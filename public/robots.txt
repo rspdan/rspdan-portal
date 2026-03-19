@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rspdan.com/sitemap.xml

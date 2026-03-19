@@ -1,0 +1,55 @@
+/* rspdan.com — Global Styles */
+/* PNW palette: forest, slate, warm white, wood */
+
+:root {
+  --forest:    #2D4A3E;
+  --forest-lt: #3D6455;
+  --slate:     #4A5568;
+  --slate-lt:  #6B7A8D;
+  --wood:      #8B6F47;
+  --wood-lt:   #B8956A;
+  --warm-white:#F5F2ED;
+  --off-white: #EDE9E3;
+  --text:      #2C2C2C;
+  --text-lt:   #555555;
+  --muted:     #888888;
+  --gold:      #C9A84C;
+  --teal:      #74C9D5;
+  --bg:        #FAFAF8;
+  --card-bg:   #FFFFFF;
+  --border:    rgba(0,0,0,0.08);
+
+  --font-head: 'Crimson Pro', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Mono', monospace;
+
+  --max-w: 1100px;
+  --radius: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--forest); text-decoration: none; }
+a:hover { color: var(--forest-lt); }
+
+img { max-width: 100%; display: block; }
+
+/* Typography */
+h1, h2, h3 { font-family: var(--font-head); font-weight: 600; line-height: 1.2; }
+
+/* Utility */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+.mono { font-family: var(--font-mono); }
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');

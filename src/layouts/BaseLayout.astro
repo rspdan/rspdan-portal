@@ -1,0 +1,84 @@
+---
+// BaseLayout.astro — rspdan.com
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Dan Sullivan — Creative Technologist' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title} — Dan Sullivan</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">DAN SULLIVAN</a>
+      <div class="nav-links">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/ohc">OHC Dashboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="mono" style="font-size:0.7rem;color:var(--muted);">
+        DAN SULLIVAN · PORT ANGELES, WA
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<style is:global>
+  /* === NAV === */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; letter-spacing: 0.2em;
+    color: var(--forest); font-weight: 500;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 0.9rem; color: var(--text-lt);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--forest); }
+
+  /* === FOOTER === */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 6rem;
+  }
+  .footer-inner { text-align: center; }
+
+  /* === MOBILE NAV === */
+  @media (max-width: 600px) {
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 0.8rem; }
+  }
+</style>

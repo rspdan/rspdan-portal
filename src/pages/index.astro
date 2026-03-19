@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Home" description="Dan Sullivan — Creative Technologist, Port Angeles WA">
+
+<!-- === HERO === -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow mono">PORT ANGELES, WA · CREATIVE TECHNOLOGIST</div>
+    <h1 class="hero-title">Dan Sullivan</h1>
+    <p class="hero-sub">
+      Building operational tools and creative systems for the outdoor industry.
+      Photographer. Storyteller. Making things work.
+    </p>
+    <div class="hero-cta">
+      <a href="/#work" class="btn btn-primary">See My Work</a>
+      <a href="/ohc" class="btn btn-outline">OHC Dashboard →</a>
+    </div>
+  </div>
+</section>
+
+<!-- === WORK === -->
+<section class="work" id="work">
+  <div class="container">
+    <div class="section-label mono">WORK</div>
+    <h2 class="section-title">Worlds to Explore</h2>
+
+    <div class="project-grid">
+
+      <!-- OHC Card -->
+      <a href="/ohc" class="project-card project-card--featured">
+        <div class="project-card__tag mono">OPERATIONS DASHBOARD</div>
+        <h3 class="project-card__title">Olympic Hiking Co.</h3>
+        <p class="project-card__desc">
+          A modular real-time operations dashboard for tour management.
+          Weather, road status, headcount, shuttle tracking — all in one view.
+        </p>
+        <div class="project-card__meta">
+          <span class="project-tag">Astro</span>
+          <span class="project-tag">Vercel</span>
+          <span class="project-tag">NWS API</span>
+          <span class="project-tag">Modular</span>
+        </div>
+        <div class="project-card__cta">Open Dashboard →</div>
+      </a>
+
+      <!-- Placeholder Card -->
+      <div class="project-card project-card--soon">
+        <div class="project-card__tag mono">COMING SOON</div>
+        <h3 class="project-card__title">More Projects</h3>
+        <p class="project-card__desc">
+          Photography. Field tools. Creative systems.
+          More worlds in development.
+        </p>
+        <div class="project-card__cta" style="opacity:0.4;">In progress</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- === ABOUT === -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-label mono">ABOUT</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">Olympic Peninsula.<br/>Creative systems.</h2>
+        <p>
+          Based in Port Angeles, WA. I work at the intersection of outdoor
+          operations and creative technology — building tools that make
+          field work clearer and easier.
+        </p>
+        <p>
+          Formerly a lens repair technician and HR specialist at Canon.
+          Currently building operational software for the outdoor industry
+          and developing a long-form creative project about the place I live.
+        </p>
+      </div>
+      <div class="about-tags">
+        <div class="tag-group">
+          <div class="tag-label mono">SKILLS</div>
+          <div class="tags">
+            <span class="tag">Operations</span>
+            <span class="tag">Web Dev</span>
+            <span class="tag">Photography</span>
+            <span class="tag">Storytelling</span>
+            <span class="tag">Tool Design</span>
+          </div>
+        </div>
+        <div class="tag-group">
+          <div class="tag-label mono">LOCATION</div>
+          <div class="tags">
+            <span class="tag">Port Angeles, WA</span>
+            <span class="tag">Olympic Peninsula</span>
+            <span class="tag">PNW</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+/* === HERO === */
+.hero {
+  padding: 7rem 0 5rem;
+  background: linear-gradient(160deg, #f0ede6 0%, #fafaf8 60%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.25em;
+  color: var(--forest); text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.hero-title {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.hero-sub {
+  font-size: 1.15rem; color: var(--text-lt);
+  max-width: 540px; line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* BUTTONS */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 500;
+  padding: 0.7rem 1.6rem; border-radius: var(--radius);
+  transition: all 0.2s; cursor: pointer;
+}
+.btn-primary {
+  background: var(--forest); color: var(--warm-white);
+  border: 1px solid var(--forest);
+}
+.btn-primary:hover { background: var(--forest-lt); color: var(--warm-white); border-color: var(--forest-lt); }
+.btn-outline {
+  background: transparent; color: var(--forest);
+  border: 1px solid var(--forest);
+}
+.btn-outline:hover { background: var(--forest); color: var(--warm-white); }
+
+/* === SECTIONS === */
+.work, .about { padding: 5rem 0; }
+.section-label {
+  font-size: 0.6rem; letter-spacing: 0.3em;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  margin-bottom: 2.5rem; color: var(--text);
+}
+
+/* === PROJECT GRID === */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  text-decoration: none; color: inherit;
+}
+.project-card:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+.project-card--featured {
+  border-left: 3px solid var(--forest);
+}
+.project-card--soon {
+  opacity: 0.55; cursor: default;
+}
+.project-card--soon:hover { transform: none; box-shadow: none; }
+.project-card__tag {
+  font-size: 0.55rem; letter-spacing: 0.2em;
+  color: var(--forest); text-transform: uppercase;
+}
+.project-card__title { font-size: 1.4rem; color: var(--text); }
+.project-card__desc { font-size: 0.9rem; color: var(--text-lt); line-height: 1.65; flex: 1; }
+.project-card__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.project-tag {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(45,74,62,0.07);
+  border-radius: 3px; color: var(--forest);
+}
+.project-card__cta { font-size: 0.85rem; font-weight: 500; color: var(--forest); margin-top: 0.5rem; }
+
+/* === ABOUT === */
+.about { background: var(--off-white); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: start;
+}
+.about-text p { font-size: 0.95rem; color: var(--text-lt); line-height: 1.8; margin-bottom: 1rem; }
+.about-tags { display: flex; flex-direction: column; gap: 1.5rem; padding-top: 0.5rem; }
+.tag-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.tag-label { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  font-size: 0.82rem; padding: 0.3rem 0.75rem;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 20px; color: var(--text-lt);
+}
+
+/* === MOBILE === */
+@media (max-width: 640px) {
+  .hero { padding: 4rem 0 3rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .project-grid { grid-template-columns: 1fr; }
+}
+</style>

@@ -1,0 +1,528 @@
+---
+// ohc.astro — rspdan.com/ohc
+// Olympic Hiking Co. Operations Dashboard
+// Ported from ouchmccouch-portal/ohc-v2.astro
+// ZERO LEAKS: no Heircor, no crew, no Niap, no cycler
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="OHC Operations"
+  description="Olympic Hiking Co. — Real-time operations dashboard for tour management"
+>
+<style>
+/* === BASE PLATE — OHC SKIN === */
+/* PNW palette: forest green, slate, warm white */
+:root {
+  --ohc-green:  #2D4A3E;
+  --ohc-teal:   #4A9B8E;
+  --ohc-slate:  #4A5568;
+  --ohc-warn:   #D97706;
+  --ohc-stop:   #DC2626;
+  --ohc-go:     #16A34A;
+  --ohc-bg:     #F5F2ED;
+  --ohc-card:   #FFFFFF;
+  --ohc-border: rgba(45,74,62,0.12);
+  --ohc-muted:  #888888;
+  --ohc-text:   #2C2C2C;
+}
+
+.ohc-shell {
+  max-width: 1300px; margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+  background: var(--ohc-bg); min-height: calc(100vh - 56px);
+}
+
+/* HEADER */
+.ohc-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--ohc-green); padding-bottom: 1rem; margin-bottom: 1.25rem;
+}
+.ohc-logo { font-family: var(--font-head); font-size: 1.5rem; color: var(--ohc-green); font-weight: 700; letter-spacing: 0.02em; }
+.ohc-sub  { font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.25em; color: var(--ohc-muted); text-transform: uppercase; margin-left: 0.75rem; }
+.ohc-ts   { font-family: var(--font-mono); font-size: 0.55rem; color: var(--ohc-muted); }
+
+/* TOOLBAR */
+.ohc-toolbar { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.ohc-btn {
+  font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.35rem 0.75rem; cursor: pointer; border-radius: 4px; transition: all 0.2s;
+  border: 1px solid rgba(45,74,62,0.3); background: none; color: var(--ohc-green);
+}
+.ohc-btn:hover  { background: rgba(45,74,62,0.08); border-color: var(--ohc-green); }
+.ohc-btn.active { background: var(--ohc-green); color: white; }
+.ohc-btn.warn   { border-color: rgba(217,119,6,0.4); color: var(--ohc-warn); }
+
+/* ROX GRID */
+.rox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.rox-grid.edit-mode .rox { cursor: grab; }
+
+/* ROX CARD */
+.rox {
+  background: var(--ohc-card);
+  border: 1px solid var(--ohc-border);
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  display: flex; flex-direction: column;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.rox.rox-wide { grid-column: span 2; }
+.rox.rox-full { grid-column: 1 / -1; }
+.rox.hidden { opacity: 0.2; }
+.rox.hidden .rox-body { display: none; }
+.rox.dragging { opacity: 0.5; transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 100; }
+.rox.drag-over { border-color: var(--ohc-teal); box-shadow: 0 0 0 2px rgba(74,155,142,0.3); }
+
+/* Status tint */
+.rox.status-go     { border-left: 3px solid var(--ohc-go); }
+.rox.status-hold   { border-left: 3px solid var(--ohc-stop); background: rgba(220,38,38,0.02); }
+.rox.status-caution{ border-left: 3px solid var(--ohc-warn); }
+
+/* ROX HEAD */
+.rox-head {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--ohc-border);
+}
+.rox-drag-handle { font-size: 0.7rem; color: var(--ohc-muted); opacity: 0.35; cursor: grab; }
+.edit-mode .rox-drag-handle { opacity: 0.7; }
+.rox-icon  { font-size: 0.85rem; flex-shrink: 0; }
+.rox-title { font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ohc-muted); flex: 1; }
+.rox-ctrl  {
+  font-size: 0.65rem; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+  border: none; background: none; color: var(--ohc-muted); cursor: pointer; border-radius: 3px; transition: all 0.15s;
+}
+.rox-ctrl:hover { background: rgba(0,0,0,0.06); color: var(--ohc-text); }
+</style>
+
+<style>
+/* ROX BODY */
+.rox-body { padding: 0.8rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+
+/* Content atoms */
+.rx-val   { font-family: var(--font-head); font-size: 1.8rem; font-weight: 600; line-height: 1; color: var(--ohc-green); }
+.rx-val.go   { color: var(--ohc-go); }
+.rx-val.hold { color: var(--ohc-stop); }
+.rx-val.caution { color: var(--ohc-warn); }
+.rx-val.sm { font-size: 1.15rem; }
+.rx-label { font-family: var(--font-mono); font-size: 0.54rem; color: var(--ohc-text); opacity: 0.65; line-height: 1.6; }
+.rx-detail{ font-size: 0.82rem; color: var(--ohc-text); opacity: 0.75; line-height: 1.65; }
+.rx-link  { font-family: var(--font-mono); font-size: 0.57rem; color: var(--ohc-green); text-decoration: none; line-height: 2.2; display: block; }
+.rx-link:hover { color: var(--ohc-teal); }
+.rx-mono  { font-family: var(--font-mono); font-size: 0.6rem; color: var(--ohc-text); opacity: 0.6; }
+.rx-sep   { border: none; border-top: 1px solid var(--ohc-border); margin: 0.25rem 0; }
+
+/* Dots */
+.dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+.dot.g { background: var(--ohc-go); }
+.dot.y { background: var(--ohc-warn); }
+.dot.r { background: var(--ohc-stop); }
+.dot.b { background: var(--ohc-teal); }
+
+/* Forecast */
+.rx-forecast { display: flex; gap: 0.5rem; }
+.rx-fc {
+  flex: 1; min-width: 80px;
+  background: rgba(45,74,62,0.04); border: 1px solid var(--ohc-border);
+  border-radius: 4px; padding: 0.5rem 0.65rem;
+}
+.rx-fc-day  { font-family: var(--font-mono); font-size: 0.44rem; letter-spacing: 0.18em; color: var(--ohc-green); text-transform: uppercase; }
+.rx-fc-temp { font-family: var(--font-head); font-size: 1.1rem; margin: 0.15rem 0; }
+.rx-fc-cond { font-size: 0.65rem; opacity: 0.6; line-height: 1.3; }
+.rx-fc-rain { font-family: var(--font-mono); font-size: 0.52rem; }
+
+/* Inputs */
+.rx-input {
+  background: rgba(45,74,62,0.05); border: 1px solid rgba(45,74,62,0.2);
+  color: var(--ohc-text); font-family: var(--font-mono); font-size: 0.95rem;
+  padding: 0.35rem 0.6rem; border-radius: 4px; width: 72px; text-align: center;
+}
+.rx-input:focus { outline: none; border-color: var(--ohc-green); }
+.rx-hc-row  { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.rx-hc-item { display: flex; flex-direction: column; gap: 0.2rem; }
+
+/* Toggle buttons */
+.rx-toggle-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.rx-tog {
+  font-family: var(--font-mono); font-size: 0.52rem; padding: 0.28rem 0.6rem;
+  border-radius: 4px; cursor: pointer; transition: all 0.15s; border: 1px solid;
+}
+.rx-tog.g { background: rgba(22,163,74,0.08); border-color: rgba(22,163,74,0.35); color: var(--ohc-go); }
+.rx-tog.y { background: rgba(217,119,6,0.08); border-color: rgba(217,119,6,0.35); color: var(--ohc-warn); }
+.rx-tog.r { background: rgba(220,38,38,0.08); border-color: rgba(220,38,38,0.35); color: var(--ohc-stop); }
+.rx-tog.b { background: rgba(74,155,142,0.08); border-color: rgba(74,155,142,0.35); color: var(--ohc-teal); }
+.rx-tog.active { filter: brightness(1.1); font-weight: 600; }
+
+/* Edit indicator */
+.edit-indicator {
+  display: none; position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em;
+  background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.5);
+  color: var(--ohc-warn); padding: 0.4rem 0.9rem; border-radius: 20px;
+}
+.edit-indicator.visible { display: block; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .ohc-shell { padding: 1rem 0.75rem 3rem; }
+  .ohc-header { flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+  .rox.rox-wide, .rox.rox-full { grid-column: span 1; }
+  .rox-grid { grid-template-columns: 1fr; }
+  .rox-body[style*="flex-direction:row"] { flex-direction: column !important; }
+  .rx-forecast { flex-wrap: wrap; }
+  .rx-fc { min-width: calc(50% - 0.25rem); }
+}
+</style>
+
+<div class="edit-indicator" id="editIndicator">⠿ EDIT MODE — drag to reorder</div>
+
+<div class="ohc-shell">
+
+  <div class="ohc-header">
+    <div style="display:flex;align-items:baseline;">
+      <span class="ohc-logo">OLYMPIC HIKING CO.</span>
+      <span class="ohc-sub">Operations Dashboard</span>
+    </div>
+    <span class="ohc-ts" id="ohcTs">loading...</span>
+  </div>
+
+  <div class="ohc-toolbar">
+    <button class="ohc-btn" onclick="refreshAll()">↺ Refresh</button>
+    <button class="ohc-btn" id="editBtn" onclick="toggleEdit()">⠿ Edit Layout</button>
+    <button class="ohc-btn warn" onclick="resetLayout()">↺ Reset</button>
+    <span style="font-family:var(--font-mono);font-size:0.48rem;color:var(--ohc-muted);margin-left:0.5rem;">
+      Toggle rox header to hide/show · Drag in edit mode to reorder
+    </span>
+  </div>
+
+  <div class="rox-grid" id="roxGrid">
+
+    <!-- ROX 001: LAUNCH STATUS -->
+    <div class="rox rox-wide" id="rox-launch" draggable="true" data-rox="launch">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span>
+        <span class="rox-icon">🚀</span>
+        <span class="rox-title">Launch Status</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('launch')">◉</button></div>
+      </div>
+      <div class="rox-body" style="flex-direction:row;align-items:center;gap:1.5rem;">
+        <div>
+          <div class="rx-val" id="rLaunchVal">Checking...</div>
+          <div class="rx-label" id="rLaunchDetail">Loading conditions...</div>
+        </div>
+        <div style="flex:1;"><div class="rx-mono" id="rLaunchFactors"></div></div>
+      </div>
+    </div>
+
+    <!-- ROX 002: WEATHER NOW -->
+    <div class="rox" id="rox-weather" draggable="true" data-rox="weather">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🌡️</span>
+        <span class="rox-title">Weather Now</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('weather')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-val" id="rWxTemp">--°F</div>
+        <div class="rx-detail" id="rWxDesc">loading...</div>
+        <div class="rx-mono" id="rWxWind"></div>
+      </div>
+    </div>
+
+    <!-- ROX 003: PRECIPITATION -->
+    <div class="rox" id="rox-precip" draggable="true" data-rox="precip">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">💧</span>
+        <span class="rox-title">Precipitation</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('precip')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-val" id="rPrecipVal">--%</div>
+        <div class="rx-label" id="rPrecipDesc">loading...</div>
+      </div>
+    </div>
+
+    <!-- ROX 004: HURRICANE RIDGE ROAD -->
+    <div class="rox" id="rox-road" draggable="true" data-rox="road">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🏔️</span>
+        <span class="rox-title">Hurricane Ridge Road</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('road')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-label" id="rRoadStatus"><span class="dot y"></span>Set status below</div>
+        <div class="rx-toggle-row" style="margin-top:0.3rem;">
+          <button class="rx-tog g" data-road-btn onclick="setRoad(this,'Open — chains may apply','g',false)">OPEN</button>
+          <button class="rx-tog r" data-road-btn onclick="setRoad(this,'CLOSED — verify before departure','r',true)">CLOSED</button>
+          <button class="rx-tog y" data-road-btn onclick="setRoad(this,'Limited access — check NPS','y',null)">LIMITED</button>
+        </div>
+        <hr class="rx-sep">
+        <a class="rx-link" href="tel:3605653131">📞 Hotline: 360-565-3131</a>
+        <a class="rx-link" href="https://www.nps.gov/olym/planyourvisit/hurricane-ridge-current-conditions.htm" target="_blank">NPS Current Conditions →</a>
+      </div>
+    </div>
+
+    <!-- ROX 005: DAYLIGHT -->
+    <div class="rox" id="rox-daylight" draggable="true" data-rox="daylight">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🌅</span>
+        <span class="rox-title">Daylight</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('daylight')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-val sm" id="rSunrise">--:--</div>
+        <div class="rx-mono" id="rSunset"></div>
+        <div class="rx-mono" id="rDayHours"></div>
+      </div>
+    </div>
+
+    <!-- ROX 006: 4-DAY FORECAST -->
+    <div class="rox rox-wide" id="rox-forecast" draggable="true" data-rox="forecast">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">📅</span>
+        <span class="rox-title">4-Day Forecast — Olympic Peninsula</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('forecast')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-forecast" id="rForecast"><span style="opacity:.4;font-size:.65rem;">loading...</span></div>
+      </div>
+    </div>
+
+    <!-- ROX 007: WEBCAM -->
+    <div class="rox rox-wide" id="rox-webcam" draggable="true" data-rox="webcam">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">📷</span>
+        <span class="rox-title">Hurricane Ridge Webcam</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('webcam')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-detail" style="opacity:0.5;font-size:0.7rem;margin-bottom:0.4rem;">Live embed blocked by NPS policy. Open directly:</div>
+        <a class="rx-link" href="https://www.nps.gov/olym/learn/photosmultimedia/hurricane-ridge-webcam.htm" target="_blank">📷 Hurricane Ridge Webcam — NPS →</a>
+        <a class="rx-link" href="https://www.nps.gov/media/webcam/view.htm?id=81B46251-1DD8-B71B-0B29B9750DE3C3E0" target="_blank">📷 HR Cam 1 (direct) →</a>
+        <a class="rx-link" href="https://www.nps.gov/media/webcam/view.htm?id=81B46260-1DD8-B71B-0B7A7B41BF3D2A69" target="_blank">📷 HR Cam 2 (direct) →</a>
+      </div>
+    </div>
+
+    <!-- ROX 008: TIDES -->
+    <div class="rox" id="rox-tides" draggable="true" data-rox="tides">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🌊</span>
+        <span class="rox-title">Tides</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('tides')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <a class="rx-link" href="https://www.tide-forecast.com/locations/Ediz-Hook-Port-Angeles-Strait-of-Juan-de-Fuca/tides/latest" target="_blank">📍 Ediz Hook — Port Angeles →</a>
+        <a class="rx-link" href="https://tides.willyweather.com/wa/jefferson-county/ruby-beach.html" target="_blank">🔴 Ruby Beach →</a>
+        <a class="rx-link" href="https://tides.willyweather.com/wa/clallam-county/rialto-beach.html" target="_blank">⚪ Rialto Beach →</a>
+      </div>
+    </div>
+
+    <!-- ROX 009: HEADCOUNT -->
+    <div class="rox" id="rox-headcount" draggable="true" data-rox="headcount">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">👥</span>
+        <span class="rox-title">Today's Headcount</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('headcount')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-hc-row">
+          <div class="rx-hc-item"><span class="rx-mono">Morning</span><input class="rx-input" type="number" id="hcMorn" value="0" min="0" oninput="calcTotal()"></div>
+          <div class="rx-hc-item"><span class="rx-mono">Afternoon</span><input class="rx-input" type="number" id="hcAftn" value="0" min="0" oninput="calcTotal()"></div>
+          <div class="rx-hc-item"><span class="rx-mono">Shuttle</span><input class="rx-input" type="number" id="hcShut" value="0" min="0" oninput="calcTotal()"></div>
+          <div class="rx-hc-item"><span class="rx-mono">Guides</span><input class="rx-input" type="number" id="hcGuide" value="0" min="0" oninput="calcTotal()"></div>
+        </div>
+        <hr class="rx-sep">
+        <div class="rx-mono" id="hcTotal">Total: 0 guests · 0 guides</div>
+      </div>
+    </div>
+
+    <!-- ROX 010: SHUTTLE -->
+    <div class="rox" id="rox-shuttle" draggable="true" data-rox="shuttle">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🚌</span>
+        <span class="rox-title">Shuttle Status</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('shuttle')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <div class="rx-toggle-row">
+          <button class="rx-tog g" onclick="setShuttle(this,'ON TIME','g')">ON TIME</button>
+          <button class="rx-tog b" onclick="setShuttle(this,'RUNNING','b')">RUNNING</button>
+          <button class="rx-tog y" onclick="setShuttle(this,'DELAYED','y')">DELAYED</button>
+          <button class="rx-tog r" onclick="setShuttle(this,'CANCELLED','r')">CANCELLED</button>
+        </div>
+        <hr class="rx-sep">
+        <div class="rx-mono" id="rShuttleCur"><span class="dot y"></span>Not set</div>
+      </div>
+    </div>
+
+    <!-- ROX 011: PEEK BOOKINGS -->
+    <div class="rox" id="rox-peek" draggable="true" data-rox="peek">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🎫</span>
+        <span class="rox-title">Peek Pro — Bookings</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('peek')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <a class="rx-link" href="https://pro-app.peek.com/insights/dashboard/overview" target="_blank">📊 Peek Pro Dashboard →</a>
+        <a class="rx-link" href="https://auth.peek.com" target="_blank">🔑 Peek Login →</a>
+        <a class="rx-link" href="https://book.peek.com/waivers/6bc55a0f-4913-4aa3-98a1-6d9f9e48069f" target="_blank">📋 Guest Waivers →</a>
+        <a class="rx-link" href="https://www.hikeolympic.com/picnic-order-form" target="_blank">🥪 Picnic Order Form →</a>
+      </div>
+    </div>
+
+    <!-- ROX 012: STAFF -->
+    <div class="rox" id="rox-staff" draggable="true" data-rox="staff">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🏠</span>
+        <span class="rox-title">Staff — Homebase</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('staff')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <a class="rx-link" href="https://app.joinhomebase.com/dashboard/location" target="_blank">📅 Homebase Dashboard →</a>
+        <a class="rx-link" href="https://outlook.office.com/mail/" target="_blank">📧 OHC Email →</a>
+        <a class="rx-link" href="https://outlook.office.com/calendar/view/week" target="_blank">📆 OHC Calendar →</a>
+        <a class="rx-link" href="https://zoom.us/profile" target="_blank">💻 Zoom →</a>
+      </div>
+    </div>
+
+    <!-- ROX 013: PERMITS -->
+    <div class="rox" id="rox-permits" draggable="true" data-rox="permits">
+      <div class="rox-head">
+        <span class="rox-drag-handle">⠿</span><span class="rox-icon">🌲</span>
+        <span class="rox-title">Permits + Navigation</span>
+        <div><button class="rox-ctrl" onclick="toggleRox('permits')">◉</button></div>
+      </div>
+      <div class="rox-body">
+        <a class="rx-link" href="https://www.recreation.gov/permits/4098362/registration/detailed-availability" target="_blank">🌲 ONP Permits →</a>
+        <a class="rx-link" href="https://www.nps.gov/olym/planyourvisit/conditions.htm" target="_blank">⛰️ NPS Conditions →</a>
+        <a class="rx-link" href="https://www.google.com/maps/dir/Olympic+Hiking+Co.,+East+Railroad+Avenue,+Port+Angeles" target="_blank">🗺️ Directions to OHC →</a>
+        <a class="rx-link" href="https://www.hikeolympic.com" target="_blank">🥾 HikeOlympic.com →</a>
+      </div>
+    </div>
+
+  </div><!-- /rox-grid -->
+</div><!-- /ohc-shell -->
+
+<script>
+const NWS_HOURLY   = 'https://api.weather.gov/gridpoints/SEW/94,93/forecast/hourly';
+const NWS_FORECAST = 'https://api.weather.gov/gridpoints/SEW/94,93/forecast';
+const NWS_POINTS   = 'https://api.weather.gov/points/47.9790,-123.4310';
+const UA = { 'User-Agent': 'OHC-Ops/2.0 (hikeolympic.com)' };
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = 'ohc_rox_v3';
+
+let editMode = false, weatherData = null, roadClosed = null, dragSrc = null, shuttleActive = null;
+
+function saveState() {
+  const grid = $('roxGrid');
+  const order = Array.from(grid.children).map(el => el.dataset.rox);
+  const hidden = {};
+  grid.querySelectorAll('.rox').forEach(el => { if (el.classList.contains('hidden')) hidden[el.dataset.rox] = true; });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ order, hidden })); } catch(e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY); if (!raw) return;
+    const s = JSON.parse(raw); const grid = $('roxGrid');
+    if (s.order) s.order.forEach(id => { const el = grid.querySelector(`[data-rox="${id}"]`); if (el) grid.appendChild(el); });
+    if (s.hidden) Object.keys(s.hidden).forEach(id => { const el = grid.querySelector(`[data-rox="${id}"]`); if (el && s.hidden[id]) el.classList.add('hidden'); });
+  } catch(e) {}
+}
+function resetLayout() {
+  if (!confirm('Reset layout?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  location.reload();
+}
+function toggleRox(id) { const el = document.querySelector(`[data-rox="${id}"]`); if (el) { el.classList.toggle('hidden'); saveState(); } }
+function toggleEdit() {
+  editMode = !editMode;
+  $('roxGrid').classList.toggle('edit-mode', editMode);
+  $('editBtn').classList.toggle('active', editMode);
+  $('editIndicator').classList.toggle('visible', editMode);
+}
+function initDrag() {
+  const grid = $('roxGrid');
+  grid.addEventListener('dragstart', e => { const r = e.target.closest('.rox'); if (!r || !editMode) { e.preventDefault(); return; } dragSrc = r; r.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+  grid.addEventListener('dragend', e => { const r = e.target.closest('.rox'); if (r) r.classList.remove('dragging'); grid.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over')); saveState(); });
+  grid.addEventListener('dragover', e => { e.preventDefault(); const r = e.target.closest('.rox'); if (!r || r === dragSrc || !editMode) return; grid.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over')); r.classList.add('drag-over'); });
+  grid.addEventListener('drop', e => { e.preventDefault(); const t = e.target.closest('.rox'); if (!t || t === dragSrc || !editMode) return; t.classList.remove('drag-over'); grid.insertBefore(dragSrc, t); saveState(); });
+}
+function setRoad(btn, label, dotCls, closed) {
+  document.querySelectorAll('[data-road-btn]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const html = `<span class="dot ${dotCls}"></span>${label}`;
+  $('rRoadStatus').innerHTML = html; roadClosed = closed;
+  try { localStorage.setItem('ohc_road_v3', JSON.stringify({ html, closed })); } catch(e) {}
+  updateLaunch();
+}
+function setShuttle(btn, label, cls) {
+  if (shuttleActive) shuttleActive.classList.remove('active');
+  btn.classList.add('active'); shuttleActive = btn;
+  $('rShuttleCur').innerHTML = `<span class="dot ${cls}"></span>${label}`;
+}
+function calcTotal() {
+  const m = +$('hcMorn').value||0, a = +$('hcAftn').value||0, s = +$('hcShut').value||0, g = +$('hcGuide').value||0;
+  const guests = m+a+s; const ratio = g ? (guests/g).toFixed(1)+':1' : '—';
+  $('hcTotal').textContent = `Total: ${guests} guests · ${g} guides · ratio ${ratio}`;
+}
+function updateTs() {
+  $('ohcTs').textContent = new Date().toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
+}
+async function loadWeather() {
+  try {
+    const r = await fetch(NWS_HOURLY, {headers:UA}); const d = await r.json(); const now = d.properties.periods[0];
+    const pct = now.probabilityOfPrecipitation?.value ?? 0;
+    $('rWxTemp').textContent = now.temperature+'°'+now.temperatureUnit;
+    $('rWxDesc').textContent = now.shortForecast;
+    $('rWxWind').textContent = '💨 '+now.windSpeed+' '+now.windDirection;
+    $('rPrecipVal').textContent = pct+'%';
+    $('rPrecipDesc').textContent = pct>=80 ? '⚠️ High rain — pack extra layers' : pct>=40 ? 'Possible rain — gear recommended' : '✓ Low precip chance';
+    weatherData = { temp: now.temperature, precip: pct, desc: now.shortForecast };
+    updateLaunch();
+  } catch(e) {}
+}
+async function loadForecast() {
+  try {
+    const r = await fetch(NWS_FORECAST, {headers:UA}); const d = await r.json();
+    const days = d.properties.periods.filter(p=>p.isDaytime).slice(0,4);
+    $('rForecast').innerHTML = days.map(p => {
+      const pct = p.probabilityOfPrecipitation?.value ?? 0;
+      const c = pct>=70?'var(--ohc-warn)':pct>=40?'var(--ohc-teal)':'var(--ohc-go)';
+      return `<div class="rx-fc"><div class="rx-fc-day">${p.name}</div><div class="rx-fc-temp">${p.temperature}°${p.temperatureUnit}</div><div class="rx-fc-cond">${p.shortForecast}</div><div class="rx-fc-rain" style="color:${c}">💧${pct}%</div></div>`;
+    }).join('');
+  } catch(e) {}
+}
+async function loadSun() {
+  try {
+    const r = await fetch(NWS_POINTS, {headers:UA}); const d = await r.json();
+    const a = d.properties?.astronomicalData; if (!a) throw new Error();
+    const fmt = iso => new Date(iso).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',timeZone:'America/Los_Angeles'});
+    const hrs = ((new Date(a.sunset)-new Date(a.sunrise))/3600000).toFixed(1);
+    $('rSunrise').textContent = fmt(a.sunrise);
+    $('rSunset').textContent = '🌇 Sunset ' + fmt(a.sunset);
+    $('rDayHours').textContent = '☀️ ' + hrs + ' hrs daylight';
+  } catch(e) { $('rSunrise').textContent = '--:--'; }
+}
+function loadRoad() {
+  const saved = localStorage.getItem('ohc_road_v3');
+  if (saved) { const d = JSON.parse(saved); $('rRoadStatus').innerHTML = d.html; roadClosed = d.closed; }
+  updateLaunch();
+}
+function updateLaunch() {
+  if (!weatherData) return;
+  const el = document.getElementById('rox-launch');
+  const val = $('rLaunchVal'), det = $('rLaunchDetail'), fac = $('rLaunchFactors');
+  const reasons = [];
+  if (roadClosed === true) reasons.push('Hurricane Ridge Road CLOSED');
+  if (weatherData.temp <= 32) reasons.push('Freezing ('+weatherData.temp+'°F)');
+  if (weatherData.precip >= 90) reasons.push('Near-certain rain ('+weatherData.precip+'%)');
+  if (weatherData.desc.toLowerCase().includes('snow')) reasons.push('Snow in forecast');
+  el?.classList.remove('status-go','status-hold','status-caution');
+  if (reasons.length >= 2) { val.textContent = '⛔ HOLD'; val.className = 'rx-val hold'; el?.classList.add('status-hold'); det.textContent = 'Multiple adverse conditions'; }
+  else if (reasons.length === 1) { val.textContent = '⚠️ CAUTION'; val.className = 'rx-val caution'; el?.classList.add('status-caution'); det.textContent = reasons[0]+' — monitor conditions'; }
+  else { val.textContent = '✓ GO'; val.className = 'rx-val go'; el?.classList.add('status-go'); det.textContent = weatherData.temp+'°F · '+weatherData.desc+' · '+weatherData.precip+'% precip'; }
+  fac.innerHTML = reasons.map(r => `<div>⚑ ${r}</div>`).join('') || '<div style="color:var(--ohc-go);">All conditions nominal</div>';
+}
+async function refreshAll() { updateTs(); await Promise.all([loadWeather(), loadForecast(), loadSun(), loadRoad()]); }
+loadState(); initDrag(); refreshAll();
+setInterval(refreshAll, 10*60*1000); updateTs(); setInterval(updateTs, 30000);
+</script>
+
+</BaseLayout>
