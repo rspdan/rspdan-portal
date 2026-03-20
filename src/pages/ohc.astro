@@ -341,14 +341,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div><button class="rox-ctrl" onclick="toggleRox('shuttle')">◉</button></div>
       </div>
       <div class="rox-body">
+        <!-- AUTO: pickup window countdown -->
+        <div id="rShuttleAuto" style="background:rgba(24,95,165,0.07);border:0.5px solid rgba(24,95,165,0.2);border-radius:6px;padding:10px 12px;margin-bottom:4px;">
+          <div style="font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#185FA5;margin-bottom:4px;font-weight:600;">Next pickup window</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <div style="font-size:1.35rem;font-weight:600;color:var(--ohc-text);" id="rShuttleCountdown">--</div>
+            <span id="rShuttleWindowBadge" style="font-size:0.48rem;padding:2px 8px;border-radius:99px;font-weight:600;background:#16A34A;color:#fff;letter-spacing:0.06em;text-transform:uppercase;"></span>
+          </div>
+          <div style="font-size:0.52rem;color:var(--ohc-muted);margin-top:3px;" id="rShuttleWindowDetail"></div>
+          <div style="font-size:0.5rem;color:var(--ohc-muted);margin-top:4px;display:flex;justify-content:space-between;">
+            <span>Afternoon window</span><span>12:15 – 12:30 PM</span>
+          </div>
+        </div>
+        <!-- MANUAL OVERRIDE -->
+        <div style="font-size:0.48rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ohc-muted);margin:2px 0 4px;text-align:center;">manual override</div>
         <div class="rx-toggle-row">
-          <button class="rx-tog g" onclick="setShuttle(this,'ON TIME','g')">ON TIME</button>
+          <button class="rx-tog g" onclick="setShuttle(this,'ON Time','g')">ON TIME</button>
           <button class="rx-tog b" onclick="setShuttle(this,'RUNNING','b')">RUNNING</button>
           <button class="rx-tog y" onclick="setShuttle(this,'DELAYED','y')">DELAYED</button>
           <button class="rx-tog r" onclick="setShuttle(this,'CANCELLED','r')">CANCELLED</button>
         </div>
-        <hr class="rx-sep">
-        <div class="rx-mono" id="rShuttleCur"><span class="dot y"></span>Not set</div>
+        <div class="rx-mono" id="rShuttleCur" style="margin-top:4px;font-size:0.52rem;"><span class="dot y"></span>No override set — clears at midnight</div>
       </div>
     </div>
 
@@ -455,7 +468,44 @@ function setRoad(btn, label, dotCls, closed) {
 function setShuttle(btn, label, cls) {
   if (shuttleActive) shuttleActive.classList.remove('active');
   btn.classList.add('active'); shuttleActive = btn;
-  $('rShuttleCur').innerHTML = `<span class="dot ${cls}"></span>${label}`;
+  $('rShuttleCur').innerHTML = `<span class="dot ${cls}"></span>${label} — clears at midnight`;
+  const exp = new Date(); exp.setHours(24,0,0,0);
+  try { localStorage.setItem('ohc_shuttle_v3', JSON.stringify({ label, cls, expires: exp.getTime() })); } catch(e) {}
+}
+function loadShuttle() {
+  try {
+    const raw = localStorage.getItem('ohc_shuttle_v3'); if (!raw) return;
+    const d = JSON.parse(raw);
+    if (Date.now() > d.expires) { localStorage.removeItem('ohc_shuttle_v3'); return; }
+    document.querySelectorAll('.rx-tog[onclick*="setShuttle"]').forEach(b => b.classList.remove('active'));
+    const match = [...document.querySelectorAll('.rx-tog[onclick*="setShuttle"]')].find(b => b.textContent.trim().toLowerCase() === d.label.toLowerCase());
+    if (match) { match.classList.add('active'); shuttleActive = match; }
+    $('rShuttleCur').innerHTML = `<span class="dot ${d.cls}"></span>${d.label} — clears at midnight`;
+  } catch(e) {}
+}
+function updateShuttleCountdown() {
+  const now = new Date();
+  const windows = [
+    { label: 'MORNING', h: 7, m: 0, endH: 7, endM: 15 },
+    { label: 'AFTERNOON', h: 12, m: 15, endH: 12, endM: 30 }
+  ];
+  let next = null, diffMs = Infinity;
+  for (const w of windows) {
+    const t = new Date(now); t.setHours(w.h, w.m, 0, 0);
+    if (t <= now) t.setDate(t.getDate() + 1);
+    const diff = t - now;
+    if (diff < diffMs) { diffMs = diff; next = w; }
+  }
+  if (!next) return;
+  const totalMins = Math.floor(diffMs / 60000);
+  const hrs = Math.floor(totalMins / 60), mins = totalMins % 60;
+  const display = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+  $('rShuttleCountdown').textContent = display;
+  const isMorn = next.label === 'MORNING';
+  const badge = $('rShuttleWindowBadge');
+  badge.textContent = next.label;
+  badge.style.background = isMorn ? '#16A34A' : '#185FA5';
+  $('rShuttleWindowDetail').textContent = `${isMorn ? '7:00' : '12:15'} – ${isMorn ? '7:15' : '12:30'} AM · Visitor Center`;
 }
 function calcTotal() {
   const m = +$('hcMorn').value||0, a = +$('hcAftn').value||0, s = +$('hcShut').value||0, g = +$('hcGuide').value||0;
@@ -521,8 +571,8 @@ function updateLaunch() {
   fac.innerHTML = reasons.map(r => `<div>⚑ ${r}</div>`).join('') || '<div style="color:var(--ohc-go);">All conditions nominal</div>';
 }
 async function refreshAll() { updateTs(); await Promise.all([loadWeather(), loadForecast(), loadSun(), loadRoad()]); }
-loadState(); initDrag(); refreshAll();
-setInterval(refreshAll, 10*60*1000); updateTs(); setInterval(updateTs, 30000);
+loadState(); initDrag(); refreshAll(); loadShuttle(); updateShuttleCountdown();
+setInterval(refreshAll, 10*60*1000); setInterval(updateShuttleCountdown, 60*1000); updateTs(); setInterval(updateTs, 30000);
 </script>
 
 </BaseLayout>
