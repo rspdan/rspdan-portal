@@ -44,16 +44,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="project-card__cta">Open Dashboard →</div>
       </a>
 
-      <!-- Placeholder Card -->
-      <div class="project-card project-card--soon">
-        <div class="project-card__tag mono">COMING SOON</div>
-        <h3 class="project-card__title">More Projects</h3>
+      <!-- Ouch McCouch Card -->
+      <a href="/ouch" class="project-card project-card--ouch">
+        <div class="project-card__tag mono">CREATIVE PROJECT</div>
+        <h3 class="project-card__title">Ouch McCouch</h3>
         <p class="project-card__desc">
-          Photography. Field tools. Creative systems.
-          More worlds in development.
+          A long-form creative project. 25 years of material — music, narrative,
+          and a world built inside the Olympic Peninsula. Something is arriving.
         </p>
-        <div class="project-card__cta" style="opacity:0.4;">In progress</div>
-      </div>
+        <div class="project-card__meta">
+          <span class="project-tag">Music</span>
+          <span class="project-tag">Narrative</span>
+          <span class="project-tag">World-building</span>
+        </div>
+        <div class="project-card__cta">Explore →</div>
+      </a>
 
     </div>
   </div>
@@ -180,10 +185,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .project-card--featured {
   border-left: 3px solid var(--forest);
 }
-.project-card--soon {
-  opacity: 0.55; cursor: default;
+.project-card--ouch {
+  border-left: 3px solid #4A5568;
+  background: linear-gradient(135deg, #fafaf8 0%, #f0ede6 100%);
 }
-.project-card--soon:hover { transform: none; box-shadow: none; }
+.project-card--ouch:hover {
+  border-left-color: #2C2C2C;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
 .project-card__tag {
   font-size: 0.55rem; letter-spacing: 0.2em;
   color: var(--forest); text-transform: uppercase;
