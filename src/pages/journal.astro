@@ -79,7 +79,10 @@ const issues = [
         <p class="issue-desc">{issue.desc}</p>
         <div class="issue-actions">
           <a href={`/journal/${issue.file}`} class="dl-link mono" download>
-            ↓ Download .md
+            ↓ .md
+          </a>
+          <a href={`/journal/${issue.file.replace('.md', '.pdf')}`} class="dl-link mono" download>
+            ↓ .pdf
           </a>
         </div>
       </article>
