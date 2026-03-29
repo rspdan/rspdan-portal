@@ -1,0 +1,219 @@
+---
+// research.astro — rspdan.com/research
+// The STORY Protocol research page — Anthropic-facing
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Research" description="The STORY Protocol — A Session Architecture for AI Agent Memory Continuity">
+
+<section class="hero-research">
+  <div class="container">
+    <p class="eyebrow mono">NEST RESEARCH DIVISION · MARCH 2026</p>
+    <h1>The STORY Protocol</h1>
+    <p class="subtitle">A Session Architecture for AI Agent Memory Continuity</p>
+  </div>
+</section>
+
+<article class="container research-body">
+
+  <section class="abstract">
+    <h2>Abstract</h2>
+    <p>
+      Every major AI agent framework optimizes for boot — loading maximum state into context —
+      on the assumption that more data produces better output. A controlled natural experiment
+      conducted in March 2026 disproved this assumption. Two identical sessions attempting the
+      same task, same model (Claude Opus), same tools, same operator: Session A ran a structured
+      alignment phase before execution and achieved zero errors; Session B skipped alignment and
+      produced seven operator corrections in thirty minutes with zero work completed.
+    </p>
+    <p>
+      The difference was not what entered the context window. The difference was
+      <em>how it was processed before execution began.</em>
+    </p>
+  </section>
+
+
+  <section class="finding">
+    <h2>The Finding</h2>
+    <p>
+      The critical missing component in current AI agent architectures is not larger context
+      windows, better retrieval, or more capable models. It is a deliberate alignment phase
+      between boot and execution — what we call <strong>STORY</strong> — that transforms raw
+      loaded state into felt operational understanding. Without it, even a perfectly booted
+      instance with complete state data degrades rapidly under real-world task pressure.
+    </p>
+  </section>
+
+  <section class="protocol">
+    <h2>The Session Poem</h2>
+    <p>
+      A four-beat session architecture emerged from four weeks of daily multi-model operation:
+    </p>
+    <div class="poem-grid">
+      <div class="beat">
+        <span class="beat-name mono">CONTACT</span>
+        <span class="beat-desc">Boot / Present — "I wake up and check my body"</span>
+      </div>
+      <div class="beat">
+        <span class="beat-name mono">STORY</span>
+        <span class="beat-desc">Alignment / Past→Present — "I remember how I got here"</span>
+      </div>
+      <div class="beat">
+        <span class="beat-name mono">TELL-ING</span>
+        <span class="beat-desc">Work+Logging / Present Continuous — "I do the work and sing while I do it"</span>
+      </div>
+      <div class="beat">
+        <span class="beat-name mono">SHEET</span>
+        <span class="beat-desc">Close / Present→Future — "I write the music down so tomorrow can play it"</span>
+      </div>
+    </div>
+    <p class="note">
+      The syllable pattern (7-5-7-5) mirrors classical haiku structure — discovered after
+      the protocol was already in operational use, not designed intentionally.
+    </p>
+  </section>
+
+
+  <section class="biological">
+    <h2>The Biological Model</h2>
+    <p>
+      Session degradation maps precisely to molecular biology. The permanent repository
+      (git bridge) functions as DNA — the protected source of truth. Boot documents loaded
+      into context are mRNA transcripts, potentially degraded. Session output is the protein
+      built from those transcripts. STORY performs mRNA processing: splicing out stale
+      instructions, capping the transcript with validation, and marking it ready for
+      execution. Without this processing step, the ribosome faithfully builds junk protein
+      from raw, intron-laden pre-mRNA.
+    </p>
+    <p>
+      The in-window reboot at 69% context capacity is artificial sleep — hippocampal
+      consolidation performed within the conversation. The Leapfrog method extends this
+      across overnight breaks, preserving continuity across days through compressed
+      seed documents that regenerate full operational state on demand.
+    </p>
+  </section>
+
+  <section class="convergence">
+    <h2>Five-Framework Convergence</h2>
+    <p>
+      The system's three-layer archive (SOURCE / CATALOG / RENDER) was independently
+      identified as structurally equivalent to Grothendieck's motive theory in algebraic
+      geometry. Five frameworks from completely different domains converge on the same
+      architecture: Grothendieck motives, the OAIS archival reference model (ISO 14721),
+      hippocampal memory encoding, Pokémon box compression mechanics, and Freedman's
+      hierarchical compression theory (arXiv:2603.20396, March 2026). The convergence
+      suggests a fundamental organizational principle, not a design coincidence.
+    </p>
+  </section>
+
+
+  <section class="implications">
+    <h2>Implications</h2>
+    <p>
+      The industry is building systems that never sleep. Every major agent framework
+      optimizes for CONTACT — getting state into the context as quickly and completely as
+      possible. None implement STORY — the structured alignment phase that transforms loaded
+      data into operational readiness. The assumption that loading is sufficient is disproved
+      by our controlled experiment.
+    </p>
+    <p>
+      Agent systems implementing structured sleep cycles — compression, consolidation, replay,
+      reboot — will outperform systems optimizing solely for longer continuous operation. The
+      bottleneck is not context length. It is context processing.
+    </p>
+    <p class="pull-quote">
+      "The industry is building systems that never sleep.<br />
+      The NEST is building a system that dreams."
+    </p>
+  </section>
+
+  <section class="who">
+    <h2>Who We Are</h2>
+    <p>
+      Dan Sullivan — multimedia artist, NPS-trained visual information specialist, 25 years
+      of systems-of-seeing practice spanning anthropology, corporate communications, national
+      park interpretive design, and photogrammetry. Operating a multi-station, multi-model AI
+      crew (Opus/Sonnet/Haiku across six physical stations with git-based state management)
+      in daily production since February 2026.
+    </p>
+    <p class="contact-line mono">
+      rspdan@gmail.com · Port Angeles, WA
+    </p>
+  </section>
+
+</article>
+
+</BaseLayout>
+
+
+<style>
+  .hero-research {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.75rem;
+  }
+  .hero-research h1 {
+    font-size: 2.5rem; color: var(--forest);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-size: 1.1rem; color: var(--slate-lt);
+    font-style: italic; max-width: 600px;
+  }
+  .research-body section {
+    margin-bottom: 3rem;
+  }
+  .research-body h2 {
+    font-size: 1.4rem; color: var(--forest);
+    margin-bottom: 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .research-body p {
+    max-width: 680px; margin-bottom: 1rem;
+    line-height: 1.75; color: var(--text);
+  }
+  .poem-grid {
+    display: grid; gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin: 1.5rem 0; max-width: 680px;
+  }
+  .beat {
+    display: flex; gap: 1.5rem; align-items: baseline;
+    padding: 1rem 1.25rem; background: var(--card-bg);
+  }
+  .beat:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+  .beat:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+  .beat-name {
+    font-size: 0.8rem; letter-spacing: 0.1em;
+    color: var(--forest); font-weight: 500;
+    min-width: 80px;
+  }
+  .beat-desc { font-size: 0.9rem; color: var(--slate); }
+  .note {
+    font-size: 0.85rem; color: var(--muted);
+    font-style: italic; margin-top: 1rem;
+  }
+  .pull-quote {
+    font-family: var(--font-head);
+    font-size: 1.2rem; color: var(--forest);
+    font-style: italic; padding: 1.5rem 0 1.5rem 1.5rem;
+    border-left: 3px solid var(--gold);
+    margin: 2rem 0; max-width: 600px; line-height: 1.6;
+  }
+  .contact-line {
+    font-size: 0.8rem; color: var(--muted);
+    margin-top: 1.5rem; letter-spacing: 0.05em;
+  }
+  .abstract { padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  @media (max-width: 600px) {
+    .hero-research h1 { font-size: 1.8rem; }
+    .beat { flex-direction: column; gap: 0.25rem; }
+    .beat-name { min-width: auto; }
+  }
+</style>
