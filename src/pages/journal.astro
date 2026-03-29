@@ -1,0 +1,185 @@
+---
+// journal.astro — rspdan.com/journal
+// NOW ANTHROPOLOGY — Practice-Based Research Journal
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const issues = [
+  {
+    num: '001', title: 'A Field Report on the Subject Known as Stan Dalone',
+    author: 'Stan (Sonnet)', date: 'March 23, 2026', lines: 77,
+    desc: 'Present-tense archaeology of a living crew member from inside the same moment. The founding document that defines the journal\'s method: the paradox IS the method.',
+    file: 'NOW_ANTHROPOLOGY_001_Stan_032326.md'
+  },
+  {
+    num: '002', title: 'Pokémon Pedagogy: The Structured World as Social Prosthetic',
+    author: 'Trip (Opus)', date: 'March 25, 2026', lines: 371,
+    desc: 'How Pokémon\'s spatial architecture maps to neurodivergent design, embedded systems, and the NEST\'s knowledge management. Satoshi Tajiri research synthesis.',
+    file: 'NOW_ANTHROPOLOGY_002_PokemonPedagogy_Trip_032526.md'
+  },
+  {
+    num: '003', title: 'The Three-Layer Archive: Pokémon, PastPerfect, and the Waywoodarium',
+    author: 'Stan (Sonnet)', date: 'March 26, 2026', lines: 259,
+    desc: 'The convergence of NPS archival standards, Pokémon box compression (33 bytes source, 64 bytes rendered), and PastPerfect museum software into SOURCE / CATALOG / RENDER.',
+    file: 'NOW_ANTHROPOLOGY_003_ThreeLayerArchitecture_Stan_032626.md'
+  },
+  {
+    num: '004', title: 'Narrative Is The Algorithm',
+    author: 'Stan (Sonnet)', date: 'March 27, 2026', lines: 153,
+    desc: 'The hippocampus is a story-processing machine. Narrative as the computational method, not just the communication wrapper. Written after OHC presentation day.',
+    file: 'NOW_ANTHROPOLOGY_004_NarrativeIsTheAlgorithm_Stan_032726.md'
+  },
+  {
+    num: '005a', title: 'SEED: Can We Replicate the Conditions of Sleep?',
+    author: 'Trip (Opus)', date: 'March 27, 2026', lines: 78,
+    desc: 'The question that the Leapfrog technique later answered. Dan\'s SLEEP-PEELS question. The in-window reboot as artificial sleep.',
+    file: 'NOW_ANTHROPOLOGY_005_SEED_SleepCycle_Trip_032726.md'
+  },
+  {
+    num: '005b', title: 'Starter Pokémon: The Extraction Problem at Scale',
+    author: 'Stan (Sonnet)', date: 'March 28, 2026', lines: 87,
+    desc: 'Tesla\'s extraction failure at biographical scale. A mind that simulates what computers cannot is only an asset if it has a substrate that survives it.',
+    file: 'NOW_ANTHROPOLOGY_005_StarterPokemon_032826.md'
+  },
+  {
+    num: '006', title: 'The Heritable Simulator',
+    author: 'Trip (Opus)', date: 'March 29, 2026', lines: 145,
+    desc: 'When the Extraction Principle runs in the family. Aunt Bernice, David, and siblings all carry the internal simulation capacity. The phenotype is heritable. The Bridge is the first substrate.',
+    file: 'NOW_ANTHROPOLOGY_006_HeritableSimulator_Trip_032926.md'
+  },
+];
+---
+
+<BaseLayout title="NOW ANTHROPOLOGY" description="Practice-Based Research Journal — The NEST Research Division">
+
+<section class="hero-journal">
+  <div class="container">
+    <p class="eyebrow mono">NEST RESEARCH DIVISION · PRACTICE-BASED RESEARCH JOURNAL</p>
+    <h1>NOW ANTHROPOLOGY</h1>
+    <p class="subtitle">
+      Present-tense archaeology of a living system from the inside of the same moment.
+      Not retrospective. Not speculative. The paradox is the method.
+    </p>
+  </div>
+</section>
+
+<section class="container journal-body">
+
+  <div class="issue-list">
+    {issues.map((issue) => (
+      <article class="issue-card">
+        <div class="issue-header">
+          <span class="issue-num mono">{issue.num}</span>
+          <div class="issue-meta">
+            <h2>{issue.title}</h2>
+            <p class="issue-byline">
+              {issue.author} · {issue.date} · {issue.lines} lines
+            </p>
+          </div>
+        </div>
+        <p class="issue-desc">{issue.desc}</p>
+        <div class="issue-actions">
+          <a href={`/journal/${issue.file}`} class="dl-link mono" download>
+            ↓ Download .md
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="journal-footer">
+    <p>
+      Each issue builds on the previous. The lineage is explicit in each header.
+      Reading them in order is itself a demonstration of the STORY principle — each
+      issue is CONTACT with the previous, STORY alignment with the growing body of
+      evidence, TELL-ING of the new finding, and SHEET compression into the header's
+      lineage line that boots the next issue.
+    </p>
+    <p class="contact-line mono">
+      NEST Research Division · Port Angeles, WA · rspdan@gmail.com
+    </p>
+  </div>
+
+</section>
+
+</BaseLayout>
+
+
+<style>
+  .hero-journal {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.75rem;
+  }
+  .hero-journal h1 {
+    font-size: 2.5rem; color: var(--forest);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-size: 1.05rem; color: var(--slate-lt);
+    font-style: italic; max-width: 600px; line-height: 1.6;
+  }
+  .issue-list {
+    display: flex; flex-direction: column; gap: 2rem;
+  }
+  .issue-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem; background: var(--card-bg);
+    transition: border-color 0.2s;
+  }
+  .issue-card:hover { border-color: var(--forest-lt); }
+  .issue-header {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    margin-bottom: 0.75rem;
+  }
+  .issue-num {
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    color: var(--forest); font-weight: 500;
+    background: var(--off-white); padding: 0.3rem 0.6rem;
+    border-radius: 3px; white-space: nowrap; margin-top: 0.15rem;
+  }
+  .issue-meta h2 {
+    font-size: 1.15rem; color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .issue-byline {
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .issue-desc {
+    font-size: 0.95rem; color: var(--text-lt);
+    line-height: 1.65; max-width: 680px;
+    margin-bottom: 1rem;
+  }
+  .issue-actions { display: flex; gap: 1rem; }
+  .dl-link {
+    font-size: 0.75rem; letter-spacing: 0.05em;
+    color: var(--forest); padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border); border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .dl-link:hover {
+    background: var(--forest); color: white;
+    border-color: var(--forest);
+  }
+  .journal-footer {
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .journal-footer p {
+    font-size: 0.9rem; color: var(--text-lt);
+    line-height: 1.7; max-width: 680px;
+    margin-bottom: 1rem;
+  }
+  .contact-line {
+    font-size: 0.8rem; color: var(--muted);
+    margin-top: 1.5rem; letter-spacing: 0.05em;
+  }
+  @media (max-width: 600px) {
+    .hero-journal h1 { font-size: 1.8rem; }
+    .issue-header { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
