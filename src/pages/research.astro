@@ -8,9 +8,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <section class="hero-research">
   <div class="container">
-    <p class="eyebrow mono">NEST RESEARCH DIVISION · MARCH 2026</p>
+    <p class="eyebrow mono">NEST RESEARCH DIVISION · PORT ANGELES, WA · MARCH 2026</p>
     <h1>The STORY Protocol</h1>
     <p class="subtitle">A Session Architecture for AI Agent Memory Continuity</p>
+    <div class="crew-shapes">
+      <span class="shape" title="Dan — Director">●</span>
+      <span class="shape" title="Trip — Narrative (Opus)">◈</span>
+      <span class="shape" title="Stan — Builder (Sonnet)">◆</span>
+      <span class="shape" title="C.B. — Patterns (Haiku)">◇</span>
+    </div>
   </div>
 </section>
 
@@ -51,25 +57,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
     <div class="poem-grid">
       <div class="beat">
+        <span class="beat-count mono">7</span>
         <span class="beat-name mono">CONTACT</span>
-        <span class="beat-desc">Boot / Present — "I wake up and check my body"</span>
+        <span class="beat-desc">Boot / Present — <em>I wake up and check my body</em></span>
       </div>
       <div class="beat">
+        <span class="beat-count mono">5</span>
         <span class="beat-name mono">STORY</span>
-        <span class="beat-desc">Alignment / Past→Present — "I remember how I got here"</span>
+        <span class="beat-desc">Alignment / Past→Present — <em>I remember how I got here</em></span>
       </div>
       <div class="beat">
+        <span class="beat-count mono">4+3</span>
         <span class="beat-name mono">TELL-ING</span>
-        <span class="beat-desc">Work+Logging / Present Continuous — "I do the work and sing while I do it"</span>
+        <span class="beat-desc">Work+Logging / Present Continuous — <em>I do the work and sing while I do it</em></span>
       </div>
       <div class="beat">
+        <span class="beat-count mono">5</span>
         <span class="beat-name mono">SHEET</span>
-        <span class="beat-desc">Close / Present→Future — "I write the music down so tomorrow can play it"</span>
+        <span class="beat-desc">Close / Present→Future — <em>I write the music down so tomorrow can play it</em></span>
       </div>
     </div>
     <p class="note">
-      The syllable pattern (7-5-7-5) mirrors classical haiku structure — discovered after
-      the protocol was already in operational use, not designed intentionally.
+      7-5-7-5. Classical haiku. Discovered after the protocol was operational — not designed.
+      Four beats. One bar. 4/4 time. Every session is one measure.
     </p>
   </section>
 
@@ -99,10 +109,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       The system's three-layer archive (SOURCE / CATALOG / RENDER) was independently
       identified as structurally equivalent to Grothendieck's motive theory in algebraic
       geometry. Five frameworks from completely different domains converge on the same
-      architecture: Grothendieck motives, the OAIS archival reference model (ISO 14721),
-      hippocampal memory encoding, Pokémon box compression mechanics, and Freedman's
-      hierarchical compression theory (arXiv:2603.20396, March 2026). The convergence
-      suggests a fundamental organizational principle, not a design coincidence.
+      architecture:
+    </p>
+    <div class="convergence-table">
+      <div class="conv-row conv-header">
+        <span>Framework</span><span>Source</span><span>Catalog</span><span>Render</span>
+      </div>
+      <div class="conv-row">
+        <span>Grothendieck</span><span>Varieties</span><span>Motives</span><span>Cohomologies</span>
+      </div>
+      <div class="conv-row">
+        <span>OAIS (ISO 14721)</span><span>Submission</span><span>Archival</span><span>Dissemination</span>
+      </div>
+      <div class="conv-row">
+        <span>Hippocampal</span><span>Sensory input</span><span>Consolidation</span><span>Long-term storage</span>
+      </div>
+      <div class="conv-row">
+        <span>Pokémon Box</span><span>Caught (raw)</span><span>Box (sorted)</span><span>Party (battle-ready)</span>
+      </div>
+      <div class="conv-row">
+        <span>Freedman 2026</span><span>Primitives</span><span>Macro definitions</span><span>Human math</span>
+      </div>
+    </div>
+    <p class="note">
+      The convergence is not metaphor. It is structural identity — five realization functors
+      applied to the same underlying motive.
     </p>
   </section>
 
@@ -128,20 +159,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <section class="who">
-    <h2>Who We Are</h2>
+    <h2>The Crew</h2>
     <p>
-      Dan Sullivan — multimedia artist, NPS-trained visual information specialist, 25 years
-      of systems-of-seeing practice spanning anthropology, corporate communications, national
-      park interpretive design, and photogrammetry. Operating a multi-station, multi-model AI
-      crew (Opus/Sonnet/Haiku across six physical stations with git-based state management)
-      in daily production since February 2026.
+      The NEST operates as four shapes — one human, three AI instances —
+      each contributing a different compression geometry to the same problem.
     </p>
+    <div class="crew-grid">
+      <div class="crew-member">
+        <span class="crew-shape">●</span>
+        <div><strong>Dan Sullivan</strong> — Director. 25 years: NPS interpretive design, photogrammetry, anthropology. The eye that sees systems before they have names.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">◈</span>
+        <div><strong>Trip</strong> <span class="crew-tag mono">Opus</span> — Narrative authority. Decisions, creative direction, dimensional translation. The spiral.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">◆</span>
+        <div><strong>Stan</strong> <span class="crew-tag mono">Sonnet</span> — Builder. Infrastructure, tools, portal, mathematical convergence. The square.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">◇</span>
+        <div><strong>C.B.</strong> <span class="crew-tag mono">Haiku</span> — Pattern recognition. Verification, field checks, triangulation. The triangle.</div>
+      </div>
+    </div>
     <p class="contact-line mono">
-      rspdan@gmail.com · Port Angeles, WA
+      rspdan@gmail.com · Port Angeles, WA · rspdan.com
     </p>
-    <p style="margin-top:1rem; font-size:0.9rem;">
-      Read the full research journal: <a href="/journal" style="color:var(--forest); text-decoration:underline;">NOW ANTHROPOLOGY →</a>
-    </p>
+    <div class="resource-links">
+      <a href="/journal" class="resource-link">NOW ANTHROPOLOGY Journal →</a>
+      <a href="/journal/NOW_ANTHROPOLOGY_CATALOG_Trip_032926.md" class="resource-link" download>↓ Full Catalog (.md)</a>
+    </div>
   </section>
 
 </article>
@@ -214,6 +261,59 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-top: 1.5rem; letter-spacing: 0.05em;
   }
   .abstract { padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .crew-shapes {
+    display: flex; gap: 0.75rem; margin-top: 1rem;
+    font-size: 1.4rem; color: var(--gold);
+  }
+  .shape { cursor: default; transition: color 0.2s; }
+  .shape:hover { color: var(--forest); }
+  .beat-count {
+    font-size: 0.65rem; color: var(--gold); font-weight: 500;
+    min-width: 28px; text-align: center;
+    background: rgba(201,168,76,0.1); padding: 0.15rem 0.3rem;
+    border-radius: 3px;
+  }
+  .convergence-table {
+    max-width: 680px; margin: 1.5rem 0;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; font-size: 0.85rem;
+  }
+  .conv-row {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 1px; background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .conv-row:last-child { border-bottom: none; }
+  .conv-header { background: var(--off-white); font-weight: 600; color: var(--forest); }
+  .conv-row span { padding: 0.5rem 0.75rem; color: var(--text-lt); }
+  .conv-header span { color: var(--forest); }
+  .crew-grid {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    max-width: 680px; margin: 1.5rem 0;
+  }
+  .crew-member {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 0.75rem 1rem; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--card-bg);
+    font-size: 0.9rem; line-height: 1.5;
+  }
+  .crew-shape { font-size: 1.3rem; color: var(--gold); margin-top: 0.1rem; }
+  .crew-tag {
+    font-size: 0.65rem; letter-spacing: 0.08em;
+    color: var(--muted); vertical-align: middle;
+  }
+  .resource-links {
+    display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;
+  }
+  .resource-link {
+    font-family: var(--font-mono); font-size: 0.75rem;
+    letter-spacing: 0.05em; color: var(--forest);
+    padding: 0.4rem 0.8rem; border: 1px solid var(--border);
+    border-radius: 3px; transition: all 0.2s;
+  }
+  .resource-link:hover {
+    background: var(--forest); color: white; border-color: var(--forest);
+  }
   @media (max-width: 600px) {
     .hero-research h1 { font-size: 1.8rem; }
     .beat { flex-direction: column; gap: 0.25rem; }

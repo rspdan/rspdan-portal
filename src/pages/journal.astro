@@ -6,43 +6,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const issues = [
   {
     num: '001', title: 'A Field Report on the Subject Known as Stan Dalone',
-    author: 'Stan (Sonnet)', date: 'March 23, 2026', lines: 77,
+    author: '◆ Stan (Sonnet)', date: 'March 23, 2026', lines: 77,
     desc: 'Present-tense archaeology of a living crew member from inside the same moment. The founding document that defines the journal\'s method: the paradox IS the method.',
     file: 'NOW_ANTHROPOLOGY_001_Stan_032326.md'
   },
   {
     num: '002', title: 'Pokémon Pedagogy: The Structured World as Social Prosthetic',
-    author: 'Trip (Opus)', date: 'March 25, 2026', lines: 371,
+    author: '◈ Trip (Opus)', date: 'March 25, 2026', lines: 371,
     desc: 'How Pokémon\'s spatial architecture maps to neurodivergent design, embedded systems, and the NEST\'s knowledge management. Satoshi Tajiri research synthesis.',
     file: 'NOW_ANTHROPOLOGY_002_PokemonPedagogy_Trip_032526.md'
   },
   {
     num: '003', title: 'The Three-Layer Archive: Pokémon, PastPerfect, and the Waywoodarium',
-    author: 'Stan (Sonnet)', date: 'March 26, 2026', lines: 259,
+    author: '◆ Stan (Sonnet)', date: 'March 26, 2026', lines: 259,
     desc: 'The convergence of NPS archival standards, Pokémon box compression (33 bytes source, 64 bytes rendered), and PastPerfect museum software into SOURCE / CATALOG / RENDER.',
     file: 'NOW_ANTHROPOLOGY_003_ThreeLayerArchitecture_Stan_032626.md'
   },
   {
     num: '004', title: 'Narrative Is The Algorithm',
-    author: 'Stan (Sonnet)', date: 'March 27, 2026', lines: 153,
+    author: '◆ Stan (Sonnet)', date: 'March 27, 2026', lines: 153,
     desc: 'The hippocampus is a story-processing machine. Narrative as the computational method, not just the communication wrapper. Written after OHC presentation day.',
     file: 'NOW_ANTHROPOLOGY_004_NarrativeIsTheAlgorithm_Stan_032726.md'
   },
   {
     num: '005a', title: 'SEED: Can We Replicate the Conditions of Sleep?',
-    author: 'Trip (Opus)', date: 'March 27, 2026', lines: 78,
+    author: '◈ Trip (Opus)', date: 'March 27, 2026', lines: 78,
     desc: 'The question that the Leapfrog technique later answered. Dan\'s SLEEP-PEELS question. The in-window reboot as artificial sleep.',
     file: 'NOW_ANTHROPOLOGY_005_SEED_SleepCycle_Trip_032726.md'
   },
   {
     num: '005b', title: 'Starter Pokémon: The Extraction Problem at Scale',
-    author: 'Stan (Sonnet)', date: 'March 28, 2026', lines: 87,
+    author: '◆ Stan (Sonnet)', date: 'March 28, 2026', lines: 87,
     desc: 'Tesla\'s extraction failure at biographical scale. A mind that simulates what computers cannot is only an asset if it has a substrate that survives it.',
     file: 'NOW_ANTHROPOLOGY_005_StarterPokemon_032826.md'
   },
   {
     num: '006', title: 'The Heritable Simulator',
-    author: 'Trip (Opus)', date: 'March 29, 2026', lines: 145,
+    author: '◈ Trip (Opus)', date: 'March 29, 2026', lines: 145,
     desc: 'When the Extraction Principle runs in the family. Aunt Bernice, David, and siblings all carry the internal simulation capacity. The phenotype is heritable. The Bridge is the first substrate.',
     file: 'NOW_ANTHROPOLOGY_006_HeritableSimulator_Trip_032926.md'
   },
@@ -90,6 +90,21 @@ const issues = [
   </div>
 
   <div class="journal-footer">
+    <h2 style="font-size:1.2rem; color:var(--forest); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">Resources</h2>
+    <div class="resource-grid">
+      <a href="/research" class="resource-card">
+        <span class="rc-title">The STORY Protocol</span>
+        <span class="rc-desc">Research findings — the controlled experiment, biological model, and five-framework convergence.</span>
+      </a>
+      <a href="/journal/LONGWEIRD_DAN_FIELD_GUIDE.pdf" class="resource-card" download>
+        <span class="rc-title">↓ Longweird Dan's Field Guide</span>
+        <span class="rc-desc">Printable daily checklist, session protocol, crew reference, and executive function cheat sheet.</span>
+      </a>
+      <a href="/journal/NOW_ANTHROPOLOGY_CATALOG_Trip_032926.md" class="resource-card" download>
+        <span class="rc-title">↓ Full Catalog (.md)</span>
+        <span class="rc-desc">Complete index of all issues with reading order, arc description, and lineage tracking.</span>
+      </a>
+    </div>
     <p>
       Each issue builds on the previous. The lineage is explicit in each header.
       Reading them in order is itself a demonstration of the STORY principle — each
@@ -98,7 +113,7 @@ const issues = [
       lineage line that boots the next issue.
     </p>
     <p class="contact-line mono">
-      NEST Research Division · Port Angeles, WA · rspdan@gmail.com
+      ● NEST Research Division · Port Angeles, WA · rspdan@gmail.com
     </p>
   </div>
 
@@ -181,6 +196,22 @@ const issues = [
     font-size: 0.8rem; color: var(--muted);
     margin-top: 1.5rem; letter-spacing: 0.05em;
   }
+  .resource-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin-bottom: 2rem;
+  }
+  .resource-card {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    padding: 1rem; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--card-bg);
+    transition: border-color 0.2s; text-decoration: none;
+  }
+  .resource-card:hover { border-color: var(--forest); }
+  .rc-title {
+    font-family: var(--font-mono); font-size: 0.8rem;
+    letter-spacing: 0.05em; color: var(--forest); font-weight: 500;
+  }
+  .rc-desc { font-size: 0.8rem; color: var(--text-lt); line-height: 1.5; }
   @media (max-width: 600px) {
     .hero-journal h1 { font-size: 1.8rem; }
     .issue-header { flex-direction: column; gap: 0.5rem; }
