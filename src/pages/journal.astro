@@ -85,6 +85,11 @@ const issues = [
         </div>
         <p class="issue-desc">{issue.desc}</p>
         <div class="issue-actions">
+          {issue.url && (
+            <a href={issue.url} class="dl-link mono read-link">
+              → Read online
+            </a>
+          )}
           <a href={`/journal/${issue.file}`} class="dl-link mono" download>
             ↓ .md
           </a>
