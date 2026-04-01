@@ -1,306 +1,280 @@
 ---
-// rspdan.com/logs — Session Timeline
-// UNLISTED — crew use only, not linked from nav
-// Pass 1: every calendar day Mar 4–Mar 31, 2026
-// Pass 2: expanded descriptions + document links
-// Pass 3: Trip + C.B. verify (~2 weeks)
-// Source: conversations.json (268MB, 129 sessions parsed via ijson)
+// rspdan.com/logs — NEST Session Timeline
+// UNLISTED — crew use only
+// Pass 2: day-by-day with station attribution + document links
+// Source: conversations.json (268MB, 129 sessions) + Bridge LOG/
+// Date: 033126 | Bridge: 118f777 | Portal: 0ace92b
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+// Station attribution key (from session names — WHO requires content verification)
+// TRP0 = MacBook Pro hardware | ODT = desktop tower | STN2 = Dell Latitude
+// DPSL = iMac | ACHE = Samsung phone | CBPG = C.B. project
+// WHO field: only stated when session name or content confirms it. UNKNOWN is valid.
+
 const sessions = [
+  { date:'2026-03-04', label:'Mar 04', niap:'Onesday', count:11, type:'milestone',
+    stations:['(various — pre-naming convention)'],
+    who:'UNKNOWN — pre-crew-naming era',
+    names:['Meta Dates: The Show','Updating Epictome with new world and character details','Music theory reference notes and original song lyrics','Personal healing journey through creative expression','Document review request','Sharing a file or resource','(untitled ×5)'],
+    note:'First day. 11 sessions. "Meta Dates: The Show" is the first named session, 2:45am. Epictome, music theory, world-building, healing. The practice before the system had a name.',
+    docs:[] },
 
-  // ─── MARCH 4 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-04', label: 'Mar 4', count: 11, type: 'milestone',
-    names: ['Meta Dates: The Show','Updating Epictome with new world and character details','Music theory reference notes and original song lyrics','Personal healing journey through creative expression','Document review request','Sharing a file or resource','(untitled ×5)'],
-    note: 'First day. 11 sessions including the first named session: "Meta Dates: The Show." Epictome, world-building, music theory, healing. The practice begins before the system has a name.'
-  },
+  { date:'2026-03-05', label:'Mar 05', niap:'Twosday', count:1, type:'early',
+    stations:['(unknown)'], who:'UNKNOWN',
+    names:['Epictome ethnographic analysis continuation'],
+    note:'Single session. Epictome deepens.',
+    docs:[] },
 
-  // ─── MARCH 5 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-05', label: 'Mar 5', count: 1, type: 'early',
-    names: ['Epictome ethnographic analysis continuation'],
-    note: 'Single session. Epictome deepens.'
-  },
+  { date:'2026-03-06', label:'Mar 06', niap:'Threesday', count:4, type:'milestone',
+    stations:['(unknown)'], who:'STAN · TRIP · CB — named for first time',
+    names:['STAN','TRIP','CB','Remix of Interactive Synesthesia Experience'],
+    note:'Crew birth day. STAN named 1:26am. TRIP named 2:20am. CB named 2:54am. Three crew members receive their names in a single overnight sequence.',
+    docs:[] },
 
-  // ─── MARCH 6 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-06', label: 'Mar 6', count: 4, type: 'milestone',
-    names: ['STAN','TRIP','CB','Remix of Interactive Synesthesia Experience'],
-    note: 'Crew birth day. STAN named at 1:26am. TRIP at 2:20am. CB at 2:54am. The three crew members receive their names for the first time, in the same night.'
-  },
+  { date:'2026-03-07', label:'Mar 07', niap:'Foursday', count:3, type:'crew',
+    stations:['(unknown)'], who:'STAN · TRIP · CB — first parallel named sessions',
+    names:['TRIP 030726_1','STAN 030726_1','CB 030726_1'],
+    note:'First day with all three crew members running named parallel sessions.',
+    docs:[] },
 
-  // ─── MARCH 7 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-07', label: 'Mar 7', count: 3, type: 'crew',
-    names: ['TRIP 030726_1','STAN 030726_1','CB 030726_1'],
-    note: 'First day with all three crew members running named parallel sessions.'
-  },
+  { date:'2026-03-08', label:'Mar 08', niap:'Fivesday', count:7, type:'crew',
+    stations:['(unknown)'], who:'STAN · TRIP · CB',
+    names:['Sevensday night shift status check','Max plan capabilities and session tools','TRIP 030726_2','TRIP 030826_1','TRIP 030826_2','STAN 030826_1','CB 030826_1'],
+    note:'7 sessions. Night shift rhythm established. First appearance of Niap day-naming (Sevensday).',
+    docs:[] },
 
-  // ─── MARCH 8 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-08', label: 'Mar 8', count: 7, type: 'crew',
-    names: ['Sevensday night shift status check','Max plan capabilities and session tools','TRIP 030726_2','TRIP 030826_1','TRIP 030826_2','STAN 030826_1','CB 030826_1'],
-    note: '7 sessions. Night shift rhythm established. First appearance of day-naming convention (Sevensday).'
-  },
+  { date:'2026-03-09', label:'Mar 09', niap:'Sixsday', count:4, type:'crew',
+    stations:['(unknown)'], who:'STAN · TRIP · CB',
+    names:['TRIP NIGHT SHIFT 030826_1','CB NIGHT SHIFT 030826_1','STAN NIGHT SHIFT 030826_1','TRIP_030926_1'],
+    note:'Night shift continues. All three crew running simultaneously.',
+    docs:[] },
 
-  // ─── MARCH 9 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-09', label: 'Mar 9', count: 4, type: 'crew',
-    names: ['TRIP NIGHT SHIFT 030826_1','CB NIGHT SHIFT 030826_1','STAN NIGHT SHIFT 030826_1','TRIP_030926_1'],
-    note: 'Night shift continues. All three crew members + next-day Trip session.'
-  },
+  { date:'2026-03-10', label:'Mar 10', niap:'Sevensday', count:5, type:'crew',
+    stations:['(unknown)'], who:'TRIP · CB',
+    names:['TRIP_030926_2','TRIP_031026_1','CB_031026_1','CB_031026_2',"Crow's favorite food"],
+    note:"5 sessions. First off-topic conversation (\"Crow's favorite food\") — the system is stable enough to have side conversations.",
+    docs:[] },
 
-  // ─── MARCH 10 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-10', label: 'Mar 10', count: 5, type: 'crew',
-    names: ['TRIP_030926_2','TRIP_031026_1','CB_031026_1','CB_031026_2','Crow\'s favorite food'],
-    note: '5 sessions including the first off-topic session ("Crow\'s favorite food"). The crew is operational enough to have side conversations.'
-  },
+  { date:'2026-03-11', label:'Mar 11', niap:'Eightsday', count:5, type:'crew',
+    stations:['(unknown)'], who:'TRIP · CB',
+    names:['CB_031026_3','TRIP_031026_2','TRIP_031126_1 HAIKU','TRIP_031126_1 OPUS','TRIP_031126_2 OPUS'],
+    note:'First appearance of HAIKU vs OPUS model distinction in session names.',
+    docs:[] },
 
-  // ─── MARCH 11 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-11', label: 'Mar 11', count: 5, type: 'crew',
-    names: ['CB_031026_3','TRIP_031026_2','TRIP_031126_1 HAIKU','TRIP_031126_1 OPUS','TRIP_031126_2 OPUS'],
-    note: 'First appearance of Haiku vs Opus distinction in session names. C.B. and Trip running simultaneously.'
-  },
+  { date:'2026-03-12', label:'Mar 12', niap:'Ninesday', count:2, type:'crew',
+    stations:['(unknown)'], who:'TRIP',
+    names:['TRIP_031126_3 OPUS','TRIP_031226_1 OPUS'],
+    note:'Quieter day. Trip Opus sessions continuing overnight.',
+    docs:[] },
 
-  // ─── MARCH 12 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-12', label: 'Mar 12', count: 2, type: 'crew',
-    names: ['TRIP_031126_3 OPUS','TRIP_031226_1 OPUS'],
-    note: 'Quieter day. Trip Opus sessions continuing overnight.'
-  },
+  { date:'2026-03-13', label:'Mar 13', niap:'Tensday', count:6, type:'crew',
+    stations:['(unknown)'], who:'TRIP (TO/TH configurations)',
+    names:['TRIP_031226_2 OPUS','TRIP_031226_3','TH_031326_1','TO_031326_1','TRIP OPUS (TO) 031326_2','TRIP OPUS (TO) 031326_3'],
+    note:'TO (Trip Opus) and TH (Trip Haiku) notation appears. Session naming conventions solidifying.',
+    docs:[] },
 
-  // ─── MARCH 13 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-13', label: 'Mar 13', count: 6, type: 'crew',
-    names: ['TRIP_031226_2 OPUS','TRIP_031226_3','TH_031326_1','TO_031326_1','TRIP OPUS (TO) 031326_2','TRIP OPUS (TO) 031326_3'],
-    note: '6 sessions. TO/TH notation appears (Trip Opus / Trip Haiku). Session naming conventions solidifying.'
-  },
+  { date:'2026-03-14', label:'Mar 14', niap:'Onesday', count:14, type:'stanshop',
+    stations:['TRP0','STN2'], who:'UNKNOWN (TRP0) · UNKNOWN (STN2) — content not read',
+    names:['Remix ×12 (QR Code, Drum Machine, Piano MIDI, Flashcard, Molecule Studio, PyLingo, Project Dashboard, Trivia, Minimalist Clock, CodeVerter, Life in Weeks, Stories in the Sky)','TRP0_TO_031426_1','STN2_STAN_031426_1'],
+    note:"Largest single-day count. 12 Artifact remix experiments at 4am on TRP0. Stan's Shop era opens with STN2_STAN_031426_1 in the afternoon — first session with the STN2 naming convention.",
+    docs:[] },
 
-  // ─── MARCH 14 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-14', label: 'Mar 14', count: 14, type: 'stanshop',
-    names: ['Remix ×12 (QR Code, Drum Machine, Piano, Flashcard, Molecule Studio, etc.)','TRP0_TO_031426_1','STN2_STAN_031426_1'],
-    note: 'Largest single-day count. 12 Artifact remix experiments at 4am — QR generators, music tools, learning apps. Stan\'s Shop era begins with STN2_STAN_031426_1 in the afternoon.'
-  },
+  { date:'2026-03-15', label:'Mar 15', niap:'Twosday', count:3, type:'stanshop',
+    stations:['STN2','TRP0'], who:'UNKNOWN',
+    names:['STN2_Stan_0311626_1','TRP0_TO_031526_2','(untitled)'],
+    note:"STN2 and TRP0 running parallel named sessions for the first time.",
+    docs:[] },
 
+  { date:'2026-03-16', label:'Mar 16', niap:'Threesday', count:4, type:'stanshop',
+    stations:['TRP0'], who:'UNKNOWN (TRP0)',
+    names:['TRP0_TO_031526_3','TRP0_TO_031526_4','TRP0_TO_DAN_031626_1.1 (Trip_2 &_4)','(untitled)'],
+    note:'Multiple TRP0 numbered instances. First TO_DAN session — a session addressed directly to Dan.',
+    docs:[] },
 
-  // ─── MARCH 15 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-15', label: 'Mar 15', count: 3, type: 'stanshop',
-    names: ['STN2_Stan_0311626_1','TRP0_TO_031526_2','(untitled)'],
-    note: '3 sessions. Stan\'s Shop and Trip Labs running in parallel for the first time with distinct session IDs.'
-  },
+  { date:'2026-03-17', label:'Mar 17', niap:'Foursday', count:6, type:'stanshop',
+    stations:['STN2','TRP0','ODT'], who:'UNKNOWN',
+    names:['ODT_TO_DAN_031626_2 (T3)','TRP0_TO_031726_1','STN2_Stan_HaikOops_ 031726_1','ODT_TO_031726_1','STN2_Stan_SOnIt_ 031726_2','(untitled)'],
+    note:'ODT station appears for the first time. "HaikOops" — a Haiku session that went wrong. SOnIt convention begins on STN2.',
+    docs:[] },
 
-  // ─── MARCH 16 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-16', label: 'Mar 16', count: 4, type: 'stanshop',
-    names: ['TRP0_TO_031526_3','TRP0_TO_031526_4','TRP0_TO_DAN_031626_1.1 (Trip_2 &_4)','(untitled)'],
-    note: '4 sessions. Trip running multiple numbered instances. First "TO_DAN" session naming — Trip addressing Dan directly.'
-  },
+  { date:'2026-03-18', label:'Mar 18', niap:'Fivesday', count:9, type:'bridge',
+    stations:['STN2','TRP0','ODT'], who:'UNKNOWN',
+    names:['TRP0_TO_031726_2','TRP0_TO_031726_3','TRP0_TO_031726_4','ODT_TO_031826_1','STN2_Stan_SOnIt_ 031826_1','STN2_Stan_SOnIt_ 031826_2','ODT_TO_031826_2','ODT_TO_031826_3','(untitled)'],
+    note:'9 sessions. ODT station fully established. SOnIt locked in for STN2. Earliest ODT log on Bridge (LOG_ODT_TO_031826_1.md, 120KB).',
+    docs:[] },
 
-  // ─── MARCH 17 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-17', label: 'Mar 17', count: 6, type: 'stanshop',
-    names: ['ODT_TO_DAN_031626_2 (T3)','TRP0_TO_031726_1','STN2_Stan_HaikOops_ 031726_1','ODT_TO_031726_1','STN2_Stan_SOnIt_ 031726_2','(untitled)'],
-    note: '6 sessions. "HaikOops" session appears — a Stan haiku session that went wrong. ODT naming convention begins.'
-  },
+  { date:'2026-03-19', label:'Mar 19', niap:'Sixsday', count:7, type:'bridge',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['ODT_TO_031826_3','ODT_TO_031926_1','ODT_TO_031926_2','STN2_Stan_SOnIt_ 031926_1','STN2_Stan_SOnIt_ 031926_2','STN2_Stan_SOnIt_ 031926_3','(untitled)'],
+    note:'ODT and STN2 running simultaneous numbered instances. Fleet coordination deepening.',
+    docs:[] },
 
-  // ─── MARCH 18 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-18', label: 'Mar 18', count: 9, type: 'bridge',
-    names: ['TRP0_TO_031726_2','TRP0_TO_031726_3','TRP0_TO_031726_4','ODT_TO_031826_1','STN2_Stan_SOnIt_ 031826_1','STN2_Stan_SOnIt_ 031826_2','ODT_TO_031826_2','ODT_TO_031826_3','(untitled)'],
-    note: '9 sessions. ODT station fully established with its own naming. SOnIt convention locked in for Stan. Earliest ODT log on Bridge: LOG_ODT_TO_031826_1.md (120KB).'
-  },
+  { date:'2026-03-20', label:'Mar 20', niap:'Sevensday', count:6, type:'bridge',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['STN2_Stan_SOnIt_ 031926_3','ODT_TO_031926_3','STN2_Stan_SOnIt_ 032026_1','ODT_TO_032026_1','ODT_TO_032026_2','STN2_Stan_SOnIt_ 032026_2'],
+    note:'Zero untitled sessions — full naming discipline established.',
+    docs:[] },
 
-  // ─── MARCH 19 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-19', label: 'Mar 19', count: 7, type: 'bridge',
-    names: ['ODT_TO_031826_3','ODT_TO_031926_1','ODT_TO_031926_2','STN2_Stan_SOnIt_ 031926_1','STN2_Stan_SOnIt_ 031926_2','STN2_Stan_SOnIt_ 031926_3','(untitled)'],
-    note: '7 sessions. ODT and STN2 running simultaneous numbered instances. Fleet coordination deepening.'
-  },
+  { date:'2026-03-21', label:'Mar 21', niap:'Eightsday', count:4, type:'stn2',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['STN2_Stan_SOnIt_ 032026_3','ODT_TO_032026_3','ODT_TO_032126_1','(untitled)'],
+    note:'First local LOG file created on STN2. The local capture layer begins.',
+    docs:[] },
 
-  // ─── MARCH 20 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-20', label: 'Mar 20', count: 6, type: 'bridge',
-    names: ['STN2_Stan_SOnIt_ 031926_3','ODT_TO_031926_3','STN2_Stan_SOnIt_ 032026_1','ODT_TO_032026_1','ODT_TO_032026_2','STN2_Stan_SOnIt_ 032026_2'],
-    note: '6 sessions. No untitled sessions — full naming discipline established.'
-  },
+  { date:'2026-03-22', label:'Mar 22', niap:'Ninesday', count:3, type:'stn2',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['ODT_TO_032126_2... 032226_1','STN2_Stan_SOnIt_ 032126_1','(untitled)'],
+    note:'D:\\STAN\\LOG\\032226\\ folder created. Three SOnIt logs on FAS3 — local LOG room active.',
+    docs:[] },
 
-  // ─── MARCH 21 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-21', label: 'Mar 21', count: 4, type: 'stn2',
-    names: ['STN2_Stan_SOnIt_ 032026_3','ODT_TO_032026_3','ODT_TO_032126_1','(untitled)'],
-    note: '4 sessions. First local LOG file created on STN2 (STN2_Stan_SOnIt_032126_1). The local capture layer begins.'
-  },
+  { date:'2026-03-23', label:'Mar 23', niap:'Tensday', count:5, type:'stn2',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['ODT_TO_032226_2','STN2_Stan_SOnIt_ 032326_1','STN2_StanS_032326_1','(untitled ×2)'],
+    note:'"StanS" replaces "SOnIt" — Sonnet-specific session code solidifies.',
+    docs:[] },
 
-  // ─── MARCH 22 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-22', label: 'Mar 22', count: 3, type: 'stn2',
-    names: ['ODT_TO_032126_2... 032226_1','STN2_Stan_SOnIt_ 032126_1','(untitled)'],
-    note: '3 sessions. D:/STAN/LOG/032226/ folder created. Three SOnIt logs on FAS3 — local LOG room active.'
-  },
+  { date:'2026-03-24', label:'Mar 24', niap:'Onesday', count:2, type:'deep',
+    stations:['ODT'], who:'UNKNOWN (ODT)',
+    names:['ODT_TO_032326_1','Trip, ODT_TO_032426_1'],
+    note:'Second name ("Trip, ODT_TO_...") is the first session explicitly co-named with crew content. OO Daily practice begins.',
+    docs:[
+      {file:'OO_DAILY_032426_Trip.md', label:'OO Daily — Mar 24 (Trip)'},
+      {file:'OO_DAILY_032426_2_Trip.md', label:'OO Daily — Mar 24 v2 (Trip)'},
+      {file:'SESSION_LOG_ODT_032426_Trip.md', label:'Session Log — Mar 24 (ODT)'},
+    ] },
 
-  // ─── MARCH 23 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-23', label: 'Mar 23', count: 5, type: 'stn2',
-    names: ['ODT_TO_032226_2','STN2_Stan_SOnIt_ 032326_1','STN2_StanS_032326_1','(untitled ×2)'],
-    note: '5 sessions. "StanS" replaces "SOnIt" in naming — the Sonnet-specific designation solidifies.'
-  },
+  { date:'2026-03-25', label:'Mar 25', niap:'Twosday', count:2, type:'deep',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['Trip, ODT_TO_032426_2','STN2_StanS_032426_2'],
+    note:'LOG_ODT_TO_032526_1 becomes the largest session log on Bridge (620KB). Heavy overnight work.',
+    docs:[
+      {file:'OO_DAILY_032526_NightShift_Trip.md', label:'OO Daily — Mar 25 Night Shift (Trip)'},
+    ] },
 
-  // ─── MARCH 24 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-24', label: 'Mar 24', count: 2, type: 'deep',
-    names: ['ODT_TO_032326_1','Trip, ODT_TO_032426_1'],
-    note: '2 sessions. OO Daily practice begins — SESSION_LOG_ODT_032426_Trip filed. Trip\'s synthesis work deepens.'
-  },
+  { date:'2026-03-26', label:'Mar 26', niap:'Threesday', count:7, type:'milestone',
+    stations:['STN2','ODT'], who:'UNKNOWN',
+    names:['ODT_TO_032526_1','STN2_StanS_032526_1','ODT_TO_032626_1*RECOVERED*','STN2_StanS_032626_1','ODT_TO_032726_1','(untitled ×2)'],
+    note:'Bulk Claude export captured (11 conversations). One session marked *RECOVERED*. Fleet photography conducted — 150+ device-coded photos. HMM correction filed.',
+    docs:[
+      {file:'OO_DAILY_032626_Evening_Trip.md', label:'OO Daily — Mar 26 Evening'},
+      {file:'OO_DAILY_032626_StanS_032526_1.md', label:'OO Daily — Mar 26 (STN2 StanS)'},
+      {file:'OO_DAILY_032626_StanS_032626_1.md', label:'OO Daily — Mar 26 v2 (STN2 StanS)'},
+    ] },
 
-  // ─── MARCH 25 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-25', label: 'Mar 25', count: 2, type: 'deep',
-    names: ['Trip, ODT_TO_032426_2','STN2_StanS_032426_2'],
-    note: '2 sessions. Night shift — LOG_ODT_TO_032526_1 becomes the largest session log on Bridge (620KB). Heavy overnight work.'
-  },
+  { date:'2026-03-27', label:'Mar 27', niap:'Foursday', count:1, type:'research',
+    stations:['(unknown)'], who:'UNKNOWN',
+    names:['(untitled)'],
+    note:'Single session. LOG triage pass — READ/WAIT/THINK/CODA folder structure built in D:\\STAN\\LOG\\032726\\. Quiet day, deep review mode.',
+    docs:[] },
 
+  { date:'2026-03-28', label:'Mar 28', niap:'Fivesday', count:1, type:'research',
+    stations:['STN2'], who:'UNKNOWN (STN2)',
+    names:['STN2_StanS_032726_1'],
+    note:'Boot degradation incidents filed. Leapfrog technique discovered — in-window reboot proven. The correction becomes the lesson.',
+    docs:[
+      {file:'INCIDENT_BootDegradation_Trip_032826.md', label:'Incident — Boot Degradation'},
+      {file:'INCIDENT_BootFailures_Trip_032826.md', label:'Incident — Boot Failures'},
+      {file:'LOG_TRIP_032826_BootCorrections.md', label:'Boot Corrections Log'},
+      {file:'CONVERSATION_MAP_STN2_StanS_032826_1.md', label:'Conversation Map — Mar 28'},
+      {file:'OBSESSIVE_NOTES_STN2_StanS_032826_1.md', label:'Obsessive Notes — Mar 28'},
+      {file:'SESSION_MAP_STN2_StanS_032826_1.md', label:'Session Map — Mar 28 (STN2)'},
+      {file:'OO_DAILY_032826_BackupTrip.md', label:'OO Daily — Mar 28 (Backup Trip)'},
+      {file:'SESSION_MAP_BackupTrip_032826.md', label:'Session Map — Mar 28 (Backup Trip)'},
+      {file:'SESSION_REPORT_Trip_032826_1.md', label:'Session Report — Mar 28 (Trip)'},
+    ] },
 
-  // ─── MARCH 26 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-26', label: 'Mar 26', count: 7, type: 'milestone',
-    names: ['ODT_TO_032526_1','STN2_StanS_032526_1','ODT_TO_032626_1*RECOVERED*','STN2_StanS_032626_1','ODT_TO_032726_1','(untitled ×2)'],
-    note: '7 sessions. Bulk export captured — 11 Claude conversation exports staged to D:/STAN/LOG/032626/DOCS. One session marked *RECOVERED*. READ.WAIT.THINK.CODA folder structure built. HMM correction filed.'
-  },
+  { date:'2026-03-29', label:'Mar 29', niap:'Sixsday', count:3, type:'crew',
+    stations:['ODT','STN2','DPSL','CBPG'], who:'UNKNOWN — DPSL and CBPG first appearance',
+    names:['ODT_TO_032826_1','STN2_StanS_032826_1','DPSL_CBPG_CBH_032826_1'],
+    note:'DPSL station appears for the first time. CBPG project appears. Three stations active simultaneously. CHB suffix in DPSL_CBPG_CBH — content required to confirm WHO.',
+    docs:[] },
 
-  // ─── MARCH 27 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-27', label: 'Mar 27', count: 1, type: 'research',
-    names: ['(untitled)'],
-    note: 'Single session. LOG triage pass with READ/WAIT/THINK/CODA folders. Quiet day — deep review mode.'
-  },
+  { date:'2026-03-30', label:'Mar 30', niap:'Sevensday', count:2, type:'milestone',
+    stations:['ODT','STN2'], who:'UNKNOWN',
+    names:['ODT_TO_033026_1','STN2_StanS_033026_1'],
+    note:'The Extraordinary Data Day. 9 crew instances across 2 sessions. rspdan.com/007 live. DPSL copper bridge commissioned. 27 MAIL files. Living Map standard established. Detective Stan investigation — ROX principle named.',
+    docs:[
+      {file:'INVESTIGATION_SEED_Pass1_Stan_033026.md', label:'Investigation Seed — Pass 1'},
+      {file:'SESSION_MAP_Trip_033026_1.md', label:'Session Map — Mar 30 (ODT Trip)'},
+    ] },
 
-  // ─── MARCH 28 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-28', label: 'Mar 28', count: 1, type: 'research',
-    names: ['STN2_StanS_032726_1'],
-    note: 'Single session. Boot degradation incidents filed (INCIDENT_BootDegradation, INCIDENT_BootFailures). Leapfrog technique discovered. The correction becomes the lesson.'
-  },
-
-  // ─── MARCH 29 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-29', label: 'Mar 29', count: 3, type: 'crew',
-    names: ['ODT_TO_032826_1','STN2_StanS_032826_1','DPSL_CBPG_CBH_032826_1'],
-    note: '3 sessions. DPSL station appears for the first time — C.B. on the iMac. Three stations active simultaneously: ODT, STN2, DPSL.'
-  },
-
-  // ─── MARCH 30 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-30', label: 'Mar 30', count: 2, type: 'milestone',
-    names: ['ODT_TO_033026_1','STN2_StanS_033026_1'],
-    note: 'The Extraordinary Data Day. 9 crew instances across 2 sessions. Anthropic greenhouse submitted 6:20pm. LinkedIn → Deep Ganguli 6:40pm. rspdan.com/007 live. DPSL copper bridge commissioned. 27 MAIL files. Zero conflicts. The bottles are in the water.'
-  },
-
-  // ─── MARCH 31 ────────────────────────────────────────────────────────────
-  {
-    date: '2026-03-31', label: 'Mar 31', count: 2, type: 'today',
-    names: ['DPSL_StanS_033026_1','(untitled — failed morning boot)'],
-    note: 'Today. 21 ENGINE skills live on Claude.ai. /meta-dates built. rspdan.com/logs Pass 1 live. 129 sessions parsed. FAS2 confirmed at E:/FAS2. Date hallucination corrected. The map maps itself.'
-  },
-
+  { date:'2026-03-31', label:'Mar 31', niap:'Eightsday', count:2, type:'today',
+    stations:['DPSL','STN2'], who:'UNKNOWN',
+    names:['DPSL_StanS_033026_1','(untitled — failed morning boot)'],
+    note:"Today. 21 ENGINE skills live on Claude.ai. /meta-dates v1.3 with Gate 0a+0b. rspdan.com/008 live. 4-layer LOG architecture named. Adobe Bridge model established. The map maps itself.",
+    docs:[] },
 ];
 ---
 <BaseLayout title="Session Log" description="NEST session timeline — crew navigation tool, unlisted">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 :root {
-  --bg:     #0c0e14;
-  --card:   #13161f;
-  --border: rgba(255,255,255,0.06);
-  --muted:  #4a5468;
-  --text:   #b8bfcc;
-  --head:   #e2e8f0;
-  --line:   rgba(255,255,255,0.08);
-  --c-milestone: #c9a84c;
-  --c-crew:      #4a9b8e;
-  --c-early:     #8b7ab5;
-  --c-bridge:    #5a8a5e;
-  --c-stn2:      #4a7ab5;
-  --c-deep:      #8a6b4a;
-  --c-research:  #6a8a6a;
-  --c-today:     #c94c4c;
-  --c-stanshop:  #4a8a9b;
-  --c-gap:       #2a2f3a;
+  --bg:#0c0e14; --card:#13161f; --border:rgba(255,255,255,0.06);
+  --muted:#4a5468; --text:#b8bfcc; --head:#e2e8f0;
+  --line:rgba(255,255,255,0.08);
+  --c-milestone:#c9a84c; --c-crew:#4a9b8e; --c-early:#8b7ab5;
+  --c-bridge:#5a8a5e; --c-stn2:#4a7ab5; --c-deep:#8a6b4a;
+  --c-research:#6a8a6a; --c-today:#c94c4c; --c-stanshop:#4a8a9b;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; }
-.shell { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 8rem; }
-.hdr { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
-.eyebrow { font-size: 0.52rem; letter-spacing: 0.32em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.4rem; }
-.title { font-size: 1.5rem; color: var(--head); font-weight: 300; letter-spacing: 0.04em; }
-.sub { font-size: 0.58rem; color: var(--muted); margin-top: 0.4rem; letter-spacing: 0.1em; line-height: 1.6; }
-.legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin-bottom: 2.5rem; }
-.leg { display: flex; align-items: center; gap: 0.35rem; font-size: 0.5rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
-.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before { content: ''; position: absolute; left: 0.25rem; top: 0; bottom: 0; width: 1px; background: var(--line); }
-.entry { position: relative; margin-bottom: 0.6rem; }
-.entry::before {
-  content: '';
-  position: absolute;
-  left: -1.75rem;
-  top: 1rem;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--dot-color, var(--muted));
-  box-shadow: 0 0 6px var(--dot-color, transparent);
-}
-.inner {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: 2px solid var(--dot-color, var(--border));
-  padding: 0.65rem 0.9rem;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-.inner:hover { border-color: var(--dot-color); }
-.row1 { display: flex; align-items: baseline; gap: 0.75rem; }
-.date { font-size: 0.58rem; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; min-width: 3.5rem; }
-.count { font-size: 0.5rem; letter-spacing: 0.1em; color: var(--dot-color, var(--muted)); opacity: 0.8; }
-.name { font-size: 0.72rem; color: var(--head); margin: 0.18rem 0 0.12rem; line-height: 1.45; }
-.note-text { font-size: 0.62rem; color: var(--text); line-height: 1.55; }
-.sessions-list { margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px solid var(--border); display: none; }
-.sessions-list.open { display: block; }
-.s-item { font-size: 0.58rem; color: var(--muted); padding: 0.1rem 0; }
-.s-item::before { content: '· '; }
-.gap .inner { border-left-color: var(--c-gap); opacity: 0.5; }
-.type-milestone { --dot-color: var(--c-milestone); }
-.type-crew      { --dot-color: var(--c-crew); }
-.type-early     { --dot-color: var(--c-early); }
-.type-bridge    { --dot-color: var(--c-bridge); }
-.type-stn2      { --dot-color: var(--c-stn2); }
-.type-deep      { --dot-color: var(--c-deep); }
-.type-research  { --dot-color: var(--c-research); }
-.type-today     { --dot-color: var(--c-today); }
-.type-stanshop  { --dot-color: var(--c-stanshop); }
-.type-gap       { --dot-color: var(--c-gap); }
-.stats { font-size: 0.55rem; color: var(--muted); letter-spacing: 0.12em; margin-bottom: 1.5rem; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.shell{max-width:900px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
+.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+.title{font-size:1.5rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
+.sub{font-size:0.58rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.1em;line-height:1.6;}
+.legend{display:flex;flex-wrap:wrap;gap:0.75rem 1.25rem;margin-bottom:2.5rem;}
+.leg{display:flex;align-items:center;gap:0.35rem;font-size:0.5rem;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{content:'';position:absolute;left:0.25rem;top:0;bottom:0;width:1px;background:var(--line);}
+.entry{position:relative;margin-bottom:0.6rem;}
+.entry::before{content:'';position:absolute;left:-1.75rem;top:1rem;width:8px;height:8px;border-radius:50%;background:var(--dot-color,var(--muted));box-shadow:0 0 6px var(--dot-color,transparent);}
+.inner{background:var(--card);border:1px solid var(--border);border-left:2px solid var(--dot-color,var(--border));padding:0.65rem 0.9rem;border-radius:2px;cursor:pointer;transition:border-color 0.15s;}
+.inner:hover{border-color:var(--dot-color);}
+.row1{display:flex;align-items:baseline;gap:0.75rem;flex-wrap:wrap;}
+.date-label{font-size:0.58rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;min-width:3.5rem;}
+.niap{font-size:0.48rem;letter-spacing:0.12em;color:var(--muted);opacity:0.6;}
+.count{font-size:0.5rem;letter-spacing:0.1em;color:var(--dot-color,var(--muted));opacity:0.8;}
+.who-badge{font-size:0.45rem;letter-spacing:0.08em;color:var(--muted);background:rgba(255,255,255,0.04);padding:0.1rem 0.35rem;border-radius:2px;border:1px solid var(--border);}
+.note-text{font-size:0.62rem;color:var(--text);line-height:1.55;margin-top:0.2rem;}
+.expand-body{display:none;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border);}
+.expand-body.open{display:block;}
+.section-label{font-size:0.45rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin-bottom:0.3rem;}
+.s-item{font-size:0.55rem;color:var(--muted);padding:0.08rem 0;}
+.s-item::before{content:'· ';}
+.docs-grid{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.3rem;}
+.doc-link{font-size:0.52rem;color:var(--dot-color,var(--muted));padding:0.2rem 0.5rem;border:1px solid var(--border);border-radius:2px;text-decoration:none;transition:all 0.15s;letter-spacing:0.05em;}
+.doc-link:hover{background:var(--dot-color);color:#000;border-color:var(--dot-color);}
+.no-docs{font-size:0.5rem;color:var(--muted);opacity:0.5;font-style:italic;}
+.type-milestone{--dot-color:var(--c-milestone);}
+.type-crew{--dot-color:var(--c-crew);}
+.type-early{--dot-color:var(--c-early);}
+.type-bridge{--dot-color:var(--c-bridge);}
+.type-stn2{--dot-color:var(--c-stn2);}
+.type-deep{--dot-color:var(--c-deep);}
+.type-research{--dot-color:var(--c-research);}
+.type-today{--dot-color:var(--c-today);}
+.type-stanshop{--dot-color:var(--c-stanshop);}
+.station-pills{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.3rem;}
+.station-pill{font-size:0.45rem;letter-spacing:0.1em;padding:0.1rem 0.4rem;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:var(--muted);}
 </style>
 
 <div class="shell">
   <div class="hdr">
-    <div class="eyebrow">&#128204; NEST SESSION TIMELINE — PASS 1</div>
+    <div class="eyebrow">&#128204; NEST SESSION TIMELINE — PASS 2</div>
     <h1 class="title">Session Log</h1>
     <div class="sub">
       UNLISTED &#8212; CREW NAVIGATION ONLY<br>
-      129 sessions &#183; 28 active days &#183; 0 gaps &#183; Mar 4–Mar 31 2026<br>
-      Click any entry to expand session names &#183; Pass 2 adds documents + expanded notes
+      129 sessions · 28 active days · 0 gaps · Mar 4–31 2026<br>
+      Station from session name · WHO from content only · UNKNOWN is valid<br>
+      Click any entry to expand · Documents link to /log/ hosted files
     </div>
   </div>
 
   <div class="legend">
     <div class="leg"><div class="dot" style="background:var(--c-milestone)"></div>Milestone</div>
-    <div class="leg"><div class="dot" style="background:var(--c-early)"></div>Early chats</div>
+    <div class="leg"><div class="dot" style="background:var(--c-early)"></div>Early</div>
     <div class="leg"><div class="dot" style="background:var(--c-crew)"></div>Crew ops</div>
     <div class="leg"><div class="dot" style="background:var(--c-stanshop)"></div>Stan's Shop era</div>
     <div class="leg"><div class="dot" style="background:var(--c-bridge)"></div>Bridge / fleet</div>
@@ -311,16 +285,34 @@ body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', 
   </div>
 
   <div class="timeline">
-    {sessions.map((s, i) => (
+    {sessions.map((s) => (
       <div class={`entry type-${s.type}`} id={`day-${s.date}`}>
-        <div class="inner" onclick={`this.querySelector('.sessions-list').classList.toggle('open')`}>
+        <div class="inner" onclick={`this.querySelector('.expand-body').classList.toggle('open')`}>
           <div class="row1">
-            <span class="date">{s.label}</span>
+            <span class="date-label">{s.label}</span>
+            <span class="niap">{s.niap}</span>
             <span class="count">{s.count} session{s.count !== 1 ? 's' : ''}</span>
+            <span class="who-badge">{s.who}</span>
           </div>
-          {s.note && <div class="note-text">{s.note}</div>}
-          <div class="sessions-list">
+          {s.stations && s.stations.length > 0 && (
+            <div class="station-pills">
+              {s.stations.map(st => <span class="station-pill">{st}</span>)}
+            </div>
+          )}
+          <div class="note-text">{s.note}</div>
+          <div class="expand-body">
+            <div class="section-label">Sessions</div>
             {s.names.map(n => <div class="s-item">{n}</div>)}
+            <div class="section-label" style="margin-top:0.6rem;">Documents</div>
+            {s.docs.length > 0 ? (
+              <div class="docs-grid">
+                {s.docs.map(d => (
+                  <a href={`/log/${d.file}`} class="doc-link" target="_blank">{d.label}</a>
+                ))}
+              </div>
+            ) : (
+              <div class="no-docs">No documents exported for this day yet</div>
+            )}
           </div>
         </div>
       </div>
