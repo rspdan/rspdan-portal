@@ -12,10 +12,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       Building operational tools and creative systems for the outdoor industry.
       Photographer. Storyteller. Making things work.
     </p>
-    <div class="hero-cta">
-      <a href="/#work" class="btn btn-primary">See My Work</a>
-      <a href="/ohc" class="btn btn-outline">OHC Dashboard →</a>
-    </div>
+
   </div>
 </section>
 
@@ -26,6 +23,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2 class="section-title">Worlds to Explore</h2>
 
     <div class="project-grid">
+
+      <!-- Research Card -->
+      <a href="/research" class="project-card project-card--research">
+        <div class="project-card__tag mono">PRACTICE-BASED RESEARCH</div>
+        <h3 class="project-card__title">NEST Research</h3>
+        <p class="project-card__desc">
+          A controlled experiment in human-AI co-cognition. Six independent frameworks
+          converge on the same architecture. The research is the project.
+        </p>
+        <div class="project-card__meta">
+          <span class="project-tag">NOW ANTHROPOLOGY</span>
+          <span class="project-tag">Memory Systems</span>
+          <span class="project-tag">Cognitive Architecture</span>
+        </div>
+        <div class="project-card__cta">Read the Research →</div>
+      </a>
+
+      <!-- Ouch McCouch Card -->
+      <a href="https://ouchmccouch.com" class="project-card project-card--ouch" target="_blank">
+        <div class="project-card__tag mono">CREATIVE PROJECT</div>
+        <h3 class="project-card__title">Ouch McCouch</h3>
+        <p class="project-card__desc">
+          A long-form creative project. 25 years of material — music, narrative,
+          and a world built inside the Olympic Peninsula. Something is arriving.
+        </p>
+        <div class="project-card__meta">
+          <span class="project-tag">Music</span>
+          <span class="project-tag">Narrative</span>
+          <span class="project-tag">World-building</span>
+        </div>
+        <div class="project-card__cta">Explore →</div>
+      </a>
 
       <!-- OHC Card -->
       <a href="/ohc" class="project-card project-card--featured">
@@ -44,22 +73,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="project-card__cta">Open Dashboard →</div>
       </a>
 
-      <!-- Ouch McCouch Card -->
-      <a href="/ouch" class="project-card project-card--ouch">
-        <div class="project-card__tag mono">CREATIVE PROJECT</div>
-        <h3 class="project-card__title">Ouch McCouch</h3>
-        <p class="project-card__desc">
-          A long-form creative project. 25 years of material — music, narrative,
-          and a world built inside the Olympic Peninsula. Something is arriving.
-        </p>
-        <div class="project-card__meta">
-          <span class="project-tag">Music</span>
-          <span class="project-tag">Narrative</span>
-          <span class="project-tag">World-building</span>
-        </div>
-        <div class="project-card__cta">Explore →</div>
-      </a>
-
     </div>
   </div>
 </section>
@@ -72,14 +85,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="about-text">
         <h2 class="section-title">Olympic Peninsula.<br/>Creative systems.</h2>
         <p>
-          Based in Port Angeles, WA. I work at the intersection of outdoor
-          operations and creative technology — building tools that make
-          field work clearer and easier.
+          Based in Port Angeles, WA — end of the road, edge of the continent,
+          gateway to Olympic National Park. I work at the intersection of outdoor
+          operations, creative technology, and interpretive design.
         </p>
         <p>
-          Formerly a lens repair technician and HR specialist at Canon.
-          Currently building operational software for the outdoor industry
-          and developing a long-form creative project about the place I live.
+          Formerly a lens repair technician at Canon and an HR specialist.
+          Currently Communications & Systems Coordinator at Olympic Hiking Co.,
+          building operational tools that make field work clearer and faster.
+        </p>
+        <p>
+          For 25 years I've been developing a creative system — music, narrative,
+          and world-building rooted in the Olympic Peninsula — called Ouch McCouch.
+          The NEST research project is the infrastructure that finally makes
+          extraction possible.
+        </p>
+        <p>
+          Photographer. Storyteller. Interpretive ranger.
+          I build things that help people see where they are.
         </p>
       </div>
       <div class="about-tags">
@@ -91,6 +114,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="tag">Photography</span>
             <span class="tag">Storytelling</span>
             <span class="tag">Tool Design</span>
+            <span class="tag">Interpretive Design</span>
+            <span class="tag">NPS</span>
           </div>
         </div>
         <div class="tag-group">
@@ -99,6 +124,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="tag">Port Angeles, WA</span>
             <span class="tag">Olympic Peninsula</span>
             <span class="tag">PNW</span>
+          </div>
+        </div>
+        <div class="tag-group">
+          <div class="tag-label mono">📬 CONTACT</div>
+          <div class="tags">
+            <a href="mailto:rspdan@gmail.com" class="tag tag--link">rspdan@gmail.com</a>
           </div>
         </div>
       </div>
@@ -185,8 +216,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .project-card--featured {
   border-left: 3px solid var(--forest);
 }
-.project-card--ouch {
-  border-left: 3px solid #4A5568;
+.project-card--research {
+  border-left: 3px solid var(--teal);
+  background: linear-gradient(135deg, #fafaf8 0%, #f0f5f5 100%);
+}
+.project-card--research .project-card__tag { color: var(--teal); }
+.project-card--research .project-tag { background: rgba(116,201,213,0.1); color: #3a8a95; }
+.project-card--research .project-card__cta { color: var(--teal); }
+.tag--link {
+  color: var(--forest); text-decoration: none;
+  transition: background 0.2s;
+}
+.tag--link:hover { background: var(--forest); color: var(--warm-white); }
   background: linear-gradient(135deg, #fafaf8 0%, #f0ede6 100%);
 }
 .project-card--ouch:hover {
