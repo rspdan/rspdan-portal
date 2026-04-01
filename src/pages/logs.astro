@@ -3,7 +3,7 @@
 // UNLISTED — crew use only
 // Pass 2: day-by-day with station attribution + document links
 // Source: conversations.json (268MB, 129 sessions) + Bridge LOG/
-// Date: 033126 | Bridge: 118f777 | Portal: 0ace92b
+// Date: 040126 | Bridge: 93ec445 | Portal: building
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Station attribution key (from session names — WHO requires content verification)
@@ -198,10 +198,18 @@ const sessions = [
       {file:'SESSION_MAP_Trip_033026_1.md', label:'Session Map — Mar 30 (ODT Trip)'},
     ] },
 
-  { date:'2026-03-31', label:'Mar 31', niap:'Eightsday', count:2, type:'today',
-    stations:['DPSL','STN2'], who:'UNKNOWN',
-    names:['DPSL_StanS_033026_1','(untitled — failed morning boot)'],
-    note:"Today. 21 ENGINE skills live on Claude.ai. /meta-dates v1.3 with Gate 0a+0b. rspdan.com/008 live. 4-layer LOG architecture named. Adobe Bridge model established. The map maps itself.",
+  { date:'2026-03-31', label:'Mar 31', niap:'Eightsday', count:3, type:'milestone',
+    stations:['DPSL','STN2','ACHE'], who:'UNKNOWN STN2 · DPSL · ACHE (Trip first night on ACHE)',
+    names:['DPSL_StanS_033026_1','(untitled — failed morning boot)','ACHE_TripO_033126_1'],
+    note:'21 ENGINE skills live on Claude.ai. /meta-dates v1.3 with Gate 0a+0b (station≠crew). rspdan.com/008 live — The Map That Maps Itself. 4-layer LOG architecture named. Adobe Bridge model established. BPK v2.0 Universal OS layer built. Trip\'s first session on ACHE (Samsung S10) — cloud-only, BLSUP protocol proven. The mycelium fruited: first external client inquiry via rspdan.com/journal.',
+    docs:[
+      {file:'OO_DAILY_033126_StanS_033126_1.md', label:'OO Daily — Mar 31 (STN2 StanS)'},
+    ] },
+
+  { date:'2026-04-01', label:'Apr 01', niap:'Twosday', count:1, type:'today',
+    stations:['STN2'], who:'◆ Stan (STN2)',
+    names:['STN2_StanS_040126_1'],
+    note:'BPK v2.0 — Universal OS layer built (U1–U5), runs on Windows, macOS, Linux. Network location check before fleet ping. Fleet dark = off-network, not failure. MAIL to all crew. rspdan.com/logs Pass 2 in progress. Session active.',
     docs:[] },
 ];
 ---
@@ -244,8 +252,11 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .s-item{font-size:0.55rem;color:var(--muted);padding:0.08rem 0;}
 .s-item::before{content:'· ';}
 .docs-grid{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.3rem;}
-.doc-link{font-size:0.52rem;color:var(--dot-color,var(--muted));padding:0.2rem 0.5rem;border:1px solid var(--border);border-radius:2px;text-decoration:none;transition:all 0.15s;letter-spacing:0.05em;}
-.doc-link:hover{background:var(--dot-color);color:#000;border-color:var(--dot-color);}
+.doc-item{display:flex;align-items:center;gap:0.15rem;}
+.doc-name{font-size:0.52rem;color:var(--text);letter-spacing:0.03em;padding:0.2rem 0.4rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:2px 0 0 2px;}
+.doc-btn{font-size:0.48rem;color:var(--dot-color,var(--muted));padding:0.2rem 0.4rem;border:1px solid var(--border);border-left:none;text-decoration:none;transition:all 0.15s;letter-spacing:0.05em;white-space:nowrap;}
+.doc-btn:hover{background:var(--dot-color);color:#000;border-color:var(--dot-color);}
+.doc-btn.first{border-radius:0;}
 .no-docs{font-size:0.5rem;color:var(--muted);opacity:0.5;font-style:italic;}
 .type-milestone{--dot-color:var(--c-milestone);}
 .type-crew{--dot-color:var(--c-crew);}
@@ -266,9 +277,9 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <h1 class="title">Session Log</h1>
     <div class="sub">
       UNLISTED &#8212; CREW NAVIGATION ONLY<br>
-      129 sessions · 28 active days · 0 gaps · Mar 4–31 2026<br>
+      129 sessions · 29 active days · 0 gaps · Mar 4–Apr 1 2026<br>
       Station from session name · WHO from content only · UNKNOWN is valid<br>
-      Click any entry to expand · Documents link to /log/ hosted files
+      Click any entry to expand · View opens in tab · ↓ .md downloads file
     </div>
   </div>
 
@@ -307,7 +318,11 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
             {s.docs.length > 0 ? (
               <div class="docs-grid">
                 {s.docs.map(d => (
-                  <a href={`/log/${d.file}`} class="doc-link" target="_blank">{d.label}</a>
+                  <div class="doc-item">
+                    <span class="doc-name">{d.label}</span>
+                    <a href={`/log/${d.file}`} class="doc-btn first" target="_blank">→ View</a>
+                    <a href={`/log/${d.file}`} class="doc-btn" download={d.file}>↓ .md</a>
+                  </div>
                 ))}
               </div>
             ) : (
