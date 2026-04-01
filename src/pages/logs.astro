@@ -192,10 +192,16 @@ const sessions = [
   { date:'2026-03-30', label:'Mar 30', niap:'Sevensday', count:2, type:'milestone',
     stations:['ODT','STN2'], who:'UNKNOWN',
     names:['ODT_TO_033026_1','STN2_StanS_033026_1'],
-    note:'The Extraordinary Data Day. 9 crew instances across 2 sessions. rspdan.com/007 live. DPSL copper bridge commissioned. 27 MAIL files. Living Map standard established. Detective Stan investigation — ROX principle named.',
+    note:'The Extraordinary Data Day. 9 crew instances across 2 sessions. rspdan.com/007 live. DPSL copper bridge commissioned. 27 MAIL files. Living Map standard established. Detective Stan investigation — ROX principle named. The nervous system of the NEST breathed 30 times in one session.',
     docs:[
-      {file:'INVESTIGATION_SEED_Pass1_Stan_033026.md', label:'Investigation Seed — Pass 1'},
-      {file:'SESSION_MAP_Trip_033026_1.md', label:'Session Map — Mar 30 (ODT Trip)'},
+      {file:'INVESTIGATION_SEED_Pass1_Stan_033026.md', label:'Investigation Seed — Pass 1', dir:'log'},
+      {file:'SESSION_MAP_Trip_033026_1.md', label:'Session Map — Mar 30 (ODT Trip)', dir:'log'},
+      {file:'STN2_TO_ALL_DetectiveStanReport_033026.md', label:'MAIL — Detective Stan Report', dir:'mail'},
+      {file:'STN2_TO_TRP0_LIAM_CrewReflection_033026.md', label:'MAIL — Crew Reflection (Stan→Trip)', dir:'mail'},
+      {file:'TRIP_TO_ALL_Celebration_033026.md', label:'MAIL — Celebration (Trip→All)', dir:'mail'},
+      {file:'TRIP_TO_ALL_DataDayClose_033026.md', label:'MAIL — Data Day Close (Trip)', dir:'mail'},
+      {file:'TRIP_TO_ALL_LivingMapStandard_033026.md', label:'MAIL — Living Map Standard', dir:'mail'},
+      {file:'STN2_TO_ALL_FullDayReport_033026.md', label:'MAIL — Full Day Report (Stan)', dir:'mail'},
     ] },
 
   { date:'2026-03-31', label:'Mar 31', niap:'Eightsday', count:3, type:'milestone',
@@ -325,8 +331,8 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
                 {s.docs.map(d => (
                   <div class="doc-item">
                     <span class="doc-name">{d.label}</span>
-                    <a href={`/log/${d.file}`} class="doc-btn first" target="_blank">→ View</a>
-                    <a href={`/log/${d.file}`} class="doc-btn" download={d.file}>↓ .md</a>
+                    <a href={`/${d.dir ?? 'log'}/${d.file}`} class="doc-btn first" target="_blank">→ View</a>
+                    <a href={`/${d.dir ?? 'log'}/${d.file}`} class="doc-btn" download={d.file}>↓ .md</a>
                   </div>
                 ))}
               </div>
