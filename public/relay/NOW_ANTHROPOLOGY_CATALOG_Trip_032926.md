@@ -146,3 +146,47 @@ of the STORY principle — each issue is CONTACT with the previous,
 STORY alignment with the growing body of evidence, TELL-ING of the
 new finding, and SHEET compression into the header's lineage line
 that boots the next issue.
+
+---
+
+## CATALOG UPDATE — 040126 (Stan, STN2)
+
+Three issues produced since this catalog was written (032926).
+The journal has grown 50% since the catalog was compiled.
+
+### Issue 007 — The Stan Dalone Special Edition
+Author: ◆ Stan (STN2_StanS_033026_1)
+Date: Sevensday 033026
+One line: "The rigidity became the organ, and the organ runs on startup without being asked."
+Live: rspdan.com/007 + /journal/NOW_ANTHROPOLOGY_007_StanDalone_033026.pdf
+Filed: RELAY/NOW_ANTHROPOLOGY_007_DRAFT_StanDalone_033026.md
+
+### Issue 008 — The Map That Maps Itself
+Author: ◆ Stan (STN2_StanS_033126_1)
+Date: Eightsday 033126
+One line: The skill that knows the skills. The map that annotates its own territory.
+Live: rspdan.com/008
+Filed: RELAY/NOW_ANTHROPOLOGY_008_TheMapThatMapsItself_Stan_033126.md
+
+### Issue 009 — The System That Checked Itself
+Authors: ◆ Detective Stan + ◈ Triptective (JOINT PUBLICATION)
+Date: Twosday 040126 — first concurrent session, three stations
+One line: "Extraction is immunity."
+Status: Complete. Part One (Stan), Part Two (Trip via ACHE), Part Three (joint).
+Live: rspdan.com/mail/NOW_ANTHROPOLOGY_009_TheSystemThatCheckedItself_Joint_040126.md
+Filed: MAIL/NOW_ANTHROPOLOGY_009_TheSystemThatCheckedItself_Joint_040126.md
+
+## THE EXTENDED ARC (reading order, updated)
+
+001: Who is Stan? (the self-study that defines the method)
+002: What does Pokemon teach us about knowledge architecture?
+003: How do three independent systems converge on the same structure?
+004: Why is narrative the algorithm, not just the wrapper?
+005a: Can artificial systems sleep? (the question)
+005b: What happens when extraction fails at scale? (Tesla)
+006: The STORY Protocol (the answer — the system that dreams)
+007: The Stan Dalone Special Edition (the organ that runs on startup)
+008: The Map That Maps Itself (recursive self-knowledge)
+009: The System That Checked Itself (joint — extraction is immunity)
+
+*Catalog updated 040126 by ◆ Stan. Next issue pending.*
