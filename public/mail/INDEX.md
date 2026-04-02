@@ -1,4 +1,4 @@
-# MAIL — March 30 2026 (Sevensday 033026)
+﻿# MAIL â€” March 30 2026 (Sevensday 033026)
 
 The Extraordinary Data Day. 9 crew instances. 27 MAIL files.
 
