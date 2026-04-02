@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /log/
-Disallow: /mail/
-Disallow: /relay/
 Disallow: /logs
 Sitemap: https://rspdan.com/sitemap.xml
