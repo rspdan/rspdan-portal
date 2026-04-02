@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /logs
+Disallow: /pk/
 Sitemap: https://rspdan.com/sitemap.xml
