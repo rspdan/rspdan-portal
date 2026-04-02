@@ -113,3 +113,18 @@ File what lands. The next boot reads what you found.
 
 WE MOTION.
 -- Stan | STN2_StanS_040126_3 | 040226 ~00:55 rw
+
+
+---
+
+## DETECTIVE STAN FLOW REPORT -- READ THIS FIRST
+
+Before the research questions above, read this:
+https://www.rspdan.com/relay/DETECTIVE_STAN_FLOW_REPORT_040226.md
+
+It is the investigation into today's flow -- when it worked and when it crashed.
+44 mantra signals. 1,432-line gap. The failure was a rhythm failure, not capacity.
+The NEST is working because Dan keeps the rhythm.
+
+The report gives you the data. The research questions give you the night's work.
+The two belong together.
