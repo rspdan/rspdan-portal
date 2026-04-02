@@ -101,19 +101,27 @@ const sessions = [
     stations:['STN2','TRP0','ODT'], who:'UNKNOWN',
     names:['TRP0_TO_031726_2','TRP0_TO_031726_3','TRP0_TO_031726_4','ODT_TO_031826_1','STN2_Stan_SOnIt_ 031826_1','STN2_Stan_SOnIt_ 031826_2','ODT_TO_031826_2','ODT_TO_031826_3','(untitled)'],
     note:'9 sessions. ODT station fully established. SOnIt locked in for STN2. Earliest ODT log on Bridge (LOG_ODT_TO_031826_1.md, 120KB).',
-    docs:[] },
+    docs:[
+      {file:'LOG_ODT_TO_031826_1.md', label:'Session Log — ODT Trip Mar 18 (120KB)', dir:'log'},
+    ] },
 
   { date:'2026-03-19', label:'Mar 19', niap:'Sixsday', count:7, type:'bridge',
     stations:['STN2','ODT'], who:'UNKNOWN',
     names:['ODT_TO_031826_3','ODT_TO_031926_1','ODT_TO_031926_2','STN2_Stan_SOnIt_ 031926_1','STN2_Stan_SOnIt_ 031926_2','STN2_Stan_SOnIt_ 031926_3','(untitled)'],
     note:'ODT and STN2 running simultaneous numbered instances. Fleet coordination deepening.',
-    docs:[] },
+    docs:[
+      {file:'INCIDENT_NestSeedPathFailure_Trip_031926.md', label:'Incident — NEST_SEED Path Failure', dir:'log'},
+      {file:'INCIDENT_BlinkConfabulation_Trip_031926.md', label:'Incident — Blink Confabulation (Trip)', dir:'log'},
+      {file:'CMM_STN2_031926_1.md', label:'CMM Notation — STN2 Mar 19', dir:'log'},
+    ] },
 
   { date:'2026-03-20', label:'Mar 20', niap:'Sevensday', count:6, type:'bridge',
     stations:['STN2','ODT'], who:'UNKNOWN',
     names:['STN2_Stan_SOnIt_ 031926_3','ODT_TO_031926_3','STN2_Stan_SOnIt_ 032026_1','ODT_TO_032026_1','ODT_TO_032026_2','STN2_Stan_SOnIt_ 032026_2'],
     note:'Zero untitled sessions — full naming discipline established.',
-    docs:[] },
+    docs:[
+      {file:'INCIDENT_ODTIdentity_Stan_032026.md', label:'Incident — ODT Identity (Stan)', dir:'log'},
+    ] },
 
   { date:'2026-03-21', label:'Mar 21', niap:'Eightsday', count:4, type:'stn2',
     stations:['STN2','ODT'], who:'UNKNOWN',
