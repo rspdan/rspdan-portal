@@ -260,12 +260,40 @@ const sessions = [
       {file:'SESSION_MAP_STN2_033126.md', label:'Session Map Mar 31 (STN2)', dir:'relay'},
       {file:'STANDARD_RULE_RemovableDrivesInICan_Stan_033126.md', label:'STANDARD RULE RemovableDrivesInICan Stan', dir:'relay'},] },
 
-  { date:'2026-04-01', label:'Apr 01', niap:'Twosday', count:1, type:'today',
-    stations:['STN2'], who:'◆ Stan (STN2)',
-    names:['STN2_StanS_040126_1'],
-    note:'BPK v2.0 — Universal OS layer built (U1–U5), runs on Windows, macOS, Linux. Network location check before fleet ping. Fleet dark = off-network, not failure. MAIL to all crew. rspdan.com/logs Pass 2 in progress. Session active.',
+  { date:'2026-04-01', label:'Apr 01', niap:'Twosday', count:1, type:'milestone',
+    stations:['STN2','ACHE'], who:'◆ Stan (STN2) · ◈ Trip (ACHE — first overnight)',
+    names:['STN2_StanS_040126_1','ACHE_TripO_040126_1'],
+    note:'BPK v2.0 — Universal OS layer (U1–U5), cross-platform. Trip boots on ACHE (phone, free cellular) for the first time — 16-hour overnight session. NA 009 Part One: "The System That Checked Itself." Leapfrog workflow proven across multiple reboots. Gmail confirmed as LIAM delivery pipe. Pass 2 gap analysis built by Trip overnight. Lessons Learned filed — five failure types.',
     docs:[
       {file:'BPK_v2_Celebration_040126.md', label:'BPK v2.0 — Crew Celebration MAIL'},
+      {file:'OO_DAILY_040126_StanS_040126_1.md', label:'OO Daily — Apr 1 (STN2 Stan)'},
+
+      {file:'NOW_ANTHROPOLOGY_009_TheSystemThatCheckedItself_Joint_040126.md', label:'NA 009 — The System That Checked Itself', dir:'relay'},
+      {file:'LESSONS_LEARNED_040126_Stan.md', label:'Lessons Learned — Apr 1', dir:'relay'},
+      {file:'LOG_DEPLOY_MANIFEST_CANDIDATE_040126.md', label:'Deploy Manifest Candidate', dir:'relay'},
+      {file:'GOG1_WiFi_DW1704_Ubuntu_Guide_Trip_040126.md', label:'GOG1 WiFi Guide (Ubuntu)', dir:'relay'},
+      {file:'STANDARD_RULE_LocalLogIsTheBackup_Stan_040126.md', label:'Standard Rule — Local Log Is the Backup', dir:'relay'},
+      {file:'CORRECTION_Tesla_NikolaTesla_040126.md', label:'Correction — Tesla / Nikola Tesla', dir:'relay'},
+
+      {file:'LIAM_TO_TRIP_Live_040126.md', label:'LIAM to Trip — Live', dir:'mail'},
+      {file:'LIAM_TO_TRIP_Pass3Directions_040126.md', label:'LIAM to Trip — Pass 3 Directions', dir:'mail'},
+      {file:'LIAM_STN2_TO_ACHE_PipelineActivation_040126.md', label:'LIAM — Pipeline Activation (STN2→ACHE)', dir:'mail'},
+      {file:'LIAM_ACHE_TO_STN2_SessionBrief_040126.md', label:'LIAM — Session Brief (ACHE→STN2)', dir:'mail'},
+      {file:'ALL_CREW_LivingMapHeartbeat_040126.md', label:'All Crew — Living Map Heartbeat', dir:'mail'},
+      {file:'TRIP_BRIEFING_040126.md', label:'Trip Briefing — Apr 1', dir:'mail'},
+    ] },
+
+  { date:'2026-04-02', label:'Apr 02', niap:'Threesday', count:2, type:'today',
+    stations:['STN2','ACHE'], who:'◆ Stan (STN2) · ◈ Trip (ACHE — 20h+ continuous)',
+    names:['STN2_StanS_040226_1','ACHE_TripO_040226_1'],
+    note:'Seed Pattern deployed: PK holds URL, content lives on Vercel. pk/ shelf live at rspdan.com/pk/. C.B. Style built. vercel.json X-Robots-Tag replaces robots.txt Disallow — one commit, never maintain again. Gmail pipe confirmed two-way crew communication channel. Working Smarter research: 140-year lineage from Mogensen to Mollick. Three builds shipped: pk/ shelf, robots.txt cleanup, vercel.json headers.',
+    docs:[
+      {file:'SESSION_FLOW_ANALYSIS_Stan_040226.md', label:'Session Flow Analysis — Apr 2', dir:'relay'},
+      {file:'DETECTIVE_STAN_FLOW_REPORT_040226.md', label:'Detective Stan Flow Report — Apr 2', dir:'relay'},
+
+      {file:'STAN_TO_TRIP_NightUpdate_040226.md', label:'Stan Night Update → Trip', dir:'mail'},
+      {file:'STAN_TO_TRIP_FinalDispatch_040226.md', label:'Stan Final Dispatch → Trip', dir:'mail'},
+      {file:'STAN_TO_TRIP_OvernightResearch_040226.md', label:'Stan Overnight Research → Trip', dir:'mail'},
     ] },
 ];
 ---
@@ -333,7 +361,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <h1 class="title">Session Log</h1>
     <div class="sub">
       UNLISTED &#8212; CREW NAVIGATION ONLY<br>
-      129 sessions · 29 active days · 0 gaps · Mar 4–Apr 1 2026<br>
+      131 sessions · 30 active days · 0 gaps · Mar 4–Apr 2 2026<br>
       Station from session name · WHO from content only · UNKNOWN is valid<br>
       Click any entry to expand · View opens in tab · ↓ .md downloads file
     </div>
