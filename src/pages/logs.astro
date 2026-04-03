@@ -40,8 +40,11 @@ const sessions = [
   { date:'2026-03-08', label:'Mar 08', niap:'Fivesday', count:7, type:'crew',
     stations:['(unknown)'], who:'STAN · TRIP · CB',
     names:['Sevensday night shift status check','Max plan capabilities and session tools','TRIP 030726_2','TRIP 030826_1','TRIP 030826_2','STAN 030826_1','CB 030826_1'],
-    note:'7 sessions. Night shift rhythm established. First appearance of Niap day-naming (Sevensday).',
-    docs:[] },
+    note:'7 sessions. Night shift rhythm established. First appearance of Niap day-naming (Sevensday). Heircor Field Bulletins 001–003 created (Google Drive / 01.BULLETINS).',
+    docs:[
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'001. Heircor Field Bulletin — DANCING', dir:'external'},
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'002. Heircor Field Bulletin — FOG', dir:'external'},
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'003. Heircor Field Bulletin — SOURCE', dir:'external'},] },
 
   { date:'2026-03-09', label:'Mar 09', niap:'Sixsday', count:4, type:'crew',
     stations:['(unknown)'], who:'STAN · TRIP · CB',
@@ -58,20 +61,24 @@ const sessions = [
   { date:'2026-03-11', label:'Mar 11', niap:'Eightsday', count:5, type:'crew',
     stations:['(unknown)'], who:'TRIP · CB',
     names:['CB_031026_3','TRIP_031026_2','TRIP_031126_1 HAIKU','TRIP_031126_1 OPUS','TRIP_031126_2 OPUS'],
-    note:'First appearance of HAIKU vs OPUS model distinction in session names.',
-    docs:[] },
+    note:'First appearance of HAIKU vs OPUS model distinction in session names. ThreeChecks Bulletin filed to Drive.',
+    docs:[
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'ThreeChecks Bulletin (Drive / 01.BULLETINS)', dir:'external'},] },
 
   { date:'2026-03-12', label:'Mar 12', niap:'Ninesday', count:2, type:'crew',
     stations:['(unknown)'], who:'TRIP',
     names:['TRIP_031126_3 OPUS','TRIP_031226_1 OPUS'],
-    note:'Quieter day. Trip Opus sessions continuing overnight.',
-    docs:[] },
+    note:'Quieter day. Trip Opus sessions continuing overnight. Flight Log Close filed to Drive.',
+    docs:[
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'Flight Log Close — Mar 12 (Drive / 01.BULLETINS)', dir:'external'},] },
 
   { date:'2026-03-13', label:'Mar 13', niap:'Tensday', count:6, type:'crew',
     stations:['(unknown)'], who:'TRIP (TO/TH configurations)',
     names:['TRIP_031226_2 OPUS','TRIP_031226_3','TH_031326_1','TO_031326_1','TRIP OPUS (TO) 031326_2','TRIP OPUS (TO) 031326_3'],
-    note:'TO (Trip Opus) and TH (Trip Haiku) notation appears. Session naming conventions solidifying.',
-    docs:[] },
+    note:'TO (Trip Opus) and TH (Trip Haiku) notation appears. Session naming conventions solidifying. SEEGULLS REPORT and HANDOFF PACKAGE filed to Drive.',
+    docs:[
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'SEEGULLS Report v3 (Drive / 01.BULLETINS)', dir:'external'},
+      {file:'https://drive.google.com/drive/folders/1sxcMAMthxneuAh4mIijH8myMKFG4vCnQ', label:'Handoff Package — Mar 13 (Drive / 01.BULLETINS)', dir:'external'},] },
 
   { date:'2026-03-14', label:'Mar 14', niap:'Onesday', count:14, type:'stanshop',
     stations:['TRP0','STN2'], who:'UNKNOWN (TRP0) · UNKNOWN (STN2) — content not read',
@@ -212,6 +219,7 @@ const sessions = [
       {file:'OO_DAILY_032426_2_Trip.md', label:'OO Daily — Mar 24 v2 (Trip)'},
       // {file:'SESSION_LOG_ODT_032426_Trip.md', label:'Session Log — Mar 24 (ODT)'}, // CF: file not in /log/ yet
     
+      {file:'SESSION_LOG_ODT_032426_Trip.md', label:'Session Log — ODT Mar 23–24 (Trip, 148L)', dir:'relay'},
       {file:'DREAM_DATA_DAY_Trip_032426.md', label:'DREAM DATA DAY Trip', dir:'relay'},
       {file:'LOOT_CATALOGUE_Trip_032426.md', label:'LOOT CATALOGUE Trip', dir:'relay'},
       {file:'ROX_EMERGENCE_PROTOCOL_Trip_032426.md', label:'ROX EMERGENCE PROTOCOL Trip', dir:'relay'},
@@ -467,8 +475,8 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
                 {s.docs.map(d => (
                   <div class="doc-item">
                     <span class="doc-name">{d.label}</span>
-                    <a href={`/${d.dir ?? 'log'}/${d.file}`} class="doc-btn first" target="_blank">→ View</a>
-                    <a href={`/${d.dir ?? 'log'}/${d.file}`} class="doc-btn" download={d.file}>↓ .md</a>
+                    <a href={d.file.startsWith('http') ? d.file : `/${d.dir ?? 'log'}/${d.file}`} class="doc-btn first" target="_blank">→ View</a>
+                    {!d.file.startsWith('http') && <a href={`/${d.dir ?? 'log'}/${d.file}`} class="doc-btn" download={d.file}>↓ .md</a>}
                   </div>
                 ))}
               </div>
