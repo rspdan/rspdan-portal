@@ -24,7 +24,7 @@ export const GET: APIRoute = async ({ url }) => {
   const allMsgs: any[] = [];
 
   for (const ch of channels) {
-    const raw = await redis.zrangebyscore(`ch:${ch}`, since + 1, '+inf');
+    const raw = await redis.zrange(`ch:${ch}`, since + 1, '+inf', { byScore: true });
     for (const r of raw) {
       try {
         allMsgs.push(typeof r === 'string' ? JSON.parse(r) : r);
