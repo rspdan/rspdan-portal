@@ -4,5 +4,5 @@ import vercel from '@astrojs/vercel/serverless';
 export default defineConfig({
   site: 'https://rspdan.com',
   output: 'hybrid',
-  adapter: vercel({ nodeVersion: '20' }),
+  adapter: vercel(),
 });

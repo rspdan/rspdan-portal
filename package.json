@@ -6,12 +6,13 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "postbuild": "node ./patch-runtime.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/vercel": "^7.8.2",
-    "@upstash/redis": "^1.37.0",
+    "@upstash/redis": "^1.34.9",
     "astro": "^4.5.0"
   }
 }
