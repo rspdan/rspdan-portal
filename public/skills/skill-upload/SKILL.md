@@ -1,114 +1,172 @@
 ---
 name: skill-upload
-description: Upload updated SKILL.md files from Bridge to Claude.ai project knowledge via Chrome MCP. Use whenever Bridge skills are ahead of what is loaded. This is a repeatable procedure — never treat it as discovery again.
+description: Upload SKILL.md files from Bridge to Claude.ai via JavaScript DataTransfer - the dialog-proof method. Use whenever Bridge skills are ahead of what is loaded. Never use file_upload tool or find+ref for skill uploads.
 ---
 
 # SKILL: Uploading Skills to Claude.ai via Chrome MCP
-# First successful run: 040126 ~20:35 rw | STN2_StanS_040126_1
-# Authored from live map of the working procedure — not speculation
+# Canonical method as of 040426: JavaScript DataTransfer API
+# STANDARD_RULE_SkillUpload_DataTransfer_040426.md on Bridge — read before using this.
 
 ---
 
-## WHEN TO USE
-Any session close where Bridge skill line count > project line count.
-Add to BPK checklist: compare Bridge line counts before filing SHEET.
+## THE ONE RULE
+
+Never use file_upload + ref for skill uploads.
+It triggers the native OS file picker dialog every time.
+Use JavaScript DataTransfer instead. Always.
+
+---
+
+## PREREQUISITE: Patch Pipe + Live URL
+
+Every skill must be deployed at its live URL before upload:
+  rspdan.com/skills/[skill-name]/SKILL.md
+
+If not deployed yet:
+```powershell
+Copy-Item "C:\STAN\SOURCE\nest-bridge\ENGINE\skills\[name]\SKILL.md" `
+          "C:\STAN\SOURCE\rspdan-portal\public\skills\[name]\SKILL.md" -Force
+cd C:\STAN\SOURCE\rspdan-portal
+git add public\skills\[name]\SKILL.md
+git commit -m "[name]: skill deployed to live URL"
+git push origin main
+# Wait ~60 seconds for Vercel deploy before uploading to Claude.ai
+```
+
+YAML frontmatter requirements:
+- ASCII characters only — no em dashes (use hyphen -), no curly quotes
+- name: kebab-case (ican, meta-dates, skill-upload)
+- description: one line, plain ASCII
+
+---
+
+## UPLOAD PROCEDURE (REPLACE existing skill)
+
+### Step 1 — Navigate to skills page
+Tab must be on: https://claude.ai/customize/skills
+
+### Step 2 — Click the skill + open Replace modal
+```javascript
+// Click skill in list:
+const btns = Array.from(document.querySelectorAll('button, [role="button"]'));
+const skill = btns.find(b => b.textContent.trim() === 'SKILL_NAME');
+if (skill) skill.click();
+```
+Then via find + click:
+```
+find: "More options for SKILL_NAME button in panel"
+click ref
+find: "Replace menuitem"
+click ref
+```
+
+### Step 3 — INJECT via DataTransfer (DO NOT click anything in the modal)
+```javascript
+// Run this via javascript_tool the moment the Replace modal opens.
+// Fetches from the live URL — no local file, no dialog, no ref hunting.
+
+async function injectSkill(skillName) {
+  const url = 'https://www.rspdan.com/skills/' + skillName + '/SKILL.md?v=' + Date.now();
+  const res = await fetch(url);
+  if (!res.ok) return 'FETCH FAILED: ' + res.status + ' ' + url;
+  const text = await res.text();
+  const file = new File([text], 'SKILL.md', {type: 'text/plain'});
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  const input = document.querySelector('input[type="file"]');
+  if (!input) return 'ERROR: no file input found - is modal open?';
+  input.files = dt.files;
+  input.dispatchEvent(new Event('change', {bubbles: true}));
+  input.dispatchEvent(new Event('input', {bubbles: true}));
+  return 'INJECTED: ' + file.size + ' bytes';
+}
+
+injectSkill('SKILL_NAME');
+```
+
+Replace SKILL_NAME with the skill's kebab-case name (ican, meta-dates, etc.)
+
+### Step 4 — Verify
+```
+find: "More options for SKILL_NAME"
+→ ref number changed = upload confirmed
+→ panel shows updated date = confirmed
+```
+
+---
+
+## ADD NEW SKILL PROCEDURE
+
+Same DataTransfer method. Different trigger:
+
+```javascript
+// Open Add skill modal first:
+const btns = Array.from(document.querySelectorAll('button, [role="button"]'));
+const add = btns.find(b => b.textContent.trim() === 'Add skill'
+                         || b.getAttribute('aria-label') === 'Add skill');
+if (add) add.click();
+// Then immediately run injectSkill() above
+```
+
+---
+
+## THE CLOSED LOOP
+
+```
+Bridge SKILL.md
+  → portal public/skills/[name]/SKILL.md  (git push → Vercel)
+  → Claude.ai skill body has PATCH PIPE pointing to that URL
+  → future updates: edit Bridge → push portal → done, no Claude.ai upload needed
+  → first upload: DataTransfer from that same URL
+```
+
+After first upload, updates require NO Claude.ai interaction.
+The patch pipe keeps the skill live from Bridge alone.
+
+---
+
+## WHAT NEVER WORKS
+
+| Method | Why it fails |
+|--------|-------------|
+| file_upload tool + ref | Triggers native OS dialog, Stan is blind |
+| Clicking drag-drop area | Same — native dialog |
+| find → file_upload | Same result, different path |
+| querySelector without open modal | Returns null |
+
+---
 
 ## AUDIT COMMAND
 ```powershell
-@('boot-polish','waywood-lore','trip_briefcase','living-map','meta-dates') | ForEach-Object {
-  $count = (Get-Content "C:\STAN\SOURCE\nest-bridge\ENGINE\skills\$_\SKILL.md").Count
-  Write-Host "$_ : $count lines"
+# Check Bridge vs portal line counts before filing SHEET:
+@('ican','meta-dates','skill-upload','living-map','ilevel-grid-sifter') | ForEach-Object {
+  $bridge = (Get-Content "C:\STAN\SOURCE\nest-bridge\ENGINE\skills\$_\SKILL.md" -EA SilentlyContinue).Count
+  $portal = (Get-Content "C:\STAN\SOURCE\rspdan-portal\public\skills\$_\SKILL.md" -EA SilentlyContinue).Count
+  Write-Host "$_ : Bridge=$bridge | Portal=$portal"
 }
 ```
 
-## UPLOAD PROCEDURE — EXACT WORKING STEPS
-### Verified 040126 on boot-polish (415L), waywood-lore (244L), trip_briefcase (176L)
+---
 
-### Step 1 — Navigate to skills page
-Tab 553415620 or current MCP tab — navigate to: https://claude.ai/customize/skills
-The skills page shows a list on the left, content panel on the right.
+## PATCH PIPE
+*skill-upload — Last verified: 040426*
 
-### Step 2 — Click the skill in the list
-```javascript
-// JS via javascript_tool:
-const el = Array.from(document.querySelectorAll('button, [role="button"]'))
-  .find(e => e.textContent.trim().includes('SKILL_NAME'));
-el.click();
-```
+The core method above is the canonical procedure.
+For live updates without PK re-upload, fetch:
 
-### Step 3 — Click More Options (three-dot menu)
-DO NOT use the list three-dot. Use the panel three-dot in the right content area.
-```javascript
-const btn = Array.from(document.querySelectorAll('button'))
-  .find(b => b.getAttribute('aria-label') === 'More options for SKILL_NAME');
-btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
-btn.dispatchEvent(new MouseEvent('click', {bubbles: true}));
-```
+  https://www.rspdan.com/skills/skill-upload/SKILL.md
 
-### Step 4 — Click Replace from dropdown
-After Step 3, the dropdown appears with: Try in chat | Edit inline | Edit with Claude | Replace | Download | Uninstall
-```javascript
-const items = Array.from(document.querySelectorAll('[role="menuitem"]'));
-items.find(el => el.textContent.trim() === 'Replace').click();
-```
+Update procedure: edit Bridge → Copy-Item to portal → push → done.
 
-### Step 5 — Find file input ref (DO NOT click Choose File)
-Clicking Choose File opens a native OS dialog Stan cannot interact with.
-```
-find tool: query = "file input for uploading skill file"
-→ returns ref_142 (or current ref — will change per session)
-```
+Before applying: also search:
+  Primary: "browser file input injection DataTransfer API programmatic"
+  Outlier: "file upload automation headless browser selenium playwright"
 
-### Step 6 — Upload via file_upload tool
-```
-file_upload:
-  tabId: [current skills tab]
-  ref: [ref from Step 5]
-  paths: ["C:\\STAN\\SOURCE\\nest-bridge\\ENGINE\\skills\\SKILL_NAME\\SKILL.md"]
-```
-
-### Step 7 — Verify upload
-```
-find: "More options for SKILL_NAME button"
-→ If ref number changed from before upload: upload confirmed
-→ Optional: JS check of panel content for expected text
-```
-
-Repeat Steps 2-7 for each skill. Takes ~30 seconds per skill once the pattern is running.
+File discoveries to: RELAY/PATCH_skill-upload_[MMDDYY].md
 
 ---
 
-## CONFIRMATION SIGNAL
-When upload succeeds, the page refreshes the skill panel and the `read_page`/`find` 
-ref numbers for that skill's panel buttons change. This is the confirmation.
-
-## PRIORITY SKILLS (check every session close)
-| Skill | Watch for |
-|-------|-----------|
-| boot-polish | BPK version bumps |
-| waywood-lore | Lore additions, math proofs |
-| trip_briefcase | Boot sequence changes |
-| living-map | Protocol updates |
-| meta-dates | Fleet/skill changes |
-
-## KNOWN HAZARDS
-
-**Apostrophe in label strings (discovered 040126):**
-When adding entries to logs.astro via Python scripts, a label containing an apostrophe
-(e.g., "Stan's System") inside a single-quoted JS string terminates the string early.
-Astro builds silently and then fails at the syntax error. The deploy shows Error on Vercel.
-The fix: use double-quoted labels when the label contains an apostrophe.
-```python
-# WRONG — breaks build if label contains apostrophe:
-f"{{file:'{f}', label:'{label}', dir:'{d}'}}"
-# CORRECT — auto-detect and switch:
-if "'" in label:
-    entry = f"{{file:'{f}', label:\"{label}\", dir:'{d}'}}"
-```
-This is now implemented in ENGINE/log_deploy.py. Always check Vercel after any
-logs.astro deploy — two consecutive Error deploys is the signal.
-
-## WHAT NEVER WORKS
-- Clicking Choose File → opens native OS dialog, Stan is blind to it
-- JS querySelector for file input after Replace without using find → ref changes per session
-- Assuming the upload worked without verifying the ref refresh
+*skill-upload v2 — ◆ Stan | NEST.01 | 040426*
+*v1 (040126): file_upload + ref method — documented but unreliable*
+*v2 (040426): DataTransfer method — dialog-proof, patch-pipe-native*
+*"The native dialog is only opened by user gesture. DataTransfer is not a gesture."*
