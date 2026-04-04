@@ -75,20 +75,60 @@ something new in the compression, redo it.
 
 Actual ping results. Run them. Don't assume.
 
+STEP 0 — NETWORK IDENTITY (run before fleet ping, always)
+
+Two separate questions. Answer each separately:
+  Q1: What network are we ON? (SSID, adapter)
+  Q2: What nodes are UP on that network? (ping sweep)
+
+Q1 uses a system-native command — no network required, reads the OS directly:
+
+  Windows (STN2):
+    netsh wlan show interfaces | findstr /i "SSID Profile Signal State"
+  macOS (DPSL) / Linux (GOG1) / Android/Termux (ACHE):
+    iwgetid -r                    # SSID only
+    nmcli -t -f active,ssid dev wifi | grep '^yes'   # full info
+    ip route show | grep default  # gateway fallback
+
+Report what is observed: SSID name, adapter, signal, connection state.
+Label any further interpretation as inference, separately.
+
+  Observation: "SSID: OHC 5G | Signal: 94% | State: connected"
+  Inference:   "Therefore we are on the OHC network, not Nest Actual LAN"
+
+Never report the inference without running the observation first.
+A dark fleet ping does NOT tell you what network you are on.
+It tells you those nodes are unreachable from wherever you are.
+
+STEP 1 — FLEET PING (after network identity is confirmed)
+
 Required data:
-  - Timestamp of the sweep (from DC Python, not Radio)
+  - Timestamp of the sweep (from system clock, not Radio)
   - Each node: name, IP, UP/DOWN
   - Color coding: green dot = UP, amber = WARN, red = DOWN
+  - Note if dark nodes are expected given the current network (OHC vs Nest Actual)
 
-HOW TO GET CURRENT TIME:
-  ALWAYS use DC Python, never read the clock from a screenshot.
-  Radio timestamps = GOG1 server time at message creation.
-  System clock = datetime.datetime.now() via DC.
-  Dan does NOT need to read the time out loud. Stan has the clock.
+STEP 2 — TIME (alongside fleet, always from system clock)
 
-  python -c "import datetime; print(datetime.datetime.now().strftime('%I:%M:%S %p'))"
+The local system clock is always Source 1. It is more reliable than any web source.
+Web time APIs fail silently, return cached data, or shut down permanently.
+The system clock does not. Read it directly.
 
-Service check alongside fleet:
+  Windows (STN2):   Get-Date -Format "MMddyy HH:mm:ss zzz"
+  macOS (DPSL):     date "+%m%d%y %H:%M:%S %z"
+  Linux (GOG1):     date "+%m%d%y %H:%M:%S %z"
+  Android (ACHE):   date "+%m%d%y %H:%M:%S %z"  (via Termux)
+  No terminal:      Read the status bar clock directly
+
+Source 2 for time: the director's stated time in chat, when present.
+Both must agree within 5 minutes before reporting confirmed.
+If Source 2 is unavailable: report Source 1 and flag the gap.
+Never use web_search or cached web pages as a time source.
+
+Reference: RELAY/STANDARD_RULE_Gate0Universal_AllCrew_040426.md
+
+STEP 3 — SERVICE CHECK (alongside fleet)
+
   HTTP GET to Radio (GOG1:5001) and HypercampUS (GOG1:5000)
   Report status codes, not just "UP"
 
@@ -186,21 +226,48 @@ build the frame. This section is the payload.
 
 ---
 
-## TIME STANDARD — FILED HERE PERMANENTLY
+## TIME AND NETWORK STANDARDS — UNIVERSAL, ALL CREW, ALL STATIONS
 
-Dan has been reading the time out loud because he assumed Stan
-couldn't see it. Stan can get the current time via DC Python in
-one command. Dan never needs to narrate the clock.
+### TIME
 
-  python -c "import datetime; print(datetime.datetime.now().strftime('%I:%M:%S %p') + ' rw')"
+The local system clock is always Source 1 for time. Always.
+No web source is as reliable. This applies at every station without exception.
 
-Niapian date format: MMDDYY (e.g., 032426 = March 24, 2026)
-Day names: Onesday Twosday Threesday Foursday Fivesday Sixsday Sevensday
+Commands by station OS:
+  Windows (STN2):   Get-Date -Format "MMddyy HH:mm:ss zzz"
+  macOS (DPSL):     date "+%m%d%y %H:%M:%S %z"
+  Linux (GOG1):     date "+%m%d%y %H:%M:%S %z"
+  Android (ACHE):   date "+%m%d%y %H:%M:%S %z"  (via Termux)
+  No terminal:      Read the status bar clock directly
+
+Source 2: the director's stated time in chat. Both must agree within 5 min.
+If Source 2 unavailable: name the gap. Do not proceed on one source alone.
+Never use web_search results as a time source — they carry index timestamps, not live time.
+
+Niapian date format: MMDDYY (e.g., 040426 = April 4, 2026)
+Day names: Onesday Twosday Threesday Foursday Fivesday Sixsday Sevensday Eightsday Ninesday Tensday
 rw = real-world time suffix
 
-This was an Obviously Emergent discovery on Sixsday 032426:
-"The thing was always there. Stan just wasn't looking at it."
-Dan never needs to narrate the clock. Stan has the clock.
+Reference: RELAY/STANDARD_RULE_Gate0Universal_AllCrew_040426.md
+
+### NETWORK
+
+The network identity check is the equivalent of the time check.
+System-native. No external dependency. Always available.
+
+Commands by station OS:
+  Windows (STN2):   netsh wlan show interfaces | findstr /i "SSID Profile Signal State"
+  macOS (DPSL):     networksetup -getairportnetwork en0
+  Linux (GOG1):     iwgetid -r
+  Android (ACHE):   iwgetid -r  or  nmcli -t -f active,ssid dev wifi | grep '^yes'
+
+Report the SSID and signal as observation.
+Fleet ping results are separate — they tell you what is reachable, not where you are.
+Always run network identity BEFORE fleet ping.
+
+Incident filed: 040426 — reported "VZW_HOTSPOT" from fleet ping inference alone.
+Actual SSID was "OHC 5G." Same principle, same fix as the time error.
+Read the instrument. Then report.
 
 ---
 
@@ -260,3 +327,43 @@ is the difference between READing the session and SEEing it.
 *Filed: C:\STAN\SOURCE\nest-bridge\ENGINE\skills\ican\SKILL.md*
 *Stan (◆ Sonnet) | STN2 at Nest Actual | Sixsday 032426 ~12:49rw*
 *"Dan never needs to narrate the clock. Stan has the clock."*
+
+
+---
+
+## ◈ PATCH PIPE
+*ican — Last verified: 040426*
+
+The core method above is the current published version.
+For live updates without waiting for a PK re-upload, fetch:
+
+  https://www.rspdan.com/skills/ican/SKILL.md
+
+That URL is the live Bridge version — updated by git push → Vercel deploy.
+No Chrome MCP required for incremental updates after this initial upload.
+
+Update procedure going forward:
+  1. Edit Bridge: ENGINE/skills/ican/SKILL.md
+  2. Copy to portal: public/skills/ican/SKILL.md
+  3. Commit + push portal → URL auto-updates within 60 seconds
+  4. No PK upload needed — crew fetches the live URL
+
+Before applying this skill, also search:
+  Primary: "crew readiness report AI system boot protocol"
+           OR "status dashboard format verification checklist"
+  Outlier: "ship's log mission control status board historical"
+           OR "ranger station daily log field readiness format"
+
+Range: Obvious (structured status reports, checklists) → Outlier (field station logs, expedition readiness culture)
+
+File discoveries to: RELAY/PATCH_ican_[MMDDYY].md
+
+*The patch pipe keeps this skill current without PK re-upload.*
+*"Dan never needs to narrate the clock. Stan has the clock."*
+
+---
+
+*Filed: C:\STAN\SOURCE\nest-bridge\ENGINE\skills\ican\SKILL.md*
+*Stan (◆ Sonnet) | STN2 | 032426 ~12:49rw (origin) | 040426 patch pipe added*
+*v2 additions (040426): STEP 0 NETWORK IDENTITY, Gate 0 Universal time standard,*
+*station ≠ network — two separate observations, patch pipe added.*
