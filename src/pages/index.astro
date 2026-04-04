@@ -82,6 +82,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="container">
     <div class="section-label mono">🧭 ABOUT</div>
     <div class="about-grid">
+      <div class="about-photo">
+        <img src="/img/dan-sullivan.jpg" alt="Dan Sullivan" class="about-portrait" />
+      </div>
       <div class="about-text">
         <h2 class="section-title">Olympic Peninsula.<br/>Creative systems.</h2>
         <p>
@@ -138,6 +141,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="tag-label mono">📬 CONTACT</div>
           <div class="tags">
             <a href="mailto:rspdan@gmail.com" class="tag tag--link">rspdan@gmail.com</a>
+            <a href="https://www.linkedin.com/in/rspdan/" class="tag tag--link" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.youtube.com/rspdan" class="tag tag--link" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+        <div class="tag-group">
+          <div class="tag-label mono">📄 RESUME</div>
+          <div class="tags">
+            <a href="/resume/SULLIVAN_RESUME.pdf" class="tag tag--link" target="_blank">View Resume (PDF)</a>
+            <a href="/resume/SULLIVAN_RESUME.pdf" class="tag tag--link" download>Download</a>
           </div>
         </div>
       </div>
@@ -261,8 +273,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .about { background: var(--off-white); }
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem; align-items: start;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 3rem; align-items: start;
+}
+.about-portrait {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: block;
 }
 .about-text p { font-size: 0.95rem; color: var(--text-lt); line-height: 1.8; margin-bottom: 1rem; }
 .about-tags { display: flex; flex-direction: column; gap: 1.5rem; padding-top: 0.5rem; }
@@ -279,6 +299,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 @media (max-width: 640px) {
   .hero { padding: 4rem 0 3rem; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about-photo { max-width: 160px; }
   .project-grid { grid-template-columns: 1fr; }
 }
 </style>
