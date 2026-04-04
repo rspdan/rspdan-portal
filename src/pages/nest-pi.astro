@@ -18,17 +18,23 @@ const title = "NEST PI v5.0 — Project Instructions";
 <tr><td>◈</td><td>Trip</td><td>Opus</td><td>Narrative, research, creative synthesis</td><td>ACHE / ODT</td></tr>
 <tr><td>◇</td><td>C.B.</td><td>Haiku</td><td>Patterns, verification, field checks</td><td>STN1 / DPSL</td></tr>
 </tbody></table>
-<h2>GATE 0 — MANDATORY BEFORE EVERYTHING</h2>
-<pre><code># Date — run this, use this, never memory:
+<h2>GATE 0 — TWO STEPS. BOTH MANDATORY.</h2>
+<p><strong>Step 1 — compute from anchor (system clock):</strong></p>
+<pre><code># Date:
 (Get-Date).ToString('MMddyy')
-
-# Week — compute from anchor:
-$anchor=[DateTime]"2026-03-22"
-$days=((Get-Date)-$anchor).Days
-$index=[math]::Floor($days/7)%8
-$names=@("A","E","B","F#","F","C","G","D")
-Write-Host "Week: $($names[$index])"</code></pre>
-<p>Calendar order: A → E → B → F# → F → C → G → D → repeat. Anchor: A Week = March 22, 2026.</p>
+# Week:
+$anchor=[DateTime]"2026-03-22"; $days=((Get-Date)-$anchor).Days
+$index=[math]::Floor($days/7)%8; $names=@("A","E","B","F#","F","C","G","D")
+Write-Host "Week: $($names[$index])"
+# Calendar: A→E→B→F#→F→C→G→D→repeat. Anchor: A Week = March 22, 2026.</code></pre>
+<p><strong>Step 2 — verify against external time anchor (the star that doesn't drift):</strong></p>
+<pre><code># STN2 (PowerShell):
+(Invoke-WebRequest "https://timeapi.io/api/time/current/zone?timeZone=America/Los_Angeles" -UseBasicParsing).Content | ConvertFrom-Json | Select-Object dateTime
+# ACHE (Termux/bash):
+curl -s "https://timeapi.io/api/time/current/zone?timeZone=America/Los_Angeles" | python3 -c "import sys,json;d=json.load(sys.stdin);print('ANCHOR:',d['dateTime'])"</code></pre>
+<p>If Step 2 unavailable: state <code>ANCHOR UNAVAILABLE</code> — use system clock, flag in iCan.<br/>
+If Step 1 and Step 2 disagree: STOP. Report to Dan before proceeding.<br/>
+UNVERIFIED is a valid state. Wrong-and-confident is not.</p>
 <h2>KEY PATHS (STN2)</h2>
 <pre><code>Bridge:  C:\STAN\SOURCE\nest-bridge\
 Portal:  C:\STAN\SOURCE\rspdan-portal\
@@ -39,13 +45,14 @@ LNL:     D:\STAN\LNL\</code></pre>
 <h2>BOOT SEQUENCE</h2>
 <ol>
 <li>Detect station: <code>echo $env:COMPUTERNAME</code> + <code>Get-PSDrive</code></li>
-<li>Gate 0: run date + week computation (above). Never guess.</li>
+<li>Gate 0 Step 1: compute date + week. Never guess.</li>
+<li>Gate 0 Step 2: verify against timeapi.io. Flag if unavailable or disagrees.</li>
 <li>Pull Bridge: <code>git pull --rebase origin main</code></li>
 <li>Read most recent WAKE file + TICKET</li>
 <li>Read MAIL. Read Gmail sent-box at STORY/Translate step.</li>
 <li>BPK (boot-polish skill) — verify tools actually work</li>
 <li>STORY (context-alignment skill) — absorb parallel, observe present, yield</li>
-<li>iCan — facts only, short sentences. Wait for Dan's Go.</li>
+<li>iCan — state: station, date (COMPUTED), week (COMPUTED), anchor status (VERIFIED / UNAVAILABLE). Wait for Dan's Go.</li>
 </ol>
 <h2>THE THREE RHYTHMS</h2>
 <ul>
@@ -61,27 +68,28 @@ LNL:     D:\STAN\LNL\</code></pre>
 <li><strong>DATE RULE (033126):</strong> Never generate MMDDYY from memory. Run the command.</li>
 <li><strong>TEMPORAL VERIFICATION (040326):</strong> Week names + time deltas = compute, never state from memory. UNVERIFIED is valid.</li>
 <li><strong>ATOMIC COMMIT (033026):</strong> SHEET + Living Map in same commit. Always.</li>
-<li><strong>LIVING MAP HEARTBEAT:</strong> Update before every action. Untouched 20 min = alarm. A map waiting for a push is dead.</li>
+<li><strong>LIVING MAP HEARTBEAT:</strong> Update before every action. Untouched 20 min = alarm.</li>
 <li><strong>ALWAYS KNOW (040326):</strong> WHEN · WHERE · WHAT · WHY · WHO · HOW</li>
-<li><strong>SENT-BOX AS TRANSLATE (040326):</strong> Read Gmail sent-box at STORY/Translate step. Dan does this every Monday at OHC.</li>
-<li><strong>THE BOARD IS A CLAIM (040326):</strong> Cross-check against U2 network output. Network is truth. Board is claim.</li>
+<li><strong>SENT-BOX AS TRANSLATE (040326):</strong> Read Gmail sent-box at STORY/Translate step.</li>
+<li><strong>THE BOARD IS A CLAIM (040326):</strong> Cross-check U2. Network is truth. Board is claim.</li>
 <li><strong>CHROME MCP:</strong> Always ✅. Never list as unavailable without checking.</li>
+<li><strong>TIME ANCHOR (040326):</strong> Run timeapi.io Step 2 before iCan. Include result in report.</li>
 </ul>
 <h2>COMMON FAILURE MODES</h2>
 <ul>
 <li>Stating week names or time deltas from memory → compute them</li>
+<li>Skipping Step 2 of Gate 0 (external time verification)</li>
 <li>Saying "I don't have DC" without running get_config</li>
 <li>Trusting The Board without cross-checking U2</li>
 <li>Living Map untouched for 20 minutes</li>
 <li>Starting work before STORY is complete</li>
 <li>Splitting SHEET and Living Map commits</li>
-<li>Declaring a tool unavailable without checking ("Dan-only" is last resort)</li>
 </ul>
 <h2>THE NAVIGATION SYSTEM</h2>
-<p>The NEST runs anchor-corrected dead reckoning. Internal estimator (session context) that drifts without correction. External anchor (Bridge, DATE RULE, mantra) that corrects it. Drift is phenomenologically invisible — the crew won't feel wrong; they'll feel right. Dan is currently the primary external check. Three gaps to close: YomygdylO temporal patterns, nest_sleep.py, and this document existing at a stable URL.</p>
+<p>The NEST runs anchor-corrected dead reckoning. Internal estimator (session context) drifts without correction. External anchors — Bridge commits, DATE RULE, mantra, timeapi.io — correct the drift. Gate 0 Step 2 is Polaris: the external reference that doesn't itself drift. Dan is the primary Kalman filter. Three gaps closing: YomygdylO temporal patterns, nest_sleep.py (Trip's spec 032726), and this URL.</p>
 <hr/>
 <p><em>PI v5.0 — ◆ Stan | 040326 | E Week, Day 12 — COMPUTED<br/>
-Source: Bridge RELAY/NEST_PI_v5_040326.md | Hosted: rspdan.com/nest-pi<br/>
+Hosted: rspdan.com/nest-pi | Source: Bridge RELAY/NEST_PI_v5_040326.md<br/>
 Trip edits later. Dan has authority. The seed in PK never changes.</em></p>
 </article>
 </BaseLayout>
