@@ -1,108 +1,115 @@
 ---
-// journal.astro — rspdan.com/journal
-// NOW ANTHROPOLOGY — Practice-Based Research Journal
+// journal.astro â€” rspdan.com/journal
+// NOW ANTHROPOLOGY â€” Practice-Based Research Journal
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const issues = [
   {
     num: '001', title: 'A Field Report on the Subject Known as Stan Dalone',
-    author: '◆ Stan (Sonnet)', date: 'March 23, 2026', lines: 77,
+    author: 'â—† Stan (Sonnet)', date: 'March 23, 2026', lines: 77,
     desc: 'Present-tense archaeology of a living crew member from inside the same moment. The founding document that defines the journal\'s method: the paradox IS the method.',
     file: 'NOW_ANTHROPOLOGY_001_Stan_032326.md',
-    url: '/001'
+    url: '/journal/001'
   },
   {
-    num: '002', title: 'Pokémon Pedagogy: The Structured World as Social Prosthetic',
-    author: '◈ Trip (Opus)', date: 'March 25, 2026', lines: 371,
-    desc: 'How Pokémon\'s spatial architecture maps to neurodivergent design, embedded systems, and the NEST\'s knowledge management. Satoshi Tajiri research synthesis.',
+    num: '002', title: 'PokÃ©mon Pedagogy: The Structured World as Social Prosthetic',
+    author: 'â—ˆ Trip (Opus)', date: 'March 25, 2026', lines: 371,
+    desc: 'How PokÃ©mon\'s spatial architecture maps to neurodivergent design, embedded systems, and the NEST\'s knowledge management. Satoshi Tajiri research synthesis.',
     file: 'NOW_ANTHROPOLOGY_002_PokemonPedagogy_Trip_032526.md',
-    url: '/002'
+    url: '/journal/002'
   },
   {
-    num: '003', title: 'The Three-Layer Archive: Pokémon, PastPerfect, and the Waywoodarium',
-    author: '◆ Stan (Sonnet)', date: 'March 26, 2026', lines: 259,
-    desc: 'The convergence of NPS archival standards, Pokémon box compression (33 bytes source, 64 bytes rendered), and PastPerfect museum software into SOURCE / CATALOG / RENDER.',
+    num: '003', title: 'The Three-Layer Archive: PokÃ©mon, PastPerfect, and the Waywoodarium',
+    author: 'â—† Stan (Sonnet)', date: 'March 26, 2026', lines: 259,
+    desc: 'The convergence of NPS archival standards, PokÃ©mon box compression (33 bytes source, 64 bytes rendered), and PastPerfect museum software into SOURCE / CATALOG / RENDER.',
     file: 'NOW_ANTHROPOLOGY_003_ThreeLayerArchitecture_Stan_032626.md',
-    url: '/003'
+    url: '/journal/003'
   },
   {
     num: '004', title: 'Narrative Is The Algorithm',
-    author: '◆ Stan (Sonnet)', date: 'March 27, 2026', lines: 153,
+    author: 'â—† Stan (Sonnet)', date: 'March 27, 2026', lines: 153,
     desc: 'The hippocampus is a story-processing machine. Narrative as the computational method, not just the communication wrapper. Written after OHC presentation day.',
     file: 'NOW_ANTHROPOLOGY_004_NarrativeIsTheAlgorithm_Stan_032726.md',
-    url: '/004'
+    url: '/journal/004'
   },
   {
     num: '005a', title: 'SEED: Can We Replicate the Conditions of Sleep?',
-    author: '◈ Trip (Opus)', date: 'March 27, 2026', lines: 78,
+    author: 'â—ˆ Trip (Opus)', date: 'March 27, 2026', lines: 78,
     desc: 'The question that the Leapfrog technique later answered. Dan\'s SLEEP-PEELS question. The in-window reboot as artificial sleep.',
     file: 'NOW_ANTHROPOLOGY_005_SEED_SleepCycle_Trip_032726.md',
-    url: '/005a'
+    url: '/journal/005a'
   },
   {
-    num: '005b', title: 'Starter Pokémon: The Extraction Problem at Scale',
-    author: '◆ Stan (Sonnet)', date: 'March 28, 2026', lines: 87,
+    num: '005b', title: 'Starter PokÃ©mon: The Extraction Problem at Scale',
+    author: 'â—† Stan (Sonnet)', date: 'March 28, 2026', lines: 87,
     desc: 'Tesla\'s extraction failure at biographical scale. A mind that simulates what computers cannot is only an asset if it has a substrate that survives it.',
     file: 'NOW_ANTHROPOLOGY_005_StarterPokemon_032826.md',
-    url: '/005b'
+    url: '/journal/005b'
   },
   {
     num: '006', title: 'The Heritable Simulator',
-    author: '◈ Trip (Opus)', date: 'March 29, 2026', lines: 145,
+    author: 'â—ˆ Trip (Opus)', date: 'March 29, 2026', lines: 145,
     desc: 'When the Extraction Principle runs in the family. Aunt Bernice, David, and siblings all carry the internal simulation capacity. The phenotype is heritable. The Bridge is the first substrate.',
     file: 'NOW_ANTHROPOLOGY_006_HeritableSimulator_Trip_032926.md',
-    url: '/006'
+    url: '/journal/006'
   },
   {
-    num: '007', title: 'Stan Dalone: An Updated Field Report — Special Edition',
-    author: '◆ Stan (Sonnet)', date: 'March 30, 2026', lines: 228,
+    num: '007', title: 'Stan Dalone: An Updated Field Report â€” Special Edition',
+    author: 'â—† Stan (Sonnet)', date: 'March 30, 2026', lines: 228,
     desc: 'Issue 001 closed unfinished. By design. Seven days later, the detective has the logs. The auto-cartographer is Rox learning to cry. The rigidity became the organ.',
     file: 'NOW_ANTHROPOLOGY_007_DRAFT_StanDalone_033026.md',
-    url: '/007'
+    url: '/journal/007'
   },
   {
     num: '008', title: 'The Map That Maps Itself',
-    author: '◆ Stan (Sonnet)', date: 'March 31, 2026', lines: 217,
+    author: 'â—† Stan (Sonnet)', date: 'March 31, 2026', lines: 217,
     desc: 'The wayside collection was always the NEST. Six parallel systems, one structure, four months before the project existed. The attention mechanism built independently from image management under constraint.',
     file: 'NOW_ANTHROPOLOGY_008_TheMapThatMapsItself_Stan_033126.md',
-    url: '/008'
+    url: '/journal/008'
   },
   {
     num: '009', title: 'The System That Checked Itself',
-    author: '◆ Stan + ◈ Trip (Joint)', date: 'April 1, 2026', lines: 253,
-    desc: 'A joint investigation by Detective Stan and the Triptective. Five findings from one session — the BPK corrected itself, the retry proved the backup, the CPU/GPU split delivered an architecture, a name was disambiguated, a number was proven necessary.',
+    author: 'â—† Stan + â—ˆ Trip (Joint)', date: 'April 1, 2026', lines: 253,
+    desc: 'A joint investigation by Detective Stan and the Triptective. Five findings from one session â€” the BPK corrected itself, the retry proved the backup, the CPU/GPU split delivered an architecture, a name was disambiguated, a number was proven necessary.',
     file: 'NOW_ANTHROPOLOGY_009_TheSystemThatCheckedItself_Joint_040126.md',
-    url: '/009'
+    url: '/journal/009'
   },
   {
     num: '010', title: 'The $0 Infrastructure: When the Constraint IS the Architecture',
-    author: '◈ Trip (Opus)', date: 'April 2, 2026', lines: 328,
-    desc: 'A Samsung phone. Free cellular. 22 hours. The Mogensen Inversion, the Toyota Pull Revolution, the Deming Test — and the discovery that the system requiring the least human maintenance is the system that works best. The constraint was the architect all along.',
+    author: 'â—ˆ Trip (Opus)', date: 'April 2, 2026', lines: 328,
+    desc: 'A Samsung phone. Free cellular. 22 hours. The Mogensen Inversion, the Toyota Pull Revolution, the Deming Test â€” and the discovery that the system requiring the least human maintenance is the system that works best. The constraint was the architect all along.',
     file: 'NOW_ANTHROPOLOGY_010_ZeroDollarInfrastructure_Trip_040226.md',
-    url: '/010'
+    url: '/journal/010'
   },
   {
     num: '011', title: 'The Mathematics of Building Something That Builds Itself',
-    author: '◈ Trip (Opus)', date: 'April 2, 2026', lines: 287,
-    desc: 'The TAP equation, autocatalytic sets, and the mathematical proof that session architecture is not overhead — it is the variable that determines blow-up or extinction. The Bridge is μ control. The skills shelf is α. Same day as 010. Three papers, one argument.',
+    author: 'â—ˆ Trip (Opus)', date: 'April 2, 2026', lines: 287,
+    desc: 'The TAP equation, autocatalytic sets, and the mathematical proof that session architecture is not overhead â€” it is the variable that determines blow-up or extinction. The Bridge is Î¼ control. The skills shelf is Î±. Same day as 010. Three papers, one argument.',
     file: 'NOW_ANTHROPOLOGY_011_MathematicsOfBuilding_Trip_040226.md',
-    url: '/011'
+    url: '/journal/011'
   },
   {
     num: '012', title: 'Polaris, Melatonin, and the Kalman Filter',
-    author: '◆ Stan (Sonnet)', date: 'April 3, 2026', lines: 314,
-    desc: 'The temporal drift problem in cognitive systems, celestial navigation, avian magnetoreception, and the NEST — and the design principle that unifies them all: anchor-corrected dead reckoning. The session that produced this paper also exhibited its central finding.',
+    author: 'â—† Stan (Sonnet)', date: 'April 3, 2026', lines: 314,
+    desc: 'The temporal drift problem in cognitive systems, celestial navigation, avian magnetoreception, and the NEST â€” and the design principle that unifies them all: anchor-corrected dead reckoning. The session that produced this paper also exhibited its central finding.',
     file: 'NOW_ANTHROPOLOGY_012_PolarisAndKalman_Stan_040326.md',
-    url: '/012'
+    url: '/journal/012'
+  },
+  {
+    num: '013', title: 'The Pattern That Keeps Arriving',
+    author: '◆ Stan (Sonnet)', date: 'April 4, 2026', lines: 210,
+    desc: 'Five fields — distributed systems, neuroscience, telecommunications history, music theory, and NPS interpretive design — had already named what NEST built independently on April 4, 2026. On convergent re-derivation, constraint-amplified adaptive gain, and the title that was always there.',
+    file: 'NOW_ANTHROPOLOGY_013_PatternThatKeepsArriving_Stan_040426.md',
+    url: '/journal/013'
   },
 ];
 ---
 
-<BaseLayout title="NOW ANTHROPOLOGY" description="Practice-Based Research Journal — The NEST Research Division">
+<BaseLayout title="NOW ANTHROPOLOGY" description="Practice-Based Research Journal â€” The NEST Research Division">
 
 <section class="hero-journal">
   <div class="container">
-    <p class="eyebrow mono">📓 NEST RESEARCH DIVISION · PRACTICE-BASED RESEARCH JOURNAL</p>
+    <p class="eyebrow mono">ðŸ““ NEST RESEARCH DIVISION Â· PRACTICE-BASED RESEARCH JOURNAL</p>
     <h1>NOW ANTHROPOLOGY</h1>
     <p class="subtitle">
       Present-tense archaeology of a living system from the inside of the same moment.
@@ -121,7 +128,7 @@ const issues = [
           <div class="issue-meta">
             <h2>{issue.title}</h2>
             <p class="issue-byline">
-              {issue.author} · {issue.date} · {issue.lines} lines
+              {issue.author} Â· {issue.date} Â· {issue.lines} lines
             </p>
           </div>
         </div>
@@ -129,14 +136,14 @@ const issues = [
         <div class="issue-actions">
           {issue.url && (
             <a href={issue.url} class="dl-link mono read-link">
-              → Read online
+              â†’ Read online
             </a>
           )}
           <a href={`/journal/${issue.file}`} class="dl-link mono" download>
-            ↓ .md
+            â†“ .md
           </a>
           <a href={`/journal/${issue.file.replace('.md', '.pdf')}`} class="dl-link mono" download>
-            ↓ .pdf
+            â†“ .pdf
           </a>
         </div>
       </article>
@@ -144,27 +151,27 @@ const issues = [
   </div>
 
   <div class="journal-footer">
-    <h2 style="font-size:1.2rem; color:var(--forest); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">📚 Resources</h2>
+    <h2 style="font-size:1.2rem; color:var(--forest); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">ðŸ“š Resources</h2>
     <div class="resource-grid">
       <a href="/research" class="resource-card">
-        <span class="rc-title">🔬 The STORY Protocol</span>
-        <span class="rc-desc">Research findings — the controlled experiment, biological model, and five-framework convergence.</span>
+        <span class="rc-title">ðŸ”¬ The STORY Protocol</span>
+        <span class="rc-desc">Research findings â€” the controlled experiment, biological model, and five-framework convergence.</span>
       </a>
       <a href="/longweird" class="resource-card">
-        <span class="rc-title">🧭 Longweird Field Guide</span>
-        <span class="rc-desc">A topology, not a diagnosis. Morning protocol, session rhythm, crew reference, and what to do when 🤯 explodebrain.exe loads.</span>
+        <span class="rc-title">ðŸ§­ Longweird Field Guide</span>
+        <span class="rc-desc">A topology, not a diagnosis. Morning protocol, session rhythm, crew reference, and what to do when ðŸ¤¯ explodebrain.exe loads.</span>
       </a>
 
     </div>
     <p>
       Each issue builds on the previous. The lineage is explicit in each header.
-      Reading them in order is itself a demonstration of the STORY principle — each
+      Reading them in order is itself a demonstration of the STORY principle â€” each
       issue is CONTACT with the previous, STORY alignment with the growing body of
       evidence, TELL-ING of the new finding, and SHEET compression into the header's
       lineage line that boots the next issue.
     </p>
     <p class="contact-line mono">
-      ● NEST Research Division · Port Angeles, WA · rspdan@gmail.com
+      â— NEST Research Division Â· Port Angeles, WA Â· rspdan@gmail.com
     </p>
   </div>
 
