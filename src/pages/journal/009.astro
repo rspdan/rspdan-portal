@@ -190,50 +190,69 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </section>
 
 <style>
-.na-hero { padding: 5rem 0 3.5rem; background: linear-gradient(180deg, #0a1a12 0%, #0f1e18 100%); border-bottom: 1px solid rgba(116,201,213,0.15); }
-.na-series { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--teal); margin-bottom: 1rem; }
-.na-issue-num { font-size: clamp(4rem, 12vw, 8rem); color: rgba(116,201,213,0.08); line-height: 1; margin-bottom: -1rem; }
-.na-title { font-family: var(--font-head); font-size: clamp(2rem, 5vw, 3.5rem); color: var(--warm-white); line-height: 1.15; margin-bottom: 1rem; }
-.na-meta { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.5rem; }
-.na-deck { font-size: clamp(1rem, 2vw, 1.15rem); color: rgba(255,255,255,0.7); line-height: 1.75; max-width: 680px; margin-bottom: 2rem; }
-.na-hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+/* === HERO === */
+.na-hero{padding:6rem 0 4rem;background:linear-gradient(160deg,#1a2e28 0%,var(--forest) 60%);border-bottom:2px solid var(--teal);}
+.na-series{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;}
+.na-issue-num{font-size:5rem;line-height:1;color:rgba(255,255,255,0.08);letter-spacing:-0.05em;margin-bottom:-1.5rem;font-weight:700;}
+.na-title{font-family:var(--font-head);font-size:clamp(2rem,5vw,3.5rem);color:var(--warm-white);line-height:1.15;margin-bottom:1.25rem;}
+.na-meta{font-size:0.7rem;letter-spacing:0.12em;color:var(--teal);margin-bottom:0.75rem;}
+.na-deck{font-size:1rem;color:rgba(255,255,255,0.75);max-width:560px;line-height:1.8;margin-bottom:2rem;}
+.na-hero-links{display:flex;gap:1rem;flex-wrap:wrap;}
+.na-hero .btn-outline{color:var(--teal);border-color:var(--teal);}
+.na-hero .btn-outline:hover{background:var(--teal);color:var(--forest);}
 
-.na-lineage { padding: 0.85rem 0; background: rgba(45,74,62,0.3); border-bottom: 1px solid var(--border); font-size: 0.75rem; }
-.na-lineage__link { color: var(--teal); text-decoration: none; }
-.na-lineage__link:hover { text-decoration: underline; }
-.na-lineage__sep { margin: 0 0.75rem; color: var(--muted); }
+/* === LINEAGE BAR === */
+.na-lineage{background:var(--off-white);border-bottom:1px solid var(--border);padding:0.75rem 0;font-size:0.7rem;}
+.na-lineage .container{display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;}
+.na-lineage__link{color:var(--forest);text-decoration:none;}
+.na-lineage__link:hover{text-decoration:underline;}
+.na-lineage__sep{margin:0 0.25rem;color:var(--muted);}
 
-.na-section { padding: 3.5rem 0; }
-.na-section--alt { background: rgba(45,74,62,0.04); }
-.na-prose-container { max-width: 720px; }
-.na-section-label { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--forest); margin-bottom: 0.75rem; }
-.na-section-title { font-family: var(--font-head); font-size: clamp(1.4rem, 3vw, 2rem); color: var(--warm-white); margin-bottom: 1.25rem; }
-.na-section-intro { font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; font-style: italic; }
-.na-pull { font-size: 1.15rem; color: var(--teal); line-height: 1.65; border-left: 3px solid var(--teal); padding-left: 1.25rem; margin: 2rem 0; }
+/* === SECTIONS === */
+.na-section{padding:5rem 0;}
+.na-section--alt{background:var(--off-white);}
+.na-section--dark{background:var(--forest);}
+.na-section-label{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--forest);margin-bottom:0.75rem;}
+.na-section-title{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.5rem);color:var(--text);margin-bottom:1.75rem;}
+.na-section-title--light{color:var(--warm-white);}
+.na-section-intro{font-size:1rem;color:var(--muted);margin-bottom:2.5rem;line-height:1.7;font-style:italic;}
+.na-prose-container{max-width:720px;}
+.na-prose-container p{font-size:1.05rem;color:var(--text-lt);line-height:1.85;margin-bottom:1.25rem;}
+.na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
 
-.na-pub-block { background: rgba(45,74,62,0.08); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; font-size: 0.8rem; line-height: 1.8; color: var(--muted); }
+/* === PULL QUOTE === */
+.na-pull{font-family:var(--font-head);font-size:1.15rem;color:var(--forest);border-left:3px solid var(--teal);padding-left:1.25rem;margin:2rem 0;line-height:1.6;}
 
-.na-finding { margin-bottom: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
-.na-finding:last-child { border-bottom: none; }
-.na-finding__num { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--teal); margin-bottom: 0.5rem; }
-.na-finding__title { font-family: var(--font-head); font-size: 1.3rem; color: var(--warm-white); margin-bottom: 1rem; }
-.na-finding__list { padding-left: 1.5rem; margin: 1rem 0; color: rgba(255,255,255,0.75); line-height: 1.8; }
-.na-finding__list li { margin-bottom: 0.4rem; }
-.na-evidence { font-size: 0.7rem; letter-spacing: 0.05em; color: var(--forest); margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(45,74,62,0.1); border-radius: var(--radius); }
+/* === PUB INFO BLOCK (009+) === */
+.na-pub-block{background:rgba(45,74,62,0.08);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:0.8rem;line-height:1.8;color:var(--muted);}
 
-.na-qa { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(45,74,62,0.2); }
-.na-qa:last-child { border-bottom: none; }
-.na-q { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.75rem; }
-.na-a p { color: rgba(255,255,255,0.8); line-height: 1.8; }
-.na-a strong { color: var(--warm-white); }
+/* === FINDINGS (009+) === */
+.na-finding{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border);}
+.na-finding:last-child{border-bottom:none;}
+.na-finding__num{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+.na-finding__title{font-family:var(--font-head);font-size:1.3rem;color:var(--text);margin-bottom:1rem;}
+.na-finding__list{padding-left:1.5rem;margin:1rem 0;color:var(--text-lt);line-height:1.8;}
+.na-finding__list li{margin-bottom:0.4rem;}
+.na-evidence{font-size:0.7rem;letter-spacing:0.05em;color:var(--forest);margin-top:1.25rem;padding:0.75rem 1rem;background:rgba(45,74,62,0.08);border-radius:var(--radius);}
 
-.na-one-line { padding: 5rem 0; background: #0f1e18; border-top: 1px solid rgba(116,201,213,0.2); border-bottom: 1px solid rgba(116,201,213,0.2); }
-.na-ol-text { font-family: var(--font-head); font-size: clamp(1.1rem, 2.5vw, 1.6rem); color: var(--warm-white); max-width: 760px; line-height: 1.65; margin-bottom: 1.5rem; font-style: italic; }
-.na-ol-meta { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--teal); }
+/* === Q&A (009+) === */
+.na-qa{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(45,74,62,0.2);}
+.na-qa:last-child{border-bottom:none;}
+.na-q{font-size:0.7rem;letter-spacing:0.1em;color:var(--teal);margin-bottom:0.75rem;}
+.na-a p{color:var(--text-lt);line-height:1.8;}
+.na-a strong{color:var(--text);}
 
-.na-downloads { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
-.btn { display: inline-block; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; padding: 0.7rem 1.6rem; border-radius: var(--radius); transition: all 0.2s ease; cursor: pointer; text-decoration: none; }
-.btn-outline { background: transparent; color: var(--forest); border: 2px solid var(--forest); }
-.btn-outline:hover { background: var(--forest); color: #fff; }
+/* === ONE LINE === */
+.na-one-line{padding:5rem 0;background:#0f1e18;border-top:1px solid rgba(116,201,213,0.2);border-bottom:1px solid rgba(116,201,213,0.2);}
+.na-ol-text{font-family:var(--font-head);font-size:clamp(1.2rem,2.5vw,1.65rem);color:var(--warm-white);max-width:800px;line-height:1.65;margin-bottom:1.5rem;font-style:italic;}
+.na-ol-meta{font-size:0.6rem;letter-spacing:0.2em;color:var(--teal);}
+
+/* === DOWNLOADS === */
+.na-downloads{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;}
+
+/* === BUTTONS === */
+.btn{display:inline-block;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
+.btn-outline{background:transparent;color:var(--forest);border:2px solid var(--forest);}
+.btn-outline:hover{background:var(--forest);color:#fff;}
 </style>
 </BaseLayout>
