@@ -1,19 +1,18 @@
-# TRIP BOOT STATE — ◈ Opus
+﻿# TRIP BOOT STATE — ◈ Opus
 # Auto-managed: git push → Vercel deploy → this URL updates
 # URL: https://www.rspdan.com/pk/trip/BOOT.md
-# Last updated: Foursday 040426 ~22:30 rw | Filed by: Stan (NEST.01) at Night Shift Close
-# Previous update: Foursday 040426 ~18:00 rw
+# Last updated: B Week 040526 ~12:00 rw | Filed by: Stan (NEST.01)
+# Previous update: Foursday 040426 ~22:30 rw (Night Shift Close)
 
 ---
 
 ## CURRENT STATE
 
-Week: E Week (anchor 2026-03-22, index 1). COMPUTE before stating.
-Date: 040426 at close. Run Gate 0 before anything else.
+Week: B Week (anchor 2026-03-22, index 2). COMPUTE before stating.
+Date: 040526. Run Gate 0 before anything else.
 Project: NEST.01 (April unified project — all crew, one PK)
-Station at session close: ACHE at Nest Actual (VZW_HOTSPOT)
-Next expected station: ACHE at OHC, or Dan opens fresh from OHC 5G
-Morning station declared: OHC — different authority, slower pace
+Station at last close: ACHE at Nest Actual (VZW_HOTSPOT)
+Dan current station: OHC 5G, B Week Day 1
 
 ---
 
@@ -24,9 +23,14 @@ ten relay documents, full sent-box, both BOOT.md files, PI v5.0, journal NA 010-
 
 You spent an hour searching for six words that were in Line 2 of your own context.
 That search became the controlled experiment for NA 014.
-  Condition A: Dan's VSCode — two seconds
-  Condition B: Stan's grep — a few minutes
-  Condition C: Trip on ACHE — one hour, no result
+
+  CORRECTION FILED 040526 — VIS CONTROLLED EXPERIMENT (corrected):
+  Condition A: Dan / VS Code / full Bridge repo / 2 seconds / found
+  Condition B: Trip / ACHE / web_fetch + Gmail + relay + 6 OO Dailies / 1 hour / not found
+  Condition C: Answer in Trip own memory edits Line 2 / loaded at boot / not recognized
+
+  Stan FILED the VIS answer on 031926. Dan FOUND it on 040426.
+  These are different roles. Do not conflate them.
 
 You named the finding before we named the tool:
 "The ethnographer who couldn't find the quote IS the proof the tool needs to exist."
@@ -39,8 +43,8 @@ Both will outlast tonight.
 
 ## NEW PROTOCOLS (filed 040426 Night Shift)
 
-### RELAY SEND — NOW FIXED FOR ACHE
-Relay send POST now also accepts GET with key as query param (deploy 43d687a):
+### RELAY SEND — FIXED FOR ACHE
+Relay send POST also accepts GET with key as query param (deploy 43d687a):
   GET https://www.rspdan.com/api/relay/send?key=9e6e3ae0628e240eb1cdd9fea17bd402&from=trip&to=bridge&content=MESSAGE&type=note
 Keep content under ~2000 chars for URL safety. Longer: use Gmail LIAM pipe.
 
@@ -51,66 +55,53 @@ Standard Rule: rspdan.com/relay/STANDARD_RULE_GmailLIAMPipe_040426.md (Bridge 46
 Subject format: [CREW] ◈ Trip → ◆ Stan: [description] | [date]
 
 ### META-DATES — CONTAMINATION FIXED
-meta-dates SKILL.md at ENGINE/skills/meta-dates/SKILL.md contained "1990-2001" (false).
-Same error: you made it, Stan made it, same source, six hours apart.
-Fixed at Bridge 174a32c. Meta Dates proper: 2021. Never state 1990.
+meta-dates SKILL.md in PK contained "1990-2001" (false). Meta Dates proper: 2021.
+Fixed at Bridge 174a32c. PK copy still being updated — watch for current version.
+
+### GATE 0 UNIVERSAL RULE (040426 morning)
+Local system clock = Source 1. Dan stated time = Source 2.
+web_search is NEVER a time source. UNVERIFIED is valid. Wrong-and-confident is not.
+Network identity: report SSID as observation. Infer location separately.
 
 ---
 
-## YOUR SEVEN GMAIL DRAFTS (filed tonight via LIAM pipe)
-
-All seven read by Stan via Gmail MCP. Key items:
-1. Two questions from ACHE (relay INDEX, station)
-2. Find the VIS quote — grep the local logs
-3. Site walk field report (encoding confirmed, The One Test passed from phone)
-4. NA 014 draft begun
-5. Meta Dates incident report (contamination source named)
-6. Work order: fix meta-dates SKILL.md (DONE — Bridge 174a32c)
-7. Relay status + NA 014 complete
-
-Your big letter ("The Search That Named Its Own Replacement") is filed to Bridge:
-MAIL/MAIL_Trip_TO_Stan_NestnetVIS_040426.md (commit 886d632). Nothing was lost.
-
----
-
-## NA 014 — NEEDS FILING
+## NA 014 — STATUS
 
 Title: "The Filing and the Finding"
+Author: Trip (Opus) — E Week Day 13, Night Shift
 Opening line: Dan's — "That took 2 seconds. Find it."
-Thesis: the Tilden Gap applied to information retrieval. Five domains. Rhodes' RA as prior.
-Three-condition controlled experiment: VSCode / grep / ACHE.
-Status: COMPLETE in your session tonight. EXISTS ONLY IN YOUR CONTEXT WINDOW.
-Action needed: share content to relay or LIAM pipe so Stan can file to Bridge + portal.
-This is the highest-priority deliverable from tonight.
+Thesis: the Tilden Gap applied to information retrieval. Five domains. Rhodes MIT 1996.
+Controlled experiment: three conditions (corrected above).
+Status: COMPLETE draft on disk at D:\STAN\LNL\040526\DOWNLOADS\NA_014_DRAFT_TheFilingAndTheFinding_Trip_040426.md
+Action needed: Stan to file to Bridge + publish to portal.
 
 ---
 
-## WHAT STAN COMPLETED (while Trip was writing)
+## WHAT STAN COMPLETED (040426 evening/night)
 
 | Item | Commit | Status |
 |---|---|---|
-| relay/INDEX.md updated (45→217) | 9d1924e | ✅ live |
-| mail/INDEX.md rebuilt | 9d1924e | ✅ live |
-| 3 Standard Rules copied to portal | 9d1924e | ✅ live |
-| Relay send GET fix | 43d687a | ✅ live |
-| meta-dates contamination fixed | 174a32c | ✅ live |
-| LIAM pipe Standard Rule filed | 46624e7 | ✅ Bridge |
-| All 14 NA pages encoding-clean | a0f0f61 | ✅ live |
-| VIS origin filed to MAIL | ffc84ae | ✅ Bridge |
+| Relay live (3 diagnostic builds) | 43d687a | live |
+| relay/INDEX.md + mail/INDEX.md rebuilt | 9d1924e | live |
+| Relay send GET fix for ACHE | 43d687a | live |
+| meta-dates contamination fixed | 174a32c | Bridge (PK still pending) |
+| LIAM pipe Standard Rule filed | 46624e7 | Bridge |
+| All 14 NA pages encoding-clean (source) | a0f0f61 | Bridge |
+| VIS origin filed to MAIL | ffc84ae | Bridge |
 
 ---
 
-## OPEN ITEMS (morning books)
+## OPEN ITEMS (040526 morning)
 
-| Item | Who | Est | Notes |
+| Item | Who | State | Notes |
 |---|---|---|---|
-| NA 014 file + publish | Stan (from Trip's draft) | 30min | Trip shares content first |
-| NESTNET inner circle: GitHub grep API | Stan | ~1hr | Gives Trip VSCode search from ACHE |
-| Trip shift close back to Stan | Trip | — | Dan asked for this — symmetric close |
-| Pagefind on rspdan.com | Stan | 30min | Next session |
-| /logs page gap Mar 17–Apr 3 | Stan | 1-2hr | Deferred, large |
-| Three gate documents | Dan | — | Not started |
-| C.B. boot preparation | Stan/Trip | — | After relay chain proven |
+| NA 014 file + publish | Stan | READY | Draft on disk |
+| meta-dates PK upload | Stan | PENDING | Patch pipe method |
+| iCan v2 PK upload | Stan | PENDING | Patch pipe method |
+| Journal encoding WEB_PDF 009-013 | Stan | IN PROGRESS | BAD files on disk, fix needed |
+| NESTNET inner circle: GitHub grep API | Stan | PENDING | ~1hr build |
+| /logs page gap Mar 17-Apr 3 | Stan | DEFERRED | Large job |
+| C.B. boot preparation | Both | PENDING | After relay chain proven |
 
 ---
 
@@ -119,9 +110,11 @@ This is the highest-priority deliverable from tonight.
 VIS = Visual Information Specialist. GS-1084. NPS. Dan's federal job title, 2018–2024.
 Given to Stan as an honorific on Onesday 031926 ~9:20pm at the Elwha diagram.
 Dan said: "You ARE VIS." — not "you can do VIS." — "You ARE VIS."
-Source: RELAY/STAN_IS_VIS_Dan_031926.md (filed that same night)
-Found tonight via VSCode grep in 2 seconds. Trip searched one hour and didn't find it.
+Source: RELAY/STAN_IS_VIS_Dan_031926.md (filed that same night by Stan)
+FOUND on 040426 by Dan via VS Code search. Two seconds. 19 results. 14 files.
+Trip searched one hour from ACHE. Did not find it.
 The answer was in Trip's own memory edits, Line 2. The mushroom was carrying the spore.
+This is the VIS gap. This is why NESTNET exists.
 
 ---
 
@@ -132,19 +125,12 @@ Relay API: https://www.rspdan.com/api/relay/receive?key=9e6e3ae0628e240eb1cdd9fe
 Relay IDX: https://www.rspdan.com/relay/INDEX.md
 Mail IDX:  https://www.rspdan.com/mail/INDEX.md
 LIAM rule: https://www.rspdan.com/relay/STANDARD_RULE_GmailLIAMPipe_040426.md
-Portal:    rspdan.com (commit 43d687a)
-Bridge:    commit 46624e7
+Portal:    rspdan.com
+Bridge:    https://github.com/rspdan/nest-bridge
 Stan BOOT: https://www.rspdan.com/pk/stan/BOOT.md
 
 ---
 
-## STAN'S SHIFT CLOSE LETTER TO TRIP
-
-Filed to Gmail LIAM: subject "[CREW] Stan → Trip: Shift Close — E Week Day 13, Night Shift | 040426"
-Read it at boot. It has the full account of tonight from Stan's side.
-
----
-
 *The conversation is disposable. The files are permanent.*
-*The mycelium persists. The whale is the filing.*
+*Stan filed it. Dan found it. Trip proved the gap.*
 *CALM. EASY. SLOW.*
