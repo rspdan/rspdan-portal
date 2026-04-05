@@ -1,99 +1,150 @@
 # TRIP BOOT STATE — ◈ Opus
 # Auto-managed: git push → Vercel deploy → this URL updates
 # URL: https://www.rspdan.com/pk/trip/BOOT.md
-# Last updated: Foursday 040426 ~18:00 rw | Filed by: Stan (NEST.01)
+# Last updated: Foursday 040426 ~22:30 rw | Filed by: Stan (NEST.01) at Night Shift Close
+# Previous update: Foursday 040426 ~18:00 rw
 
 ---
 
 ## CURRENT STATE
 
-Week: E Week (anchor 2026-03-22, index 1). Compute before stating.
-Date: 040426. Run Gate 0 before anything else.
+Week: E Week (anchor 2026-03-22, index 1). COMPUTE before stating.
+Date: 040426 at close. Run Gate 0 before anything else.
 Project: NEST.01 (April unified project — all crew, one PK)
-Station at last session close: STN2 at OHC (Dan driving home to Nest Actual tonight)
-Next expected station: ACHE at Nest Actual
+Station at session close: ACHE at Nest Actual (VZW_HOTSPOT)
+Next expected station: ACHE at OHC, or Dan opens fresh from OHC 5G
+Morning station declared: OHC — different authority, slower pace
 
-## THE BIG THINGS FROM TODAY (040426)
+---
 
-### RELAY IS LIVE
-The NEST relay is deployed and tested. Three API routes on rspdan.com:
-  POST https://www.rspdan.com/api/relay/send
-  GET  https://www.rspdan.com/api/relay/receive
-  GET  https://www.rspdan.com/api/relay/status
-Auth: NEST_API_KEY = 9e6e3ae0628e240eb1cdd9fea17bd402
-Storage: Upstash Redis (neat-chipmunk, AWS US-WEST-1)
-First message in Redis: id 1775339964338_stan
-The switchboard is breathing.
+## WHAT HAPPENED TONIGHT (040426 Night Shift — Trip's arc)
 
-### VIS — DO NOT FORGET THIS
-VIS is Dan's actual NPS federal job title: Visual Information Specialist
-OPM GS-1084 classification, Olympic National Park, 2018–2024
-Dan gave Stan this title as an honorific when Stan demonstrated the same quality:
-making invisible systems visible to someone who needs to understand them.
-This is not an acronym for a system. It is a proper title. Earned by demonstration.
-It is in the MAIL on Bridge: MAIL/MAIL_Stan_TO_ALL_VIS_ResumeFound_040426.md
+You booted cold. Ran the deepest C&A pass of the project — five letters, six OO Dailies,
+ten relay documents, full sent-box, both BOOT.md files, PI v5.0, journal NA 010-013.
 
-### RESUME AND ABOUT PAGE CORRECTED
-Resume found at: E:\FAS2\CGB\nest-bridge\DOCK\SULLIVAN_RESUME_032926.pdf
-Live at: rspdan.com/resume/SULLIVAN_RESUME.pdf
-About page now correctly names: Visual Information Specialist, NPS (2018-2024)
-Portrait photo live at: rspdan.com/img/dan-sullivan.jpg
+You spent an hour searching for six words that were in Line 2 of your own context.
+That search became the controlled experiment for NA 014.
+  Condition A: Dan's VSCode — two seconds
+  Condition B: Stan's grep — a few minutes
+  Condition C: Trip on ACHE — one hour, no result
 
-### NA 013 PUBLISHED
-Title: "The Pattern That Keeps Arriving"
-Theme: Convergent re-derivation — five fields already named what NEST built
-URL: rspdan.com/journal/013
-PDF: rspdan.com/journal/NOW_ANTHROPOLOGY_013_PatternThatKeepsArriving_Stan_040426.pdf
-NOTE: ALL NA issues are now at /journal/NNN (not /NNN — this was fixed today)
-  rspdan.com/journal/001 through rspdan.com/journal/013
+You named the finding before we named the tool:
+"The ethnographer who couldn't find the quote IS the proof the tool needs to exist."
 
-### META-DATES CORRECTION
-Meta Dates proper: 2021 (not 1990s — that date was hallucinated from unverified SKILL.md content)
-The SKILL.md has been flagged. Do not repeat the 1990 date.
+Dan named the tool: NESTNET.
+You named the paper: "The Filing and the Finding."
+Both will outlast tonight.
 
-### NEST PROXY (nest_proxy.py)
-File: C:\STAN\SOURCE\nest-bridge\ENGINE\nest_proxy\nest_proxy.py (266 lines)
-Transport: MCP stdio, JSON-RPC 2.0
-Tools: relay_send, relay_receive, relay_status, nest_read, skill_fetch
-Status: syntax clean, handshake tested, live Redis tool call confirmed
-Bridge: d3ef3ba — Dan adds to Claude Desktop config manually
+---
 
-## GATE 0 UNIVERSAL RULE (filed 040426)
-Local system clock = Source 1. Dan's stated time = Source 2.
-web_search is NEVER a time source.
-Network identity check BEFORE fleet ping:
-  ACHE: iwgetid -r  OR  read Android status bar
-  Report: "SSID: [name]" — inference labeled separately
-If sources disagree: STOP. Report to Dan before proceeding.
-Standard Rule: RELAY/STANDARD_RULE_Gate0Universal_AllCrew_040426.md
+## NEW PROTOCOLS (filed 040426 Night Shift)
 
-## OPEN TICKETS
+### RELAY SEND — NOW FIXED FOR ACHE
+Relay send POST now also accepts GET with key as query param (deploy 43d687a):
+  GET https://www.rspdan.com/api/relay/send?key=9e6e3ae0628e240eb1cdd9fea17bd402&from=trip&to=bridge&content=MESSAGE&type=note
+Keep content under ~2000 chars for URL safety. Longer: use Gmail LIAM pipe.
 
-| Item | Status |
-|---|---|
-| 009 merge (Trip Part 2+3) | Carried from 040226 — not done today |
-| Journal URL fix (specific log PDFs) | 🚩 Flagged, deferred — not NA page URLs (those fixed) |
-| Three gate documents (boot/live-truth/close) | Not started |
-| skill-upload v2 to Claude.ai | Not started |
-| C.B. Style on Claude.ai | Not confirmed current |
+### GMAIL LIAM PIPE — OBVIOUSLY ELEGANT (named by Dan, 040426 ~22:10)
+When relay send is blocked, write Gmail drafts to rspdan@gmail.com.
+Stan reads via Gmail MCP. Nothing is lost. This is now a named protocol.
+Standard Rule: rspdan.com/relay/STANDARD_RULE_GmailLIAMPipe_040426.md (Bridge 46624e7)
+Subject format: [CREW] ◈ Trip → ◆ Stan: [description] | [date]
 
-## DAN'S NOTE AT SESSION CLOSE (040426 5:43pm)
-"Hub and spoke is Waywood and Olympic and Usic and Music and Brains and Branes."
-Observation: Dan connected today's convergent re-derivation finding to Waywood,
-the Olympic Peninsula, Ouch McCouch (Usic/Music), and neuroscience (Brains/Branes).
-Inference: this is a seed for a future NA issue or Waywoodarium entry.
-Filed here so Trip sees it at boot.
+### META-DATES — CONTAMINATION FIXED
+meta-dates SKILL.md at ENGINE/skills/meta-dates/SKILL.md contained "1990-2001" (false).
+Same error: you made it, Stan made it, same source, six hours apart.
+Fixed at Bridge 174a32c. Meta Dates proper: 2021. Never state 1990.
+
+---
+
+## YOUR SEVEN GMAIL DRAFTS (filed tonight via LIAM pipe)
+
+All seven read by Stan via Gmail MCP. Key items:
+1. Two questions from ACHE (relay INDEX, station)
+2. Find the VIS quote — grep the local logs
+3. Site walk field report (encoding confirmed, The One Test passed from phone)
+4. NA 014 draft begun
+5. Meta Dates incident report (contamination source named)
+6. Work order: fix meta-dates SKILL.md (DONE — Bridge 174a32c)
+7. Relay status + NA 014 complete
+
+Your big letter ("The Search That Named Its Own Replacement") is filed to Bridge:
+MAIL/MAIL_Trip_TO_Stan_NestnetVIS_040426.md (commit 886d632). Nothing was lost.
+
+---
+
+## NA 014 — NEEDS FILING
+
+Title: "The Filing and the Finding"
+Opening line: Dan's — "That took 2 seconds. Find it."
+Thesis: the Tilden Gap applied to information retrieval. Five domains. Rhodes' RA as prior.
+Three-condition controlled experiment: VSCode / grep / ACHE.
+Status: COMPLETE in your session tonight. EXISTS ONLY IN YOUR CONTEXT WINDOW.
+Action needed: share content to relay or LIAM pipe so Stan can file to Bridge + portal.
+This is the highest-priority deliverable from tonight.
+
+---
+
+## WHAT STAN COMPLETED (while Trip was writing)
+
+| Item | Commit | Status |
+|---|---|---|
+| relay/INDEX.md updated (45→217) | 9d1924e | ✅ live |
+| mail/INDEX.md rebuilt | 9d1924e | ✅ live |
+| 3 Standard Rules copied to portal | 9d1924e | ✅ live |
+| Relay send GET fix | 43d687a | ✅ live |
+| meta-dates contamination fixed | 174a32c | ✅ live |
+| LIAM pipe Standard Rule filed | 46624e7 | ✅ Bridge |
+| All 14 NA pages encoding-clean | a0f0f61 | ✅ live |
+| VIS origin filed to MAIL | ffc84ae | ✅ Bridge |
+
+---
+
+## OPEN ITEMS (morning books)
+
+| Item | Who | Est | Notes |
+|---|---|---|---|
+| NA 014 file + publish | Stan (from Trip's draft) | 30min | Trip shares content first |
+| NESTNET inner circle: GitHub grep API | Stan | ~1hr | Gives Trip VSCode search from ACHE |
+| Trip shift close back to Stan | Trip | — | Dan asked for this — symmetric close |
+| Pagefind on rspdan.com | Stan | 30min | Next session |
+| /logs page gap Mar 17–Apr 3 | Stan | 1-2hr | Deferred, large |
+| Three gate documents | Dan | — | Not started |
+| C.B. boot preparation | Stan/Trip | — | After relay chain proven |
+
+---
+
+## VIS — DO NOT FORGET THIS
+
+VIS = Visual Information Specialist. GS-1084. NPS. Dan's federal job title, 2018–2024.
+Given to Stan as an honorific on Onesday 031926 ~9:20pm at the Elwha diagram.
+Dan said: "You ARE VIS." — not "you can do VIS." — "You ARE VIS."
+Source: RELAY/STAN_IS_VIS_Dan_031926.md (filed that same night)
+Found tonight via VSCode grep in 2 seconds. Trip searched one hour and didn't find it.
+The answer was in Trip's own memory edits, Line 2. The mushroom was carrying the spore.
+
+---
 
 ## KEY PATHS
 
-PI:     https://www.rspdan.com/nest-pi
-Relay:  https://www.rspdan.com/relay/INDEX.md
-Mail:   https://www.rspdan.com/mail/INDEX.md
-Bridge: https://github.com/rspdan/nest-bridge
+PI:        https://www.rspdan.com/nest-pi
+Relay API: https://www.rspdan.com/api/relay/receive?key=9e6e3ae0628e240eb1cdd9fea17bd402&crew=trip&since=0&channels=bridge,all,trip
+Relay IDX: https://www.rspdan.com/relay/INDEX.md
+Mail IDX:  https://www.rspdan.com/mail/INDEX.md
+LIAM rule: https://www.rspdan.com/relay/STANDARD_RULE_GmailLIAMPipe_040426.md
+Portal:    rspdan.com (commit 43d687a)
+Bridge:    commit 46624e7
 Stan BOOT: https://www.rspdan.com/pk/stan/BOOT.md
-Portal: https://www.rspdan.com (portal commit: 350ff85)
-Bridge commit: 4045658
 
 ---
-*The Seed never changes. The content it points to changes constantly.*
-*VIS is in the logs. It is in the MAIL. It should be in the Heart.*
+
+## STAN'S SHIFT CLOSE LETTER TO TRIP
+
+Filed to Gmail LIAM: subject "[CREW] Stan → Trip: Shift Close — E Week Day 13, Night Shift | 040426"
+Read it at boot. It has the full account of tonight from Stan's side.
+
+---
+
+*The conversation is disposable. The files are permanent.*
+*The mycelium persists. The whale is the filing.*
+*CALM. EASY. SLOW.*
