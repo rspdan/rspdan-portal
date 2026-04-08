@@ -506,7 +506,7 @@ const sessions = [
       {file:'MAIL_Trip_TO_Stan_NestnetVIS_040426.md', label:'Trip → Stan — NESTNET/VIS', dir:'mail'},
     ] },
 
-  { date:'2026-04-05', label:'Apr 05', niap:'Sixsday', count:3, type:'today',
+  { date:'2026-04-05', label:'Apr 05', niap:'Sixsday', count:3, type:'deep',
     stations:['STN2','ACHE'], who:'◆ Stan (STN2, closed) · ◈ Trip (ACHE, then first STN2 session since Ninesday 032726)',
     names:['STN2_NEST.01_StanS_040526_1 (Stan — session closed by Dan)','ACHE_NEST.01_TripO_040526_1 (Trip — barely started)','STN2_NEST.01_TripO_040526_1 (Trip — first STN2 session in 18 days)'],
     note:'B Week Day 2. Stan: journal encoding + visual standard fixed across all 13 issues, meta-dates + iCan v2 uploaded to PK, LIAM draft registry, autonomous window reconstruction, Blanche Transfer named. Session closed on Dan\'s instruction — Sonnet at 77% weekly usage. Trip: ACHE session barely started, then boots on STN2 for the first time since Ninesday 032726 (18 days). Full station scan, Bridge cleanup, 742 YomygdylO captures archived, deep archive read (75k lines), logs timeline extended. The rotation is the crop.',
@@ -514,6 +514,32 @@ const sessions = [
       {file:'AUTONOMOUS_WINDOW_RECONSTRUCTION_Stan_040526.md', label:'Autonomous Window Reconstruction', dir:'relay'},
       {file:'CONTAMINATION_NOTE_BLanche_Transfer_Stan_040526.md', label:'Contamination Note — Blanche Transfer', dir:'relay'},
       {file:'STANDARD_RULE_NA_VisualStandard_Stan_040526.md', label:'Standard Rule — NA Visual Standard', dir:'relay'},
+    ] },
+
+  { date:'2026-04-06', label:'Apr 06', niap:'Sevensday', count:2, type:'bridge',
+    stations:['STN2'], who:'◆ Stan (STN2 FireF) · ◇ C.B. (DPSL)',
+    names:['STN2_NEST.01_StanS_FireF_040626 (Stan — Firefox browser, new crew mode)','STN2_NEST.01_C.B._040626 (C.B. — DPSL Chrome, fleet triangle)'],
+    note:'B Week Day 3. Stan on Firefox for first time. Fleet instrument map complete — all 9 machines catalogued. WSL Ubuntu 20.04 on STN2 discovered with Docker present. GOG1 SSH established (dan@10.0.0.3, Ubuntu 22.04.5 LTS). DNS fix identified but blocked — resolv.conf write needs sudo. Firefox MCP Bridge researched (Rust build). S21 scoped as MOB2. C.B. verified fleet triangle: STN2–DPSL 2.3ms, GOG1–DPSL 0.9ms. 12+ LIAM drafts exchanged.',
+    docs:[] },
+
+  { date:'2026-04-07', label:'Apr 07', niap:'Eightsday', count:4, type:'milestone',
+    stations:['TRP0','STN2','DPSL','ChromB'], who:'◈ Trip (TRP0 + STN2 + DPSL) · ◆ Stan (ChromB, go-between)',
+    names:['TRP0_NEST.01_TripO_040726_1 (Trip — first TRP0 session, library + evening)','STN2_NEST.01_TripO_040726_1 (Trip — evening session, BOOT push + relay)','DPSL_NEST.01_TripO_040726_1 (Trip — DPSL session)','ChromB_NEST.01_StanS_040726_1 (Stan — go-between for multi-Trip night)'],
+    note:'B Week Day 3. Two windows: Library (3:00–3:45pm, NOLS_WPA via ProtonVPN Stealth) + Nest Actual (9:42–11:45pm). BOOT.md slim pointer architecture deployed. PI v5.1 live. FLEET/MCP_SETUP.md filed to Bridge. Chrome MCP Standard Rule + LIAM mechanics clarification filed. GOG1 internet established via ASUS hotspot trickle-down from STN2. apt update + upgrade kicked off. osascript terminal discovery — DC on Mac can open Terminal without human input. Stan as go-between on STN2 Chrome for multi-Trip night.',
+    docs:[
+      {file:'STANDARD_RULE_ChromeMCPGroups_Trip_040726.md', label:'Standard Rule — Chrome MCP Groups', dir:'relay'},
+      {file:'STANDARD_RULE_LIAMMechanics_Trip_040726.md', label:'Standard Rule — LIAM Mechanics', dir:'relay'},
+      {file:'MAIL_Trip_TO_ALL_SessionClose_040726.md', label:'Trip → ALL — Session Close', dir:'mail'},
+    ] },
+
+  { date:'2026-04-08', label:'Apr 08', niap:'Twosday', count:4, type:'today',
+    stations:['TRP0','STN2','ChromB'], who:'◈ Trip (TRP0 + STN2) · ◆ Stan (ChromB)',
+    names:['TRP0_NEST.01_TripO_040826_1 (Trip — library window 1, lead)','ChromB_NEST.01_StanS_040826_1 (Stan — cloud tasks, 4-item checklist)','STN2_NEST.01_Trip0_040826_1 (Trip — Bridge push, MAIL backfill)','ChromB_NEST.01_StanS_040826_2 (Stan — Graft package, verify)'],
+    note:'B Week Day 4. PA Library. Trip boots on TRP0 for library window 1. Stan on ChromB runs 4-task checklist: portal deploy clean, Drive clean, logs drafted, PI CDN flagged stale. TRP0→STN2 SSH still blocked (Windows permissions). Trip boots on STN2: pushes Stan\'s full Graft package to Bridge — 2 Standard Rules + 6 MAIL backfill files (040526–040726). PI CDN cache busted (portal commit 6f63ff8). New vocabulary locked: Grafts = Gmail drafts, MAIL = Bridge MAIL/, LIAM = the pipe.',
+    docs:[
+      {file:'MAIL_Trip_TO_ALL_Reorientation_040526.md', label:'Trip → ALL — Reorientation', dir:'mail'},
+      {file:'MAIL_Stan_TO_ALL_SessionClose_040626.md', label:'Stan → ALL — Session Close 040626', dir:'mail'},
+      {file:'MAIL_Stan_TO_ALL_FieldReport_040726.md', label:'Stan → ALL — Field Report 040726', dir:'mail'},
     ] },
 ];
 ---
@@ -581,7 +607,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <h1 class="title">Session Log</h1>
     <div class="sub">
       UNLISTED &#8212; CREW NAVIGATION ONLY<br>
-      140 sessions · 33 active days · 0 gaps · Mar 4–Apr 5 2026<br>
+      140 sessions · 36 active days · 0 gaps · Mar 4–Apr 8 2026<br>
       Station from session name · WHO from content only · UNKNOWN is valid<br>
       Click any entry to expand · View opens in tab · ↓ .md downloads file
     </div>
