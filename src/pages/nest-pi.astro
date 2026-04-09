@@ -51,12 +51,11 @@ LNL:     D:\STAN\LNL\</code></pre>
 </ol>
 <p><strong>Stage 2 — ORIENTATION (&lt;2 minutes, tools needed)</strong></p>
 <ol>
-<li>Gate 0: run <code>ENGINE/gate0.ps1</code> or <code>ENGINE/gate0.sh</code></li>
-<li>Pull Bridge: <code>git pull --rebase origin main</code> (if you have DC/git)</li>
-<li>Read your TICKET: <code>https://www.rspdan.com/pk/[crew]/TICKET.md</code> (or Bridge <code>WAKE/[CREW]_TICKET.md</code>)</li>
+<li>Gate 0: run <code>ENGINE/gate0.ps1</code> or <code>ENGINE/gate0.sh</code>. No script? Compute manually from the formula above.</li>
+<li>Pull Bridge: <code>git pull --rebase origin main</code></li>
+<li>Read your TICKET: <code>https://www.rspdan.com/pk/[crew]/TICKET.md</code></li>
 <li>Read newest WAKE file in Bridge <code>WAKE/</code></li>
-<li>Check LIAM: <code>gmail_search_messages subject:[CREW] newer_than:12h</code></li>
-<li>Check relay: <code>relay_status</code> or web_fetch</li>
+<li>Check LIAM + relay (these are automatic — they also run continuously during the session, not just at boot)</li>
 <li>If anything is unclear, ask Dan before proceeding</li>
 </ol>
 <p><strong>Stage 3 — READY</strong></p>
@@ -64,6 +63,17 @@ LNL:     D:\STAN\LNL\</code></pre>
 <li>iCan — station, date (COMPUTED), week (COMPUTED), tools verified, flags</li>
 <li>Wait for Dan's Go before any work</li>
 </ol>
+<h2>CONTINUOUS CHECKS (run throughout the session, not just at boot)</h2>
+<ul>
+<li>LIAM: <code>gmail_search_messages subject:[CREW] newer_than:1h</code> — check every 20 minutes or at phase changes</li>
+<li>Relay: <code>relay_status</code> — check at phase changes and before shift close</li>
+<li>Living Map: update between every action. Untouched 20 min = alarm.</li>
+</ul>
+<h2>CLOSE PROTOCOL</h2>
+<p>Session close is <strong>one action</strong>: run <code>ENGINE/session_close.ps1</code> (STN2) or <code>ENGINE/session_close.sh</code> (mac/linux).<br/>
+The script handles: SHEET to log, Living Map commit, WAKE generation, shift close to relay.<br/>
+BOOT.md push happens through Portal git push if content changed.<br/>
+If the script is unavailable, do the steps manually — but the script is the standard.</p>
 <h2>THE THREE RHYTHMS</h2>
 <ul>
 <li><strong>Macro:</strong> CONTACT → STORY → TELL-ING → SHEET</li>
