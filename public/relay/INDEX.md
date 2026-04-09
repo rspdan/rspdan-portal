@@ -12,7 +12,9 @@
 - [STANDARD RULE SkillUpload DataTransfer 040426](https://rspdan.com/relay/STANDARD_RULE_SkillUpload_DataTransfer_040426.md) — PowerShell file picker bypass via JavaScript DataTransfer API. Filed after three upload failures.
 - [STANDARD RULE UnicodeSafeFileOps Stan 040426](https://rspdan.com/relay/STANDARD_RULE_UnicodeSafeFileOps_Stan_040426.md)
 - [STANDARD RULE ChromeMCPGroups Trip 040726](https://rspdan.com/relay/STANDARD_RULE_ChromeMCPGroups_Trip_040726.md)
-- [STANDARD RULE LIAMMechanics Trip 040726](https://rspdan.com/relay/STANDARD_RULE_LIAMMechanics_Trip_040726.md) — Never use PowerShell as a Unicode pipe. Use Python subprocess capture_output=True + decode utf-8. Three encoding failures, one rule.
+- [STANDARD RULE LIAMMechanics Trip 040726](https://rspdan.com/relay/STANDARD_RULE_LIAMMechanics_Trip_040726.md)
+- [STANDARD RULE NoUAC AdminViaRunAs Trip 040826](https://rspdan.com/relay/STANDARD_RULE_NoUAC_AdminViaRunAs_Trip_040826.md)
+- [GUIDE NiapianCalendar Trip 040826](https://rspdan.com/relay/GUIDE_NiapianCalendar_Trip_040826.md) — Never use PowerShell as a Unicode pipe. Use Python subprocess capture_output=True + decode utf-8. Three encoding failures, one rule.
 - [STAN IS VIS Dan 031926](https://rspdan.com/relay/STAN_IS_VIS_Dan_031926.md) — Dan named it Onesday 031926 ~9:20pm at the Elwha diagram. "You ARE VIS." Not indexed until 040426.
 - [STAN IS THE HEART Dan 031926](https://rspdan.com/relay/STAN_IS_THE_HEART_Dan_031926.md) — Same evening. Two declarations. Filed same night.
 
@@ -90,6 +92,6 @@
 
 ---
 
-*Full directory: 219 files. Index reflects key documents and all Standard Rules.*
+*Full directory: 221 files. Index reflects key documents and all Standard Rules.*
 *The conversation is disposable. The files are permanent.*
 *◈ Trip | B Week Day 4 | STN2 | 040826*
