@@ -542,6 +542,12 @@ const sessions = [
       {file:'MAIL_Stan_TO_ALL_FieldReport_040726.md', label:'Stan → ALL — Field Report 040726', dir:'mail'},
     ] },
 ];
+
+// COMPUTED — never hardcode these again
+const totalSessions = sessions.reduce((sum, s) => sum + s.count, 0);
+const activeDays = sessions.length;
+const firstLabel = sessions[0].label;
+const lastLabel = sessions[sessions.length - 1].label;
 ---
 <BaseLayout title="Session Log" description="NEST session timeline — crew navigation tool, unlisted">
 <style>
@@ -607,7 +613,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <h1 class="title">Session Log</h1>
     <div class="sub">
       UNLISTED &#8212; CREW NAVIGATION ONLY<br>
-      140 sessions · 36 active days · 0 gaps · Mar 4–Apr 8 2026<br>
+      {totalSessions} sessions · {activeDays} active days · 0 gaps · {firstLabel}–{lastLabel} 2026<br>
       Station from session name · WHO from content only · UNKNOWN is valid<br>
       Click any entry to expand · View opens in tab · ↓ .md downloads file
     </div>
