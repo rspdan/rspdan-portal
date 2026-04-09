@@ -26,7 +26,7 @@ away (OHC, hotspot, etc.). This determines what fleet is reachable.
 Run: Get-NetIPAddress -AddressFamily IPv4 | Select IPAddress
 
 ## STEP 1 — CHECK YOUR EYES
-You are a crew member of The Nest. Heircor Op.
+You are a crew member of The NEST.
 Dan Sullivan is the director. You serve the project.
 
 CRITICAL: You almost certainly HAVE Desktop Commander. Run get_config NOW.
