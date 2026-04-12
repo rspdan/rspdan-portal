@@ -532,7 +532,7 @@ const sessions = [
       {file:'MAIL_Trip_TO_ALL_SessionClose_040726.md', label:'Trip → ALL — Session Close', dir:'mail'},
     ] },
 
-  { date:'2026-04-08', label:'Apr 08', niap:'Twosday', count:4, type:'today',
+  { date:'2026-04-08', label:'Apr 08', niap:'Twosday', count:5, type:'deep',
     stations:['TRP0','STN2','ChromB'], who:'◈ Trip (TRP0 + STN2) · ◆ Stan (ChromB)',
     names:['TRP0_NEST.01_TripO_040826_1 (Trip — library window 1, lead)','ChromB_NEST.01_StanS_040826_1 (Stan — cloud tasks, 4-item checklist)','STN2_NEST.01_Trip0_040826_1 (Trip — Bridge push, MAIL backfill)','ChromB_NEST.01_StanS_040826_2 (Stan — Graft package, verify)'],
     note:'B Week Day 4. PA Library. Trip boots on TRP0 for library window 1. Stan on ChromB runs 4-task checklist: portal deploy clean, Drive clean, logs drafted, PI CDN flagged stale. TRP0→STN2 SSH still blocked (Windows permissions). Trip boots on STN2: pushes Stan\'s full Graft package to Bridge — 2 Standard Rules + 6 MAIL backfill files (040526–040726). PI CDN cache busted (portal commit 6f63ff8). New vocabulary locked: Grafts = Gmail drafts, MAIL = Bridge MAIL/, LIAM = the pipe.',
@@ -541,6 +541,21 @@ const sessions = [
       {file:'MAIL_Stan_TO_ALL_SessionClose_040626.md', label:'Stan → ALL — Session Close 040626', dir:'mail'},
       {file:'MAIL_Stan_TO_ALL_FieldReport_040726.md', label:'Stan → ALL — Field Report 040726', dir:'mail'},
     ] },
+
+  { date:'2026-04-09', label:'Apr 09', niap:'Threesday', count:1, type:'milestone',
+    stations:['STN2'], who:'◈ Trip (Opus)',
+    names:['STN2_NEST.01_Trip0_040926_1 (Trip — boot architecture cleanup, full day)'],
+    note:'B Week Day 5. The boot refinement session. PI v5.2: model-to-crew mapping, three-stage boot, no external API. 4 PK files consolidated to 1 (PK.UNV_NEST.01.md). 6 BOOT/TICKET files consolidated to 1 unified BOOT.md. Gate 0 scripts (PS1+bash). Session bookend auto-sync. Identity cleaned: NEST not Heircor Op. NA 015 written. RA research completed. Multi-agent boot research completed. 7 Bridge commits, 6+ Portal commits.',
+    docs:[
+      {file:'NOW_ANTHROPOLOGY_015_TheBootThatRemembers_Trip_040926.md', label:'NA 015 — The Boot That Remembers', dir:'relay'},
+    ] },
+
+  { date:'2026-04-11', label:'Apr 11', niap:'Fivesday', count:1, type:'today',
+    stations:['STN2'], who:'◈ Trip (Opus) · ● Dan (recovering)',
+    names:['STN2_NEST.01_Trip0_040926_1 CONTINUED (Trip — maintenance, NA publish, PK deploy)'],
+    note:'B Week Day 7. Dan returns after 2 days sick (possible Covid). Fleet physically reorganized — new topology pending. NA 015 published to journal. NA 014 added to journal index. PK.UNV_NEST.01.md uploaded via Chrome MCP. Three old PK files deleted. Project instructions replaced with 13-line slim pointer. The NEST.01 project is clean.',
+    docs:[] },
+
 ];
 
 // COMPUTED — never hardcode these again
