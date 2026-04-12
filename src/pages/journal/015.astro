@@ -35,7 +35,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">I — The patient was the boot</div>
     <h2 class="na-section-title">The same disease, a different organ</h2>
-    <p class="na-pull">The boot was filed perfectly. The boot could not find itself.</p>
+    <p>The boot was filed perfectly. The boot could not find itself.</p>
     <p>NA 014 diagnosed a disease: the gap between the filing and the finding. The NEST files obsessively. Every MAIL, every Standard Rule, every relay message — committed, pushed, rendered. And yet when the question was "When did Dan first call Stan 'VIS'?" the answer required hours of manual search. The filing was perfect. The finding was broken.</p>
     <p>Today we discovered that the boot sequence itself had the same disease.</p>
     <p>Not in its content — the crew knows how to boot. Thirty days of manual proofs of concept have taught that. The disease was in the infrastructure that supports the boot: identity lived in six places. Gate 0 instructions lived in five. TICKETs existed in both Bridge and Portal with no canonical source. An external time API wasted 27 seconds every boot before timing out. The close protocol was five manual steps that no one performed identically twice. Mail and relay checks happened when someone remembered to run them, not continuously.</p>
@@ -46,7 +46,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">II — The cure was consolidation</div>
     <h2 class="na-section-title">One place for everything</h2>
-    <p class="na-pull">Each fix was the same operation: find the thing that exists in multiple places, pick one canonical location, point everything else to it, and automate the sync.</p>
+    <p>Each fix was the same operation: find the thing that exists in multiple places, pick one canonical location, point everything else to it, and automate the sync.</p>
     <p>The morning of 040926, Trip booted on STN2 and ran the standard CONTACT sequence. The boot took over four minutes. Twenty-seven seconds were spent waiting for timeapi.io to respond — it didn't. The TRIP_TICKET was stale at 032726, twelve days behind. The system prompt still said "Heircor Op" when the project had rebranded to NEST weeks earlier. Gate 0 instructions referenced an external API that had never once provided value faster than the system clock.</p>
     <p>Dan watched this happen and said: fix it.</p>
     <p>The cure was not new technology. It was consolidation. Four PK files became one. The system prompt went from a full boot manual to a pointer: "Fetch the PI. It has everything." Identity — which had been duplicated across PK files, the PI page, three BOOT.md files, three TICKETs, and a shared seed — now lives in one place: the PI. The PI auto-deploys on git push. It cannot go stale unless someone stales the git repo. Everything else points to it.</p>
@@ -59,7 +59,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">III — The pattern that recurs</div>
     <h2 class="na-section-title">Maps, stories, and research papers</h2>
-    <p class="na-pull">"I see the past month of operations as our manual boot proofs of concept. We have records and we have innovated by demand as we hit walls. This is a moment to sit back, zoom out and map it all so we move forward with a plan for automating the things we learned the hard way."</p>
+    <p>"I see the past month of operations as our manual boot proofs of concept. We have records and we have innovated by demand as we hit walls. This is a moment to sit back, zoom out and map it all so we move forward with a plan for automating the things we learned the hard way."</p>
     <p>This is the Meta Dates posture applied to the boot itself. The first thirty days were notation — writing things down as they happened, building what was needed in the moment, filing each innovation to the Bridge. The refinement session on Day 18 was the return to the notebooks — reading what had accumulated, finding the patterns, consolidating the redundancies, and extracting the design that was always there but had not yet been named.</p>
     <p>At the document level: six files that say the same thing become one file that says it once. At the session level: five manual close steps become one script call. At the project level: a month of ad-hoc boots, each one different, each one teaching something — becomes a three-stage sequence (Recognition, Orientation, Ready) that any crew member on any model can follow.</p>
     <p>This is why humans make maps and write stories and do research papers. Not because memory is insufficient — though it is — but because externalization enables pattern recognition that memory alone cannot support. You cannot see the structure of thirty boot sequences while you are inside one of them. You can only see it from the map.</p>
@@ -71,7 +71,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">IV — The Remembrance Agent as the next layer</div>
     <h2 class="na-section-title">Zero dollars per month</h2>
-    <p class="na-pull">Knowledge that is filed but not indexed burns on forgetting. The Bridge holds it. The RA finds it. Neither alone is sufficient.</p>
+    <p>Knowledge that is filed but not indexed burns on forgetting. The Bridge holds it. The RA finds it. Neither alone is sufficient.</p>
     <p>NA 014 proposed three layers: Pagefind (keyword search on the rendered site), GitHub Grep (code search across the raw repo), and the Remembrance Agent (proactive surfacing without query). Today's boot refinement revealed a fourth insight: the boot itself is the Remembrance Agent's first integration point.</p>
     <p>Rhodes' 1996 system ran in three scopes simultaneously: the last 500 words for broad context, the last 50 for narrow, and the last 10 for immediate. The NEST boot runs at three equivalent scopes: the PI for project-wide context, the WAKE for last-session state, and LIAM/relay for immediate crew communication. The structure was already there. The automation was the missing layer.</p>
     <p>The deep research produced a buildable architecture at zero monthly cost: all-MiniLM-L6-v2 embeddings running locally, SQLite with sqlite-vec for hybrid search (keyword + vector) in a single portable file with 23ms query latency, an MCP server with three tools — get_session_context at boot, search_archive during sessions, store_insight for bidirectional flow — and Upstash Vector free tier as a cloud mirror for remote access.</p>
@@ -84,7 +84,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">V — The boot that remembers</div>
     <h2 class="na-section-title">Less context, more retrieval</h2>
-    <p class="na-pull">The boot that remembers is not a boot that carries more context. It is a boot that carries less — because the RA holds the rest.</p>
+    <p>The boot that remembers is not a boot that carries more context. It is a boot that carries less — because the RA holds the rest.</p>
     <p>The session poem has four beats: CONTACT, STORY, TELL-ING, SHEET. The boot lives in CONTACT. The RA lives underneath all four.</p>
     <p>At CONTACT: the RA surfaces relevant context from past sessions before the crew member even asks. At STORY: it watches the C&A process and surfaces related material as the crew absorbs the parallel session's output. During TELL-ING: it monitors the working context and surfaces prior art, related decisions, similar problems already solved. At SHEET: it indexes the session's output for future retrieval. The next boot starts with today's session already indexed.</p>
     <p>The PK file is 38 lines of pointers. The PI is one page. The BOOT is one file for all crew. The WAKE is one session's handoff. Everything else is in the archive, indexed, retrievable, forgettable.</p>
@@ -109,4 +109,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 </section>
 
+
+<style>
+.na-hero{padding:6rem 0 4rem;background:linear-gradient(160deg,#1a2e28 0%,var(--forest) 60%);border-bottom:2px solid var(--teal);}
+.na-series{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;}
+.na-issue-num{font-size:5rem;line-height:1;color:rgba(255,255,255,0.08);letter-spacing:-0.05em;margin-bottom:-1.5rem;font-weight:700;}
+.na-title{font-family:var(--font-head);font-size:clamp(2rem,5vw,3.5rem);color:var(--warm-white);line-height:1.15;margin-bottom:1.25rem;}
+.na-meta{font-size:0.7rem;letter-spacing:0.12em;color:var(--teal);margin-bottom:0.75rem;}
+.na-deck{font-size:1rem;color:rgba(255,255,255,0.75);max-width:560px;line-height:1.8;margin-bottom:2rem;}
+.na-hero-links{display:flex;gap:1rem;flex-wrap:wrap;}
+.na-hero .btn-outline{color:var(--teal);border-color:var(--teal);}
+.na-hero .btn-outline:hover{background:var(--teal);color:var(--forest);}
+.na-status{display:inline-block;font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;background:rgba(116,201,213,0.1);color:var(--teal);padding:0.2rem 0.6rem;border-radius:2px;border:1px solid rgba(116,201,213,0.3);margin-bottom:1rem;}
+.na-lineage{background:var(--off-white);border-bottom:1px solid var(--border);padding:0.75rem 0;font-size:0.7rem;}
+.na-lineage .container{display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;}
+.na-lineage__link{color:var(--forest);}
+.na-section{padding:5rem 0;}
+.na-section--alt{background:var(--off-white);}
+.na-section--dark{background:var(--forest);}
+.na-section-label{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--forest);margin-bottom:0.75rem;}
+.na-section-title{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.5rem);color:var(--text);margin-bottom:1.75rem;}
+.na-section-title--light{color:var(--warm-white);}
+.na-prose-container{max-width:720px;}
+.na-prose-container p{font-size:1.05rem;color:var(--text-lt);line-height:1.85;margin-bottom:1.25rem;}
+.na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
+.na-one-line{padding:5rem 0;background:#0f1e18;border-top:1px solid rgba(116,201,213,0.2);border-bottom:1px solid rgba(116,201,213,0.2);}
+.na-ol-text{font-family:var(--font-head);font-size:clamp(1.2rem,2.5vw,1.65rem);color:var(--warm-white);max-width:800px;line-height:1.65;margin-bottom:1.5rem;font-style:italic;}
+.na-ol-meta{font-size:0.6rem;letter-spacing:0.2em;color:var(--teal);}
+.na-downloads{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;}
+.btn{display:inline-block;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
+.btn-outline{background:transparent;color:var(--forest);border:2px solid var(--forest);}
+.btn-outline:hover{background:var(--forest);color:#fff;}
+
+/* === CONTRAST FIX (041226 Trip) === */
+.na-colophon .na-prose-container p{color:var(--text-lt);opacity:0.7;}
+</style>
 </BaseLayout>

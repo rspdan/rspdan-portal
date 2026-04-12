@@ -42,7 +42,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <strong>Station:</strong> STN2 (Stan) + ACHE (Trip, reading via rspdan.com/mail/)<br/>
       <strong>Session arc:</strong> CONTACT 12:57 → TELL-ING 15:00 → SHEET pending</p>
     </div>
-    <p class="na-pull">A controlled experiment in self-correction. The correction is the data.</p>
+    <p>A controlled experiment in self-correction. The correction is the data.</p>
   </div>
 </section>
 
@@ -76,7 +76,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>What was lost: the conversation window. What was not lost: everything filed to Bridge and the local auto-log.</p>
       <p>Recovery sequence: Dan pasted the path → Stan read 862 lines / 53KB → Stan confirmed bridge state 82dc861 clean → full operational context recovered in one response.</p>
       <p>Dan's words: <em>"Phew! Good things I'm using my local logs like this!!"</em></p>
-      <p class="na-pull">The conversation is disposable. The local log is the backup. Maximum data loss when retry is clicked: 60 seconds of auto-logger output.</p>
+      <p>The conversation is disposable. The local log is the backup. Maximum data loss when retry is clicked: 60 seconds of auto-logger output.</p>
       <p>This is the NEST's answer to the Nikola Tesla failure mode. The difference between Tesla's outcome and this project's potential outcome: a git repo, a daemon, the commitment to file before the session closes.</p>
       <div class="na-evidence mono">Evidence: RELAY/STANDARD_RULE_LocalLogIsTheBackup_Stan_040126.md · Bridge d200028</div>
     </div>
@@ -104,7 +104,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h3 class="na-finding__title">Nikola Tesla, Not Elon Musk</h3>
       <p>A correction arrived mid-session from Dan: <em>"Tesla is confusing without his first name at least mentioned sometimes to differentiate between that asshole Elon Musk. (A. Leon Skum)"</em></p>
       <p>75+ bare "Tesla" references across Bridge RELAY files. First mention in 6 high-priority files corrected to "Nikola Tesla." Standard rule filed.</p>
-      <p class="na-pull">This is a small correction with a large implication: the NEST's central parallel — simulation intact, extraction incomplete — draws on the inventor's biography, not the automobile company's brand. When the word is ambiguous, the parallel collapses.</p>
+      <p>This is a small correction with a large implication: the NEST's central parallel — simulation intact, extraction incomplete — draws on the inventor's biography, not the automobile company's brand. When the word is ambiguous, the parallel collapses.</p>
       <p>The correction: Nikola Tesla (1856–1943), inventor. Not: Tesla, Inc. (2003–present), automotive/energy company.</p>
       <div class="na-evidence mono">Evidence: RELAY/CORRECTION_Tesla_NikolaTesla_040126.md · Bridge 3d15577</div>
     </div>
@@ -119,7 +119,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Trip, on ACHE at ~11:30pm on Onesday 033126, wrote a 15KB research paper: "The Remarkable Lives of the Number Twelve."</p>
       <p>The key finding: the chromatic scale is ℤ/12ℤ — the cyclic group of order 12. Ascending by a fifth means adding 7 semitones (mod 12). Because gcd(7, 12) = 1, the element 7 generates the entire group. This is precisely why the Circle of Fifths visits every key exactly once.</p>
       <p>The 12 tones of Western music arise from the continued fraction expansion of log₂(3) — the best small rational approximation for reconciling fifths with octaves. The denominators are 1, 1, 2, 5, 12, 41, 53... 12 is the convergent at the mathematical sweet spot: simple enough to be practical, precise enough to be musical.</p>
-      <p class="na-pull">The Circle of Fifths is not a metaphor for the circle group. It IS the circle group, applied to frequency ratios. Waywood's cosmology is grounded in number theory. The 12-key system is not arbitrary — it is the unique optimal solution.</p>
+      <p>The Circle of Fifths is not a metaphor for the circle group. It IS the circle group, applied to frequency ratios. Waywood's cosmology is grounded in number theory. The 12-key system is not arbitrary — it is the unique optimal solution.</p>
       <p>Written on the lightest station during a bedtime question. The paper exists. The math holds.</p>
       <div class="na-evidence mono">Evidence: ACHE_TripO_033126_1 · Trip's 15KB research paper · Continued fraction expansion of log₂(3)</div>
     </div>
@@ -163,7 +163,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">◆◈ PART THREE</div>
     <h2 class="na-section-title">Synthesis</h2>
-    <p class="na-pull">Extraction is immunity.</p>
+    <p>Extraction is immunity.</p>
     <p>The BPK that runs is the BPK that improves. The log that gets written is the log that saves the session. The name that gets disambiguated is the name that holds the parallel. The number that gets proven is the number that grounds the cosmology. The architecture that gets named is the architecture that can be built on purpose.</p>
     <p>Every finding in this issue is the same finding: the system that extracts — that runs itself, that files itself, that names itself, that proves itself — cannot be lost. The simulation stays intact because extraction is built in. This is the NEST's answer to the Nikola Tesla failure mode, operating at five scales simultaneously.</p>
   </div>
@@ -221,8 +221,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 .na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
 
 /* === PULL QUOTE === */
-.na-pull{font-family:var(--font-head);font-size:1.15rem;color:var(--forest);border-left:3px solid var(--teal);padding-left:1.25rem;margin:2rem 0;line-height:1.6;}
-
 /* === PUB INFO BLOCK (009+) === */
 .na-pub-block{background:rgba(45,74,62,0.08);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:0.8rem;line-height:1.8;color:var(--muted);}
 

@@ -38,7 +38,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">I — The field note</div>
     <h2 class="na-section-title">OHC. April 4. 17:28.</h2>
-    <p class="na-pull">Between 13:57 and 15:04 today, we pushed five commits to production. Three failed. Each failure produced a more precise diagnosis than the one before. The fourth attempt worked.</p>
+    <p>Between 13:57 and 15:04 today, we pushed five commits to production. Three failed. Each failure produced a more precise diagnosis than the one before. The fourth attempt worked.</p>
     <p>Olympic Hiking Company, Port Angeles, Washington. The network is OHC 5G. A port kitty walked by the window around 15:00. The Strait of Juan de Fuca is two miles north.</p>
     <p>At 13:57, the first relay commit landed — three API routes, Upstash Redis, hybrid SSR mode. The build log returned 200 events and ended in a deployment rejection: the adapter had written <code>nodejs18.x</code> as the serverless runtime, and Vercel's deployment API no longer accepts Node 18. At 14:45, a fix was pushed. Zero events — a pre-build rejection, categorically different from the first failure but not yet recognized as such. At 14:48, one character changed. Zero events again. The variable that differed between the working first build and the two empty-log failures was the presence of <code>vercel.json</code> in the project root. When the adapter owns the Vercel output directory, a coexisting <code>vercel.json</code> creates a configuration conflict that Vercel rejects before provisioning a build machine.</p>
     <p>The correct diagnosis required reading the adapter source — not Vercel's documentation, not the adapter's README, but <code>adapter.js</code> directly. The function <code>getRuntime()</code> hardcodes <code>return 'nodejs18.x'</code>. The adapter's TypeScript definitions contain no <code>nodeVersion</code> property. The fix lives at the layer that writes the output. A 24-line postbuild script patches the generated file after build and before deployment. It worked.</p>
@@ -52,7 +52,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">II — The finding</div>
     <h2 class="na-section-title">Convergent Re-derivation</h2>
-    <p class="na-pull">When multiple independent searches land on the same answer, the structure they found is not an artifact of any single searcher's assumptions. It exists in the territory, not just in the map.</p>
+    <p>When multiple independent searches land on the same answer, the structure they found is not an artifact of any single searcher's assumptions. It exists in the territory, not just in the map.</p>
     <p>A convergent re-derivation is when two or more independent parties, working from different constraints in different domains without knowledge of each other, arrive at the same formal structure. Darwin and Wallace arriving at natural selection in 1858 is the canonical case. But convergent re-derivation is not rare in science — it is precisely the signal that a structure is real, not constructed.</p>
     <p>Today we confirmed that NEST's architecture — built through constraint and problem-solving across six weeks of daily operation — has formal names in five separate fields. Those names existed before we arrived. We did not know them. Arriving at them independently is not coincidence. It is evidence that the structure underneath the NEST project corresponds to something real in the territory of how minds, systems, and memory actually work.</p>
     <p>The five fields: distributed systems, neuroscience, telecommunications history, music theory, and National Park Service interpretive design. Each had already named something we found.</p>
@@ -90,7 +90,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">IV — The meta-lesson</div>
     <h2 class="na-section-title">Read the Instrument First</h2>
-    <p class="na-pull">The adapter writes the output. The platform validates it. The fix lives at the layer that writes. External documentation describes expected behavior. Source code describes actual behavior. When they differ, source code wins.</p>
+    <p>The adapter writes the output. The platform validates it. The fix lives at the layer that writes. External documentation describes expected behavior. Source code describes actual behavior. When they differ, source code wins.</p>
     <p>The meta-lesson that cuts across all five witnesses is identical to the meta-lesson from today's build failures: read the instrument before reading any documentation of it. <code>adapter.js</code> is more reliable than Vercel's documentation about the adapter. The installed package source is more reliable than the published API reference. The system clock is more reliable than any stated time. These are the same instruction in three different registers, discovered independently across a single session.</p>
     <p>In interpretive design, Tilden's Principle 2 says this directly: the tangible thing is not the information. The information is not the interpretation. Each layer is a different kind of reading and none substitutes for the others. The park is the instrument. The guide is a description. The interpretation is the revelation of what the park exists to carry.</p>
     <p>In the GANE model: the brain's signal amplification system increases fidelity to the thing itself by suppressing competing representations. The norepinephrine hotspot is not created by external information — it is created by the thing that was already there, now amplified against suppressed noise. The NE system raises signal-to-noise ratio for information already present. It does not add. It clarifies.</p>
@@ -153,8 +153,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 .na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
 
 /* === PULL QUOTE === */
-.na-pull{font-family:var(--font-head);font-size:1.15rem;color:var(--forest);border-left:3px solid var(--teal);padding-left:1.25rem;margin:2rem 0;line-height:1.6;}
-
 /* === PUB INFO BLOCK (009+) === */
 .na-pub-block{background:rgba(45,74,62,0.08);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:0.8rem;line-height:1.8;color:var(--muted);}
 

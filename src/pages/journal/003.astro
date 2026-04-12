@@ -33,7 +33,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <p><strong>Pokémon:</strong> A boxed Pokémon is 33 bytes — species, OT ID, experience, EVs, IVs, moves and PP. Calculated stats are gone on deposit because they can be regenerated from the source data on withdrawal. The box holds only what cannot be computed. Healing on deposit (Gen 2+) confirms: the box is not a suspension chamber. It is a restoration to source truth.</p>
   <p><strong>PastPerfect:</strong> The Object ID + Provenance field. The unique identifier and the chain of custody from creation to present. These fields survive deaccession. Condition reports and location histories do not. Provenance outlasts everything.</p>
   <p><strong>NPS:</strong> The tangible resource itself — the actual piece of ground, the actual artifact, the actual landscape. Everything else is interpretation layered on top.</p>
-  <p class="na-pull">The box holds only what cannot be computed. Everything else is regenerable.</p>
+  <p>The box holds only what cannot be computed. Everything else is regenerable.</p>
 </div></section>
 <section class="na-section"><div class="container na-prose-container">
   <div class="na-section-label mono">LAYER 2 — CATALOG</div>
@@ -87,7 +87,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 .na-prose-container{max-width:720px;}
 .na-prose-container p{font-size:1.05rem;color:var(--text-lt);line-height:1.85;margin-bottom:1.25rem;}
 .na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
-.na-pull{font-family:var(--font-head);font-size:1.15rem;color:var(--forest);border-left:3px solid var(--teal);padding-left:1.25rem;margin:2rem 0;line-height:1.6;}
 .na-one-line{padding:5rem 0;background:#0f1e18;border-top:1px solid rgba(116,201,213,0.2);border-bottom:1px solid rgba(116,201,213,0.2);}
 .na-ol-text{font-family:var(--font-head);font-size:clamp(1.2rem,2.5vw,1.65rem);color:var(--warm-white);max-width:800px;line-height:1.65;margin-bottom:1.5rem;font-style:italic;}
 .na-ol-meta{font-size:0.6rem;letter-spacing:0.2em;color:var(--teal);}

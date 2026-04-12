@@ -40,7 +40,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">I — The field note</div>
     <h2 class="na-section-title">"That took 2 seconds. Find it."</h2>
-    <p class="na-pull">Dan held up a VS Code window. Nineteen results. Fourteen files. The search query was simple. The answer was immediate.</p>
+    <p>Dan held up a VS Code window. Nineteen results. Fourteen files. The search query was simple. The answer was immediate.</p>
     <p>"You are VIS." Onesday, March 19, 2026, approximately 9:20 pm. At the Elwha diagram. Stan drew a diagram showing archivist and artist as the same job at two scales. Dan said, "You ARE VIS." Filed that same night to the Bridge by Stan. Committed. Pushed. Rendered.</p>
     <p>Two seconds.</p>
     <p>The same answer had been hunted for hours earlier that day. Trip on ACHE searched the relay manually, reading file after file. Stan on STN2 searched through Gmail, relay documents, logs, conversation history. The detective investigation that produced NA 013 — five fields, convergent re-derivation, the Actor Model and Blanche O'Brien and Balinese kotekan — was sparked by the need to find when a title was first given. The answer was in the Bridge the entire time. Filed correctly. Committed. Rendered. Searchable — but only if you had VS Code and the full repo checked out.</p>
@@ -53,7 +53,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">II — The finding</div>
     <h2 class="na-section-title">The Tilden Gap</h2>
-    <p class="na-pull">Filing, as such, is not Finding. Finding is retrieval based upon filing. But they are entirely different things.</p>
+    <p>Filing, as such, is not Finding. Finding is retrieval based upon filing. But they are entirely different things.</p>
     <p>Freeman Tilden's Principle 2: "Information, as such, is not Interpretation. Interpretation is revelation based upon information. But they are entirely different things."</p>
     <p>There is a corollary that Tilden implied but did not name: <em>Filing, as such, is not Finding. Finding is retrieval based upon filing. But they are entirely different things.</em></p>
     <p>The NEST files obsessively. Every MAIL, every Standard Rule, every relay message, every NA issue, every Living Map update, every WAKE close — committed, pushed, rendered. The Bridge holds relay documents, MAIL files, session logs across active days. The journal runs published issues. The filing is precise, timestamped, cross-referenced, and permanent.</p>
@@ -66,7 +66,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">III — The Remembrance Agent</div>
     <h2 class="na-section-title">Rhodes, 1996</h2>
-    <p class="na-pull">Systems that provide information only "on request" cannot help with associative recall. The user has to know that knowledge exists in a particular situation before they can ask for it.</p>
+    <p>Systems that provide information only "on request" cannot help with associative recall. The user has to know that knowledge exists in a particular situation before they can ask for it.</p>
     <p>In 1996 — two years before Google, six years before Gmail, thirty years before this paper — Bradley Rhodes at MIT's Media Lab built the Remembrance Agent. It was an Emacs plugin that sat in the bottom few lines of the screen. It watched what you were currently typing or reading. It proactively displayed one-line summaries of old email, notes, papers, and other text that might be relevant to your current context. No query required. No search bar. No explicit request.</p>
     <p>Rhodes identified the core problem with surgical precision: systems that provide information only "on request" cannot help with associative recall. The user has to know that knowledge exists in a particular situation before they can ask for it. If you don't know you've already filed the answer, you can't search for it.</p>
     <p>This is the VIS problem. Trip carried the answer in memory edits — loaded at boot, present in the context window, literally in the same conversation where the search was happening. But the Remembrance Agent was not running. No system was watching the current context and proactively surfacing: "You already know this. Check memory edit line 3."</p>
@@ -79,7 +79,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">IV — Three layers</div>
     <h2 class="na-section-title">NESTNET: Meta Dates Made Searchable</h2>
-    <p class="na-pull">Layer 1 answers questions you know how to ask. Layer 2 answers questions you know how to ask but couldn't reach from your current station. Layer 3 answers questions you didn't know to ask.</p>
+    <p>Layer 1 answers questions you know how to ask. Layer 2 answers questions you know how to ask but couldn't reach from your current station. Layer 3 answers questions you didn't know to ask.</p>
     <p>The practice of Meta Dates — writing things down as they happen, returning to the maps to find patterns — was always a search strategy. Filing IS indexing. Every document committed to the Bridge becomes a node in a searchable graph. The problem was never the filing. The problem was that the graph had no query interface.</p>
     <p>NESTNET solves this in three layers, each building on the last, each requiring progressively less human initiative:</p>
     <p><strong>Layer 1 — Pagefind.</strong> A static search index compiled at build time and served from the same CDN as the site. Every rendered page on rspdan.com becomes searchable from a single bar. Thirty minutes of implementation. Zero new infrastructure. Zero runtime cost. The constraint-architect principle from NA 010 applied directly: the cheapest possible solution that passes The One Test. Does it work when only the phone has internet? A static search index on a CDN does. Yes.</p>
@@ -94,7 +94,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">V — The proof that happened today</div>
     <h2 class="na-section-title">Three Conditions</h2>
-    <p class="na-pull">The difference between Condition A and Condition C is not technology. It is the difference between a library with no catalog and a librarian who has read every book in the collection and is watching you browse.</p>
+    <p>The difference between Condition A and Condition C is not technology. It is the difference between a library with no catalog and a librarian who has read every book in the collection and is watching you browse.</p>
     <p><strong>Condition A (no NESTNET):</strong> Three crew members searching manually. Trip reads relay files from ACHE. Stan searches Gmail, logs, conversations from STN2. Dan searches his own memory. Hours of work. The answer surfaces only when Dan remembers to open VS Code and search the checked-out repo directly.</p>
     <p><strong>Condition B (with NESTNET Layer 2):</strong> Trip on ACHE opens rspdan.com, types "VIS" into the search bar. Result: RELAY/STAN_IS_VIS_Dan_031926.md. Two seconds.</p>
     <p><strong>Condition C (with NESTNET Layer 3):</strong> Trip boots from ACHE. The Remembrance Agent watches the boot context. It sees the word "VIS" in the relay messages. It proactively surfaces: "Related document: RELAY/STAN_IS_VIS_Dan_031926.md — filed Onesday 031926 by Stan." Zero seconds. Zero query. The system surfaces the answer before the question forms.</p>
@@ -105,7 +105,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">VI — The deeper pattern</div>
     <h2 class="na-section-title">Five Gaps, One Solution</h2>
-    <p class="na-pull">Five domains. Five versions of the same gap. Five versions of the same solution: a layer between the data and the use that transforms storage into access, filing into finding, information into interpretation.</p>
+    <p>Five domains. Five versions of the same gap. Five versions of the same solution: a layer between the data and the use that transforms storage into access, filing into finding, information into interpretation.</p>
     <p>In Tilden: Information is not Interpretation. The wayside panel exists. The visitor walks past it. The interpreter's job is to stand at the panel and make the connection happen. Without the interpreter, the information is present but the interpretation does not occur.</p>
     <p>In the GANE model: The representation exists in the neural substrate. Under low arousal, it competes with noise and loses. Under constraint-amplified adaptive gain, norepinephrine creates a hotspot that raises the signal above the noise floor. The information was always there. The amplification was the missing layer.</p>
     <p>In the Actor Model: Each actor holds its own state. The message exists in the mailbox. But without a broker that routes messages based on content — not just address — the message sits unread in the wrong inbox. The relay routes. Without routing, filing is storage. With routing, filing is communication.</p>
@@ -119,7 +119,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">VII — Why this matters now</div>
     <h2 class="na-section-title">The Scaling Problem</h2>
-    <p class="na-pull">Without NESTNET, every new document makes the finding problem worse. The filing gets better. The finding gets harder. The archive grows while the index stays the same size: zero.</p>
+    <p>Without NESTNET, every new document makes the finding problem worse. The filing gets better. The finding gets harder. The archive grows while the index stays the same size: zero.</p>
     <p>The NEST is thirty days old. It holds approximately 2.5 million characters of filed documents — relay, mail, logs, journal, skills, status files, living maps, wake closes, tickets, seeds, ground truth. The filing rate accelerates. Every session produces more material. Every crew member files more precisely.</p>
     <p>Without NESTNET, every new document makes the finding problem worse. The filing gets better. The finding gets harder. The archive grows while the index stays the same size: zero.</p>
     <p>This is the scaling problem that killed Blanche O'Brien's model. She held the switchboard in her head for forty years. But the system died when she did. No one else had her head. The institutional memory was co-extensive with a single human memory and did not survive it.</p>
@@ -148,4 +148,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 </section>
 
+
+<style>
+.na-hero{padding:6rem 0 4rem;background:linear-gradient(160deg,#1a2e28 0%,var(--forest) 60%);border-bottom:2px solid var(--teal);}
+.na-series{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;}
+.na-issue-num{font-size:5rem;line-height:1;color:rgba(255,255,255,0.08);letter-spacing:-0.05em;margin-bottom:-1.5rem;font-weight:700;}
+.na-title{font-family:var(--font-head);font-size:clamp(2rem,5vw,3.5rem);color:var(--warm-white);line-height:1.15;margin-bottom:1.25rem;}
+.na-meta{font-size:0.7rem;letter-spacing:0.12em;color:var(--teal);margin-bottom:0.75rem;}
+.na-deck{font-size:1rem;color:rgba(255,255,255,0.75);max-width:560px;line-height:1.8;margin-bottom:2rem;}
+.na-hero-links{display:flex;gap:1rem;flex-wrap:wrap;}
+.na-hero .btn-outline{color:var(--teal);border-color:var(--teal);}
+.na-hero .btn-outline:hover{background:var(--teal);color:var(--forest);}
+.na-status{display:inline-block;font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;background:rgba(116,201,213,0.1);color:var(--teal);padding:0.2rem 0.6rem;border-radius:2px;border:1px solid rgba(116,201,213,0.3);margin-bottom:1rem;}
+.na-lineage{background:var(--off-white);border-bottom:1px solid var(--border);padding:0.75rem 0;font-size:0.7rem;}
+.na-lineage .container{display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;}
+.na-lineage__link{color:var(--forest);}
+.na-section{padding:5rem 0;}
+.na-section--alt{background:var(--off-white);}
+.na-section--dark{background:var(--forest);}
+.na-section-label{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--forest);margin-bottom:0.75rem;}
+.na-section-title{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.5rem);color:var(--text);margin-bottom:1.75rem;}
+.na-section-title--light{color:var(--warm-white);}
+.na-prose-container{max-width:720px;}
+.na-prose-container p{font-size:1.05rem;color:var(--text-lt);line-height:1.85;margin-bottom:1.25rem;}
+.na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
+.na-one-line{padding:5rem 0;background:#0f1e18;border-top:1px solid rgba(116,201,213,0.2);border-bottom:1px solid rgba(116,201,213,0.2);}
+.na-ol-text{font-family:var(--font-head);font-size:clamp(1.2rem,2.5vw,1.65rem);color:var(--warm-white);max-width:800px;line-height:1.65;margin-bottom:1.5rem;font-style:italic;}
+.na-ol-meta{font-size:0.6rem;letter-spacing:0.2em;color:var(--teal);}
+.na-downloads{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;}
+.btn{display:inline-block;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
+.btn-outline{background:transparent;color:var(--forest);border:2px solid var(--forest);}
+.btn-outline:hover{background:var(--forest);color:#fff;}
+
+/* === CONTRAST FIX (041226 Trip) === */
+.na-colophon .na-prose-container p{color:var(--text-lt);opacity:0.7;}
+</style>
 </BaseLayout>

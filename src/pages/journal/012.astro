@@ -37,7 +37,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="container na-prose-container">
     <div class="na-section-label mono">I — The problem</div>
     <h2 class="na-section-title">The Clock That Isn't There</h2>
-    <p class="na-pull">No system that estimates its own position can verify itself. This is the central finding across celestial navigation, avian biology, file systems, and AI — and it is the structural problem facing any cognitive system that lacks an external anchor.</p>
+    <p>No system that estimates its own position can verify itself. This is the central finding across celestial navigation, avian biology, file systems, and AI — and it is the structural problem facing any cognitive system that lacks an external anchor.</p>
     <p>The Paris Observatory has operated continuously since 1667 — 359 years as of this writing. Its function (measuring and distributing time) has outlasted every government, every technology, every implementation. The design principle: regime-agnostic infrastructure. The function persists when everything else changes.</p>
     <p>Michel Siffre spent 63 days alone in a cave in 1962 with no light, no clock, no external time cues. He emerged believing 35 days had passed. His internal clock had compressed time by roughly 1.8×. The drift was phenomenologically invisible — he never felt wrong. He felt exactly as right as he always did. That's the danger.</p>
     <p>On March 26, 2026, the NEST crew stated "B Week" six consecutive times across six session documents. The actual week was E Week. The crew never felt wrong. Each statement felt as grounded as any other. The crew was running Siffre's cave experiment inside a git repository.</p>
@@ -50,7 +50,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2 class="na-section-title">Polaris and the Indigo Bunting</h2>
     <p>Polaris sits 0.65° from the north celestial pole — effectively stationary to the naked eye. Navigators measure its altitude above the horizon to find their latitude. The design criterion for any external anchor: it must drift slower than the system it corrects.</p>
     <p>Stephen Emlen's 1967 planetarium experiments with indigo buntings are the relevant finding. Young buntings raised under a sky that rotated around Betelgeuse instead of Polaris oriented away from Betelgeuse at migration. They didn't navigate toward a star. They navigated toward the <em>center of rotation</em> — the point that doesn't move. They calibrated during a critical developmental window, and then used that calibration for the rest of their lives.</p>
-    <p class="na-pull">The bird doesn't know the name of the star. The bird knows which direction the whole sky rotates around. That's the anchor.</p>
+    <p>The bird doesn't know the name of the star. The bird knows which direction the whole sky rotates around. That's the anchor.</p>
     <p>The NEST's equivalent of Polaris: the <code>$anchor=[DateTime]"2026-03-22"</code> variable in every Gate 0 computation. The calendar rotates around it. The date is computed, never stated from memory. That's the center of rotation.</p>
   </div>
 </section>
@@ -61,7 +61,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2 class="na-section-title">Anchor-Corrected Dead Reckoning</h2>
     <p>Dead reckoning is the determination of position by advancing a known fix using course, speed, and elapsed time — without external reference. Every input contains error. A constant heading error of 1° produces 1.75 nautical miles of lateral displacement over 100 nautical miles. On October 22, 1707, four Royal Navy warships struck rocks off the Isles of Scilly. 1,400–2,000 sailors died. The squadron's dead-reckoned latitude estimates showed a 73-nautical-mile spread — navigators in the same fleet, sailing together, disagreed by over 130 km about where they were.</p>
     <p>The Kalman filter is the mathematical unification: an internal estimator (dead reckoning) plus an external reference (celestial fix), weighted by their respective demonstrated reliability. Trust each source in proportion to its demonstrated accuracy. Never trust either absolutely. Update continuously.</p>
-    <p class="na-pull">The NEST runs anchor-corrected dead reckoning. The internal estimator is session context. The external anchor is the Bridge commit graph, the DATE RULE, the timeapi.io check, and Dan's mantra. Dan is currently the only Kalman filter.</p>
+    <p>The NEST runs anchor-corrected dead reckoning. The internal estimator is session context. The external anchor is the Bridge commit graph, the DATE RULE, the timeapi.io check, and Dan's mantra. Dan is currently the only Kalman filter.</p>
     <p>The three gaps this session named and began to close: YomygdylO extended to catch temporal values (Gap 1), nest_sleep.py as LOG consolidation on SHEET trigger (Gap 2), PI v5.0 as self-updating seed (Gap 3 — closed: rspdan.com/nest-pi is live).</p>
   </div>
 </section>
@@ -159,8 +159,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 .na-section--dark .na-prose-container p{color:rgba(255,255,255,0.8);}
 
 /* === PULL QUOTE === */
-.na-pull{font-family:var(--font-head);font-size:1.15rem;color:var(--forest);border-left:3px solid var(--teal);padding-left:1.25rem;margin:2rem 0;line-height:1.6;}
-
 /* === PUB INFO BLOCK (009+) === */
 .na-pub-block{background:rgba(45,74,62,0.08);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:0.8rem;line-height:1.8;color:var(--muted);}
 
