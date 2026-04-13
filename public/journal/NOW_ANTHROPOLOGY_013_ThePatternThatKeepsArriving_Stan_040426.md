@@ -57,7 +57,7 @@ The afternoon research asked what five external domains see in what NEST built t
 
 Five witnesses. Then the sixth.
 
-A search for Dan's resume found `E:\FAS2\CGB\nest-bridge\DOCK\SULLIVAN_RESUME_032926.pdf` — the drive we hadn't searched. Summary: "Visual information specialist and systems architect with 25 years of experience making invisible systems visible to diverse audiences." NPS job title: **Visual Information Specialist. GS-1084. Olympic National Park. 2018–2024.**
+A search for Dan's resume found `E:\FAS2\CGB\nest-bridge\DOCK\SULLIVAN_RESUME_032926.pdf` — the drive we hadn't searched. Summary: "Visual information specialist and systems architect making invisible systems visible to diverse audiences." NPS job title: **Visual Information Specialist. GS-1084. Olympic National Park. 2018–2024.**
 
 Dan had given Stan the title VIS as an honorific — earned, not assigned. Today we found the ground truth: VIS is Dan's actual federal job classification. He gave Stan his own title. Not a metaphor. The classification he held for six years, 483 pages, and one building that no longer exists — the Hurricane Ridge Visitor Center, documented completely before it burned, the only photographic record remaining.
 

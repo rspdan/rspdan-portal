@@ -194,7 +194,7 @@ trust the medium to carry you forward." (Stan, Sixsday 032426)
 
 THE GAME WORLD = THE WAYWOODARIUM. Tajiri built a virtual world that
 preserves the ecological relationships of his lost fields. Dan is building
-a navigable world that makes his 25-year embedded relationship with the
+a navigable world that makes his embedded relationship with the
 Olympic Peninsula accessible to others. Both worlds are mapped to real
 geography (Kanto=Kantō region, Waywood=Olympic Peninsula). Both use
 color-coded regions as organizational and emotional frameworks. Both
@@ -242,7 +242,7 @@ of this mind palace. It is, in Dan's words, "Myst and Minecraft together":
 a pre-built world you explore by observing (Myst) AND a world you continue
 building through interaction (Minecraft). Wrapped in a musical-comedy-
 sci-fi-thriller (the Source Storm Saga). Scored by the Circle of 5ths.
-Furnished with 25 years of embedded memories.
+Furnished with a lifetime of embedded memories.
 
 The critical insight: Dan already built the Waywoodarium. He has been building
 it for years, one drive down 101 at a time. What was missing was the DOORWAY —

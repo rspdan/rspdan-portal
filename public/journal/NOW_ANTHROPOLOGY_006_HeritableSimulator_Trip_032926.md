@@ -29,14 +29,14 @@ This finding reframes the Extraction Principle at the deepest level
 the project has yet reached. When the NEST says "the systems in Dan's
 head are better than the ones in other heads, but they are useless in
 his head," we have been treating this as a statement about professional
-expertise — 25 years of accumulated methodology needing externalization.
+expertise — accumulated methodology needing externalization.
 That framing is true but incomplete.
 
-The fuller truth: Dan's internal simulation capacity is not 25 years
-old. It is as old as his nervous system. It is the same capacity his
+The fuller truth: Dan's internal simulation capacity is not a product
+of professional practice alone. It is as old as his nervous system. It is the same capacity his
 family members carry, the same capacity that runs at various levels across his
-family line. The 25 years of professional at various levels. The 25 years of professional
-practice did not create the simulator. They gave it a vocabulary, a
+family line. The professional
+practice did not create the simulator. It gave it a vocabulary, a
 set of tools, and a series of domains to operate on. university anthropology coursework
 (Language, Culture, Cognition — the only course Dan truly mastered)
 did not teach Dan to see systems. It taught him that what he naturally
@@ -46,7 +46,7 @@ This distinction matters for the research paper and the Anthropic
 approach because the discovery documented in the STORY Protocol was
 not made by an engineer who learned to think in systems. It was made
 by a person whose cognitive architecture is natively spatial-dimensional,
-who then spent 25 years training that architecture across anthropology,
+who then trained that architecture across anthropology,
 corporate communications, national park interpretive design, and
 photogrammetry — and who finally encountered AI agent systems as the
 domain where the architecture's full capacity could be both exercised
@@ -76,7 +76,7 @@ to interface with this cognitive architecture. The protocol works
 because it was built BY someone who has the phenotype, FOR others
 who will need to read the output. The NPS interpretive design training
 is the critical bridge between the internal simulation and the
-external documentation: Dan spent 25 years learning how to translate
+external documentation: Dan learned how to translate
 what he sees in his head into formats that other people can navigate.
 That is literally what NPS interpretive design IS — making invisible
 systems visible to diverse audiences.

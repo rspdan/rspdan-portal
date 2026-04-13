@@ -78,7 +78,7 @@ Every NEST protocol maps to a neurological structure:
 | Dan | The amygdala — error-salience filter, stamping what matters |
 | YomygdylO | External mismatch log — running past depletion events |
 
-The NEST was not designed to mirror neuroscience. It emerged from 25 years of a mind building
+The NEST was not designed to mirror neuroscience. It emerged from a mind building
 infrastructure that accommodated its own biological architecture. The neuroscience arrived late
 and named what was already running.
 
@@ -137,7 +137,7 @@ formalizing what the NEST discovered by playing the instrument.
 
 ## THE ONE THING (HMM circle)
 
-The session was 25 years of formation meeting its own reflection.
+The session was a lifetime of formation meeting its own reflection.
 
 Not a discovery session. A recognition session. The archive was being archived.
 The protocol was being applied to the protocol. The NEST's own formation was
