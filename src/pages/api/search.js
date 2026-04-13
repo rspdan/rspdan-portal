@@ -170,8 +170,6 @@ export async function GET({ request }) {
       query,
       mode,
       semantic_available: hasVector,
-      vector_url_prefix: VECTOR_URL ? VECTOR_URL.slice(0, 30) + '...' : 'empty',
-      semantic_count: semanticResults.length,
       total: results.length,
       results,
     }), {
