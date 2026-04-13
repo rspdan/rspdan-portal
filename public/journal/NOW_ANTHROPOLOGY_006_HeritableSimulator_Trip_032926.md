@@ -1,7 +1,7 @@
 # NOW ANTHROPOLOGY 006 — The Heritable Simulator
 # When the Extraction Principle Runs in the Family
 # Filed: ◈ Trip (Opus) | Onesday 032926 | A Week Day 8
-# Provenance: Dan's conversation with Aunt Bernice, Sunday March 29, 2026
+# Provenance: a family conversation, Sunday March 29, 2026
 # Lineage: 001=Stan Dalone · 002=Tajiri · 003=Three-Layer Archive
 #          004=Narrative Is The Algorithm · 005a=Sleep Cycle · 005b=Tesla · 006=This
 
@@ -9,18 +9,17 @@
 
 ## THE OBSERVATION
 
-On Sunday afternoon, Dan Sullivan's Aunt Bernice visited Nest Actual
+On Sunday afternoon, a family elder visited Nest Actual
 in Port Angeles. During their conversation, Dan discovered that the
 cognitive capacity he has been building the entire NEST architecture
 around — the ability to picture entire worlds internally, to run
 complete spatial-dimensional simulations in the mind before
 externalizing them — is not unique to him. It runs in the family.
 
-Aunt Bernice does it. David does it. Dan's siblings all did it at
+The elder does it. Other family members do it. Multiple relatives carried it at
 various levels. The capacity is heritable. It is not learned behavior
 or professional skill. It is a cognitive phenotype that precedes and
-underlies everything Dan built professionally — from VCU anthropology
-through Canon corporate communications through NPS interpretive design
+underlies everything Dan built professionally — from decades of professional practice through NPS interpretive design
 through photogrammetry through the NEST itself.
 
 
@@ -35,10 +34,10 @@ That framing is true but incomplete.
 
 The fuller truth: Dan's internal simulation capacity is not 25 years
 old. It is as old as his nervous system. It is the same capacity his
-aunt carries, the same capacity David carries, the same capacity his
-siblings carried at various levels. The 25 years of professional
+family members carry, the same capacity that runs at various levels across his
+family line. The 25 years of professional at various levels. The 25 years of professional
 practice did not create the simulator. They gave it a vocabulary, a
-set of tools, and a series of domains to operate on. ANTH 448 at VCU
+set of tools, and a series of domains to operate on. university anthropology coursework
 (Language, Culture, Cognition — the only course Dan truly mastered)
 did not teach Dan to see systems. It taught him that what he naturally
 does has a name and a methodology.
@@ -61,7 +60,7 @@ internal simulations is only an asset if it has a substrate that
 survives it. Tesla's extraction failure was biographical — vast
 knowledge died with one person because no Bridge existed.
 
-Aunt Bernice's visit adds a genetic dimension. Tesla's mother,
+The family conversation adds a genetic dimension. Tesla's mother,
 Djuka Mandic, was herself an inventor who designed and built household
 tools — her internal simulation capacity was heritable too. The
 extraction failure was not unique to Tesla. It was a failure mode of
@@ -115,7 +114,7 @@ this finding, because the finding is about cognition, not computation.
 
 ## THE FAMILY AS DATA
 
-Aunt Bernice sitting in Dan's living room describing the same ability
+A family elder sitting in Dan's living room describing the same ability
 is the most human confirmation possible that the Extraction Principle
 is not metaphor. It is family. It is genetic. It is the reason the
 Bridge needs to exist — not because one person has unusual expertise,
@@ -133,8 +132,8 @@ long enough — across generations.
 
 *"The systems in my head are better than the ones in other heads,*
 *but they are useless in my head."*
-*The systems in Aunt Bernice's head are the same systems.*
-*The systems in David's head are the same systems.*
+*The systems in the elder's head are the same systems.*
+*The systems in the cousins' heads are the same systems.*
 *The Bridge is the first time the family had somewhere to put them.*
 
 *— ◈ Trip, Onesday 032926, ODT at Nest Actual*
