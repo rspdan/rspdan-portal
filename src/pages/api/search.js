@@ -11,8 +11,8 @@
 
 export const prerender = false;
 
-const VECTOR_URL = import.meta.env.UPSTASH_VECTOR_REST_URL || '';
-const VECTOR_TOKEN = import.meta.env.UPSTASH_VECTOR_REST_TOKEN || '';
+const VECTOR_URL = import.meta.env.UPSTASH_VECTOR_REST_URL || process.env.UPSTASH_VECTOR_REST_URL || '';
+const VECTOR_TOKEN = import.meta.env.UPSTASH_VECTOR_REST_TOKEN || process.env.UPSTASH_VECTOR_REST_TOKEN || '';
 
 async function keywordSearch(terms, index, limit) {
   const results = [];
@@ -52,7 +52,8 @@ async function semanticSearch(query, limit) {
   if (!VECTOR_URL || !VECTOR_TOKEN) return [];
   
   try {
-    const resp = await fetch(`${VECTOR_URL}/query`, {
+    const vectorUrl = `${VECTOR_URL}/query-data`;
+    const resp = await fetch(vectorUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${VECTOR_TOKEN}`,
@@ -65,8 +66,17 @@ async function semanticSearch(query, limit) {
       }),
     });
     
+    if (!resp.ok) {
+      const errText = await resp.text();
+      console.error('Vector API error:', resp.status, errText);
+      return [];
+    }
+    
     const data = await resp.json();
-    if (!data || !data.result) return [];
+    if (!data || !data.result) {
+      console.error('Vector unexpected response:', JSON.stringify(data).slice(0, 500));
+      return [];
+    }
     
     return data.result.map(hit => ({
       path: hit.metadata?.path || '',
@@ -160,6 +170,8 @@ export async function GET({ request }) {
       query,
       mode,
       semantic_available: hasVector,
+      vector_url_prefix: VECTOR_URL ? VECTOR_URL.slice(0, 30) + '...' : 'empty',
+      semantic_count: semanticResults.length,
       total: results.length,
       results,
     }), {
