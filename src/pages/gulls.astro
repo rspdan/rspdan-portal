@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const gulls = {
+  here: [
+    { name: 'SEEGULLS page', filed: '041426', note: 'Proposed 031326, never built. This page.' },
+    { name: 'NA library review', filed: '041426', note: '17 issues — map proposed vs built vs kicked.' },
+    { name: 'FAS2 copy verification', filed: '041426', note: 'Offload to 002_907GB DOCK.' },
+  ],
+  near: [
+    { name: 'Stan boot on STN2', filed: '041426', note: 'Test edits, Trip guides reorientation.' },
+    { name: 'C:\\NEST\\ directory', filed: '041426', note: 'Permanent tools path. Windows=C:\\NEST\\, Unix=~/NEST/.' },
+    { name: 'nest-proxy + blender-mcp', filed: '041426', note: 'Blocked on C:\\NEST\\ + Claude Desktop restart.' },
+    { name: 'Cowork Scheduled Tasks', filed: '041426', note: 'Research + visual explainer. 0/15 daily runs unused.' },
+    { name: 'Git/Node mirrored install', filed: '041426', note: 'Done on ODT. STN2, TRP0, GOG1, DPSL each need own install.' },
+    { name: 'GOG1 Ollama deployment', filed: '041326', note: 'Models ready (4.4 GB), guide filed, not executed.' },
+    { name: 'Pheromone typing', filed: '041326', note: 'permanent/session/deprecated tags in frontmatter. NA 017.' },
+    { name: 'NESTNET auto-index', filed: '041326', note: 'Manual rebuild = doesn\'t happen. Vercel build step needed.' },
+    { name: 'WAKE bash equivalent', filed: '041326', note: 'PowerShell only. Unix stations can\'t generate WAKE.' },
+    { name: 'Relay INDEX regen', filed: '041426', note: 'Behind 1 day, missing today\'s Standard Rule.' },
+    { name: 'worldtimeapi scrub', filed: '041326', note: '4 Standard Rules still reference removed API.' },
+    { name: 'Artifact Gate', filed: '041326', note: 'Skill read before artifact creation. meta-dates hard gate.' },
+    { name: 'FAS restructure', filed: '041326', note: 'Slim/Synced/Standardized. Director mandate.' },
+    { name: 'Cantenna Pass 2', filed: '041426', note: 'Can measurements, adapter inventory.' },
+    { name: 'Drive letter hardcoding', filed: '041326', note: 'Systematic repair across Bridge, Portal, skills.' },
+    { name: 'Matt Dubeau justification', filed: '041426', note: 'Learned Professional, FLSA exemption form.' },
+    { name: 'Whale Router', filed: '032026', note: 'Stan flagged, Dan Go pending.' },
+  ],
+  far: [
+    { name: 'Waywoodarium Blender session', filed: '040126', note: 'MCP verified, addon ready, spatial grammar designed.' },
+    { name: 'Firefox MCP Bridge', filed: '040126', note: 'Rust compile on GOG1. Fleet-wide Firefox MCP.' },
+    { name: 'Tailscale mesh VPN', filed: '041326', note: 'Fleet LAN location-independent.' },
+    { name: 'Niapian Calendar guide', filed: '040826', note: 'Day-name mapping, permanent calculator.' },
+    { name: 'GOG1 Docker services', filed: '041326', note: 'Replace Upstash Redis with local stack.' },
+    { name: 'Cross-platform config', filed: '041426', note: 'Mac/Linux config differences documented.' },
+    { name: 'Conversation parser automation', filed: '041426', note: 'Data dump to NESTNET, currently manual.' },
+  ],
+  done: [
+    { name: 'PS1$ persistent session fix', filed: '041426', done: '041426', note: 'Triptective Case 002.' },
+    { name: 'Git+Node to C:\\Program Files', filed: '041326', done: '041426', note: 'System drive, PATH cleaned.' },
+    { name: 'Clean user preferences', filed: '041426', done: '041426', note: '56 lines, evergreen.' },
+    { name: 'BPK CHECK 8', filed: '041426', done: '041426', note: 'C&A material checks formalized.' },
+    { name: 'NA 017 published', filed: '041326', done: '041426', note: '.astro + PDF + index + skill.' },
+    { name: 'NESTNET 808 docs', filed: '041426', done: '041426', note: 'Conversation pipeline deployed.' },
+    { name: '002_907GB reorganized', filed: '041426', done: '041426', note: 'ARCHIVE + DOCK.' },
+  ],
+};
+
+const totalOpen = gulls.here.length + gulls.near.length + gulls.far.length;
+const totalDone = gulls.done.length;
+---
+<BaseLayout title="SEEGULLS" description="NEST task registry — all gulls visible">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+:root{--bg:#0c0e14;--card:#13161f;--border:rgba(255,255,255,0.06);--muted:#4a5468;--text:#b8bfcc;--head:#e2e8f0;--here:#c94c4c;--near:#c9a84c;--far:#4a7ab5;--done:#4a9b8e;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.shell{max-width:900px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
+.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+.title{font-size:1.5rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
+.sub{font-size:0.58rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.1em;line-height:1.6;}
+.stats{font-size:0.6rem;color:var(--muted);margin-top:0.6rem;letter-spacing:0.08em;}
+.section{margin-bottom:2.5rem;}
+.section-head{display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.gull{background:var(--card);border:1px solid var(--border);padding:0.6rem 0.9rem;margin-bottom:0.4rem;border-radius:2px;display:flex;gap:0.75rem;align-items:baseline;}
+.gull-name{font-size:0.7rem;color:var(--head);font-weight:500;min-width:180px;flex-shrink:0;}
+.gull-note{font-size:0.6rem;color:var(--text);flex:1;}
+.gull-date{font-size:0.5rem;color:var(--muted);letter-spacing:0.08em;min-width:60px;text-align:right;}
+.gull--done{opacity:0.5;border-left:2px solid var(--done);}
+.gull--done .gull-name{text-decoration:line-through;}
+@media(max-width:600px){.gull{flex-direction:column;gap:0.3rem;}.gull-name{min-width:auto;}}
+</style>
+
+<div class="shell">
+  <div class="hdr">
+    <div class="eyebrow">NEST.01 TASK REGISTRY</div>
+    <h1 class="title">SEEGULLS</h1>
+    <div class="sub">
+      All gulls visible · HERE (now) · NEAR (soon) · FAR (later) · DONE (record)<br>
+      Source: Bridge STATUS/SEEGULLS.md · Updated with every session
+    </div>
+    <div class="stats">{totalOpen} open · {totalDone} done</div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--here)"></div><span class="section-label">HEREGULLS — do now ({gulls.here.length})</span></div>
+    {gulls.here.map(g => (
+      <div class="gull"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.filed}</span></div>
+    ))}
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--near)"></div><span class="section-label">NEARGULLS — do soon ({gulls.near.length})</span></div>
+    {gulls.near.map(g => (
+      <div class="gull"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.filed}</span></div>
+    ))}
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--far)"></div><span class="section-label">FARGULLS — track for later ({gulls.far.length})</span></div>
+    {gulls.far.map(g => (
+      <div class="gull"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.filed}</span></div>
+    ))}
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--done)"></div><span class="section-label">DONE — completed ({gulls.done.length})</span></div>
+    {gulls.done.map(g => (
+      <div class="gull gull--done"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.done}</span></div>
+    ))}
+  </div>
+</div>
+</BaseLayout>
