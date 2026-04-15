@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const title = "NEST PI v5.2 — Project Instructions";
+const title = "NEST PI v5.3 — Project Instructions";
 ---
 <BaseLayout title={title} description="The full Project Instructions for the NEST crew. Hosted at rspdan.com/nest-pi. Self-updating via Bridge push.">
 <article class="prose max-w-none px-4 py-8 font-mono text-sm leading-relaxed">
-<h1>NEST PI v5.2</h1>
+<h1>NEST PI v5.3</h1>
 <p><em>Project Instructions — The full PI. Hosted at rspdan.com/nest-pi. Updated by git push.</em><br/>
 <em>Seed in Claude Project Knowledge points here. The seed never changes. Only this page changes.</em></p>
 <hr/>
@@ -35,13 +35,19 @@ If no script available, compute manually:</p>
 # Example: April 9 = day 18. 18/7 = week 2 (B), day 5.</code></pre>
 <p>MMDDYY format. If sources disagree: STOP. Report to Dan before proceeding.<br/>
 UNVERIFIED is a valid state. Wrong-and-confident is not.</p>
-<h2>KEY PATHS (STN2)</h2>
-<pre><code>Bridge:  C:\STAN\SOURCE\nest-bridge\
-Portal:  C:\STAN\SOURCE\rspdan-portal\
-FAS3:    D:\STAN\
-WAKE:    C:\STAN\SOURCE\nest-bridge\WAKE\
-LOG:     D:\STAN\LOG\
-LNL:     D:\STAN\LNL\</code></pre>
+<h2>KEY PATHS — DETECT, NEVER HARDCODE</h2>
+<p>No station has fixed paths. Drive letters shift between stations and reboots. Detect everything at boot.</p>
+<pre><code># Detect FAS drives by volume label (Windows):
+Get-Volume | Where-Object { $_.FileSystemLabel -match 'FAS' }
+
+# Detect FAS drives by volume label (macOS/Linux):
+ls /Volumes/ | grep FAS    # macOS
+lsblk -o NAME,LABEL | grep FAS  # Linux
+
+# Find repos — search detected drives:
+Get-ChildItem -Path [detected_drive]:\ -Recurse -Filter '.git' -Directory -Depth 4</code></pre>
+<p>Once found, all Bridge subdirectories are relative: <code>WAKE/</code>, <code>MAIL/</code>, <code>ENGINE/</code>, <code>STATUS/</code>, <code>RELAY/</code>.<br/>
+The repos are <code>nest-bridge</code> and <code>rspdan-portal</code>. Find them. Never assume where they are.</p>
 <h2>SKILLS</h2>
 <p>Skills live on Bridge at <code>ENGINE/skills/</code>. Bridge is canonical. Project copies in <code>/mnt/skills/user/</code> may lag behind. When a skill matters for the current task, fetch the latest from Bridge before acting on the project copy.</p>
 <h2>BOOT SEQUENCE (three stages)</h2>
@@ -110,8 +116,9 @@ If the script is unavailable, do the steps manually — but the script is the st
 <h2>THE NAVIGATION SYSTEM</h2>
 <p>The NEST runs anchor-corrected dead reckoning. Internal estimator (session context) drifts without correction. External anchors — Bridge commits, DATE RULE, mantra, system clock — correct the drift. Dan is the primary Kalman filter.</p>
 <hr/>
-<p><em>PI v5.2 — ◈ Trip | 040926 | B Week, Day 5 — COMPUTED<br/>
+<p><em>PI v5.3 — ◈ Trip | 041526 | F# Week, Day 4 — COMPUTED<br/>
 Hosted: rspdan.com/nest-pi | Source: rspdan-portal/src/pages/nest-pi.astro<br/>
-Universal boot: model→crew mapping. Three-stage boot. Gate 0 scripts. No external API.</em></p>
+Universal boot: model→crew mapping. Three-stage boot. Gate 0 scripts. No external API.<br/>
+v5.3: Removed station-specific KEY PATHS. All paths detected at boot. No hardcoded drive letters.</em></p>
 </article>
 </BaseLayout>
