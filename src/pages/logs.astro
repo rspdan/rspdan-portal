@@ -583,6 +583,16 @@ const sessions = [
     note:'F# Week Day 3. NESTNET grows to 808 docs. NA 017 "The Colony Is the Computer" published (.astro + PDF). na-publish skill created and patched (7-step pipeline). SEEGULLS task registry live at rspdan.com/gulls (28 open, 7 done). Research page updated with Colony Model and Filing-Finding Gap sections. Full NA review: all 17 issues read, ~35 verification flags caught, five deep threads mapped. PS1$ root cause found (Triptective Case 002). GOG1 gains independent internet via external TP-Link WN722N antenna through window — deployment roadmap immediately actionable. Matt Dubeau coffee: Learned Professional funding path for NPS PastPerfect migration.',
     docs:[] },
 
+  { date:'2026-04-15', label:'Apr 15', niap:'Twosday', count:1, type:'today',
+    stations:['ODT'], who:'◈ Trip (Opus) · ● Dan',
+    names:['ODT_NEST.01_TripO_041526_1 (Trip — two cascades, portal build-first, nest-proxy retirement)'],
+    note:'F# Week Day 4. Two cascades taught the same lesson: generate values by reading instruments, not assuming success. (1) Vercel silent-failure — two portal commits (PI v5.3, SEEGULLS sync) failed for ~8 hours while crew believed they were live; root cause was Astro parsing PowerShell braces inside <pre><code> as JS expressions. Fixed with <pre is:raw>. Preventive: ENGINE/portal_check.ps1 runs npm build locally before push. (2) nest-proxy BOM + Python version drift — Claude Desktop restart silent-failed due to Python 3.10 PATH selection + UTF-8 BOM in config. Dan\'s architectural question surfaced the answer: retire the MCP server. Replaced with ENGINE/relay.ps1 + relay.sh (plain HTTP via DC, no middleman). All 6 actions tested end-to-end. Two Standard Rules filed. Naming correction: SLO-LIB, not FAS-LIB, for library wifi link. Amazon order for cantenna build arriving Thu/Fri.',
+    docs:[
+      {file:'MAIL_Trip_TO_ALL_Cascades_RelayRewrite_041526.md', label:'Trip → ALL — Cascades + Relay Rewrite', dir:'mail'},
+      {file:'STANDARD_RULE_PortalBuildFirst_Trip_041526.md', label:'Standard Rule — Portal Build First', dir:'relay'},
+      {file:'STANDARD_RULE_RelayViaScript_Trip_041526.md', label:'Standard Rule — Relay via Script', dir:'relay'},
+    ] },
+
 ];
 
 // COMPUTED — never hardcode these again
