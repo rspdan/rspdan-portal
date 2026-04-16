@@ -9,7 +9,7 @@ const gulls = {
   near: [
     { name: 'Stan boot on STN2', filed: '041426', note: 'Test edits, Trip guides reorientation.' },
     { name: 'C:\\NEST\\ directory', filed: '041426', note: 'Permanent tools path. Windows=C:\\NEST\\, Unix=~/NEST/.' },
-    { name: 'nest-proxy config cleanup (4 stations)', filed: '041526', note: 'nest-proxy RETIRED 041526 on ODT (replaced by relay.ps1/relay.sh). STN2/TRP0/GOG1/DPSL still have entry — remove on next boot.' },
+    { name: 'nest-proxy config cleanup (4 stations)', filed: '041526', note: 'Tooling staged 041626: ENGINE/cleanup_nest_proxy_windows.ps1 (STN2/CUBE), ENGINE/cleanup_nest_proxy_unix.sh (TRP0/DPSL/GOG1). Per-station commands in FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md. Each script idempotent, creates timestamped backup. Run once on next boot, then restart Claude Desktop.' },
     { name: 'session_close.ps1 Vercel verify', filed: '041526', note: 'Layer 2 Vercel prevention. Automate list_deployments READY check at session close.' },
     { name: 'NEST_API_KEY rotation', filed: '041526', note: 'Current key in public repo config. Rotate + .gitignored secrets.' },
     { name: 'Cowork Scheduled Tasks', filed: '041426', note: 'Research + visual explainer. 0/15 daily runs unused.' },
@@ -40,6 +40,7 @@ const gulls = {
     { name: 'Conversation parser automation', filed: '041426', note: 'Anthropic data dump to NESTNET, currently manual.' },
   ],
   done: [
+    { name: 'Cleanup tooling staged for cross-fleet nest-proxy removal', filed: '041626', done: '041626', note: 'ENGINE/cleanup_nest_proxy_windows.ps1 + _unix.sh (idempotent, jq-based, timestamped backups). FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md has per-station commands. FLEET/MCP_SETUP.md refreshed (nest-proxy retired, relay documented, mojibake cleaned).' },
     { name: 'nest-proxy retired + relay.ps1/.sh live', filed: '041426', done: '041526', note: 'MCP server replaced by shell scripts via DC. 6 actions, tested end-to-end.' },
     { name: 'Vercel portal_check.ps1', filed: '041526', done: '041526', note: 'Pre-push npm build catches Astro errors. STANDARD_RULE_PortalBuildFirst filed.' },
     { name: 'PS1$ persistent session fix', filed: '041426', done: '041426', note: 'Triptective Case 002.' },
