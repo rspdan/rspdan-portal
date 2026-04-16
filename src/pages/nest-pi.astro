@@ -37,7 +37,7 @@ If no script available, compute manually:</p>
 UNVERIFIED is a valid state. Wrong-and-confident is not.</p>
 <h2>KEY PATHS — DETECT, NEVER HARDCODE</h2>
 <p>No station has fixed paths. Drive letters shift between stations and reboots. Detect everything at boot.</p>
-<pre><code># Detect FAS drives by volume label (Windows):
+<pre is:raw><code># Detect FAS drives by volume label (Windows):
 Get-Volume | Where-Object { $_.FileSystemLabel -match 'FAS' }
 
 # Detect FAS drives by volume label (macOS/Linux):
