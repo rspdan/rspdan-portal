@@ -9,7 +9,9 @@ const gulls = {
   near: [
     { name: 'Stan boot on STN2', filed: '041426', note: 'Test edits, Trip guides reorientation.' },
     { name: 'C:\\NEST\\ directory', filed: '041426', note: 'Permanent tools path. Windows=C:\\NEST\\, Unix=~/NEST/.' },
-    { name: 'nest-proxy + blender-mcp config', filed: '041426', note: 'Blocked on C:\\NEST\\ + Claude Desktop restart.' },
+    { name: 'nest-proxy config cleanup (4 stations)', filed: '041526', note: 'nest-proxy RETIRED 041526 on ODT (replaced by relay.ps1/relay.sh). STN2/TRP0/GOG1/DPSL still have entry — remove on next boot.' },
+    { name: 'session_close.ps1 Vercel verify', filed: '041526', note: 'Layer 2 Vercel prevention. Automate list_deployments READY check at session close.' },
+    { name: 'NEST_API_KEY rotation', filed: '041526', note: 'Current key in public repo config. Rotate + .gitignored secrets.' },
     { name: 'Cowork Scheduled Tasks', filed: '041426', note: 'Research + visual explainer. 0/15 daily runs unused.' },
     { name: 'Git/Node mirrored install', filed: '041426', note: 'Done on ODT. STN2, TRP0, GOG1, DPSL each need own install.' },
     { name: 'GOG1 Ollama deployment', filed: '041326', note: 'Models on FAS2 (4.4 GB), deployment guide filed, not executed.' },
@@ -38,6 +40,8 @@ const gulls = {
     { name: 'Conversation parser automation', filed: '041426', note: 'Anthropic data dump to NESTNET, currently manual.' },
   ],
   done: [
+    { name: 'nest-proxy retired + relay.ps1/.sh live', filed: '041426', done: '041526', note: 'MCP server replaced by shell scripts via DC. 6 actions, tested end-to-end.' },
+    { name: 'Vercel portal_check.ps1', filed: '041526', done: '041526', note: 'Pre-push npm build catches Astro errors. STANDARD_RULE_PortalBuildFirst filed.' },
     { name: 'PS1$ persistent session fix', filed: '041426', done: '041426', note: 'Triptective Case 002.' },
     { name: 'Git+Node to C:\\Program Files', filed: '041326', done: '041426', note: 'System drive, stale PATH cleaned.' },
     { name: 'Clean user preferences', filed: '041426', done: '041426', note: '56 lines, evergreen, station-agnostic.' },
