@@ -61,7 +61,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2 class="na-section-title">Anchor-Corrected Dead Reckoning</h2>
     <p>Dead reckoning is the determination of position by advancing a known fix using course, speed, and elapsed time — without external reference. Every input contains error. A constant heading error of 1° produces 1.75 nautical miles of lateral displacement over 100 nautical miles. On October 22, 1707, four Royal Navy warships struck rocks off the Isles of Scilly. 1,400–2,000 sailors died. The squadron's dead-reckoned latitude estimates showed a 73-nautical-mile spread — navigators in the same fleet, sailing together, disagreed by over 130 km about where they were.</p>
     <p>The Kalman filter is the mathematical unification: an internal estimator (dead reckoning) plus an external reference (celestial fix), weighted by their respective demonstrated reliability. Trust each source in proportion to its demonstrated accuracy. Never trust either absolutely. Update continuously.</p>
-    <p>The NEST runs anchor-corrected dead reckoning. The internal estimator is session context. The external anchor is the Bridge commit graph, the DATE RULE, the timeapi.io check, and Dan's mantra. Dan is currently the only Kalman filter.</p>
+    <p>The NEST runs anchor-corrected dead reckoning. The internal estimator is session context. The external anchor is the Bridge commit graph, the DATE RULE, the Gate 0 time check, and Dan's mantra. Dan is currently the only Kalman filter.</p>
     <p>The three gaps this session named and began to close: YomygdylO extended to catch temporal values (Gap 1), nest_sleep.py as LOG consolidation on SHEET trigger (Gap 2), PI v5.0 as self-updating seed (Gap 3 — closed: rspdan.com/nest-pi is live).</p>
   </div>
 </section>
@@ -76,7 +76,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="na-case"><div class="na-case__label mono">rspdan.com/nest-pi</div><div class="na-case__result">PI Lighthouse — fixed URL, always on</div></div>
       <div class="na-case"><div class="na-case__label mono">YomygdylO</div><div class="na-case__result">Health beacon — 8s pulse, 26 patterns</div></div>
       <div class="na-case"><div class="na-case__label mono">HypercampUS</div><div class="na-case__result">Chart room — current from Bridge</div></div>
-      <div class="na-case"><div class="na-case__label mono">Gate 0 / timeapi.io</div><div class="na-case__result">Harbor entrance sequence</div></div>
+      <div class="na-case"><div class="na-case__label mono">Gate 0 time anchor</div><div class="na-case__result">Harbor entrance sequence</div></div>
     </div>
     <p>We built lighthouse infrastructure while looking at a lighthouse. The navigation metaphor was never abstract. It was out the window.</p>
   </div>
