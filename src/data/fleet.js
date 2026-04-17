@@ -18,12 +18,12 @@
 // Every fleet statement names four things: Rox · face · probe · time.
 
 export const fleet = {
-  updated: "041626 22:05 PT",
+  updated: "041626 23:10 PT",
   updated_by: "Trip (ODT) + Dan",
   instructions: "Edit src/data/fleet.js directly. Push to rebuild. IPs are observed values, not defining values.",
 
   baseplate: [
-    { role: "Piralus Actual", hardware: "Netgear R7900", loc: "Nest Actual (Room Center, under bed)", func: "L2 bridge: 5PSW p1 <-> 8PSW p1. Also wifi AP on own SSID.", note: "Not a router for 10.0.0.0/24. Admin UI on R7900 SSID subnet (likely 192.168.1.x). Fleet LAN is routerless L2 island that depends on Piralus for inter-switch bridging.", verified_at: "041626 21:45", probe: "ODT ARP sweep + admin URL probes" },
+    { role: "Piralus Actual", hardware: "Netgear R7900", loc: "Nest Actual (Room Center, under bed)", func: "L2 bridge between two hemispheres (5PSW unix side ↔ 8PSW windows side). Also wifi AP on own SSID. Planned Fleet LAN management at 10.0.0.1.", note: "Bridge-at-.1 is the design anchor for Nest Actual — the room is two hemispheres joined by the bridge. Pattern echoes across Nest / Waywood / Olympic / neurology / biology / storytelling / physics / music (per Dan). Admin UI currently on R7900 SSID subnet; LAN management needs enabling.", verified_at: "041626 23:10", probe: "Dan direction + topology reading" },
     { role: "5PSW", hardware: "Linksys EZXS55W (5-port gig)", loc: "Nest Actual (north, near window)", func: "Fleet switch for unix stations + Piralus uplink", note: "p1=PIRp1 · p2=GOG1 · p3=TRP0 · p4=DPSL · p5=DPSR", verified_at: "041426", probe: "NEST.01_NOTES_041426_1" },
     { role: "8PSW", hardware: "D-Link DIR-632 (dumb-switch)", loc: "Nest Actual (under Windows Desk 1)", func: "Fleet switch for windows stations + Piralus uplink", note: "p1=PIRp2 · p3=ODT · p5=STN2 · p8=CUBE (rest unused)", verified_at: "041426", probe: "NEST.01_NOTES_041426_1" },
     { role: "Fleet LAN", hardware: "10.0.0.0/24 (routerless L2 island)", loc: "Nest Actual via 5PSW + 8PSW + Piralus bridge", func: "Isolated local mesh. No routing out. Never touches VZW_HOTSPOT.", note: "No DHCP server — stations are static. IPs are observed values, not defining values.", verified_at: "041626 22:02", probe: "ODT route table + ARP" },
@@ -59,7 +59,7 @@ export const fleet = {
     { rox: "STN1", face: "K16A Hub ethernet (Fleet)",          ip: "10.0.0.69",       detail: "static, DNS 8.8.8.8/1.1.1.1",                                                    verified_at: "041526 15:06", probe: "Dan direct" },
     { rox: "TRP0", face: "USB ethernet (Fleet, 5PSW p3)",      ip: "10.0.0.11",       detail: "last seen 041526; not probed tonight",                                           verified_at: "041526",       probe: "INVENTORY claim — needs re-probe" },
     { rox: "DPSR", face: "Fleet (5PSW p5)",                    ip: "(unassigned)",    detail: "Reserved 10.0.0.8 per BIG_ASS_BOARD 032626. On Guest wifi only; Fleet ethernet pending", verified_at: "041626 21:32", probe: "Dan direct" },
-    { rox: "Piralus", face: "Fleet LAN",                       ip: "(none visible)",  detail: "ARP sweep 1-254 returned no R7900 entry. Not an IP device on 10.0.0.0/24. Admin UI on R7900 SSID.", verified_at: "041626 21:45", probe: "ODT ARP sweep" },
+    { rox: "Piralus", face: "Fleet LAN management (planned)",  ip: "10.0.0.1/24",     detail: "ASSIGNED 041626 23:10 per Dan direction. Piralus bridges the two hemispheres of Nest Actual (5PSW unix side, 8PSW windows side) — a bridge at .1 is the design anchor. This pattern echoes deliberately across Nest, Waywood, Olympic, neurology, biology, storytelling, physics, music (per Dan). Currently NOT responding to ARP from ODT — requires enabling R7900 management interface on LAN side. Next step: join Piralus SSID from ACHE or ODT Wi-Fi 2 and enable LAN management IP.", verified_at: "041626 23:10", probe: "Assignment by design (Dan). Not yet active at L3." },
   ],
 
   open_faces: [
