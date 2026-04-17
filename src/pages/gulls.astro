@@ -20,6 +20,7 @@ const gulls = {
     { name: 'GOG1 Ollama deployment', filed: '041326', note: 'Models on FAS2 (4.4 GB), deployment guide filed, not executed.' },
     { name: 'Pheromone typing in frontmatter', filed: '041326', note: 'permanent/session/deprecated tags. NA 017 proposed.' },
     { name: 'NESTNET auto-index rebuild', filed: '041326', note: 'Manual rebuild = doesn\'t happen. Vercel build step or GitHub Action.' },
+    { name: 'Logs page auto-pipeline', filed: '041626', note: 'Cowork Scheduled Task on ODT: watch F:\\STAN\\LNL\\ for new data exports, stream-parse conversations.json via conv_reader pattern, generate logs.astro entries, portal_check + commit + push + Vercel verify + relay beacon. Design: RELAY/LOGS_AUTOPIPELINE_DESIGN_Trip_041626.md. Source conversation: claude.ai/chat/60614011. Five open design decisions for Dan before build.' },
     { name: 'WAKE bash equivalent', filed: '041326', note: 'PowerShell only. Unix stations can\'t generate WAKE.' },
     { name: 'Relay INDEX regeneration', filed: '041426', note: 'Behind by 1 day, missing today\'s Standard Rule.' },
     { name: 'worldtimeapi scrub', filed: '041326', note: '4 Standard Rules still reference removed API.' },
