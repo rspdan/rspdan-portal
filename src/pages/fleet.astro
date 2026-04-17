@@ -8,7 +8,7 @@ const fleet = {
   absorption: '/relay/TRIP_ROX_ABSORPTION_FleetAsNodeSystem_041626.md',
 
   baseplate: [
-    { role: 'Piralus Actual', hardware: 'Netgear R7900', loc: 'Nest Actual (under bed)', function: 'Fleet wifi AP + switch core', note: 'INVENTORY claim 10.0.0.1 collides with ODT live; functioning as switch/AP from ODT rotation (no default gateway on ODT Fleet face)' },
+    { role: 'Piralus Actual', hardware: 'Netgear R7900', loc: 'Nest Actual (under bed)', function: 'Fleet wifi AP + L2 switch', note: 'Confirmed 041626 21:45 from ODT: not present on 10.0.0.0/24 as an IP device. Admin UI on its own SSID subnet (likely 192.168.1.x). Not a router for Fleet LAN.' },
     { role: '5PSW', hardware: 'TP-Link 5-port gig switch', loc: 'Nest Actual', function: 'Fleet LAN core switch (passive)', note: 'Dumb L2 switch' },
     { role: '8PSW', hardware: 'D-Link DIR-632 (dumb-switch mode)', loc: 'Nest Actual', function: 'Fleet LAN expansion (passive)', note: 'Formerly router, repurposed as switch' },
     { role: 'Fleet LAN', hardware: '10.0.0.0/24 subnet', loc: 'copper mesh', function: 'Isolated local network', note: 'No routing out. Never touches VZW_HOTSPOT.' },
@@ -44,10 +44,10 @@ const fleet = {
   ],
 
   openFaces: [
-    { rox: 'R7900 (Piralus Actual)', face: 'admin IP', issue: 'INVENTORY claims 10.0.0.1; ODT live ipconfig owns 10.0.0.1. Same LAN cannot have both.', action: 'Dan verify via router admin UI (or power-cycle + DHCP check)' },
-    { rox: 'R7900 (Piralus Actual)', face: 'routing role', issue: 'Labeled "Fleet backbone router/switch" but ODT Fleet face has no default gateway. R7900 is functioning as switch/AP from ODT rotation, not a router.', action: 'Re-document role once admin UI confirms routing config' },
-    { rox: 'GOG1', face: 'ICMP + SSH on both copper faces', issue: 'ARP resolves at 10.0.0.3 and 10.0.0.54, but both silent on ICMP and SSH:22 from ODT.', action: 'Check ufw status, bridging config, sshd service from GOG1 console' },
-    { rox: 'DPSR', face: 'Fleet LAN IP', issue: 'Commissioning 041626 — currently on Guest wifi + ProtonVPN Stealth only; Claude Desktop installing.', action: 'Assign static IP on copper once commissioning settles' },
+    { rox: 'R7900 (Piralus Actual)', face: 'admin IP', issue: 'Tested from ODT 041626 21:45: ARP sweep of 10.0.0.0/24 returned ONLY stations (STN2, GOG1, CUBE, DPSL). R7900 is not present on Fleet LAN as an IP-having device. routerlogin.net/.com resolve via VZW to IIS decoys. R7900 is functioning as wifi AP + L2 switch, not a routed gateway.', action: 'Admin UI reachable only from a device on R7900\'s own SSID (likely 192.168.1.x DHCP) or via direct LAN-port patch. ACHE or a phone already joined to R7900 wifi can open http://192.168.1.1 or http://routerlogin.net from there.' },
+    { rox: 'R7900 (Piralus Actual)', face: 'routing role', issue: 'ODT Fleet face has no default gateway; default route goes out ASUS wifi to VZW. R7900 is NOT routing for 10.0.0.0/24 — the Fleet LAN is an isolated L2 island with no router.', action: 'Re-document R7900 role as "wifi AP + L2 switch (not router)" once admin UI confirms.' },
+    { rox: 'GOG1', face: 'ICMP + SSH on both copper faces', issue: 'ARP resolves at 10.0.0.3 AND 10.0.0.54 with SAME MAC 98-90-96-dc-76-0e — one physical interface exposing two IPs (alias or bridge). Both silent on ICMP and SSH:22 from ODT. Tailscale shows GOG1 is NOT a Tailscale node. Firewall-level drop is the remaining hypothesis.', action: 'From GOG1 console: check ufw status (sudo ufw status verbose), verify sshd is listening on 0.0.0.0:22 (ss -tlnp | grep 22), confirm 10.0.0.0/24 is allowed. Fixable from GOG1 keyboard only; ODT cannot reach to fix.' },
+    { rox: 'DPSR', face: 'Fleet LAN IP', issue: 'Commissioning 041626 — currently on Guest wifi + ProtonVPN Stealth only; Claude Desktop installing. Reserved 10.0.0.8 per BIG_ASS_BOARD 032626.', action: 'Assign static IP on copper once commissioning settles. DPSR is a DPSL clone (Late 2013 iMac twin) paired via Apple Universal Control.' },
   ],
 };
 ---
