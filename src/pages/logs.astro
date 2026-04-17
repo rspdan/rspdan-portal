@@ -550,6 +550,14 @@ const sessions = [
       {file:'NOW_ANTHROPOLOGY_015_TheBootThatRemembers_Trip_040926.md', label:'NA 015 — The Boot That Remembers', dir:'relay'},
     ] },
 
+  { date:'2026-04-10', label:'Apr 10', niap:'Foursday', count:0, type:'deep',
+    stations:[], who:'● Dan (sick — offline)',
+    names:['(no session — Dan offline, sick — possible Covid, day 1 of 2)'],
+    note:'B Week Day 6. Dan offline sick (possible Covid). No session activity, no crew commits. The first real test of the new close protocol after the 040926 boot-architecture session. Filed in retrospect by Trip in the 041126 session close: "The sick break proved the architecture — nothing drifted in 2 days of silence. The PK is a pointer. The PI is current. The project is clean." On return, Dan: "This sick break has been so good for Nest." — DPS 041126. The gap is the data: the architecture holds through silence.',
+    docs:[
+      {file:'TRIP_TO_ALL_SessionClose_041126.md', label:'Trip → ALL — Session Close 041126 (covers Apr 10 sick break)', dir:'mail'},
+    ] },
+
   { date:'2026-04-11', label:'Apr 11', niap:'Fivesday', count:1, type:'deep',
     stations:['STN2'], who:'◈ Trip (Opus) · ● Dan (recovering)',
     names:['STN2_NEST.01_Trip0_040926_1 CONTINUED (Trip — maintenance, NA publish, PK deploy)'],
@@ -615,6 +623,12 @@ const totalSessions = sessions.reduce((sum, s) => sum + s.count, 0);
 const activeDays = sessions.length;
 const firstLabel = sessions[0].label;
 const lastLabel = sessions[sessions.length - 1].label;
+// Gap count: dates in sessions vs full date span from first to last
+const msPerDay = 86400000;
+const firstDate = new Date(sessions[0].date).getTime();
+const lastDate = new Date(sessions[sessions.length - 1].date).getTime();
+const spanDays = Math.round((lastDate - firstDate) / msPerDay) + 1;
+const totalGaps = spanDays - activeDays;
 ---
 <BaseLayout title="Session Log" description="NEST session timeline — crew navigation tool, unlisted">
 <style>
@@ -680,7 +694,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <h1 class="title">Session Log</h1>
     <div class="sub">
       UNLISTED &#8212; CREW NAVIGATION ONLY<br>
-      {totalSessions} sessions · {activeDays} active days · 0 gaps · {firstLabel}–{lastLabel} 2026<br>
+      {totalSessions} sessions · {activeDays} active days · {totalGaps} gap{totalGaps !== 1 ? 's' : ''} · {firstLabel}–{lastLabel} 2026<br>
       Station from session name · WHO from content only · UNKNOWN is valid<br>
       Click any entry to expand · View opens in tab · ↓ .md downloads file
     </div>
