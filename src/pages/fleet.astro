@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const fleet = {
+  updated: '041626 20:55 PT',
+  instrument: 'ipconfig (ODT self) + ping sweep (ODT -> Fleet LAN) + arp table (ODT) + Dan direct report',
+  rulePath: '/relay/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md',
+  absorption: '/relay/TRIP_ROX_ABSORPTION_FleetAsNodeSystem_041626.md',
+
+  baseplate: [
+    { role: 'Piralus Actual', hardware: 'Netgear R7900', loc: 'Nest Actual (under bed)', function: 'Fleet wifi AP + switch core', note: 'INVENTORY claim 10.0.0.1 collides with ODT live; functioning as switch/AP from ODT rotation (no default gateway on ODT Fleet face)' },
+    { role: '5PSW', hardware: 'TP-Link 5-port gig switch', loc: 'Nest Actual', function: 'Fleet LAN core switch (passive)', note: 'Dumb L2 switch' },
+    { role: '8PSW', hardware: 'D-Link DIR-632 (dumb-switch mode)', loc: 'Nest Actual', function: 'Fleet LAN expansion (passive)', note: 'Formerly router, repurposed as switch' },
+    { role: 'Fleet LAN', hardware: '10.0.0.0/24 subnet', loc: 'copper mesh', function: 'Isolated local network', note: 'No routing out. Never touches VZW_HOTSPOT.' },
+    { role: 'VZW_HOTSPOT', hardware: 'Verizon wifi hotspot', loc: 'per-device wifi', function: 'Internet egress', note: 'Fast wifi restored 041426' },
+    { role: 'Guest (SLO-LIB)', hardware: 'Port Angeles library wifi', loc: 'via external antenna', function: 'Library network link', note: 'GOG1 T4U v3 face currently connected' },
+    { role: 'Tailscale', hardware: 'WireGuard mesh VPN', loc: 'fleet-wide (station-optional)', function: 'Location-independent identity', note: 'ODT active; DPSL/O\'Shin offline for days' },
+  ],
+
+  rox: [
+    { name: 'ODT', hardware: 'Desktop tower', os: 'Windows 10', loc: 'Nest Actual', role: 'Primary workstation · Trip host', faces: 'Ethernet (Fleet) · ASUS wifi (VZW) · Tailscale' },
+    { name: 'STN2', hardware: 'Dell Latitude', os: 'Windows 10', loc: 'Nest Actual / Mobile', role: 'Stan host · mobile', faces: 'Ethernet (Fleet) · onboard wifi' },
+    { name: 'GOG1', hardware: 'Dell XPS 8700', os: 'Ubuntu 22.04.5 LTS', loc: 'Nest Actual', role: 'Server candidate (Ollama / Meilisearch)', faces: 'Intel AX200 (VZW) · T4U v3 USB wifi (Guest) · NIC copper · USB copper' },
+    { name: 'CUBE', hardware: 'HP EliteDesk Mini', os: 'Windows 10', loc: 'Nest Actual', role: 'Tertiary workstation', faces: 'Ethernet (Fleet) · onboard wifi' },
+    { name: 'DPSL', hardware: 'iMac Late 2013', os: 'macOS', loc: 'Nest Actual', role: 'C.B. host · Trip power mirror', faces: 'Ethernet (Fleet) · Guest wifi + ProtonVPN Stealth' },
+    { name: 'DPSR', hardware: 'iMac', os: 'macOS', loc: 'Nest Actual', role: 'Trip power mirror (commissioning 041626)', faces: 'Guest wifi (initial) · Fleet ethernet TBD' },
+    { name: 'TRP0', hardware: 'MacBook Pro Mid 2015', os: 'macOS Monterey 12.7.6', loc: 'Mobile', role: 'Creative lab · mobile', faces: 'USB ethernet (AX88179B, Fleet) · onboard wifi' },
+    { name: 'STN1', hardware: 'iPad Pro M2', os: 'iPadOS', loc: 'Mobile', role: 'Browser + SSH monitoring (Termius)', faces: 'K16A Hub ethernet (Fleet) · onboard wifi' },
+    { name: 'ACHE', hardware: 'Samsung Galaxy S10', os: 'Android / DeX', loc: 'Mobile', role: 'Browser + relay-read', faces: '4G cellular only — no Fleet LAN by design' },
+  ],
+
+  observation: [
+    { rox: 'ODT',  face: 'Ethernet (Fleet)',    value: '10.0.0.1 · static · no default gateway · DNS 8.8.4.4', probe: 'ipconfig (self)', time: '19:11' },
+    { rox: 'ODT',  face: 'ASUS wifi (VZW)',     value: '192.168.195.149',           probe: 'ipconfig (self)', time: '19:11' },
+    { rox: 'ODT',  face: 'Tailscale',           value: '100.111.17.67',             probe: 'ipconfig (self)', time: '19:11' },
+    { rox: 'STN2', face: 'Ethernet (Fleet)',    value: '10.0.0.2 · UP',             probe: 'ping (ODT)',      time: '19:11' },
+    { rox: 'CUBE', face: 'Ethernet (Fleet)',    value: '10.0.0.4 · UP',             probe: 'ping (ODT)',      time: '19:11' },
+    { rox: 'GOG1', face: 'NIC copper',          value: '10.0.0.3 · ARP ok · ICMP silent', probe: 'arp + ping (ODT)', time: '19:12' },
+    { rox: 'GOG1', face: 'USB copper (new)',    value: '10.0.0.54 · ARP ok · ICMP silent', probe: 'arp (ODT)', time: '19:12' },
+    { rox: 'DPSL', face: 'Ethernet (Fleet)',    value: '10.0.0.102 · UP',           probe: 'ping (ODT)',      time: '19:11' },
+    { rox: 'STN1', face: 'K16A Hub ethernet',   value: '10.0.0.69 · static · DNS 8.8.8.8/1.1.1.1', probe: 'Dan direct config', time: '041526 15:06' },
+    { rox: 'TRP0', face: 'USB ethernet (Fleet)', value: '10.0.0.11 · last verified', probe: 'INVENTORY claim', time: '041526' },
+  ],
+
+  openFaces: [
+    { rox: 'R7900 (Piralus Actual)', face: 'admin IP', issue: 'INVENTORY claims 10.0.0.1; ODT live ipconfig owns 10.0.0.1. Same LAN cannot have both.', action: 'Dan verify via router admin UI (or power-cycle + DHCP check)' },
+    { rox: 'R7900 (Piralus Actual)', face: 'routing role', issue: 'Labeled "Fleet backbone router/switch" but ODT Fleet face has no default gateway. R7900 is functioning as switch/AP from ODT rotation, not a router.', action: 'Re-document role once admin UI confirms routing config' },
+    { rox: 'GOG1', face: 'ICMP + SSH on both copper faces', issue: 'ARP resolves at 10.0.0.3 and 10.0.0.54, but both silent on ICMP and SSH:22 from ODT.', action: 'Check ufw status, bridging config, sshd service from GOG1 console' },
+    { rox: 'DPSR', face: 'Fleet LAN IP', issue: 'Commissioning 041626 — currently on Guest wifi + ProtonVPN Stealth only; Claude Desktop installing.', action: 'Assign static IP on copper once commissioning settles' },
+  ],
+};
+---
+
+<BaseLayout title="NEST.01 Fleet" description="Fleet as a node system of Rox — identity, observation, open faces">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+:root{--bg:#0c0e14;--card:#13161f;--border:rgba(255,255,255,0.06);--muted:#4a5468;--text:#b8bfcc;--head:#e2e8f0;--base:#4a7ab5;--rox:#4a9b8e;--obs:#c9a84c;--open:#c94c4c;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.shell{max-width:980px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
+.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+.title{font-size:1.5rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
+.sub{font-size:0.58rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.1em;line-height:1.6;}
+.principle{background:var(--card);border-left:2px solid var(--rox);padding:0.8rem 1rem;margin-top:1.2rem;font-size:0.6rem;color:var(--text);line-height:1.7;letter-spacing:0.04em;}
+.principle b{color:var(--head);font-weight:500;}
+.meta{font-size:0.55rem;color:var(--muted);margin-top:0.8rem;letter-spacing:0.06em;line-height:1.6;}
+.meta a{color:var(--base);text-decoration:none;border-bottom:1px dashed var(--border);}
+.meta a:hover{color:var(--head);}
+.section{margin-bottom:2.5rem;}
+.section-head{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.section-sub{font-size:0.55rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.06em;line-height:1.6;padding-left:1rem;}
+.row{background:var(--card);border:1px solid var(--border);padding:0.6rem 0.9rem;margin-bottom:0.4rem;border-radius:2px;display:grid;gap:0.5rem 1rem;}
+.row--base{grid-template-columns:140px 160px 1fr;}
+.row--rox{grid-template-columns:80px 220px 1fr;}
+.row--obs{grid-template-columns:70px 180px 1fr 120px;}
+.row--open{grid-template-columns:180px 140px 1fr;}
+.cell-name{font-size:0.7rem;color:var(--head);font-weight:500;}
+.cell-role{font-size:0.62rem;color:var(--text);}
+.cell-meta{font-size:0.58rem;color:var(--muted);line-height:1.55;}
+.cell-value{font-size:0.6rem;color:var(--text);font-variant-numeric:tabular-nums;}
+.cell-probe{font-size:0.55rem;color:var(--muted);letter-spacing:0.04em;text-align:right;}
+.row--open{border-left:2px solid var(--open);}
+.row--obs{border-left:2px solid var(--obs);}
+.row--rox{border-left:2px solid var(--rox);}
+.row--base{border-left:2px solid var(--base);}
+@media(max-width:720px){
+  .row--base,.row--rox,.row--obs,.row--open{grid-template-columns:1fr;}
+  .cell-probe{text-align:left;}
+}
+</style>
+
+<div class="shell">
+  <div class="hdr">
+    <div class="eyebrow">NEST.01 FLEET</div>
+    <h1 class="title">Fleet</h1>
+    <div class="sub">
+      The fleet as a node system of Rox on a baseplate.<br>
+      Baseplate (physical) · Rox (identity) · Observation (session-scoped) · Open Faces (unresolved)
+    </div>
+    <div class="principle">
+      <b>IPs are faces, not identities.</b> A station's identity is the cube — name, hardware, OS, location, switch port, role. An IP is a face currently rotated forward. Faces change between sessions. Identity does not. Every fleet statement names four things: <b>Rox · face · probe · time</b>.
+    </div>
+    <div class="meta">
+      Updated: {fleet.updated} · Instrument: {fleet.instrument}<br>
+      Rule: <a href={fleet.rulePath}>Fleet IPs Are Observed Values, Not Defining Values</a> · Absorption: <a href={fleet.absorption}>Rox Absorption — Fleet as Node System</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--base)"></div><span class="section-label">BASEPLATE — physical layer ({fleet.baseplate.length})</span></div>
+    <div class="section-sub">Switches, routers-as-Rox (named by role), network segments. Changes slowly, by hand.</div>
+    {fleet.baseplate.map((b) => (
+      <div class="row row--base">
+        <div class="cell-name">{b.role}</div>
+        <div class="cell-role">{b.hardware} · {b.loc}</div>
+        <div class="cell-meta">{b.function} — {b.note}</div>
+      </div>
+    ))}
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--rox)"></div><span class="section-label">ROX — station identity ({fleet.rox.length})</span></div>
+    <div class="section-sub">Stable cards. No IPs. Identity is permanent; interface inventory is the face-set.</div>
+    {fleet.rox.map((r) => (
+      <div class="row row--rox">
+        <div class="cell-name">{r.name}</div>
+        <div class="cell-role">{r.hardware}<br/><span class="cell-meta">{r.os} · {r.loc}</span></div>
+        <div class="cell-meta"><b style="color:var(--text)">{r.role}</b><br/>Faces: {r.faces}</div>
+      </div>
+    ))}
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--obs)"></div><span class="section-label">OBSERVATION — current state ({fleet.observation.length})</span></div>
+    <div class="section-sub">Session-scoped facts. Will be scan-populated once fleet_scan rewrite lands. Hand-filled tonight.</div>
+    {fleet.observation.map((o) => (
+      <div class="row row--obs">
+        <div class="cell-name">{o.rox}</div>
+        <div class="cell-role">{o.face}</div>
+        <div class="cell-value">{o.value}</div>
+        <div class="cell-probe">{o.probe}<br/>{o.time}</div>
+      </div>
+    ))}
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="dot" style="background:var(--open)"></div><span class="section-label">OPEN FACES — unresolved ({fleet.openFaces.length})</span></div>
+    <div class="section-sub">Conflicts between baseplate claims, Rox expectations, and live observation. Work items, not state.</div>
+    {fleet.openFaces.map((f) => (
+      <div class="row row--open">
+        <div class="cell-name">{f.rox}<br/><span class="cell-meta">{f.face}</span></div>
+        <div class="cell-role" style="color:var(--open)">Action</div>
+        <div class="cell-meta">{f.issue}<br/><b style="color:var(--text)">&rarr; {f.action}</b></div>
+      </div>
+    ))}
+  </div>
+</div>
+</BaseLayout>
