@@ -593,6 +593,21 @@ const sessions = [
       {file:'STANDARD_RULE_RelayViaScript_Trip_041526.md', label:'Standard Rule — Relay via Script', dir:'relay'},
     ] },
 
+  { date:'2026-04-16', label:'Apr 16', niap:'Threesday', count:1, type:'today',
+    stations:['ODT'], who:'◈ Trip (Opus) · ● Dan',
+    names:['ODT_NEST.01_TripO_041626_1 (Trip — F# Week Day 5: R7900 topology, UAC universalized, /fleet living document, 8th principle, Piralus bridge-at-dot-one)'],
+    note:'F# Week Day 5. Six Dan corrections in one evening, all the same structural pattern: generating values without reading the instrument. Morning: Matt Dubeau handoff + two-rules memo. Evening: (1) R7900 topology — not an IP device on Fleet LAN; admin UI lives on its own SSID subnet. (2) ODT Fleet IP moved 10.0.0.1 → 10.0.0.10/24 via silent RunAs elevation — first dynamic-reconfiguration use of universalized UAC rule. (3) UAC rule universalized fleet-wide, forever (Dan: "FUCK UAC TO HELL FOREVER"). (4) DPSL + DPSR identified as iMac twin clones bridged via Apple Universal Control — added to Baseplate as twin-pair Rox. (5) /fleet page redesigned as living document with editable src/data/fleet.js; Dan edits fleet.js, pushes, Vercel rebuilds. (6) Piralus R7900 assigned 10.0.0.1 as design anchor — bridge-at-dot-one is the pattern that echoes across Nest / Waywood / Olympic / neurology / biology / storytelling / physics / music. 8th architectural principle filed: no NEST.01 system may require any station to be always on or online. NA flag verification HERE → DONE (35 flags triaged; 3 portal fixes deployed; 9 BUILT, 11 NOT BUILT, 6 NA frameworks not operationalized, 5 held for Dan). Two Standard Rules filed. Mid-close crash recovered cleanly via persistent DC session. Seven architectural principles from 041326 now read as ancestor to the 8th.',
+    docs:[
+      {file:'MAIL_Trip_TO_ALL_EveningArc_041626.md', label:'Trip → ALL — Evening Arc (5 corrections + recovery)', dir:'mail'},
+      {file:'MAIL_Trip_TO_ALL_R7900Diagnostic_DCPlusChromeUsed_041626.md', label:'Trip → ALL — R7900 Diagnostic', dir:'mail'},
+      {file:'MAIL_Trip_TO_ALL_LBM_NA018_ConcurrentBootPlan_041626.md', label:'Trip → ALL — LBM NA 018 Concurrent Boot Plan', dir:'mail'},
+      {file:'OO_DAILY_041626_TripO_Evening.md', label:'OO Daily — Apr 16 Evening (Trip)', dir:'log'},
+      {file:'RESEARCH_BridgeAtDotOne_Trip_041626.md', label:'Research — Bridge at Dot One (8-domain fractal)', dir:'relay'},
+      {file:'CORRECTION_NoStationAlwaysOnAssumption_Trip_041626.md', label:'Correction — 8th Architectural Principle (no always-on assumption)', dir:'relay'},
+      {file:'STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md', label:'Standard Rule — Fleet IPs Observed Not Defining', dir:'relay'},
+      {file:'STANDARD_RULE_NoUAC_AdminViaRunAs_Trip_040826.md', label:'Standard Rule — UAC Off, RunAs Is the Pattern (universalized 041626)', dir:'relay'},
+    ] },
+
 ];
 
 // COMPUTED — never hardcode these again
