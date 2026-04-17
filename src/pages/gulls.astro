@@ -33,6 +33,10 @@ const gulls = {
     { name: 'Whale Router', filed: '032026', note: 'Stan flagged, Dan Go pending.' },
     { name: 'SEEGULLS auto-pipeline', filed: '041426', note: 'Single source → pipeline → web. Kill manual dual-update.' },
     { name: 'Clock Out automation', filed: '041526', note: 'One trigger, non-AI Rube Goldberg to finish line. Replaces manual session_close.' },
+    { name: 'Off-Fleet boot normalization', filed: '041726', note: 'Off-Fleet boots (WiFi-only, at OHC, on hotspot alone) should be a normal branch, not an anomaly. Update briefcase, BPK, PI, WAKE.' },
+    { name: 'DPSL/DPSR always-online path', filed: '041726', note: 'Both twins lit overnight via OHC Public WiFi. Decide: per-station wake protocols vs fleet-wide Tailscale mesh.' },
+    { name: 'Manifest-per-day Standard (pilot)', filed: '041726', note: 'One SESSION_NOTES.md per day per station, append-as-you-go. Notes/Logs/Maps. Promotes to Standard Rule if pilot sustains.' },
+    { name: 'portal_check.ps1 station-aware', filed: '041726', note: 'Script hardcodes FAS-drive paths; breaks when portal is on C:\\STAN\\SOURCE. FAS is go-between now, not system storage.' },
   ],
   far: [
     { name: 'Waywoodarium Blender session', filed: '040126', note: 'MCP verified, addon ready, spatial grammar designed.' },
