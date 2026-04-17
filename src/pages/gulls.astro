@@ -3,10 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const gulls = {
   here: [
+    { name: 'R7900 actual IP resolution', filed: '041626', note: 'INVENTORY.md claims R7900 (Piralus Actual) is at 10.0.0.1; live ipconfig on ODT shows ODT ethernet owns that IP. Same LAN cannot have both. Dan must verify from router admin UI. First concrete instance of the Fleet IP universalization problem.' },
     { name: 'GOG1 deployment', filed: '041426', note: 'Independent internet via external antenna. Ollama + models ready. Deploy now.' },
   ],
   near: [
-    { name: 'Fleet IP universalization (fleet_scan rewrite)', filed: '041626', note: 'ENGINE/fleet_scan.ps1 currently maps IPs to station names (hardcoded). Invert: station to probes (hostname resolution, Tailscale, mDNS, ARP). INVENTORY STATIONS carry identity only; IPs populated by scan into timestamped block. Same failure class as FAS2 drive-letter hardcoding. Full rule: RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md.' },
+    { name: 'fleet_scan.ps1 rewrite (station -> probes model)', filed: '041626', note: 'Current script maps IP -> station name (hardcoded). Invert: for each station, probe via hostname resolution, Tailscale, mDNS, ARP, ping. Output timestamped observation block, not a defining map. Add Unix equivalent fleet_scan.sh. Full rule: RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md.' },
+    { name: 'INVENTORY.md restructure (IPs out of STATIONS)', filed: '041626', note: 'STATIONS blocks carry stable identity only (name, hardware, OS, location, switch port). IPs live in a scan-populated section, overwritten on each run. No hand-edited IPs.' },
+    { name: 'Audit Bridge for hardcoded fleet IPs', filed: '041626', note: 'Catalog every doc and script that writes 10.0.0.x literally. Known suspects: INVENTORY.md, fleet_scan.ps1, fleet_manifest.json, BIG_ASS_BOARD_NetworkModel, boot-polish skill, possibly nest_harbor.py, MAIL/LOG entries. Produce catalog, decide remediation per file.' },
     { name: 'Stan boot on STN2', filed: '041426', note: 'Test edits, Trip guides reorientation.' },
     { name: 'C:\\NEST\\ directory', filed: '041426', note: 'Permanent tools path. Windows=C:\\NEST\\, Unix=~/NEST/.' },
     { name: 'nest-proxy config cleanup (4 stations)', filed: '041526', note: 'Tooling staged 041626: ENGINE/cleanup_nest_proxy_windows.ps1 (STN2/CUBE), ENGINE/cleanup_nest_proxy_unix.sh (TRP0/DPSL/GOG1). Per-station commands in FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md. Each script idempotent, creates timestamped backup. Run once on next boot, then restart Claude Desktop.' },
