@@ -1,162 +1,211 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const fleet = {
-  updated: '041626 20:55 PT',
-  instrument: 'ipconfig (ODT self) + ping sweep (ODT -> Fleet LAN) + arp table (ODT) + Dan direct report',
-  rulePath: '/relay/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md',
-  absorption: '/relay/TRIP_ROX_ABSORPTION_FleetAsNodeSystem_041626.md',
-
-  baseplate: [
-    { role: 'Piralus Actual', hardware: 'Netgear R7900', loc: 'Nest Actual (under bed)', function: 'Fleet wifi AP + L2 switch', note: 'Confirmed 041626 21:45 from ODT: not present on 10.0.0.0/24 as an IP device. Admin UI on its own SSID subnet (likely 192.168.1.x). Not a router for Fleet LAN.' },
-    { role: '5PSW', hardware: 'TP-Link 5-port gig switch', loc: 'Nest Actual', function: 'Fleet LAN core switch (passive)', note: 'Dumb L2 switch' },
-    { role: '8PSW', hardware: 'D-Link DIR-632 (dumb-switch mode)', loc: 'Nest Actual', function: 'Fleet LAN expansion (passive)', note: 'Formerly router, repurposed as switch' },
-    { role: 'Fleet LAN', hardware: '10.0.0.0/24 subnet', loc: 'copper mesh', function: 'Isolated local network', note: 'No routing out. Never touches VZW_HOTSPOT.' },
-    { role: 'VZW_HOTSPOT', hardware: 'Verizon wifi hotspot', loc: 'per-device wifi', function: 'Internet egress', note: 'Fast wifi restored 041426' },
-    { role: 'Guest (SLO-LIB)', hardware: 'Port Angeles library wifi', loc: 'via external antenna', function: 'Library network link', note: 'GOG1 T4U v3 face currently connected' },
-    { role: 'Tailscale', hardware: 'WireGuard mesh VPN', loc: 'fleet-wide (station-optional)', function: 'Location-independent identity', note: 'ODT active; DPSL/O\'Shin offline for days' },
-    { role: 'Universal Control', hardware: 'Apple ecosystem (macOS)', loc: 'DPSL ↔ DPSR twin-pair only', function: 'Shared keyboard/mouse bridge between the iMac twins', note: 'DPSR is a DPSL clone, diverged. Universal Control lets cursor flow between their screens as a single workstation. Twin-pair Rox relationship, not independent stations.' },
-  ],
-
-  rox: [
-    { name: 'ODT', hardware: 'Desktop tower', os: 'Windows 10', loc: 'Nest Actual', role: 'Primary workstation · Trip host', faces: 'Ethernet (Fleet) · ASUS wifi (VZW) · Tailscale' },
-    { name: 'STN2', hardware: 'Dell Latitude', os: 'Windows 10', loc: 'Nest Actual / Mobile', role: 'Stan host · mobile', faces: 'Ethernet (Fleet) · onboard wifi' },
-    { name: 'GOG1', hardware: 'Dell XPS 8700', os: 'Ubuntu 22.04.5 LTS', loc: 'Nest Actual', role: 'Server candidate (Ollama / Meilisearch)', faces: 'Intel AX200 (VZW) · T4U v3 USB wifi (Guest) · NIC copper · USB copper' },
-    { name: 'CUBE', hardware: 'HP EliteDesk Mini', os: 'Windows 10', loc: 'Nest Actual', role: 'Tertiary workstation', faces: 'Ethernet (Fleet) · onboard wifi' },
-    { name: 'DPSL', hardware: 'iMac Late 2013', os: 'macOS', loc: 'Nest Actual', role: 'C.B. host · Trip power mirror · DPSR twin', faces: 'Ethernet (Fleet) · Guest wifi + ProtonVPN Stealth · Universal Control ↔ DPSR' },
-    { name: 'DPSR', hardware: 'iMac Late 2013 (DPSL clone, diverged)', os: 'macOS', loc: 'Nest Actual', role: 'Trip power mirror · DPSL twin (commissioning 041626)', faces: 'Guest wifi (initial) · Fleet ethernet TBD · Universal Control ↔ DPSL' },
-    { name: 'TRP0', hardware: 'MacBook Pro Mid 2015', os: 'macOS Monterey 12.7.6', loc: 'Mobile', role: 'Creative lab · mobile', faces: 'USB ethernet (AX88179B, Fleet) · onboard wifi' },
-    { name: 'STN1', hardware: 'iPad Pro M2', os: 'iPadOS', loc: 'Mobile', role: 'Browser + SSH monitoring (Termius)', faces: 'K16A Hub ethernet (Fleet) · onboard wifi' },
-    { name: 'ACHE', hardware: 'Samsung Galaxy S10', os: 'Android / DeX', loc: 'Mobile', role: 'Browser + relay-read', faces: '4G cellular only — no Fleet LAN by design' },
-  ],
-
-  observation: [
-    { rox: 'ODT',  face: 'Ethernet (Fleet)',    value: '10.0.0.1 · static · no default gateway · DNS 8.8.4.4', probe: 'ipconfig (self)', time: '19:11' },
-    { rox: 'ODT',  face: 'ASUS wifi (VZW)',     value: '192.168.195.149',           probe: 'ipconfig (self)', time: '19:11' },
-    { rox: 'ODT',  face: 'Tailscale',           value: '100.111.17.67',             probe: 'ipconfig (self)', time: '19:11' },
-    { rox: 'STN2', face: 'Ethernet (Fleet)',    value: '10.0.0.2 · UP',             probe: 'ping (ODT)',      time: '19:11' },
-    { rox: 'CUBE', face: 'Ethernet (Fleet)',    value: '10.0.0.4 · UP',             probe: 'ping (ODT)',      time: '19:11' },
-    { rox: 'GOG1', face: 'NIC copper',          value: '10.0.0.3 · ARP ok · ICMP silent', probe: 'arp + ping (ODT)', time: '19:12' },
-    { rox: 'GOG1', face: 'USB copper (new)',    value: '10.0.0.54 · ARP ok · ICMP silent', probe: 'arp (ODT)', time: '19:12' },
-    { rox: 'DPSL', face: 'Ethernet (Fleet)',    value: '10.0.0.102 · UP',           probe: 'ping (ODT)',      time: '19:11' },
-    { rox: 'STN1', face: 'K16A Hub ethernet',   value: '10.0.0.69 · static · DNS 8.8.8.8/1.1.1.1', probe: 'Dan direct config', time: '041526 15:06' },
-    { rox: 'TRP0', face: 'USB ethernet (Fleet)', value: '10.0.0.11 · last verified', probe: 'INVENTORY claim', time: '041526' },
-  ],
-
-  openFaces: [
-    { rox: 'R7900 (Piralus Actual)', face: 'admin IP', issue: 'Tested from ODT 041626 21:45: ARP sweep of 10.0.0.0/24 returned ONLY stations (STN2, GOG1, CUBE, DPSL). R7900 is not present on Fleet LAN as an IP-having device. routerlogin.net/.com resolve via VZW to IIS decoys. R7900 is functioning as wifi AP + L2 switch, not a routed gateway.', action: 'Admin UI reachable only from a device on R7900\'s own SSID (likely 192.168.1.x DHCP) or via direct LAN-port patch. ACHE or a phone already joined to R7900 wifi can open http://192.168.1.1 or http://routerlogin.net from there.' },
-    { rox: 'R7900 (Piralus Actual)', face: 'routing role', issue: 'ODT Fleet face has no default gateway; default route goes out ASUS wifi to VZW. R7900 is NOT routing for 10.0.0.0/24 — the Fleet LAN is an isolated L2 island with no router.', action: 'Re-document R7900 role as "wifi AP + L2 switch (not router)" once admin UI confirms.' },
-    { rox: 'GOG1', face: 'ICMP + SSH on both copper faces', issue: 'ARP resolves at 10.0.0.3 AND 10.0.0.54 with SAME MAC 98-90-96-dc-76-0e — one physical interface exposing two IPs (alias or bridge). Both silent on ICMP and SSH:22 from ODT. Tailscale shows GOG1 is NOT a Tailscale node. Firewall-level drop is the remaining hypothesis.', action: 'From GOG1 console: check ufw status (sudo ufw status verbose), verify sshd is listening on 0.0.0.0:22 (ss -tlnp | grep 22), confirm 10.0.0.0/24 is allowed. Fixable from GOG1 keyboard only; ODT cannot reach to fix.' },
-    { rox: 'DPSR', face: 'Fleet LAN IP', issue: 'Commissioning 041626 — currently on Guest wifi + ProtonVPN Stealth only; Claude Desktop installing. Reserved 10.0.0.8 per BIG_ASS_BOARD 032626.', action: 'Assign static IP on copper once commissioning settles. DPSR is a DPSL clone (Late 2013 iMac twin) paired via Apple Universal Control.' },
-  ],
-};
+import { fleet } from '../data/fleet.js';
 ---
 
-<BaseLayout title="NEST.01 Fleet" description="Fleet as a node system of Rox — identity, observation, open faces">
+<BaseLayout title="NEST.01 Fleet" description="Fleet as a node system of Rox — living record of identity, observation, open faces">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
-:root{--bg:#0c0e14;--card:#13161f;--border:rgba(255,255,255,0.06);--muted:#4a5468;--text:#b8bfcc;--head:#e2e8f0;--base:#4a7ab5;--rox:#4a9b8e;--obs:#c9a84c;--open:#c94c4c;}
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#0c0e14;
+  --card:#13161f;
+  --border:rgba(255,255,255,0.06);
+  --muted:#4a5468;
+  --text:#b8bfcc;
+  --head:#e2e8f0;
+  --base:#4a7ab5;
+  --rox:#4a9b8e;
+  --obs:#c9a84c;
+  --open:#c94c4c;
+  --ip:#7dd3c0;
+  --stamp:#8a93a5;
+  --stale:#c97a4a;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
-.shell{max-width:980px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+.shell{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+
 .hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
 .eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
 .title{font-size:1.5rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
 .sub{font-size:0.58rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.1em;line-height:1.6;}
-.principle{background:var(--card);border-left:2px solid var(--rox);padding:0.8rem 1rem;margin-top:1.2rem;font-size:0.6rem;color:var(--text);line-height:1.7;letter-spacing:0.04em;}
-.principle b{color:var(--head);font-weight:500;}
-.meta{font-size:0.55rem;color:var(--muted);margin-top:0.8rem;letter-spacing:0.06em;line-height:1.6;}
-.meta a{color:var(--base);text-decoration:none;border-bottom:1px dashed var(--border);}
-.meta a:hover{color:var(--head);}
-.section{margin-bottom:2.5rem;}
-.section-head{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
-.section-sub{font-size:0.55rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.06em;line-height:1.6;padding-left:1rem;}
-.row{background:var(--card);border:1px solid var(--border);padding:0.6rem 0.9rem;margin-bottom:0.4rem;border-radius:2px;display:grid;gap:0.5rem 1rem;}
-.row--base{grid-template-columns:140px 160px 1fr;}
-.row--rox{grid-template-columns:80px 220px 1fr;}
-.row--obs{grid-template-columns:70px 180px 1fr 120px;}
-.row--open{grid-template-columns:180px 140px 1fr;}
-.cell-name{font-size:0.7rem;color:var(--head);font-weight:500;}
-.cell-role{font-size:0.62rem;color:var(--text);}
-.cell-meta{font-size:0.58rem;color:var(--muted);line-height:1.55;}
-.cell-value{font-size:0.6rem;color:var(--text);font-variant-numeric:tabular-nums;}
-.cell-probe{font-size:0.55rem;color:var(--muted);letter-spacing:0.04em;text-align:right;}
-.row--open{border-left:2px solid var(--open);}
-.row--obs{border-left:2px solid var(--obs);}
-.row--rox{border-left:2px solid var(--rox);}
-.row--base{border-left:2px solid var(--base);}
-@media(max-width:720px){
-  .row--base,.row--rox,.row--obs,.row--open{grid-template-columns:1fr;}
-  .cell-probe{text-align:left;}
-}
+
+.live-banner{background:linear-gradient(90deg,rgba(74,155,142,0.08),transparent);border-left:3px solid var(--rox);padding:0.9rem 1.1rem;margin:1.2rem 0 0;border-radius:2px;}
+.live-banner .row{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:baseline;font-size:0.65rem;}
+.live-banner .lbl{color:var(--muted);text-transform:uppercase;letter-spacing:0.18em;font-size:0.5rem;}
+.live-banner .val{color:var(--head);font-weight:500;}
+.live-banner .note{font-size:0.58rem;color:var(--stamp);margin-top:0.5rem;font-style:italic;}
+.live-banner .edit{font-size:0.55rem;color:var(--rox);margin-top:0.35rem;font-family:inherit;}
+.live-banner code{background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:2px;color:var(--ip);font-size:0.85em;}
+
+.principle{background:var(--card);border-left:2px solid var(--base);padding:1rem 1.2rem;margin:2rem 0 1.5rem;border-radius:2px;font-size:0.68rem;line-height:1.7;color:var(--text);}
+.principle strong{color:var(--head);font-weight:500;}
+
+section{margin:2.5rem 0;}
+.sec-head{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:0.9rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+.sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sec-dot.base{background:var(--base);}
+.sec-dot.rox{background:var(--rox);}
+.sec-dot.obs{background:var(--obs);}
+.sec-dot.open{background:var(--open);}
+.sec-title{font-size:0.72rem;color:var(--head);letter-spacing:0.22em;text-transform:uppercase;font-weight:500;}
+.sec-count{font-size:0.55rem;color:var(--muted);letter-spacing:0.16em;margin-left:auto;}
+
+.row-block{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.55rem;font-size:0.64rem;line-height:1.55;}
+.row-block:hover{border-color:rgba(255,255,255,0.1);}
+
+.row-top{display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap;margin-bottom:0.3rem;}
+.row-name{color:var(--head);font-weight:500;min-width:110px;font-size:0.7rem;}
+.row-ip{font-weight:500;color:var(--ip);font-size:0.82rem;letter-spacing:0.03em;padding:2px 8px;background:rgba(125,211,192,0.08);border-radius:2px;font-family:'IBM Plex Mono',monospace;}
+.row-ip.empty{color:var(--muted);background:rgba(255,255,255,0.02);font-weight:300;font-size:0.68rem;}
+.row-face{color:var(--text);font-size:0.62rem;}
+.row-detail{color:var(--stamp);font-size:0.6rem;margin-top:0.2rem;line-height:1.5;}
+.row-meta{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;margin-top:0.45rem;padding-top:0.4rem;border-top:1px dashed rgba(255,255,255,0.04);font-size:0.54rem;color:var(--muted);}
+.row-meta .stamp{color:var(--stamp);font-weight:500;letter-spacing:0.06em;}
+.row-meta .stamp.stale{color:var(--stale);}
+.row-meta .probe{font-style:italic;}
+
+.baseplate-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:1rem;align-items:baseline;}
+.baseplate-role{color:var(--head);font-weight:500;font-size:0.68rem;}
+.baseplate-hw{color:var(--text);font-size:0.6rem;}
+.baseplate-func{color:var(--text);font-size:0.6rem;}
+.baseplate-note{color:var(--stamp);font-size:0.58rem;margin-top:0.25rem;line-height:1.5;}
+
+.rox-row{display:grid;grid-template-columns:90px 1fr;gap:1rem;align-items:baseline;}
+.rox-name{color:var(--head);font-weight:500;font-size:0.72rem;letter-spacing:0.05em;}
+.rox-body{}
+.rox-hw{color:var(--text);font-size:0.62rem;}
+.rox-meta-l2{color:var(--stamp);font-size:0.58rem;margin-top:0.2rem;}
+.rox-faces{color:var(--text);font-size:0.58rem;margin-top:0.3rem;line-height:1.55;padding-top:0.3rem;border-top:1px dashed rgba(255,255,255,0.04);}
+
+.open-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;}
+.open-rox{color:var(--open);font-weight:500;font-size:0.66rem;}
+.open-face{color:var(--head);font-size:0.62rem;margin-bottom:0.3rem;}
+.open-issue{color:var(--text);font-size:0.6rem;line-height:1.55;margin-bottom:0.35rem;}
+.open-action{color:var(--stamp);font-size:0.58rem;font-style:italic;line-height:1.55;}
+.open-status{font-size:0.52rem;color:var(--obs);letter-spacing:0.14em;text-transform:uppercase;margin-top:0.4rem;}
+
+.foot{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.55rem;color:var(--muted);line-height:1.7;letter-spacing:0.08em;}
+.foot a{color:var(--rox);text-decoration:none;}
+.foot a:hover{color:var(--head);}
 </style>
 
 <div class="shell">
   <div class="hdr">
-    <div class="eyebrow">NEST.01 FLEET</div>
-    <h1 class="title">Fleet</h1>
-    <div class="sub">
-      The fleet as a node system of Rox on a baseplate.<br>
-      Baseplate (physical) · Rox (identity) · Observation (session-scoped) · Open Faces (unresolved)
-    </div>
-    <div class="principle">
-      <b>IPs are faces, not identities.</b> A station's identity is the cube — name, hardware, OS, location, switch port, role. An IP is a face currently rotated forward. Faces change between sessions. Identity does not. Every fleet statement names four things: <b>Rox · face · probe · time</b>.
-    </div>
-    <div class="meta">
-      Updated: {fleet.updated} · Instrument: {fleet.instrument}<br>
-      Rule: <a href={fleet.rulePath}>Fleet IPs Are Observed Values, Not Defining Values</a> · Absorption: <a href={fleet.absorption}>Rox Absorption — Fleet as Node System</a>
+    <div class="eyebrow">NEST.01 · Fleet Map</div>
+    <div class="title">Fleet as a node system of Rox</div>
+    <div class="sub">A living record. Identity is the cube; IPs are faces currently rotated forward. Every statement names Rox · face · probe · time.</div>
+
+    <div class="live-banner">
+      <div class="row">
+        <span><span class="lbl">Updated</span> <span class="val">{fleet.updated}</span></span>
+        <span><span class="lbl">By</span> <span class="val">{fleet.updated_by}</span></span>
+      </div>
+      <div class="edit">Editable source: <code>src/data/fleet.js</code> — edit the file directly, push, portal rebuilds.</div>
+      <div class="note">{fleet.instructions}</div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--base)"></div><span class="section-label">BASEPLATE — physical layer ({fleet.baseplate.length})</span></div>
-    <div class="section-sub">Switches, routers-as-Rox (named by role), network segments. Changes slowly, by hand.</div>
+  <div class="principle">
+    <strong>Principle.</strong> Station identity is the Rox — name, hardware, OS, location, switch port, role. The IP is a face currently rotated forward. Faces change between sessions and cannot be used to identify the station. Every observation on this page is session-scoped and carries a <em>verified_at</em> timestamp. When a row goes stale, it gets marked stale and re-probed, not silently trusted. Full rule: <em>RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md</em>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot base"></div>
+      <div class="sec-title">Baseplate — persistent identity</div>
+      <div class="sec-count">{fleet.baseplate.length} items</div>
+    </div>
     {fleet.baseplate.map((b) => (
-      <div class="row row--base">
-        <div class="cell-name">{b.role}</div>
-        <div class="cell-role">{b.hardware} · {b.loc}</div>
-        <div class="cell-meta">{b.function} — {b.note}</div>
+      <div class="row-block">
+        <div class="baseplate-row">
+          <div class="baseplate-role">{b.role}</div>
+          <div>
+            <div class="baseplate-hw">{b.hardware}</div>
+            <div class="baseplate-note">{b.loc}</div>
+          </div>
+          <div>
+            <div class="baseplate-func">{b.func}</div>
+            <div class="baseplate-note">{b.note}</div>
+          </div>
+        </div>
+        <div class="row-meta">
+          <span class="stamp">verified {b.verified_at}</span>
+          <span class="probe">via {b.probe}</span>
+        </div>
       </div>
     ))}
-  </div>
+  </section>
 
-  <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--rox)"></div><span class="section-label">ROX — station identity ({fleet.rox.length})</span></div>
-    <div class="section-sub">Stable cards. No IPs. Identity is permanent; interface inventory is the face-set.</div>
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot rox"></div>
+      <div class="sec-title">Rox — station identity</div>
+      <div class="sec-count">{fleet.rox.length} stations</div>
+    </div>
     {fleet.rox.map((r) => (
-      <div class="row row--rox">
-        <div class="cell-name">{r.name}</div>
-        <div class="cell-role">{r.hardware}<br/><span class="cell-meta">{r.os} · {r.loc}</span></div>
-        <div class="cell-meta"><b style="color:var(--text)">{r.role}</b><br/>Faces: {r.faces}</div>
+      <div class="row-block">
+        <div class="rox-row">
+          <div class="rox-name">{r.name}</div>
+          <div class="rox-body">
+            <div class="rox-hw">{r.hw} · {r.os}</div>
+            <div class="rox-meta-l2">{r.loc} — {r.role}</div>
+            <div class="rox-faces">Faces: {r.faces}</div>
+          </div>
+        </div>
       </div>
     ))}
-  </div>
+  </section>
 
-  <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--obs)"></div><span class="section-label">OBSERVATION — current state ({fleet.observation.length})</span></div>
-    <div class="section-sub">Session-scoped facts. Will be scan-populated once fleet_scan rewrite lands. Hand-filled tonight.</div>
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot obs"></div>
+      <div class="sec-title">Observation — current face rotation</div>
+      <div class="sec-count">{fleet.observation.length} rows</div>
+    </div>
     {fleet.observation.map((o) => (
-      <div class="row row--obs">
-        <div class="cell-name">{o.rox}</div>
-        <div class="cell-role">{o.face}</div>
-        <div class="cell-value">{o.value}</div>
-        <div class="cell-probe">{o.probe}<br/>{o.time}</div>
+      <div class="row-block">
+        <div class="row-top">
+          <span class="row-name">{o.rox}</span>
+          <span class={"row-ip " + (o.ip.includes('(') ? 'empty' : '')}>{o.ip}</span>
+          <span class="row-face">{o.face}</span>
+        </div>
+        <div class="row-detail">{o.detail}</div>
+        <div class="row-meta">
+          <span class={"stamp " + (o.verified_at === 'stale' ? 'stale' : '')}>verified {o.verified_at}</span>
+          <span class="probe">via {o.probe}</span>
+        </div>
       </div>
     ))}
-  </div>
+  </section>
 
-  <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--open)"></div><span class="section-label">OPEN FACES — unresolved ({fleet.openFaces.length})</span></div>
-    <div class="section-sub">Conflicts between baseplate claims, Rox expectations, and live observation. Work items, not state.</div>
-    {fleet.openFaces.map((f) => (
-      <div class="row row--open">
-        <div class="cell-name">{f.rox}<br/><span class="cell-meta">{f.face}</span></div>
-        <div class="cell-role" style="color:var(--open)">Action</div>
-        <div class="cell-meta">{f.issue}<br/><b style="color:var(--text)">&rarr; {f.action}</b></div>
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot open"></div>
+      <div class="sec-title">Open faces — unresolved, under observation</div>
+      <div class="sec-count">{fleet.open_faces.length} items</div>
+    </div>
+    {fleet.open_faces.map((f) => (
+      <div class="row-block">
+        <div class="open-row">
+          <div class="open-rox">{f.rox}</div>
+          <div>
+            <div class="open-face">{f.face}</div>
+            <div class="open-issue">{f.issue}</div>
+            <div class="open-action">→ {f.action}</div>
+            {f.status && <div class="open-status">{f.status}</div>}
+          </div>
+        </div>
+        <div class="row-meta">
+          <span class="stamp">verified {f.verified_at}</span>
+        </div>
       </div>
     ))}
+  </section>
+
+  <div class="foot">
+    Related: <a href="/gulls">/gulls</a> · <a href="/logs">/logs</a> · <a href="/nest-pi">/nest-pi</a><br/>
+    Source docs: RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md · RELAY/TRIP_ROX_ABSORPTION_FleetAsNodeSystem_041626.md · FLEET/INVENTORY.md · NEST.01_NOTES_041426_1.png
   </div>
 </div>
 </BaseLayout>
