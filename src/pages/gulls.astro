@@ -39,6 +39,8 @@ const gulls = {
     { name: 'portal_check.ps1 station-aware', filed: '041726', note: 'Script hardcodes FAS-drive paths; breaks when portal is on C:\\STAN\\SOURCE. FAS is go-between now, not system storage.' },
     { name: 'Briefcase/BPK enforce Log-First', filed: '041726', note: 'Every session open: publish previous day\u2019s /logs entry before any other work. Rule: STANDARD_RULE_LogFirstOpeningMove. Briefcase + boot-polish need this step.' },
     { name: 'log_gap_check.ps1 to ENGINE', filed: '041726', note: 'Today\u2019s ad-hoc gap checker becomes a reusable ENGINE utility + bash equivalent. Called by BPK for Log-First enforcement.' },
+    { name: 'STN2 Docker + Ubuntu WSL survey', filed: '041726', note: '25 GB Docker data pulled but uncatalogued. Ubuntu WSL forgotten. Map pulled images, compose files, volumes. Identify which solve NEST open problems vs exploratory.' },
+    { name: 'Filesystem:edit_file truncation pitfall', filed: '041726', note: 'Large multi-line appends via Filesystem MCP silently truncate/fuse content. Workaround: small edits or full write_file rewrites. Document in FLEET/MCP_SETUP.md.' },
   ],
   far: [
     { name: 'Waywoodarium Blender session', filed: '040126', note: 'MCP verified, addon ready, spatial grammar designed.' },
