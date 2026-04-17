@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const gulls = {
   here: [
-    { name: 'NA review flag verification', filed: '041426', note: '~35 flags from reading all 17 NA issues. Tools described as built but unverified. Duration refs. Contradictions.' },
     { name: 'GOG1 deployment', filed: '041426', note: 'Independent internet via external antenna. Ollama + models ready. Deploy now.' },
   ],
   near: [
@@ -40,6 +39,7 @@ const gulls = {
     { name: 'Conversation parser automation', filed: '041426', note: 'Anthropic data dump to NESTNET, currently manual.' },
   ],
   done: [
+    { name: 'NA review flag verification', filed: '041426', done: '041626', note: '35 flags from the 17-issue library review triaged. 3 portal text fixes deployed (005b, 006, 012). 9 verified BUILT on disk (yomygdylo, Stans System, Leapfrog, ROX, auto-logger, HypercampUS, C&A skill). 11 confirmed NOT BUILT (nest_sleep.py, RA MCP, Half-Organ). 6 NA frameworks not operationalized in skills. 5 held for Dan. Status: RELAY/NA_FLAG_STATUS_Trip_041626.md.' },
     { name: 'Cleanup tooling staged for cross-fleet nest-proxy removal', filed: '041626', done: '041626', note: 'ENGINE/cleanup_nest_proxy_windows.ps1 + _unix.sh (idempotent, jq-based, timestamped backups). FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md has per-station commands. FLEET/MCP_SETUP.md refreshed (nest-proxy retired, relay documented, mojibake cleaned).' },
     { name: 'nest-proxy retired + relay.ps1/.sh live', filed: '041426', done: '041526', note: 'MCP server replaced by shell scripts via DC. 6 actions, tested end-to-end.' },
     { name: 'Vercel portal_check.ps1', filed: '041526', done: '041526', note: 'Pre-push npm build catches Astro errors. STANDARD_RULE_PortalBuildFirst filed.' },
