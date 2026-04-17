@@ -18,8 +18,8 @@
 // Every fleet statement names four things: Rox · face · probe · time.
 
 export const fleet = {
-  updated: "041626 23:10 PT",
-  updated_by: "Trip (ODT) + Dan",
+  updated: "041726 09:20 PT",
+  updated_by: "Trip (STN2) + Dan",
   instructions: "Edit src/data/fleet.js directly. Push to rebuild. IPs are observed values, not defining values.",
 
   baseplate: [
@@ -51,7 +51,8 @@ export const fleet = {
     { rox: "ODT",  face: "ASUS wifi (VZW)",                    ip: "192.168.195.149", detail: "gateway 192.168.195.64",                                                         verified_at: "041626 19:11", probe: "ipconfig (self)" },
     { rox: "ODT",  face: "WIFI 2 Intel AC 9560 160MHz",        ip: "(disabled)",      detail: "MAC 0A-F5-30-87-61-57 — available for Piralus SSID attach",                     verified_at: "041626 21:48", probe: "Get-NetAdapter" },
     { rox: "ODT",  face: "Tailscale",                          ip: "100.111.17.67",   detail: "peer 001-win10pro",                                                              verified_at: "041626 21:28", probe: "tailscale status" },
-    { rox: "STN2", face: "Ethernet (Fleet, 8PSW p5)",          ip: "10.0.0.2",        detail: "MAC 18-db-f2-12-62-9e · UP",                                                     verified_at: "041626 22:03", probe: "ping + arp from ODT 10.0.0.10" },
+    { rox: "STN2", face: "Ethernet (Fleet, 8PSW p5)",          ip: "(disconnected)",  detail: "Was UP at 10.0.0.2 041626 22:03 (probed from ODT). Station moved to OHC Actual overnight; Fleet cable not attached there. No media. MAC 18-db-f2-12-62-9e persists on NIC. First applied test of Observed-Not-Defining rule — the face rotated with the station.", verified_at: "041726 07:20", probe: "Get-NetAdapter from STN2 (self)" },
+    { rox: "STN2", face: "OHC WiFi 5G",                        ip: "192.168.0.11",    detail: "gateway 192.168.0.1 (OHC router) → Layer42 ISP. Off-Fleet wifi for remote work days. Not on Fleet LAN, no Tailscale on STN2.", verified_at: "041726 07:20", probe: "ipconfig (self)" },
     { rox: "GOG1", face: "NIC copper (Fleet, 5PSW p2)",        ip: "10.0.0.3",        detail: "MAC 98-90-96-dc-76-0e · ARP ok · ICMP and SSH:22 silent (firewall drop)",         verified_at: "041626 22:03", probe: "Test-NetConnection from ODT 10.0.0.10" },
     { rox: "GOG1", face: "USB copper (Fleet)",                 ip: "10.0.0.54",       detail: "SAME MAC as .3 — IP alias on same interface; ARP ok, ICMP silent",                verified_at: "041626 21:28", probe: "arp from ODT" },
     { rox: "CUBE", face: "Ethernet (Fleet, 8PSW p8)",          ip: "10.0.0.4",        detail: "MAC e0-3f-49-1b-03-29 · UP",                                                     verified_at: "041626 22:03", probe: "ping + arp from ODT 10.0.0.10" },
