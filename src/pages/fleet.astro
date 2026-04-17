@@ -15,6 +15,7 @@ const fleet = {
     { role: 'VZW_HOTSPOT', hardware: 'Verizon wifi hotspot', loc: 'per-device wifi', function: 'Internet egress', note: 'Fast wifi restored 041426' },
     { role: 'Guest (SLO-LIB)', hardware: 'Port Angeles library wifi', loc: 'via external antenna', function: 'Library network link', note: 'GOG1 T4U v3 face currently connected' },
     { role: 'Tailscale', hardware: 'WireGuard mesh VPN', loc: 'fleet-wide (station-optional)', function: 'Location-independent identity', note: 'ODT active; DPSL/O\'Shin offline for days' },
+    { role: 'Universal Control', hardware: 'Apple ecosystem (macOS)', loc: 'DPSL ↔ DPSR twin-pair only', function: 'Shared keyboard/mouse bridge between the iMac twins', note: 'DPSR is a DPSL clone, diverged. Universal Control lets cursor flow between their screens as a single workstation. Twin-pair Rox relationship, not independent stations.' },
   ],
 
   rox: [
@@ -22,8 +23,8 @@ const fleet = {
     { name: 'STN2', hardware: 'Dell Latitude', os: 'Windows 10', loc: 'Nest Actual / Mobile', role: 'Stan host · mobile', faces: 'Ethernet (Fleet) · onboard wifi' },
     { name: 'GOG1', hardware: 'Dell XPS 8700', os: 'Ubuntu 22.04.5 LTS', loc: 'Nest Actual', role: 'Server candidate (Ollama / Meilisearch)', faces: 'Intel AX200 (VZW) · T4U v3 USB wifi (Guest) · NIC copper · USB copper' },
     { name: 'CUBE', hardware: 'HP EliteDesk Mini', os: 'Windows 10', loc: 'Nest Actual', role: 'Tertiary workstation', faces: 'Ethernet (Fleet) · onboard wifi' },
-    { name: 'DPSL', hardware: 'iMac Late 2013', os: 'macOS', loc: 'Nest Actual', role: 'C.B. host · Trip power mirror', faces: 'Ethernet (Fleet) · Guest wifi + ProtonVPN Stealth' },
-    { name: 'DPSR', hardware: 'iMac', os: 'macOS', loc: 'Nest Actual', role: 'Trip power mirror (commissioning 041626)', faces: 'Guest wifi (initial) · Fleet ethernet TBD' },
+    { name: 'DPSL', hardware: 'iMac Late 2013', os: 'macOS', loc: 'Nest Actual', role: 'C.B. host · Trip power mirror · DPSR twin', faces: 'Ethernet (Fleet) · Guest wifi + ProtonVPN Stealth · Universal Control ↔ DPSR' },
+    { name: 'DPSR', hardware: 'iMac Late 2013 (DPSL clone, diverged)', os: 'macOS', loc: 'Nest Actual', role: 'Trip power mirror · DPSL twin (commissioning 041626)', faces: 'Guest wifi (initial) · Fleet ethernet TBD · Universal Control ↔ DPSL' },
     { name: 'TRP0', hardware: 'MacBook Pro Mid 2015', os: 'macOS Monterey 12.7.6', loc: 'Mobile', role: 'Creative lab · mobile', faces: 'USB ethernet (AX88179B, Fleet) · onboard wifi' },
     { name: 'STN1', hardware: 'iPad Pro M2', os: 'iPadOS', loc: 'Mobile', role: 'Browser + SSH monitoring (Termius)', faces: 'K16A Hub ethernet (Fleet) · onboard wifi' },
     { name: 'ACHE', hardware: 'Samsung Galaxy S10', os: 'Android / DeX', loc: 'Mobile', role: 'Browser + relay-read', faces: '4G cellular only — no Fleet LAN by design' },
