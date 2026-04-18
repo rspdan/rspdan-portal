@@ -18,12 +18,12 @@
 // Every fleet statement names four things: Rox · face · probe · time.
 
 export const fleet = {
-  updated: "041726 09:20 PT",
-  updated_by: "Trip (STN2) + Dan",
+  updated: "041726 21:00 PT",
+  updated_by: "Trip (ODT) + Dan — Piralus commissioned",
   instructions: "Edit src/data/fleet.js directly. Push to rebuild. IPs are observed values, not defining values.",
 
   baseplate: [
-    { role: "Piralus Actual", hardware: "Netgear R7900", loc: "Nest Actual (Room Center, under bed)", func: "L2 bridge between two hemispheres (5PSW unix side ↔ 8PSW windows side). Also wifi AP on own SSID. Planned Fleet LAN management at 10.0.0.1.", note: "Bridge-at-.1 is the design anchor for Nest Actual — the room is two hemispheres joined by the bridge. Pattern echoes across Nest / Waywood / Olympic / neurology / biology / storytelling / physics / music (per Dan). Admin UI currently on R7900 SSID subnet; LAN management needs enabling.", verified_at: "041626 23:10", probe: "Dan direction + topology reading" },
+    { role: "Piralus Actual", hardware: "Netgear Nighthawk X6 R7900 (firmware V1.0.4.46_10.0.53)", loc: "Nest Actual (Room Center, under bed)", func: "Fleet backbone router at 10.0.0.1. DHCP pool 10.0.0.150–200. WiFi AP (2.4GHz + dual 5GHz). Commissioned 041726 ~20:55 by Dan on ODT via factory-reset pinhole + Genie setup wizard.", note: "Admin UI: http://10.0.0.1 (user: admin / pw: theone1). Device name: PIRALUS. WiFi SSIDs: NETGEAR69_0 (2.4GHz), NETGEAR69_1 (5GHz ch44), NETGEAR69_2 (5GHz ch153). WiFi password: Sull1vandp. Security: WPA2-PSK [AES]. Bridge-at-.1 is the design anchor for Nest Actual — the room is two hemispheres joined by the bridge. Pattern echoes across Nest / Waywood / Olympic / neurology / biology / storytelling / physics / music (per Dan).", verified_at: "041726 21:00", probe: "ODT Ethernet @ 10.0.0.10 pings 10.0.0.1 0ms + Chrome admin UI verified at http://10.0.0.1/start.htm" },
     { role: "5PSW", hardware: "Linksys EZXS55W (5-port gig)", loc: "Nest Actual (north, near window)", func: "Fleet switch for unix stations + Piralus uplink", note: "p1=PIRp1 · p2=GOG1 · p3=TRP0 · p4=DPSL · p5=DPSR", verified_at: "041426", probe: "NEST.01_NOTES_041426_1" },
     { role: "8PSW", hardware: "D-Link DIR-632 (dumb-switch)", loc: "Nest Actual (under Windows Desk 1)", func: "Fleet switch for windows stations + Piralus uplink", note: "p1=PIRp2 · p3=ODT · p5=STN2 · p8=CUBE (rest unused)", verified_at: "041426", probe: "NEST.01_NOTES_041426_1" },
     { role: "Fleet LAN", hardware: "10.0.0.0/24 (routerless L2 island)", loc: "Nest Actual via 5PSW + 8PSW + Piralus bridge", func: "Isolated local mesh. No routing out. Never touches VZW_HOTSPOT.", note: "No DHCP server — stations are static. IPs are observed values, not defining values.", verified_at: "041626 22:02", probe: "ODT route table + ARP" },
