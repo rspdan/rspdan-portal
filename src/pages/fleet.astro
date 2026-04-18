@@ -95,6 +95,23 @@ section{margin:2.5rem 0;}
 .map-ascii-meta code{background:rgba(255,255,255,0.04);padding:0.1rem 0.35rem;border-radius:3px;font-size:0.8rem;}
 .map-ascii{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:0.68rem;line-height:1.22;color:var(--fg);margin:0;padding:0.5rem 0.2rem;background:transparent;white-space:pre;overflow-x:auto;letter-spacing:0;}
 
+/* ---- HARDWARE ---- */
+.hw-block{padding-top:0.75rem;}
+.hw-head{display:flex;align-items:baseline;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.6rem;padding-bottom:0.5rem;border-bottom:1px dashed var(--border);}
+.hw-name{font-weight:700;font-size:1.05rem;color:var(--head);letter-spacing:0.02em;}
+.hw-role{font-size:0.8rem;color:var(--muted);font-style:italic;}
+.hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.45rem 1.2rem;margin-bottom:0.6rem;}
+.hw-item{display:flex;gap:0.6rem;align-items:baseline;font-size:0.82rem;line-height:1.4;}
+.hw-wide{grid-column:1 / -1;}
+.hw-k{color:var(--stamp);font-size:0.72rem;font-family:'SF Mono','Menlo','Consolas',monospace;text-transform:lowercase;min-width:7rem;flex:0 0 auto;padding-top:0.1rem;letter-spacing:0.04em;}
+.hw-v{color:var(--fg);flex:1 1 auto;}
+.hw-list{margin:0;padding-left:1rem;list-style:none;}
+.hw-list li{position:relative;margin-bottom:0.15rem;padding-left:0.8rem;font-size:0.82rem;}
+.hw-list li::before{content:"▸";position:absolute;left:0;color:var(--stamp);}
+.hw-pending{color:var(--obs);font-style:italic;}
+.hw-blocker{color:var(--rox);}
+@media (max-width: 680px){.hw-grid{grid-template-columns:1fr;}}
+
 .switch-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin:1rem 0;}
 .switch-block{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:1rem;}
 .switch-head{display:flex;align-items:baseline;gap:0.6rem;margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
@@ -367,6 +384,65 @@ section{margin:2.5rem 0;}
         <div class="row-meta">
           <span class={"stamp " + (o.verified_at === 'stale' ? 'stale' : '')}>verified {o.verified_at}</span>
           <span class="probe">via {o.probe}</span>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot base"></div>
+      <div class="sec-title">Hardware — per-Rox specs (probe, not memory)</div>
+      <div class="sec-count">{Object.keys(fleet.hardware).length} Rox</div>
+    </div>
+    <div class="sub" style="margin-bottom:1rem;">
+      Fleet-map-right work started 041726 23:55 (Dan directive). Each Rox row gets CPU, RAM, GPU, storage, and every network adapter. Values come from one probe round-trip per station. <strong>"probe-pending"</strong> is an acknowledged hole, not a guess. Takes the next few days to fill completely; tonight is the sketch.
+    </div>
+    {Object.entries(fleet.hardware).map(([name, h]) => (
+      <div class="row-block hw-block">
+        <div class="hw-head">
+          <div class="hw-name">{name}</div>
+          {h.fleet_role && <div class="hw-role">{h.fleet_role}</div>}
+        </div>
+        <div class="hw-grid">
+          {h.cpu         && <div class="hw-item"><span class="hw-k">cpu</span><span class="hw-v">{h.cpu}</span></div>}
+          {h.ram         && <div class="hw-item"><span class="hw-k">ram</span><span class="hw-v">{h.ram}</span></div>}
+          {h.gpu         && <div class="hw-item"><span class="hw-k">gpu</span><span class="hw-v">{h.gpu}</span></div>}
+          {h.storage     && <div class="hw-item hw-wide"><span class="hw-k">storage</span><span class="hw-v">{h.storage}</span></div>}
+          {h.hardware_class && <div class="hw-item"><span class="hw-k">class</span><span class="hw-v">{h.hardware_class}</span></div>}
+          {h.firmware    && <div class="hw-item"><span class="hw-k">firmware</span><span class="hw-v">{h.firmware}</span></div>}
+          {h.radios      && <div class="hw-item hw-wide"><span class="hw-k">radios</span><span class="hw-v">{h.radios.join(" · ")}</span></div>}
+          {h.net_ports   && <div class="hw-item hw-wide"><span class="hw-k">net_ports</span><span class="hw-v">{h.net_ports}</span></div>}
+          {h.net_adapters && (
+            <div class="hw-item hw-wide">
+              <span class="hw-k">net_adapters</span>
+              <ul class="hw-list">
+                {h.net_adapters.map((n) => <li>{n}</li>)}
+              </ul>
+            </div>
+          )}
+          {h.default_route && <div class="hw-item hw-wide"><span class="hw-k">default_route</span><span class="hw-v">{h.default_route}</span></div>}
+          {h.user        && <div class="hw-item hw-wide"><span class="hw-k">user</span><span class="hw-v">{h.user}</span></div>}
+          {h.software    && <div class="hw-item hw-wide"><span class="hw-k">software</span><span class="hw-v">{h.software}</span></div>}
+          {h.ssh_keys_in_authorized && (
+            <div class="hw-item hw-wide">
+              <span class="hw-k">authorized_keys</span>
+              <ul class="hw-list">
+                {h.ssh_keys_in_authorized.map((k) => <li>{k}</li>)}
+              </ul>
+            </div>
+          )}
+          {h.installs_pending && h.installs_pending.length > 0 && (
+            <div class="hw-item hw-wide">
+              <span class="hw-k">installs_pending</span>
+              <span class="hw-v hw-pending">{h.installs_pending.join(" · ")}</span>
+            </div>
+          )}
+          {h.known_blocker && <div class="hw-item hw-wide"><span class="hw-k hw-blocker">blocker</span><span class="hw-v">{h.known_blocker}</span></div>}
+        </div>
+        <div class="row-meta">
+          <span class="stamp">verified {h.verified_at}</span>
+          <span class="stamp">probe: {h.probe}</span>
         </div>
       </div>
     ))}
