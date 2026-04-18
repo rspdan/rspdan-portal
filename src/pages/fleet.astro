@@ -90,10 +90,10 @@ section{margin:2.5rem 0;}
 .foot a:hover{color:var(--head);}
 
 /* ---- LIVING MAP ---- */
-.map-canonical{margin:1.5rem 0 2rem;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1rem;}
-.map-canonical img{width:100%;max-width:950px;display:block;margin:0.5rem auto;border-radius:3px;}
-.map-caption{font-size:0.6rem;color:var(--stamp);line-height:1.6;margin-top:0.8rem;font-style:italic;}
-.map-delta{font-size:0.58rem;color:var(--obs);line-height:1.6;margin-top:0.5rem;padding:0.6rem 0.8rem;background:rgba(201,168,76,0.05);border-left:2px solid var(--obs);border-radius:2px;}
+.map-ascii-wrap{margin:1.5rem 0 2rem;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1rem;overflow:hidden;}
+.map-ascii-meta{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;padding-bottom:0.6rem;border-bottom:1px dashed var(--border);font-size:0.82rem;color:var(--muted);}
+.map-ascii-meta code{background:rgba(255,255,255,0.04);padding:0.1rem 0.35rem;border-radius:3px;font-size:0.8rem;}
+.map-ascii{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:0.68rem;line-height:1.22;color:var(--fg);margin:0;padding:0.5rem 0.2rem;background:transparent;white-space:pre;overflow-x:auto;letter-spacing:0;}
 
 .switch-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin:1rem 0;}
 .switch-block{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:1rem;}
@@ -197,10 +197,56 @@ section{margin:2.5rem 0;}
       <div class="sec-count">{fleet.topology.switches.length} switches · {fleet.current_attachment.length} attachments</div>
     </div>
 
-    <div class="map-canonical">
-      <img src={fleet.map.canonical_image} alt="NEST.01 topology map (Dan's Illustrator reference)" />
-      <div class="map-caption">{fleet.map.caption}</div>
-      <div class="map-delta"><strong>Delta since canonical:</strong> {fleet.map.delta_note}</div>
+    <div class="map-ascii-wrap">
+      <div class="map-ascii-meta">
+        <span><strong>Pass 1 · hand-lettered sketch</strong></span>
+        <span>Updated inline when things move · rendered from <code>src/pages/fleet.astro</code></span>
+      </div>
+      <pre is:raw class="map-ascii">
+         NORTH WINDOW   ·   NOLS_WPA signal this way ────▶
+
+  ╔══════════════════════════════════════════════════════════════════════════════════════════╗
+  ║                                                                                          ║
+  ║       UNIX  ZONE                     ·  CENTER  ·                    WINDOWS  ZONE       ║
+  ║                                                                                          ║
+  ║   ┌──── UNIX DESK 2 ─────┐                                   ┌── WINDOWS DESK 1 ────┐    ║
+  ║   │ DPSL    10.0.0.102 ★ │                                   │ ODT     10.0.0.10  ★ │    ║
+  ║   │ DPSR    10.0.0.32  ★ │                                   │ onboard 8PSW p3      │    ║
+  ║   │ (iMac twins · UC)    │        ┌───────────────────┐      │ + Wacom + Westi + BAS│    ║
+  ║   │ 5PSW unix switch p1  │        │      PIRALUS      │      └──────────────────────┘    ║
+  ║   └──────────────────────┘        │     10.0.0.1  ★   │                                  ║
+  ║                                   │   R7900 backbone  │      ┌── WINDOWS DESK 2 ────┐    ║
+  ║   ┌──── UNIX DESK 1 ─────┐        │   DHCP .150–.200  │      │ STN2    10.0.0.2   ◯ │    ║
+  ║   │ TRP0    10.0.0.11  ◯ │        │   SSIDs:          │      │ (on desk this week)  │    ║
+  ║   │ GOG1    10.0.0.3   ★ │        │   PIRALUS69_0 2.4 │      │ CUBE    10.0.0.4   ★ │    ║
+  ║   │ multi-home (Pub +    │        │   PIRALUS69_1 5   │      │   + ALFA .44 USB ●   │    ║
+  ║   │ VZW + copper)        │        │   PIRALUS69_2 5   │      │ (mini-PC + wacom)    │    ║
+  ║   └──────────────────────┘        │   SMB \\PIR\SKY69 │      └──────────────────────┘    ║
+  ║                                   └───────────────────┘                                  ║
+  ║                                                              STN1     10.0.0.69   ◯      ║
+  ║                                                              (via Dell K16A hub ──▶      ║
+  ║                                                               8PSW p6)                   ║
+  ║                                  ·  ROOM CENTER  ·                                       ║
+  ║                                                                                          ║
+  ║   ACHE    by window ★★        MOB2  full-mobile ★★                                      ║
+  ║   (Galaxy S10 · best sig)     (Galaxy S21 · always with Dan)                             ║
+  ║                                                                                          ║
+  ╚═══════════ BEDROOM DOOR (SW) ══════════════════════════════ CLOSET DOOR (SE) ════════════╝
+
+    LEGEND   ★ stationary (lives here)   ◯ roaming (leaves regularly)   ★★ full-mobile (Dan)
+             ● attached accessory (e.g. ALFA USB-C adapter currently testing on CUBE)
+
+    LINKS    5PSW ──▶ PIRALUS p1 (unix zone uplink)
+             8PSW ──▶ PIRALUS p2 (windows zone uplink)
+             DPSL ◀── Apple Universal Control ──▶ DPSR  (shared kbd/mouse across iMac twins)
+
+    CANON    Based on Dan's Illustrator map `NEST.01_NOTES_041426_1` (spatial framework)
+             + Piralus attached-devices 041726 21:55 + Dan fleet-canon 041726 22:46.
+
+    PASSES   Pass 1 (you are here): hand-lettered ASCII sketch. Easy to edit. Not authoritative data — reference only.
+             Pass 2 (planned NEARGULL): render ASCII dynamically from fleet.js baseplate + current_attachment so it can't drift stale.
+             Pass 3 (planned NEARGULL): color coding via existing theme tokens (teal for current IPs, amber for off-fleet, red for unresolved).
+      </pre>
     </div>
 
     <div class="mobility-legend">

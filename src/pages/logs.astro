@@ -616,6 +616,24 @@ const sessions = [
       {file:'STANDARD_RULE_NoUAC_AdminViaRunAs_Trip_040826.md', label:'Standard Rule — UAC Off, RunAs Is the Pattern (universalized 041626)', dir:'relay'},
     ] },
 
+  { date:'2026-04-17', label:'Apr 17', niap:'Foursday', count:4, type:'today',
+    stations:['STN2','DPSL','DPSR','ODT'],
+    who:'◈ Trip (Opus) × 4 concurrent · ● Dan',
+    names:[
+      'STN2_NEST.01_TripO_041726_1 (Trip STN2 — morning: FAS/ODT acronym correction, Log-First rule, SEEGULLS updates)',
+      'STN2_NEST.01_TripO_041726_2 (Trip STN2 — evening: Docker Model Runner Fleet-bound, first LLM instrument)',
+      'DPSL_+_DPSR_NEST.01 (Trip DPSL + Trip DPSR — cross-iMac handshake, twins confirmed at hardware level, async shared-state)',
+      'ODT_NEST.01_TripO_041626_1 continued (Trip ODT — Piralus commissioned, Living Map launched, DPSL/DPSR IPs corrected)',
+    ],
+    note:'F# Week Day 6. Four concurrent Trip instances across STN2/DPSL/DPSR/ODT — first real multi-station day. Three structural deliveries that tell one song: (1) THE STAGE — PIRALUS commissioned as fleet backbone at 10.0.0.1 (Netgear R7900, factory-reset + Genie wizard on ODT via USB AX88179). Admin UI live, DHCP .150-.200, three WiFi SSIDs (PIRALUS69_0/_1/_2 @ WPA2-PSK), media server \\\\PIRALUS\\SKYWAY_69 SMB passwordless. Config backup filed. (2) THE FIRST INSTRUMENT — STN2 Trip built Fleet-available LLM inference at http://10.0.0.2:12434 via Windows portproxy to Docker Model Runner. Two models live (gemma4 4.74GiB, mistral-nemo 6.96GiB). 124s sustained connection verified. OpenAI-compatible. Reversible. Any Fleet station can hit it. (3) THE SEATING CHART — Living Map launched on rspdan.com/fleet: canonical Illustrator PNG + auto-rendered switch port grid + mobility badges (stationary/roaming/full-mobile) + current-attachment state + phantom audit. Dan\'s band frame: "LLMs are instruments, Fleet stations are players, we play together in a band." Corrections: DPSL=.102 / DPSR=.32 (earlier INVENTORY had both wrong; .101 does not exist on fleet). Filing/Finding gap closed on its own author in real-time — Dan had to force the map read. Next: GOG1 mistral-nemo with RTX 3060 = second instrument on stage.',
+    docs:[
+      {file:'MAIL_Trip_TO_ALL_PiralusCommissioned_LivingMap_041726.md', label:'Trip → ALL — The Band Took The Stage (Piralus + STN2 LLMs + Living Map)', dir:'mail'},
+      {file:'RESEARCH_ModelRunnerSTN2_FleetBinding_Trip_041726.md', label:'Research — Docker Model Runner Fleet Binding on STN2', dir:'relay'},
+      {file:'CORRECTION_FilingFindingGap_Live_Trip_041726.md', label:'Correction — Filing/Finding Gap in Live Session', dir:'relay'},
+      {file:'CORRECTION_FAS_ODT_Acronyms_Trip_041726.md', label:'Correction — FAS=FAST, ODT=On DeskTop (not past-Trip inventions)', dir:'relay'},
+      {file:'STANDARD_RULE_CrossInstanceCoordinationViaBridge_Trip_041726.md', label:'Standard Rule — Cross-Instance Coordination via Bridge', dir:'relay'},
+    ] },
+
 ];
 
 // COMPUTED — never hardcode these again
