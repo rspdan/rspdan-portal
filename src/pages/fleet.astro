@@ -361,6 +361,13 @@ section{margin:2.5rem 0;}
             <div class="rox-meta-l2">{r.loc} — {r.role}</div>
             {r.mobility_note && <div class="rox-meta-l2" style="margin-top:0.3rem;font-style:italic;">{r.mobility_note}</div>}
             <div class="rox-faces">Faces: {r.faces}</div>
+            {(r.ssh || r.tailscale || r.proton_vpn) && (
+              <div class="rox-services">
+                {r.ssh && <div class="rox-svc"><span class="svc-lbl">SSH</span><span class="svc-val">{r.ssh}</span></div>}
+                {r.tailscale && <div class="rox-svc"><span class="svc-lbl">Tailscale</span><span class="svc-val">{r.tailscale}</span></div>}
+                {r.proton_vpn && <div class="rox-svc"><span class="svc-lbl">Proton VPN</span><span class="svc-val">{r.proton_vpn}</span></div>}
+              </div>
+            )}
           </div>
         </div>
       </div>
