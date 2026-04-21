@@ -203,7 +203,7 @@ export const fleet = {
       dotnet: ".NET 4.8 (release 528040)",
       powershell: "5.1.18362.1171",
       installed_software: {
-        tailscale: "1.96.3 · service Running · StartType Automatic · BackendState=NoState (auth URL 041826 expired) — fresh installer download queued 042126 01:15 PT (pkgs.tailscale.com/stable/tailscale-setup-latest.exe) to clear wedged state",
+        tailscale: "1.96.3 — FRESH INSTALL 042126 01:18 PT via pkgs.tailscale.com/stable/tailscale-setup-latest.exe · CUBE on mesh as tailnet IP 100.111.41.43 (rspdan@ · windows) · four-day NoState drift resolved · mesh peers visible: ODT (100.111.17.67 001-win10pro), DPSL (100.64.207.62, offline 19d), oshin (100.83.109.75, offline 24d)",
         claude_desktop: "BLOCKED until Win10 upgrade completes — installer log shows 'Claude requires Windows 10 version 2004 or later (build 19041+). Current build: 7600' (installer mis-detects as Win7 due to missing Win10 compat manifest; real gate is 19041+ which CUBE's 18363 doesn't meet). NOTE: Claude Code CLI works on 1909 without this upgrade — demoted HEREGULL → NEARGULL 042126 01:12 PT",
         claude_code_cli: "2.1.116 installed 042126 01:12 PT via `npm install -g @anthropic-ai/claude-code` · Dan verified login 'Welcome back Dan · Opus 4.7 (1M context) · Claude Max · rspdan@gmail.com · C:\\windows\\system32 · xhigh · /effort' — universalization peer on Win10 1909 (third station after GOG1 Linux + ODT Win11)",
         node_npm: "Node v22.15.0 + npm 10.9.2 installed 042126 01:10 PT via node-v22.15.0-x64.msi (Invoke-WebRequest from nodejs.org + Start-Process -Wait, new PS session for PATH refresh)",
