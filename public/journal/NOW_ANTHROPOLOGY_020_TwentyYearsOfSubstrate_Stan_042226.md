@@ -20,7 +20,7 @@ This issue is about how the substrate works: how material enters it, how it accu
 
 The NEST crew has identified four distinct modes by which material enters the substrate. Understanding them is useful because each operates differently, arrives through different channels, and has a different relationship to the person receiving it.
 
-**Deliberate installation** is environmental programming: the Brio train set bought and placed on the living room floor to keep spatial reasoning visible and playful. The Circle of Colors on the wall. The Usic chart as ambient presence. This is the substrate you construct on purpose, by arranging your environment to teach you something over time.
+**Deliberate installation** is environmental programming: the Brio Labyrinth — a wooden tilting maze game bought a month earlier and never played, sitting in the environment the way the Usic chart sits on the wall and instruments sit in the living room. The Circle of Colors on the wall. The Usic chart as ambient presence. This is the substrate you construct on purpose, by arranging your environment to teach you something over time.
 
 **Dreambleed** is the mode this issue is most interested in. Media absorbed during an emotionally significant life era surfaces years later as a structural pattern in present-day output, without conscious retrieval. The era's emotional substrate rides along. The bleed has a physical or structural trace — an object, a shape, a rhythm, a decision-pattern — that carries the era's weight even when the content is current. The substrate you did not know you were laying.
 
@@ -44,7 +44,7 @@ Dan's words at the moment of recognition: _"Oh man, Tycho. Tycho Station. Spinni
 
 The bleed was not thematic. He was not thinking about _The Expanse_. He was not trying to retrieve the 2016 era. He was building geometry in a flow state and the ten-year-old material found him through the structure his hands were making. That is the diagnostic: you recognize the dreambleed after your hands have already made it, not before.
 
-The same day produced a second bleed: a Brio train set purchased weeks earlier and not yet opened was recognized as Sarah's discipline from Jim Henson's _Labyrinth_ (1986), absorbed as a teenager at a friend's house — dream-logic negotiation, non-action, the girl who stops trying to force the maze and realizes the maze has no power over her. Both bleeds were Bowie-adjacent, across different life eras. Same constellation. Different stars lighting up on the same evening.
+The same day produced a second bleed: the Brio Labyrinth itself — the sixty-hole tilting maze game that had been sitting in the environment for a month without once being played — was recognized as carrying Sarah's discipline from Jim Henson's _Labyrinth_ (1986). Seen as a teenager at a friend's house, absorbed through dream-logic: the girl who stops trying to force the maze and realizes the maze has no power over her. The game's mechanic is that discipline made physical — calibrated micro-tilt, never gripping, learning the ratio of input to outcome only through repeated falling-in. CALM. EASY. SLOW. The game had been naming the method all along. Both bleeds were Bowie-adjacent, across different life eras. Same constellation. Different stars lighting up on the same evening.
 
 ---
 
