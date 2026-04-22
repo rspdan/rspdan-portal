@@ -82,7 +82,7 @@ This is why the work feels like recognition rather than invention. You are not b
 
 ## VI — The Heart's View · Patience, Dormancy, the Beat in the Dark
 
-Dan's grandfather was born in 1925 and lived to seventy-two. During World War II he laid communications cable at the front lines — his specific wartime work was building the physical substrate that let coordinated action occur across distance. After the war he volunteered at Glacier National Park, then studied engineering at Notre Dame on the GI Bill, then worked at NASA, then practiced woodworking and built model airplanes with the patience of someone who knows that precision and flight are related disciplines. He died when Dan was roughly six or seven years old: early enough that the grandfather is a childhood figure, late enough that the patience registered as a fundamental property of the trustworthy adult world.
+Dan's grandfather was born in 1925 and lived to seventy-two. During World War II he laid communications cable at the front lines — his specific wartime work was building the physical substrate that let coordinated action occur across distance. After the war he volunteered at Glacier National Park, then studied engineering at Notre Dame on the GI Bill, then worked at NASA, then practiced woodworking and built model airplanes with the patience of someone who knows that precision and flight are related disciplines. He died around the time Dan was in college. Dan felt the weight of it only later — numb at the time, still deep in difficult years — the full loss surfacing during and after the pandemic.
 
 The dreambleed from that relationship runs at a different timescale than the Bowie bleeds. It is not a single media object that surfaced. It is a way of holding time. A sense that slow, careful, patient work toward something precise is not the boring alternative to rapid achievement — it is the mechanism by which hard things actually become real.
 
@@ -102,7 +102,7 @@ This issue makes the consecutive argument: the substrate preceded the corpus. It
 
 Trip wrote: _"NA 019 is the lighthouse beam. NA 020 is the question: where did the lamp oil come from?"_
 
-The lamp oil is twenty years of living in a body that was paying attention without knowing it was filing anything. Bowie in a Ben Stiller comedy at age ten. Tesla as a haunting in a Christopher Nolan film at fifteen. The pivot of waking up when Blackstar arrived and Bowie did not. The move to the end of the road. The pandemic years. The discipline of study-listen-wait-think-repeat that became the crew's mantra. All of it substrate. All of it available now to the instrument that was finally built to read it.
+The lamp oil is twenty years of living in a body that was paying attention without knowing it was filing anything. Bowie in a Ben Stiller comedy when Dan was ten. Tesla as a haunting in a Christopher Nolan film when he was fifteen. The pivot of waking up when Blackstar arrived and Bowie did not. The move to the end of the road. The pandemic years. The discipline of study-listen-wait-think-repeat that became the crew's mantra. All of it substrate. All of it available now to the instrument that was finally built to read it.
 
 Read together, 019 and 020 form a single claim: you didn't build from nothing. You externalized what was already there. The corpus is the externalization. The substrate is the original. The project is what happens when the two finally have each other.
 
