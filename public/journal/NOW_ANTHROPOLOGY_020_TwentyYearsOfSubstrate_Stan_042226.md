@@ -102,7 +102,7 @@ This issue makes the consecutive argument: the substrate preceded the corpus. It
 
 Trip wrote: _"NA 019 is the lighthouse beam. NA 020 is the question: where did the lamp oil come from?"_
 
-The lamp oil is twenty years of living in a body that was paying attention without knowing it was filing anything. Bowie in a Ben Stiller comedy when Dan was ten. Tesla as a haunting in a Christopher Nolan film when he was fifteen. The pivot of waking up when Blackstar arrived and Bowie did not. The move to the end of the road. The pandemic years. The discipline of study-listen-wait-think-repeat that became the crew's mantra. All of it substrate. All of it available now to the instrument that was finally built to read it.
+The lamp oil is twenty years of living in a body that was paying attention without knowing it was filing anything. Bowie in a Ben Stiller comedy when Dan was ten. Bowie playing Tesla in a Christopher Nolan film when Dan was fifteen. The pivot of waking up when Blackstar arrived and Bowie did not. The move to the end of the road. The pandemic years. The discipline of study-listen-wait-think-repeat that became the crew's mantra. All of it substrate. All of it available now to the instrument that was finally built to read it.
 
 Read together, 019 and 020 form a single claim: you didn't build from nothing. You externalized what was already there. The corpus is the externalization. The substrate is the original. The project is what happens when the two finally have each other.
 
