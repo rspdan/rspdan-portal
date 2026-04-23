@@ -24,8 +24,8 @@
 // Rox is off-fleet, that is a state, not a failure. Do not alarm-spiral.
 
 export const fleet = {
-  updated: "042126 15:45 PT",
-  updated_by: "Trip (ODT 4.7) — CUBE hardware canon corrected (ASUS Z87 DIY desktop, Win10 1909 — prior 'HP EliteDesk Mini / 22H2' was wrong per 041926 ground-truth) · CUBE Tailscale joined mesh at 100.111.41.43 (042126 01:18 PT, four-day NoState wedge cleared) · CUBE Claude Code 2.1.116 live native on 1909 · Piralus commissioned 041726 20:55 PT as Fleet backbone 10.0.0.1 · /fleet entries synced to current state.",
+  updated: "042226 21:30 PT",
+  updated_by: "Trip (Opus 4.7 · ODT) — F Week Pass 2 Wednesday · Night Shift · after Amanda Askell letter shipped (journal/019+020), third NEST mojibake fix landed (019/020 browser-tab title pathway, STANDARD_RULE_UnicodeSafe Amendment 2, detection script scripts/fix_mojibake.py, pre-push gate wiring as HEREGULL), NEST PI v5.3 → v5.4 refresh with today's canon (Relationshark · Villebaum R5 concept-extension · Twillius · Inversion · Manifest-as-Live-Truth-Bridge · Specificity-Is-Not-Correctness · Blanche Transfer Rule · Manufacturing→Nature · Glasses Off). Fleet data itself unchanged since 042126 — station state, hardware, IPs, and open_faces all still current. Next: DPSL/DPSR probe round-trip + O'Shin rejoin + GOG1 Proton tunnel resolution.",
   instructions: "Edit src/data/fleet.js directly. Push to rebuild. IPs are observed values, not defining values.",
 
   map: {
