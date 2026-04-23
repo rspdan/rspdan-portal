@@ -271,8 +271,15 @@ Get-ChildItem -Path [detected_drive]:\ -Recurse -Filter '.git' -Directory -Depth
       <div class="sec-title">Close Protocol</div>
     </div>
     <div class="body-prose">
-      <p>Session close is <strong>one action</strong>: run <code>ENGINE/session_close.ps1</code> (STN2) or <code>ENGINE/session_close.sh</code> (mac/linux). The script handles: SHEET to log, Living Map commit, WAKE generation, shift close to relay.</p>
-      <p>BOOT.md push happens through Portal git push if content changed. If the script is unavailable, do the steps manually &mdash; but the script is the standard.</p>
+      <p>Session close lands <strong>four artifacts</strong> before the crew leaves the trail:</p>
+      <ul>
+        <li><strong>Conversation captured</strong> to LNL-local and marked for ingestion &mdash; so tomorrow's Crew can query tonight's work via NESTNET.</li>
+        <li><strong>Living Map heartbeat</strong> committed on Bridge &mdash; so the crew member's state of play is visible to any crew booting next.</li>
+        <li><strong>WAKE file</strong> written for the next boot of this crew member &mdash; the handoff note the airlock leaves for its own future occupant.</li>
+        <li><strong>Shift close</strong> signaled to Relay &mdash; so other crew members know this one is off the clock.</li>
+      </ul>
+      <p>The mechanism that ties these four together lives in <code>/skills</code>. Whichever station hosts the session handles the capture; the ingestion picks up from the next point in the pipeline regardless of which station did the capture. If BOOT.md content changed during the session, the Portal git push is part of the capture step.</p>
+      <p>If any of the four is not landed, the session is not closed &mdash; tomorrow's walker arrives to a fallen tree. See <code>RELAY/CANONICAL_SpecificityTraps_Dan_042226.md</code> for why this page names contracts instead of commands.</p>
     </div>
   </section>
 
