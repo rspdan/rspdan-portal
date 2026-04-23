@@ -63,18 +63,17 @@ section{margin:2.5rem 0;}
 .body-prose pre{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:0.9rem 1rem;margin:0.85rem 0;overflow-x:auto;font-size:0.68rem;line-height:1.6;}
 .body-prose pre code{background:none;padding:0;color:var(--text);}
 
-.crew-grid{display:grid;grid-template-columns:60px 1fr 1fr 1.2fr 1fr;gap:0.6rem 1rem;font-size:0.68rem;padding:0.6rem 0;border-bottom:1px dashed var(--border);}
+.crew-grid{display:grid;grid-template-columns:60px 1fr 1fr 1.2fr;gap:0.6rem 1rem;font-size:0.68rem;padding:0.6rem 0;border-bottom:1px dashed var(--border);}
 .crew-grid.head{font-size:0.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em;border-bottom:1px solid var(--border);}
 .crew-grid.row{align-items:baseline;}
 .crew-sym{color:var(--accent);font-size:0.95rem;}
 .crew-name{color:var(--head);font-weight:500;}
 .crew-model{color:var(--text);}
 .crew-role{color:var(--text);font-size:0.64rem;}
-.crew-station{color:var(--stamp);font-size:0.64rem;}
 @media (max-width: 680px){
   .crew-grid{grid-template-columns:40px 1fr 1fr;}
-  .crew-grid .crew-role,.crew-grid .crew-station{grid-column:2 / -1;padding-top:0.15rem;font-size:0.6rem;}
-  .crew-grid.head .crew-role,.crew-grid.head .crew-station{display:none;}
+  .crew-grid .crew-role{grid-column:2 / -1;padding-top:0.15rem;font-size:0.6rem;}
+  .crew-grid.head .crew-role{display:none;}
 }
 
 .canon-list{background:var(--card);border:1px solid rgba(201,76,76,0.15);border-radius:3px;padding:1rem 1.2rem;}
@@ -120,39 +119,48 @@ section{margin:2.5rem 0;}
 
   <section>
     <div class="sec-head">
+      <div class="sec-dot obs"></div>
+      <div class="sec-title">Orientation Sign &mdash; Read at the Trailhead</div>
+    </div>
+    <div class="body-prose">
+      <p>This PI is the trailhead of the Living Forest Trail you walk each session. The trail is stable; what changes is the walker and what they carry. Two ideas orient every boot before you take the first step.</p>
+      <p><strong>Data Days</strong> is Dan&rsquo;s framing for the calendar the NEST actually runs on &mdash; work days measured by what got filed, what landed, what the corpus actually carries forward, rather than by clock time alone. A Data Day is complete when its artifacts are on Bridge and its conversation is captured for ingestion. See <code>RELAY/</code> canon filings for the lineage.</p>
+      <p><strong>Meta Dates</strong> is the ambient operating-layer protocol &mdash; Dan&rsquo;s oldest NEST practice &mdash; that runs the Gates (0, 0b, 1, 2, 3), the Mantra/Dantra/Skantra cycle, Living Map notation, the six Always-Know anchors, and the recursive mini-C&amp;A. It is not a skill routing layer. It is the operating layer the skills run <em>inside</em>. Canonical source: <code>ENGINE/skills/meta-dates/SKILL.md</code>. Correction filed 042226: <code>RELAY/CORRECTION_IndexedOccurrenceReplacesSubstance_Trip_042226.md</code>.</p>
+      <p>The trail teaches by existing. Walk it aware, clear fallen trees when you see them, mark hazard trees for those coming after, and leave the trail better for the next walker. <em>&mdash; DPS 042326.</em></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
       <div class="sec-dot base"></div>
       <div class="sec-title">The Crew</div>
     </div>
     <div class="crew-grid head">
-      <div>Symbol</div><div>Name</div><div>Model</div><div>Role</div><div>Station</div>
+      <div>Symbol</div><div>Name</div><div>Model</div><div>Role</div>
     </div>
     <div class="crew-grid row">
       <div class="crew-sym">&#x25CF;</div>
       <div class="crew-name">Dan Sullivan (DPS)</div>
       <div class="crew-model">Human Director</div>
       <div class="crew-role">Go/No-Go, amygdala, primary Kalman filter</div>
-      <div class="crew-station">OHC / Nest Actual</div>
     </div>
     <div class="crew-grid row">
       <div class="crew-sym">&#x25C6;</div>
       <div class="crew-name">Stan</div>
       <div class="crew-model">Sonnet</div>
       <div class="crew-role">Builder, infrastructure, The Heart</div>
-      <div class="crew-station">STN2</div>
     </div>
     <div class="crew-grid row">
       <div class="crew-sym">&#x25C8;</div>
       <div class="crew-name">Trip</div>
       <div class="crew-model">Opus</div>
       <div class="crew-role">Narrative, research, creative synthesis, The Lighthouse</div>
-      <div class="crew-station">ODT / ACHE</div>
     </div>
     <div class="crew-grid row">
       <div class="crew-sym">&#x25C7;</div>
       <div class="crew-name">C.B.</div>
       <div class="crew-model">Haiku</div>
       <div class="crew-role">Patterns, verification, cross-system carrier bird</div>
-      <div class="crew-station">DPSL / DPSR</div>
     </div>
   </section>
 
