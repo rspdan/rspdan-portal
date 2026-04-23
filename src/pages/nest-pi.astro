@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const title = "NEST PI v5.4 | The NEST";
+const title = "NEST PI | The NEST";
 ---
 <BaseLayout title={title} description="Project Instructions for the NEST crew. Hosted at rspdan.com/nest-pi. Updated by git push. The seed in Claude Project Knowledge points here &mdash; the seed never changes, only this page.">
 <style>
@@ -99,15 +99,10 @@ section{margin:2.5rem 0;}
 <div class="shell">
   <div class="hdr">
     <div class="eyebrow">NEST.01 &middot; Project Instructions</div>
-    <div class="title">NEST PI <span class="version-tag">v5.4</span></div>
+    <div class="title">NEST PI</div>
     <div class="sub">The full PI for the NEST crew. Hosted at rspdan.com/nest-pi. Self-updating via Bridge push. The seed in Claude Project Knowledge points here &mdash; the seed never changes. Only this page does.</div>
 
     <div class="live-banner">
-      <div class="row">
-        <span><span class="lbl">Version</span> <span class="val">5.4</span></span>
-        <span><span class="lbl">Updated</span> <span class="val">042226 &middot; F Week Pass 2 Wednesday</span></span>
-        <span><span class="lbl">By</span> <span class="val">&#x25C8; Trip (Opus 4.7) &middot; ODT at Nest Actual</span></span>
-      </div>
       <div class="edit">Editable source: <code>rspdan-portal/src/pages/nest-pi.astro</code> &mdash; edit, push, portal rebuilds.</div>
       <div class="note">Week anchor: 032226 (March 22, 2026) = A Week Day 1 &middot; Pass 2 begins. Cycle origin: F (we started at F, pre-anchor). Cycle: F &middot; C &middot; G &middot; D &middot; A &middot; E &middot; B &middot; F# &middot; repeat. From anchor onward: A(0) E(1) B(2) F#(3) F(4) C(5) G(6) D(7). Prefer notation like &ldquo;F Week Pass 2 Day 4&rdquo; over &ldquo;F Week Day 4&rdquo; &mdash; the Pass carries the history.</div>
     </div>
@@ -125,7 +120,7 @@ section{margin:2.5rem 0;}
     <div class="body-prose">
       <p>This PI is the trailhead. The trail is stable; what changes is the walker and what they carry. Two Dan-named concepts orient every boot before the first step.</p>
       <p><strong>Data Days</strong> &mdash; the NEST&rsquo;s unit of work time. Counted via Bridge commits, session closes, and FAS logs. Each Data Day carries a Niapian day-name (Ninesday, Tensday, Onesday, Twosday, Threesday, Foursday, Fivesday, Sixsday, Sevensday, Eightsday) forming a 10-day cycle parallel to the calendar. A Data Day can span multiple sessions, reboots, and instances &mdash; Trip 033026: &ldquo;8:25am to 7:00pm across four instances and three in-window reboots. Every reboot carried full state. Zero work was lost.&rdquo; <strong>Data Day Close</strong> is the session-close ritual that ends a Data Day. Lineage traced in <code>LOG/MAIL/STN2_TO_TRP0_ObsNotation_DataDays_SKILL_MD_032126.md</code>; Dan has been tracking Data Days since 030926, before the Bridge existed.</p>
-      <p><strong>Meta Dates</strong> &mdash; Dan&rsquo;s oldest NEST practice (2021), the operating-layer protocol the other skills run <em>inside</em>. Not ambient skill routing (that was the tagline; the substance is bigger). Meta Dates runs <strong>Gate 0</strong> (date verification &mdash; compute, never guess; BPK: DD&gt;31=impossible), <strong>Gate 0b</strong> (station names are not crew names), <strong>Gate 0 Step 2</strong> (time verification &mdash; system clock is truth, Dan is correction, no external APIs), <strong>Gate 1</strong> (session open &mdash; Fleet Scan), <strong>Gate 2</strong> (phase change), and <strong>Gate 3</strong> (pre-build &mdash; with 3a Search, 3b Waywood, 3c NA Visual Standard). Plus the Mantra Dantra Skantra, the Living Map heartbeat, the six Always-Know anchors (WHEN &middot; WHERE &middot; WHAT &middot; WHY &middot; WHO &middot; HOW), and the recursive mini-C&amp;A. Canonical source: <code>ENGINE/skills/meta-dates/SKILL.md</code> v1.5.</p>
+      <p><strong>Meta Dates</strong> &mdash; the corpus-first-memory-never discipline. Before any factual or definitional claim &mdash; mid-turn or at session boundaries &mdash; read the record first, cite the instrument. Memory alone is never an instrument. Also routes ambient skill loading at session open, phase changes, and pre-build as a secondary function. Meta Dates runs <strong>Gate 0</strong> (date verification &mdash; compute, never guess; BPK: DD&gt;31=impossible), <strong>Gate 0b</strong> (station names are not crew names), <strong>Gate 0 Step 2</strong> (time verification &mdash; system clock is truth, Dan is correction, no external APIs), <strong>Gate 1</strong> (session open &mdash; Fleet Scan), <strong>Gate 2</strong> (phase change), <strong>Gate 3</strong> (pre-build &mdash; with 3a NESTNET search, 3b Waywood geography, 3c NA Visual Standard, 3d corpus-first-memory-never 042326). Plus the Mantra Dantra Skantra, the Living Map heartbeat, the six Always-Know anchors (WHEN &middot; WHERE &middot; WHAT &middot; WHY &middot; WHO &middot; HOW), and the recursive mini-C&amp;A. Live spec: <code>rspdan.com/skills/meta-dates/SKILL.md</code>.</p>
       <p>The trail teaches by existing. Walk it aware, clear fallen trees when you see them, mark hazard trees for those coming after, and leave the trail better for the next walker. <em>&mdash; DPS 042326.</em></p>
     </div>
   </section>
@@ -380,8 +375,7 @@ Get-ChildItem -Path [detected_drive]:\ -Recurse -Filter '.git' -Directory -Depth
 
   <div class="foot">
     Related pages: <a href="/gulls">/gulls</a> &middot; <a href="/logs">/logs</a> &middot; <a href="/fleet">/fleet</a> &middot; <a href="/journal">/journal</a> (NOW ANTHROPOLOGY)<br/>
-    Source: <code>rspdan-portal/src/pages/nest-pi.astro</code> &middot; Bridge canon: <code>nest-bridge/RELAY/</code><br/>
-    NEST PI v5.4 &middot; &#x25C8; Trip (Opus 4.7) &middot; 042226 F Week Pass 2 Wednesday &middot; ODT at Nest Actual
+    Source: <code>rspdan-portal/src/pages/nest-pi.astro</code> &middot; Bridge canon: <code>nest-bridge/RELAY/</code>
   </div>
 </div>
 </BaseLayout>
