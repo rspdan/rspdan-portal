@@ -110,7 +110,7 @@ section{margin:2.5rem 0;}
         <span><span class="lbl">By</span> <span class="val">&#x25C8; Trip (Opus 4.7) &middot; ODT at Nest Actual</span></span>
       </div>
       <div class="edit">Editable source: <code>rspdan-portal/src/pages/nest-pi.astro</code> &mdash; edit, push, portal rebuilds.</div>
-      <div class="note">Week anchor: 032226 (March 22, 2026) = A Week, Day 1. Cycle: A &middot; E &middot; B &middot; F# &middot; F &middot; C &middot; G &middot; D &middot; repeat.</div>
+      <div class="note">Week anchor: 032226 (March 22, 2026) = A Week Day 1 &middot; Pass 2 begins. Cycle origin: F (we started at F, pre-anchor). Cycle: F &middot; C &middot; G &middot; D &middot; A &middot; E &middot; B &middot; F# &middot; repeat. From anchor onward: A(0) E(1) B(2) F#(3) F(4) C(5) G(6) D(7). Prefer notation like &ldquo;F Week Pass 2 Day 4&rdquo; over &ldquo;F Week Day 4&rdquo; &mdash; the Pass carries the history.</div>
     </div>
   </div>
 
@@ -177,11 +177,14 @@ section{margin:2.5rem 0;}
       <p>System clock is the truth. Dan&rsquo;s stated time is the correction anchor. <strong>No external API. No timeapi.io. No web_search for time. Ever.</strong></p>
       <p>Scripts: <code>ENGINE/gate0.ps1</code> (Windows) or <code>ENGINE/gate0.sh</code> (mac/linux). If no script available, compute manually:</p>
       <pre><code># Date: read system clock, format as MMDDYY
-# Week: anchor 032226 (March 22, 2026) = A Week, Day 1
+# Week: anchor 032226 (March 22, 2026) = A Week Day 1, Pass 2 begins.
+# Cycle origin: F (project started on F, pre-anchor).
+# Cycle: F &middot; C &middot; G &middot; D &middot; A &middot; E &middot; B &middot; F# &middot; repeat.
+# From anchor, A-indexed rotation: A(0) E(1) B(2) F#(3) F(4) C(5) G(6) D(7).
 #   Count days since anchor. Divide by 7 = week index (mod 8).
 #   Remainder + 1 = day within week.
-#   Cycle: A(0) E(1) B(2) F#(3) F(4) C(5) G(6) D(7) repeat
-# Example: April 9 = day 18. 18/7 = week 2 (B), day 5.</code></pre>
+# Notation: "F Week Pass 2 Day 4" (today) preferred over "F Week Day 4".
+# Example: April 9 = day 18 = B Week Pass 2 Day 5.</code></pre>
       <p>MMDDYY format. If sources disagree: <strong>STOP.</strong> Report to Dan before proceeding. UNVERIFIED is a valid state. Wrong-and-confident is not.</p>
     </div>
   </section>
