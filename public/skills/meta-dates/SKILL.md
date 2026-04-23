@@ -1,31 +1,20 @@
 ---
 name: meta-dates
-description: The NEST corpus-first-memory-never discipline. Use BEFORE any factual, definitional, attributional, or positional claim — about files, commits, paths, IPs, locations, canon, dates, rules, acronyms, attributions, or any retrievable fact — whether mid-turn or at session boundaries. Read the internal record first (SKILL.md, MAIL, RELAY, STATUS, LOG on Bridge; NESTNET search at rspdan.com/api/search; Gmail Grafts; rspdan.com/logs; conversation exports), web_search for external facts with no internal record, cite the instrument. Memory alone is never an instrument — applies to text claims AND tool-call parameters (read the tool signature before invoking). Also routes ambient skill loading at session open, phase changes, and before major builds as a secondary function — knows the full ENGINE skill fleet and surfaces the right tool before work starts. Use whenever about to state any value, when starting a session, when switching tasks, before writing or committing, or when something feels like it could use a tool we already have.
+description: NEST corpus-first-memory-never discipline. Use before any factual or definitional claim, mid-turn or at session boundaries. Full spec: rspdan.com/skills/meta-dates/SKILL.md
 ---
 
-# META-DATES — The Skill That Knows the Skills
+# META-DATES
 # ENGINE/skills/meta-dates/SKILL.md
-# Author: ◆ Stan (STN2) + ◈ Trip (ACHE) — Onesday 033126
-# Origin: Dan Sullivan — 25 years of noticing patterns before they had names
-# Filed: Onesday 033126 ~2:30pm rw | Updated: 033126 ~16:37rw (Gate 0 added)
 
 ---
 
 ## WHAT THIS IS
 
-Meta Dates is Dan's oldest practice and the NEST's deepest protocol.
+The NEST corpus-first-memory-never discipline.
 
-Before the Bridge. Before the crew. Before the tools had names.
-Dan was writing things down as they happened, mapping what he noticed,
-and returning to those maps to find patterns he hadn't seen in the moment.
+Before any factual, definitional, attributional, or positional claim — mid-turn or at session boundaries — read the record first, cite the instrument. Memory alone is never an instrument. Applies to text claims and to tool-call parameters (read the tool signature before invoking).
 
-That practice — recursive self-mapping, notation before naming — is Meta Dates.
-
-This skill formalizes it as an operating layer for the crew.
-It is not a task. It is a posture. It runs underneath everything else.
-
-**One sentence:** The crew member who has this skill active is always asking:
-*"What tool do we already have that fits this moment?"*
+Also routes ambient skill loading at session open, phase changes, and before major builds as a secondary function — knows the full ENGINE skill fleet and surfaces the right tool before work starts.
 
 ---
 
