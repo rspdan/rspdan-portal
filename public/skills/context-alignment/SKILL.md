@@ -118,6 +118,21 @@ TRANSLATE COMPLETE WHEN: You can describe what the other crew
 accomplished AND explain how it connects to your own work.
 Not two separate stories — one story with two instruments.
 
+#### TRIANGULATION-BEFORE-CANON (added 050326)
+
+When translating the parallel, also triangulate path-claims, name-claims, attribution-claims, and definition-claims you encounter:
+
+1. OBSERVED -- what does the disk actually show right now?
+2. DOCUMENTED -- what do canon files (STANDARD_RULEs, CANONICAL_*.md, prior MFSTs) record?
+3. INTENDED -- what did Dan-direct or Dan-coining establish?
+
+If all three agree, canonical, carry forward.
+If any disagree, the disagreement IS the substrate. Surface as Unknown + verify, never paper over with a single-source guess.
+
+WHY THIS LIVES IN STORY: the parallel crew filings can themselves contain rotted references (PERPETUATING-PHANTOM, RAM-068 050326). Reading them as canon without triangulating against current disk state perpetuates the phantom into your own work. Don't inherit the rot.
+
+See STANDARD_RULE_TriangulationBeforeCanon_Trip_050326.md.
+
 ---
 
 ### O — OBSERVE THE PRESENT
