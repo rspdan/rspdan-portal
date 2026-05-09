@@ -27,7 +27,7 @@ HypercampUS makes the system extractable.
 python -m http.server 8080
 
 # Access from any browser on the switch:
-# http://10.0.0.3:8080/MAIL/
+# http://10.0.0.3:8080/LOG/MAIL/
 # http://10.0.0.3:8080/RELAY/
 # http://10.0.0.3:8080/WAKE/
 ```
@@ -42,17 +42,25 @@ is running before touching anything else.
 ### Phase 1 — The Origin Store Library
 
 The complete project history lives at:
-`L:\FAS2\LNL\032126\READ_ORIGIN_STOREEEEEE_Claude_project_export_HEIRCOR_OP`
+**Origin Store: elsewhere and accessible** (Dan-direct 050826 SPECTRAP correction —
+see `RELAY/CORRECTION_FAS2OriginStoreSpecTrap_Doc_050826.md`). Most likely a
+shared Google Drive folder reachable via Drive-MCP from any station with Drive
+access. Confirm actual location with Dan or via Drive search; do NOT cite
+FAS2-rooted paths or any drive-letter-rooted path. Substrate-cite for contents:
+`RELAY/STN2_TO_DAN_AND_TRIP_BigAssLetter_032126.md`.
 
-Structure:
-- `OPS/` — 41 unzipped conversation exports (full HTML + files/)
-- `PIZ/` — 41 matching .zip files
+Structure (per substrate-cite above):
+- `01.READ/OPS/` — 41 unzipped conversation exports (full HTML + files/)
+- `01.READ/PIZ/` — 41 matching .zip files
 - `project_files/` — 24 PK files (the substrate documents)
+- TRIP LABS export — 21 conversations, 40,000 lines (per `RELAY/HYBRIDGE_HowWeCameToBeInANest_032226.md`)
+- Possibly photos (656 March 10 ACHE captures per HYBRIDGE)
 
 **To serve the Origin Store:**
 ```bash
-# On GOG1, point the server at the export directory:
-cd /path/to/READ_ORIGIN_STOREEEEEE
+# On GOG1, point the server at the export directory
+# (locate the directory first — do NOT hardcode FAS2 or any drive letter):
+cd /path/to/origin-store-mirror
 python -m http.server 8081
 
 # http://10.0.0.3:8081/ shows all exports as clickable links
@@ -179,7 +187,7 @@ wayside panel — the park sign format Stan uses for VIS artifacts.
 
 ```python
 # hypercampus_digest.py
-# Scans Bridge WAKE/, MAIL/, RELAY/ and builds navigable index
+# Scans Bridge WAKE/, LOG/MAIL/, RELAY/ and builds navigable index
 # Run on GOG1 or STN2, output to STATUS/DIGEST_INDEX.json
 
 import os
