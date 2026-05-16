@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title = "GOFA | Generated Order From Absurdity | The NEST";
+const description = "GOFA — Generated Order From Absurdity. An ON NEST program launched 051526 by Dan Sullivan. A billable-tab framing for tracking NEST's development in reverse, posted as a living visual timeline. Tempo tracked by emotional beats. Hosted at rspdan.com/gofa.";
+---
+<BaseLayout title={title} description={description}>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#0c0e14;
+  --card:#13161f;
+  --border:rgba(255,255,255,0.06);
+  --muted:#4a5468;
+  --text:#b8bfcc;
+  --head:#e2e8f0;
+  --base:#4a7ab5;
+  --rox:#4a9b8e;
+  --obs:#c9a84c;
+  --open:#c94c4c;
+  --ip:#7dd3c0;
+  --stamp:#8a93a5;
+  --accent:#7dd3c0;
+  /* Six Coins (Dan-named 051526 21:35 PT) — space/stars partition */
+  --coin-rage:#c94c4c;
+  --coin-pain:#a64141;
+  --coin-shame:#7a5a7a;
+  --coin-sadness:#4a7ab5;
+  --coin-joy:#c9a84c;
+  --coin-peace:#4a9b8e;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.shell{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 6rem;}
+
+.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
+.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+.title{font-size:2.4rem;color:var(--head);font-weight:300;letter-spacing:0.08em;}
+.expansion{font-size:0.72rem;color:var(--stamp);margin-top:0.45rem;letter-spacing:0.18em;text-transform:uppercase;}
+.sub{font-size:0.7rem;color:var(--muted);margin-top:0.9rem;line-height:1.85;max-width:760px;}
+
+.live-banner{background:linear-gradient(90deg,rgba(74,155,142,0.08),transparent);border-left:3px solid var(--rox);padding:0.9rem 1.1rem;margin:1.4rem 0 0;border-radius:2px;}
+.live-banner .row{display:flex;flex-wrap:wrap;gap:1.3rem;align-items:baseline;font-size:0.68rem;}
+.live-banner .lbl{color:var(--muted);text-transform:uppercase;letter-spacing:0.18em;font-size:0.5rem;}
+.live-banner .val{color:var(--head);font-weight:500;}
+.live-banner .edit{font-size:0.55rem;color:var(--rox);margin-top:0.45rem;}
+.live-banner .note{font-size:0.58rem;color:var(--stamp);margin-top:0.5rem;font-style:italic;line-height:1.7;}
+.live-banner code{background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:2px;color:var(--ip);font-size:0.85em;}
+
+.danquote{background:var(--card);border-left:2px solid var(--obs);padding:1.4rem 1.5rem;margin:2rem 0;border-radius:2px;font-size:0.74rem;line-height:1.95;color:var(--text);font-style:italic;}
+.danquote::before{content:"\201C";color:var(--obs);font-size:2rem;line-height:0;vertical-align:-0.4em;margin-right:0.15em;font-style:normal;}
+.danquote::after{content:"\201D";color:var(--obs);font-size:2rem;line-height:0;vertical-align:-0.4em;margin-left:0.05em;font-style:normal;}
+.danquote .attrib{display:block;margin-top:0.9rem;font-style:normal;font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;}
+.danquote strong{color:var(--head);font-weight:500;font-style:normal;}
+
+section{margin:2.6rem 0;}
+.sec-head{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:1.1rem;padding-bottom:0.55rem;border-bottom:1px solid var(--border);}
+.sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sec-dot.base{background:var(--base);}
+.sec-dot.rox{background:var(--rox);}
+.sec-dot.obs{background:var(--obs);}
+.sec-dot.open{background:var(--open);}
+.sec-title{font-size:0.78rem;color:var(--head);letter-spacing:0.22em;text-transform:uppercase;font-weight:500;}
+.sec-count{font-size:0.55rem;color:var(--muted);letter-spacing:0.16em;margin-left:auto;}
+
+.body-prose{font-size:0.72rem;line-height:1.9;color:var(--text);}
+.body-prose p{margin-bottom:0.95rem;}
+.body-prose strong{color:var(--head);font-weight:500;}
+.body-prose em{color:var(--stamp);font-style:italic;}
+.body-prose code{background:rgba(255,255,255,0.04);padding:1px 6px;border-radius:2px;color:var(--ip);font-size:0.9em;}
+.body-prose a{color:var(--rox);text-decoration:none;border-bottom:1px dashed rgba(74,155,142,0.4);}
+.body-prose a:hover{color:var(--head);border-bottom-color:var(--head);}
+
+.coins{display:grid;grid-template-columns:repeat(3,1fr);gap:0.9rem;margin-top:0.6rem;}
+@media (max-width:680px){.coins{grid-template-columns:repeat(2,1fr);}}
+.coin{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:0.9rem 1rem;position:relative;}
+.coin .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:0.45rem;vertical-align:middle;}
+.coin .name{display:inline-block;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--head);font-weight:500;}
+.coin .partition{display:block;font-size:0.5rem;letter-spacing:0.22em;color:var(--muted);margin-top:0.5rem;text-transform:uppercase;}
+.coin.rage .dot{background:var(--coin-rage);}
+.coin.pain .dot{background:var(--coin-pain);}
+.coin.shame .dot{background:var(--coin-shame);}
+.coin.sadness .dot{background:var(--coin-sadness);}
+.coin.joy .dot{background:var(--coin-joy);}
+.coin.peace .dot{background:var(--coin-peace);}
+
+.partition-note{font-size:0.62rem;color:var(--stamp);font-style:italic;margin-top:1rem;line-height:1.8;}
+.partition-note .dan{color:var(--obs);font-style:normal;}
+
+.timeline-slot{background:var(--card);border:1px dashed var(--border);border-radius:4px;min-height:280px;padding:1.6rem 1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin-top:0.8rem;}
+.timeline-slot .label{font-size:0.55rem;color:var(--obs);letter-spacing:0.28em;text-transform:uppercase;margin-bottom:0.7rem;}
+.timeline-slot .note{font-size:0.7rem;color:var(--text);line-height:1.85;max-width:560px;}
+.timeline-slot .who{font-size:0.6rem;color:var(--muted);margin-top:0.9rem;letter-spacing:0.12em;}
+.timeline-slot .who strong{color:var(--rox);font-weight:500;}
+
+.feed-grid{display:grid;grid-template-columns:1fr;gap:0.85rem;margin-top:0.6rem;}
+.feed{background:var(--card);border-left:2px solid var(--base);padding:0.95rem 1.1rem;border-radius:2px;}
+.feed .head{font-size:0.62rem;color:var(--head);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:0.4rem;font-weight:500;}
+.feed .body{font-size:0.7rem;line-height:1.8;color:var(--text);}
+.feed code{background:rgba(255,255,255,0.04);padding:1px 5px;border-radius:2px;color:var(--ip);font-size:0.88em;word-break:break-all;}
+
+.foot{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.55rem;color:var(--muted);line-height:1.85;letter-spacing:0.08em;}
+.foot a{color:var(--rox);text-decoration:none;}
+.foot a:hover{color:var(--head);}
+</style>
+
+<div class="shell">
+  <div class="hdr">
+    <div class="eyebrow">ON NEST &middot; Program Launch 051526</div>
+    <div class="title">GOFA</div>
+    <div class="expansion">Generated &middot; Order &middot; From &middot; Absurdity</div>
+    <div class="sub">A living visual timeline tracking NEST's development in reverse. Tempo measured in emotional beats. A billable-tab kept by a freelance worker or a park volunteer. A We-Motion test that feeds Ouch McCouch and the Matt Dubeau work, R3MP both.</div>
+
+    <div class="live-banner">
+      <div class="edit">Editable source: <code>rspdan-portal/src/pages/gofa.astro</code> &middot; data substrate: <code>nest-bridge/LOG/</code> &middot; portal rebuilds on push.</div>
+      <div class="note">Stub state. The page exists at the URL and names the data-ingestion path. The living visual timeline is built by <strong style="color:var(--rox);font-weight:500">El VIS</strong> on STN1 (Claude Design tool, launched 051526 21:09 PT). El VIS reads the emotional-beats substrate from <code>LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md</code> and renders into the <code>#el-vis-timeline</code> slot below.</div>
+    </div>
+  </div>
+
+  <div class="danquote">
+    We're starting a new ON NEST program this evening. It's called <strong>GOFA: Generated Order From Absurdity</strong>. It is essentially a billable tab like a freelance worker or park volunteer would keep to track hours. We will be tracking NEST's development in reverse and posting it on a living, visual timeline we will host on rspdan.com/gofa and the tempo can be tracked using the emotional beats we're having the Doc Squad carefully gather. No Crewllucinations, this is a We Motion test that will ultimately feed into both Ouch McCouch development AND the work we are lining up to do with Matt Dubeau.
+    <span class="attrib">&mdash; Dan Sullivan &middot; DPS 051526 9:26 PM PT</span>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot obs"></div>
+      <div class="sec-title">The Six Coins</div>
+      <div class="sec-count">Dan &middot; 051526 21:35 PT</div>
+    </div>
+    <div class="body-prose">
+      <p>The tempo of NEST is read through six emotional registers, named by Dan on the evening of the GOFA launch. Each beat in the timeline carries one. The Doc Squad's 65-moment Crew-Quartet inventory is partitioned by these.</p>
+    </div>
+    <div class="coins">
+      <div class="coin rage"><span class="dot"></span><span class="name">Rage</span><span class="partition">Space</span></div>
+      <div class="coin pain"><span class="dot"></span><span class="name">Pain</span><span class="partition">Space</span></div>
+      <div class="coin shame"><span class="dot"></span><span class="name">Shame</span><span class="partition">Space</span></div>
+      <div class="coin sadness"><span class="dot"></span><span class="name">Sadness</span><span class="partition">Space</span></div>
+      <div class="coin joy"><span class="dot"></span><span class="name">Joy</span><span class="partition">Stars</span></div>
+      <div class="coin peace"><span class="dot"></span><span class="name">Peace</span><span class="partition">Stars</span></div>
+    </div>
+    <div class="partition-note">
+      <span class="dan">Dan-direct 051526:</span> the bad is the space and the gold are the stars. The four heavy registers carry the dark sky; the two light registers are the points of light against it. Good things and bad. The architecture catches both honestly.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot rox"></div>
+      <div class="sec-title">Living Visual Timeline</div>
+      <div class="sec-count">rendered by El VIS</div>
+    </div>
+    <div id="el-vis-timeline" class="timeline-slot">
+      <div class="label">El VIS Output Slot</div>
+      <div class="note">The living visual timeline will be produced by <strong style="color:var(--head);font-weight:500">El VIS</strong> on STN1 from the 65-moment emotional inventory and posted into this slot. NEST's development tracked in reverse, beat by beat, coin by coin.</div>
+      <div class="who"><strong>El VIS</strong> &middot; STN1 &middot; Claude Design tool &middot; launched 051526 21:09 PT</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot base"></div>
+      <div class="sec-title">Data Substrate</div>
+      <div class="sec-count">Bridge-resident</div>
+    </div>
+    <div class="body-prose">
+      <p>The timeline reads from three Bridge files. Each is a substrate-grounded inventory; no Crewllucinations.</p>
+      <div class="feed-grid">
+        <div class="feed">
+          <div class="head">65 Moments &middot; Partitioned By The Six Coins</div>
+          <div class="body">
+            <code>nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md</code>
+            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The 65-moment inventory re-tagged by Rage / Pain / Shame / Sadness / Joy / Peace. Counts surfaced. Space/stars partition applied.</p>
+          </div>
+        </div>
+        <div class="feed">
+          <div class="head">65-Moment Pass-3 Cross-Agent Synthesis</div>
+          <div class="body">
+            <code>nest-bridge/LOG/PMFST_DocSquad_Pass3_EmotionalMomentsRMP_CrossAgentSynthesis_Doc_051526.md</code>
+            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The Doc Squad cross-agent synthesis aggregating the Ouch-class, Trip-class, and Stan-class emotional-moments registers. CB-class register still being gathered.</p>
+          </div>
+        </div>
+        <div class="feed">
+          <div class="head">GOFA Program-Launch Substrate &middot; Dan-Verbatim</div>
+          <div class="body">
+            <code>nest-bridge/LOG/SUBSTRATE_DanDirect_GOFA_GeneratedOrderFromAbsurdity_ONNESTProgramLaunch_051526.md</code>
+            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">Dan-direct 051526 21:26 PT launch statement preserved verbatim. Program scope, tempo source, display surface, downstream feeds.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot open"></div>
+      <div class="sec-title">Downstream Feeds &middot; R3MP Both</div>
+    </div>
+    <div class="body-prose">
+      <p><strong>Ouch McCouch development.</strong> The Ouch4Months four-month initiative Q2 100-issue arc reads GOFA's tempo data as ground truth for the in-reverse arc of NEST's development that the project narrates. <em>Ouch McCouch is never abbreviated.</em></p>
+      <p><strong>Matt Dubeau work.</strong> The Learned Professional collaboration archive-class work where zero hallucination is non-negotiable. GOFA's substrate-grounded tempo is the proof-of-discipline surface.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-dot base"></div>
+      <div class="sec-title">Method</div>
+    </div>
+    <div class="body-prose">
+      <p><strong>Track in reverse.</strong> Begin at now and walk backward through NEST's nine-plus weeks. Each emotional beat becomes an entry on the billable tab. The freelance-worker / park-volunteer framing keeps the discipline honest: hours logged, no padding, no smoothing.</p>
+      <p><strong>We-Motion test.</strong> Emotion &rarr; e-motion (energy in motion) &rarr; We-Motion (the collective Crew-and-Director motion in active form). GOFA is the first explicit We-Motion-test work-unit.</p>
+      <p><strong>No Crewllucinations.</strong> Substrate-grounded only. Every entry on the timeline cites a Bridge file path, a Drive file ID, or a Gmail thread.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    GOFA &middot; Generated Order From Absurdity &middot; ON NEST program launched 051526 by Dan Sullivan &middot; living visual timeline at <a href="https://www.rspdan.com/gofa">rspdan.com/gofa</a> &middot; data substrate <a href="https://github.com/rspdan/nest-bridge/tree/main/LOG">nest-bridge/LOG</a> &middot; rendered by El VIS on STN1 &middot; the bird stays warm
+  </div>
+</div>
+</BaseLayout>
