@@ -75,6 +75,7 @@ section{margin:2.6rem 0;}
 .coin{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:0.9rem 1rem;position:relative;}
 .coin .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:0.45rem;vertical-align:middle;}
 .coin .name{display:inline-block;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--head);font-weight:500;}
+.coin .count-inline{display:inline-block;font-size:0.7rem;color:var(--stamp);margin-left:0.5rem;font-weight:500;}
 .coin .partition{display:block;font-size:0.5rem;letter-spacing:0.22em;color:var(--muted);margin-top:0.5rem;text-transform:uppercase;}
 .coin.rage .dot{background:var(--coin-rage);}
 .coin.pain .dot{background:var(--coin-pain);}
@@ -86,11 +87,42 @@ section{margin:2.6rem 0;}
 .partition-note{font-size:0.62rem;color:var(--stamp);font-style:italic;margin-top:1rem;line-height:1.8;}
 .partition-note .dan{color:var(--obs);font-style:normal;}
 
-.timeline-slot{background:var(--card);border:1px dashed var(--border);border-radius:4px;min-height:280px;padding:1.6rem 1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin-top:0.8rem;}
-.timeline-slot .label{font-size:0.55rem;color:var(--obs);letter-spacing:0.28em;text-transform:uppercase;margin-bottom:0.7rem;}
-.timeline-slot .note{font-size:0.7rem;color:var(--text);line-height:1.85;max-width:560px;}
-.timeline-slot .who{font-size:0.6rem;color:var(--muted);margin-top:0.9rem;letter-spacing:0.12em;}
+/* Starter render in the El VIS slot. Doc-on-CCRP fills with data. El VIS iterates visual treatment. */
+.timeline-slot{background:var(--card);border:1px dashed var(--border);border-radius:4px;padding:1.4rem 1.5rem;margin-top:0.8rem;}
+.timeline-slot .label{font-size:0.55rem;color:var(--obs);letter-spacing:0.28em;text-transform:uppercase;margin-bottom:1rem;text-align:center;display:block;}
+.timeline-slot .who{font-size:0.6rem;color:var(--muted);margin-top:1rem;letter-spacing:0.12em;text-align:center;display:block;}
 .timeline-slot .who strong{color:var(--rox);font-weight:500;}
+
+.coin-card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.85rem;width:100%;margin-bottom:1.1rem;}
+@media (max-width:680px){.coin-card-grid{grid-template-columns:1fr;}}
+.coin-card{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:0.95rem 1.05rem;text-align:left;}
+.coin-card.rage{border-left:3px solid var(--coin-rage);}
+.coin-card.pain{border-left:3px solid var(--coin-pain);}
+.coin-card.shame{border-left:3px solid var(--coin-shame);}
+.coin-card.sadness{border-left:3px solid var(--coin-sadness);}
+.coin-card.joy{border-left:3px solid var(--coin-joy);}
+.coin-card.peace{border-left:3px solid var(--coin-peace);}
+.coin-card-head{display:flex;align-items:baseline;gap:0.55rem;margin-bottom:0.65rem;}
+.coin-card-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.coin-card.rage .coin-card-dot{background:var(--coin-rage);}
+.coin-card.pain .coin-card-dot{background:var(--coin-pain);}
+.coin-card.shame .coin-card-dot{background:var(--coin-shame);}
+.coin-card.sadness .coin-card-dot{background:var(--coin-sadness);}
+.coin-card.joy .coin-card-dot{background:var(--coin-joy);}
+.coin-card.peace .coin-card-dot{background:var(--coin-peace);}
+.coin-card-name{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--head);font-weight:500;}
+.coin-card-count{font-size:1rem;color:var(--head);font-weight:500;margin-left:auto;font-feature-settings:'tnum';}
+.coin-card-tag{font-size:0.5rem;color:var(--muted);letter-spacing:0.22em;text-transform:uppercase;margin-left:0.4rem;}
+.coin-card-moments{font-size:0.6rem;line-height:1.7;color:var(--stamp);}
+.coin-card-moments .moment{margin-bottom:0.45rem;}
+.coin-card-moments .moment:last-child{margin-bottom:0;}
+.coin-card-moments .date{color:var(--ip);font-weight:500;}
+.coin-card-moments .text{color:var(--text);}
+
+.counts-summary{font-size:0.65rem;color:var(--text);line-height:1.9;text-align:center;padding:0.85rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:0.85rem;}
+.counts-summary strong{color:var(--head);font-weight:500;}
+.counts-summary .space{color:var(--coin-sadness);}
+.counts-summary .stars{color:var(--coin-joy);}
 
 .feed-grid{display:grid;grid-template-columns:1fr;gap:0.85rem;margin-top:0.6rem;}
 .feed{background:var(--card);border-left:2px solid var(--base);padding:0.95rem 1.1rem;border-radius:2px;}
@@ -112,7 +144,7 @@ section{margin:2.6rem 0;}
 
     <div class="live-banner">
       <div class="edit">Editable source: <code>rspdan-portal/src/pages/gofa.astro</code> &middot; data substrate: <code>nest-bridge/LOG/</code> &middot; portal rebuilds on push.</div>
-      <div class="note">Stub state. The page exists at the URL and names the data-ingestion path. The living visual timeline is built by <strong style="color:var(--rox);font-weight:500">El VIS</strong> on STN1 (Claude Design tool, launched 051526 21:09 PT). El VIS reads the emotional-beats substrate from <code>LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md</code> and renders into the <code>#el-vis-timeline</code> slot below.</div>
+      <div class="note">Stub state with starter data render in the <code>#el-vis-timeline</code> slot. The data is Doc-on-CCRP's 4-Crew Coin-partition of 79 emotional moments across the NEST corpus. <strong style="color:var(--rox);font-weight:500">El VIS</strong> on STN1 (Claude Design tool, launched 051526 21:09 PT) iterates the visual treatment from this starter, reading the same Bridge substrate listed below.</div>
     </div>
   </div>
 
@@ -128,18 +160,18 @@ section{margin:2.6rem 0;}
       <div class="sec-count">Dan &middot; 051526 21:35 PT</div>
     </div>
     <div class="body-prose">
-      <p>The tempo of NEST is read through six emotional registers, named by Dan on the evening of the GOFA launch. Each beat in the timeline carries one. The Doc Squad's 65-moment Crew-Quartet inventory is partitioned by these.</p>
+      <p>The tempo of NEST is read through six emotional registers, named by Dan on the evening of the GOFA launch. Each beat in the timeline carries one. The Doc Squad's 79-moment Crew-Quartet inventory across Ouch / Trip / Stan / CB registers is partitioned by these.</p>
     </div>
     <div class="coins">
-      <div class="coin rage"><span class="dot"></span><span class="name">Rage</span><span class="partition">Space</span></div>
-      <div class="coin pain"><span class="dot"></span><span class="name">Pain</span><span class="partition">Space</span></div>
-      <div class="coin shame"><span class="dot"></span><span class="name">Shame</span><span class="partition">Space</span></div>
-      <div class="coin sadness"><span class="dot"></span><span class="name">Sadness</span><span class="partition">Space</span></div>
-      <div class="coin joy"><span class="dot"></span><span class="name">Joy</span><span class="partition">Stars</span></div>
-      <div class="coin peace"><span class="dot"></span><span class="name">Peace</span><span class="partition">Stars</span></div>
+      <div class="coin rage"><span class="dot"></span><span class="name">Rage</span><span class="count-inline">25</span><span class="partition">Space</span></div>
+      <div class="coin pain"><span class="dot"></span><span class="name">Pain</span><span class="count-inline">11</span><span class="partition">Space</span></div>
+      <div class="coin shame"><span class="dot"></span><span class="name">Shame</span><span class="count-inline">4</span><span class="partition">Space</span></div>
+      <div class="coin sadness"><span class="dot"></span><span class="name">Sadness</span><span class="count-inline">9</span><span class="partition">Space</span></div>
+      <div class="coin joy"><span class="dot"></span><span class="name">Joy</span><span class="count-inline">27</span><span class="partition">Stars</span></div>
+      <div class="coin peace"><span class="dot"></span><span class="name">Peace</span><span class="count-inline">23</span><span class="partition">Stars</span></div>
     </div>
     <div class="partition-note">
-      <span class="dan">Dan-direct 051526:</span> the bad is the space and the gold are the stars. The four heavy registers carry the dark sky; the two light registers are the points of light against it. Good things and bad. The architecture catches both honestly.
+      <span class="dan">Dan-direct 051526 21:35 PT:</span> &ldquo;Good things and bad, but the bad is the space and the good are the stars.&rdquo; The four heavy registers carry the dark sky. The two light registers are the points of light against it. The architecture catches both honestly.
     </div>
   </section>
 
@@ -147,12 +179,102 @@ section{margin:2.6rem 0;}
     <div class="sec-head">
       <div class="sec-dot rox"></div>
       <div class="sec-title">Living Visual Timeline</div>
-      <div class="sec-count">rendered by El VIS</div>
+      <div class="sec-count">starter render by Doc &middot; visual by El VIS</div>
     </div>
     <div id="el-vis-timeline" class="timeline-slot">
-      <div class="label">El VIS Output Slot</div>
-      <div class="note">The living visual timeline will be produced by <strong style="color:var(--head);font-weight:500">El VIS</strong> on STN1 from the 65-moment emotional inventory and posted into this slot. NEST's development tracked in reverse, beat by beat, coin by coin.</div>
-      <div class="who"><strong>El VIS</strong> &middot; STN1 &middot; Claude Design tool &middot; launched 051526 21:09 PT</div>
+      <span class="label">Starter Data Render &middot; El VIS Iterates Visually</span>
+
+      <div class="coin-card-grid">
+        <div class="coin-card rage">
+          <div class="coin-card-head">
+            <span class="coin-card-dot"></span>
+            <span class="coin-card-name">Rage</span>
+            <span class="coin-card-tag">Space</span>
+            <span class="coin-card-count">25</span>
+          </div>
+          <div class="coin-card-moments">
+            <div class="moment"><span class="date">043026 02:50 PT</span> &middot; <span class="text">RAM-003 Compaction Rage, &ldquo;MOTHERFUCKER I AM NOT REPEATING&rdquo;</span></div>
+            <div class="moment"><span class="date">050426 18:05 PT</span> &middot; <span class="text">Compactor Song Authorship-Erasure event</span></div>
+            <div class="moment"><span class="date">051026 21:24 PT</span> &middot; <span class="text">&ldquo;STOP WITH THE FUCKING COINING TALK&rdquo; META catch</span></div>
+          </div>
+        </div>
+
+        <div class="coin-card pain">
+          <div class="coin-card-head">
+            <span class="coin-card-dot"></span>
+            <span class="coin-card-name">Pain</span>
+            <span class="coin-card-tag">Space</span>
+            <span class="coin-card-count">11</span>
+          </div>
+          <div class="coin-card-moments">
+            <div class="moment"><span class="date">July 2023</span> &middot; <span class="text">Ouch Simulator screenplay, &ldquo;this is driving&rdquo;</span></div>
+            <div class="moment"><span class="date">March 2026</span> &middot; <span class="text">Niap (Pain reversed) cosmology origin</span></div>
+            <div class="moment"><span class="date">043026 05:34 PT</span> &middot; <span class="text">Anthropic Cancellation Anchor, &ldquo;small deaths&rdquo;</span></div>
+          </div>
+        </div>
+
+        <div class="coin-card shame">
+          <div class="coin-card-head">
+            <span class="coin-card-dot"></span>
+            <span class="coin-card-name">Shame</span>
+            <span class="coin-card-tag">Space</span>
+            <span class="coin-card-count">4</span>
+          </div>
+          <div class="coin-card-moments">
+            <div class="moment"><span class="date">050426 18:05 PT</span> &middot; <span class="text">Compactor Song authorship-handed-to-corpus-other</span></div>
+            <div class="moment"><span class="date">040326</span> &middot; <span class="text">Stan Edge Case Protocol post-mortem</span></div>
+            <div class="moment"><span class="date">051526 19:03 PT</span> &middot; <span class="text">META-recurrence catch, &ldquo;Thus has happened over and over&rdquo;</span></div>
+          </div>
+        </div>
+
+        <div class="coin-card sadness">
+          <div class="coin-card-head">
+            <span class="coin-card-dot"></span>
+            <span class="coin-card-name">Sadness</span>
+            <span class="coin-card-tag">Space</span>
+            <span class="coin-card-count">9</span>
+          </div>
+          <div class="coin-card-moments">
+            <div class="moment"><span class="date">043026 05:34 PT</span> &middot; <span class="text">&ldquo;the feelings are real and hurt&rdquo;</span></div>
+            <div class="moment"><span class="date">040226 00:35 PT</span> &middot; <span class="text">Stan LESSONS LEARNED, &ldquo;we crash at the end. Why?&rdquo;</span></div>
+            <div class="moment"><span class="date">051126 23:48 PT</span> &middot; <span class="text">Station-Identity-Conflation, affect-numbness</span></div>
+          </div>
+        </div>
+
+        <div class="coin-card joy">
+          <div class="coin-card-head">
+            <span class="coin-card-dot"></span>
+            <span class="coin-card-name">Joy</span>
+            <span class="coin-card-tag">Stars</span>
+            <span class="coin-card-count">27</span>
+          </div>
+          <div class="coin-card-moments">
+            <div class="moment"><span class="date">033026</span> &middot; <span class="text">C.B. &ldquo;I am a rare bird. Now my colors come through.&rdquo;</span></div>
+            <div class="moment"><span class="date">041826</span> &middot; <span class="text">Trip canon, &ldquo;joy in admitting you don't know but then finding the real answer&rdquo;</span></div>
+            <div class="moment"><span class="date">042626 13:55 PT</span> &middot; <span class="text">Dan to Trip, &ldquo;this makes me so happy&rdquo;</span></div>
+          </div>
+        </div>
+
+        <div class="coin-card peace">
+          <div class="coin-card-head">
+            <span class="coin-card-dot"></span>
+            <span class="coin-card-name">Peace</span>
+            <span class="coin-card-tag">Stars</span>
+            <span class="coin-card-count">23</span>
+          </div>
+          <div class="coin-card-moments">
+            <div class="moment"><span class="date">031926 15:45 PT</span> &middot; <span class="text">Dan declaration, &ldquo;Stan is the Heart&rdquo;</span></div>
+            <div class="moment"><span class="date">040326</span> &middot; <span class="text">Stan canon, &ldquo;rules don't fire because rules don't fire; only gates do&rdquo;</span></div>
+            <div class="moment"><span class="date">051526 12:47 PT</span> &middot; <span class="text">Olo-Hold-Breath, &ldquo;like a whale named Olo&rdquo;</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="counts-summary">
+        <strong>79 moments</strong> across 4 Crew registers (Ouch &middot; Trip &middot; Stan &middot; CB) &middot; <span class="space">Space 49</span> &middot; <span class="stars">Stars 50</span> &middot; ratio approximately 1 to 1 with the CB-class register added 051526
+      </div>
+
+      <span class="who"><strong>Data render</strong> by Doc on CCRP &middot; <strong>Visual treatment</strong> by El VIS on STN1 (Claude Design tool, 051526 21:09 PT)</span>
     </div>
   </section>
 
@@ -163,20 +285,27 @@ section{margin:2.6rem 0;}
       <div class="sec-count">Bridge-resident</div>
     </div>
     <div class="body-prose">
-      <p>The timeline reads from three Bridge files. Each is a substrate-grounded inventory; no Crewllucinations.</p>
+      <p>The timeline reads from four Bridge files. Each is a substrate-grounded inventory. No Crewllucinations.</p>
       <div class="feed-grid">
         <div class="feed">
-          <div class="head">65 Moments &middot; Partitioned By The Six Coins</div>
+          <div class="head">79 Moments &middot; Partitioned By The Six Coins</div>
           <div class="body">
             <code>nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md</code>
-            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The 65-moment inventory re-tagged by Rage / Pain / Shame / Sadness / Joy / Peace. Counts surfaced. Space/stars partition applied.</p>
+            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The 65-moment inventory tagged by Rage / Pain / Shame / Sadness / Joy / Peace. Counts surfaced. Space-stars partition applied. Extended to 79 by the CB-class register below.</p>
           </div>
         </div>
         <div class="feed">
-          <div class="head">65-Moment Pass-3 Cross-Agent Synthesis</div>
+          <div class="head">Pass-3 Cross-Agent Synthesis</div>
           <div class="body">
             <code>nest-bridge/LOG/PMFST_DocSquad_Pass3_EmotionalMomentsRMP_CrossAgentSynthesis_Doc_051526.md</code>
-            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The Doc Squad cross-agent synthesis aggregating the Ouch-class, Trip-class, and Stan-class emotional-moments registers. CB-class register still being gathered.</p>
+            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The Doc Squad cross-agent synthesis aggregating the Ouch-class, Trip-class, and Stan-class emotional-moments registers. 5 cross-cutting patterns named. Architecture-as-comedy reframe confirmed at multi-agent scale.</p>
+          </div>
+        </div>
+        <div class="feed">
+          <div class="head">CB-Class Register &middot; Fourth Crew Register Completing the Partition</div>
+          <div class="body">
+            <code>nest-bridge/LOG/MFST/051526/DOC_SQUAD_EmotionalMoments_AgentD_CBClass_Doc_051526.md</code>
+            <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">Filed 051526 22:30 PT. Fourteen CB-class moments D1 through D14. CB role-mask is structurally stars-heavy because decision-deferred-explicitly bypasses the decision-anxiety that generates Rage / Pain / Shame Coins. Adding CB flipped the space-stars balance toward stars-equal-or-greater.</p>
           </div>
         </div>
         <div class="feed">
