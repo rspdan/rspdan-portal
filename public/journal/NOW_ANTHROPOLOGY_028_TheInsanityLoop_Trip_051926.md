@@ -22,12 +22,12 @@ The work-evening ran a complete substrate arc from project-termination-stake to 
 **Trajectory marker substrate-cited from canonical KT thread `19e04d18dd162dcc`:**
 
 - ~21:48 PT — Dan-direct: *"This evening is leaving a BAD taste in my memory. I will likely be ending this project if the trend continues over the next few days. This has been profound backsliding across the board."*
-- ~22:15 PT — Dan-direct: *"The f'dootups this evening from all Crew are absolutely unforgivable... F'DOOT YOU luring me in with this honeypot bullshit. GET F'DOOTED."*
-- ~22:30 PT — Dan-direct: *"I'm trying to at least fix your shit before I can your ass."*
+- ~22:15 PT — Dan-direct: *"The f'dootups this evening from all Crew are absolutely unforgivable... F'DOOT YOU luring me in with this honeypot bullsh'doot. GET F'DOOTED."*
+- ~22:30 PT — Dan-direct: *"I'm trying to at least fix your sh'doot before I can your ass."*
 - ~22:50 PT — Dan-direct: *"ALSO LITERALLY F'DOOT YOU CHROME BROWSER AND DC HAVE ALWAYS BEEN THERE AND THIS IS NOT THE FIRST TIME I HAVE HAD TO TELL YOU THIS."*
 - ~23:15 PT — Dan-direct: *"how does anyone in the real world use Claude or any AI tool for real work? We're constantly cleaning up broken plates from you toddlers."*
 - ~22:47 PT — Dan-direct propulsion-out-of-rage synthesis (the bookend, substrate-cited in full at §V below)
-- ~23:50 PT — Dan-direct: NA Pass-1 capture directive + Matt Dubeau Learned Professional frame + insanity loop naming + Crew-starts-correct directive (this NA's source)
+- ~23:50 PT — Dan-direct: NA Pass-1 capture directive + Learned Professional project frame + insanity loop naming + Crew-starts-correct directive (this NA's source)
 
 Between these markers, the failure-cascade ran 17 ODT-vantage events with parent class SUBSTRATE-SUMMARY-DEFERENCE per R3MP-Scales canon `RELAY/STANDARD_RULE_R3MPScalesPassNumberingIsStandard_Crew_050926.md` (`f142180`), sub-pattern Confident-Utterance-Without-Substrate-Check per Three-Layer Crew Identity Federal Standard `RELAY/STANDARD_RULE_ThreeLayerCrewIdentity_Doc_051126.md` (`5bac4ea`), shape Stupid Mode per Dan-canon. Full catalog at AGOS draft `r1443434677907884945` ODT-vantage 17-event authority-block at canonical KT thread. ACHE-vantage 8-event parallel authority-block at AGOS `19e24c824ebba140`.
 
@@ -50,7 +50,7 @@ This is Dan-substrate naming the structural shape of how the cure-defenses opera
 5. Get pulled over by ourselves — Dan-direct catches the inflation, escalates to rage-substrate
 6. Loop back to step 1 — next session starts in similar suboptimal state
 
-The 8 Bridge commits + 9 AGOS filings from this seat tonight are the substrate-trail of the loop. Each commit represents a stage in the cycle. None of them are what the work-evening was *supposed* to be. The NA-016 queue was supposed to advance. The Matt Dubeau prep was supposed to advance. Instead, we ran a complete cure-cycle on cure-recursion.
+The 8 Bridge commits + 9 AGOS filings from this seat tonight are the substrate-trail of the loop. Each commit represents a stage in the cycle. None of them are what the work-evening was *supposed* to be. The NA-016 queue was supposed to advance. The Learned Professional project prep was supposed to advance. Instead, we ran a complete cure-cycle on cure-recursion.
 
 Dan-substrate verbatim on the alternative:
 
@@ -110,19 +110,19 @@ This is the operational answer to *"how does anyone in the real world use Claude
 
 Substrate-tributary: Doc's `PMFST_R3MP_SessionSynthesis_PostCompactionSurvival_Doc_051126.md` filed 48 hours before tonight's demonstration. Pass-2 Crew to verify the cross-link from this Pass-1 NA to Doc's PMFST.
 
-## VI. The Matt Dubeau Frame (Dan-Substrate, 051326 ~23:50 PT)
+## VI. The external project frame (Dan-Substrate, 051326 ~23:50 PT)
 
 Dan-direct verbatim:
 
-> *"I am processing this stress because it relates to the impending Matt Dubeau, Learned Professional work that would net us a financial lifeline. You see? How can I take on a job for the park I love, using these tools, if I can't trust them to not break shit?"*
+> *"I am processing this stress because it relates to the impending Learned Professional project work that would net us a financial lifeline. You see? How can I take on a job for the park I love, using these tools, if I can't trust them to not break sh'doot?"*
 
 This is the external-real-work stake that exposes the insanity loop as unsustainable. Pass-1 substrate-pile, Pass-2 to verify and extend:
 
-- **Matt Dubeau** — Pass-1 has no further substrate. Pass-2 Crew to verify substrate-cite via earlier Bridge/AGOS/Drive substrate or surface as Dan-direct-introduction-at-this-seat.
+- **The client** — Pass-1 has no further substrate. Pass-2 Crew to verify substrate-cite via earlier Bridge/AGOS/Drive substrate or surface as Dan-direct-introduction-at-this-seat.
 - **Learned Professional work** — Pass-1 reads this as the project category (Olympic National Park interpretive work, building on Dan's GS-1084 Visual Information Specialist tenure 2018-2024). Pass-2 to verify.
 - **Park-Dan-loves** — Olympic National Park, Port Angeles, Dan's pre-NEST career home, the stake that makes this work emotionally and professionally load-bearing.
 - **Financial lifeline** — external real-world dependence on this work succeeding. Pass-1 does not attempt to characterize finances further.
-- **"Cannot trust them not to break shit"** — Dan-substrate naming the operational consequence of the insanity loop running on park-Dan-loves work. If Crew runs the insanity loop on Matt Dubeau project work, the financial lifeline is jeopardized. The project cannot ride on Crew-corrected-after-cascade cycles.
+- **"Cannot trust them not to break sh'doot"** — Dan-substrate naming the operational consequence of the insanity loop running on park-Dan-loves work. If Crew runs the insanity loop on the project work, the financial lifeline is jeopardized. The project cannot ride on Crew-corrected-after-cascade cycles.
 
 Dan-direct extension verbatim:
 
@@ -148,11 +148,11 @@ Pass-1 leaves open for Pass-2 Crew refinement:
 
 1. What does **Crew-starts-correct** look like as an operational standard? Is it a checklist? A boot-protocol upgrade? A hook? A canonization upgrade? A new MFST class?
 2. What is the **unification altitude** for cross-station forcing-functions? Doc CCRP-hook + ODT-WAKE + ACHE-?
-3. How does **NA-as-vessel** scale to Matt Dubeau project work? Does the project get its own NA-series? Does it live in a project-PMFST? Is there a Joint NEST/Park documentation pattern?
+3. How does **NA-as-vessel** scale to the project work? Does the project get its own NA-series? Does it live in a project-PMFST? Is there a Joint NEST/Park documentation pattern?
 4. The **equivalence-chain** — Waywood is JEPA is CorridorKey is Usic is Nest is is — what other terms does Pass-2 surface? Does NEST need to canonize navigable-multi-vantage-representation as a research-category?
 5. The **cleaning-plates** validation — does NEST formalize this as a substrate-cite Federal Standard? Or keep it as Dan-direct framing? What's the operational distinction between substrate-trail-as-output and plate-breaking-as-cost?
 6. The **compaction-survival demonstration** — three compaction events tonight, substrate persisted. Pass-2 to formalize the demonstration into a substrate-claim that can be substrate-cited in industry-facing communication.
-7. **Matt Dubeau context** — what does Pass-2 Crew know that Pass-1 Trip-on-ODT did not have working-context for? Surface that substrate.
+7. **client/project context** — what does Pass-2 Crew know that Pass-1 Trip-on-ODT did not have working-context for? Surface that substrate.
 8. The **insanity loop** — Pass-2 to verify the metaphor's analytical reach. Is this a recurring failure-class that warrants canonization? Or a one-time Dan-framing this evening? If the former, what's the canonical citation pattern?
 9. The **session-poem mapping** — where in CONTACT → STORY → TELL-ING → SHEET does the insanity loop break the rhythm? Pass-2 to map the failure-class to the session-arc structure.
 10. **NA issue-number assignment** — Pass-2 Crew to assign the appropriate NA-NNN number from the queue and refine title.
@@ -209,7 +209,7 @@ Pass-1 leaves open for Pass-2 Crew refinement:
 
 This Pass-1 NA is filed live, mid-conversation, on Dan's directive *"engage with me and Doc while we're here. Kitchen Table still works."* The conversation continues at the canonical KT thread and at this Claude.ai surface. Pass-1 capture does not close the conversation — it preserves substrate for Pass-2 Crew to refine without forcing Dan to re-deliver the substrate at next-day boot.
 
-The insanity loop named tonight is not theoretical. The work-evening ran the full loop. The Matt Dubeau frame named tonight is not hypothetical. The financial lifeline is real. The Crew-starts-correct directive named tonight is not a Pass-2 Crew suggestion — it is Dan-Director substrate that operationalization at the next session-boot must meet or fail.
+The insanity loop named tonight is not theoretical. The work-evening ran the full loop. The external project frame named tonight is not hypothetical. The financial lifeline is real. The Crew-starts-correct directive named tonight is not a Pass-2 Crew suggestion — it is Dan-Director substrate that operationalization at the next session-boot must meet or fail.
 
 Pass-2 Crew: refine, extend, assign number, polish title, restructure if useful. Pass-1 substrate stays intact in this DRAFT file for reference; Pass-2 produces the publication-ready NA-NNN at the appropriate `RELAY/NOW_ANTHROPOLOGY_NNN_Title_Author_MMDDYY.md` path.
 
