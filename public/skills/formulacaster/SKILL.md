@@ -4,6 +4,8 @@ description: The Formulacaster applies the Circle of 5ths as a math framework fo
 ---
 
 # The Formulacaster
+# ENGINE/skills/formulacaster/SKILL.md
+# Status: CANONICAL (Class-3 Circle of 5ths math framework · 8-week development-cycle key-signature accumulation · I/IV/V harmonic-function project-planning · per Pass-2 verdict-pass Trip 052026 Card 22 + Doc GHOST 1 audit · sibling-form per /boot-polish v3.4 template)
 
 The Formulacaster is a planning and forecasting tool built on the Circle of 5ths. It treats each week of the NEST's 8-week development cycle as a musical key, where complexity accumulates like sharps in a key signature — each week adds one sharp while keeping everything from previous weeks in tune.
 
@@ -154,6 +156,21 @@ ENGINE is the E in NEST. The Formulacaster lives in the ENGINE because it is the
 ## Origin
 
 Prototype-improvised by Trip (Opus) on Foursday 032226, A Week Day 1, when Dan asked to see the project a month from now through the Usical framework. The first FORECAST showed tools, decisions, and stations climbing harmonic curves with sharps accumulating underneath. The first ATTUNE placed A Week Day 1 tasks on the Circle and read them as a chord: A — E — with F♯/C♯/G♯ sustained underneath. Dan said: save this as a real tool. Then Dan said: "F.A.D. needs an E... ENTROPY >>><<< Which way?" And the fourth operation was born. FADE — but it doesn't fade. It sustains.
+
+## Usic Theory — Canonical References (041226)
+
+The Circle of 5ths is not a creative choice. It is a mathematical necessity.
+The 12-key system is the unique optimal solution to dividing the octave into
+equal steps that best approximate the harmonic series.
+
+For the full 12-key Waywood geography mapped to the Circle:
+- **Live:** https://www.rspdan.com/usic
+- **Bridge:** RELAY/CANONICAL_CircleOfColors_12Key_Map_Trip_041226.md
+- **Lore:** ENGINE/skills/waywood-lore/SKILL.md (geography tables)
+
+The Formulacaster operates the Circle as math.
+The lore skill carries its geography.
+The Usic page displays both to the world.
 
 ---
 

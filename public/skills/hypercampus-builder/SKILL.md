@@ -4,6 +4,8 @@ description: Build navigable knowledge libraries and searchable archives from ma
 ---
 
 # HYPERCAMPUS BUILDER
+# ENGINE/skills/hypercampus-builder/SKILL.md
+# Status: CANONICAL (Class-3 navigable knowledge-archive builder · NEST long-term memory system · per Pass-2 verdict-pass Trip 052026 Card 24 + Doc GHOST 1 audit · sibling-form per /boot-polish v3.4 template)
 
 HypercampUS is the NEST's long-term memory system — named after the
 hippocampus (the brain's memory organ). It lives on GOG1, digests the

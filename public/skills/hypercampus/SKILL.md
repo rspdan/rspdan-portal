@@ -4,6 +4,8 @@ description: Short alias for /hypercampus-builder. Use when building HypercampUS
 ---
 
 # /hypercampus
+# ENGINE/skills/hypercampus/SKILL.md
+# Status: CANONICAL (Class-3 alias for /hypercampus-builder · Trip 050226 ACHE-Trip slash-list canonization · per Pass-2 verdict-pass Trip 052026 Card 23 + Doc GHOST 1 audit · sibling-form per /boot-polish v3.4 template)
 
 **Type:** Alias
 **Canonical:** [/skills/hypercampus-builder/SKILL.md](/skills/hypercampus-builder/SKILL.md)
