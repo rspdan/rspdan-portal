@@ -3,6 +3,35 @@
 // NOW ANTHROPOLOGY — Practice-Based Research Journal
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+const monthMap = {
+  January: '01', February: '02', March: '03', April: '04',
+  May: '05', June: '06', July: '07', August: '08',
+  September: '09', October: '10', November: '11', December: '12',
+};
+
+function dateISO(dateStr) {
+  const yearMatch = dateStr.match(/\d{4}/);
+  const year = yearMatch ? yearMatch[0] : '2026';
+  const parts = dateStr.split(/[–—\-]/).map((s) => s.trim());
+  const lastPart = parts[parts.length - 1];
+
+  let m = lastPart.match(/([A-Za-z]+)\s+(\d+)/);
+  if (m && monthMap[m[1]]) {
+    return `${year}-${monthMap[m[1]]}-${m[2].padStart(2, '0')}`;
+  }
+
+  m = lastPart.match(/^(\d+)/);
+  if (m && parts.length > 1) {
+    const prev = parts[parts.length - 2];
+    const mm = prev.match(/([A-Za-z]+)\s+\d+/);
+    if (mm && monthMap[mm[1]]) {
+      return `${year}-${monthMap[mm[1]]}-${m[1].padStart(2, '0')}`;
+    }
+  }
+
+  return `${year}-01-01`;
+}
+
 const issues = [
   {
     num: '001', title: 'A Field Report on the Subject Known as Stan Dalone',
@@ -215,6 +244,12 @@ const issues = [
     url: '/journal/029'
   },
 ];
+
+const issuesWithMeta = issues.map((iss, i) => ({
+  ...iss,
+  _sortDate: dateISO(iss.date),
+  _manualIdx: i,
+}));
 ---
 
 <BaseLayout title="NOW ANTHROPOLOGY" description="Practice-Based Research Journal — The NEST Research Division">
@@ -232,9 +267,19 @@ const issues = [
 
 <section class="container journal-body">
 
-  <div class="issue-list">
-    {issues.map((issue) => (
-      <article class="issue-card">
+  <div class="filter-bar">
+    <label for="sort-select" class="filter-label mono">Sort by</label>
+    <select id="sort-select" class="filter-select mono">
+      <option value="manual">Manual order</option>
+      <option value="date-desc">Date · newest first</option>
+      <option value="date-asc">Date · oldest first</option>
+    </select>
+    <span class="filter-count mono"><span id="issue-count">{issuesWithMeta.length}</span> issues</span>
+  </div>
+
+  <div class="issue-list" id="issue-list">
+    {issuesWithMeta.map((issue) => (
+      <article class="issue-card" data-sort-date={issue._sortDate} data-manual-idx={issue._manualIdx}>
         <div class="issue-header">
           <span class="issue-num mono">{issue.num}</span>
           <div class="issue-meta">
@@ -261,6 +306,29 @@ const issues = [
       </article>
     ))}
   </div>
+
+  <script is:inline>
+    (function () {
+      const select = document.getElementById('sort-select');
+      const list = document.getElementById('issue-list');
+      if (!select || !list) return;
+      const cards = Array.from(list.querySelectorAll('.issue-card'));
+      select.addEventListener('change', function () {
+        const mode = select.value;
+        const sorted = cards.slice().sort(function (a, b) {
+          if (mode === 'manual') {
+            return parseInt(a.dataset.manualIdx, 10) - parseInt(b.dataset.manualIdx, 10);
+          }
+          const da = a.dataset.sortDate || '';
+          const db = b.dataset.sortDate || '';
+          if (mode === 'date-desc') return db.localeCompare(da);
+          if (mode === 'date-asc') return da.localeCompare(db);
+          return 0;
+        });
+        sorted.forEach(function (card) { list.appendChild(card); });
+      });
+    })();
+  </script>
 
   <div class="journal-footer">
     <h2 style="font-size:1.2rem; color:var(--forest); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">📚 Resources</h2>
@@ -309,6 +377,28 @@ const issues = [
   .subtitle {
     font-size: 1.05rem; color: var(--slate-lt);
     font-style: italic; max-width: 600px; line-height: 1.6;
+  }
+  .filter-bar {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 2rem; padding: 0.75rem 1rem;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--off-white);
+  }
+  .filter-label {
+    font-size: 0.75rem; letter-spacing: 0.05em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .filter-select {
+    font-family: var(--font-mono); font-size: 0.8rem;
+    padding: 0.35rem 0.6rem; border: 1px solid var(--border);
+    border-radius: 3px; background: var(--card-bg);
+    color: var(--text); cursor: pointer;
+  }
+  .filter-select:hover { border-color: var(--forest-lt); }
+  .filter-select:focus { outline: none; border-color: var(--forest); }
+  .filter-count {
+    margin-left: auto; font-size: 0.75rem;
+    color: var(--muted); letter-spacing: 0.05em;
   }
   .issue-list {
     display: flex; flex-direction: column; gap: 2rem;
@@ -385,5 +475,7 @@ const issues = [
   @media (max-width: 600px) {
     .hero-journal h1 { font-size: 1.8rem; }
     .issue-header { flex-direction: column; gap: 0.5rem; }
+    .filter-bar { flex-wrap: wrap; gap: 0.5rem; }
+    .filter-count { margin-left: 0; width: 100%; }
   }
 </style>
