@@ -143,6 +143,16 @@ const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
   </blockquote>
 </div></section>
 
+<section class="sk-cascade"><div class="container">
+  <div class="sk-axis-label mono" style="color:var(--teal);">SKILL CASCADE MAP · NEST.02 · 042926</div>
+  <h2 class="sk-section-title sk-section-title--light">28 NEST skills arranged by session phase (ARMS)</h2>
+  <p class="sk-section-desc sk-section-desc--light"><code>meta-dates</code> at apex · 450 refs · always-on. Cascade connections + frequency-based sizing from corpus analysis of 5 session logs. Source: <code>C:\STAN\ENGINE\NEST.02\Skills\nest02_skill_cascade_map_042926_1.1.svg</code> (Trip 042926).</p>
+  <div class="sk-cascade-wrap">
+    <img src="/img/skills/cascade-map.svg" alt="NEST.02 Skill Cascade Map · 28 skills arranged by ARMS session phase with meta-dates as apex trigger" class="sk-cascade-svg" />
+  </div>
+  <p class="sk-cascade-note mono"><em>v1.1 cascade-map · 28-skill baseline (042926) · current Bridge state has 33 NEST-built skills (5 added since: btw + box-in-box + hypercampus alias + remememento + ultrareview) · cascade map pending update to current state · Pass-2 refinement reserves.</em></p>
+</div></section>
+
 <section class="sk-section"><div class="container">
   <div class="sk-axis-label mono">AXIS A · NEST-BUILT (POKEMON MOVES)</div>
   <h2 class="sk-section-title">Skills emerged from NEST operational discoveries</h2>
@@ -314,6 +324,46 @@ const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
   background: var(--off-white);
   padding: 3.5rem 0;
   border-bottom: 1px solid var(--border);
+}
+
+.sk-cascade {
+  background: #0a1410;
+  padding: 4rem 0;
+  border-bottom: 1px solid rgba(116, 201, 213, 0.15);
+}
+.sk-cascade .sk-section-title {
+  color: var(--warm-white);
+}
+.sk-cascade-wrap {
+  background: #050a08;
+  border: 1px solid rgba(116, 201, 213, 0.1);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin: 2rem 0 1rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.sk-cascade-svg {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  margin: 0 auto;
+}
+.sk-cascade-note {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-align: center;
+  max-width: 800px;
+  margin: 0.75rem auto 0;
+}
+.sk-cascade-note code {
+  font-size: 0.7rem;
+  color: rgba(116, 201, 213, 0.8);
+  background: rgba(116, 201, 213, 0.06);
+  padding: 0.1rem 0.3rem;
+  border-radius: 2px;
 }
 .sk-canon-label {
   font-size: 0.6rem;
