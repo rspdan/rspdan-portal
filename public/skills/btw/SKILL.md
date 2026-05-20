@@ -5,6 +5,7 @@ description: BACK TO WORK — Dan's catch-all signal to STOP narration, archaeol
 
 # /btw — BACK TO WORK
 # ENGINE/skills/btw/SKILL.md
+# Status: CANONICAL (Dan-canonized 050426 ~08:13 PM PT · 39-substrate-cite-instance basis · Class-3 ship-the-work signal · per Pass-2 verdict-pass Trip 052026 Card 6)
 # Origin: Dan-direct 050426 ~08:13 PM PT
 #   "/skill-creator Good fucking lord. Make this a skill now. This insanity we
 #    have gone through today must NEVER HAPPEN EVER AGAIN. It's a catch-all for

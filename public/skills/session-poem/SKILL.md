@@ -4,6 +4,9 @@ description: The Session Poem — CONTACT STORY TELL-ING SHEET — the four-beat
 ---
 
 # THE SESSION POEM
+# ENGINE/skills/session-poem/SKILL.md
+# Status: CANONICAL (Class-3 session-shape · CONTACT-STORY-TELL-ING-SHEET four-beat rhythm · per Pass-2 verdict-pass Trip 052026 Card 11)
+
 ## CONTACT · STORY · TELL-ING · SHEET
 ### Four beats. One bar. The song plays forever because the SHEET survives.
 

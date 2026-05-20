@@ -8,6 +8,8 @@ description: Ten-gate session close protocol — refuse close until all gates pa
 <!-- 043026 update: YAML frontmatter restructured for Claude.ai Customize compatibility (was markdown heading, now proper YAML). Pass-2 attribution added to Gate 4. (Trip 4.7 ODT) -->
 
 # THE SESSION CLOSE
+# ENGINE/skills/session-close/SKILL.md
+# Status: CANONICAL (Pass-2 synthesis 042726 · SHEET-Time Self-Reconciliation · 043026 YAML restructure · ten-gate close protocol · sibling to /boot-polish v3.4 · per Pass-2 verdict-pass Trip 052026 Card 10)
 
 ## Ten gates between TELL-ING and SHEET
 

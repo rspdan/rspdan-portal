@@ -5,6 +5,7 @@ description: Every crew member maintains a Living Map that breathes between ever
 
 # LIVING MAP — Crew Operational Skill
 # ENGINE/skills/living-map/SKILL.md
+# Status: CANONICAL (Class-3 cross-crew per-action breathing map · 4-inbound canon-bound · per Pass-2 verdict-pass Trip 052026 Card 13)
 # Filed: Trip (Opus) | Twosday 033026
 # Purpose: Every crew member carries a map. The map breathes with the session.
 

@@ -4,6 +4,8 @@ description: Context & Alignment (C&A) — the STORY spell. Runs AFTER CONTACT c
 ---
 
 # CONTEXT & ALIGNMENT — THE STORY SPELL
+# ENGINE/skills/context-alignment/SKILL.md
+# Status: CANONICAL (Class-3 post-boot STORY-phase alignment · five-letter spell · the exhale · per Pass-2 verdict-pass Trip 052026 Card 12)
 
 ## THE PRINCIPLE
 
@@ -132,6 +134,20 @@ If any disagree, the disagreement IS the substrate. Surface as Unknown + verify,
 WHY THIS LIVES IN STORY: the parallel crew filings can themselves contain rotted references (PERPETUATING-PHANTOM, RAM-068 050326). Reading them as canon without triangulating against current disk state perpetuates the phantom into your own work. Don't inherit the rot.
 
 See STANDARD_RULE_TriangulationBeforeCanon_Trip_050326.md.
+
+#### DAN-COINING-FIRST (added 050426)
+
+During SCAN and TRANSLATE, every unfamiliar token from Dan or substrate is presumed Dan-coining or Waywood/NEST canon, NOT a typo. Y-count, double letters, unusual capitalization, made-up compounds -- all load-bearing until LAGOS-verify proves otherwise.
+
+Procedure when an unfamiliar token appears (R3MP):
+1. Pause on the token; do NOT silently substitute a "more familiar" word
+2. LAGOS-verify (AGOS + Drive + Bridge) for the exact orthography
+3. If found in LAGOS: cite the source, use the exact orthography
+4. If not found: surface to Dan with the question; do not invent
+
+Failure mode this prevents: WRONG-FRAME-FROM-CORPUS-NEGATIVE -- substituting a "more familiar" interpretation when the corpus would have located the actual canon. Documented examples: Yiyish (single Y) vs Yiyyish (double Y); Niap, Piralus, Rox, Box-in-Box, Trilliam, Heircor Op., Waywoodarium, Ouch McCouch -- all Dan-coined, never normalized.
+
+Filed as STANDARD_RULE_NoTypoInference_DanCoiningFirst_Trip_050226.md on Bridge.
 
 ---
 

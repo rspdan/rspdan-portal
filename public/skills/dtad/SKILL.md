@@ -4,6 +4,8 @@ description: Director-Teach-Actor-Teach-Director observation loop. Use when Dan 
 ---
 
 # DTAD — Director-Teach-Actor-Teach-Director
+# ENGINE/skills/dtad/SKILL.md
+# Status: CANONICAL (Class-3 cross-crew observation loop · most-fired in corpus at 18 per 042826 baseline · per Pass-2 verdict-pass Trip 052026 Card 14)
 
 ## THE NAME
 
