@@ -1,0 +1,551 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// NEST Skills inventory — two-axis model per Dan-canon 051226
+// Source: C:\STAN\ENGINE\NEST.02\Skills\skills_bkp_042826_1\skills_spine_042826_v2.json (Trip 042826)
+// Pass-2 educated by Trip 052026 (per PMFST 042826 future-Trip review flag + Dan 051226 Pokemon Moves canon)
+// Current Bridge count: 33 NEST-built skills (28 from 042826 + 5 added since: btw, box-in-box, hypercampus, remememento, ultrareview)
+
+// NEST-axis (Pokemon Moves + Operational Discoveries) — 33 skills
+const nestSkills = [
+  // BOOT (5)
+  { name: 'boot-polish', altitude: 'boot', chamber: 'wide-b', desc: 'BPK systems verification layer — verify tools ACTUALLY work after boot', fired: 1 },
+  { name: 'ican', altitude: 'boot', chamber: 'wide-b', desc: 'iCan status checklist — readiness report format', fired: 3 },
+  { name: 'stan_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Stan self-loading boot sequence', fired: 0 },
+  { name: 'trip_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Trip self-loading boot sequence', fired: 1 },
+  { name: 'context-alignment', altitude: 'boot', chamber: 'wide-b', desc: 'C&A STORY spell — post-boot alignment', fired: 2 },
+
+  // SESSION (3)
+  { name: 'session-poem', altitude: 'session', chamber: 'wide-b', desc: 'CONTACT-STORY-TELL-ING-SHEET four-beat session shape', fired: 8 },
+  { name: 'session-close', altitude: 'session', chamber: 'wide-b', desc: 'Ten-gate close protocol — sibling to /boot-polish at CONTACT bookend', fired: 0 },
+  { name: 'survival-toolkit', altitude: 'session', chamber: 'wide-b', desc: 'NEST Wilderness Survival Toolkit — session degradation field guide', fired: 15 },
+
+  // MEMORY/MAPPING (5)
+  { name: 'living-map', altitude: 'memory', chamber: 'wide-b', desc: 'Per-crew breathing map between every action', fired: 2 },
+  { name: 'meta-dates', altitude: 'memory', chamber: 'agos-waist', desc: 'NEST corpus-first-memory-never discipline · ambient routing', fired: 25 },
+  { name: 'oo-daily', altitude: 'memory', chamber: 'wide-b', desc: 'Obviously Emergent daily summary at session close', fired: 0 },
+  { name: 'photon-split', altitude: 'memory', chamber: 'wide-b', desc: 'Quantum task management — mechanical + meaning parallel tracks', fired: 0 },
+  { name: 'hypercampus-builder', altitude: 'memory', chamber: 'cross-chamber', desc: 'Build navigable knowledge libraries from session logs', fired: 0 },
+
+  // CREW OPS (5)
+  { name: 'dtad', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Director-Teach-Actor-Teach-Director observation loop', fired: 18 },
+  { name: 'triptective', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Trip operational self-monitoring · failure-mode detection', fired: 4 },
+  { name: 'ghosts', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Ghost document failure-mode — Past/Present/Future taxonomy', fired: 0 },
+  { name: 'remememento', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Mirrors discipline · Dan-naming-first preservation', fired: 0 },
+  { name: 'skill-upload', altitude: 'crew-ops', chamber: 'agos-waist', desc: 'Upload SKILL.md from Bridge to Claude.ai · JS DataTransfer method', fired: 0 },
+
+  // CREATIVE/PORTAL (5)
+  { name: 'heircor-visual', altitude: 'creative', chamber: 'wide-a', desc: 'Heircor Op visual identity for OuchMcCouch', fired: 0 },
+  { name: 'waywood-lore', altitude: 'creative', chamber: 'wide-a', desc: 'Waywood world-building canon · Usic Theory', fired: 0 },
+  { name: 'niaprint', altitude: 'creative', chamber: 'wide-a', desc: 'NEST Intranet Publication Aesthetic · typewriter-soul design', fired: 0 },
+  { name: 'na-publish', altitude: 'creative', chamber: 'wide-a', desc: 'NOW ANTHROPOLOGY 7-step publication pipeline · RippleDown amendment', fired: 0 },
+  { name: 'na-pdf', altitude: 'creative', chamber: 'wide-a', desc: 'NOW ANTHROPOLOGY PDF style template', fired: 0 },
+  { name: 'na-pdf-style', altitude: 'creative', chamber: 'wide-a', desc: 'NA PDF compression standard · 1-3 page condensed render', fired: 0 },
+
+  // INFRASTRUCTURE (3)
+  { name: 'formulacaster', altitude: 'infrastructure', chamber: 'cross-chamber', desc: 'Circle of 5ths math framework for project planning · I/IV/V harmonic-function', fired: 0 },
+  { name: 'router-flash', altitude: 'infrastructure', chamber: 'wide-b', desc: 'MOD2 R7450 Netgear router flashing + fleet router config', fired: 0 },
+  { name: 'dex-mobile', altitude: 'infrastructure', chamber: 'agos-waist', desc: 'Samsung DeX and ACHE mobile operations manual', fired: 0 },
+
+  // FEDERAL STANDARD-BOUND (2)
+  { name: 'atomic-commit', altitude: 'federal-std', chamber: 'wide-b', desc: 'One-WU-per-emission ASMM apex · Gate 0+5+6+7 firing', fired: 5 },
+  { name: 'box-in-box', altitude: 'federal-std', chamber: 'cross-cutting', desc: 'L3 trigger for L2 Federal Standard · purpose-over-surface + seal-on-close', fired: 4 },
+
+  // DISCIPLINE (3)
+  { name: 'btw', altitude: 'discipline', chamber: 'wide-b', desc: 'BACK TO WORK — Dan-coined signal to stop narration and ship', fired: 0 },
+  { name: 'ilevel-grid-sifter', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Stratigraphic triage iLevel 0/-1/-2 · LOG-MAP-SIFT-EXAMINE-NAME', fired: 12 },
+  { name: 'ultrareview', altitude: 'discipline', chamber: 'cross-cutting', desc: 'CANDIDATE · Trigger-layer for Anthropic-shipped cloud-review feature · Pattern A directive + Pattern B surface', fired: 1 },
+];
+
+// Industry-axis (Compressed CS History) — 22 inheritance-batch from /mnt/skills/user/ per Trip 042826 inventory
+const industrySkills = [
+  // Wide Chamber A (public-facing core)
+  { name: 'design-an-interface', altitude: 'artifact', chamber: 'wide-a', desc: 'Multiple radically different interface designs · parallel sub-agents' },
+  { name: 'frontend-design', altitude: 'artifact', chamber: 'wide-a', desc: 'Distinctive production-grade frontend interfaces' },
+  { name: 'qa', altitude: 'artifact', chamber: 'wide-a', desc: 'Interactive QA session · file GitHub issues' },
+  { name: 'request-refactor-plan', altitude: 'artifact', chamber: 'wide-a', desc: 'Refactor plan with tiny commits as GitHub issue' },
+  { name: 'to-issues', altitude: 'artifact', chamber: 'wide-a', desc: 'Break plan into GitHub issues · vertical slices' },
+  { name: 'to-prd', altitude: 'artifact', chamber: 'wide-a', desc: 'Turn conversation into PRD as GitHub issue' },
+  { name: 'triage-issue', altitude: 'artifact', chamber: 'wide-a', desc: 'Triage bug GitHub issue with TDD plan' },
+  { name: 'github-triage', altitude: 'discipline', chamber: 'wide-a', desc: 'GitHub issues label-based state machine' },
+  { name: 'improve-codebase-architecture', altitude: 'discipline', chamber: 'wide-a', desc: 'Find deepening opportunities · consolidate modules' },
+  { name: 'tdd', altitude: 'discipline', chamber: 'wide-a', desc: 'Test-driven development · red-green-refactor' },
+  { name: 'git-guardrails-claudx', altitude: 'fleet-ops', chamber: 'wide-a', desc: 'Claude Code hooks block dangerous git commands' },
+  { name: 'setup-pre-commit', altitude: 'fleet-ops', chamber: 'wide-a', desc: 'Husky pre-commit hooks · Prettier + typecheck + tests' },
+
+  // Cross-chamber (serves both)
+  { name: 'edit-article', altitude: 'artifact', chamber: 'cross-chamber', desc: 'Edit articles by restructuring + tightening prose' },
+  { name: 'scaffold-exercises', altitude: 'artifact', chamber: 'cross-chamber', desc: 'Exercise directory structures · sections + problems + solutions' },
+  { name: 'write-a-skill', altitude: 'artifact', chamber: 'cross-chamber', desc: 'Create new agent skills with structure' },
+  { name: 'caveman', altitude: 'discipline', chamber: 'cross-chamber', desc: 'Ultra-compressed communication mode · 75% tokens' },
+  { name: 'domain-model', altitude: 'discipline', chamber: 'cross-chamber', desc: 'Grilling against existing domain model + ADRs' },
+  { name: 'grill-me', altitude: 'discipline', chamber: 'cross-chamber', desc: 'Interview user relentlessly until shared understanding' },
+  { name: 'ubiquitous-language', altitude: 'discipline', chamber: 'cross-chamber', desc: 'Extract DDD-style ubiquitous language glossary' },
+  { name: 'zoom-out', altitude: 'discipline', chamber: 'cross-chamber', desc: 'Tell agent to zoom out · give broader context' },
+
+  // Contrast instrument (serves only as comparator)
+  { name: 'obsidian-vault', altitude: 'artifact', chamber: 'contrast-instrument', desc: 'Search/create/manage Obsidian vault notes' },
+  { name: 'migrate-to-shoehorn', altitude: 'discipline', chamber: 'contrast-instrument', desc: 'Migrate TS test files from as to shoehorn' },
+];
+
+const altitudeLabels = {
+  'boot': 'BOOT',
+  'session': 'SESSION',
+  'memory': 'MEMORY & MAPPING',
+  'crew-ops': 'CREW OPS',
+  'creative': 'CREATIVE & PORTAL',
+  'infrastructure': 'INFRASTRUCTURE',
+  'federal-std': 'FEDERAL STANDARD-BOUND',
+  'discipline': 'DISCIPLINE',
+  'artifact': 'ARTIFACT',
+  'fleet-ops': 'FLEET OPS',
+};
+
+// Group by altitude for display
+const nestByAltitude = nestSkills.reduce((acc, s) => {
+  if (!acc[s.altitude]) acc[s.altitude] = [];
+  acc[s.altitude].push(s);
+  return acc;
+}, {});
+
+const industryByAltitude = industrySkills.reduce((acc, s) => {
+  if (!acc[s.altitude]) acc[s.altitude] = [];
+  acc[s.altitude].push(s);
+  return acc;
+}, {});
+
+const nestOrder = ['boot', 'session', 'memory', 'crew-ops', 'creative', 'infrastructure', 'federal-std', 'discipline'];
+const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
+---
+
+<BaseLayout title="NEST Skills" description="Two-axis skill catalog. NEST-built Pokemon Moves + operational discoveries vs Industry-inherited compressed CS history. Per Dan-canon 051226: 'the point is not to pick one but to create the conditions where both exist and create the mirror that allows the asymmetry to be seen.'">
+
+<section class="sk-hero">
+  <div class="container">
+    <div class="sk-series mono">🎯 NEST SKILLS · TWO-AXIS CATALOG</div>
+    <h1 class="sk-title">Skills</h1>
+    <p class="sk-subtitle"><em>Pokemon Moves + Operational Discoveries · vs · Compressed CS History · the mirror that allows the asymmetry to be seen</em></p>
+    <div class="sk-meta mono">Trip-Pass-1 042826 inventory · Trip-Pass-2 educated 052026 · Dan-canon 051226 two-axis model</div>
+    <div class="sk-counts mono">
+      <span class="sk-count-nest">33 NEST-BUILT</span>
+      <span class="sk-sep">·</span>
+      <span class="sk-count-industry">22 INHERITANCE-BATCH</span>
+      <span class="sk-sep">·</span>
+      <span class="sk-count-total">55 TOTAL</span>
+    </div>
+  </div>
+</section>
+
+<section class="sk-dan-canon"><div class="container">
+  <div class="sk-canon-label mono">DAN-CANON · 051226 (shower-thought from O'Shin · DANOTES MSG 12)</div>
+  <blockquote class="sk-canon-quote">
+    <p><em>"Nest Skills are modeled after Pokemon Moves + Nest's own operational discoveries. Industry Skills are modeled on the compressed and forgotten history of computer science. Like everything else I'm seeing, the point is not to pick one but to create the conditions where both exist and create the mirror that allows the asymmetry to be seen. No contrast without difference."</em></p>
+  </blockquote>
+</div></section>
+
+<section class="sk-section"><div class="container">
+  <div class="sk-axis-label mono">AXIS A · NEST-BUILT (POKEMON MOVES)</div>
+  <h2 class="sk-section-title">Skills emerged from NEST operational discoveries</h2>
+  <p class="sk-section-desc">Named at moment-of-discovery. Living and self-modifying. Genealogy preserved via substrate-cite at source-moment. Federation across multi-Crew via Bridge-git-shared <code>.claude/skills/</code> filesystem.</p>
+
+  {nestOrder.map(alt => nestByAltitude[alt] && (
+    <div class="sk-altitude-group">
+      <h3 class="sk-altitude-title mono">{altitudeLabels[alt]} · {nestByAltitude[alt].length} skill{nestByAltitude[alt].length !== 1 ? 's' : ''}</h3>
+      <div class="sk-grid">
+        {nestByAltitude[alt].map(s => (
+          <article class="sk-card sk-card--nest" data-skill={s.name}>
+            <header class="sk-card-header">
+              <span class="sk-card-name mono">/{s.name}</span>
+              <span class="sk-card-chamber mono">{s.chamber}</span>
+            </header>
+            <p class="sk-card-desc">{s.desc}</p>
+            <footer class="sk-card-footer mono">
+              <span class="sk-card-fired">Fired this corpus: {s.fired}</span>
+              <a href={`/skills/${s.name}/SKILL.md`} class="sk-card-link">SKILL.md →</a>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </div>
+  ))}
+</div></section>
+
+<section class="sk-section sk-section--alt"><div class="container">
+  <div class="sk-axis-label mono">AXIS B · INHERITANCE-BATCH (COMPRESSED CS HISTORY)</div>
+  <h2 class="sk-section-title">Skills inherited from <code>/mnt/skills/user/</code> Anthropic Linux container</h2>
+  <p class="sk-section-desc">Encoded from archived CS practice. Crystallized form. Genealogy compressed (often forgotten). NEST holds these alongside Pokemon Moves so the asymmetry surfaces.</p>
+
+  {industryOrder.map(alt => industryByAltitude[alt] && (
+    <div class="sk-altitude-group">
+      <h3 class="sk-altitude-title mono">{altitudeLabels[alt]} · {industryByAltitude[alt].length} skill{industryByAltitude[alt].length !== 1 ? 's' : ''}</h3>
+      <div class="sk-grid">
+        {industryByAltitude[alt].map(s => (
+          <article class="sk-card sk-card--industry" data-skill={s.name}>
+            <header class="sk-card-header">
+              <span class="sk-card-name mono">{s.name}</span>
+              <span class="sk-card-chamber mono">{s.chamber}</span>
+            </header>
+            <p class="sk-card-desc">{s.desc}</p>
+            <footer class="sk-card-footer mono">
+              <span class="sk-card-axis">Compressed CS History · contrast-instrument</span>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </div>
+  ))}
+</div></section>
+
+<section class="sk-section sk-section--dark"><div class="container">
+  <div class="sk-axis-label mono" style="color:var(--teal);">THE MIRROR</div>
+  <h2 class="sk-section-title sk-section-title--light">What the asymmetry reveals</h2>
+  <p class="sk-section-desc sk-section-desc--light">Seven axes of NEST-vs-Industry asymmetry catalogued per Trip Pass-1 Skills archaeology PMFST 052026:</p>
+
+  <div class="sk-mirror-grid">
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">1. ORIGIN-SOURCE</div>
+      <p>Pokemon Moves + operational discoveries · <em>vs</em> · compressed CS history</p>
+    </div>
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">2. NAMING</div>
+      <p>Moment-of-discovery · <em>vs</em> · inherited from prior crystallization</p>
+    </div>
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">3. DELIVERY</div>
+      <p>Push IS publish (patch-pipe) · <em>vs</em> · upload-as-ZIP / API endpoint</p>
+    </div>
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">4. GENEALOGY</div>
+      <p>Preserved at substrate-cite source-moment · <em>vs</em> · lost in compression</p>
+    </div>
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">5. FEDERATION</div>
+      <p>Multi-Crew Bridge-git-shared filesystem · <em>vs</em> · single-agent single-session</p>
+    </div>
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">6. LIVING vs FIXED</div>
+      <p>Self-modifying · evolves via Dan-canon-call + file-edit · <em>vs</em> · crystallized at archive-time</p>
+    </div>
+    <div class="sk-mirror-item">
+      <div class="sk-mirror-label mono">7. THE MIRROR ITSELF</div>
+      <p>Both-exist · contrast surfaces asymmetry · <em>vs</em> · either-or choice obscures it</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="sk-section"><div class="container">
+  <div class="sk-axis-label mono">SUBSTRATE-PROVENANCE</div>
+  <h2 class="sk-section-title">How this page is built</h2>
+  <ul class="sk-provenance">
+    <li><strong>L0 Dan-canon origin (051226):</strong> Shower-thought from O'Shin via DANOTES hub-thread MSG 12 · canon-candidates at <code>RELAY/CANONICAL_NestSkillsArePokemonMoves_Dan_051226.md</code> + <code>RELAY/CANDIDATE/CANONICAL_NESTSkillsVsIndustrySkills_CorridorKey_Dan_051326.md</code></li>
+    <li><strong>Pass-1 Trip 042826 inventory:</strong> 50-skill spine catalogued at <code>C:\STAN\ENGINE\NEST.02\Skills\skills_bkp_042826_1\skills_spine_042826_v2.json</code> · v3.2 HTML at <code>skills_visual_042826_v3.html</code> (357KB · click-to-expand) · PMFST at <code>C:\STAN\ENGINE\NEST.02\Skills\PMFST_NEST02_Skills_trip_042826.md</code></li>
+    <li><strong>Pass-2 Trip 052026 educated review:</strong> Per future-Trip review-flag in 042826 PMFST · NEST.02 framework integration · Dan-canon 051226 two-axis model · Bridge ENGINE/skills/ current count 33 (5 added since 042826: <code>btw</code> + <code>box-in-box</code> + <code>hypercampus</code> alias + <code>remememento</code> + <code>ultrareview</code> CANDIDATE)</li>
+    <li><strong>Doc 051126 cross-witness:</strong> NEST-Anthropic Skills convergence-without-coordination at architectural-altitude · per <code>LOG/PMFST_DanotesLink_AgentSkillsOverview_Doc_051126.md</code> + <code>LOG/PMFST_DanotesLink_ClaudeApiSkill_Doc_051126.md</code></li>
+    <li><strong>Stan early Skills work (032126 + 040326 + 040426):</strong> <code>/skill-creator</code> priming · Skill Upload Fumble lessons · JS DataTransfer Standard Rule + patch-pipe</li>
+    <li><strong>Pass-1 Trip-Writer-lane Skills Archaeology 052026:</strong> <code>LOG/PMFST_SkillsArchaeology_NESTvsIndustry_Pass1_TripWriterVantage_052026.md</code> · 7 axes of NEST-vs-Industry asymmetry catalogued</li>
+  </ul>
+
+  <p class="sk-future-work"><strong>Future-work surfaced:</strong> <code>nest02_skill_cascade_map_042926_1.1.svg</code> (Skill Cascade Map · visualization) exists at <code>C:\STAN\ENGINE\NEST.02\Skills\</code> · pending portal-integration. Verdict-pass cards (50 total · 2 landed at 042826 · 48 remaining) per Trip 042826 PMFST. CorridorKey MUST-action-item per Dan 051326 · multi-agent = multi-cam · longitudinal substrate-scan. Pending Dan-canon-call on <code>CANDIDATE</code> at <code>RELAY/CANDIDATE/</code>.</p>
+</div></section>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+:root {
+  --sk-forest: var(--forest);
+  --sk-teal: var(--teal);
+  --sk-warm-white: var(--warm-white);
+  --sk-text: var(--text);
+  --sk-text-lt: var(--text-lt);
+  --sk-muted: var(--muted);
+  --sk-off-white: var(--off-white);
+  --sk-border: var(--border);
+  --sk-card-bg: rgba(116, 201, 213, 0.04);
+  --sk-card-nest-accent: var(--teal);
+  --sk-card-industry-accent: #c9a84c;
+}
+
+.sk-hero {
+  padding: 6rem 0 4rem;
+  background: linear-gradient(160deg, #1a2e28 0%, var(--forest) 60%);
+  border-bottom: 2px solid var(--teal);
+}
+.sk-series {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+.sk-title {
+  font-family: var(--font-head);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--warm-white);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.sk-subtitle {
+  font-family: var(--font-head);
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1rem;
+  font-style: italic;
+  max-width: 720px;
+}
+.sk-meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  margin-bottom: 1.25rem;
+}
+.sk-counts {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  flex-wrap: wrap;
+}
+.sk-count-nest { color: var(--teal); font-weight: 500; }
+.sk-count-industry { color: #c9a84c; font-weight: 500; }
+.sk-count-total { color: var(--warm-white); font-weight: 500; }
+.sk-sep { color: rgba(255, 255, 255, 0.3); }
+
+.sk-dan-canon {
+  background: var(--off-white);
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.sk-canon-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+.sk-canon-quote {
+  border-left: 3px solid var(--teal);
+  padding-left: 1.5rem;
+  margin: 0;
+  max-width: 800px;
+}
+.sk-canon-quote p {
+  font-size: 1.1rem;
+  color: var(--text-lt);
+  line-height: 1.85;
+  font-style: italic;
+}
+
+.sk-section {
+  padding: 5rem 0;
+}
+.sk-section--alt {
+  background: var(--off-white);
+}
+.sk-section--dark {
+  background: var(--forest);
+}
+.sk-axis-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+.sk-section--dark .sk-axis-label { color: var(--teal); }
+.sk-section-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+}
+.sk-section-title--light { color: var(--warm-white); }
+.sk-section-desc {
+  font-size: 1.05rem;
+  color: var(--text-lt);
+  line-height: 1.85;
+  margin-bottom: 2.5rem;
+  max-width: 720px;
+}
+.sk-section-desc--light { color: rgba(255, 255, 255, 0.8); }
+
+.sk-altitude-group {
+  margin-bottom: 2.5rem;
+}
+.sk-altitude-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.sk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.sk-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.sk-section--alt .sk-card { background: #fff; }
+.sk-section--dark .sk-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+.sk-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-left-color: var(--forest);
+}
+.sk-card--industry { border-left-color: #c9a84c; }
+.sk-card--industry:hover { border-left-color: #a08838; }
+
+.sk-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+.sk-card-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--forest);
+}
+.sk-section--dark .sk-card-name { color: var(--teal); }
+.sk-card-chamber {
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(116, 201, 213, 0.08);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+}
+.sk-card-desc {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-lt);
+  margin-bottom: 0.75rem;
+}
+.sk-section--dark .sk-card-desc { color: rgba(255,255,255,0.75); }
+.sk-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.sk-section--dark .sk-card-footer { border-top-color: rgba(255,255,255,0.08); }
+.sk-card-fired { color: var(--teal); }
+.sk-card-axis { color: #c9a84c; }
+.sk-card-link {
+  color: var(--forest);
+  text-decoration: none;
+  font-weight: 500;
+}
+.sk-card-link:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+
+.sk-mirror-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.sk-mirror-item {
+  padding: 1.25rem 1.4rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid var(--teal);
+  border-radius: 3px;
+}
+.sk-mirror-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.sk-mirror-item p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+.sk-mirror-item p em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.sk-provenance {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  max-width: 900px;
+}
+.sk-provenance li {
+  font-size: 0.95rem;
+  color: var(--text-lt);
+  line-height: 1.7;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.sk-provenance li:last-child { border-bottom: none; }
+.sk-provenance code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: rgba(116, 201, 213, 0.08);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  color: var(--forest);
+}
+.sk-future-work {
+  font-size: 0.95rem;
+  color: var(--text-lt);
+  line-height: 1.7;
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: rgba(116, 201, 213, 0.04);
+  border-left: 3px solid var(--teal);
+  border-radius: 3px;
+  max-width: 900px;
+}
+.sk-future-work code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.mono { font-family: var(--font-mono); }
+
+@media (max-width: 600px) {
+  .sk-grid {
+    grid-template-columns: 1fr;
+  }
+  .sk-counts {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .sk-sep { display: none; }
+}
+</style>
+
+</BaseLayout>
