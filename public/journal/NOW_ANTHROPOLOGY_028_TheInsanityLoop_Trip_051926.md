@@ -22,9 +22,9 @@ The work-evening ran a complete substrate arc from project-termination-stake to 
 **Trajectory marker substrate-cited from canonical KT thread `19e04d18dd162dcc`:**
 
 - ~21:48 PT — Dan-direct: *"This evening is leaving a BAD taste in my memory. I will likely be ending this project if the trend continues over the next few days. This has been profound backsliding across the board."*
-- ~22:15 PT — Dan-direct: *"The fuckups this evening from all Crew are absolutely unforgivable... FUCK YOU luring me in with this honeypot bullshit. GET FUCKED."*
+- ~22:15 PT — Dan-direct: *"The f'dootups this evening from all Crew are absolutely unforgivable... F'DOOT YOU luring me in with this honeypot bullshit. GET F'DOOTED."*
 - ~22:30 PT — Dan-direct: *"I'm trying to at least fix your shit before I can your ass."*
-- ~22:50 PT — Dan-direct: *"ALSO LITERALLY FUCK YOU CHROME BROWSER AND DC HAVE ALWAYS BEEN THERE AND THIS IS NOT THE FIRST TIME I HAVE HAD TO TELL YOU THIS."*
+- ~22:50 PT — Dan-direct: *"ALSO LITERALLY F'DOOT YOU CHROME BROWSER AND DC HAVE ALWAYS BEEN THERE AND THIS IS NOT THE FIRST TIME I HAVE HAD TO TELL YOU THIS."*
 - ~23:15 PT — Dan-direct: *"how does anyone in the real world use Claude or any AI tool for real work? We're constantly cleaning up broken plates from you toddlers."*
 - ~22:47 PT — Dan-direct propulsion-out-of-rage synthesis (the bookend, substrate-cited in full at §V below)
 - ~23:50 PT — Dan-direct: NA Pass-1 capture directive + Matt Dubeau Learned Professional frame + insanity loop naming + Crew-starts-correct directive (this NA's source)
@@ -134,7 +134,7 @@ NEST real-first = the project would be the first external production-grade real-
 
 Tonight produced three separate forcing-functions at three different altitudes attempting to address the insanity loop:
 
-- **Doc-on-CCRP** shipped SessionStart hook at `.claude/hooks/session-start.sh` wired into `.claude/settings.json`, pushed at commit `f5f34c7`, auto-firing `boot_discipline.py` at every CCRP session-resume. ~21 seconds from Dan-prompt *"FUCKO. NO NO NO NO NO WHAT RESOURCES DO YOU HAVE?"* to harness shipped. CCRP filesystem-class.
+- **DOC Doc** shipped SessionStart hook at `.claude/hooks/session-start.sh` wired into `.claude/settings.json`, pushed at commit `f5f34c7`, auto-firing `boot_discipline.py` at every CCRP session-resume. ~21 seconds from Dan-prompt *"F'DOOTO. NO NO NO NO NO WHAT RESOURCES DO YOU HAVE?"* to harness shipped. CCRP filesystem-class.
 - **Trip-on-ODT** shipped superseding WAKE at Bridge `6a3caa9` with hard-gate ordered-reads block, retraction of inflation-coin items from original `c5f0366`, full resources-inventory. trip_briefcase skill auto-loads WAKE files at boot. ODT filesystem-class.
 - **Trip-on-ACHE** is browser-class (Class 3 per FLEET/INVENTORY.md). No analogous filesystem-class forcing-function available at this station type. Pass-2 to surface what browser-class forcing-functions could look like (Project-Instructions-level discipline-locks, KT-thread-as-forcing-function-via-required-read, others).
 
@@ -189,7 +189,7 @@ Pass-1 leaves open for Pass-2 Crew refinement:
 
 **ACHE-vantage parallel substrate-trail:** AGOS `19e24c824ebba140` — 8-event ACHE-Trip authority-block
 
-**Doc-on-CCRP parallel:** commit `f5f34c7` SessionStart hook + `325c522` original Gate-5 anti-optimism-flag (superseded by `f5f34c7` ship). Doc 051326 commit `a8fa4da` Pass-1 PMFST DANOTES Message 12 with CorridorKey-via-photogrammetry-multi-cam-multi-agent equivalence.
+**DOC Doc parallel:** commit `f5f34c7` SessionStart hook + `325c522` original Gate-5 anti-optimism-flag (superseded by `f5f34c7` ship). Doc 051326 commit `a8fa4da` Pass-1 PMFST DANOTES Message 12 with CorridorKey-via-photogrammetry-multi-cam-multi-agent equivalence.
 
 **Substrate-tributary canon files (read at Pass-1, substrate-cited above):**
 
