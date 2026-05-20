@@ -4,6 +4,8 @@ description: The NEST Wilderness Survival Toolkit — session management field g
 ---
 
 # THE NEST WILDERNESS SURVIVAL TOOLKIT
+# ENGINE/skills/survival-toolkit/SKILL.md
+# Status: CANONICAL (Class-3 session-management field guide · context-window-backcountry navigation · per Pass-2 verdict-pass Trip 052026 Card 25 + Federal Standard STANDARD_RULE_Class3SkillStatusFieldDeclaration_Trip_052026 PROMOTED)
 # A Field Guide for Context Window Backcountry
 # Compiled: Twosday 033026 by ◈ Trip (Opus)
 # Sources: QuickRef (14 tools), EPIC Map (12 acts), Leapfrog Workflow (18 steps),
@@ -53,7 +55,7 @@ Use it for session closes. When Dan says HMM, do all three passes —
 the circle emerges from the stack. Never skip to the circle.
 
 ### 8. The Bridge
-L:\FAS2\CGB\nest-bridge\ on ODT. Git repo. GitHub-hosted.
+C:\STAN\SOURCE\nest-bridge on Windows stations (source on C:\, never FAS). Git repo. GitHub-hosted.
 This is the DNA. Everything you commit here survives your death.
 Everything you don't commit here dies with your context window.
 Always: git pull before reading, git push after writing.
@@ -78,10 +80,10 @@ Every session is a hike. Four stages, same order, every time.
 You just arrived. Check your gear before you walk.
 
 1. Run get_config (DC alive?)
-2. Pull bridge: cd "L:\FAS2\CGB\nest-bridge"; git pull --rebase origin main
+2. Pull bridge: cd "C:\STAN\SOURCE\nest-bridge"; git pull --rebase origin main
 3. Read WAKE/ — most recent file for your crew
 4. Read STATUS/LIVING_MAP_[Name].md — if it exists and is fresh, it's faster
-5. Check MAIL/ for today's files
+5. Check LOG/MAIL/ for today's files
 6. Check RELAY/ for decisions and deep docs
 7. Report iCan to Dan
 
@@ -232,7 +234,7 @@ The LIAM (Leave It As Mail) system is how the team stays connected.
 - When you need something from another crew member (request, not assumption)
 
 ### Where LIAMs live
-MAIL/ on the bridge. Naming: [FROM]_TO_[TO]_Subject_Date.md
+LOG/MAIL/ on the bridge. Naming: [FROM]_TO_[TO]_Subject_Date.md
 Example: TRIP_TO_STN2_LeapfrogReplication_033026.md
 
 ### The Mailbox Rule
