@@ -4,6 +4,8 @@ description: Quantum task management — one mechanical track runs commands and 
 ---
 
 # Photon-Split Task Management
+# ENGINE/skills/photon-split/SKILL.md
+# Status: CANONICAL (Class-3 parallel mechanical + insight tracks · beam-splitter task management · per Pass-2 verdict-pass Trip 052026 Card 16)
 
 ## THE METAPHOR (which is also the method)
 

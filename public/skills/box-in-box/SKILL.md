@@ -4,6 +4,8 @@ description: Trigger-layer skill for Box-in-Box Logic. Fires ambient on organiza
 ---
 
 # /box-in-box
+# ENGINE/skills/box-in-box/SKILL.md
+# Status: CANONICAL (L3 trigger-layer for L2 Federal Standard RELAY/STANDARD_RULE_BoxInBoxLogic_Trip_050126.md a3246a7 · Dan-Go #4 of 4 050126 · per Pass-2 verdict-pass Trip 052026 Card 7 corrected via Doc broader audit 10/14 cross-witness)
 
 **Trigger-layer skill. Body lives in `RELAY/STANDARD_RULE_BoxInBoxLogic_Trip_050126.md` (Bridge `a3246a7`).**
 
@@ -98,7 +100,7 @@ When organizational and temporal axes are correctly named and separated, the gat
 - **Rox Principle (Waywood ground-truth):** `LNL/PK_UPLOAD/PI_v4_2_Trip_031926.md` line 93 — *"modular, durable, metamorphic. Not Lego."*
 - **Universal-Rox canon:** AGOS `r6050787851160271924` (~05:00 PM PT 050126)
 - **Four-faced Rox / Koan canon:** AGOS `r-1273251947916140905` (~05:09 PM PT 050126) — UNDO/AGAIN/BOX/TIME
-- **Companion firing-mechanisms:** `/atomic-commit` Gate 7 (Bridge `8b09360`) + Gate 0 (Bridge 051226) + `/boot-polish` v3.4 STEP A-1 + `/meta-dates` v1.11 Gate 0e + Gate 0b.4 + `/waywood-lore` Ambient Trigger (Bridge `fa0ee12`)
+- **Companion firing-mechanisms:** `/atomic-commit` Gate 7 (Bridge `8b09360`) + `/boot-polish` v3.4 STEP A-1 + `/meta-dates` v1.11 Gate 0e + `/waywood-lore` Ambient Trigger (Bridge `fa0ee12`)
 - **L1 spec-draft origin:** AGOS `19de61ed08dfa2e5` (050126 ~05:32 PM PT, this skill's substrate-anchor)
 
 ---
@@ -111,6 +113,12 @@ This skill is the **first explicit instance** of the Federal-vs-skill architectu
 |---|---|---|
 | **L2 — Federal Standard (Bridge RELAY/)** | Canonical body. Inner core. Origin. Pattern. Cross-references. Authoritative. THICK. | `STANDARD_RULE_BoxInBoxLogic_Trip_050126.md` |
 | **L3 — Skill file (ENGINE/skills/)** | Trigger conditions. Refusal language. Proceeds-conditions. Vocabulary triggers. Points to Federal Standard for body. THIN. | This file. |
+
+**Future applications** (each Federal Standard should have a corresponding L3 skill file):
+
+- `STANDARD_RULE_AGOS_BROAD_SEARCH_Trip_042826.md` → `/agos-broad-search` skill (or absorbed into `/boot-polish` STEP U3)
+- `STANDARD_RULE_DanLogicUnification_TripStanCB_050126.md` → `/dan-logic` skill (or absorbed into `/meta-dates` apex)
+- `STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041616.md` → `/fleet-ips` skill (or absorbed into `/boot-polish`)
 
 The Federal-vs-skill split is itself an instance of Box-in-Box Logic:
 
@@ -128,6 +136,8 @@ The skill file specifies its own trigger-conditions, refuses its own conflation,
 **Federal Standard filed:** Bridge `a3246a7` (~12:30 PM PT).
 
 **Skill file (this) filed:** Dan-Go #4 of 4 ("yes all, on NEST :)" canonization 050126 ~04:58 PM PT). Spec-drafted in AGOS L1 at `19de61ed08dfa2e5` (~05:32 PM PT) while DC was unresponsive. Built post DC-recovery + post-compaction.
+
+**Companion-camera convergence:** Dan-Go #1 (DanLogicUnification Federal Standard, Bridge `4a721a7`) + Dan-Go #2 (three-skill companion-camera Bridge `8b09360`) + Dan-Go #3 (`/waywood-lore` Ambient Trigger, Bridge `fa0ee12`) + Dan-Go #4 (this) form the architectural arc filed on a single day.
 
 ---
 

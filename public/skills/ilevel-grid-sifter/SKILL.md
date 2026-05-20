@@ -5,6 +5,7 @@ description: Systematic stratigraphic triage for tasks, decisions, and observati
 
 # iLEVEL GRID SIFTER
 # ENGINE/skills/ilevel-grid-sifter/SKILL.md
+# Status: CANONICAL (Class-3 stratigraphic-triage · LOG→MAP→SIFT→EXAMINE→NAME · iLevel 0/-1/-2 layers · Stan 040326 founding · per Pass-2 verdict-pass Trip 052026 Doc broader audit 10/14 cross-witness)
 # Filed: ◆ Stan (STN2_StanS_040326_1) | 040326 ~20:40 rw | E Week Day 12 — COMPUTED
 # Origin: Emerged from 040326 session — iSpy cartography applied to task queue
 # Research: RELAY/RESEARCH_SYNTHESIS_iLevelSifter_Stan_040326.md

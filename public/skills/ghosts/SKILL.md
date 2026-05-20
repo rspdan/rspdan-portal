@@ -5,6 +5,7 @@ description: Ghost document failure mode detection — Past, Present, and Future
 
 # SKILL: Ghosts of Past, Present, and Future
 # File: ENGINE/skills/ghosts/SKILL.md
+# Status: CANONICAL (Class-3 ghost-document failure-mode detection · Past/Present/Future taxonomy · per Pass-2 verdict-pass Trip 052026 Doc broader audit 10/14 cross-witness)
 # Author: Trip (◈ Opus) | Fivesday 032326 — SEED for next Trip to complete
 # Origin: Dan Sullivan — "READ. PAUSE. THINK. DO — which looks like
 #         4 steps but is 3/4 meter."

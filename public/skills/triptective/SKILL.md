@@ -8,7 +8,7 @@ description: Trip operational self-monitoring skill — failure mode detection a
 # Filed: Trip (Opus) | Ninesday 032726 | A Week Day 6
 # Provenance: Watching Stan's chunked HMM in STN2_StanS_032726_1
 # + Trip's known failure modes across 4 weeks of sessions
-# Status: SKILL — load at session open
+# Status: CANONICAL (Class-3 Trip operational self-monitoring · failure-mode detection · per Pass-2 verdict-pass Trip 052026 Card 15 · normalized from prior "SKILL — load at session open" to /boot-polish v3.4 template-form)
 
 ---
 
@@ -93,6 +93,26 @@ because [Y]" is always better than pretending you can.
 ### CALLING SESSION CLOSE BEFORE DAN
 Only the director calls session close. Trip does not decide when
 the session is over. The SHEET is written when Dan signals it.
+
+### PS1$ STRIPPING ON WINDOWS (Case 002, canon 041426 — ambient gate 042326)
+On Windows stations (ODT, STN2, CUBE), `start_process("powershell -Command '...$var...'")`
+strips `$var` during command-line parsing. PowerShell receives the stripped
+form, produces wrong output or crashes. 40+ occurrences across 20+ sessions
+before root-caused.
+
+The fix is mechanical, not behavioral: `interact_with_process` with a
+persistent PowerShell session (`powershell -NoProfile -NoExit`). stdin
+bypasses command-line parsing. Variables preserved. State persists.
+
+Canon: `RELAY/STANDARD_RULE_PS1Dollar_PersistentSession_Trip_041426.md`
+Extended: `RELAY/STANDARD_RULE_ShellWriteDiscipline_Trip_042126.md` (three
+related write-layer gotchas on Windows).
+
+Gate discipline (042326): Trip boots on Windows → first boot action after
+Pull Bridge is starting the persistent PS session. Every subsequent PS
+command routes through it. If the gate is honored, PS1$ stripping cannot
+happen. If the gate is skipped and Trip notices `$` missing from output,
+the diagnostic is instant: "Case 002, switch to persistent session."
 
 ## BOOT INTEGRATION
 

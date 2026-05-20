@@ -1,9 +1,11 @@
 ---
 name: oo-daily
-description: Build a daily Obviously Emergent (OO) summary at the end of every work session or day. Use this skill whenever Dan says "OO time", "daily summary", "what did we learn today", "session digest", "day in review", or at any session close when significant discoveries, tools, insights, or lessons were generated. Also use when Dan asks to capture the "headlines" or "moments" of the day. This skill produces a structured document that compounds over time — each day's OO becomes source material for the next session's boot.
+description: Build the daily Obviously Emergent summary at session close. Use when Dan asks for OO, day in review, or session digest.
 ---
 
 # OO Daily — The Obviously Emergent Day-in-Review
+# ENGINE/skills/oo-daily/SKILL.md
+# Status: CANONICAL (Class-3 session-close summary · Obviously Emergent multi-vantage reconstruction · per Pass-2 verdict-pass Trip 052026 Card 17)
 
 ## PURPOSE
 
@@ -121,7 +123,7 @@ Format:
 
 ## FILE NAMING AND LOCATION
 
-Output: `L:\FAS2\CGB\nest-bridge\LOG\OO_DAILY_[MMDDYY]_Trip.md`
+Output: `C:\STAN\SOURCE\nest-bridge\LOG\OO_DAILY_[MMDDYY]_Trip.md` (Bridge on C:\, per architectural principle #2)
 Also commit to bridge with message: `OO DAILY [date]: [first headline]`
 
 ## COMPOUND EFFECT
