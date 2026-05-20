@@ -116,6 +116,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <a href="/journal" class="btn btn-outline">&larr; All Issues</a>
 </div></div></section>
 
+<section class="na-end-nav-section"><div class="container">
+  <nav class="na-end-nav" aria-label="Article navigation">
+    <a href="/journal/019" class="na-end-nav__link na-end-nav__prev">
+      <span class="na-end-nav__dir mono">&larr; Previous</span>
+      <span class="na-end-nav__title">019 &middot; The Lighthouse and the Lab</span>
+    </a>
+    <a href="/journal" class="na-end-nav__link na-end-nav__all">
+      <span class="na-end-nav__dir mono">All Issues</span>
+      <span class="na-end-nav__title">&#x2191; Journal Index</span>
+    </a>
+    <a href="/journal/021" class="na-end-nav__link na-end-nav__next">
+      <span class="na-end-nav__dir mono">Next &rarr;</span>
+      <span class="na-end-nav__title">021 &middot; The Wh-olo Bolo</span>
+    </a>
+  </nav>
+</div></section>
+
 <style>
 .na-hero{padding:6rem 0 4rem;background:linear-gradient(160deg,#1a2e28 0%,var(--forest) 60%);border-bottom:2px solid var(--teal);}
 .na-series{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;}
@@ -146,5 +163,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 .btn{display:inline-block;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
 .btn-outline{background:transparent;color:var(--forest);border:2px solid var(--forest);}
 .btn-outline:hover{background:var(--forest);color:#fff;}
+
+.na-end-nav-section{padding:3rem 0 5rem;background:var(--off-white);border-top:1px solid var(--border);}
+.na-end-nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;max-width:900px;margin:0 auto;}
+.na-end-nav__link{display:flex;flex-direction:column;padding:1.25rem 1.5rem;border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--text);background:var(--warm-white);transition:all 0.2s;}
+.na-end-nav__link:hover:not(.na-end-nav__disabled){border-color:var(--forest);background:var(--forest);color:var(--warm-white);}
+.na-end-nav__link:hover:not(.na-end-nav__disabled) .na-end-nav__dir{color:var(--teal);}
+.na-end-nav__dir{font-size:0.65rem;letter-spacing:0.15em;color:var(--forest);margin-bottom:0.5rem;}
+.na-end-nav__title{font-size:0.95rem;font-weight:500;}
+.na-end-nav__all{text-align:center;}
+.na-end-nav__next{text-align:right;}
+.na-end-nav__next .na-end-nav__dir{text-align:right;}
+.na-end-nav__disabled{opacity:0.4;cursor:default;}
+@media (max-width:680px){.na-end-nav{grid-template-columns:1fr;}.na-end-nav__next,.na-end-nav__all{text-align:left;}.na-end-nav__next .na-end-nav__dir{text-align:left;}}
 </style>
 </BaseLayout>
