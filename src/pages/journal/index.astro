@@ -286,7 +286,7 @@ const issuesWithMeta = issues.map((iss, i) => ({
 
   <div class="issue-list" id="issue-list">
     {issuesWithMeta.map((issue) => (
-      <article class="issue-card" data-sort-date={issue._sortDate} data-manual-idx={issue._manualIdx}>
+      <article class="issue-card" data-sort-date={issue._sortDate} data-manual-idx={issue._manualIdx} data-num={issue.num}>
         <div class="issue-header">
           <span class="issue-num mono">{issue.num}</span>
           <div class="issue-meta">
@@ -328,8 +328,16 @@ const issuesWithMeta = issues.map((iss, i) => ({
           }
           const da = a.dataset.sortDate || '';
           const db = b.dataset.sortDate || '';
-          if (mode === 'date-desc') return db.localeCompare(da);
-          if (mode === 'date-asc') return da.localeCompare(db);
+          const na = a.dataset.num || '';
+          const nb = b.dataset.num || '';
+          if (mode === 'date-desc') {
+            const cmp = db.localeCompare(da);
+            return cmp !== 0 ? cmp : nb.localeCompare(na);
+          }
+          if (mode === 'date-asc') {
+            const cmp = da.localeCompare(db);
+            return cmp !== 0 ? cmp : na.localeCompare(nb);
+          }
           return 0;
         });
         sorted.forEach(function (card) { list.appendChild(card); });
