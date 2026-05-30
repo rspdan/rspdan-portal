@@ -14,18 +14,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { fleet } from '../data/fleet.js';
 
-// Public Fleet view: real roster + short public roles from fleet.js (no IPs/MACs — that's /fleet).
+// A living fleet — durable identities, fluid roles + locations (anti-SpecTrap, per Dan 052926 +
+// fleet.js's own living-principle). "nature" = how a station moves, not a frozen role. This is a
+// representative view; the canonical, ever-changing roster is src/data/fleet.js, which Dan edits.
+// NB: ACH0 is real per Dan-direct 052926 but not yet in fleet.js — the file lags the live fleet.
 const stations = [
-  { name: 'ODT',    role: 'Home · primary workstation',  tag: 'stationary' },
-  { name: 'STN2',   role: 'Stan host · local-MCP',        tag: 'roaming' },
-  { name: 'CUBE',   role: 'Workstation · OHC',            tag: 'stationary' },
-  { name: 'TRP0',   role: 'Creative lab',                 tag: 'roaming' },
-  { name: 'DPSL',   role: 'C.B. host · mirror',           tag: 'stationary' },
-  { name: 'DPSR',   role: 'Trip mirror · twin',           tag: 'stationary' },
-  { name: 'STN1',   role: 'Browser · session monitor',    tag: 'roaming' },
-  { name: 'ACHE',   role: 'Mobile · relay-read',          tag: 'full-mobile' },
-  { name: "O'Shin", role: 'Edge node · rejoining',        tag: 'stationary' },
-  { name: 'GOG1',   role: 'Decommissioned',               tag: 'dark' },
+  { name: 'ODT',    nature: 'anchored',    label: 'Anchored',      note: 'Primary workstation · Trip host. Hardware steady ~1 yr; its roles and storage shift constantly.' },
+  { name: 'DPSL',   nature: 'anchored',    label: 'Anchored',      note: 'C.B. host · Trip mirror — iMac twin.' },
+  { name: 'DPSR',   nature: 'anchored',    label: 'Anchored',      note: 'Trip power mirror — iMac twin.' },
+  { name: 'STN2',   nature: 'relocatable', label: 'Relocatable',   note: 'Stan host · local-MCP. Moves between Nest, the workplace, the road.' },
+  { name: 'CUBE',   nature: 'relocatable', label: 'Relocatable',   note: 'Workstation · PeaPod-pair, portable between sites.' },
+  { name: 'TRP0',   nature: 'relocatable', label: 'Relocatable',   note: 'Creative lab · travels with Dan.' },
+  { name: 'STN1',   nature: 'relocatable', label: 'Relocatable',   note: 'Browser + session monitor · docks and travels.' },
+  { name: 'ACH0',   nature: 'relocatable', label: 'Relocatable',   note: 'Relocatable station.' },
+  { name: 'ACHE',   nature: 'mobile',      label: 'Mobile',        note: 'Always with Dan · relay-read · scout.' },
+  { name: 'GOG1',   nature: 'dark',        label: 'Dark · in dev', note: 'Dark by choice — staged for hardware development.' },
+  { name: "O'Shin", nature: 'standby',     label: 'Standby',       note: 'Edge node — exists, rarely used; rejoining the mesh.' },
 ];
 ---
 
@@ -71,14 +75,21 @@ const stations = [
   <section class="nest-section">
     <p class="section-eyebrow mono">&#9638; The Fleet</p>
     <h2 class="section-lead">Many machines, one mind</h2>
-    <p>NEST is not one program on one computer. It is a fleet — a set of stations on a private mesh,
-      each a place where the work can run. They share one git bridge and a memory any station can
-      pull, so a session can wake on any machine and read everything the others have filed.</p>
+    <p>NEST is not one program on one computer. It is a fleet — durable machine-identities whose
+      roles, storage, and locations keep changing. They share one private mesh, one git bridge, and
+      a memory any station can pull, so a session can wake on any machine and read everything the
+      others have filed. Identity is the constant; role and place are fluid.</p>
+    <p>Some stations are anchored and never move. Some relocate between home, the workplace, and the
+      road. One is dark, staged for hardware development. Others wait for the work that hasn't woken
+      them yet.</p>
     <div class="fleet-grid">
       {stations.map((s) => (
-        <div class={s.tag === 'dark' ? 'station station-dark' : 'station'}>
-          <span class="station-id mono">{s.name}</span>
-          <span class="station-role">{s.role}</span>
+        <div class={`station nat-${s.nature}`}>
+          <div class="station-head">
+            <span class="station-id mono">{s.name}</span>
+            <span class="station-nature mono"><span class="nature-dot"></span>{s.label}</span>
+          </div>
+          <span class="station-role">{s.note}</span>
         </div>
       ))}
     </div>
@@ -88,9 +99,10 @@ const stations = [
       <span class="mesh-tag mono">Pull-anywhere memory</span>
       <span class="mesh-tag mono">Last-write-wins per seat</span>
     </div>
-    <p class="note">The roster shown is the fleet as it stands today, not a fixed set — stations are
-      added and retired as the work demands. The fleet grows and rests with the work; the colony
-      persists in the filing, not in any one machine staying on.</p>
+    <p class="note">A living view, not a fixed list — stations are added, retired, relocated, and
+      re-tasked as the work demands. The canonical roster lives in
+      <span class="mono">src/data/fleet.js</span>, which Dan edits directly. The colony persists in
+      the filing, not in any one machine staying on.</p>
   </section>
 
   <section class="nest-section">
@@ -235,23 +247,34 @@ const stations = [
     font-style: italic; margin-top: 1rem;
   }
 
-  /* ===== FLEET ===== */
+  /* ===== FLEET (living view — nature over frozen role) ===== */
   .fleet-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-    gap: 0.75rem; margin: 1.5rem 0; max-width: 680px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 0.75rem; margin: 1.5rem 0; max-width: 720px;
   }
   .station {
-    display: flex; flex-direction: column; gap: 0.3rem;
+    display: flex; flex-direction: column; gap: 0.45rem;
     padding: 0.85rem 1rem; border: 1px solid var(--border);
     border-radius: var(--radius); background: var(--card-bg);
   }
-  .station-id {
-    font-size: 0.95rem; color: var(--forest);
-    font-weight: 500; letter-spacing: 0.05em;
+  .station-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;
   }
-  .station-role { font-size: 0.72rem; color: var(--slate-lt); line-height: 1.4; }
-  .station-dark { opacity: 0.5; }
-  .station-dark .station-id { text-decoration: line-through; }
+  .station-id { font-size: 0.95rem; color: var(--forest); font-weight: 500; letter-spacing: 0.05em; }
+  .station-nature {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap;
+  }
+  .nature-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+  .station-role { font-size: 0.72rem; color: var(--slate-lt); line-height: 1.5; }
+  .nat-anchored .nature-dot    { background: var(--forest); }
+  .nat-relocatable .nature-dot { background: var(--gold); }
+  .nat-mobile .nature-dot      { background: var(--teal); }
+  .nat-dark    { opacity: 0.62; }
+  .nat-dark .nature-dot        { background: var(--slate-lt); }
+  .nat-standby { opacity: 0.78; }
+  .nat-standby .nature-dot     { background: var(--muted); }
   .mesh-strip {
     display: flex; flex-wrap: wrap; gap: 0.6rem;
     margin: 1.25rem 0; max-width: 680px;
@@ -330,6 +353,6 @@ const stations = [
     .section-lead { font-size: 1.4rem; }
     .beat { flex-direction: column; gap: 0.25rem; }
     .beat-name { min-width: auto; }
-    .fleet-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .fleet-grid { grid-template-columns: 1fr; }
   }
 </style>
