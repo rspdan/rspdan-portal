@@ -3,3 +3,6 @@ dist/
 .astro/
 .env
 .vercel/output/
+
+# Boxed Fleet substrate — credentials/IPs/MACs/SSH (Box-in-Box Rox Genius · 053026)
+src/data/fleet_private.js
