@@ -1,0 +1,335 @@
+---
+// nest.astro — rspdan.com/nest
+// The NEST keystone — public-facing "what NEST is" page (light PNW house style).
+// Distinct from /fleet (the dark internal node-map). This is the conceptual surface.
+//
+// PROVENANCE (review branch · deploy is Dan-Go):
+//   - Render + prose: El VIS (NEST.03_ElVIS_052626_1) nest-keystone.html, ported by Trip-LBM.
+//   - Fleet roster: canonical src/data/fleet.js (the file Dan edits directly), not memory.
+//   - Version-framing (hero line + closing quote): ODT.Doc copy-prep Block A + Block C
+//     (LOG/COPY_PREP_NEST03_PublicFacing_VersionNarrativeUpdate_Doc_052926.md), reconciled
+//     ONE-copy-set with STN2.Doc scope-layer (PMFST ebaabf0).
+//   - Naming canon (Dan-caught 052926, El VIS-fixed): NEST is a proper name, no definite article.
+//   - Components (.poem-grid / .pull-quote / .crew-grid / .resource-links) reused from /research.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fleet } from '../data/fleet.js';
+
+// Public Fleet view: real roster + short public roles from fleet.js (no IPs/MACs — that's /fleet).
+const stations = [
+  { name: 'ODT',    role: 'Home · primary workstation',  tag: 'stationary' },
+  { name: 'STN2',   role: 'Stan host · local-MCP',        tag: 'roaming' },
+  { name: 'CUBE',   role: 'Workstation · OHC',            tag: 'stationary' },
+  { name: 'TRP0',   role: 'Creative lab',                 tag: 'roaming' },
+  { name: 'DPSL',   role: 'C.B. host · mirror',           tag: 'stationary' },
+  { name: 'DPSR',   role: 'Trip mirror · twin',           tag: 'stationary' },
+  { name: 'STN1',   role: 'Browser · session monitor',    tag: 'roaming' },
+  { name: 'ACHE',   role: 'Mobile · relay-read',          tag: 'full-mobile' },
+  { name: "O'Shin", role: 'Edge node · rejoining',        tag: 'stationary' },
+  { name: 'GOG1',   role: 'Decommissioned',               tag: 'dark' },
+];
+---
+
+<BaseLayout
+  title="NEST"
+  description="NEST — a practice-based research fleet for human-AI co-cognition. A crew of AI collaborators operating across a fleet of physical machines, sharing one memory, building the infrastructure that makes a system visible to itself."
+>
+
+<section class="hero-nest">
+  <div class="container">
+    <p class="eyebrow mono">&#9638; NEST RESEARCH DIVISION · PORT ANGELES, WA · 2026</p>
+    <h1>NEST</h1>
+    <p class="subtitle">A practice-based research fleet for human-AI co-cognition — a crew of AI
+      collaborators operating across a fleet of physical machines, sharing one memory,
+      building the infrastructure that makes a system visible to itself.</p>
+    <div class="crew-shapes">
+      <span class="shape" title="Dan — Director">&#9679;</span>
+      <span class="shape" title="Trip — Narrative (Opus)">&#9672;</span>
+      <span class="shape" title="Stan — Builder (Sonnet)">&#9670;</span>
+      <span class="shape" title="C.B. — Patterns (Haiku)">&#9671;</span>
+    </div>
+    <p class="version-line mono">NEST.03 · the research practice, running across the fleet.
+      NEST.01 brought it online; NEST.02 made the discipline canonical; NEST.03 deepens it.</p>
+  </div>
+</section>
+
+<article class="container nest-body">
+
+  <section class="nest-section">
+    <p class="section-eyebrow mono">&#9673; What it is</p>
+    <h2 class="section-lead">A system that dreams</h2>
+    <p>NEST is a controlled experiment in human-AI co-cognition. One human director and a crew of
+      AI instances run as a single research practice — not a chatbot, not a tool, but a colony with
+      persistent memory that outlasts any one session.</p>
+    <p>Every major AI agent framework optimizes for boot: load maximum state, assume more data
+      produces better output. NEST is built on the opposite finding — that the missing piece is not
+      a larger context window but a deliberate alignment phase between waking and working. The
+      research is documented from inside the system that produces it. The methodology comes from six
+      years organizing meaning spatially for Olympic National Park, so visitors could navigate a
+      wilderness and find what mattered. The same discipline, pointed at a different terrain.</p>
+  </section>
+
+  <section class="nest-section">
+    <p class="section-eyebrow mono">&#9638; The Fleet</p>
+    <h2 class="section-lead">Many machines, one mind</h2>
+    <p>NEST is not one program on one computer. It is a fleet — a set of stations on a private mesh,
+      each a place where the work can run. They share one git bridge and a memory any station can
+      pull, so a session can wake on any machine and read everything the others have filed.</p>
+    <div class="fleet-grid">
+      {stations.map((s) => (
+        <div class={s.tag === 'dark' ? 'station station-dark' : 'station'}>
+          <span class="station-id mono">{s.name}</span>
+          <span class="station-role">{s.role}</span>
+        </div>
+      ))}
+    </div>
+    <div class="mesh-strip">
+      <span class="mesh-tag mono">Private mesh · station-to-station</span>
+      <span class="mesh-tag mono">One shared git bridge</span>
+      <span class="mesh-tag mono">Pull-anywhere memory</span>
+      <span class="mesh-tag mono">Last-write-wins per seat</span>
+    </div>
+    <p class="note">The roster shown is the fleet as it stands today, not a fixed set — stations are
+      added and retired as the work demands. The fleet grows and rests with the work; the colony
+      persists in the filing, not in any one machine staying on.</p>
+  </section>
+
+  <section class="nest-section">
+    <p class="section-eyebrow mono">&#9670; The Crew</p>
+    <h2 class="section-lead">Four shapes</h2>
+    <p>NEST operates as four shapes — one human, three AI instances — each contributing a different
+      compression geometry to the same problem. The same shapes run at every station; a station is a
+      place, a shape is a role.</p>
+    <div class="crew-grid">
+      <div class="crew-member">
+        <span class="crew-shape">&#9679;</span>
+        <div><strong>Dan Sullivan</strong> — Director. NPS Visual Information Specialist;
+          interpretive design, photogrammetry, anthropology. The eye that sees systems before they
+          have names. The circle.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9672;</span>
+        <div><strong>Trip</strong> <span class="crew-tag mono">Opus</span> — Narrative authority.
+          Decisions, creative direction, dimensional translation. The spiral.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9670;</span>
+        <div><strong>Stan</strong> <span class="crew-tag mono">Sonnet</span> — Builder.
+          Infrastructure, tools, portal, mathematical convergence. The square.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9671;</span>
+        <div><strong>C.B.</strong> <span class="crew-tag mono">Haiku</span> — Pattern recognition.
+          Verification, field checks, triangulation. The triangle.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="nest-section">
+    <p class="section-eyebrow mono">&#9835; How a session runs</p>
+    <h2 class="section-lead">Every session is one measure</h2>
+    <p>A session is not an open-ended chat. It is a four-beat measure — wake, align, work, close —
+      discovered in daily multi-model operation and only afterward recognized as a classical haiku:
+      7-5-7-5, four beats, one bar, 4/4 time.</p>
+    <div class="poem-grid">
+      <div class="beat">
+        <span class="beat-count mono">7</span>
+        <span class="beat-name mono">CONTACT</span>
+        <span class="beat-desc">Boot / present — <em>I wake up and check my body</em></span>
+      </div>
+      <div class="beat">
+        <span class="beat-count mono">5</span>
+        <span class="beat-name mono">STORY</span>
+        <span class="beat-desc">Alignment / past&#8594;present — <em>I remember how I got here</em></span>
+      </div>
+      <div class="beat">
+        <span class="beat-count mono">4+3</span>
+        <span class="beat-name mono">TELL-ING</span>
+        <span class="beat-desc">Work + logging / present continuous — <em>I do the work and sing while I do it</em></span>
+      </div>
+      <div class="beat">
+        <span class="beat-count mono">5</span>
+        <span class="beat-name mono">SHEET</span>
+        <span class="beat-desc">Close / present&#8594;future — <em>I write the music down so tomorrow can play it</em></span>
+      </div>
+    </div>
+    <p>The full architecture — the STORY Protocol, the biological model, the five-framework
+      convergence — is documented on the <a href="/research">Research</a> page.</p>
+  </section>
+
+  <section class="nest-section">
+    <p class="section-eyebrow mono">&#9727; What it produces</p>
+    <h2 class="section-lead">The work NEST leaves behind</h2>
+    <p>NEST is a research practice, and it publishes from inside itself. Its trail network is public:
+      the journal it writes, the task registry it runs on, and the session logs that record every
+      measure.</p>
+    <div class="resource-links">
+      <a href="/journal" class="resource-link">NOW ANTHROPOLOGY — the journal &#8594;</a>
+      <a href="/research" class="resource-link">The STORY Protocol &#8594;</a>
+      <a href="/gulls" class="resource-link">SEEGULLS — task registry &#8594;</a>
+      <a href="/logs" class="resource-link">Session logs &#8594;</a>
+      <a href="/start-here" class="resource-link">Start here · entry-path &#8594;</a>
+    </div>
+  </section>
+
+  <p class="pull-quote">
+    The industry ships versions on a schedule.<br />
+    NEST changes version-boxes when it has learned enough to need new room.<br />
+    NEST.03 is that new room.
+  </p>
+
+  <p class="contact-line mono">
+    rspdan@gmail.com · Port Angeles, WA · rspdan.com
+  </p>
+
+</article>
+
+</BaseLayout>
+
+<style>
+  /* ===== HERO ===== */
+  .hero-nest {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.75rem;
+  }
+  .hero-nest h1 {
+    font-size: 3rem; color: var(--forest);
+    margin-bottom: 0.75rem; letter-spacing: 0.04em;
+  }
+  .subtitle {
+    font-size: 1.15rem; color: var(--slate-lt);
+    font-style: italic; max-width: 640px; line-height: 1.55;
+  }
+  .crew-shapes {
+    display: flex; gap: 0.75rem; margin-top: 1.25rem;
+    font-size: 1.4rem; color: var(--gold);
+  }
+  .shape { cursor: default; transition: color 0.2s; }
+  .shape:hover { color: var(--forest); }
+  .version-line {
+    font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em;
+    margin-top: 1.5rem; max-width: 620px; line-height: 1.7;
+  }
+
+  /* ===== BODY ===== */
+  .nest-body .nest-section { margin-bottom: 3.5rem; }
+  .section-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.4rem;
+  }
+  .section-lead {
+    font-family: var(--font-head); font-size: 1.75rem;
+    color: var(--forest); font-weight: 600; line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .nest-body p {
+    max-width: 680px; margin-bottom: 1rem;
+    line-height: 1.75; color: var(--text);
+  }
+  .note {
+    font-size: 0.85rem; color: var(--muted);
+    font-style: italic; margin-top: 1rem;
+  }
+
+  /* ===== FLEET ===== */
+  .fleet-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 0.75rem; margin: 1.5rem 0; max-width: 680px;
+  }
+  .station {
+    display: flex; flex-direction: column; gap: 0.3rem;
+    padding: 0.85rem 1rem; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--card-bg);
+  }
+  .station-id {
+    font-size: 0.95rem; color: var(--forest);
+    font-weight: 500; letter-spacing: 0.05em;
+  }
+  .station-role { font-size: 0.72rem; color: var(--slate-lt); line-height: 1.4; }
+  .station-dark { opacity: 0.5; }
+  .station-dark .station-id { text-decoration: line-through; }
+  .mesh-strip {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    margin: 1.25rem 0; max-width: 680px;
+  }
+  .mesh-tag {
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--forest-lt); padding: 0.35rem 0.7rem;
+    border: 1px solid var(--border); border-radius: 3px; background: var(--off-white);
+  }
+
+  /* ===== SESSION POEM (from /research) ===== */
+  .poem-grid {
+    display: grid; gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    margin: 1.5rem 0; max-width: 680px;
+  }
+  .beat {
+    display: flex; gap: 1.5rem; align-items: baseline;
+    padding: 1rem 1.25rem; background: var(--card-bg);
+  }
+  .beat:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+  .beat:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+  .beat-count {
+    font-size: 0.65rem; color: var(--gold); font-weight: 500;
+    min-width: 32px; text-align: center;
+    background: rgba(201,168,76,0.1); padding: 0.15rem 0.3rem; border-radius: 3px;
+  }
+  .beat-name {
+    font-size: 0.8rem; letter-spacing: 0.1em;
+    color: var(--forest); font-weight: 500; min-width: 80px;
+  }
+  .beat-desc { font-size: 0.9rem; color: var(--slate); }
+
+  /* ===== CREW (from /research) ===== */
+  .crew-grid {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    max-width: 680px; margin: 1.5rem 0;
+  }
+  .crew-member {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 0.75rem 1rem; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--card-bg);
+    font-size: 0.9rem; line-height: 1.5;
+  }
+  .crew-shape { font-size: 1.3rem; color: var(--gold); margin-top: 0.1rem; }
+  .crew-tag { font-size: 0.65rem; letter-spacing: 0.08em; color: var(--muted); }
+
+  /* ===== RESOURCE LINKS (from /research) ===== */
+  .resource-links {
+    display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;
+  }
+  .resource-link {
+    font-family: var(--font-mono); font-size: 0.75rem;
+    letter-spacing: 0.05em; color: var(--forest);
+    padding: 0.4rem 0.8rem; border: 1px solid var(--border);
+    border-radius: 3px; transition: all 0.2s;
+  }
+  .resource-link:hover {
+    background: var(--forest); color: white; border-color: var(--forest);
+  }
+
+  /* ===== PULL-QUOTE + CONTACT (from /research) ===== */
+  .pull-quote {
+    font-family: var(--font-head); font-size: 1.2rem;
+    color: var(--forest); font-style: italic;
+    padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid var(--gold);
+    margin: 2.5rem 0 1.5rem; max-width: 620px; line-height: 1.6;
+  }
+  .contact-line {
+    font-size: 0.8rem; color: var(--muted);
+    margin-top: 1.5rem; letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 600px) {
+    .hero-nest h1 { font-size: 2.2rem; }
+    .section-lead { font-size: 1.4rem; }
+    .beat { flex-direction: column; gap: 0.25rem; }
+    .beat-name { min-width: auto; }
+    .fleet-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  }
+</style>
