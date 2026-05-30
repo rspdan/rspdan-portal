@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { fleet } from '../data/fleet.js';
+import { fleet, board, crew_seats } from '../data/fleet.js';
 ---
 
 <BaseLayout title="NEST.03 Fleet · Bridging Public and Private Faces" description="Fleet as a node system of Rox · living record of identity, observation, open faces · NEST.03 trajectory bridges this public face with the private FLEET/INVENTORY.md substrate. NEST.02 Cycle 2 stabilized the inner core ring of the spiral. NEST.03 makes the bridge visible.">
@@ -158,9 +158,115 @@ section{margin:2.5rem 0;}
 .phantom-ip{color:var(--ip);font-size:0.64rem;}
 .phantom-mac{color:var(--text);font-size:0.55rem;font-family:inherit;}
 .phantom-note{color:var(--stamp);font-size:0.54rem;line-height:1.5;}
+
+/* ============ FLEET ACTUAL board (El VIS design, ported 053026) ============ */
+.fa-hdr{border-bottom:1px solid var(--border);padding-bottom:1.6rem;margin-bottom:2rem;}
+.fa-eyebrow{font-size:0.5rem;letter-spacing:0.28em;color:var(--obs);text-transform:uppercase;text-align:center;padding:0.55rem 0;border:1px solid rgba(201,168,76,0.25);border-radius:2px;background:linear-gradient(90deg,rgba(201,168,76,0.06),transparent,rgba(201,168,76,0.06));margin-bottom:1.4rem;}
+.fa-titlerow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;}
+.fa-title{font-size:2.4rem;color:var(--obs);font-weight:600;letter-spacing:0.06em;}
+.fa-meta{display:grid;grid-template-columns:auto auto;gap:0.15rem 1.2rem;font-size:0.55rem;color:var(--head);text-align:right;}
+.fa-meta span{color:var(--muted);letter-spacing:0.14em;margin-right:0.4rem;}
+.fa-tagline{font-size:0.56rem;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;margin-top:0.5rem;}
+.fa-quote{font-size:0.74rem;color:var(--obs);font-style:italic;line-height:1.7;border-left:2px solid var(--obs);padding:0.5rem 1rem;margin:1.3rem 0 0.8rem;background:linear-gradient(90deg,rgba(201,168,76,0.05),transparent);}
+.fa-caption{font-size:0.62rem;color:var(--text);line-height:1.6;}
+.fa-legend{display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:1.2rem;font-size:0.5rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.fa-leg{display:inline-flex;align-items:center;gap:0.35rem;}
+.fa-dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+.st-lbm{color:var(--obs);} .fa-dot.st-lbm{background:var(--obs);}
+.st-active{color:var(--rox);} .fa-dot.st-active{background:var(--rox);}
+.st-standby{color:var(--base);} .fa-dot.st-standby{background:var(--base);}
+.st-more{color:#b89a6a;} .fa-dot.st-more{background:#b89a6a;}
+.st-off-fleet{color:var(--stale);} .fa-dot.st-off-fleet{background:var(--stale);}
+.st-dark{color:var(--muted);} .fa-dot.st-dark{background:var(--muted);}
+.st-dark-ready{color:var(--base);} .fa-dot.st-dark-ready{background:var(--base);}
+.st-off-network{color:var(--open);} .fa-dot.st-off-network{background:var(--open);}
+.st-decommissioned{color:#5a6072;} .fa-dot.st-decommissioned{background:#5a6072;}
+.fa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1rem;margin:1.5rem 0 2rem;}
+.fa-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:3px;padding:1rem 1.1rem;}
+.fa-card.st-border-lbm{border-left-color:var(--obs);}
+.fa-card.st-border-active{border-left-color:var(--rox);}
+.fa-card.st-border-standby{border-left-color:var(--base);}
+.fa-card.st-border-more{border-left-color:#b89a6a;}
+.fa-card.st-border-off-fleet{border-left-color:var(--stale);}
+.fa-card.st-border-dark{border-left-color:var(--muted);}
+.fa-card.st-border-dark-ready{border-left-color:var(--base);}
+.fa-card.st-border-off-network{border-left-color:var(--open);}
+.fa-card.st-border-decommissioned{border-left-color:#5a6072;opacity:0.72;}
+.fa-card-head{display:flex;justify-content:space-between;align-items:center;gap:0.6rem;}
+.fa-card-name{font-size:1rem;color:var(--head);font-weight:600;letter-spacing:0.05em;}
+.fa-badge{font-size:0.46rem;letter-spacing:0.1em;padding:2px 7px;border-radius:8px;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap;}
+.fa-card-role{font-size:0.6rem;color:var(--text);margin:0.35rem 0 0.5rem;line-height:1.5;}
+.fa-fields{display:grid;gap:0.28rem;margin:0.6rem 0;padding:0.6rem 0;border-top:1px dashed rgba(255,255,255,0.05);border-bottom:1px dashed rgba(255,255,255,0.05);}
+.fa-field{display:grid;grid-template-columns:5.5rem 1fr;gap:0.6rem;font-size:0.6rem;line-height:1.45;}
+.fa-k{color:var(--stamp);text-transform:uppercase;letter-spacing:0.1em;font-size:0.5rem;padding-top:0.12rem;}
+.fa-v{color:var(--text);}
+.fa-seats-head{font-size:0.48rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin:0.55rem 0 0.4rem;}
+.fa-seat{display:grid;grid-template-columns:auto auto 1fr;gap:0.5rem;align-items:baseline;font-size:0.58rem;margin-bottom:0.32rem;line-height:1.45;}
+.fa-seat-crew{color:var(--head);font-weight:500;white-space:nowrap;}
+.fa-seat-status{font-size:0.44rem;letter-spacing:0.08em;padding:1px 5px;border-radius:6px;text-transform:uppercase;border:1px solid currentColor;align-self:start;white-space:nowrap;}
+.fa-seat-note{color:var(--stamp);}
+.fa-seat-idle{font-size:0.56rem;color:var(--muted);font-style:italic;}
+.fa-divider{margin:3rem 0 1.5rem;padding:0.6rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);font-size:0.54rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;text-align:center;}
+@media(max-width:680px){.fa-title{font-size:1.8rem;}.fa-meta{text-align:left;}.fa-titlerow{align-items:flex-start;}}
 </style>
 
 <div class="shell">
+
+  <!-- ===== FLEET ACTUAL board (El VIS design, ported 053026 · live crew seats over Rox identity) ===== -->
+  <div class="fa-hdr">
+    <div class="fa-eyebrow">⚓ {board.eyebrow} ⚓</div>
+    <div class="fa-titlerow">
+      <h1 class="fa-title">{board.title}</h1>
+      <div class="fa-meta">
+        <div><span>UPDATED</span>{board.updated}</div>
+        <div><span>STATIONS</span>{fleet.rox.length} ROX</div>
+        <div><span>LBM</span>{board.lbm}</div>
+        <div><span>SOURCE</span>fleet.js + live seats</div>
+      </div>
+    </div>
+    <div class="fa-tagline">{board.tagline}</div>
+    <blockquote class="fa-quote">{board.quote}</blockquote>
+    <div class="fa-caption">{board.caption}</div>
+    <div class="fa-legend">
+      {board.legend.map((l) => (
+        <span class="fa-leg" title={l.desc}><span class={"fa-dot st-" + l.key}></span>{l.label}</span>
+      ))}
+    </div>
+  </div>
+
+  <div class="fa-grid">
+    {fleet.rox.map((r) => {
+      const cs = crew_seats[r.name] || { station_status: "dark-ready", seats: [] };
+      const stationLabel = cs.station_status.replace(/-/g, " ").toUpperCase();
+      return (
+        <div class={"fa-card st-border-" + cs.station_status}>
+          <div class="fa-card-head">
+            <span class="fa-card-name">{r.name}</span>
+            <span class={"fa-badge st-" + cs.station_status}>{stationLabel}</span>
+          </div>
+          <div class="fa-card-role">{r.role}</div>
+          <div class="fa-fields">
+            <div class="fa-field"><span class="fa-k">hardware</span><span class="fa-v">{r.hw} · {r.os}</span></div>
+            <div class="fa-field"><span class="fa-k">location</span><span class="fa-v">{r.loc}</span></div>
+            <div class="fa-field"><span class="fa-k">face</span><span class="fa-v">{r.faces}</span></div>
+            <div class="fa-field"><span class="fa-k">tailscale</span><span class="fa-v">{r.tailscale}</span></div>
+            <div class="fa-field"><span class="fa-k">mobility</span><span class="fa-v"><span class={"mob-badge " + (r.mobility || "stationary")}>{r.mobility || "stationary"}</span></span></div>
+          </div>
+          <div class="fa-seats-head">Crew Seated</div>
+          {cs.seats.length > 0 ? cs.seats.map((s) => (
+            <div class="fa-seat">
+              <span class="fa-seat-crew">{s.crew}</span>
+              <span class={"fa-seat-status st-" + s.status}>{s.status.replace(/-/g, " ").toUpperCase()}</span>
+              <span class="fa-seat-note">{s.note}</span>
+            </div>
+          )) : <div class="fa-seat-idle">No crew seated · station idle</div>}
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="fa-divider">Deeper substrate · identity · living map · hardware · observation · open faces</div>
+
   <div class="hdr">
     <div class="eyebrow">NEST.03 · Fleet Map · Bridging Public + Private Faces</div>
     <div class="title">Fleet as a node system of Rox</div>
@@ -220,49 +326,34 @@ section{margin:2.5rem 0;}
         <span>Updated inline when things move · rendered from <code>src/pages/fleet.astro</code></span>
       </div>
       <pre is:raw class="map-ascii">
-         NORTH WINDOW   ·   NOLS_WPA signal this way ────▶
+    NORTH WINDOW   ·   external signal this way  ───▶
 
-  ╔══════════════════════════════════════════════════════════════════════════════════════════╗
-  ║                                                                                          ║
-  ║       UNIX  ZONE                     ·  CENTER  ·                    WINDOWS  ZONE       ║
-  ║                                                                                          ║
-  ║   ┌──── UNIX DESK 2 ─────┐                                   ┌── WINDOWS DESK 1 ────┐    ║
-  ║   │ DPSL    10.0.0.102 ★ │                                   │ ODT     10.0.0.10  ★ │    ║
-  ║   │ DPSR    10.0.0.32  ★ │                                   │ onboard 8PSW p3      │    ║
-  ║   │ (iMac twins · UC)    │        ┌───────────────────┐      │ + Wacom + Westi + BAS│    ║
-  ║   │ 5PSW unix switch p1  │        │      PIRALUS      │      └──────────────────────┘    ║
-  ║   └──────────────────────┘        │     10.0.0.1  ★   │                                  ║
-  ║                                   │   R7900 backbone  │      ┌── WINDOWS DESK 2 ────┐    ║
-  ║   ┌──── UNIX DESK 1 ─────┐        │   DHCP .150–.200  │      │ STN2    10.0.0.2   ◯ │    ║
-  ║   │ TRP0    10.0.0.11  ◯ │        │   SSIDs:          │      │ (on desk this week)  │    ║
-  ║   │ GOG1    10.0.0.3   ★ │        │   PIRALUS69_0 2.4 │      │ CUBE    10.0.0.4   ★ │    ║
-  ║   │ multi-home (Pub +    │        │   PIRALUS69_1 5   │      │   + ALFA .44 USB ●   │    ║
-  ║   │ VZW + copper)        │        │   PIRALUS69_2 5   │      │ (mini-PC + wacom)    │    ║
-  ║   └──────────────────────┘        │   SMB \\PIR\SKY69 │      └──────────────────────┘    ║
-  ║                                   └───────────────────┘                                  ║
-  ║                                                              STN1     10.0.0.69   ◯      ║
-  ║                                                              (via Dell K16A hub ──▶      ║
-  ║                                                               8PSW p6)                   ║
-  ║                                  ·  ROOM CENTER  ·                                       ║
-  ║                                                                                          ║
-  ║   ACHE    by window ★★                                                                   ║
-  ║   (Galaxy S10 · always with Dan · best sig)                                              ║
-  ║                                                                                          ║
-  ╚═══════════ BEDROOM DOOR (SW) ══════════════════════════════ CLOSET DOOR (SE) ════════════╝
+    UNIX  ZONE                                  WINDOWS  ZONE
+    ─────────────────────────                   ─────────────────────────
+    UNIX DESK 2                                 WINDOWS DESK 1
+      DPSL    5PSW p4    ★                         ODT     8PSW p3    ★
+      DPSR    5PSW p5    ★                         (+ Wacom · Westi · BAS)
+      (iMac twins · Universal Control)
+                                                WINDOWS DESK 2
+    UNIX DESK 1                                   STN2    8PSW p5    ◯   (off-fleet at OHC)
+      TRP0    5PSW p3    ◯                         CUBE    8PSW p8    ★   (+ ALFA USB ●)
+      GOG1    5PSW p2    ✕   (decommissioned)
+      (multi-home: Public + VZW + copper)
 
-    LEGEND   ★ stationary (lives here)   ◯ roaming (leaves regularly)   ★★ full-mobile (Dan)
-             ● attached accessory (e.g. ALFA USB-C adapter currently testing on CUBE)
+    CENTER
+      PIRALUS  ·  Netgear R7900 backbone  ·  DHCP (boxed)  ·  Fleet WiFi (boxed)  ·  SMB (boxed)
+      STN1    8PSW p6    ◯   (via Dell K16A hub)
+      ACHE    by window  ★★  (Galaxy S10 · always with Dan)
 
-    LINKS    5PSW ──▶ PIRALUS p1 (unix zone uplink)
-             8PSW ──▶ PIRALUS p2 (windows zone uplink)
-             DPSL ◀── Apple Universal Control ──▶ DPSR  (shared kbd/mouse across iMac twins)
+    LEGEND   ★ stationary    ◯ roaming    ★★ full-mobile (Dan)    ✕ decommissioned    ● accessory
 
-    CANON    Based on Dan's Illustrator map `NEST.01_NOTES_041426_1` (spatial framework)
-             + Piralus attached-devices 041726 21:55 + Dan fleet-canon 041726 22:46.
+    LINKS    5PSW ──▶ PIRALUS p1 (unix uplink)   ·   8PSW ──▶ PIRALUS p2 (windows uplink)
+             DPSL ◀── Apple Universal Control ──▶ DPSR
 
-    PASSES   Pass 1 (you are here): hand-lettered ASCII sketch. Easy to edit. Not authoritative data — reference only.
-             Pass 2 (planned NEARGULL): render ASCII dynamically from fleet.js baseplate + current_attachment so it can't drift stale.
-             Pass 3 (planned NEARGULL): color coding via existing theme tokens (teal for current IPs, amber for off-fleet, red for unresolved).
+    CANON    Dan's Illustrator map NEST.01_NOTES_041426_1 (spatial framework).
+             Switch ports shown · IPs / SSIDs / share paths are boxed (fleet_private.js).
+
+    NOTE     Reference sketch only. Live station state is the FLEET ACTUAL board above.
       </pre>
     </div>
 

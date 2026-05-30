@@ -63,6 +63,7 @@ export const fleet = {
     { name: "TRP0", hw: "MacBook Pro Mid 2015",        os: "macOS Monterey 12.7.6",  loc: "Mobile (Unix Desk 1 home)",                 role: "Creative lab · mobile",                     mobility: "roaming",    mobility_note: "Home at Unix Desk 1 via USB ethernet adapter. Travels with Dan.",                                 faces: "USB ethernet (Fleet) · onboard wifi · VZW when mobile", ssh: "pending verification", tailscale: "pending (join when off-fleet)", proton_vpn: "unknown" },
     { name: "STN1", hw: "iPad Pro M2",                 os: "iPadOS",                 loc: "Mobile (dock when at Nest)",               role: "Browser + SSH monitoring (Termius)",        mobility: "roaming",    mobility_note: "Home when docked on the Dell K16A hub. Travels constantly.", faces: "Hub ethernet (Fleet) · onboard wifi · VZW when mobile", ssh: "client-only (Termius app)", tailscale: "pending (join when off-fleet)", proton_vpn: "unknown" },
     { name: "ACHE", hw: "Samsung Galaxy S10",          os: "Android / DeX",          loc: "Full-mobile (always with Dan)",             role: "Browser + relay-read · WiFi scout", mobility: "full-mobile", mobility_note: "Always with Dan. No Fleet LAN home. Joins Fleet WiFi when at Nest; cellular when mobile.",           faces: "4G cellular · Fleet WiFi (when in range)", ssh: "N/A (browser-only station)", tailscale: "N/A", proton_vpn: "N/A" },
+    { name: "ACHO", hw: "probe-pending",                os: "probe-pending",          loc: "Relocatable (with Dan)",                    role: "Relocatable station · Dan-named 052926 (post-fleet.js snapshot)", mobility: "full-mobile", mobility_note: "Dan-named 052926, after the last fleet.js snapshot. Relocatable, travels with Dan. Hardware + faces pending probe + fleet.js entry.", faces: "pending fleet.js entry", ssh: "pending", tailscale: "pending", proton_vpn: "pending" },
     { name: "O'Shin", hw: "Raspberry Pi 4",            os: "Raspberry Pi OS (verify)", loc: "Nest Actual (currently OFF-NETWORK)", role: "TBD — candidate: always-online edge node / caching proxy / fleet monitor", mobility: "stationary", mobility_note: "Off-network for weeks. Rejoin plan: locate device → power + SD card verify → OS update → Tailscale install → fleet registration. Historically was online before going dark.", faces: "onboard ethernet + onboard wifi", ssh: "pending (station down)", tailscale: "pending (mesh target)", proton_vpn: "pending (optional)" },
   ],
 
@@ -278,4 +279,71 @@ export const fleet = {
     { rox: "CUBE", face: "Phantom WiFi ghost", issue: "Piralus saw a WiFi client with CUBE's hostname on a DHCP-pool address while CUBE is wired. Hypothesis: a legacy hostname from early NEST days.", action: "NESTNET hunt: search early-NEST Bridge docs + DHCP lease history (details in fleet_private.js).", verified_at: "041726", status: "audit pending" },
     { rox: "GOG1", face: "Wired vs WiFi preference", issue: "GOG1 was on WiFi while the map expects it wired. Linux preferring WiFi — unusual. May be unplugged or bridging drift.", action: "Verify at GOG1 console: ip link / ip route. (Decommissioned — deferred.)", verified_at: "041726", status: "diagnostic pending (decommissioned)" },
   ],
+};
+
+//
+// ============================================================
+// FLEET ACTUAL board — El VIS design ported to the portal (STN2 Trip, 053026)
+// ============================================================
+//
+// ONE BOARD: Rox identity (from fleet.rox above) + live crew-seat runtime.
+// The board reads fleet.js identity and overlays who is seated where right now.
+// Crew-seat state is the LIVE layer — grounded in cross-witnessed Bridge state,
+// re-stamped when the Crew configuration changes. Box-in-Box holds: face/tailscale
+// values shown here are sanitized descriptors, never raw IPs (those stay boxed).
+//
+
+export const board = {
+  eyebrow: "HEIRCOR OP · NEST INTERNAL · FLEET ACTUAL · INVENTORY · LIVE CREW",
+  title: "FLEET ACTUAL",
+  tagline: "ONE BOARD · IDENTITY (ROX) + RUNTIME (CREW SEATS)",
+  updated: "053026 ~13:30 PT",
+  lbm: "STN2 Trip",
+  quote: "Hold the bird, don't crush it. Record the moment so the past is not lost; keep the roster open so the future is not killed. The Fleet grows, condenses, and changes.",
+  caption: "Long-term AND ever-changing. A station's identity persists (the Rox, its name) while its faces shift: roles, storage, location, IP. Stable spine, moving body.",
+  legend: [
+    { key: "lbm",            label: "LBM",            desc: "Lead Boot Model this session" },
+    { key: "active",         label: "ACTIVE",         desc: "seated and working" },
+    { key: "standby",        label: "STANDBY",        desc: "booted, awaiting direction" },
+    { key: "more",           label: "MORE",           desc: "more detail available" },
+    { key: "off-fleet",      label: "OFF-FLEET",      desc: "off the Nest Fleet LAN (roaming / OHC)" },
+    { key: "dark",           label: "DARK",           desc: "powered but unseated" },
+    { key: "dark-ready",     label: "DARK-READY",     desc: "ready to wake" },
+    { key: "off-network",    label: "OFF-NETWORK",    desc: "unreachable" },
+    { key: "decommissioned", label: "DECOMMISSIONED", desc: "retired" },
+  ],
+};
+
+// Live crew seats, keyed by Rox name. station_status drives the card badge.
+// seats[] = who is seated on that Rox right now, their status, and what they are doing.
+export const crew_seats = {
+  ODT:  { station_status: "off-fleet", seats: [
+    { crew: "ODT Trip", status: "standby", note: "Writer-lane · ODT host at Nest Actual" },
+    { crew: "ODT Doc",  status: "standby", note: "Producer-lane cross-witness" },
+  ]},
+  STN2: { station_status: "off-fleet", seats: [
+    { crew: "STN2 Trip", status: "lbm",    note: "LBM 053026 · /fleet-actual port + Crew Data Day delegation" },
+    { crew: "STN2 Doc",  status: "active", note: "Skills walk-8-pairs prep · KT-cooperation with CUBE Doc" },
+  ]},
+  CUBE: { station_status: "off-fleet", seats: [
+    { crew: "CUBE Doc",  status: "active", note: "KT-instance collision diagnosis · ENGINE trio · #127" },
+    { crew: "CUBE Trip", status: "more",   note: "ACK-collision diagnosed · gate0 fix-forever (f3819ea) · render-verify ready" },
+  ]},
+  STN1: { station_status: "off-fleet", seats: [
+    { crew: "STN1 Doc",  status: "active", note: "Dan-meeting now · NEST.02 to NEST.03 portal copy" },
+  ]},
+  ACHE: { station_status: "off-fleet", seats: [
+    { crew: "ACHE Doc",  status: "standby",    note: "Dan may engage later · heartbeat cascade" },
+    { crew: "ACHE Trip", status: "dark-ready", note: "activation pending · DOCKET" },
+  ]},
+  ACHO: { station_status: "off-fleet", seats: [] },
+  TRP0: { station_status: "off-fleet", seats: [
+    { crew: "TRP0 Trip", status: "dark-ready", note: "creative lab · roaming with Dan" },
+  ]},
+  DPSL: { station_status: "dark-ready", seats: [
+    { crew: "DPSL", status: "dark-ready", note: "C.B. host · Trip mirror · at Nest Actual" },
+  ]},
+  DPSR: { station_status: "dark-ready", seats: [] },
+  GOG1: { station_status: "decommissioned", seats: [] },
+  "O'Shin": { station_status: "off-network", seats: [] },
 };
