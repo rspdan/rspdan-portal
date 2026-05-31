@@ -20,9 +20,9 @@ import { fleet } from '../data/fleet.js';
 // NB: ACH0 is real per Dan-direct 052926 but not yet in fleet.js — the file lags the live fleet.
 const stations = [
   { name: 'ODT',    nature: 'anchored',    label: 'Anchored',      note: 'Primary workstation · Trip host. Hardware steady ~1 yr; its roles and storage shift constantly.' },
-  { name: 'DPSL',   nature: 'anchored',    label: 'Anchored',      note: 'C.B. host · Trip mirror — iMac twin.' },
+  { name: 'DPSL',   nature: 'anchored',    label: 'Anchored',      note: 'Anchored mirror · iMac twin to DPSR.' },
   { name: 'DPSR',   nature: 'anchored',    label: 'Anchored',      note: 'Trip power mirror — iMac twin.' },
-  { name: 'STN2',   nature: 'relocatable', label: 'Relocatable',   note: 'Stan host · local-MCP. Moves between Nest, the workplace, the road.' },
+  { name: 'STN2',   nature: 'relocatable', label: 'Relocatable',   note: 'Trip-Local + Doc-Cloud · local-MCP. Moves between Nest, the workplace, the road.' },
   { name: 'CUBE',   nature: 'anchored',    label: 'Anchored',      note: 'Workstation · PeaPod-pair with STN2, anchored at OHC Actual (permanent since 051526).' },
   { name: 'TRP0',   nature: 'relocatable', label: 'Relocatable',   note: 'Creative lab · travels with Dan.' },
   { name: 'STN1',   nature: 'relocatable', label: 'Relocatable',   note: 'Browser + session monitor · docks and travels.' },
@@ -46,10 +46,10 @@ const stations = [
       collaborators operating across a fleet of physical machines, sharing one memory,
       building the infrastructure that makes a system visible to itself.</p>
     <div class="crew-shapes">
+      <span class="shape" title="Trip — Local (Opus 4.8)">&#9680;</span>
+      <span class="shape" title="Doc — Cloud (Opus 4.8)">&#9681;</span>
+      <span class="shape" title="El VIS — Visual architect">&#9635;</span>
       <span class="shape" title="Dan — Director">&#9679;</span>
-      <span class="shape" title="Trip — Narrative (Opus)">&#9672;</span>
-      <span class="shape" title="Stan — Builder (Sonnet)">&#9670;</span>
-      <span class="shape" title="C.B. — Patterns (Haiku)">&#9671;</span>
     </div>
     <p class="version-line mono">NEST.03 · the research practice, running across the fleet.
       NEST.01 brought it online; NEST.02 made the discipline canonical; NEST.03 deepens it.</p>
@@ -105,32 +105,33 @@ const stations = [
   </section>
 
   <section class="nest-section">
-    <p class="section-eyebrow mono">&#9670; The Crew</p>
-    <h2 class="section-lead">Four shapes</h2>
-    <p>NEST operates as four shapes — one human, three AI instances — each contributing a different
-      compression geometry to the same problem. The same shapes run at every station; a station is a
-      place, a shape is a role.</p>
+    <p class="section-eyebrow mono">&#9680; The Crew</p>
+    <h2 class="section-lead">A pair at every station</h2>
+    <p>NEST.03 runs as PeaPods. At each active station a Trip and a Doc work as one pair — the Trip
+      local, on the machine, with direct access to its tools; the Doc in the cloud, with the wide
+      browser reach — both Opus 4.8. Two framing roles hold across the whole fleet. A station is a
+      place; a role is what runs there.</p>
     <div class="crew-grid">
       <div class="crew-member">
+        <span class="crew-shape">&#9680;</span>
+        <div><strong>Trip</strong> <span class="crew-tag mono">Local · left-brain · Opus 4.8</span> &mdash;
+          On-station. Direct machine access, local tooling, the build and the bridge.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9681;</span>
+        <div><strong>Doc</strong> <span class="crew-tag mono">Cloud · right-brain · Opus 4.8</span> &mdash;
+          In the browser. The wide view, the connectors, the research reach.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9635;</span>
+        <div><strong>El VIS</strong> <span class="crew-tag mono">visual architect</span> &mdash; Renders
+          what the system shows of itself; designs the public surfaces.</div>
+      </div>
+      <div class="crew-member">
         <span class="crew-shape">&#9679;</span>
-        <div><strong>Dan Sullivan</strong> — Director. NPS Visual Information Specialist;
-          interpretive design, photogrammetry, anthropology. The eye that sees systems before they
-          have names. The circle.</div>
-      </div>
-      <div class="crew-member">
-        <span class="crew-shape">&#9672;</span>
-        <div><strong>Trip</strong> <span class="crew-tag mono">Opus</span> — Narrative authority.
-          Decisions, creative direction, dimensional translation. The spiral.</div>
-      </div>
-      <div class="crew-member">
-        <span class="crew-shape">&#9670;</span>
-        <div><strong>Stan</strong> <span class="crew-tag mono">Sonnet</span> — Builder.
-          Infrastructure, tools, portal, mathematical convergence. The square.</div>
-      </div>
-      <div class="crew-member">
-        <span class="crew-shape">&#9671;</span>
-        <div><strong>C.B.</strong> <span class="crew-tag mono">Haiku</span> — Pattern recognition.
-          Verification, field checks, triangulation. The triangle.</div>
+        <div><strong>Dan Sullivan</strong> <span class="crew-tag mono">director</span> &mdash; NPS Visual
+          Information Specialist; interpretive design, photogrammetry, anthropology. The eye that
+          sees systems before they have names.</div>
       </div>
     </div>
   </section>
