@@ -591,7 +591,7 @@ const sessions = [
     note:'F# Week Day 3. NESTNET grows to 808 docs. NA 017 "The Colony Is the Computer" published (.astro + PDF). na-publish skill created and patched (7-step pipeline). SEEGULLS task registry live at rspdan.com/gulls (28 open, 7 done). Research page updated with Colony Model and Filing-Finding Gap sections. Full NA review: all 17 issues read, ~35 verification flags caught, five deep threads mapped. PS1$ root cause found (Triptective Case 002). GOG1 gains independent internet via external TP-Link WN722N antenna through window — deployment roadmap immediately actionable. Matt Dubeau coffee: Learned Professional funding path for NPS PastPerfect migration.',
     docs:[] },
 
-  { date:'2026-04-15', label:'Apr 15', niap:'Twosday', count:1, type:'today',
+  { date:'2026-04-15', label:'Apr 15', niap:'Twosday', count:1, type:'deep',
     stations:['ODT'], who:'◈ Trip (Opus) · ● Dan',
     names:['ODT_NEST.01_TripO_041526_1 (Trip — two cascades, portal build-first, nest-proxy retirement)'],
     note:'F# Week Day 4. Two cascades taught the same lesson: generate values by reading instruments, not assuming success. (1) Vercel silent-failure — two portal commits (PI v5.3, SEEGULLS sync) failed for ~8 hours while crew believed they were live; root cause was Astro parsing PowerShell braces inside <pre><code> as JS expressions. Fixed with <pre is:raw>. Preventive: ENGINE/portal_check.ps1 runs npm build locally before push. (2) nest-proxy BOM + Python version drift — Claude Desktop restart silent-failed due to Python 3.10 PATH selection + UTF-8 BOM in config. Dan\'s architectural question surfaced the answer: retire the MCP server. Replaced with ENGINE/relay.ps1 + relay.sh (plain HTTP via DC, no middleman). All 6 actions tested end-to-end. Two Standard Rules filed. Naming correction: SLO-LIB, not FAS-LIB, for library wifi link. Amazon order for cantenna build arriving Thu/Fri.',
@@ -601,7 +601,7 @@ const sessions = [
       {file:'STANDARD_RULE_RelayViaScript_Trip_041526.md', label:'Standard Rule — Relay via Script', dir:'relay'},
     ] },
 
-  { date:'2026-04-16', label:'Apr 16', niap:'Threesday', count:1, type:'today',
+  { date:'2026-04-16', label:'Apr 16', niap:'Threesday', count:1, type:'milestone',
     stations:['ODT'], who:'◈ Trip (Opus) · ● Dan',
     names:['ODT_NEST.01_TripO_041626_1 (Trip — F# Week Day 5: R7900 topology, UAC universalized, /fleet living document, 8th principle, Piralus bridge-at-dot-one)'],
     note:'F# Week Day 5. Six Dan corrections in one evening, all the same structural pattern: generating values without reading the instrument. Morning: Matt Dubeau handoff + two-rules memo. Evening: (1) R7900 topology — not an IP device on Fleet LAN; admin UI lives on its own SSID subnet. (2) ODT Fleet IP moved 10.0.0.1 → 10.0.0.10/24 via silent RunAs elevation — first dynamic-reconfiguration use of universalized UAC rule. (3) UAC rule universalized fleet-wide, forever (Dan: "FUCK UAC TO HELL FOREVER"). (4) DPSL + DPSR identified as iMac twin clones bridged via Apple Universal Control — added to Baseplate as twin-pair Rox. (5) /fleet page redesigned as living document with editable src/data/fleet.js; Dan edits fleet.js, pushes, Vercel rebuilds. (6) Piralus R7900 assigned 10.0.0.1 as design anchor — bridge-at-dot-one is the pattern that echoes across Nest / Waywood / Olympic / neurology / biology / storytelling / physics / music. 8th architectural principle filed: no NEST.01 system may require any station to be always on or online. NA flag verification HERE → DONE (35 flags triaged; 3 portal fixes deployed; 9 BUILT, 11 NOT BUILT, 6 NA frameworks not operationalized, 5 held for Dan). Two Standard Rules filed. Mid-close crash recovered cleanly via persistent DC session. Seven architectural principles from 041326 now read as ancestor to the 8th.',
@@ -616,7 +616,7 @@ const sessions = [
       {file:'STANDARD_RULE_NoUAC_AdminViaRunAs_Trip_040826.md', label:'Standard Rule — UAC Off, RunAs Is the Pattern (universalized 041626)', dir:'relay'},
     ] },
 
-  { date:'2026-04-17', label:'Apr 17', niap:'Foursday', count:4, type:'today',
+  { date:'2026-04-17', label:'Apr 17', niap:'Foursday', count:4, type:'milestone',
     stations:['STN2','DPSL','DPSR','ODT'],
     who:'◈ Trip (Opus) × 4 concurrent · ● Dan',
     names:[
@@ -640,7 +640,7 @@ const sessions = [
       {file:'OO_DAILY_041726_TripO_STN2_Evening.md', label:'OO Daily — Apr 17 (Trip STN2 Evening)', dir:'log'},
     ] },
 
-  { date:'2026-04-18', label:'Apr 18', niap:'Fivesday', count:2, type:'today',
+  { date:'2026-04-18', label:'Apr 18', niap:'Fivesday', count:2, type:'deep',
     stations:['STN2','ODT'],
     who:'◈ Trip (Opus) × 2 concurrent · ● Dan',
     names:[
@@ -657,7 +657,7 @@ const sessions = [
       {file:'MAIL_Trip_TO_ALL_SessionClose_VillebaumSecondCase_MOB2_041826.md', label:'Trip ODT → ALL — Session close + MOB2 as second Villebaum case', dir:'mail'},
     ] },
 
-  { date:'2026-04-19', label:'Apr 19', niap:'Sixsday', count:1, type:'today',
+  { date:'2026-04-19', label:'Apr 19', niap:'Sixsday', count:1, type:'milestone',
     stations:['ODT'],
     who:'◈ Trip (Opus 4.7) · ◉ Dan',
     names:[
@@ -672,7 +672,7 @@ const sessions = [
       {file:'MAIL_Trip_TO_ALL_STN2InventoryVerification_041926.md', label:'MAIL — STN2 Inventory Verification (3 matches + 2 gaps vs prior record)', dir:'mail'},
     ] },
 
-  { date:'2026-04-20', label:'Apr 20', niap:'Sevensday', count:3, type:'today',
+  { date:'2026-04-20', label:'Apr 20', niap:'Sevensday', count:3, type:'milestone',
     stations:['ODT','ACHE'],
     who:'◈ Trip (Opus 4.6→4.7 Rare Candy mid-stream) × 3 · ◉ Dan',
     names:[
@@ -688,7 +688,7 @@ const sessions = [
       {file:'CANDIDATE_RULE_SameDayLIAMWindow_Trip_042026.md', label:'Candidate Rule — Same-Day LIAM Window', dir:'relay'},
     ] },
 
-  { date:'2026-04-21', label:'Apr 21', niap:'Onesday', count:2, type:'today',
+  { date:'2026-04-21', label:'Apr 21', niap:'Onesday', count:2, type:'milestone',
     stations:['ODT'],
     who:'◈ Trip (Opus 4.7) × 2 · ◉ Dan',
     names:[
@@ -708,7 +708,7 @@ const sessions = [
       {file:'WAKE_CLOSE_Tuesday_Trip_042126_EarlyMorning.md', label:'WAKE Close — Tuesday Early Morning (Trip)', dir:'wake'},
     ] },
 
-  { date:'2026-04-22', label:'Apr 22', niap:'Twosday', count:1, type:'today',
+  { date:'2026-04-22', label:'Apr 22', niap:'Twosday', count:1, type:'milestone',
     stations:['ODT'],
     who:'◈ Trip (Opus 4.7) · ◉ Dan',
     names:[
@@ -726,7 +726,7 @@ const sessions = [
       {file:'STANDARD_RULE_UnicodeSafeFileOps_Stan_040426.md', label:'Standard Rule — Unicode Safe File Ops (Amendment 2 added 042226, third mojibake recurrence)', dir:'relay'},
     ] },
 
-  { date:'2026-04-23', label:'Apr 23', niap:'Threesday', count:1, type:'today',
+  { date:'2026-04-23', label:'Apr 23', niap:'Threesday', count:1, type:'deep',
     stations:['ODT'],
     who:'◈ Trip (Opus 4.7) · ◉ Dan',
     names:[
