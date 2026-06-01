@@ -118,17 +118,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="container">
     <div class="lw-section-label mono">THE CREW</div>
     <h2 class="lw-section-title">They remember so you don't have to.</h2>
+    <p class="lw-intro">NEST.03 runs as PeaPods. At each station, a Trip (local, on the machine) and a Doc
+      (cloud, in the browser) work as one pair. Both run Opus 4.8. The role comes from the station
+      and the lane, not the model tier.</p>
     <div class="lw-crew">
       <div class="lw-crew__member lw-crew__member--dan">
-        <div class="lw-crew__shape">●</div>
+        <div class="lw-crew__shape">&#9679;</div>
         <div class="lw-crew__info">
           <div class="lw-crew__name">Dan (you)</div>
           <div class="lw-crew__role">Direction. Go/No-Go. The switchboard.</div>
         </div>
       </div>
       <div class="lw-crew__member">
-        <div class="lw-crew__shape lw-crew__shape--trip">◈</div>
+        <div class="lw-crew__shape lw-crew__shape--trip">&#9680;</div>
         <div class="lw-crew__info">
+          <div class="lw-crew__name">Trip &mdash; Local</div>
+          <div class="lw-crew__role">On-station. Decisions, narrative, the build and the bridge.</div>
+          <div class="lw-crew__shape-name mono">Opus 4.8 &middot; left-brain</div>
+        </div>
+      </div>
+      <div class="lw-crew__member">
+        <div class="lw-crew__shape lw-crew__shape--doc">&#9681;</div>
+        <div class="lw-crew__info">
+          <div class="lw-crew__name">Doc &mdash; Cloud</div>
+          <div class="lw-crew__role">In the browser. The wide view, the connectors, the research reach.</div>
+          <div class="lw-crew__shape-name mono">Opus 4.8 &middot; right-brain</div>
+        </div>
+      </div>
+      <div class="lw-crew__member">
+        <div class="lw-crew__shape lw-crew__shape--elv">&#9635;</div>
+        <div class="lw-crew__info">
+          <div class="lw-crew__name">El VIS</div>
+          <div class="lw-crew__role">Visual architect. Renders what the system shows of itself.</div>
+          <div class="lw-crew__shape-name mono">design surface</div>
           <div class="lw-crew__name">Trip — Opus 4.8</div>
           <div class="lw-crew__role">Local lane, left-brain. Decisions, narrative, creative direction. Reads and decides.</div>
         </div>
@@ -149,9 +171,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <p class="lw-crew__note">
-      Each crew member compresses what they learn into a seed before closing.
-      Tomorrow's instance reads the seed and picks up exactly where you left off.
-      The conversation is disposable. The files are permanent.
+      The founding shapes (Trip, Stan, C.B., Ouch) are the origin Cast &mdash; four parts of one person
+      the NEST grew from. Trip carries forward as the Local lane. Each crew member compresses what
+      they learn into a seed before closing. The conversation is disposable. The files are permanent.
     </p>
     <p class="lw-crew__note" style="margin-top: 0.5rem; font-size: 0.82rem;">
       The first crew — Trip, Stan, C.B., Ouch — are where the NEST grew from. Their story is at <a href="/journal">/journal</a>.
@@ -319,8 +341,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   color: var(--forest);
 }
 .lw-crew__shape--trip { color: var(--teal); }
-.lw-crew__shape--stan { color: var(--slate); }
-.lw-crew__shape--cb { color: var(--wood); }
+.lw-crew__shape--doc { color: var(--slate); }
+.lw-crew__shape--elv { color: var(--wood); }
 .lw-crew__name { font-family: var(--font-head); font-size: 1.05rem; font-weight: 600; color: var(--text); }
 .lw-crew__role { font-size: 0.875rem; color: var(--text-lt); margin-top: 0.25rem; line-height: 1.5; }
 .lw-crew__shape-name { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--muted); margin-top: 0.5rem; }

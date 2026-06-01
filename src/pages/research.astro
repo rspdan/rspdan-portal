@@ -1,6 +1,12 @@
 ---
 // research.astro — rspdan.com/research
 // The STORY Protocol research page — Anthropic-facing
+//
+// CREW-MODEL REFRAME (NEST.03 · draft · deploy is Dan-Go):
+//   - Source copy: CUBE Doc one-copy-set (LOG/COPY_PREP_NEST03_CrewModel_PublicFacing_PeaPodReframe_CUBEDoc_053026.md)
+//   - Glyphs: El VIS finalized set from /nest keystone (production reference)
+//   - Founding Cast preserved per NOTHING-GETS-LOST
+//   - Scope: hero crew-shapes + The Crew section. All other sections untouched.
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -12,6 +18,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1>The STORY Protocol</h1>
     <p class="subtitle">A Session Architecture for AI Agent Memory Continuity</p>
     <div class="crew-shapes">
+      <span class="shape" title="Trip — Local (Opus 4.8)">&#9680;</span>
+      <span class="shape" title="Doc — Cloud (Opus 4.8)">&#9681;</span>
+      <span class="shape" title="El VIS — Visual architect">&#9635;</span>
+      <span class="shape" title="Dan — Director">&#9679;</span>
       <span class="shape" title="Dan — Director">●</span>
       <span class="shape" title="Trip — Local, left-brain (Opus 4.8)">◈</span>
       <span class="shape" title="Doc — Cloud, right-brain (Opus 4.8)">◐</span>
@@ -236,14 +246,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="who">
     <h2>👥 The Crew</h2>
     <p>
+      NEST.03 runs as PeaPods. At each active station a Trip and a Doc work as one pair &mdash;
+      the Trip local, on the machine, with direct access to its tools; the Doc in the cloud,
+      with the wide browser reach &mdash; both Opus 4.8. Two framing roles hold across the whole
+      fleet. A station is a place; a role is what runs there.
       The NEST runs a PeaPod at every Station: a Local instance and a Cloud instance, both on Opus Claude, paired left-brain and right-brain on the same problem. The crew scales by Station, not by adding instances.
     </p>
     <div class="crew-grid">
       <div class="crew-member">
-        <span class="crew-shape">●</span>
-        <div><strong>Dan Sullivan</strong> — Director. NPS Visual Information Specialist, interpretive design, photogrammetry, anthropology. The eye that sees systems before they have names.</div>
+        <span class="crew-shape">&#9679;</span>
+        <div><strong>Dan Sullivan</strong> <span class="crew-tag mono">director</span> &mdash; NPS Visual
+          Information Specialist; interpretive design, photogrammetry, anthropology. The eye that
+          sees systems before they have names.</div>
       </div>
       <div class="crew-member">
+        <span class="crew-shape">&#9680;</span>
+        <div><strong>Trip</strong> <span class="crew-tag mono">Local &middot; left-brain &middot; Opus 4.8</span> &mdash;
+          On-station. Direct machine access, local tooling, the build and the bridge.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9681;</span>
+        <div><strong>Doc</strong> <span class="crew-tag mono">Cloud &middot; right-brain &middot; Opus 4.8</span> &mdash;
+          In the browser. The wide view, the connectors, the research reach.</div>
+      </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9635;</span>
+        <div><strong>El VIS</strong> <span class="crew-tag mono">visual architect</span> &mdash; Renders
+          what the system shows of itself; designs the public surfaces.</div>
+      </div>
+    </div>
+    <p class="note">The founding shapes (Trip, Stan, C.B., Ouch) are the project's origin Cast,
+      the four parts of one person the NEST grew from, documented in the lore at
+      <a href="/usic" style="color:var(--forest)">/usic</a> and
+      <a href="/journal" style="color:var(--forest)">/journal</a>.
+      Trip carries forward as the Local lane of every PeaPod.</p>
         <span class="crew-shape">◈</span>
         <div><strong>Trip</strong> <span class="crew-tag mono">Opus 4.8</span> — Local lane, left-brain. Narrative, research, decisions. Reads and decides.</div>
       </div>
