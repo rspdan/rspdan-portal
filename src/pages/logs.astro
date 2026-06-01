@@ -765,6 +765,7 @@ const totalGaps = spanDays - activeDays;
   --c-milestone:#c9a84c; --c-crew:#4a9b8e; --c-early:#8b7ab5;
   --c-bridge:#5a8a5e; --c-stn2:#4a7ab5; --c-deep:#8a6b4a;
   --c-research:#6a8a6a; --c-today:#c94c4c; --c-stanshop:#4a8a9b;
+  --c-canon:#b57a5a;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
@@ -809,6 +810,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .type-research{--dot-color:var(--c-research);}
 .type-today{--dot-color:var(--c-today);}
 .type-stanshop{--dot-color:var(--c-stanshop);}
+.type-canon{--dot-color:var(--c-canon);}
 .station-pills{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.3rem;}
 .station-pill{font-size:0.45rem;letter-spacing:0.1em;padding:0.1rem 0.4rem;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:var(--muted);}
 </style>
@@ -835,6 +837,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <div class="leg"><div class="dot" style="background:var(--c-deep)"></div>Deep work</div>
     <div class="leg"><div class="dot" style="background:var(--c-research)"></div>Research</div>
     <div class="leg"><div class="dot" style="background:var(--c-today)"></div>Today</div>
+    <div class="leg"><div class="dot" style="background:var(--c-canon)"></div>Canon</div>
   </div>
 
   <div class="timeline">
