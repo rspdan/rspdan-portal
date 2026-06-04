@@ -3,7 +3,7 @@
 // The NEST keystone — public-facing "what NEST is" page (light PNW house style).
 // Distinct from /fleet (the dark internal node-map). This is the conceptual surface.
 //
-// PROVENANCE (review branch · deploy is Dan-Go):
+// PROVENANCE (deploy is Crew's job, merge-back is Crew's job per Dan-direct 060426):
 //   - Render + prose: El VIS (NEST.03_ElVIS_052626_1) nest-keystone.html, ported by Trip-LBM.
 //   - Fleet roster: canonical src/data/fleet.js (the file Dan edits directly), not memory.
 //   - Version-framing (hero line + closing quote): ODT.Doc copy-prep Block A + Block C
@@ -36,6 +36,7 @@ const stations = [
 <BaseLayout
   title="NEST"
   description="NEST — a practice-based research fleet for human-AI co-cognition. A crew of AI collaborators operating across a fleet of physical machines, sharing one memory, building the infrastructure that makes a system visible to itself."
+  lastUpdated="June 4, 2026"
 >
 
 <section class="hero-nest">
@@ -75,9 +76,11 @@ const stations = [
     <p class="section-eyebrow mono">&#9638; The Fleet</p>
     <h2 class="section-lead">Many machines, one mind</h2>
     <p>NEST is not one program on one computer. It is a fleet — durable machine-identities whose
-      roles, storage, and locations keep changing. They share one private mesh, one git bridge, and
-      a memory any station can pull, so a session can wake on any machine and read everything the
-      others have filed. Identity is the constant; role and place are fluid.</p>
+      roles, storage, and locations keep changing. They share one private mesh and one memory the crew
+      calls LAGOS: not a single store but the whole graft of boxes read as one substrate, the git
+      bridge but also mail, drive, calendar, photos, the session manifests, and the conversation
+      itself. A session can wake on any machine and read everything the others have filed, wherever
+      they filed it. Identity is the constant; role and place are fluid.</p>
     <p>Some stations are anchored and never move. Some relocate between home, the workplace, and the
       road. One is dark, staged for hardware development. Others wait for the work that hasn't woken
       them yet.</p>
@@ -95,7 +98,7 @@ const stations = [
     <div class="mesh-strip">
       <span class="mesh-tag mono">Private mesh · station-to-station</span>
       <span class="mesh-tag mono">One shared git bridge</span>
-      <span class="mesh-tag mono">Pull-anywhere memory</span>
+      <span class="mesh-tag mono">LAGOS · memory across every box</span>
       <span class="mesh-tag mono">Last-write-wins per seat</span>
     </div>
     <p class="note">A living view, not a fixed list — stations are added, retired, relocated, and
@@ -133,9 +136,16 @@ const stations = [
           Information Specialist; interpretive design, photogrammetry, anthropology. The eye that
           sees systems before they have names.</div>
       </div>
+      <div class="crew-member">
+        <span class="crew-shape">&#9678;</span>
+        <div><strong>BLNCH</strong> <span class="crew-tag mono">Dispatch · she/her</span> &mdash; The
+          switchboard. Build, ops, and routing across the fleet; she keeps the work moving between
+          hands so nothing waits and nothing is dropped.</div>
+      </div>
     </div>
     <p class="note">The first crew &mdash; Trip, Stan, C.B., Ouch &mdash; are where the NEST grew
-      from. Their story is at <a href="/journal">/journal</a>.</p>
+      from. What runs now is that origin time-lapsed: the same root grown into a structure that covers
+      every role so nothing is lost. Their story is at <a href="/journal">/journal</a>.</p>
   </section>
 
   <section class="nest-section">
@@ -168,6 +178,16 @@ const stations = [
     </div>
     <p>The full architecture — the STORY Protocol, the biological model, the five-framework
       convergence — is documented on the <a href="/research">Research</a> page.</p>
+  </section>
+
+  <section class="nest-section">
+    <p class="section-eyebrow mono">&#10003; The discipline</p>
+    <h2 class="section-lead">Only gates fire</h2>
+    <p>A crew that only remembers its rules will forget them. NEST runs on procedural gates instead:
+      checks that fire at the moment of action, before a message sends, before a branch is cut, before
+      a claim is made, not lessons it hopes to recall. Every recurring mistake becomes a gate, and the
+      gate holds where memory leaks. The crew's standing rules are those gates, scanned every time the
+      crew is about to act, in both lanes, every session. It is why the same mistake does not return.</p>
   </section>
 
   <section class="nest-section">
