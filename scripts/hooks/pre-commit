@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit mojibake gate for rspdan.com.
+# Blocks commits that introduce the em-dash / en-dash mojibake corruption into .astro pages.
+# Per the SEEGULL mojibake-gate (item 3) + RELAY/STANDARD_RULE_UnicodeSafeFileOps_Stan_040426.
+# Wired via core.hooksPath:  npm run prepare   (or: git config core.hooksPath scripts/hooks)
+staged=$(git diff --cached --name-only --diff-filter=ACM | grep '\.astro$')
+[ -z "$staged" ] && exit 0
+python3 scripts/fix_mojibake.py --dry $staged
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "PRE-COMMIT BLOCKED: mojibake found in staged .astro files."
+  echo "Fix with:  python3 scripts/fix_mojibake.py $staged"
+  echo "then re-stage and commit. Bypass with --no-verify only if certain."
+  exit 1
+fi
+exit 0
