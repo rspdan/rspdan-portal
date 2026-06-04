@@ -4,8 +4,10 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  lastUpdated?: string;
 }
 const { title, description = 'Dan Sullivan — Creative Technologist' } = Astro.props;
+const lastUpdated = Astro.props.lastUpdated as string | undefined;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +37,14 @@ const { title, description = 'Dan Sullivan — Creative Technologist' } = Astro.
   <main>
     <slot />
   </main>
+
+  {lastUpdated && (
+    <div class="last-updated">
+      <div class="container">
+        <span class="mono">Last updated: {lastUpdated}</span>
+      </div>
+    </div>
+  )}
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -78,6 +88,18 @@ const { title, description = 'Dan Sullivan — Creative Technologist' } = Astro.
     margin-top: 6rem;
   }
   .footer-inner { text-align: center; }
+
+  /* === LAST UPDATED (NPS-style currency marker, before the footer) === */
+  .last-updated {
+    margin-top: 6rem;
+    text-align: center;
+  }
+  .last-updated .mono {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .last-updated + .site-footer { margin-top: 2.5rem; }
 
   /* === MOBILE NAV === */
   @media (max-width: 600px) {
