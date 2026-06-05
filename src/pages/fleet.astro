@@ -1,332 +1,179 @@
 ---
+// fleet.astro — rspdan.com/fleet — DE-SPRAWLED (one station, one row)
+// Per RELAY/SPEC_FleetPageDeSprawl_OneStationTable_NotFourRepeats_CUBE_Trip_060426.md
+// El VIS render 060426 · collapses the prior 4x-repeated sections (FLEET ACTUAL cards +
+// Rox identity + Hardware + Observation) into ONE details/summary table, one row per Rox,
+// every column sourced ONCE from fleet.js. Kept: hold-the-bird philosophy (once), the
+// IP-is-a-face principle (once), verified_at staleness model, ONE topology (ASCII sketch).
+// Credentials/IPs/MACs stay boxed in fleet_private.js. Verified against preview/fleet-desprawl.html.
+// Ported by CUBE Trip 060426 via the text-paste seam (Design surface has no GitHub write).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { fleet, board, crew_seats } from '../data/fleet.js';
+
+// Join identity + hardware + seats on name — ONE source per column.
+const stations = fleet.rox.map((r) => {
+  const h = fleet.hardware[r.name] || {};
+  const cs = crew_seats[r.name] || { station_status: 'dark-ready', seats: [] };
+  return {
+    ...r,
+    cpu: h.cpu || 'probe-pending', ram: h.ram || 'probe-pending',
+    gpu: h.gpu || 'probe-pending', storage: h.storage || 'probe-pending',
+    verified: h.verified_at || 'pending',
+    status: cs.station_status, seats: cs.seats,
+  };
+});
+const isPend = (v) => /pending/i.test(String(v));
+const legend = board.legend.filter((l) =>
+  ['lbm','active','standby','off-fleet','dark-ready','off-network','decommissioned','more'].includes(l.key));
 ---
 
-<BaseLayout title="NEST.03 Fleet · Bridging Public and Private Faces" description="Fleet as a node system of Rox · living record of identity, observation, open faces · NEST.03 trajectory bridges this public face with the private FLEET/INVENTORY.md substrate. NEST.02 Cycle 2 stabilized the inner core ring of the spiral. NEST.03 makes the bridge visible.">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
-:root{
-  --bg:#0c0e14;
-  --card:#13161f;
-  --border:rgba(255,255,255,0.06);
-  --muted:#4a5468;
-  --text:#b8bfcc;
-  --head:#e2e8f0;
-  --base:#4a7ab5;
-  --rox:#4a9b8e;
-  --obs:#c9a84c;
-  --open:#c94c4c;
-  --ip:#7dd3c0;
-  --stamp:#8a93a5;
-  --stale:#c97a4a;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
-.shell{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+<BaseLayout title="NEST.03 Fleet · One Station, One Row" description="Fleet as a node system of Rox · one consolidated table: identity, hardware, faces, and live crew seats sourced once from fleet.js. IPs are faces, boxed in fleet_private.js; identity is the Rox. Long-term AND ever-changing.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+    :root{
+      --bg:#0c0e14; --card:#13161f; --border:rgba(255,255,255,0.06);
+      --muted:#4a5468; --text:#b8bfcc; --head:#e2e8f0;
+      --base:#4a7ab5; --rox:#4a9b8e; --obs:#c9a84c; --open:#c94c4c;
+      --ip:#7dd3c0; --stamp:#8a93a5; --stale:#c97a4a;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+    .shell{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 6rem;}
+    .eyebrow{font-size:0.5rem;letter-spacing:0.28em;color:var(--obs);text-transform:uppercase;text-align:center;padding:0.5rem 0;border:1px solid rgba(201,168,76,0.25);border-radius:2px;background:linear-gradient(90deg,rgba(201,168,76,0.06),transparent,rgba(201,168,76,0.06));margin-bottom:1.4rem;}
+    .titlerow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:1.4rem;}
+    .title{font-size:2.3rem;color:var(--obs);font-weight:600;letter-spacing:0.06em;}
+    .meta{display:grid;grid-template-columns:auto auto;gap:0.15rem 1.2rem;font-size:0.55rem;color:var(--head);text-align:right;}
+    .meta span{color:var(--muted);letter-spacing:0.14em;margin-right:0.4rem;}
+    .asof{font-size:0.52rem;color:var(--stale);letter-spacing:0.12em;text-transform:uppercase;margin-top:0.9rem;}
+    .quote{font-size:0.72rem;color:var(--obs);font-style:italic;line-height:1.7;border-left:2px solid var(--obs);padding:0.5rem 1rem;margin:1.4rem 0 0.7rem;background:linear-gradient(90deg,rgba(201,168,76,0.05),transparent);}
+    .principle{background:var(--card);border-left:2px solid var(--base);padding:0.9rem 1.1rem;margin:0 0 1.6rem;border-radius:2px;font-size:0.64rem;line-height:1.7;color:var(--text);}
+    .principle strong{color:var(--head);font-weight:500;}.principle em{color:var(--ip);font-style:normal;}
+    .legend{display:flex;flex-wrap:wrap;gap:0.7rem;margin:0 0 1.4rem;font-size:0.5rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+    .leg{display:inline-flex;align-items:center;gap:0.35rem;}
+    .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+    .s-lbm{color:var(--obs);}.dot.s-lbm{background:var(--obs);}
+    .s-active{color:var(--rox);}.dot.s-active{background:var(--rox);}
+    .s-standby{color:var(--base);}.dot.s-standby{background:var(--base);}
+    .s-off-fleet{color:var(--stale);}.dot.s-off-fleet{background:var(--stale);}
+    .s-dark-ready{color:var(--base);}.dot.s-dark-ready{background:var(--base);}
+    .s-off-network{color:var(--open);}.dot.s-off-network{background:var(--open);}
+    .s-decommissioned{color:#5a6072;}.dot.s-decommissioned{background:#5a6072;}
+    .s-more{color:#b89a6a;}.dot.s-more{background:#b89a6a;}
+    .col-head{display:grid;grid-template-columns:150px 1fr 96px;gap:1rem;padding:0 1rem 0.5rem;font-size:0.48rem;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;}
+    .col-head span:last-child{text-align:right;}
+    .tbl{display:flex;flex-direction:column;gap:0.4rem;}
+    .st{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:3px;overflow:hidden;}
+    .st[data-st="lbm"]{border-left-color:var(--obs);}
+    .st[data-st="active"]{border-left-color:var(--rox);}
+    .st[data-st="standby"]{border-left-color:var(--base);}
+    .st[data-st="off-fleet"]{border-left-color:var(--stale);}
+    .st[data-st="dark-ready"]{border-left-color:var(--base);}
+    .st[data-st="off-network"]{border-left-color:var(--open);}
+    .st[data-st="decommissioned"]{border-left-color:#5a6072;opacity:0.66;}
+    summary{display:grid;grid-template-columns:150px 1fr 96px;gap:1rem;align-items:center;padding:0.75rem 1rem;cursor:pointer;list-style:none;}
+    summary::-webkit-details-marker{display:none;}
+    summary:hover{background:rgba(255,255,255,0.015);}
+    .s-name{display:flex;align-items:center;gap:0.5rem;}
+    .s-nm{color:var(--head);font-weight:600;font-size:0.78rem;letter-spacing:0.05em;}
+    .s-badge{font-size:0.44rem;letter-spacing:0.1em;padding:2px 6px;border-radius:7px;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap;}
+    .s-mid .hwos{color:var(--text);font-size:0.64rem;}
+    .s-mid .role{color:var(--stamp);font-size:0.56rem;margin-top:0.15rem;line-height:1.4;}
+    .mob{justify-self:end;font-size:0.46rem;padding:2px 7px;border-radius:8px;letter-spacing:0.08em;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap;}
+    .mob.stationary{color:var(--rox);}.mob.roaming{color:var(--obs);}.mob.full-mobile{color:var(--open);}
+    .det{padding:0.2rem 1rem 1rem;border-top:1px dashed rgba(255,255,255,0.05);margin-top:-0.2rem;}
+    .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.3rem 1.4rem;margin:0.7rem 0;}
+    .f{display:grid;grid-template-columns:5.5rem 1fr;gap:0.5rem;font-size:0.6rem;line-height:1.45;}
+    .f.wide{grid-column:1/-1;}
+    .fk{color:var(--stamp);text-transform:uppercase;letter-spacing:0.1em;font-size:0.5rem;padding-top:0.12rem;}
+    .fv{color:var(--text);}.fv.pend{color:var(--obs);font-style:italic;}.fv .boxed{color:var(--muted);font-style:italic;}
+    .seats{margin-top:0.6rem;padding-top:0.6rem;border-top:1px dashed rgba(255,255,255,0.05);}
+    .seats-h{font-size:0.46rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+    .seat{display:grid;grid-template-columns:auto auto 1fr;gap:0.5rem;align-items:baseline;font-size:0.58rem;margin-bottom:0.3rem;line-height:1.45;}
+    .seat-c{color:var(--head);font-weight:500;white-space:nowrap;}
+    .seat-s{font-size:0.42rem;letter-spacing:0.08em;padding:1px 5px;border-radius:6px;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap;align-self:start;}
+    .seat-n{color:var(--stamp);}
+    .seat-idle{font-size:0.56rem;color:var(--muted);font-style:italic;}
+    .det-meta{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:0.6rem;font-size:0.52rem;color:var(--stamp);}
+    .det-meta .stale{color:var(--stale);}
+    .topo{margin:2.5rem 0 1rem;}
+    .topo-h{font-size:0.62rem;color:var(--rox);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+    .ascii-wrap{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1rem;overflow-x:auto;}
+    .ascii-meta{display:flex;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;font-size:0.56rem;color:var(--muted);margin-bottom:0.7rem;padding-bottom:0.55rem;border-bottom:1px dashed var(--border);}
+    .ascii{font-family:'SF Mono','Menlo','Consolas',monospace;font-size:0.66rem;line-height:1.25;color:var(--text);white-space:pre;letter-spacing:0;}
+    .foot{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.55rem;color:var(--muted);line-height:1.8;letter-spacing:0.06em;}
+    .foot a{color:var(--rox);text-decoration:none;}
+    @media(max-width:680px){
+      .col-head,summary{grid-template-columns:1fr auto;}
+      .col-head span:nth-child(2){display:none;}
+      .s-mid{grid-column:1/-1;}
+      .det-grid{grid-template-columns:1fr;}
+      .title{font-size:1.7rem;}.meta{text-align:left;}
+    }
+  </style>
 
-.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
-.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
-.title{font-size:1.5rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
-.sub{font-size:0.58rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.1em;line-height:1.6;}
-
-.live-banner{background:linear-gradient(90deg,rgba(74,155,142,0.08),transparent);border-left:3px solid var(--rox);padding:0.9rem 1.1rem;margin:1.2rem 0 0;border-radius:2px;}
-.live-banner .row{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:baseline;font-size:0.65rem;}
-.live-banner .lbl{color:var(--muted);text-transform:uppercase;letter-spacing:0.18em;font-size:0.5rem;}
-.live-banner .val{color:var(--head);font-weight:500;}
-.live-banner .note{font-size:0.58rem;color:var(--stamp);margin-top:0.5rem;font-style:italic;}
-.live-banner .edit{font-size:0.55rem;color:var(--rox);margin-top:0.35rem;font-family:inherit;}
-.live-banner code{background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:2px;color:var(--ip);font-size:0.85em;}
-
-.principle{background:var(--card);border-left:2px solid var(--base);padding:1rem 1.2rem;margin:2rem 0 1.5rem;border-radius:2px;font-size:0.68rem;line-height:1.7;color:var(--text);}
-.principle strong{color:var(--head);font-weight:500;}
-
-section{margin:2.5rem 0;}
-.sec-head{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:0.9rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
-.sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.sec-dot.base{background:var(--base);}
-.sec-dot.rox{background:var(--rox);}
-.sec-dot.obs{background:var(--obs);}
-.sec-dot.open{background:var(--open);}
-.sec-title{font-size:0.72rem;color:var(--head);letter-spacing:0.22em;text-transform:uppercase;font-weight:500;}
-.sec-count{font-size:0.55rem;color:var(--muted);letter-spacing:0.16em;margin-left:auto;}
-
-.row-block{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.55rem;font-size:0.64rem;line-height:1.55;}
-.row-block:hover{border-color:rgba(255,255,255,0.1);}
-
-.row-top{display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap;margin-bottom:0.3rem;}
-.row-name{color:var(--head);font-weight:500;min-width:110px;font-size:0.7rem;}
-.row-ip{font-weight:500;color:var(--ip);font-size:0.82rem;letter-spacing:0.03em;padding:2px 8px;background:rgba(125,211,192,0.08);border-radius:2px;font-family:'IBM Plex Mono',monospace;}
-.row-ip.empty{color:var(--muted);background:rgba(255,255,255,0.02);font-weight:300;font-size:0.68rem;}
-.row-face{color:var(--text);font-size:0.62rem;}
-.row-detail{color:var(--stamp);font-size:0.6rem;margin-top:0.2rem;line-height:1.5;}
-.row-meta{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;margin-top:0.45rem;padding-top:0.4rem;border-top:1px dashed rgba(255,255,255,0.04);font-size:0.54rem;color:var(--muted);}
-.row-meta .stamp{color:var(--stamp);font-weight:500;letter-spacing:0.06em;}
-.row-meta .stamp.stale{color:var(--stale);}
-.row-meta .probe{font-style:italic;}
-
-.baseplate-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:1rem;align-items:baseline;}
-.baseplate-role{color:var(--head);font-weight:500;font-size:0.68rem;}
-.baseplate-hw{color:var(--text);font-size:0.6rem;}
-.baseplate-func{color:var(--text);font-size:0.6rem;}
-.baseplate-note{color:var(--stamp);font-size:0.58rem;margin-top:0.25rem;line-height:1.5;}
-
-.rox-row{display:grid;grid-template-columns:90px 1fr;gap:1rem;align-items:baseline;}
-.rox-name{color:var(--head);font-weight:500;font-size:0.72rem;letter-spacing:0.05em;}
-.rox-body{}
-.rox-hw{color:var(--text);font-size:0.62rem;}
-.rox-meta-l2{color:var(--stamp);font-size:0.58rem;margin-top:0.2rem;}
-.rox-faces{color:var(--text);font-size:0.58rem;margin-top:0.3rem;line-height:1.55;padding-top:0.3rem;border-top:1px dashed rgba(255,255,255,0.04);}
-
-.open-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;}
-.open-rox{color:var(--open);font-weight:500;font-size:0.66rem;}
-.open-face{color:var(--head);font-size:0.62rem;margin-bottom:0.3rem;}
-.open-issue{color:var(--text);font-size:0.6rem;line-height:1.55;margin-bottom:0.35rem;}
-.open-action{color:var(--stamp);font-size:0.58rem;font-style:italic;line-height:1.55;}
-.open-status{font-size:0.52rem;color:var(--obs);letter-spacing:0.14em;text-transform:uppercase;margin-top:0.4rem;}
-
-.foot{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.55rem;color:var(--muted);line-height:1.7;letter-spacing:0.08em;}
-.foot a{color:var(--rox);text-decoration:none;}
-.foot a:hover{color:var(--head);}
-
-/* ---- LIVING MAP ---- */
-.map-ascii-wrap{margin:1.5rem 0 2rem;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1rem;overflow:hidden;}
-.map-ascii-meta{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;padding-bottom:0.6rem;border-bottom:1px dashed var(--border);font-size:0.82rem;color:var(--muted);}
-.map-ascii-meta code{background:rgba(255,255,255,0.04);padding:0.1rem 0.35rem;border-radius:3px;font-size:0.8rem;}
-.map-ascii{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:0.68rem;line-height:1.22;color:var(--fg);margin:0;padding:0.5rem 0.2rem;background:transparent;white-space:pre;overflow-x:auto;letter-spacing:0;}
-
-/* ---- HARDWARE ---- */
-.hw-block{padding-top:0.75rem;}
-.hw-head{display:flex;align-items:baseline;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.6rem;padding-bottom:0.5rem;border-bottom:1px dashed var(--border);}
-.hw-name{font-weight:700;font-size:1.05rem;color:var(--head);letter-spacing:0.02em;}
-.hw-role{font-size:0.8rem;color:var(--muted);font-style:italic;}
-.hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.45rem 1.2rem;margin-bottom:0.6rem;}
-.hw-item{display:flex;gap:0.6rem;align-items:baseline;font-size:0.82rem;line-height:1.4;}
-.hw-wide{grid-column:1 / -1;}
-.hw-k{color:var(--stamp);font-size:0.72rem;font-family:'SF Mono','Menlo','Consolas',monospace;text-transform:lowercase;min-width:7rem;flex:0 0 auto;padding-top:0.1rem;letter-spacing:0.04em;}
-.hw-v{color:var(--fg);flex:1 1 auto;}
-.hw-list{margin:0;padding-left:1rem;list-style:none;}
-.hw-list li{position:relative;margin-bottom:0.15rem;padding-left:0.8rem;font-size:0.82rem;}
-.hw-list li::before{content:"▸";position:absolute;left:0;color:var(--stamp);}
-.hw-pending{color:var(--obs);font-style:italic;}
-.hw-blocker{color:var(--rox);}
-@media (max-width: 680px){.hw-grid{grid-template-columns:1fr;}}
-
-.switch-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin:1rem 0;}
-.switch-block{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:1rem;}
-.switch-head{display:flex;align-items:baseline;gap:0.6rem;margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
-.switch-label{font-size:0.85rem;color:var(--head);font-weight:500;letter-spacing:0.08em;}
-.switch-hw{font-size:0.56rem;color:var(--muted);}
-.switch-loc{font-size:0.52rem;color:var(--stamp);margin-left:auto;font-style:italic;}
-.port-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0.45rem;margin-top:0.5rem;}
-.port{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:2px;padding:0.5rem 0.6rem;font-size:0.56rem;min-height:72px;position:relative;}
-.port-num{font-size:0.5rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;}
-.port-home{color:var(--head);font-size:0.78rem;font-weight:500;letter-spacing:0.04em;margin:0.2rem 0 0.15rem;}
-.port-ip{color:var(--ip);font-size:0.68rem;}
-.port-state{font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;margin-top:0.25rem;}
-.port.home{border-color:rgba(125,211,192,0.4);background:rgba(125,211,192,0.06);}
-.port.home .port-state{color:var(--rox);}
-.port.uplink{border-color:rgba(74,122,181,0.4);background:rgba(74,122,181,0.06);}
-.port.uplink .port-state{color:var(--base);}
-.port.unused{opacity:0.55;}
-.port.unused .port-state{color:var(--muted);}
-.port.empty{border-style:dashed;background:rgba(201,122,74,0.05);}
-.port.empty .port-state{color:var(--stale);}
-.port-note{font-size:0.5rem;color:var(--stamp);margin-top:0.2rem;line-height:1.45;}
-
-.mobility-legend{display:flex;gap:1rem;flex-wrap:wrap;margin:0.5rem 0 1rem;font-size:0.55rem;color:var(--muted);letter-spacing:0.06em;}
-.mobility-legend span{display:inline-flex;align-items:center;gap:0.35rem;}
-.mob-badge{display:inline-block;font-size:0.5rem;padding:1px 6px;border-radius:8px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;}
-.mob-badge.stationary{background:rgba(125,211,192,0.12);color:var(--rox);border:1px solid rgba(125,211,192,0.3);}
-.mob-badge.roaming{background:rgba(201,168,76,0.12);color:var(--obs);border:1px solid rgba(201,168,76,0.3);}
-.mob-badge.full-mobile{background:rgba(201,76,76,0.12);color:var(--open);border:1px solid rgba(201,76,76,0.3);}
-
-.live-row{display:grid;grid-template-columns:90px 110px 130px 1fr auto;gap:0.8rem;align-items:center;padding:0.45rem 0.7rem;background:rgba(255,255,255,0.01);border:1px solid var(--border);border-radius:2px;margin-bottom:0.35rem;font-size:0.58rem;}
-.live-row:hover{border-color:rgba(255,255,255,0.08);}
-.live-rox{color:var(--head);font-weight:500;font-size:0.7rem;letter-spacing:0.05em;}
-.live-via{color:var(--text);font-size:0.55rem;}
-.live-at{color:var(--text);font-size:0.58rem;}
-.live-ip{color:var(--ip);font-size:0.72rem;letter-spacing:0.03em;}
-.live-status{font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:1px 6px;border-radius:8px;}
-.live-status.home{background:rgba(125,211,192,0.12);color:var(--rox);}
-.live-status.wifi-substitute{background:rgba(74,122,181,0.12);color:var(--base);}
-.live-status.full-mobile{background:rgba(201,76,76,0.12);color:var(--open);}
-.live-status.roaming-off{background:rgba(201,122,74,0.12);color:var(--stale);}
-
-.phantom-row{display:grid;grid-template-columns:100px 110px 160px 1fr;gap:0.8rem;padding:0.4rem 0.7rem;background:rgba(201,76,76,0.03);border:1px dashed rgba(201,76,76,0.2);border-radius:2px;margin-bottom:0.3rem;font-size:0.55rem;}
-.phantom-ssid{color:var(--muted);}
-.phantom-ip{color:var(--ip);font-size:0.64rem;}
-.phantom-mac{color:var(--text);font-size:0.55rem;font-family:inherit;}
-.phantom-note{color:var(--stamp);font-size:0.54rem;line-height:1.5;}
-
-/* ============ FLEET ACTUAL board (El VIS design, ported 053026) ============ */
-.fa-hdr{border-bottom:1px solid var(--border);padding-bottom:1.6rem;margin-bottom:2rem;}
-.fa-eyebrow{font-size:0.5rem;letter-spacing:0.28em;color:var(--obs);text-transform:uppercase;text-align:center;padding:0.55rem 0;border:1px solid rgba(201,168,76,0.25);border-radius:2px;background:linear-gradient(90deg,rgba(201,168,76,0.06),transparent,rgba(201,168,76,0.06));margin-bottom:1.4rem;}
-.fa-titlerow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;}
-.fa-title{font-size:2.4rem;color:var(--obs);font-weight:600;letter-spacing:0.06em;}
-.fa-meta{display:grid;grid-template-columns:auto auto;gap:0.15rem 1.2rem;font-size:0.55rem;color:var(--head);text-align:right;}
-.fa-meta span{color:var(--muted);letter-spacing:0.14em;margin-right:0.4rem;}
-.fa-tagline{font-size:0.56rem;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;margin-top:0.5rem;}
-.fa-quote{font-size:0.74rem;color:var(--obs);font-style:italic;line-height:1.7;border-left:2px solid var(--obs);padding:0.5rem 1rem;margin:1.3rem 0 0.8rem;background:linear-gradient(90deg,rgba(201,168,76,0.05),transparent);}
-.fa-caption{font-size:0.62rem;color:var(--text);line-height:1.6;}
-.fa-legend{display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:1.2rem;font-size:0.5rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
-.fa-leg{display:inline-flex;align-items:center;gap:0.35rem;}
-.fa-dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
-.st-lbm{color:var(--obs);} .fa-dot.st-lbm{background:var(--obs);}
-.st-active{color:var(--rox);} .fa-dot.st-active{background:var(--rox);}
-.st-standby{color:var(--base);} .fa-dot.st-standby{background:var(--base);}
-.st-more{color:#b89a6a;} .fa-dot.st-more{background:#b89a6a;}
-.st-off-fleet{color:var(--stale);} .fa-dot.st-off-fleet{background:var(--stale);}
-.st-dark{color:var(--muted);} .fa-dot.st-dark{background:var(--muted);}
-.st-dark-ready{color:var(--base);} .fa-dot.st-dark-ready{background:var(--base);}
-.st-off-network{color:var(--open);} .fa-dot.st-off-network{background:var(--open);}
-.st-decommissioned{color:#5a6072;} .fa-dot.st-decommissioned{background:#5a6072;}
-.fa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1rem;margin:1.5rem 0 2rem;}
-.fa-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:3px;padding:1rem 1.1rem;}
-.fa-card.st-border-lbm{border-left-color:var(--obs);}
-.fa-card.st-border-active{border-left-color:var(--rox);}
-.fa-card.st-border-standby{border-left-color:var(--base);}
-.fa-card.st-border-more{border-left-color:#b89a6a;}
-.fa-card.st-border-off-fleet{border-left-color:var(--stale);}
-.fa-card.st-border-dark{border-left-color:var(--muted);}
-.fa-card.st-border-dark-ready{border-left-color:var(--base);}
-.fa-card.st-border-off-network{border-left-color:var(--open);}
-.fa-card.st-border-decommissioned{border-left-color:#5a6072;opacity:0.72;}
-.fa-card-head{display:flex;justify-content:space-between;align-items:center;gap:0.6rem;}
-.fa-card-name{font-size:1rem;color:var(--head);font-weight:600;letter-spacing:0.05em;}
-.fa-badge{font-size:0.46rem;letter-spacing:0.1em;padding:2px 7px;border-radius:8px;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap;}
-.fa-card-role{font-size:0.6rem;color:var(--text);margin:0.35rem 0 0.5rem;line-height:1.5;}
-.fa-fields{display:grid;gap:0.28rem;margin:0.6rem 0;padding:0.6rem 0;border-top:1px dashed rgba(255,255,255,0.05);border-bottom:1px dashed rgba(255,255,255,0.05);}
-.fa-field{display:grid;grid-template-columns:5.5rem 1fr;gap:0.6rem;font-size:0.6rem;line-height:1.45;}
-.fa-k{color:var(--stamp);text-transform:uppercase;letter-spacing:0.1em;font-size:0.5rem;padding-top:0.12rem;}
-.fa-v{color:var(--text);}
-.fa-seats-head{font-size:0.48rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin:0.55rem 0 0.4rem;}
-.fa-seat{display:grid;grid-template-columns:auto auto 1fr;gap:0.5rem;align-items:baseline;font-size:0.58rem;margin-bottom:0.32rem;line-height:1.45;}
-.fa-seat-crew{color:var(--head);font-weight:500;white-space:nowrap;}
-.fa-seat-status{font-size:0.44rem;letter-spacing:0.08em;padding:1px 5px;border-radius:6px;text-transform:uppercase;border:1px solid currentColor;align-self:start;white-space:nowrap;}
-.fa-seat-note{color:var(--stamp);}
-.fa-seat-idle{font-size:0.56rem;color:var(--muted);font-style:italic;}
-.fa-divider{margin:3rem 0 1.5rem;padding:0.6rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);font-size:0.54rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;text-align:center;}
-@media(max-width:680px){.fa-title{font-size:1.8rem;}.fa-meta{text-align:left;}.fa-titlerow{align-items:flex-start;}}
-</style>
-
-<div class="shell">
-
-  <!-- ===== FLEET ACTUAL board (El VIS design, ported 053026 · live crew seats over Rox identity) ===== -->
-  <div class="fa-hdr">
-    <div class="fa-eyebrow">⚓ {board.eyebrow} ⚓</div>
-    <div class="fa-titlerow">
-      <h1 class="fa-title">{board.title}</h1>
-      <div class="fa-meta">
-        <div><span>UPDATED</span>{board.updated}</div>
+  <div class="shell">
+    <div class="eyebrow">⚓ {board.eyebrow} ⚓</div>
+    <div class="titlerow">
+      <h1 class="title">{board.title}</h1>
+      <div class="meta">
         <div><span>STATIONS</span>{fleet.rox.length} ROX</div>
         <div><span>LBM</span>{board.lbm}</div>
-        <div><span>SOURCE</span>fleet.js + live seats</div>
+        <div><span>SOURCE</span>fleet.js + fleet_private.js</div>
+        <div><span>MODEL</span>NEST.03 · 3P PeaPod</div>
       </div>
     </div>
-    <div class="fa-tagline">{board.tagline}</div>
-    <blockquote class="fa-quote">{board.quote}</blockquote>
-    <div class="fa-caption">{board.caption}</div>
-    <div class="fa-legend">
-      {board.legend.map((l) => (
-        <span class="fa-leg" title={l.desc}><span class={"fa-dot st-" + l.key}></span>{l.label}</span>
+    <div class="asof">▲ Runtime snapshot as of fleet.js stamp {board.updated} · seat-state is session-scoped, re-verify before treating as live</div>
+
+    <blockquote class="quote">{board.quote}</blockquote>
+
+    <div class="principle">
+      <strong>One source, one row.</strong> Station identity is the <em>Rox</em> — name, hardware, OS, location, role, mobility. The IP is a face currently rotated forward; faces change between sessions, so they stay boxed in <em>fleet_private.js</em> and only identity is shown. Every row carries a <em>verified_at</em> stamp; stale rows are marked stale and re-probed, never silently trusted. Expand a station for its hardware, faces, and seated crew.
+    </div>
+
+    <div class="legend">
+      {legend.map((l) => (
+        <span class={"leg s-" + l.key} title={l.desc}><span class={"dot s-" + l.key}></span>{l.label}</span>
       ))}
     </div>
-  </div>
 
-  <div class="fa-grid">
-    {fleet.rox.map((r) => {
-      const cs = crew_seats[r.name] || { station_status: "dark-ready", seats: [] };
-      const stationLabel = cs.station_status.replace(/-/g, " ").toUpperCase();
-      return (
-        <div class={"fa-card st-border-" + cs.station_status}>
-          <div class="fa-card-head">
-            <span class="fa-card-name">{r.name}</span>
-            <span class={"fa-badge st-" + cs.station_status}>{stationLabel}</span>
-          </div>
-          <div class="fa-card-role">{r.role}</div>
-          <div class="fa-fields">
-            <div class="fa-field"><span class="fa-k">hardware</span><span class="fa-v">{r.hw} · {r.os}</span></div>
-            <div class="fa-field"><span class="fa-k">location</span><span class="fa-v">{r.loc}</span></div>
-            <div class="fa-field"><span class="fa-k">face</span><span class="fa-v">{r.faces}</span></div>
-            <div class="fa-field"><span class="fa-k">tailscale</span><span class="fa-v">{r.tailscale}</span></div>
-            <div class="fa-field"><span class="fa-k">mobility</span><span class="fa-v"><span class={"mob-badge " + (r.mobility || "stationary")}>{r.mobility || "stationary"}</span></span></div>
-          </div>
-          <div class="fa-seats-head">Crew Seated</div>
-          {cs.seats.length > 0 ? cs.seats.map((s) => (
-            <div class="fa-seat">
-              <span class="fa-seat-crew">{s.crew}</span>
-              <span class={"fa-seat-status st-" + s.status}>{s.status.replace(/-/g, " ").toUpperCase()}</span>
-              <span class="fa-seat-note">{s.note}</span>
+    <div class="col-head"><span>Station</span><span>Hardware · OS / Role</span><span>Mobility</span></div>
+    <div class="tbl">
+      {stations.map((d) => (
+        <details class="st" data-st={d.status}>
+          <summary>
+            <span class="s-name"><span class={"dot s-" + d.status}></span><span class="s-nm">{d.name}</span><span class={"s-badge s-" + d.status}>{d.status.replace(/-/g, " ").toUpperCase()}</span></span>
+            <span class="s-mid"><div class="hwos">{d.hw} · {d.os}</div><div class="role">{d.role}</div></span>
+            <span class={"mob " + (d.mobility || "stationary")}>{d.mobility || "stationary"}</span>
+          </summary>
+          <div class="det">
+            <div class="det-grid">
+              <div class="f"><span class="fk">cpu</span><span class={"fv" + (isPend(d.cpu) ? " pend" : "")}>{d.cpu}</span></div>
+              <div class="f"><span class="fk">ram</span><span class={"fv" + (isPend(d.ram) ? " pend" : "")}>{d.ram}</span></div>
+              <div class="f"><span class="fk">gpu</span><span class={"fv" + (isPend(d.gpu) ? " pend" : "")}>{d.gpu}</span></div>
+              <div class="f"><span class="fk">storage</span><span class={"fv" + (isPend(d.storage) ? " pend" : "")}>{d.storage}</span></div>
+              <div class="f wide"><span class="fk">location</span><span class="fv">{d.loc}</span></div>
+              <div class="f wide"><span class="fk">faces</span><span class="fv">{d.faces} <span class="boxed">· IPs boxed</span></span></div>
             </div>
-          )) : <div class="fa-seat-idle">No crew seated · station idle</div>}
-        </div>
-      );
-    })}
-  </div>
-
-  <div class="fa-divider">Deeper substrate · identity · living map · hardware · observation · open faces</div>
-
-  <div class="hdr">
-    <div class="eyebrow">NEST.03 · Fleet Map · Bridging Public + Private Faces</div>
-    <div class="title">Fleet as a node system of Rox</div>
-    <div class="sub">A living record. Identity is the cube; IPs are faces currently rotated forward. Every statement names Rox · face · probe · time. NEST.02 Cycle 2 stabilized the inner core ring of the spiral. NEST.03 makes the bridge visible · this public page mirrors the private FLEET/INVENTORY.md substrate.</div>
-
-    <div class="live-banner">
-      <div class="row">
-        <span><span class="lbl">Updated</span> <span class="val">{fleet.updated}</span></span>
-        <span><span class="lbl">By</span> <span class="val">{fleet.updated_by}</span></span>
-      </div>
-      <div class="edit">Editable source: <code>src/data/fleet.js</code> — edit the file directly, push, portal rebuilds.</div>
-      <div class="note">{fleet.instructions}</div>
-    </div>
-  </div>
-
-  <div class="principle">
-    <strong>Principle.</strong> Station identity is the Rox — name, hardware, OS, location, switch port, role. The IP is a face currently rotated forward. Faces change between sessions and cannot be used to identify the station. Every observation on this page is session-scoped and carries a <em>verified_at</em> timestamp. When a row goes stale, it gets marked stale and re-probed, not silently trusted. Full rule: <em>RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md</em>
-  </div>
-
-  <section>
-    <div class="sec-head">
-      <div class="sec-dot base"></div>
-      <div class="sec-title">Baseplate — persistent identity</div>
-      <div class="sec-count">{fleet.baseplate.length} items</div>
-    </div>
-    {fleet.baseplate.map((b) => (
-      <div class="row-block">
-        <div class="baseplate-row">
-          <div class="baseplate-role">{b.role}</div>
-          <div>
-            <div class="baseplate-hw">{b.hardware}</div>
-            <div class="baseplate-note">{b.loc}</div>
+            <div class="seats">
+              <div class="seats-h">Crew seated (as of {board.updated})</div>
+              {d.seats.length > 0 ? d.seats.map((s) => (
+                <div class="seat"><span class="seat-c">{s.crew}</span><span class={"seat-s s-" + s.status}>{s.status.replace(/-/g, " ").toUpperCase()}</span><span class="seat-n">{s.note}</span></div>
+              )) : <div class="seat-idle">No crew seated · station idle</div>}
+            </div>
+            <div class="det-meta"><span class={/stale|pending/i.test(d.verified) ? "stale" : ""}>verified {d.verified}</span><span>probe: (boxed)</span></div>
           </div>
-          <div>
-            <div class="baseplate-func">{b.func}</div>
-            <div class="baseplate-note">{b.note}</div>
-          </div>
-        </div>
-        <div class="row-meta">
-          <span class="stamp">verified {b.verified_at}</span>
-          <span class="probe">via {b.probe}</span>
-        </div>
-      </div>
-    ))}
-  </section>
-
-  <section>
-    <div class="sec-head">
-      <div class="sec-dot base"></div>
-      <div class="sec-title">Living Map — canonical + current</div>
-      <div class="sec-count">{fleet.topology.switches.length} switches · {fleet.current_attachment.length} attachments</div>
+        </details>
+      ))}
     </div>
 
-    <div class="map-ascii-wrap">
-      <div class="map-ascii-meta">
-        <span><strong>Pass 1 · hand-lettered sketch</strong></span>
-        <span>Updated inline when things move · rendered from <code>src/pages/fleet.astro</code></span>
-      </div>
-      <pre is:raw class="map-ascii">
-    NORTH WINDOW   ·   external signal this way  ───▶
+    <div class="topo">
+      <div class="topo-h">Living Map · canonical reference</div>
+      <div class="ascii-wrap">
+        <div class="ascii-meta">
+          <span>Hand-lettered sketch · NEST.01_NOTES_041426 (Dan's Illustrator framework)</span>
+          <span>Switch ports shown · IPs / SSIDs / shares boxed</span>
+        </div>
+        <pre is:raw class="ascii">    NORTH WINDOW   ·   external signal this way  ───▶
 
     UNIX  ZONE                                  WINDOWS  ZONE
     ─────────────────────────                   ─────────────────────────
@@ -341,238 +188,18 @@ section{margin:2.5rem 0;}
       (multi-home: Public + VZW + copper)
 
     CENTER
-      PIRALUS  ·  Netgear R7900 backbone  ·  DHCP (boxed)  ·  Fleet WiFi (boxed)  ·  SMB (boxed)
+      PIRALUS  ·  Netgear R7900 backbone  ·  DHCP (boxed)  ·  Fleet WiFi (boxed)
       STN1    8PSW p6    ◯   (via Dell K16A hub)
       ACHE    by window  ★★  (Galaxy S10 · always with Dan)
 
     LEGEND   ★ stationary    ◯ roaming    ★★ full-mobile (Dan)    ✕ decommissioned    ● accessory
-
-    LINKS    5PSW ──▶ PIRALUS p1 (unix uplink)   ·   8PSW ──▶ PIRALUS p2 (windows uplink)
-             DPSL ◀── Apple Universal Control ──▶ DPSR
-
-    CANON    Dan's Illustrator map NEST.01_NOTES_041426_1 (spatial framework).
-             Switch ports shown · IPs / SSIDs / share paths are boxed (fleet_private.js).
-
-    NOTE     Reference sketch only. Live station state is the FLEET ACTUAL board above.
-      </pre>
-    </div>
-
-    <div class="mobility-legend">
-      <span><span class="mob-badge stationary">stationary</span> never moves</span>
-      <span><span class="mob-badge roaming">roaming</span> leaves the Nest regularly</span>
-      <span><span class="mob-badge full-mobile">full-mobile</span> always with Dan</span>
-    </div>
-
-    <div class="switch-grid">
-      {fleet.topology.switches.map((sw) => (
-        <div class="switch-block">
-          <div class="switch-head">
-            <span class="switch-label">{sw.label}</span>
-            <span class="switch-hw">{sw.hw}</span>
-            <span class="switch-loc">{sw.loc}</span>
-          </div>
-          <div class="port-row">
-            {sw.ports.map((p) => {
-              const cls = p.uplink_to ? "port uplink" : p.unused ? "port unused" : p.home ? "port home" : "port";
-              const state = p.uplink_to ? "UPLINK" : p.unused ? "UNUSED" : p.home ? "HOME" : "";
-              return (
-                <div class={cls}>
-                  <div class="port-num">p{p.n}</div>
-                  {p.home && <div class="port-home">{p.home}</div>}
-                  {p.expected_ip && <div class="port-ip">{p.expected_ip}</div>}
-                  {p.uplink_to && <div class="port-home" style="font-size:0.6rem">→ {p.uplink_to}</div>}
-                  <div class="port-state">{state}</div>
-                  {p.note && <div class="port-note">{p.note}</div>}
-                </div>
-              );
-            })}
-          </div>
-          {sw.wifi_radios && (
-            <div class="port-row" style="margin-top:0.7rem;">
-              {sw.wifi_radios.map((r) => (
-                <div class="port uplink" style="min-height:auto;padding:0.4rem 0.6rem;">
-                  <div class="port-num">WiFi</div>
-                  <div class="port-home" style="font-size:0.6rem;color:var(--base);">{r}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-
-    <div style="margin-top:1.5rem;">
-      <div class="sec-title" style="font-size:0.58rem;margin-bottom:0.5rem;color:var(--rox);">Current attachment (who is where right now)</div>
-      {fleet.current_attachment.map((a) => {
-        const rx = fleet.rox.find((r) => r.name === a.rox);
-        const mob = rx?.mobility || "";
-        return (
-          <div class="live-row">
-            <span class="live-rox">{a.rox}</span>
-            <span class="live-via">{a.via === "wired" ? "⎯⎯ wired" : a.via === "wifi" ? "⟿ wifi" : "off-fleet"}</span>
-            <span class="live-at">{a.at}</span>
-            <span class="live-ip">{a.ip}</span>
-            <span>
-              {mob && <span class={"mob-badge " + mob}>{mob}</span>}
-              {' '}
-              <span class={"live-status " + a.status}>{a.status}</span>
-            </span>
-          </div>
-        );
-      })}
-    </div>
-
-    {fleet.phantom_clients && fleet.phantom_clients.length > 0 && (
-      <div style="margin-top:1.2rem;">
-        <div class="sec-title" style="font-size:0.58rem;margin-bottom:0.5rem;color:var(--open);">Phantom clients (audit pending)</div>
-        {fleet.phantom_clients.map((p) => (
-          <div class="phantom-row">
-            <span class="phantom-ssid">{p.ssid}</span>
-            <span class="phantom-ip">{p.ip}</span>
-            <span class="phantom-mac">{p.mac}</span>
-            <span class="phantom-note">{p.hostname} — {p.note}</span>
-          </div>
-        ))}
+    LINKS    5PSW ──▶ PIRALUS p1 · 8PSW ──▶ PIRALUS p2 · DPSL ◀─ Universal Control ─▶ DPSR</pre>
       </div>
-    )}
-  </section>
-
-  <section>
-    <div class="sec-head">
-      <div class="sec-dot rox"></div>
-      <div class="sec-title">Rox — station identity</div>
-      <div class="sec-count">{fleet.rox.length} stations</div>
     </div>
-    {fleet.rox.map((r) => (
-      <div class="row-block">
-        <div class="rox-row">
-          <div class="rox-name">{r.name}</div>
-          <div class="rox-body">
-            <div class="rox-hw">{r.hw} · {r.os} · <span class={"mob-badge " + (r.mobility || "stationary")}>{r.mobility || "stationary"}</span></div>
-            <div class="rox-meta-l2">{r.loc} — {r.role}</div>
-            {r.mobility_note && <div class="rox-meta-l2" style="margin-top:0.3rem;font-style:italic;">{r.mobility_note}</div>}
-            <div class="rox-faces">Faces: {r.faces}</div>
-            {(r.ssh || r.tailscale || r.proton_vpn) && (
-              <div class="rox-services">
-                {r.ssh && <div class="rox-svc"><span class="svc-lbl">SSH</span><span class="svc-val">{r.ssh}</span></div>}
-                {r.tailscale && <div class="rox-svc"><span class="svc-lbl">Tailscale</span><span class="svc-val">{r.tailscale}</span></div>}
-                {r.proton_vpn && <div class="rox-svc"><span class="svc-lbl">Proton VPN</span><span class="svc-val">{r.proton_vpn}</span></div>}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    ))}
-  </section>
 
-  <section>
-    <div class="sec-head">
-      <div class="sec-dot obs"></div>
-      <div class="sec-title">Observation — current face rotation</div>
-      <div class="sec-count">{fleet.observation.length} rows</div>
+    <div class="foot">
+      Related: <a href="/gulls">/gulls</a> · <a href="/logs">/logs</a> · <a href="/nest-pi">/nest-pi</a> · <a href="/nest">/nest</a><br/>
+      Source: src/data/fleet.js (public) · src/data/fleet_private.js (boxed, gitignored) · FLEET/INVENTORY.md · RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md
     </div>
-    {fleet.observation.map((o) => (
-      <div class="row-block">
-        <div class="row-top">
-          <span class="row-name">{o.rox}</span>
-          <span class={"row-ip " + (o.ip.includes('(') ? 'empty' : '')}>{o.ip}</span>
-          <span class="row-face">{o.face}</span>
-        </div>
-        <div class="row-detail">{o.detail}</div>
-        <div class="row-meta">
-          <span class={"stamp " + (o.verified_at === 'stale' ? 'stale' : '')}>verified {o.verified_at}</span>
-          <span class="probe">via {o.probe}</span>
-        </div>
-      </div>
-    ))}
-  </section>
-
-  <section>
-    <div class="sec-head">
-      <div class="sec-dot base"></div>
-      <div class="sec-title">Hardware — per-Rox specs (probe, not memory)</div>
-      <div class="sec-count">{Object.keys(fleet.hardware).length} Rox</div>
-    </div>
-    <div class="sub" style="margin-bottom:1rem;">
-      Fleet-map-right work started 041726 23:55 (Dan directive). Each Rox row gets CPU, RAM, GPU, storage, and every network adapter. Values come from one probe round-trip per station. <strong>"probe-pending"</strong> is an acknowledged hole, not a guess. Takes the next few days to fill completely; tonight is the sketch.
-    </div>
-    {Object.entries(fleet.hardware).map(([name, h]) => (
-      <div class="row-block hw-block">
-        <div class="hw-head">
-          <div class="hw-name">{name}</div>
-          {h.fleet_role && <div class="hw-role">{h.fleet_role}</div>}
-        </div>
-        <div class="hw-grid">
-          {h.cpu         && <div class="hw-item"><span class="hw-k">cpu</span><span class="hw-v">{h.cpu}</span></div>}
-          {h.ram         && <div class="hw-item"><span class="hw-k">ram</span><span class="hw-v">{h.ram}</span></div>}
-          {h.gpu         && <div class="hw-item"><span class="hw-k">gpu</span><span class="hw-v">{h.gpu}</span></div>}
-          {h.storage     && <div class="hw-item hw-wide"><span class="hw-k">storage</span><span class="hw-v">{h.storage}</span></div>}
-          {h.hardware_class && <div class="hw-item"><span class="hw-k">class</span><span class="hw-v">{h.hardware_class}</span></div>}
-          {h.firmware    && <div class="hw-item"><span class="hw-k">firmware</span><span class="hw-v">{h.firmware}</span></div>}
-          {h.radios      && <div class="hw-item hw-wide"><span class="hw-k">radios</span><span class="hw-v">{h.radios.join(" · ")}</span></div>}
-          {h.net_ports   && <div class="hw-item hw-wide"><span class="hw-k">net_ports</span><span class="hw-v">{h.net_ports}</span></div>}
-          {h.net_adapters && (
-            <div class="hw-item hw-wide">
-              <span class="hw-k">net_adapters</span>
-              <ul class="hw-list">
-                {h.net_adapters.map((n) => <li>{n}</li>)}
-              </ul>
-            </div>
-          )}
-          {h.default_route && <div class="hw-item hw-wide"><span class="hw-k">default_route</span><span class="hw-v">{h.default_route}</span></div>}
-          {h.user        && <div class="hw-item hw-wide"><span class="hw-k">user</span><span class="hw-v">{h.user}</span></div>}
-          {h.software    && <div class="hw-item hw-wide"><span class="hw-k">software</span><span class="hw-v">{h.software}</span></div>}
-          {h.ssh_keys_in_authorized && (
-            <div class="hw-item hw-wide">
-              <span class="hw-k">authorized_keys</span>
-              <ul class="hw-list">
-                {h.ssh_keys_in_authorized.map((k) => <li>{k}</li>)}
-              </ul>
-            </div>
-          )}
-          {h.installs_pending && h.installs_pending.length > 0 && (
-            <div class="hw-item hw-wide">
-              <span class="hw-k">installs_pending</span>
-              <span class="hw-v hw-pending">{h.installs_pending.join(" · ")}</span>
-            </div>
-          )}
-          {h.known_blocker && <div class="hw-item hw-wide"><span class="hw-k hw-blocker">blocker</span><span class="hw-v">{h.known_blocker}</span></div>}
-        </div>
-        <div class="row-meta">
-          <span class="stamp">verified {h.verified_at}</span>
-          <span class="stamp">probe: {h.probe}</span>
-        </div>
-      </div>
-    ))}
-  </section>
-
-  <section>
-    <div class="sec-head">
-      <div class="sec-dot open"></div>
-      <div class="sec-title">Open faces — unresolved, under observation</div>
-      <div class="sec-count">{fleet.open_faces.length} items</div>
-    </div>
-    {fleet.open_faces.map((f) => (
-      <div class="row-block">
-        <div class="open-row">
-          <div class="open-rox">{f.rox}</div>
-          <div>
-            <div class="open-face">{f.face}</div>
-            <div class="open-issue">{f.issue}</div>
-            <div class="open-action">→ {f.action}</div>
-            {f.status && <div class="open-status">{f.status}</div>}
-          </div>
-        </div>
-        <div class="row-meta">
-          <span class="stamp">verified {f.verified_at}</span>
-        </div>
-      </div>
-    ))}
-  </section>
-
-  <div class="foot">
-    Related: <a href="/gulls">/gulls</a> · <a href="/logs">/logs</a> · <a href="/nest-pi">/nest-pi</a><br/>
-    Source docs: RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md · RELAY/TRIP_ROX_ABSORPTION_FleetAsNodeSystem_041626.md · FLEET/INVENTORY.md · NEST.01_NOTES_041426_1.png
   </div>
-</div>
 </BaseLayout>
