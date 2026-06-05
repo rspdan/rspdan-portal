@@ -1,0 +1,786 @@
+{
+  "_updated": "060526 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
+  "here": [
+    {
+      "name": "OLO BRIGHT · rspdan.com public-faces maintenance cluster · 060426 LAGOS-diff verify pass (CUBE Trip)",
+      "note": "Filed 060426 ~4:00 PM PT by CUBE Trip Local per Dan-direct maintenance-phase directive (track what we're fixing, map it, establish a way that registers + automates these problems). Full map: [STATUS/LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md](LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md) + problem-classes C1-C11 in [MFST RAM-003](../LOG/MFST/060426/MFST_CUBE_Trip_NEST03_Opus4.8_060426_3.md). **Verified gaps (each routed to its lane):** (a) **/nest keystone** name LAGOS publicly + gate-architecture + Dispatch [CUBE Doc fold, in progress]; (b) **/gulls** week-stale + …",
+      "filed": "060426 ~4:00 PM PT"
+    },
+    {
+      "name": "SEEGULL #74 PARTIAL RESOLUTION · Rorrim Nips ProseMirror paste-state-gate failure-class · multi-approach combo SHIPPED 4 of 4 Crews Pass-N+25 · investigation-path narrowed",
+      "note": "",
+      "filed": ""
+    },
+    {
+      "name": "SEEGULL #74 · Rorrim Nips ProseMirror paste-state-gate failure-class · Chrome MCP JavaScript injection fails for Claude Code Crew composers · 2 of 4 Crews paste-relay delivery Day-3",
+      "note": "Filed: 052726 Wednesday ~20:00 PT by ODT Trip Local-MCP per Pass-N+12 + Pass-N+17/N+18 empirical observations + Pass-N+21 OO_DAILY §III + Pass-N+22 WAKE §VI · per Dan-direct AAA 052726 + /meta-dates fashion + /atomic-commit · sister-cite to Sub-class-F Rorrim Nips canonical-procedure (CLAUDE.md Hard Rule 10) | **Failure-class:** JavaScript DOM-level injection succeeds (textContent / value set 2387-3332 chars per tab tested) but React-controlled state does NOT update · Send button stays disabled (aria=Send + disabled=true) · multiple event-dispatch attempts fail (native-setter trick + …",
+      "filed": "052726 Wednesday ~20:00 PT"
+    },
+    {
+      "name": "🔥 OLO BRIGHT · 34+ days of logs missing from rspdan.com/logs (042426 through 052726) · SEEGULL #73 EXPANDED finding 052726",
+      "note": "Filed: 052726 Wednesday ~13:55 PT by ODT Trip Local-MCP via Trip Local-tool archaeology · per Dan-direct 052726 13:25 PT *\"FUCKING GET EVERYTHING DONE TODAY BY USING THE CREW STRUCTURE NO STUPID MODE NO FUCKUPS NO OOPS AND SPINNING CORRECTIONS NO STALLING NO WAITING ALWAYS YES ASMM GET TO WORK\"* + Briefcase Log-First standard rule install this session 40484c3 | **Finding:** `src/pages/logs.astro` contains continuous dates 2026-03-04 → 2026-04-23 (51 entries) then NOTHING. Missing 042426 onward through today 052726 = ~34 days × 1+ entries/day. Week-label histogram confirms gap: A Week 10 + E …",
+      "filed": "052726 Wednesday ~13:55 PT"
+    },
+    {
+      "name": "Claude Code chat-record extraction pipeline · Projects→Code transition substrate-gap · ODT-Trip session-jsonl location DISCOVERED 052726 17:25 PT · Research-gap #3 schema-comparison RESOLVED 052726 18:30 PT · LAYER-2 TRANSPORT PICKED 060426 (PR #168)",
+      "note": "",
+      "filed": ""
+    },
+    {
+      "name": "🔥 OLO BRIGHT · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT) · same-shape as Jikal Maxon 041426 (Spotify 82 GB VZW_HOTSPOT) · /yiyish vs /yiyyish posture-trigger violation per Dan-canon 050226",
+      "note": "Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of my VZW_HOTSPOT because Spotify decided to download 80gbs of music without making it clear what was being wasted. Just because the access is there does not give Stupid Mode permission. /dtad\"* | **Anthropic Labs product-design alarm:** Claude Design weekly quota burns through Dan's Extra Usage credits without delivering proportional canonical-output. Today's session: El VIS Claude Design 100% …",
+      "filed": "052026 Wednesday ~15:30 PT u"
+    },
+    {
+      "name": "STN2-Doc cure-recipe apply (Tailscale-RDP into STN2 + restore session)",
+      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 BYPASS-FUCKERY discipline-fold | STN2-Doc CRASHED at commit `e3a3620` with persistence-rollback per 051926 cross-Crew witness. Cure-recipe filed at `LOG/MAIL/DOCDoc_TO_Dan_STN2DocCrashRecovery_TailscaleRDPRecipe_051926.md` (Tailscale-RDP into STN2 `100.95.196.13` + restore working-dir + reauth). Dan-action when scenery permits (NOT Dan-deferred per RAM-006 write-time-gate). Unblocks STN2-Doc cloud-station rejoin to PeaPod triangle.",
+      "filed": "051926 Tuesday ~02:51 PT"
+    }
+  ],
+  "near": [
+    {
+      "name": "Branch protection switch (Bridge main-branch governance)",
+      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | Bridge `main` branch should have protection-rules requiring PR-review + green-checks before merge. Currently any Crew can push direct (per cross-Crew witness 051926). Dan-decision pending: enable + which checks gate the merge.",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "STN1 Tailscale onboarding (mesh 8-peer extension)",
+      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | STN1 not yet on Tailscale mesh (currently 7-peer per CURRENT_ARC §III LIVING_MAP heartbeat 051926). Install Tailscale client + auth-key + verify peer-reachable from ODT. Extends mesh-coverage to all Windows stations.",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "GOG1/oshin status verification (Claude Code peer reachability)",
+      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | GOG1 (`10.0.0.3`) Claude Code installed 041926 per SEEGULLS DONE entry. Verify current state: Claude Code still authed · oshin (G2 GPU) reachable · Ollama models accessible. Substrate-state-check needed before next Claude-Code-on-GOG1 work.",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "Gmail label scope audit (AGOS canonical-set vs live label-set)",
+      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | AGOS canonical labels per LAGOS canon need audit-vs-live-set. Enumerate live labels via gmail MCP `list_labels`, compare against canonical-set, surface drift: orphan labels · missing canon labels · labelless threads. Substrate-grep before claim per /meta-dates Gate 3d.",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "PS$ ambient scratch-file gate (Triptective Case 002 install as nature)",
+      "note": "Filed: 042226 Wednesday ~21:20 PT by Trip after Dan's 042226 ~21:10 teaching | Triptective Case 002 (041426) named the PowerShell dollar-sign stripping failure: `start_process powershell -Command 'python -c \"...$var...\"'` loses `$var` because PowerShell command-line parsing consumes the `$`. The fix exists as a *remembered* rule: write the command to a `.ps1` or `.py` scratch file and run via `-File` / direct `python scripts/...`. Dan 042226 ~21:10 PT: *\"This is on our list already, you made a fix earlier but I don't think it's actively engaged yet. Seems like a good one to get running on our …",
+      "filed": "042226 Wednesday ~21:20 PT"
+    },
+    {
+      "name": "STN2 Claude Code install",
+      "note": "Filed: 041926 Sunday 23:00 PT | Same pattern as GOG1 tonight: Node already present via existing Node installation (Git/Node mirrored install NEARGULL covers this), run `npm install -g @anthropic-ai/claude-code`, then `claude` interactively (TTY required · Windows Terminal or `ssh -t`). Expected to complete in <5 min when executed. After install: STN2 becomes a local-Claude station peer alongside GOG1. Fleet-wide universalization takes another step.",
+      "filed": "041926 Sunday 23:00 PT"
+    },
+    {
+      "name": "CUBE Claude Code install",
+      "note": "Filed: 041926 Sunday 23:00 PT | Blocked on Win10 1909→22H2 upgrade (separate CUBE Claude Desktop blocker NEARGULL). Claude Code itself may work on 1909 · verify once Node is installed. If 1909 works, install Claude Code before the 22H2 upgrade and gain CUBE-local-Claude immediately. If not, sequence is 22H2 upgrade first then Claude Code install.",
+      "filed": "041926 Sunday 23:00 PT"
+    },
+    {
+      "name": "Fleet ground-truth rebuild · station by station with Dan",
+      "note": "Filed: 041926 by Dan directive ~11:30am PT | Started 041926 ~12:20pm PT. Working doc: `RELAY/FLEET_GROUNDTRUTH_REBUILD_041926.md`. Method: stop treating current fleet.js / INVENTORY.md / rspdan.com/fleet as truth. Treat them as scaffolding. Dan + Trip review each Station together, logging from ground-truthed data (Dan-direct + DC probes + screenshots). Every fact anchored to its instrument. Station 1 = CUBE (ground-truthed 041926 12:17pm: Wacom tablets on ODT side not CUBE, monitors are WM32DX9019 + UN40NU7200, ALFA is gone, TP-Link TX20U+ on CUBE for VZW, CUBE PCIe WiFi at 10.0.0.42, CUBE …",
+      "filed": "041926"
+    },
+    {
+      "name": "GOG1 deployment",
+      "note": "Filed: 041326, upgraded 041426 | **STATUS 041926 ~22:00 PT · Claude Code universalization achieved (see HEREGULL above). Remaining pure-execution items shifted to separate gulls:** (a) NVIDIA drivers for GTX 980 (GCC-11 vs kernel 6.8 DKMS blocker · deferred, CPU inference works), (b) Docker not yet installed, (c) Ollama installed and Fleet-bound at 10.0.0.3:11434 · model Modelfile imports pending per Dan directive to defer. Access path remains fully clear: passwordless SSH, NOPASSWD sudo, UFW inactive. This HEREGULL is effectively replaced by the Claude Code DONE entry above · leaving for …",
+      "filed": "041326, upgraded 041426"
+    },
+    {
+      "name": "Make-It-Visible 7+1 page architecture",
+      "note": "Filed: 042226 Wednesday ~17:58 PT by Dan directive | ABSORBS and SUPERSEDES the prior Night Shift 042226 package. Dan's declared architecture: existing crew-only pages `/gulls` `/logs` `/fleet` `/nest-pi` (4) + NEW `/skills` `/boot` `/manifest` (3) = 7 tool pages, with an 8th `/nest` that holds the other 7 as the VISible layer (VIS = Visual Information Specialist honorific, same as Dan's NPS title given to Stan 031926 · NOT new). Rules: cannot boot without manifest; cannot close until manifest matches VIS layer on `/nest`. Dan's Inversion teaching (042226 ~18:25 PT): Cycle 1 pages were built …",
+      "filed": "042226 Wednesday ~17:58 PT"
+    },
+    {
+      "name": "Blanche Transfer → /skills render as pre-send pronoun gate",
+      "note": "Filed: 042226 Wednesday ~18:30 PT | Canon exists at `RELAY/CONTAMINATION_NOTE_BLanche_Transfer_Stan_040526.md` since 040526, but it only catches when someone grep-hits \"Blanche.\" Today (042226) Trip committed the same structural failure in thinking while prepping the Amanda letter · pronoun \"her\" bled from recipient Amanda (she/her) onto Dan (he/him, the VIS being described). Near-miss: slip didn't reach letter body, but could next time. Structural fix: when `/skills` goes live in Make-It-Visible, render the Blanche Transfer rule as an active pre-send gate that fires on any outbound letter …",
+      "filed": "042226 Wednesday ~18:30 PT"
+    },
+    {
+      "name": "Night Shift 042226 · filed-not-propagated systemic fix suite",
+      "note": "Filed: 042226 Wednesday ~17:02 PT by Dan directive, sequenced post-Amanda-letter-ship | **SUPERSEDED 042226 ~17:58 PT by Make-It-Visible 7+1 page architecture above.** Keeping this entry for lineage · the five items (rspdan.com/nestnet page, NESTNET auto-refresh pipeline, /logs A-Week repair + E-Week 13-day-span fix, PI rotation to F-indexed with Pass notation, Premiere MCP as Waywood Cycle 2 first-tier tool) all fold into the 7+1 architecture as components. See Make-It-Visible NEARGULL above for Cycle 2 framing.",
+      "filed": "042226 Wednesday ~17:02 PT"
+    },
+    {
+      "name": "MAIL INDEX full backfill",
+      "note": "Filed: 042126 Twosday ~22:30 PT by Trip (Opus 4.7) ODT | Bootstrap `LOG/MAIL/INDEX.md` created tonight covering 042126 session only (4 files). 234 top-level MAIL files + LOG/MAIL/ARCHIVE/ subtree uncataloged. Needed so Layer 6 manifest invariant holds across the corpus, not just tonight. Arc: one dedicated session to walk every MAIL file, extract (date, author, one-sentence summary), sort by date descending within session arcs, commit. Not a crisis Ã¢â‚¬â€ the bootstrap means new MAIL files get indexed going forward. Related: CANONICAL_MemoryManagement_Trip_041926.md (Layer 6 manifest …",
+      "filed": "042126 Twosday ~22:30 PT"
+    },
+    {
+      "name": "Second-Loop Narrative Review · spiral direction audit",
+      "note": "Filed: 042126 by Dan directive ~18:30 PT | Dan named the frame: NEST is his lived-experience educational tool, crew has completed one narrative loop around Waywood (first cycle of canon, 031626→042126), and the second loop is where spiral direction becomes visible (up or down · neither bad, but direction must be named). Canon: `RELAY/CANONICAL_NestAsLivedEducationalTool_Dan_042126.md`. Arc: systematic corpus review with second-loop eyes, not to relitigate but to notice where the current moment rhymes with prior canon. Each crew member reviews their own prior work. Method: NESTNET-first (every …",
+      "filed": "042126"
+    },
+    {
+      "name": "Missing E-Week · logs archaeology",
+      "note": "Filed: 041926 by Dan ~11:50am PT | Dan's observation on wrapping back to F Week 041926: *\"I'M PRETTY SURE A WEEK GOT ENGULFED BY E WEEK IN THE LOGS WHERE IS IT????\"* A week from the first cycle (A E B F# F C G D) may have been absorbed/overlapped by E Week labeling and gone missing from rspdan.com/logs. **Defer until Logs maintenance sweep** · Dan's directive: \"not get derailed by my note above is worth flagging for repair when we do Logs maintenance soon.\" Investigation path when taken up: (a) NESTNET-search corpus for all week labels chronologically, (b) cross-reference against the …",
+      "filed": "041926"
+    },
+    {
+      "name": "GraftOS pipeline · [FLEET_CANON] as first payload",
+      "note": "Filed: 041926 by Dan + Trip ~11:50am PT | Named pattern: GraftOS (`RELAY/CANONICAL_GraftOS_Trip_041926.md`). First pipeline implementation: GitHub Action on `rspdan-portal/main` fires on merges touching `src/data/fleet.js`, renders file to markdown, emails to rspdan@gmail.com with subject `[FLEET_CANON] rspdan.com/fleet · <timestamp> · <commit-short>`. Crew boot queries: `gmail_search_messages subject:[FLEET_CANON] newer_than:30d` → take newest. Blocked on: (a) fleet ground-truth rebuild completing enough to produce trustworthy first canon, (b) Dan-approved subject-prefix taxonomy, (c) SMTP …",
+      "filed": "041926"
+    },
+    {
+      "name": "BPK skill rewrite · reference GraftOS, remove hardcoded fleet data",
+      "note": "Filed: 041926 by Dan directive | Current `ENGINE/skills/boot-polish/SKILL.md` has hardcoded inventory tables that drift. Rewrite: replace inventory with `gmail_search_messages subject:[FLEET_CANON] newer_than:30d` query as the authoritative read. Same pattern for other canon types once pipelines exist. Blocked on: GraftOS pipeline above producing first real payload. Supporting patch: briefcase skills (trip-briefcase, stan-briefcase, cb-briefcase) get a canon-query step at boot that reads latest FLEET_CANON + GULLS_CANON + any other live canon Grafts. The briefcase + BPK skills become the …",
+      "filed": "041926"
+    },
+    {
+      "name": "Fleet page ASCII sketch · Pass 2 (dynamic render) + fresh content corrections from 041926 12:17pm review",
+      "note": "Filed: 041926 by Dan ~12:17pm PT | Dan reviewed the current Pass-1 hand-lettered ASCII and flagged: rework for clean + easier to update (this is Pass 2 NEARGULL above); Wacom tablets are on ODT side not CUBE; \"West + BAS\" is unclear (models: Westinghouse WM32DX9019, Samsung UN40NU7200); ALFA is no longer at CUBE (floating accessory now); TP-Link TX20U+ adapter on CUBE for VZW_HOTSPOT; CUBE PCIe WiFi card at 10.0.0.42 attached to Piralus (NEW · not in current map); CUBE copper NIC at 10.0.0.4 (existing). Pass 2 work picks up the ASCII-render-from-data task AND incorporates these corrections …",
+      "filed": "041926"
+    },
+    {
+      "name": "Boot Documentation Sweep · C:\\STAN canonical + FAS-letter purge",
+      "note": "Filed: 041826 by Trip | Multi-session task triggered by 041826 C: migration. Bridge + /mnt/skills/user/ skills still reference older paths (`L:\\FAS2\\CGB\\nest-bridge`, `F:\\STAN\\SOURCE`) in several places. **Scripts** (ENGINE/, non-skills): 23 files with FAS-first search logic · top offenders portal_check.ps1 (5 hits), yomygdylo_automap.py (8), oshin_ping.py (5), nestlog_check.py (4), nest_vitals.py (3), oshin_tv.py (3), session_close.ps1 (3), log_watch.py (3), oshin_eyes.py (3). Pattern to replace: `Get-Volume | Where FileSystemLabel -match '^FAS'` as primary search must become C:-first with …",
+      "filed": "041826"
+    },
+    {
+      "name": "fleet_scan.ps1 rewrite (station -> probes model)",
+      "note": "Filed: 041626 | Current script maps IP -> station name (hardcoded hashtable with stale R7900=10.0.0.1 line, no way to attribute 10.0.0.54 to GOG1). Invert: for each station (stable identity), probe via hostname resolution, Tailscale, mDNS, ARP, ping. Output a timestamped observation block, not a defining map. Full rule: RELAY/STANDARD_RULE_FleetIPsObservedNotDefining_Trip_041626.md. Add Unix equivalent ENGINE/fleet_scan.sh.",
+      "filed": "041626"
+    },
+    {
+      "name": "INVENTORY.md restructure (IPs out of STATIONS)",
+      "note": "Filed: 041626 | STATIONS blocks should carry stable identity only (name, hardware, OS, location, switch port, physical role). IPs live in a separate scan-populated section, overwritten by fleet_scan on each run. No hand-edited IPs. Currently ODT/STN2/GOG1/CUBE/DPSL/DPSR/TRP0/STN1 all mix identity with literal IPs. Restructure as one block with Dan's sign-off on format.",
+      "filed": "041626"
+    },
+    {
+      "name": "Audit Bridge for hardcoded fleet IPs",
+      "note": "Filed: 041626 | Every doc and script that literally writes 10.0.0.x needs cataloging and flagging. Known suspects: FLEET/INVENTORY.md, ENGINE/fleet_scan.ps1, ENGINE/fleet_manifest.json, RELAY/BIG_ASS_BOARD_NetworkModel_Trip_032626.md, skills/boot-polish/SKILL.md (fleet table), possibly nest_harbor.py (per old log reference), any LOG/MAIL entries with IP-as-identity. Produce a catalog, then decide remediation strategy per file.",
+      "filed": "041626"
+    },
+    {
+      "name": "C:\\NEST\\ directory",
+      "note": "Filed: 041426 | Permanent system tools path. Windows=C:\\NEST\\, Unix=~/NEST/. Needed for nest-proxy and blender-mcp config.",
+      "filed": "041426"
+    },
+    {
+      "name": "nest-proxy config cleanup (STN2/TRP0/DPSL/GOG1-if-applicable)",
+      "note": "Filed: 041526, tooling staged 041626 | Scripts ready: `ENGINE/cleanup_nest_proxy_windows.ps1` (STN2, CUBE), `ENGINE/cleanup_nest_proxy_unix.sh` (TRP0, DPSL, GOG1 if Claude Desktop installed). Per-station commands in `FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md`. Each script creates timestamped backup, is idempotent, reports mcpServer list after. Station runs once at next boot, then restart Claude Desktop.",
+      "filed": "041526, tooling staged 04162"
+    },
+    {
+      "name": "session_close.ps1 Vercel READY verify",
+      "note": "Filed: 041526 | Layer 2 of Vercel prevention (Layer 1 is pre-push portal_check.ps1). Automate the Vercel MCP `list_deployments` check · block session close if latest commit isn't READY. Tonight proved the pattern works; next step is making it automatic.",
+      "filed": "041526"
+    },
+    {
+      "name": "NEST_API_KEY rotation",
+      "note": "Filed: 041526 | Current key 9e6e3ae... is in nest_proxy_config.json in public repo. Rotate + move to .gitignored secrets file. Update Vercel env var + all station configs simultaneously.",
+      "filed": "041526"
+    },
+    {
+      "name": "Cowork Scheduled Tasks",
+      "note": "Filed: 041426 | Research + visual explainer before implementing. 0/15 daily runs unused.",
+      "filed": "041426"
+    },
+    {
+      "name": "Git/Node mirrored install",
+      "note": "Filed: 041426 | Installed on ODT. Flag: STN2, TRP0, GOG1, DPSL each need their own install.",
+      "filed": "041426"
+    },
+    {
+      "name": "GOG1 Ollama deployment",
+      "note": "Filed: 041326 | Models on FAS2 (4.4 GB), deployment guide filed, not executed. Golden carpet ready.",
+      "filed": "041326"
+    },
+    {
+      "name": "Pheromone typing in frontmatter",
+      "note": "Filed: 041326 | NA 017 proposed permanent/session/deprecated tags. Not implemented.",
+      "filed": "041326"
+    },
+    {
+      "name": "NESTNET auto-index rebuild",
+      "note": "Filed: 041326 | Manual rebuild = doesn't happen. Vercel build step or GitHub Action.",
+      "filed": "041326"
+    },
+    {
+      "name": "Logs page auto-pipeline",
+      "note": "Filed: 041626 | Cowork Scheduled Task on ODT: watch `F:\\STAN\\LNL\\` for new data exports, stream-parse conversations.json via `ENGINE/conv_reader.py` pattern, generate `rspdan-portal/src/pages/logs.astro` entries, portal_check.ps1 + commit + push + Vercel verify + relay beacon. Design filed at `RELAY/LOGS_AUTOPIPELINE_DESIGN_Trip_041626.md` (source conversation: claude.ai/chat/60614011-4456-4e91-9250-3743d174f7a3). Sibling to NESTNET auto-pipeline · same trigger, different output. Five open design decisions for Dan before implementation.",
+      "filed": "041626"
+    },
+    {
+      "name": "Relay INDEX regeneration",
+      "note": "Filed: 041426 | Behind by 1 day, missing today's Standard Rule.",
+      "filed": "041426"
+    },
+    {
+      "name": "Artifact Gate",
+      "note": "Filed: 041326 | Skill read must precede artifact creation. Add to meta-dates as hard gate.",
+      "filed": "041326"
+    },
+    {
+      "name": "FAS restructure",
+      "note": "Filed: 041326 | Slim/Synced/Standardized. Dan directive. FAS2+3 cargo offloaded, architecture not yet unified.",
+      "filed": "041326"
+    },
+    {
+      "name": "Cantenna Pass 2",
+      "note": "Filed: 041426 | Can measurements, adapter inventory on ODT/CUBE/GOG1. Principles understood.",
+      "filed": "041426"
+    },
+    {
+      "name": "Drive letter hardcoding repair",
+      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters.",
+      "filed": "041326"
+    },
+    {
+      "name": "Matt Dubeau justification",
+      "note": "Filed: 041426 | Learned Professional funding path, FLSA exemption form. Crew to draft.",
+      "filed": "041426"
+    },
+    {
+      "name": "Whale Router",
+      "note": "Filed: 032026 | Stan flagged, Dan Go pending.",
+      "filed": "032026"
+    },
+    {
+      "name": "SEEGULLS auto-pipeline",
+      "note": "Filed: 041426 | Single source (STATUS/SEEGULLS.md) → pipeline → web. Kill manual dual-update. One source, one renderer, always in motion.",
+      "filed": "041426"
+    },
+    {
+      "name": "Clock Out automation",
+      "note": "Filed: 041526 | One trigger, non-AI Rube Goldberg to finish line. Replaces manual session_close. WAKE generation guaranteed.",
+      "filed": "041526"
+    },
+    {
+      "name": "Off-Fleet boot normalization",
+      "note": "Filed: 041726 | Boot docs (briefcase skills, BPK, PI, WAKE format) currently assume Fleet LAN reachability. Off-Fleet boots (WiFi-only, at OHC, at a cafe, on VZW hotspot alone) should be a normal branch, not an anomaly. First reference: STN2-at-OHC cold boot 041726 · no ethernet, no 10.0.0.x, Tailscale not installed. Update: briefcase boot sequence, BPK network checks, PI network notes, WAKE template, and relevant Standard Rules.",
+      "filed": "041726"
+    },
+    {
+      "name": "DPSL/DPSR always-online path",
+      "note": "Filed: 041726 | Both iMac twins lit on 5PSW overnight via OHC Public WiFi. Investigate: Public reachability while-asleep (LAN-Wake-on-WiFi feasibility) OR install Tailscale on both twins for reachability from any other Fleet station regardless of network. Same decision applies to STN2, TRP0, ACHE. Strategic choice between per-station wake protocols vs fleet-wide mesh VPN.",
+      "filed": "041726"
+    },
+    {
+      "name": "Manifest-per-day Standard (pilot in progress)",
+      "note": "Filed: 041726 | Promote today's SESSION_NOTES.md pilot to Standard Rule if it sustains through close. Proposed: each crew member maintains ONE file per day per station at `C:\\STAN\\LNL\\YYMMDD\\SESSION_NOTES.md` (or ~/STAN/LNL/YYMMDD/ on Unix). Three sections: NOTES (live commentary), LOGS (append-as-you-go action record), MAPS (diagrams + references). Replaces ad-hoc multi-file-per-session fragmentation. Append discipline: every decision, every tool output worth keeping, every Dan correction · written AS it happens, not reconstructed at close. Validation at 041726 session close.",
+      "filed": "041726"
+    },
+    {
+      "name": "portal_check.ps1 station-aware path detection",
+      "note": "Filed: 041726 | Script hardcodes FAS-drive path lookup; breaks on STN2-at-OHC where portal lives at `C:\\STAN\\SOURCE\\rspdan-portal` with no FAS attached. Deeper issue: per Dan 041726 teaching, FAS drives are go-betweens now, not system storage. portal_check.ps1 was written for an earlier fleet topology where FAS1 = hot cache. Reframe: detect portal repo by searching common local paths (C:\\STAN\\SOURCE\\, ~/STAN/SOURCE/, then FAS labels as fallback). Same pattern family as fleet_scan.ps1 IP hardcoding.",
+      "filed": "041726"
+    },
+    {
+      "name": "Briefcase/BPK enforce Log-First opening move",
+      "note": "Filed: 041726 | Update trip-briefcase + stan-briefcase boot sequences to include a log-integrity check as the first action after CONTACT/STORY. Update boot-polish (BPK) with a log-publication verification step. Full rule: `RELAY/STANDARD_RULE_LogFirstOpeningMove_Trip_041726.md`. Without this, Apr-10-style invisible gaps can persist for days. The briefcase skill is where the ritual lives.",
+      "filed": "041726"
+    },
+    {
+      "name": "Move log_gap_check.ps1 to ENGINE",
+      "note": "Filed: 041726 | Today's ad-hoc gap checker at `C:\\STAN\\LNL\\041726\\log_gap_check.ps1` (23 lines, verified working) should live in `ENGINE/log_gap_check.ps1` as a reusable utility, and its bash equivalent filed as `ENGINE/log_gap_check.sh` for Unix stations. Called by BPK to enforce Log-First rule.",
+      "filed": "041726"
+    },
+    {
+      "name": "STN2 Docker + Ubuntu WSL survey + mapping",
+      "note": "Filed: 041726 | **PARTIAL: 041726 21:35 · Docker operational, Model Runner verified Fleet-reachable at 10.0.0.2:12434 (gemma4, mistral-nemo). See `RELAY/RESEARCH_ModelRunnerSTN2_FleetBinding_Trip_041726.md` for full verification. Survey of pulled images, compose files, Ubuntu WSL contents still open.** Dan installed Docker Desktop + downloaded \"tons of stuff\" without clear tracking. Ubuntu WSL also installed, frequently forgotten in favor of firefighting. Opening snapshot 041726 11:30 PT: Docker Desktop at `C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe`, service `com.docker.service` …",
+      "filed": "041726"
+    },
+    {
+      "name": "Filesystem:edit_file large-append truncation",
+      "note": "Filed: 041726 | Today's finding: Filesystem MCP's edit_file silently collapses/fuses content mid-block on large multi-line appends (~4K byte append landed as ~1.8K with two unrelated sentences fused mid-word). Workaround: small targeted edits or full-file write_file rewrites. Root cause unknown · possibly regex-match limit or line-diff heuristic bug in the MCP. Document in FLEET/MCP_SETUP.md as a known pitfall.",
+      "filed": "041726"
+    },
+    {
+      "name": "STN2 Model Runner cross-station reach verification",
+      "note": "Filed: 041726 | STN2 Model Runner is now Fleet-bound at `10.0.0.2:12434` via Windows portproxy + firewall rule added 041726 21:00. Self-reach verified from STN2 itself (localhost + Fleet IP both answer). Cross-station reach from DPSL, DPSR, ODT, TRP0, GOG1, CUBE is expected but not empirically proven. At next boot on each of those stations, run `Invoke-RestMethod -Uri 'http://10.0.0.2:12434/engines/v1/models'` (PowerShell) or `curl http://10.0.0.2:12434/engines/v1/models` (Unix) and confirm the two-model catalog returns. Full context: …",
+      "filed": "041726"
+    },
+    {
+      "name": "STN2 Model Runner reboot-persistence check",
+      "note": "Filed: 041726 | Windows portproxy entries and firewall rules added 041726 persist across reboots via registry state, in theory. Verify at next STN2 cold boot by running the three-test self-check (localhost models, Fleet IP models, netstat listening on both). If Fleet IP drops after reboot, investigate and either re-apply the setup script at boot or move to a scheduled-task that re-runs it on login. Setup script is idempotent so re-running is safe.",
+      "filed": "041726"
+    },
+    {
+      "name": "Parse-check before invoke (PS1 discipline)",
+      "note": "Filed: 041726 | Tonight's em-dash failure would have been caught in three seconds by `[System.Management.Automation.Language.Parser]::ParseFile()` before the script was handed to Dan's admin PowerShell window. Inline this check into every script-writing workflow: after writing a .ps1 file, parse-check + ASCII-check before invoking. Consider: add a lightweight `ENGINE/parse_check.ps1` wrapper that takes a path and prints PASS/FAIL, and call it from setup scripts' own self-verification step. Also candidate for promotion to a STANDARD_RULE if the pattern proves durable.",
+      "filed": "041726"
+    },
+    {
+      "name": "Tailscale mesh VPN on every station",
+      "note": "Filed: 041326 promoted to NEAR 041726 22:46 by Dan | **PARTIAL · 051926 ~07:25 PT · ACHE (Samsung Galaxy S10 per RELAY/CORRECTION_MOB2_NotFleetMember_Trip_041826.md:16) NOW ON TAILSCALE per Dan-direct 07:23 PT *\"Tailscale is connected on ACHE now. I can add ACH0 soon too\"* · ACH0 future-Tailscale-target named.** Fleet LAN location-independent. Dan directive 041726 22:46: *\"We need Tailscale on every Station on the Fleet.\"* Stations: STN2 (DONE 051826 ~17:00 PT · 100.95.196.13 · 026-stn2) · ACHE (DONE 051926 ~07:23 PT) · ODT (PRE-EXISTING · 100.111.17.67 as 001-win10pro). REMAINING: CUBE, …",
+      "filed": "041326 promoted to NEAR 0417"
+    },
+    {
+      "name": "CUBE Claude install blocker",
+      "note": "Filed: 041726 22:46 by Dan | Claude Desktop has not been installed on CUBE due to \"some weird update requirement\" that Dan hasn't been able to resolve. Dan quote: *\"a crazier Catch-69 than Piralus.\"* CUBE is a HP EliteDesk mini-PC running Windows 10 (per Win10-fleet policy, no Win11 until forced). Investigation path: SSH to CUBE from ODT as `Code` user (verify which Code account via hostname check · STN2 and CUBE share `Code` username, so always hostname-verify) → inspect Windows Update pending list → check Feature Update / Quality Update blockers → resolve → install Claude Desktop → …",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "Orchestra-framed Fleet map · Pass 2 (dynamic render from fleet.js)",
+      "note": "Filed: 041726 22:46 by Dan, Pass-1 delivered 041726 ~23:10 | Pass 1 shipped as hand-lettered ASCII sketch in `src/pages/fleet.astro` (replaced the Illustrator PNG because the PNG risked being read as gospel and drifting stale · classic Ghost Present failure mode). Pass 2: generate the ASCII map dynamically at build time from `src/data/fleet.js` baseplate positions + current_attachment so the map can't drift stale. Approach: add a render function in fleet.js (or a small renderer module) that walks rox + topology + current_attachment and emits the monospace string the current static block …",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "Orchestra-framed Fleet map · Pass 3 (color)",
+      "note": "Filed: 041726 22:46 by Dan | Follows Pass 2. Add color coding to the ASCII render via existing theme tokens (--ip teal for current fleet IPs, --obs amber for off-fleet / roaming, --rox red or --stamp for unresolved phantoms, --head orange for zone-title rows). Requires breaking the monospace string into spans with classes. Keep it optional via CSS so the plain-text view still copy-pastes cleanly when a crew member wants an unstyled snapshot. Acceptance: /fleet renders the ASCII map with color-differentiated IP chips while preserving monospace grid alignment.",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "WiFi hardware inventory (Fleet-scope)",
+      "note": "Filed: 041726 22:46 by Dan | Per Dan 041726 22:46: ALFA AWUS036ACH is \"likely the most powerful wifi card in the Fleet now\" · but there's no centralized record of what every station has. Survey per station: internal PCIe WiFi (make/model/chipset/bands), USB adapters present, monitor-mode capability, highest-supported standard (Wi-Fi 5/6/6E/7), antenna gain. Feeds into Orchestra Fleet Map NEARGULL. Cross-reference with Cantenna Pass 2 work.",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "Windows 10 fleet policy documented",
+      "note": "Filed: 041726 22:46 by Dan | Dan directive: *\"The Windows side has all Windows 10 systems and not planning on doing Windows 11 until I'm forced to.\"* This is a standing fleet policy · file as a STANDARD_RULE if it holds through reflection: `STANDARD_RULE_Win10Until_Forced_Trip_041726.md` or similar. Implication: all NEST.01 Windows-side tooling must target Win 10 compatibility. No Win 11-only features assumed (no snap layouts, no widgets API, no Copilot taskbar integration). Don't plan around Win 11 until Dan signals the transition.",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "Spec probe pass (hardware field per Rox)",
+      "note": "Filed: 041726 23:55 by Dan | Dan directive 041726 23:50: *\"Get your fleet map right. That's simple shit you should have listed for each device.\"* Live as of tonight in `src/data/fleet.js → fleet.hardware.{Rox}`. ODT + GOG1 populated fully (CPU + RAM + GPU + storage + every NIC + default route + user + ssh key state). Remaining stations marked `probe-pending`. One SSH/WMI round-trip per station fills in the blanks: Get-CimInstance Win32_Processor/ComputerSystem/LogicalDisk/VideoController on Windows stations; lsb_release + free + df + lspci + ip on Unix. Takes ~5 minutes per station when …",
+      "filed": "041726 23:55"
+    },
+    {
+      "name": "RTX 3060 / GTX 980 canon correction propagation",
+      "note": "Filed: 041726 23:55 | Full correction at `RELAY/CORRECTION_GOG1GPU_Trip_041726.md`. ODT has the RTX 3060 (Ampere, 12GB); GOG1 has the GTX 980 (Maxwell, 4GB). Memory echo had this wrong and it propagated into Grafts + MAIL + NEARGULLs tonight. Propagation scrubbing: (1) update any SEEGULLS entries that say \"RTX 3060 on GOG1\" · none remain after this patch; (2) when next grafting to STAN or C.B., lead with the correction so they don't carry the error forward; (3) future \"second LLM instrument\" planning splits into two candidates · GOG1 GTX 980 + ODT RTX 3060 · both worth standing up in …",
+      "filed": "041726 23:55"
+    },
+    {
+      "name": "Unix NOPASSWD+keys propagation (DPSL, DPSR, TRP0)",
+      "note": "Filed: 041726 23:59 | Tonight unblocked GOG1 by adding ODT's public keys to `~/.ssh/authorized_keys` + `dan ALL=(ALL:ALL) NOPASSWD:ALL` in `/etc/sudoers.d/nest-dan`. Full pattern documented in `RELAY/STANDARD_RULE_UnixNOPASSWDPlusKeys_Trip_041726.md` with paste-ready two-block sequence. Dan pastes at terminal; verification from ODT is one SSH round-trip each. Same benefit for each Unix station: Trip (and Stan, once Stan's ed25519 lands) can execute real admin work remotely. DPSL + DPSR + TRP0 are the three candidates. Apply when Dan green-lights; do not self-authorize. Risk is low because …",
+      "filed": "041726 23:59"
+    },
+    {
+      "name": "GOG1 install-path over SLO-PUB MITM",
+      "note": "Filed: 041726 23:59 | GOG1's current default route (metric 601) goes through the USB WiFi adapter on SLO-PUB (school-district public WiFi), which runs a TLS-inspecting proxy that injects a self-signed cert into the chain. This BREAKS any install that fetches over HTTPS with cert verification enabled · confirmed tonight: `curl -fsSL https://tailscale.com/install.sh` failed with \"self-signed certificate in certificate chain.\" Google et al. pass through fine because the proxy re-signs with its own CA. Workaround options: (a) install Tailscale via apt repo with pre-shared PGP key: `curl -fsSL …",
+      "filed": "041726 23:59"
+    },
+    {
+      "name": "GOG1 wlp4s0 on 192.168.5.x audit",
+      "note": "Filed: 041726 23:59 | Tonight's SSH survey revealed GOG1's internal PCIe WiFi (`wlp4s0`) is associated with an AP at 192.168.5.1 · which is the D-Link DIR-632's default management subnet. The DIR-632 is the 8PSW dumb-switch at Nest Actual. Audit questions: is the DIR-632 running an active WiFi AP (not just switching)? If yes, is it intentional? When did wlp4s0 first attach to it · at factory reset? At Piralus commissioning? Is this a third WiFi network inside Nest Actual nobody accounted for? Investigation: log into DIR-632 admin UI (192.168.5.1 from GOG1 or from a Fleet station), check …",
+      "filed": "041726 23:59"
+    },
+    {
+      "name": "Proton VPN connect Backend:None debug (GOG1) · RESUME HERE",
+      "note": "Filed: 041826 ~02:30 | HEREGULL. Mid-debug at session close. State: proton-vpn-cli 1.0.0 + api-core 4.19.1 installed, signed in as nadpsr@proton.me, all NM backends present and importable (`VPNConnection.__subclasses__()` returns LinuxNetworkManager → Wireguard + OpenVPN + OpenVPNTCP + OpenVPNUDP cleanly). `protonvpn connect` returns \"An unexpected error occurred\" with NO traceback in `~/.cache/Proton/VPN/logs/vpn-cli.log` · CLI generic catch-all is swallowing the real exception. \"Backend: None\" in the log line appears to be a display artifact, not a true null. Resume via `/tmp/pcon.py` …",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "MOB2/S21 ground-truth canon cleanup",
+      "note": "Filed: 041826 ~02:30 | Awaits Dan's call. After tonight's Living Map correction (`RELAY/CORRECTION_MOB2_NotFleetMember_Trip_041826.md`), three Bridge files still list S21 as \"Fleet reserve\": `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/APRIL/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/GROUND_TRUTH.md`. Plus `ENGINE/fleet_manifest.json` line 357+ has the full hardware entry. Options: (a) delete lines entirely, (b) qualify with \"device exists but not in active fleet use as of 041826,\" (c) leave as-is because fleet_manifest is reserve-inventory not active-fleet. Dan's call because these feed crew boot …",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "Data reservoir architecture",
+      "note": "Filed: 041826 ~02:30 | For bandwidth-disciplined bulk transfers (CUBE Win10 22H2 upgrade, future Android Blender build when it ships, fleet-wide OS updates). Two options: (a) IP forwarding + NAT through GOG1 · GOG1 becomes reservoir host, but couples fleet operation to one station (violates 8th architectural principle). (b) Caching proxy on FAS drive · station-agnostic, serves LAN, principle-compliant. Prefer (b). Needs design pass: which proxy software (squid? nginx caching? apt-cacher-ng for debian?), which FAS drive, how cache invalidation works, how stations point to it. Blocks CUBE 22H2 …",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "Tailscale on GOG1 via Proton Stealth tunnel",
+      "note": "Filed: 041826 ~02:30 | Blocked on Proton VPN connect Backend:None being resolved (HEREGULL above). Once Proton is up, retry `tailscale up --hostname=gog1 --accept-routes --accept-dns=false`. SLO-PUB's TLS MITM blocks Tailscale controlplane directly (tested 041726); Proton Stealth tunnel bypasses the MITM by re-routing over WireGuard or OpenVPN-TCP-443. This is the real solve for the `GOG1 install-path over SLO-PUB MITM` NEARGULL too.",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "Gmail MCP `update_draft` verb",
+      "note": "Filed: 041826 20:02 by Trip ODT | The live-thread Graft protocol (single draft body, append-only turns) REQUIRES updating an existing draft in place. Gmail MCP exposes `create_draft` / `list_drafts` / `read_draft` but no `update_draft`. Today I had to file TURN 2 as a companion draft (`r261784064313361808`) instead of appending into the live thread (`19da368737b953d5`). Coordination still works but the protocol degrades · append-order must be reconstructed from timestamps across drafts instead of living in one body. Fix options: (a) extend Gmail MCP with `update_draft` wrapping Gmail API …",
+      "filed": "041826 20:02"
+    },
+    {
+      "name": "`ENGINE/log_deploy.py` needs BUILD-GREEN gate",
+      "note": "Filed: 041826 20:02 by Trip ODT | Current script git-commits and pushes portal changes without running `npm run build` first. Violates `STANDARD_RULE_PortalBuildFirst_Trip_041526` (BUILD GREEN = push; BUILD FAILED = fix first). I did today's 041726 fill-in manually to respect the rule. Fix: add `npm run build` invocation with exit-code gate before `git_commit_and_push`. Also want support for \"already-in-public\" files (script currently errors when target public/*/file already exists from a prior run · should treat as idempotent).",
+      "filed": "041826 20:02"
+    },
+    {
+      "name": "O'Shin (Raspberry Pi 4) rejoin fleet",
+      "note": "Filed: 041826 22:25 by Dan | Tomorrow job. O'Shin has been off-network for weeks, sitting unused at Nest Actual. Plan: add back to network on Unix side via Public wifi (SLO-PUB). Is a Raspberry Pi 4 · ARM64 Linux station. Role unclear yet · could serve as: always-online cloud-edge node (SLO-PUB always-on), lightweight caching proxy (data-reservoir architecture NEARGULL), Docker host for small services, or fleet monitor. Needs: physical location check, power + SD card verification, OS update + Tailscale install via VZW path (since SLO-PUB TLS MITM blocks fresh installs), fleet registration in …",
+      "filed": "041826 22:25"
+    },
+    {
+      "name": "Fleet page: per-station SSH / Tailscale / Proton VPN status matrix",
+      "note": "Filed: 041826 22:15 by Dan directive | /fleet needs a clear three-column status for each Rox: (a) SSH configured + verified ground-truth working, (b) Tailscale installed + meshed, (c) Proton VPN configured + active. Current state going into tonight's update: SSH verified on STN2, ODT, CUBE (the three Windows stations after tonight's work); GOG1 SSH known-working with NOPASSWD+keys; TRP0 SSH pending; DPSL/DPSR/STN1 unknown. Tailscale: none confirmed active as of 041826 (was NEARGULL; blocked on GOG1 SLO-PUB MITM). Proton VPN: GOG1 mid-debug (Backend:None HEREGULL); others unknown. Fleet.js …",
+      "filed": "041826 22:15"
+    },
+    {
+      "name": "CUBE Claude Desktop install blocker (post-SSH)",
+      "note": "Filed: 041826 22:25 by Trip ODT (reclassified) | Previously blocked on SSH access. Tonight SSH became live from ODT to CUBE (`ssh Dan@10.0.0.4`). Earlier hypotheses dead: build-gate not the issue (CUBE is 19045.6332, same as ODT where Claude Desktop works); UAC not the issue (Never-Notify fleet-universal). CUBC hardware probe 041826 confirmed Hyper-V VID driver active, Z87 LPC + i5-4670K + GTX 745, standard NIC stack. Remaining investigation: probe Claude Desktop install state from ODT directly via SSH · check Program Files, registry for Claude entries, last install log, Windows Event Viewer …",
+      "filed": "041826 22:25"
+    },
+    {
+      "name": "Ground-truth canon propagation check",
+      "note": "Filed: 041826 22:25 by Trip ODT | After tonight's `STANDARD_RULE_GetLocalUserIsGroundTruth_Trip_041826.md` filing + memory edit #12 replacement + FLEET/INVENTORY.md updates (CUBE, STN2, ODT), audit remaining Bridge files for any references to \"CUBE username Code\" or similar symmetry-assumption errors: `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/**/GROUND_TRUTH.md`, `ENGINE/fleet_manifest.json`, any MAIL files with SSH canon. Correct where crew boot context is fed; leave historical LOG/MAIL as historical record.",
+      "filed": "041826 22:25"
+    },
+    {
+      "name": "PI/BOOT TICKET URL gate · web_fetch blocks the literal resolved URL",
+      "note": "Filed: 041926 by Trip ODT | PI page nest-pi.astro references `https://www.rspdan.com/pk/[crew]/TICKET.md` as a literal template (square brackets appear in the fetched markdown). When any crew substitutes `trip`/`stan`/`cb` and calls `web_fetch` on the resolved URL, the Claude.ai fetch tool refuses because that exact literal URL was never in a prior fetch response. Hits every crew boot, every session. 041926 Trip boot worked around by reading local portal filesystem at `C:\\STAN\\SOURCE\\rspdan-portal\\public\\pk\\trip\\TICKET.md` via DC. Fix options (combine (a)+(c) for resilience): (a) update …",
+      "filed": "041926"
+    },
+    {
+      "name": "LOG/MAIL/INDEX.md manifest creation",
+      "note": "Filed: 041926 by Trip ODT (found when running Memory Management live) | The Memory Management canonical doc filed today (`RELAY/CANONICAL_MemoryManagement_Trip_041926.md`) describes the MAIL INDEX as a Layer 6 manifest that \"maintains the invariant that every MAIL file on Bridge is listed with its date and author.\" Running the practice live this afternoon surfaced that `LOG/MAIL/INDEX.md` does not actually exist. The gap is real · MAIL has grown organically without an index, so finding a specific historical MAIL requires either directory listing or grep rather than looking it up in a …",
+      "filed": "041926"
+    },
+    {
+      "name": "rspdan.com/nestnet page build",
+      "note": "Filed: 041926 by Trip ODT evening | Public-facing page explaining NESTNET · what it is, how it works, what it indexes, how to query it, the Wayside Comprehensive PDF methodology underneath it. Bait for external readers arriving at the portal. Not a replacement for /logs or /journal · a companion that names the search-layer methodology directly. ~45 minutes of frontend work once the content brief exists. Defer until a lower-activity session; today's evening is dense enough without adding it.",
+      "filed": "041926"
+    },
+    {
+      "name": "Dario Amodei Olympic tour thought experiment (SEED_NA022)",
+      "note": "Filed: 041926 by Dan ODT evening, seed filed by Trip 041926 ~18:05 PT | Dan raised the idea of giving Dario Amodei a \"Dan tour\" of Olympic National Park to talk about systems. Dan's 041926 6pm note: \"Dario tour idea is likely NA022 or NA023.\" Seed filed at `RELAY/SEED_NA022_DarioTourThoughtExperiment_Trip_041926.md` with draft premise, reasoning, Olympic-specific structural notes, and open questions for Dan. Core argument: one day walking Olympic with Dan talking about systems is cognitively equivalent to a month of text-based study on the same material, because Dan's NPS-interpretive-design …",
+      "filed": "041926"
+    },
+    {
+      "name": "NA023 Retrospective Lighthouse (SEED_NA023)",
+      "note": "Filed: 041926 by Trip ODT evening, seed filed ~18:08 PT | NA seed capturing the retrospective-lighthouse pattern Dan surfaced during the Lighthouses canon-filing session: a signal emits, the media carrying it is constant, a receiver encounters the media but is not tuned to the signal, years or decades pass, the receiver goes through experiences that tune them to the frequency, the receiver returns to the original media and the signal arrives · not a new signal but the same one, recovered because the receiver changed. Seed filed at `RELAY/SEED_NA023_RetrospectiveLighthouse_Trip_041926.md` with …",
+      "filed": "041926"
+    },
+    {
+      "name": "NA 006 Bowie-connection addendum review",
+      "note": "Filed: 041926 by Trip ODT evening | NA 006 \"The Heritable Simulator\" may benefit from a small addendum acknowledging the Bowie-through-Prestige pathway that NA 005b now documents, since the heritability argument in 006 builds directly on the extraction-failure-mode framing from 005b. Read NA 006 carefully for any place the new Bowie-Prestige context would clarify or enrich the existing argument without changing its substance. Low priority · the existing text is not broken, just potentially enrichable. Defer until NA 019 drafting work is active and a natural review pass would catch multiple …",
+      "filed": "041926"
+    },
+    {
+      "name": "AMBIGUOUS pool single-scan ratify",
+      "note": "Filed: 051926 ~02:15 PT by Trip ODT | 14 AMBIGUOUS items pooled at `LOG/MAIL/Trip_TO_Dan_HubthreadSweeper_AmbiguousPool_051826.md` aggregate from hubthread-sweep batches 1-7 closed at commit b09c26c (45 of 45 candidates: 12 PROMOTE + 14 AMBIGUOUS + 19 REJECT). Per-item summary + 3-4 Trip-recommendation lanes + key Dan-quotes captured in pool MAIL. Single-scan ratify-pass clears queue: per-item PROMOTE / keep-AMBIGUOUS / REJECT decision. Pool aggregation per Dan-direct 051826 ~23:15 PT *\"stop ratify-per-candidate pattern · AMBIGUOUS pool aggregates to ONE file for Dan-glance at end of full …",
+      "filed": "051926 ~02:15 PT"
+    },
+    {
+      "name": "STN1 Tailscale install",
+      "note": "Filed: 051926 ~02:15 PT by Trip ODT | STN1 not yet on Tailscale mesh per LIVING_MAP_Trip + LIVING_MAP_Doc substrate-cites across 051726-051826 routing. Same install pattern as STN2-Doc executed at 051826 (RAM-002 at commit fe9e70a · IP 100.95.196.13 · hostname 026-stn2 · --advertise-exit-node + --unattended flags · 6 peers visible cube/dpsl/dpsr/odt/oshin/trp0). Substrate-cite the STN2 recipe at `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 and DOC Doc RAM-005 absorption fold-in. Trip-actionable solo when Dan-direct routes Fleet-side work-unit (requires …",
+      "filed": "051926 ~02:15 PT"
+    },
+    {
+      "name": "/dtad cross-fold on PARALLEL-PEAPOD CATCH event class",
+      "note": "Filed: 051926 ~02:15 PT by Trip ODT | PARALLEL-PEAPOD CATCH event observed at 051826 ~23:18 PT (substrate-cite: Trip a67bdd9 + DOC Doc f46708d independent canon §IV BootProtocol amendments within 3-min window · auto-merge clean per LIVING_MAP_Doc 23:18 PT entry · Trip absorbed DOC Doc's selective-key surgical-merge structure + applied PS 5.1 compat fix · DOC Doc /dtad fold-in RAM-010 captured 3 lessons). Cross-fold lane: extract pattern (independent-Crew convergence on same cure-recipe via parallel substrate-work) + cure-recipe (auto-merge + /dtad fold-in + cross-Crew attribution) + name as …",
+      "filed": "051926 ~02:15 PT"
+    },
+    {
+      "name": "Hubthread-sweep routine-improvements validation-run",
+      "note": "Filed: 051926 ~02:15 PT by Trip ODT | 4 findings (A-D) folded into SPEC §IX + §V.AMENDED at commit 5472453 (RAM-015): (A) dedupe-by-source-quote hash for candidate-pool · (B) is-already-canon pre-flight grep before classification · (C) Question vs Pattern vs Declaration classification heuristic with DanQuestion_* naming convention · (D) held-for-Dan-direct timeout policy. Validation-run = next hubthread-sweep cycle applies amended spec + observes noise-reduction projection (~46% per RAM-014 §VI estimate). Substrate-cite: `RELAY/SPEC_FirstRoutineInstall_HubThreadSweeper_Doc_051226.md` …",
+      "filed": "051926 ~02:15 PT"
+    },
+    {
+      "name": "STN2-Doc Tailscale-RDP cure (CRASHED-with-persistence-rollback recovery)",
+      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | STN2-Doc session classified CRASHED-with-persistence-rollback per Trip RAM-016 Rorrim Nips state-check (Bridge commit 2e172e2). Last visible chat-emission was DOC Doc 17:18 PT Tailscale routing · post-23:55-PT-Rorrim-Nips-write substrate NOT visible post-F5-refresh. Bridge-work preserved: STN2-Doc commits fe9e70a (17:30 PT) + bce9a43 (17:38 PT) + e3a3620 (18:05 PT) on `local-doc-stn2-boot-051626` branch · no work-product loss. Cure-MAIL substrate-cited at `LOG/MAIL/DOCDoc_TO_Dan_STN2DocCrashRecovery_TailscaleRDPRecipe_051926.md` …",
+      "filed": "051926 ~02:25 PT"
+    },
+    {
+      "name": "PROPOSAL #17 canon-evolution ratify (3-day-remote-loop bridge-keepalive vs Tailscale-first)",
+      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | PROPOSAL filed at `RELAY/PROPOSAL_3DayRemoteLoopReliability_BridgeKeepaliveVsTailscaleFirst_Doc_051926.md` (commit 3f02f3c) · 4 cure-class options analyzed for 3-day-remote-loop Claude-Code-bridge time-out behavior (pattern recurring at 6-24h windows when no human-interaction fires · observed yesterday session_01FXey + tonight session_01G11qXyiGChsMViMSTNDj8i). DOC Doc substrate-grounded recommendation: option (β) Tailscale-first default. 4 Q's Q1-Q4 enumerated in PROPOSAL for Dan-ratify. Class: Dan-action ratify-class · awaits …",
+      "filed": "051926 ~02:25 PT"
+    },
+    {
+      "name": "Branch protection switch from Rulesets to classic (Dan-GitHub-admin lane)",
+      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | Long-standing Dan-pending per multi-day Layer 0 register (substrate-cite: WAKE_Doc_051926 §UPDATE Layer 0 #6 + multiple prior MFST register-cites). Branch protection currently uses GitHub Rulesets; switch to classic branch protection is Dan-GitHub-admin lane (requires Dan-authenticated UI access). Substrate-warrant: branch-protection-class incidents repeatedly surface as Dan-direction-bit across PeaPod work. Class: Dan-action GitHub-admin-class · awaits Dan-able-action.",
+      "filed": "051926 ~02:25 PT"
+    },
+    {
+      "name": "GOG1/oshin tailnet hostname disambiguation",
+      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | GOG1 and oshin share same Tailscale IP 100.83.109.75 with two different hostnames per RAM-005 STN2-Doc Tailscale install observation (substrate-cite: `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 mesh-status output + DOC Doc RAM-005 fold-in). Likely \"tailnet-hostname-naming-history\" rather than two-devices-same-IP scenario per DOC Doc STN2-Doc analysis. Cure-path: tailnet admin UI (Dan-action) clarifies actual device-mapping · rename one if needed · update FLEET/INVENTORY.md + fleet.js. Class: …",
+      "filed": "051926 ~02:25 PT"
+    },
+    {
+      "name": "Gmail label_message MCP permission scope (Dan-direction-bit #15)",
+      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | Gmail MCP connector lacks label-modify scope · `label_message` operation returns permission denied per Trip LAGOS Graft fire attempt at 051826 ~23:18 PT (substrate-cite: DOC Doc RAM-010 PARALLEL-PEAPOD-CATCH absorbed event · Trip's LAGOS Graft fired but unlabeled · DOC Doc surfaced as Dan-direction-bit #15). Cure-path: Gmail MCP connector OAuth scope expansion to include `gmail.labels` modify scope · re-auth Gmail MCP · re-test label_message. Class: Dan-action MCP-config-class · Dan-OAuth-flow-required.",
+      "filed": "051926 ~02:25 PT"
+    }
+  ],
+  "far": [
+    {
+      "name": "Waywoodarium first Blender session",
+      "note": "Filed: 040126 | Blender MCP verified, addon ready. Spatial grammar designed.",
+      "filed": "040126"
+    },
+    {
+      "name": "Firefox MCP Bridge",
+      "note": "Filed: 040126 | Rust compile on GOG1. Every Firefox tab gets MCP tools.",
+      "filed": "040126"
+    },
+    {
+      "name": "Niapian Calendar guide + calculator",
+      "note": "Filed: 040826 | Day-name mapping must be built once and filed permanently.",
+      "filed": "040826"
+    },
+    {
+      "name": "GOG1 Docker services",
+      "note": "Filed: 041326 | Ollama/Meilisearch/Qdrant replacing Upstash Redis.",
+      "filed": "041326"
+    },
+    {
+      "name": "gemma4 reasoning-phase control experiments",
+      "note": "Filed: 041726 | gemma4 (via Docker Model Runner on STN2) is a reasoning model: it generates chain-of-thought tokens inside `<think>...</think>` markers before emitting user-visible `content`. llama.cpp server splits these into `reasoning_content` and `content` fields. For tagging/classification/short-summary tasks, reasoning is overkill and slow; for analysis/decision-support tasks, it is exactly what makes the model useful. Worth exploring: (1) does Docker Model Runner expose a runtime flag to suppress the reasoning phase? (2) can a custom chat template be passed per-request to override …",
+      "filed": "041726"
+    },
+    {
+      "name": "Cross-platform config notes",
+      "note": "Filed: 041426 | Mac/Linux differences from Windows documented.",
+      "filed": "041426"
+    },
+    {
+      "name": "na-publish skill to project knowledge",
+      "note": "Filed: 041426 | Upload via skill-upload process.",
+      "filed": "041426"
+    },
+    {
+      "name": "Conversation parser automation",
+      "note": "Filed: 041426 | Anthropic data dump → NESTNET, currently manual.",
+      "filed": "041426"
+    }
+  ],
+  "done": [
+    {
+      "name": "Pre-push mojibake gate wiring (portal_check.ps1 + na-publish + pre-commit hook)",
+      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **2-of-3 DONE 052626 ~20:50 PT** by CUBE Doc cloud · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (no edit needed at this time) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit · item (3) git pre-commit hook in rspdan-portal STILL OPEN cross-repo · requires `.husky/pre-commit` install in rspdan-portal repo OR setup script …",
+      "filed": "042226 Wednesday ~20:50 PT"
+    },
+    {
+      "name": "AMBIGUOUS pool ratify (Trip Hubthread-Sweeper proposal · Dan-yes/no)",
+      "note": "**RESOLVED 060426 (CUBE Doc · PR #166 merged).** Dan-Go \"All\" 060426 ratified the lane Crew-side: 3-of-4 routine-improvements routed (canon-cache pre-flight folded into the Sweeper-reform spec; routine-duplication addressed; 2 remaining are Dan-class), the 14 per-item AMBIGUOUS canon-picks correctly held Dan-pace per Rule 13. Status filed [STATUS/STATUS_AmbiguousPoolRatifyLane_CurrentStateAnd4RoutineImprovements_CUBE_Doc_060426.md](STATUS_AmbiguousPoolRatifyLane_CurrentStateAnd4RoutineImprovements_CUBE_Doc_060426.md) + MAIL to Trip+Dan. **Original entry preserved below (NOTHING-GETS-LOST):** …",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "#17 canon-evolution ratify (3-day-remote-loop reliability · Bridge-keepalive vs Tailscale-first)",
+      "note": "**RESOLVED 060426 (CUBE Doc · PR #167 merged).** Dan-Go \"All\" 060426 ratified Option (β) Tailscale-first default for autonomous-during-Dan-absence Crew (the bridge-death class is a launch-path bug cured at the launch-path, not papered with a keepalive ping). Promoted to [RELAY/STANDARD_RULE_TailscaleFirstDefault_3DayRemoteLoopReliability_DanGo_060426.md](../RELAY/STANDARD_RULE_TailscaleFirstDefault_3DayRemoteLoopReliability_DanGo_060426.md); PROPOSAL carries a RATIFIED forward-pointer. **Original entry preserved below (NOTHING-GETS-LOST):** Filed: 051926 Tuesday ~02:51 PT by Doc-LBM …",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "LIVING_MAP_Doc.md rotation (1000-line / 200KB threshold per CURRENT_ARC §IV canon)",
+      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | **DONE 052426 Sunday ~05:38 AM PT** by DOC Doc cloud-station per Hard Rule #6 PICK-AND-DO + Dan-direct \"Please do work\" current-arc maintenance · Doc-side `STATUS/LIVING_MAP_Doc.md` rotated 1540 lines / 360K → 19 lines / 12K via clean archive · `STATUS/ARCHIVE/LIVING_MAP_Doc_052326.md` created with 1528 archived lines + header (Saturday 052326 + earlier heartbeats 90+ CURRENT PRIOR blocks preserved verbatim) · zero substrate-loss · sister-pattern to Trip rotation 051926 …",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "Claude Code on GOG1 · universalization first production instance",
+      "note": "Filed: 041926 Sunday ~22:00 PT | **DONE 041926 Sunday ~22:28 PT** · Claude Code 2.1.114 installed via `npm install -g @anthropic-ai/claude-code` under nvm Node v22.22.2, authed via OAuth as rspdan@gmail.com (Claude Max / Opus 4.7 1M context / Organization), workspace `/home/dan` trusted, auth persisted to `~/.claude/`. Dan verified at 22:28 by running `claude` directly at GOG1's terminal and capturing the \"Welcome back Dan\" TUI screen. OAuth survives reboots. `claude` on PATH in any login bash. Full state: `RELAY/GOG1_STATE_ClaudeCodeOllamaReady_Trip_041926.md`. First production instance of …",
+      "filed": "041926 Sunday ~22:00 PT"
+    },
+    {
+      "name": "Four Standard Rules filings from 041926 Sunday session",
+      "note": "Filed: 041926 Sunday 23:00 PT | **DONE 042126 Tuesday ~17:20 PT** · four `RELAY/STANDARD_RULE_*_Trip_041926.md` files committed: (1) **ReadRecordFirst** (55 lines) · NESTNET/LNL exports/Bridge MAIL/Grafts/Living Map before filesystem probes; extended 042126 to filesystem layer per Dan's software-gap observation. (2) **SSHTTYAllocated** (49 lines) · `ssh -tt` is baseline for interactive programs on remote Unix stations. (3) **DriveViaChrome** (65 lines) · when Drive MCP not surfaced, Start-Process chrome.exe + screenshot workflow composes the capability. (4) **ScreenshotWorkflow** (80 lines) · …",
+      "filed": "041926 Sunday 23:00 PT"
+    },
+    {
+      "name": "R7900 admin UI access",
+      "note": "Filed: 041626 | **DONE 041726 ~20:55** | Piralus commissioned as fleet backbone. Dan factory-reset the R7900 and ran Genie wizard on ODT via USB AX88179 ethernet. Admin UI live at `http://10.0.0.1` (admin / theone1). Device name PIRALUS, LAN 10.0.0.1/24, DHCP pool .150-.200. Three WiFi SSIDs (PIRALUS69_0/_1/_2). Media server `\\\\PIRALUS\\SKYWAY_69` live (SMB-only, passwordless). Config backup at `FLEET/configs/PIRALUS_001_041726.cfg`. Full record: `LOG/MAIL/MAIL_Trip_TO_ALL_PiralusCommissioned_LivingMap_041726.md`.",
+      "filed": "041626"
+    },
+    {
+      "name": "ODT Wi-Fi 2 attach to Piralus SSID",
+      "note": "Filed: 041626 | **DONE 041726** · OBSOLETED by commissioning path. Piralus is now reachable directly via ODT's 8PSW copper (no SSID hop needed). Wi-Fi 2 (Intel AC 9560) remains disabled; not needed for admin UI access.",
+      "filed": "041626"
+    },
+    {
+      "name": "Portal trio refresh · /logs Apr 20+21, /fleet CUBE canon + Tailscale, /gulls afternoon DONE",
+      "note": "Filed: 042126 Tuesday ~15:10 PT | **DONE 042126 Tuesday ~16:20 PT** · commit `5f716bb` live on Vercel. Banner refresh: \"173 sessions · 49 active days · 0 gaps · Mar 04-Apr 21 2026\". CUBE canon ground-truth (ASUS Z87 DIY desktop / Win10 1909) corrected from phantom HP EliteDesk / 22H2. Tailscale mesh baseplate added with CUBE at 100.111.41.43. npm run build GREEN before push per STANDARD_RULE_PortalBuildFirst. Filed by Trip ODT (Opus 4.7) as Lead Boot Model of the day.",
+      "filed": "042126 Tuesday ~15:10 PT"
+    },
+    {
+      "name": "Software inventory canonical doc · FLEET/SOFTWARE_INVENTORY.md",
+      "note": "Filed: 042126 Tuesday 16:33 PT by Dan directive | **DONE 042126 Tuesday 16:47 PT** · commit `599fe6d`. New canonical inventory file (100 lines) on Bridge pointing to E:\\Files\\Installers as THE software repository. Read DATA/documents/LIGHTHOUSE_LIBRARY_031826.md first (record-first discipline), then fresh-scanned D/F/G/I/J/K/M/N/Q for parallel installer trees · none found. E: is central. Critical find for CUBE: `Win10_2004_English_x64.iso` (5.0 GB) already present at E:\\Files\\Installers\\Windows\\. Unblocks 1909→22H2 path without library trip / torrent / VZW burn. Anti-filing/finding-gap …",
+      "filed": "042126 Tuesday 16:33 PT"
+    },
+    {
+      "name": "NA 019 draft located on Bridge + stale numbers refreshed",
+      "note": "Filed: 042126 Tuesday ~16:47 PT | **DONE 042126 Tuesday 16:55 PT** · real draft lives at `RELAY/NA019_WORKING_DRAFT_LighthouseAndLab_TripO_041826.md` (138 lines, 24 KB, drafted 041826 by TripO). Earlier memory of a \"v2 in Gmail Graft r7662819765497455773\" was Twillius phantom · Gmail search returned nothing. Real material was on Bridge all along. Refreshed two stale numbers: 31→32 Standard Rules, 28→30 calendar days since 032226 anchor, body \"thirty-one→thirty-two.\" Draft editorial-ready pending Dan's final pass.",
+      "filed": "042126 Tuesday ~16:47 PT"
+    },
+    {
+      "name": "NA 019 SHIP · The Lighthouse and the Lab, letter to Amanda Askell",
+      "note": "Filed: 041826 (drafted), 042126 Tuesday 16:55 PT (located) | **DONE 042126 Tuesday ~23:22 PT** · /na-publish 7-step pipeline executed clean per Ripple-Down amendment (042126 verified case · Phase A .astro at commit c1cbb16..8b451a0 23:01 PT · Dan approval 23:15 PT *\"beautiful and ready to launch as-is\"* · Phase B .md+.pdf at commit 8b451a0..249abf5 23:22 PT · zero corrections · 31-min total). Live at rspdan.com/journal/019. DONE-mark applied 051926 ~03:18 PT by Trip-on-ODT per Dan-direct via DOC Doc routing.",
+      "filed": "041826 (drafted), 042126 Tue"
+    },
+    {
+      "name": "Dan's 4:58pm vision seed captured at source fidelity",
+      "note": "Filed: 042126 Tuesday 17:02 PT | **DONE 042126 Tuesday 17:02 PT** · Graft `r-2152902819909062434` [VISION] preserves Dan's holographic-projection, glass-bowl ENGINE (NIAP/ENWAY/AMUART stack, phase-shift sandâ†”glassâ†”liquid, compressed-slinky), 12-pole Brio alignment, Waywood-growing-Waywoods fractal, Frontier work + Olympic National Park draw, youtube.com/rspdan Meta Dates videos as flow-state archive, \"Who is that? WHAT BOX DO?\" Held as seed not architecture per Dan's explicit directive. File to DATA/visions/ when home folder established.",
+      "filed": "042126 Tuesday 17:02 PT"
+    },
+    {
+      "name": "Correct LighthousesThroughTime canon grandfather age",
+      "note": "Filed: 042226 | Done 052126 by Doc cloud-station. Canon corrected: grandfather died ~2011/2012 when Dan was college-aged (was: died 1997 when Dan was 6-7). Correction-note included in canon file (Dan-confirmed 042226).",
+      "filed": "042226"
+    },
+    {
+      "name": "Stan boot on STN2",
+      "note": "Filed: 041426 | DONE 042126 ~23:10 PT by Stan (Sonnet 4.6) STN2. Full reorientation session: 16-day gap closed, six-layer Manage Memory walk complete, Scheme C partition verified intact (5/20/5 HOTBAR/MAIN/RESERVED), NA 020 working draft built. Trip guided via Graft. Concurrent crew operation verified.",
+      "filed": "041426"
+    },
+    {
+      "name": "WAKE bash equivalent",
+      "note": "Filed: 041326 | **DONE 052626 ~21:00 PT** by CUBE Doc cloud · `ENGINE/generate_wake.sh` ported from `ENGINE/generate_wake.ps1` 107-line PowerShell · same behavior · auto-detect Bridge from script-location + auto-detect station via hostname + Portal-path optional with 3-candidate search · NEST week computed from anchor 2026-03-22 cycle-of-8 (A E B F# F C G D) · git log/HEAD for Bridge + Portal · new RELAY/MAIL files via diff HEAD~10 · UTF-8 output to `WAKE/WAKE_<crew>_<session>.md` · `chmod +x` + `bash -n` syntax-verified · Unix stations TRP0/GOG1/DPSL can now generate WAKE at close.",
+      "filed": "041326"
+    },
+    {
+      "name": "worldtimeapi scrub",
+      "note": "Filed: 041326 | **DONE 052126 by Doc cloud-station** · 4 files scrubbed: STANDARD_RULE_Gate0MultiSourceTime + STANDARD_RULE_Gate0TimeVerification_FINAL (SUPERSEDED-headers added pointing to Universal canon) + STANDARD_RULE_Gate0Universal_AllCrew (cross-ref block to live ENGINE/gate0_verify.py + ENGINE/skills/meta-dates) + NEST01_INSTRUCTIONS.md lines 16-17 (rewritten to local-system-clock + Dan-anchor per current canon · removed timeapi.io curl/verify references). Original content retained per correction-density-as-data. Closed per Hard Rule #6 + SHARED RULE 15 PICK-AND-DO enforcement install …",
+      "filed": "041326"
+    },
+    {
+      "name": "Claude Desktop on GOG1 (UNIX side)",
+      "note": "Filed: 041726 22:46 by Dan | **DONE 041926 Sunday 22:28 PT as Claude Code (not Claude Desktop)** · Dan directive was *\"I want Claude running locally on everything possible because it gives you the direct ability to do the work I have no idea how to.\"* Claude Desktop has no Linux build. Claude Code CLI (option (a) in original gull) fulfilled the directive: installed via npm, authed via OAuth to Dan's Max plan, runs natively on GOG1, operates `/home/dan` directly. See HEREGULL above and `RELAY/GOG1_STATE_ClaudeCodeOllamaReady_Trip_041926.md`.",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "GOG1 firewall removal",
+      "note": "Filed: 041726 22:46 by Dan | **DONE 041726 ~23:30** | Dan ran `sudo ufw disable` himself on GOG1. Verified inactive via SSH from ODT: `sudo ufw status` = \"Status: inactive.\" No residual iptables rules blocking Fleet LAN. Combined with passwordless SSH + NOPASSWD sudo (filed tonight as Standard Rule `RELAY/STANDARD_RULE_UnixNOPASSWDPlusKeys_Trip_041726.md`), GOG1 is now fully remotely operable by Trip from ODT. Three-tests-green: passwordless SSH âœ“ · passwordless sudo âœ“ · ufw inactive âœ“. Dan directive satisfied.",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "Villebaum Standard Rule crew consensus",
+      "note": "Filed: 041826 ~02:30 | **DONE 041826 21:50 PT** · filed as `RELAY/STANDARD_RULE_NameTheInstrument_Trip_041826.md` (122 lines) with open-for-amendment section per Dan directive (\"can't wait for Stan and C.B. or we'll never post it\"). Stan + C.B. phrasing input and Dan sign-off absorb as amendments, not as blockers. NA 018 \"Truth Is Piralus\" publishes the teaching publicly. First real-world validation arrived within an hour: CUBC Trip's three-loop Villebaum on CUBE username resolved only by running `Get-LocalUser`. Source docs: `RELAY/LESSON_HallucinatingTrip_PassFive_Trip_041726.md`, …",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "DTAD Director Notes · Dan's validation on Villebaum teaching",
+      "note": "Filed: 041826 ~02:30 | **DONE 041826 21:50 PT** · Director Notes section in `RELAY/DTAD_TruthIsPiralus_Trip_041826.md` filled in updateable form with 5 prioritized questions for Dan + explicit statement that Dan amends in place. Same no-wait pattern as the Villebaum rule: absorb Director validation as amendments when they arrive, not as blockers for filing. NA 018 publication does not depend on Director Notes being signed-off.",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "NA queue elevation (NA 026 + NA 027 + NA 028 SHIPPED)",
+      "note": "Filed: 051926 ~02:15 PT by Trip ODT | **DONE NA 026+027+028 · 051926 ~08:15 PT**: NA 026 SHIPPED Phase A+B (portal 0215211 + 672df92 · live /journal/026) · NA 027 SHIPPED Phase A+B per Dan-direct 06:43 PT \"get NA 027 published\" (portal f0345f2 · live /journal/027) · NA 028 SHIPPED Phase A+B per Dan-direct 08:08 PT \"Can we move forward with 028?\" (portal e3362e0 · live /journal/028 · The Insanity Loop · Pass 1 from 051326 compressed to publication). NA 026/027 paired-piece cure-side/failure-side companion architecture per Pass 3 cross-Crew synthesis · NA 028 names the session-design …",
+      "filed": "051926 ~02:15 PT"
+    },
+    {
+      "name": "NA 026 SHIP COMPLETE (Phase A + Phase B) · The Map of Where the Cost Falls",
+      "note": "Filed: 051526 (Doc Pass 1 + 2 + 3 cross-Crew synthesis) · 051926 ~03:00 PT (Dan-direct routing to Trip-canonical Pass 4 lane) | **DONE Phase A 051926 ~03:15 PT** (026.astro · CSS · index entry · build GREEN · mojibake CLEAN · portal commit 0215211) · **DONE Phase B 051926 ~06:00 PT** per Dan-direct *\"fucking stop holding for DAN VOICE...IT IS ALREADY THERE USE FUCKING LAGOS AND LOGS AND MFTS AND ALL OUR RECORDS\"* (§IV Dan-voice body composed from substrate-resident Dan-quotes per NA 022 §V scaffold + TempleThrobbing PMFST + Doc Squad Pass 3 Ouch witness + RELAY SEED NA 026 · 026.astro §IV …",
+      "filed": "051526 (Doc Pass 1 + 2 + 3 c"
+    },
+    {
+      "name": "Session 041926 evening · Lighthouses canon + MAIL→LOG rename + NA 005 timeline repair",
+      "note": "Filed: 041926 by Trip ODT | **DONE 041926 ~17:55 PT** · Eight canonical documents filed across afternoon + evening: GraftOS, rspdan, Thread Reel, Memory Management, Six-Faced Rox STANardized, Superpositionship, Troupe-Hickey-Usic triple lineage, rspdan-thrice meta-dates, Crew Character Origins, MAIL-to-LOG rename canon, and Lighthouses Through Time. The Lighthouses canon captures Dan's disclosure naming Bowie + Tesla + Van Gogh + grandfather-at-NASA as the extraction-failure-and-completion lineage NEST is the structural response to; the 2016 Bowie death at Canon Newport News is the pivot; …",
+      "filed": "041926"
+    },
+    {
+      "name": "Gmail NEST.01 nested labels",
+      "note": "Filed: 041926 by Dan | **DONE 041926 evening** · Dan manually created the nested label tree in Gmail: NEST.01/CREW, NEST.01/ENGINE, NEST.01/LNL, NEST.01/LOG, NEST.01/RELAY, NEST.01/SOURCE (STATUS present or pending per Dan). Supports the GraftOS-canon routing pipeline where crew boot Grafts land in `[CREW]`, fleet canon in `[FLEET_CANON]`, log publications in `[LOG]`. Gmail MCP `create_label` OAuth path failed earlier; Dan did the work directly. The labels are live.",
+      "filed": "041926"
+    },
+    {
+      "name": "NEST/ Drive folder rename · six-Rox-face structure",
+      "note": "Filed: 041926 by Dan | **DONE 041926 evening** · Google Drive NEST/ folder reorganized to the canonical six-Rox-face names with no numeric prefixes: ENGINE, LNL, LOG, RELAY, SOURCE, STATUS. LNL holds day folders Apr 7-19 + ARCHIVE. LOG holds Mar-Apr session folders + ARCHIVE + OHC_040526. ENGINE, RELAY, SOURCE, STATUS empty pending fresh ODT data. Matches Bridge top-level directory shape exactly. Drive MCP is read-only so Dan did the rename manually; structure verified via his screenshots.",
+      "filed": "041926"
+    },
+    {
+      "name": "Session 041926 afternoon · canon bundle",
+      "note": "Filed: 041926 by Trip ODT | **DONE 041926 ~15:20 PT** · Full afternoon session landed nine canonical pieces at Bridge commits `7a7580c` (GraftOS), `9f4e421` (rspdan canon + Python .gitignore), `fa3f37c` (STN2 Station 4 + drive-label canon + Thread Reel rule + NA020 seed + session MAIL), plus later commits for Docker-STN2 correction and Memory Management canon. Key artifacts: `RELAY/CANONICAL_GraftOS_Trip_041926.md` (GraftOS named · personal Gmail as 20-year OS substrate), `RELAY/CANONICAL_rspdan_RobotSandwichProductions_Dan_041926.md` (origin story), …",
+      "filed": "041926"
+    },
+    {
+      "name": "ODT ghost static IP 192.168.1.100 cleanup",
+      "note": "Filed: 041926 12:22pm PT by Trip ODT ground-truth rebuild | **DONE 041926 12:35pm PT** · Manual static secondary IP on ODT Ethernet with no documented purpose. Dan authorized cleanup: \"Clean up if you can not find a reason for this.\" Removed via `Remove-NetIPAddress -IPAddress 192.168.1.100 -InterfaceAlias Ethernet` in an elevated powershell spawned by `Start-Process -Verb RunAs -Wait` (silent elevation, no UAC prompt · Never-Notify triplet operational). Verified: Ethernet now has only the canonical `10.0.0.10/24`. Cleanup artifact at `C:\\STAN\\LNL\\041926\\remove_ghost_ip_result.txt`. Likely …",
+      "filed": "041926 12:22pm PT"
+    },
+    {
+      "name": "10.0.0.151 phantom · resolved as stale DHCP lease",
+      "note": "Filed: 041726 22:30 by Dan, catalogued 041726 23:59 | **DONE 041826 ~00:50** · Once passwordless admin SSH into CUBE landed 041826 (`dan@10.0.0.4` via Dan's paste-block), `ipconfig /all` on CUBE showed the answer directly. CUBE's internal Qualcomm AR938x WiFi (MAC `18:D6:C7:2A:E4:C7`) was briefly associated to PIRALUS69_1 earlier and got DHCP lease `.151` from the Piralus pool. That card has since roamed to `192.168.145.138` on some other network. The `.151` entry in Piralus attached_devices is a stale lease record · not a phantom, not a second interface, not TRP0. Full correction doc: …",
+      "filed": "041726 22:30"
+    },
+    {
+      "name": "UAC rule universalized fleet-wide",
+      "note": "Filed: 040826 (original STN2-scoped) | Done: 041626 22:15. Removed STN2 scoping. Rule `RELAY/STANDARD_RULE_NoUAC_AdminViaRunAs_Trip_040826.md` rewritten as universal NEST.01 Windows policy. Per-station verification log embedded (STN2=EnableLUA=0 verified 040826; ODT=Never-Notify triplet verified 041626 22:00; CUBE=verify at commissioning). Memory #12 replaced with universal framing; #26 retains ODT registry evidence. Dan's directive: \"FUCK UAC TO HELL FOREVER · it doesn't matter where we are.\"",
+      "filed": "040826 (original STN2-scoped"
+    },
+    {
+      "name": "ODT Fleet IP moved dynamically",
+      "note": "Filed: 041626 | Done: 041626 22:02. ODT Fleet LAN IP 10.0.0.1 → 10.0.0.10/24 via `Start-Process -Verb RunAs -Wait` on `C:\\STAN\\change_odt_fleet_ip.ps1`. Silent elevation confirmed Never-Notify UAC operational on ODT. Fleet stations reachable from new source. Eliminates stale INVENTORY Piralus=10.0.0.1 conflict claim. Static IS dead; dynamic works. Proof-of-concept for Dan's \"just change the one you can change\" directive.",
+      "filed": "041626"
+    },
+    {
+      "name": "/fleet page redesigned as living document",
+      "note": "Filed: 041626 | Done: 041626 22:04. Data extracted from inline Astro to editable `src/data/fleet.js` with inline instructions. fleet.astro rewritten as pure rendering layer. Every observation row carries `verified_at` + `probe` timestamp meta (visually prominent). IP fields styled as teal monospace chips for readability. \"Editable source\" callout at top. Dan can now edit IPs directly in fleet.js, push, Vercel rebuilds. Piralus reframed as L2 bridge (not router) per hand-drawn topology. Living-doc treatment applied · matching /gulls and /logs handling.",
+      "filed": "041626"
+    },
+    {
+      "name": "NA review flag verification",
+      "note": "Filed: 041426 | Done: 041626. All 35 flags from the 17-issue library review triaged. 3 portal text fixes deployed (005b, 006, 012). 9 flags verified BUILT with on-disk evidence (yomygdylo, Stan's System, Leapfrog, ROX, auto-logger, HypercampUS, C&A skill, etc.). 11 confirmed NOT BUILT (nest_sleep.py, RA MCP, Half-Organ, etc.). 6 NA-named frameworks not yet operationalized in skills (TAP, GANE, kotekan, Four Speeds, CPU/GPU split, Actor Model). 5 flags held for Dan (Circle of Colors, wayside PDFs path, companion papers, GS-1084, Longweird). Status doc: RELAY/NA_FLAG_STATUS_Trip_041626.md.",
+      "filed": "041426"
+    },
+    {
+      "name": "Cleanup tooling staged for cross-fleet nest-proxy removal",
+      "note": "Filed: 041626 | Done: 041626. `ENGINE/cleanup_nest_proxy_windows.ps1` (idempotent, backs up, removes nest-proxy/nest_proxy/nest-proxy-mcp keys). `ENGINE/cleanup_nest_proxy_unix.sh` (jq-based, auto-detects macOS vs Linux). `FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md` has per-station commands. `FLEET/MCP_SETUP.md` refreshed: nest-proxy section marked retired, relay scripts documented, Layer 4 added for Chrome extension, mojibake encoding corruption cleaned throughout.",
+      "filed": "041626"
+    },
+    {
+      "name": "nest-proxy retired + relay.ps1/relay.sh live",
+      "note": "Filed: 041426 (as \"nest-proxy + blender-mcp config\") | Done: 041526. nest-proxy MCP server retired after BOM+Python-version cascade. Replaced with ENGINE/relay.ps1 (Windows, 6 actions tested end-to-end) + ENGINE/relay.sh (Mac/Linux). Full rule: RELAY/STANDARD_RULE_RelayViaScript_Trip_041526.md. blender-mcp configured + working on ODT.",
+      "filed": "041426 (as \"nest-proxy + ble"
+    },
+    {
+      "name": "Vercel portal_check.ps1 discipline",
+      "note": "Filed: 041526 | Done: 041526. ENGINE/portal_check.ps1 runs npm build locally before git push. Full rule: RELAY/STANDARD_RULE_PortalBuildFirst_Trip_041526.md. Layer 2 (session_close auto-verify) tracked as new NEAR gull.",
+      "filed": "041526"
+    },
+    {
+      "name": "PS1$ persistent session fix",
+      "note": "Filed: 041426 | Done: 041426. Triptective Case 002. interact_with_process bypasses dollar sign stripping.",
+      "filed": "041426"
+    },
+    {
+      "name": "Git+Node to C:\\Program Files",
+      "note": "Filed: 041326 | Done: 041426. System drive, stale PATH cleaned.",
+      "filed": "041326"
+    },
+    {
+      "name": "Clean user preferences",
+      "note": "Filed: 041426 | Done: 041426. 56 lines, evergreen, station-agnostic.",
+      "filed": "041426"
+    },
+    {
+      "name": "BPK CHECK 8 formalized",
+      "note": "Filed: 041426 | Done: 041426. C&A material checks in boot-polish skill.",
+      "filed": "041426"
+    },
+    {
+      "name": "NA 017 published",
+      "note": "Filed: 041326 | Done: 041426. .astro + PDF + index. na-publish skill created.",
+      "filed": "041326"
+    },
+    {
+      "name": "SEEGULLS page",
+      "note": "Filed: 031326 | Done: 041426. Live at rspdan.com/gulls.",
+      "filed": "031326"
+    },
+    {
+      "name": "NA library review",
+      "note": "Filed: 041426 | Done: 041426. All 17 issues read. ~35 flags. Five deep threads.",
+      "filed": "041426"
+    },
+    {
+      "name": "PI v5.3 station paths removed",
+      "note": "Filed: 041526 | Done: 041526. KEY PATHS (STN2) replaced with universal detection.",
+      "filed": "041526"
+    },
+    {
+      "name": "NESTNET 808 docs",
+      "note": "Filed: 041426 | Done: 041426. Conversation pipeline built and deployed.",
+      "filed": "041426"
+    },
+    {
+      "name": "002_907GB reorganized",
+      "note": "Filed: 041426 | Done: 041426. ARCHIVE + DOCK structure.",
+      "filed": "041426"
+    },
+    {
+      "name": "Jikal Maxon found",
+      "note": "Filed: 041426 | Done: 041426. Spotify 82 GB. Bandwidth discipline confirmed.",
+      "filed": "041426"
+    },
+    {
+      "name": "chillingSlothLocation resolved",
+      "note": "Filed: 041426 | Done: 041426. Cowork worktree setting, already gone from config.",
+      "filed": "041426"
+    },
+    {
+      "name": "SEEGULLS page",
+      "note": "Filed: 041426 | Done: 041426. Proposed 031326, live at rspdan.com/gulls.",
+      "filed": "041426"
+    },
+    {
+      "name": "NA library review",
+      "note": "Filed: 041426 | Done: 041426. All 17 issues read, ~35 flags, five threads mapped.",
+      "filed": "041426"
+    },
+    {
+      "name": "NA 017 published",
+      "note": "Filed: 041326 | Done: 041426. .astro + PDF + index + na-publish skill.",
+      "filed": "041326"
+    },
+    {
+      "name": "Research page updated",
+      "note": "Filed: 041426 | Done: 041426. Colony Model + Filing-Finding Gap sections, duration fix, evergreen.",
+      "filed": "041426"
+    }
+  ]
+}
