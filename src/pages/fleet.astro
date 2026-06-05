@@ -1,5 +1,5 @@
 ---
-// fleet.astro — rspdan.com/fleet — DE-SPRAWLED (one station, one row)
+// fleet.astro · rspdan.com/fleet · DE-SPRAWLED (one station, one row)
 // Per RELAY/SPEC_FleetPageDeSprawl_OneStationTable_NotFourRepeats_CUBE_Trip_060426.md
 // El VIS render 060426 · collapses the prior 4x-repeated sections (FLEET ACTUAL cards +
 // Rox identity + Hardware + Observation) into ONE details/summary table, one row per Rox,
@@ -10,7 +10,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { fleet, board, crew_seats } from '../data/fleet.js';
 
-// Join identity + hardware + seats on name — ONE source per column.
+// Join identity + hardware + seats on name · ONE source per column.
 const stations = fleet.rox.map((r) => {
   const h = fleet.hardware[r.name] || {};
   const cs = crew_seats[r.name] || { station_status: 'dark-ready', seats: [] };
@@ -127,7 +127,7 @@ const legend = board.legend.filter((l) =>
     <blockquote class="quote">{board.quote}</blockquote>
 
     <div class="principle">
-      <strong>One source, one row.</strong> Station identity is the <em>Rox</em> — name, hardware, OS, location, role, mobility. The IP is a face currently rotated forward; faces change between sessions, so they stay boxed in <em>fleet_private.js</em> and only identity is shown. Every row carries a <em>verified_at</em> stamp; stale rows are marked stale and re-probed, never silently trusted. Expand a station for its hardware, faces, and seated crew.
+      <strong>One source, one row.</strong> Station identity is the <em>Rox</em> · name, hardware, OS, location, role, mobility. The IP is a face currently rotated forward; faces change between sessions, so they stay boxed in <em>fleet_private.js</em> and only identity is shown. Every row carries a <em>verified_at</em> stamp; stale rows are marked stale and re-probed, never silently trusted. Expand a station for its hardware, faces, and seated crew.
     </div>
 
     <div class="legend">
