@@ -179,11 +179,6 @@
       "filed": "041426"
     },
     {
-      "name": "GOG1 Ollama deployment",
-      "note": "Filed: 041326 | Models on FAS2 (4.4 GB), deployment guide filed, not executed. Golden carpet ready.",
-      "filed": "041326"
-    },
-    {
       "name": "Pheromone typing in frontmatter",
       "note": "Filed: 041326 | NA 017 proposed permanent/session/deprecated tags. Not implemented.",
       "filed": "041326"
@@ -344,21 +339,6 @@
       "filed": "041726 23:59"
     },
     {
-      "name": "GOG1 install-path over SLO-PUB MITM",
-      "note": "Filed: 041726 23:59 | GOG1's current default route (metric 601) goes through the USB WiFi adapter on SLO-PUB (school-district public WiFi), which runs a TLS-inspecting proxy that injects a self-signed cert into the chain. This BREAKS any install that fetches over HTTPS with cert verification enabled · confirmed tonight: `curl -fsSL https://tailscale.com/install.sh` failed with \"self-signed certificate in certificate chain.\" Google et al. pass through fine because the proxy re-signs with its own CA. Workaround options: (a) install Tailscale via apt repo with pre-shared PGP key: `curl -fsSL …",
-      "filed": "041726 23:59"
-    },
-    {
-      "name": "GOG1 wlp4s0 on 192.168.5.x audit",
-      "note": "Filed: 041726 23:59 | Tonight's SSH survey revealed GOG1's internal PCIe WiFi (`wlp4s0`) is associated with an AP at 192.168.5.1 · which is the D-Link DIR-632's default management subnet. The DIR-632 is the 8PSW dumb-switch at Nest Actual. Audit questions: is the DIR-632 running an active WiFi AP (not just switching)? If yes, is it intentional? When did wlp4s0 first attach to it · at factory reset? At Piralus commissioning? Is this a third WiFi network inside Nest Actual nobody accounted for? Investigation: log into DIR-632 admin UI (192.168.5.1 from GOG1 or from a Fleet station), check …",
-      "filed": "041726 23:59"
-    },
-    {
-      "name": "Proton VPN connect Backend:None debug (GOG1) · RESUME HERE",
-      "note": "Filed: 041826 ~02:30 | HEREGULL. Mid-debug at session close. State: proton-vpn-cli 1.0.0 + api-core 4.19.1 installed, signed in as nadpsr@proton.me, all NM backends present and importable (`VPNConnection.__subclasses__()` returns LinuxNetworkManager → Wireguard + OpenVPN + OpenVPNTCP + OpenVPNUDP cleanly). `protonvpn connect` returns \"An unexpected error occurred\" with NO traceback in `~/.cache/Proton/VPN/logs/vpn-cli.log` · CLI generic catch-all is swallowing the real exception. \"Backend: None\" in the log line appears to be a display artifact, not a true null. Resume via `/tmp/pcon.py` …",
-      "filed": "041826 ~02:30"
-    },
-    {
       "name": "MOB2/S21 ground-truth canon cleanup",
       "note": "Filed: 041826 ~02:30 | Awaits Dan's call. After tonight's Living Map correction (`RELAY/CORRECTION_MOB2_NotFleetMember_Trip_041826.md`), three Bridge files still list S21 as \"Fleet reserve\": `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/APRIL/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/GROUND_TRUTH.md`. Plus `ENGINE/fleet_manifest.json` line 357+ has the full hardware entry. Options: (a) delete lines entirely, (b) qualify with \"device exists but not in active fleet use as of 041826,\" (c) leave as-is because fleet_manifest is reserve-inventory not active-fleet. Dan's call because these feed crew boot …",
       "filed": "041826 ~02:30"
@@ -366,11 +346,6 @@
     {
       "name": "Data reservoir architecture",
       "note": "Filed: 041826 ~02:30 | For bandwidth-disciplined bulk transfers (CUBE Win10 22H2 upgrade, future Android Blender build when it ships, fleet-wide OS updates). Two options: (a) IP forwarding + NAT through GOG1 · GOG1 becomes reservoir host, but couples fleet operation to one station (violates 8th architectural principle). (b) Caching proxy on FAS drive · station-agnostic, serves LAN, principle-compliant. Prefer (b). Needs design pass: which proxy software (squid? nginx caching? apt-cacher-ng for debian?), which FAS drive, how cache invalidation works, how stations point to it. Blocks CUBE 22H2 …",
-      "filed": "041826 ~02:30"
-    },
-    {
-      "name": "Tailscale on GOG1 via Proton Stealth tunnel",
-      "note": "Filed: 041826 ~02:30 | Blocked on Proton VPN connect Backend:None being resolved (HEREGULL above). Once Proton is up, retry `tailscale up --hostname=gog1 --accept-routes --accept-dns=false`. SLO-PUB's TLS MITM blocks Tailscale controlplane directly (tested 041726); Proton Stealth tunnel bypasses the MITM by re-routing over WireGuard or OpenVPN-TCP-443. This is the real solve for the `GOG1 install-path over SLO-PUB MITM` NEARGULL too.",
       "filed": "041826 ~02:30"
     },
     {
@@ -598,6 +573,11 @@
       "filed": "041426"
     },
     {
+      "name": "DEPRECATED · GOG1 Ollama deployment",
+      "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041326 | Models on FAS2 (4.4 GB), deployment guide filed, not executed. Golden carpet ready.",
+      "filed": "041326"
+    },
+    {
       "name": "WAKE bash equivalent",
       "note": "Filed: 041326 | **DONE 052626 ~21:00 PT** by CUBE Doc cloud · `ENGINE/generate_wake.sh` ported from `ENGINE/generate_wake.ps1` 107-line PowerShell · same behavior · auto-detect Bridge from script-location + auto-detect station via hostname + Portal-path optional with 3-candidate search · NEST week computed from anchor 2026-03-22 cycle-of-8 (A E B F# F C G D) · git log/HEAD for Bridge + Portal · new RELAY/MAIL files via diff HEAD~10 · UTF-8 output to `WAKE/WAKE_<crew>_<session>.md` · `chmod +x` + `bash -n` syntax-verified · Unix stations TRP0/GOG1/DPSL can now generate WAKE at close.",
       "filed": "041326"
@@ -618,6 +598,21 @@
       "filed": "041726 22:46"
     },
     {
+      "name": "DEPRECATED · GOG1 install-path over SLO-PUB MITM",
+      "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041726 23:59 | GOG1's current default route (metric 601) goes through the USB WiFi adapter on SLO-PUB (school-district public WiFi), which runs a TLS-inspecting proxy that injects a self-signed cert into the chain. This BREAKS any install that fetches over HTTPS with cert verification enabled · confirmed tonight: `curl -fsSL https://tailscale.com/install.sh` failed with \"self-signed certificate in certificate chain.\" Google et al. pass through fine because the proxy re-signs with its own CA. Workaround options: (a) …",
+      "filed": "041726 23:59"
+    },
+    {
+      "name": "DEPRECATED · GOG1 wlp4s0 on 192.168.5.x audit",
+      "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041726 23:59 | Tonight's SSH survey revealed GOG1's internal PCIe WiFi (`wlp4s0`) is associated with an AP at 192.168.5.1 · which is the D-Link DIR-632's default management subnet. The DIR-632 is the 8PSW dumb-switch at Nest Actual. Audit questions: is the DIR-632 running an active WiFi AP (not just switching)? If yes, is it intentional? When did wlp4s0 first attach to it · at factory reset? At Piralus commissioning? Is this a third WiFi network inside Nest Actual nobody accounted for? Investigation: log into DIR-632 …",
+      "filed": "041726 23:59"
+    },
+    {
+      "name": "DEPRECATED · Proton VPN connect Backend:None debug (GOG1) · RESUME HERE",
+      "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041826 ~02:30 | HEREGULL. Mid-debug at session close. State: proton-vpn-cli 1.0.0 + api-core 4.19.1 installed, signed in as nadpsr@proton.me, all NM backends present and importable (`VPNConnection.__subclasses__()` returns LinuxNetworkManager → Wireguard + OpenVPN + OpenVPNTCP + OpenVPNUDP cleanly). `protonvpn connect` returns \"An unexpected error occurred\" with NO traceback in `~/.cache/Proton/VPN/logs/vpn-cli.log` · CLI generic catch-all is swallowing the real exception. \"Backend: None\" in the log line appears to be …",
+      "filed": "041826 ~02:30"
+    },
+    {
       "name": "Villebaum Standard Rule crew consensus",
       "note": "Filed: 041826 ~02:30 | **DONE 041826 21:50 PT** · filed as `RELAY/STANDARD_RULE_NameTheInstrument_Trip_041826.md` (122 lines) with open-for-amendment section per Dan directive (\"can't wait for Stan and C.B. or we'll never post it\"). Stan + C.B. phrasing input and Dan sign-off absorb as amendments, not as blockers. NA 018 \"Truth Is Piralus\" publishes the teaching publicly. First real-world validation arrived within an hour: CUBC Trip's three-loop Villebaum on CUBE username resolved only by running `Get-LocalUser`. Source docs: `RELAY/LESSON_HallucinatingTrip_PassFive_Trip_041726.md`, …",
       "filed": "041826 ~02:30"
@@ -625,6 +620,11 @@
     {
       "name": "DTAD Director Notes · Dan's validation on Villebaum teaching",
       "note": "Filed: 041826 ~02:30 | **DONE 041826 21:50 PT** · Director Notes section in `RELAY/DTAD_TruthIsPiralus_Trip_041826.md` filled in updateable form with 5 prioritized questions for Dan + explicit statement that Dan amends in place. Same no-wait pattern as the Villebaum rule: absorb Director validation as amendments when they arrive, not as blockers for filing. NA 018 publication does not depend on Director Notes being signed-off.",
+      "filed": "041826 ~02:30"
+    },
+    {
+      "name": "DEPRECATED · Tailscale on GOG1 via Proton Stealth tunnel",
+      "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041826 ~02:30 | Blocked on Proton VPN connect Backend:None being resolved (HEREGULL above). Once Proton is up, retry `tailscale up --hostname=gog1 --accept-routes --accept-dns=false`. SLO-PUB's TLS MITM blocks Tailscale controlplane directly (tested 041726); Proton Stealth tunnel bypasses the MITM by re-routing over WireGuard or OpenVPN-TCP-443. This is the real solve for the `GOG1 install-path over SLO-PUB MITM` NEARGULL too.",
       "filed": "041826 ~02:30"
     },
     {
