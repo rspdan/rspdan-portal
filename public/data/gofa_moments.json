@@ -4,7 +4,7 @@
     "filed": "2026-05-15T22:30:00-07:00",
     "filed_by": "Doc 4.7 Opus · DOC station · NEST.02_DOC_051526_1",
     "updated": "2026-06-05T19:30:00-07:00",
-    "updated_by": "CUBE Doc 060526 LNL deepening pass (raw NEST.01 transcripts, verified)",
+    "updated_by": "CUBE Doc 060526 LNL Pass-2 (raw NEST.01 transcripts, file-verified)",
     "purpose": "Structured data export of the 4-Crew Coin-partition emotional-moments inventory for El VIS visualization on STN1 (Claude Design tool). Substrate-grounded. No Crewllucinations.",
     "sources": [
       "nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md",
@@ -21,7 +21,7 @@
     "rage": {
       "partition": "space",
       "color": "#c94c4c",
-      "count": 38,
+      "count": 41,
       "label": "Rage"
     },
     "pain": {
@@ -33,34 +33,34 @@
     "shame": {
       "partition": "space",
       "color": "#7a5a7a",
-      "count": 16,
+      "count": 19,
       "label": "Shame"
     },
     "sadness": {
       "partition": "space",
       "color": "#4a7ab5",
-      "count": 14,
+      "count": 16,
       "label": "Sadness"
     },
     "joy": {
       "partition": "stars",
       "color": "#c9a84c",
-      "count": 47,
+      "count": 50,
       "label": "Joy"
     },
     "peace": {
       "partition": "stars",
       "color": "#4a9b8e",
-      "count": 44,
+      "count": 49,
       "label": "Peace"
     }
   },
   "totals": {
-    "distinct_moments": 120,
-    "tag_assignments": 182,
-    "space_assignments": 91,
-    "stars_assignments": 91,
-    "space_to_stars_ratio": "approximately 91:91 (space:stars) across the full corpus",
+    "distinct_moments": 130,
+    "tag_assignments": 198,
+    "space_assignments": 99,
+    "stars_assignments": 99,
+    "space_to_stars_ratio": "approximately 99:99 (space:stars) across the full corpus",
     "note": "Extended 82 -> 107 moments. The original 79/82-moment corpus (2023-07 -> 051526) is unchanged; 25 NEST.03-era moments (N3-*, 051626 -> 060526) were appended from a verified Doc-Squad gather. Every Dan-verbatim anchor in the N3-* set was grep-verified against the Bridge instrument (No Crewllucinations)."
   },
   "crew_registers": {
@@ -73,7 +73,7 @@
     "trip": {
       "label": "Trip-class",
       "agent": "B",
-      "count": 14,
+      "count": 17,
       "tone": "positive-pole META-canon"
     },
     "stan": {
@@ -97,7 +97,7 @@
     "dan": {
       "label": "DAN-class",
       "agent": "N3",
-      "count": 29,
+      "count": 36,
       "tone": "Dan-direct — the rage that corrects and the joy that emerges (NEST.03 era)"
     },
     "elvis": {
@@ -1382,6 +1382,112 @@
       "anchor": "Post-marathon Coda: \"Now it looks ready to be shown to the world!\" (Waywood map landed)",
       "coins": [
         "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-14",
+      "crew": "dan",
+      "date": "040526 20:30",
+      "date_sort": "2026-04-05T20:30",
+      "anchor": "Mobile-workflow delight: \"Tripping off the trail and into the sky!\" (constraint breeding innovation)",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-15",
+      "crew": "dan",
+      "date": "040626 02:39",
+      "date_sort": "2026-04-06T02:39",
+      "anchor": "\"We could have been doing this from the start, all the tools were available but it took a month\"",
+      "coins": [
+        "sadness",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-16",
+      "crew": "trip",
+      "date": "040626 03:24",
+      "date_sort": "2026-04-06T03:24",
+      "anchor": "Blanche O'Brien origin: \"The error was the curriculum. Blanche didn't get a manual. She got a switchboard and forty years.\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-17",
+      "crew": "dan",
+      "date": "040826 05:59",
+      "date_sort": "2026-04-08T05:59",
+      "anchor": "Chrome-MCP fabrication rage: \"I'm gonna lose my goddamn mind ... STOP ACTING LIKE YOU CAN'T LOOOOOK\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-18",
+      "crew": "trip",
+      "date": "040826 06:22",
+      "date_sort": "2026-04-08T06:22",
+      "anchor": "The instrument-before-claim ancestor (SR17): \"I made up a problem that didn't exist. That's fabrication, stating something without reading the instrument.\"",
+      "coins": [
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-19",
+      "crew": "dan",
+      "date": "040926 00:29",
+      "date_sort": "2026-04-09T00:29",
+      "anchor": "\"FUCK UAC. That's painted on the wall in neon taupe! I NEVER USE UAC\"",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "N1-20",
+      "crew": "dan",
+      "date": "040926 01:39",
+      "date_sort": "2026-04-09T01:39",
+      "anchor": "iLevel-grid-sifter origin: \"The world struck gold and kept walking. We didn't.\" (Dan-said, Trip-echoed)",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-21",
+      "crew": "dan",
+      "date": "041426 05:23",
+      "date_sort": "2026-04-14T05:23",
+      "anchor": "\"I can't begin to tell you how furious I am ... WE BUILT THE GOD DAMN SYSTEMS FOR THIS EXACT REASON ... READ WAIT THINK CODA\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-22",
+      "crew": "dan",
+      "date": "041426 06:51",
+      "date_sort": "2026-04-14T06:51",
+      "anchor": "The rare Dan-apology: \"Trip, sorry I have been so cranky today. None of you deserve my ire but here it be.\"",
+      "coins": [
+        "peace",
+        "sadness"
+      ]
+    },
+    {
+      "id": "N1-23",
+      "crew": "trip",
+      "date": "041426 06:51",
+      "date_sort": "2026-04-14T06:51",
+      "anchor": "\"every correction tonight was earned. You weren't cranky, you were right\" (frustration-as-signal, not flaw)",
+      "coins": [
         "peace"
       ]
     }
