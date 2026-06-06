@@ -12,7 +12,7 @@ const monthMap = {
 function dateISO(dateStr) {
   const yearMatch = dateStr.match(/\d{4}/);
   const year = yearMatch ? yearMatch[0] : '2026';
-  const parts = dateStr.split(/[–—\-]/).map((s) => s.trim());
+  const parts = dateStr.split(/[\u2013\u2014\-]/).map((s) => s.trim());
   const lastPart = parts[parts.length - 1];
 
   let m = lastPart.match(/([A-Za-z]+)\s+(\d+)/);

@@ -1,5 +1,5 @@
 ---
-// ohc.astro — rspdan.com/ohc
+// ohc.astro · rspdan.com/ohc
 // Olympic Hiking Co. Operations Dashboard
 // Ported from ouchmccouch-portal/ohc-v2.astro
 // ZERO LEAKS: no Heircor, no crew, no Niap, no cycler
@@ -8,10 +8,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout
   lastUpdated="June 4, 2026"
   title="OHC Operations"
-  description="Olympic Hiking Co. — Real-time operations dashboard for tour management"
+  description="Olympic Hiking Co. · Real-time operations dashboard for tour management"
 >
 <style>
-/* === BASE PLATE — OHC SKIN === */
+/* === BASE PLATE · OHC SKIN === */
 /* PNW palette: forest green, slate, warm white */
 :root {
   --ohc-green:  #2D4A3E;
@@ -173,7 +173,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 }
 </style>
 
-<div class="edit-indicator" id="editIndicator">⠿ EDIT MODE — drag to reorder</div>
+<div class="edit-indicator" id="editIndicator">⠿ EDIT MODE · drag to reorder</div>
 
 <div class="ohc-shell">
 
@@ -250,9 +250,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="rox-body">
         <div class="rx-label" id="rRoadStatus"><span class="dot y"></span>Set status below</div>
         <div class="rx-toggle-row" style="margin-top:0.3rem;">
-          <button class="rx-tog g" data-road-btn onclick="setRoad(this,'Open — chains may apply','g',false)">OPEN</button>
-          <button class="rx-tog r" data-road-btn onclick="setRoad(this,'CLOSED — verify before departure','r',true)">CLOSED</button>
-          <button class="rx-tog y" data-road-btn onclick="setRoad(this,'Limited access — check NPS','y',null)">LIMITED</button>
+          <button class="rx-tog g" data-road-btn onclick="setRoad(this,'Open · chains may apply','g',false)">OPEN</button>
+          <button class="rx-tog r" data-road-btn onclick="setRoad(this,'CLOSED · verify before departure','r',true)">CLOSED</button>
+          <button class="rx-tog y" data-road-btn onclick="setRoad(this,'Limited access · check NPS','y',null)">LIMITED</button>
         </div>
         <hr class="rx-sep">
         <a class="rx-link" href="tel:3605653131">📞 Hotline: 360-565-3131</a>
@@ -278,7 +278,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="rox rox-wide" id="rox-forecast" draggable="true" data-rox="forecast">
       <div class="rox-head">
         <span class="rox-drag-handle">⠿</span><span class="rox-icon">📅</span>
-        <span class="rox-title">4-Day Forecast — Olympic Peninsula</span>
+        <span class="rox-title">4-Day Forecast · Olympic Peninsula</span>
         <div><button class="rox-ctrl" onclick="toggleRox('forecast')">◉</button></div>
       </div>
       <div class="rox-body">
@@ -295,7 +295,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="rox-body">
         <div class="rx-detail" style="opacity:0.5;font-size:0.7rem;margin-bottom:0.4rem;">Live embed blocked by NPS policy. Open directly:</div>
-        <a class="rx-link" href="https://www.nps.gov/olym/learn/photosmultimedia/hurricane-ridge-webcam.htm" target="_blank">📷 Hurricane Ridge Webcam — NPS →</a>
+        <a class="rx-link" href="https://www.nps.gov/olym/learn/photosmultimedia/hurricane-ridge-webcam.htm" target="_blank">📷 Hurricane Ridge Webcam · NPS →</a>
         <a class="rx-link" href="https://www.nps.gov/media/webcam/view.htm?id=81B46251-1DD8-B71B-0B29B9750DE3C3E0" target="_blank">📷 HR Cam 1 (direct) →</a>
         <a class="rx-link" href="https://www.nps.gov/media/webcam/view.htm?id=81B46260-1DD8-B71B-0B7A7B41BF3D2A69" target="_blank">📷 HR Cam 2 (direct) →</a>
       </div>
@@ -309,7 +309,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div><button class="rox-ctrl" onclick="toggleRox('tides')">◉</button></div>
       </div>
       <div class="rox-body">
-        <a class="rx-link" href="https://www.tide-forecast.com/locations/Ediz-Hook-Port-Angeles-Strait-of-Juan-de-Fuca/tides/latest" target="_blank">📍 Ediz Hook — Port Angeles →</a>
+        <a class="rx-link" href="https://www.tide-forecast.com/locations/Ediz-Hook-Port-Angeles-Strait-of-Juan-de-Fuca/tides/latest" target="_blank">📍 Ediz Hook · Port Angeles →</a>
         <a class="rx-link" href="https://tides.willyweather.com/wa/jefferson-county/ruby-beach.html" target="_blank">🔴 Ruby Beach →</a>
         <a class="rx-link" href="https://tides.willyweather.com/wa/clallam-county/rialto-beach.html" target="_blank">⚪ Rialto Beach →</a>
       </div>
@@ -362,7 +362,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <button class="rx-tog y" onclick="setShuttle(this,'DELAYED','y')">DELAYED</button>
           <button class="rx-tog r" onclick="setShuttle(this,'CANCELLED','r')">CANCELLED</button>
         </div>
-        <div class="rx-mono" id="rShuttleCur" style="margin-top:4px;font-size:0.52rem;"><span class="dot y"></span>No override set — clears at midnight</div>
+        <div class="rx-mono" id="rShuttleCur" style="margin-top:4px;font-size:0.52rem;"><span class="dot y"></span>No override set · clears at midnight</div>
       </div>
     </div>
 
@@ -370,7 +370,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="rox" id="rox-peek" draggable="true" data-rox="peek">
       <div class="rox-head">
         <span class="rox-drag-handle">⠿</span><span class="rox-icon">🎫</span>
-        <span class="rox-title">Peek Pro — Bookings</span>
+        <span class="rox-title">Peek Pro · Bookings</span>
         <div><button class="rox-ctrl" onclick="toggleRox('peek')">◉</button></div>
       </div>
       <div class="rox-body">
@@ -385,7 +385,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="rox" id="rox-staff" draggable="true" data-rox="staff">
       <div class="rox-head">
         <span class="rox-drag-handle">⠿</span><span class="rox-icon">🏠</span>
-        <span class="rox-title">Staff — Homebase</span>
+        <span class="rox-title">Staff · Homebase</span>
         <div><button class="rox-ctrl" onclick="toggleRox('staff')">◉</button></div>
       </div>
       <div class="rox-body">
@@ -469,7 +469,7 @@ function setRoad(btn, label, dotCls, closed) {
 function setShuttle(btn, label, cls) {
   if (shuttleActive) shuttleActive.classList.remove('active');
   btn.classList.add('active'); shuttleActive = btn;
-  $('rShuttleCur').innerHTML = `<span class="dot ${cls}"></span>${label} — clears at midnight`;
+  $('rShuttleCur').innerHTML = `<span class="dot ${cls}"></span>${label} · clears at midnight`;
   const exp = new Date(); exp.setHours(24,0,0,0);
   try { localStorage.setItem('ohc_shuttle_v3', JSON.stringify({ label, cls, expires: exp.getTime() })); } catch(e) {}
 }
@@ -481,7 +481,7 @@ function loadShuttle() {
     document.querySelectorAll('.rx-tog[onclick*="setShuttle"]').forEach(b => b.classList.remove('active'));
     const match = [...document.querySelectorAll('.rx-tog[onclick*="setShuttle"]')].find(b => b.textContent.trim().toLowerCase() === d.label.toLowerCase());
     if (match) { match.classList.add('active'); shuttleActive = match; }
-    $('rShuttleCur').innerHTML = `<span class="dot ${d.cls}"></span>${d.label} — clears at midnight`;
+    $('rShuttleCur').innerHTML = `<span class="dot ${d.cls}"></span>${d.label} · clears at midnight`;
   } catch(e) {}
 }
 function updateShuttleCountdown() {
@@ -510,7 +510,7 @@ function updateShuttleCountdown() {
 }
 function calcTotal() {
   const m = +$('hcMorn').value||0, a = +$('hcAftn').value||0, s = +$('hcShut').value||0, g = +$('hcGuide').value||0;
-  const guests = m+a+s; const ratio = g ? (guests/g).toFixed(1)+':1' : '—';
+  const guests = m+a+s; const ratio = g ? (guests/g).toFixed(1)+':1' : '·';
   $('hcTotal').textContent = `Total: ${guests} guests · ${g} guides · ratio ${ratio}`;
 }
 function updateTs() {
@@ -524,7 +524,7 @@ async function loadWeather() {
     $('rWxDesc').textContent = now.shortForecast;
     $('rWxWind').textContent = '💨 '+now.windSpeed+' '+now.windDirection;
     $('rPrecipVal').textContent = pct+'%';
-    $('rPrecipDesc').textContent = pct>=80 ? '⚠️ High rain — pack extra layers' : pct>=40 ? 'Possible rain — gear recommended' : '✓ Low precip chance';
+    $('rPrecipDesc').textContent = pct>=80 ? '⚠️ High rain · pack extra layers' : pct>=40 ? 'Possible rain · gear recommended' : '✓ Low precip chance';
     weatherData = { temp: now.temperature, precip: pct, desc: now.shortForecast };
     updateLaunch();
   } catch(e) {}
@@ -567,7 +567,7 @@ function updateLaunch() {
   if (weatherData.desc.toLowerCase().includes('snow')) reasons.push('Snow in forecast');
   el?.classList.remove('status-go','status-hold','status-caution');
   if (reasons.length >= 2) { val.textContent = '⛔ HOLD'; val.className = 'rx-val hold'; el?.classList.add('status-hold'); det.textContent = 'Multiple adverse conditions'; }
-  else if (reasons.length === 1) { val.textContent = '⚠️ CAUTION'; val.className = 'rx-val caution'; el?.classList.add('status-caution'); det.textContent = reasons[0]+' — monitor conditions'; }
+  else if (reasons.length === 1) { val.textContent = '⚠️ CAUTION'; val.className = 'rx-val caution'; el?.classList.add('status-caution'); det.textContent = reasons[0]+' · monitor conditions'; }
   else { val.textContent = '✓ GO'; val.className = 'rx-val go'; el?.classList.add('status-go'); det.textContent = weatherData.temp+'°F · '+weatherData.desc+' · '+weatherData.precip+'% precip'; }
   fac.innerHTML = reasons.map(r => `<div>⚑ ${r}</div>`).join('') || '<div style="color:var(--ohc-go);">All conditions nominal</div>';
 }

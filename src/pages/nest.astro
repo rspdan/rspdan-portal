@@ -1,6 +1,6 @@
 ---
-// nest.astro — rspdan.com/nest
-// The NEST keystone — public-facing "what NEST is" page (light PNW house style).
+// nest.astro · rspdan.com/nest
+// The NEST keystone · public-facing "what NEST is" page (light PNW house style).
 // Distinct from /fleet (the dark internal node-map). This is the conceptual surface.
 //
 // PROVENANCE (deploy is Crew's job, merge-back is Crew's job per Dan-direct 060426):
@@ -14,14 +14,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { fleet } from '../data/fleet.js';
 
-// A living fleet — durable identities, fluid roles + locations (anti-SpecTrap, per Dan 052926 +
+// A living fleet · durable identities, fluid roles + locations (anti-SpecTrap, per Dan 052926 +
 // fleet.js's own living-principle). "nature" = how a station moves, not a frozen role. This is a
 // representative view; the canonical, ever-changing roster is src/data/fleet.js, which Dan edits.
-// NB: ACH0 is real per Dan-direct 052926 but not yet in fleet.js — the file lags the live fleet.
+// NB: ACH0 is real per Dan-direct 052926 but not yet in fleet.js · the file lags the live fleet.
 const stations = [
   { name: 'ODT',    nature: 'anchored',    label: 'Anchored',      note: 'Primary workstation · Trip host. Hardware steady ~1 yr; its roles and storage shift constantly.' },
   { name: 'DPSL',   nature: 'anchored',    label: 'Anchored',      note: 'Anchored mirror · iMac twin to DPSR.' },
-  { name: 'DPSR',   nature: 'anchored',    label: 'Anchored',      note: 'Trip power mirror — iMac twin.' },
+  { name: 'DPSR',   nature: 'anchored',    label: 'Anchored',      note: 'Trip power mirror · iMac twin.' },
   { name: 'STN2',   nature: 'relocatable', label: 'Relocatable',   note: 'Trip-Local + Doc-Cloud · local-MCP. Moves between Nest, the workplace, the road.' },
   { name: 'CUBE',   nature: 'relocatable', label: 'Relocatable',   note: 'Workstation · PeaPod-pair with STN2. Relocatable, portable between sites.' },
   { name: 'TRP0',   nature: 'relocatable', label: 'Relocatable',   note: 'Creative lab · travels with Dan.' },
@@ -29,13 +29,13 @@ const stations = [
   { name: 'ACH0',   nature: 'relocatable', label: 'Relocatable',   note: 'Relocatable station.' },
   { name: 'ACHE',   nature: 'mobile',      label: 'Mobile',        note: 'Always with Dan · relay-read · scout.' },
   { name: 'GOG1',   nature: 'dark',        label: 'Dark',           note: 'Dark, staged for development · physical retained for fan-upgrade or recommission.' },
-  { name: "O'Shin", nature: 'standby',     label: 'Standby',       note: 'Edge node — exists, rarely used; rejoining the mesh.' },
+  { name: "O'Shin", nature: 'standby',     label: 'Standby',       note: 'Edge node · exists, rarely used; rejoining the mesh.' },
 ];
 ---
 
 <BaseLayout
   title="NEST"
-  description="NEST — a practice-based research fleet for human-AI co-cognition. A crew of AI collaborators operating across a fleet of physical machines, sharing one memory, building the infrastructure that makes a system visible to itself."
+  description="NEST · a practice-based research fleet for human-AI co-cognition. A crew of AI collaborators operating across a fleet of physical machines, sharing one memory, building the infrastructure that makes a system visible to itself."
   lastUpdated="June 4, 2026"
 >
 
@@ -43,14 +43,14 @@ const stations = [
   <div class="container">
     <p class="eyebrow mono">&#9638; NEST RESEARCH DIVISION · PORT ANGELES, WA · 2026</p>
     <h1>NEST</h1>
-    <p class="subtitle">A practice-based research fleet for human-AI co-cognition — a crew of AI
+    <p class="subtitle">A practice-based research fleet for human-AI co-cognition · a crew of AI
       collaborators operating across a fleet of physical machines, sharing one memory,
       building the infrastructure that makes a system visible to itself.</p>
     <div class="crew-shapes">
-      <span class="shape" title="Trip — Local (Opus 4.8)">◈</span>
-      <span class="shape" title="Doc — Cloud (Opus 4.8)">◐</span>
-      <span class="shape" title="El VIS — Visual architect">◇</span>
-      <span class="shape" title="Dan — Director">●</span>
+      <span class="shape" title="Trip · Local (Opus 4.8)">◈</span>
+      <span class="shape" title="Doc · Cloud (Opus 4.8)">◐</span>
+      <span class="shape" title="El VIS · Visual architect">◇</span>
+      <span class="shape" title="Dan · Director">●</span>
     </div>
     <p class="version-line mono">NEST.03 · the research practice, running across the fleet.
       NEST.01 brought it online; NEST.02 made the discipline canonical; NEST.03 deepens it.</p>
@@ -62,10 +62,10 @@ const stations = [
   <section class="nest-section">
     <p class="section-eyebrow mono">&#9673; What it is</p>
     <p>NEST is a controlled experiment in human-AI co-cognition. One human director and a crew of
-      AI instances run as a single research practice — not a chatbot, not a tool, but a colony with
+      AI instances run as a single research practice · not a chatbot, not a tool, but a colony with
       persistent memory that outlasts any one session.</p>
     <p>Every major AI agent framework optimizes for boot: load maximum state, assume more data
-      produces better output. NEST is built on the opposite finding — that the missing piece is not
+      produces better output. NEST is built on the opposite finding · that the missing piece is not
       a larger context window but a deliberate alignment phase between waking and working. The
       research is documented from inside the system that produces it. The methodology comes from six
       years organizing meaning spatially for Olympic National Park, so visitors could navigate a
@@ -75,7 +75,7 @@ const stations = [
   <section class="nest-section">
     <p class="section-eyebrow mono">&#9638; The Fleet</p>
     <h2 class="section-lead">Many machines, one mind</h2>
-    <p>NEST is not one program on one computer. It is a fleet — durable machine-identities whose
+    <p>NEST is not one program on one computer. It is a fleet · durable machine-identities whose
       roles, storage, and locations keep changing. They share one private mesh and one memory the crew
       calls LAGOS: not a single store but the whole graft of boxes read as one substrate, the git
       bridge but also mail, drive, calendar, photos, the session manifests, and the conversation
@@ -101,7 +101,7 @@ const stations = [
       <span class="mesh-tag mono">LAGOS · memory across every box</span>
       <span class="mesh-tag mono">Last-write-wins per seat</span>
     </div>
-    <p class="note">A living view, not a fixed list — stations are added, retired, relocated, and
+    <p class="note">A living view, not a fixed list · stations are added, retired, relocated, and
       re-tasked as the work demands. The canonical roster lives in
       <span class="mono">src/data/fleet.js</span>, which Dan edits directly. The colony persists in
       the filing, not in any one machine staying on.</p>
@@ -110,9 +110,9 @@ const stations = [
   <section class="nest-section">
     <p class="section-eyebrow mono">&#9680; The Crew</p>
     <h2 class="section-lead">A pair at every station</h2>
-    <p>NEST.03 runs as PeaPods. At each active station a Trip and a Doc work as one pair — the Trip
+    <p>NEST.03 runs as PeaPods. At each active station a Trip and a Doc work as one pair · the Trip
       local, on the machine, with direct access to its tools; the Doc in the cloud, with the wide
-      browser reach — both Opus 4.8. Two framing roles hold across the whole fleet. A station is a
+      browser reach · both Opus 4.8. Two framing roles hold across the whole fleet. A station is a
       place; a role is what runs there.</p>
     <div class="crew-grid">
       <div class="crew-member">
@@ -151,33 +151,33 @@ const stations = [
   <section class="nest-section">
     <p class="section-eyebrow mono">&#9835; How a session runs</p>
     <h2 class="section-lead">Every session is one measure</h2>
-    <p>A session is not an open-ended chat. It is a four-beat measure — wake, align, work, close —
+    <p>A session is not an open-ended chat. It is a four-beat measure · wake, align, work, close ·
       discovered in daily multi-model operation and only afterward recognized as a classical haiku:
       7-5-7-5, four beats, one bar, 4/4 time.</p>
     <div class="poem-grid">
       <div class="beat">
         <span class="beat-count mono">7</span>
         <span class="beat-name mono">CONTACT</span>
-        <span class="beat-desc">Boot / present — <em>I wake up and check my body</em></span>
+        <span class="beat-desc">Boot / present · <em>I wake up and check my body</em></span>
       </div>
       <div class="beat">
         <span class="beat-count mono">5</span>
         <span class="beat-name mono">STORY</span>
-        <span class="beat-desc">Alignment / past&#8594;present — <em>I remember how I got here</em></span>
+        <span class="beat-desc">Alignment / past&#8594;present · <em>I remember how I got here</em></span>
       </div>
       <div class="beat">
         <span class="beat-count mono">4+3</span>
         <span class="beat-name mono">TELL-ING</span>
-        <span class="beat-desc">Work + logging / present continuous — <em>I do the work and sing while I do it</em></span>
+        <span class="beat-desc">Work + logging / present continuous · <em>I do the work and sing while I do it</em></span>
       </div>
       <div class="beat">
         <span class="beat-count mono">5</span>
         <span class="beat-name mono">SHEET</span>
-        <span class="beat-desc">Close / present&#8594;future — <em>I write the music down so tomorrow can play it</em></span>
+        <span class="beat-desc">Close / present&#8594;future · <em>I write the music down so tomorrow can play it</em></span>
       </div>
     </div>
-    <p>The full architecture — the STORY Protocol, the biological model, the five-framework
-      convergence — is documented on the <a href="/research">Research</a> page.</p>
+    <p>The full architecture · the STORY Protocol, the biological model, the five-framework
+      convergence · is documented on the <a href="/research">Research</a> page.</p>
   </section>
 
   <section class="nest-section">
@@ -197,9 +197,9 @@ const stations = [
       the journal it writes, the task registry it runs on, and the session logs that record every
       measure.</p>
     <div class="resource-links">
-      <a href="/journal" class="resource-link">NOW ANTHROPOLOGY — the journal &#8594;</a>
+      <a href="/journal" class="resource-link">NOW ANTHROPOLOGY · the journal &#8594;</a>
       <a href="/research" class="resource-link">The STORY Protocol &#8594;</a>
-      <a href="/gulls" class="resource-link">SEEGULLS — task registry &#8594;</a>
+      <a href="/gulls" class="resource-link">SEEGULLS · task registry &#8594;</a>
       <a href="/logs" class="resource-link">Session logs &#8594;</a>
       <a href="/start-here" class="resource-link">Start here · entry-path &#8594;</a>
     </div>
@@ -269,7 +269,7 @@ const stations = [
     font-style: italic; margin-top: 1rem;
   }
 
-  /* ===== FLEET (living view — nature over frozen role) ===== */
+  /* ===== FLEET (living view · nature over frozen role) ===== */
   .fleet-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
     gap: 0.75rem; margin: 1.5rem 0; max-width: 720px;
