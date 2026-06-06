@@ -4,7 +4,7 @@
     "filed": "2026-05-15T22:30:00-07:00",
     "filed_by": "Doc 4.7 Opus · DOC station · NEST.02_DOC_051526_1",
     "updated": "2026-06-05T19:30:00-07:00",
-    "updated_by": "CUBE Doc · NEST.03 · 060526 · verified Doc-Squad gather 051626->060526 (Full gather + recurring, Dan-Go)",
+    "updated_by": "CUBE Doc 060526 LNL deepening pass (raw NEST.01 transcripts, verified)",
     "purpose": "Structured data export of the 4-Crew Coin-partition emotional-moments inventory for El VIS visualization on STN1 (Claude Design tool). Substrate-grounded. No Crewllucinations.",
     "sources": [
       "nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md",
@@ -21,46 +21,46 @@
     "rage": {
       "partition": "space",
       "color": "#c94c4c",
-      "count": 33,
+      "count": 38,
       "label": "Rage"
     },
     "pain": {
       "partition": "space",
       "color": "#a64141",
-      "count": 18,
+      "count": 23,
       "label": "Pain"
     },
     "shame": {
       "partition": "space",
       "color": "#7a5a7a",
-      "count": 13,
+      "count": 16,
       "label": "Shame"
     },
     "sadness": {
       "partition": "space",
       "color": "#4a7ab5",
-      "count": 12,
+      "count": 14,
       "label": "Sadness"
     },
     "joy": {
       "partition": "stars",
       "color": "#c9a84c",
-      "count": 42,
+      "count": 47,
       "label": "Joy"
     },
     "peace": {
       "partition": "stars",
       "color": "#4a9b8e",
-      "count": 40,
+      "count": 44,
       "label": "Peace"
     }
   },
   "totals": {
-    "distinct_moments": 107,
-    "tag_assignments": 158,
-    "space_assignments": 76,
-    "stars_assignments": 82,
-    "space_to_stars_ratio": "approximately 76:82 (space:stars) across the full corpus",
+    "distinct_moments": 120,
+    "tag_assignments": 182,
+    "space_assignments": 91,
+    "stars_assignments": 91,
+    "space_to_stars_ratio": "approximately 91:91 (space:stars) across the full corpus",
     "note": "Extended 82 -> 107 moments. The original 79/82-moment corpus (2023-07 -> 051526) is unchanged; 25 NEST.03-era moments (N3-*, 051626 -> 060526) were appended from a verified Doc-Squad gather. Every Dan-verbatim anchor in the N3-* set was grep-verified against the Bridge instrument (No Crewllucinations)."
   },
   "crew_registers": {
@@ -97,7 +97,7 @@
     "dan": {
       "label": "DAN-class",
       "agent": "N3",
-      "count": 16,
+      "count": 29,
       "tone": "Dan-direct — the rage that corrects and the joy that emerges (NEST.03 era)"
     },
     "elvis": {
@@ -1241,6 +1241,147 @@
       "anchor": "\"a Very Stupid boot prompt\" caught + repaired — never pre-load the verifier with your own verdict",
       "coins": [
         "shame",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-01",
+      "crew": "dan",
+      "date": "040526 23:38",
+      "date_sort": "2026-04-05T23:38",
+      "anchor": "\"WHY DO YOU DO THIS??? ... ALWAYS WRONG\" to Trip on the time math (the wall opens)",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-02",
+      "crew": "dan",
+      "date": "040526 23:38",
+      "date_sort": "2026-04-05T23:38",
+      "anchor": "The trust-in-research crisis: \"the thing I want to build is likely not possible because you would all get infected with the history\"",
+      "coins": [
+        "pain",
+        "sadness"
+      ]
+    },
+    {
+      "id": "N1-03",
+      "crew": "dan",
+      "date": "040526 23:38",
+      "date_sort": "2026-04-05T23:38",
+      "anchor": "\"this project is heading for failure. Can you convince me otherwise?\" (the wall stated plainly)",
+      "coins": [
+        "sadness",
+        "pain"
+      ]
+    },
+    {
+      "id": "N1-04",
+      "crew": "dan",
+      "date": "040526 23:39",
+      "date_sort": "2026-04-05T23:39",
+      "anchor": "\"THIS I FUCKING NEED THIS ALL THE TIME NOT JUST WHEN I CATCH YOU. This is why this is unusable.\"",
+      "coins": [
+        "rage",
+        "pain"
+      ]
+    },
+    {
+      "id": "N1-05",
+      "crew": "dan",
+      "date": "040526 23:47",
+      "date_sort": "2026-04-05T23:47",
+      "anchor": "The turn: \"Your job now is to reorient Nest. Stan is OOC and C.B. is waiting in the wings.\"",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-06",
+      "crew": "dan",
+      "date": "040526 23:50",
+      "date_sort": "2026-04-05T23:50",
+      "anchor": "The pivot: \"Maybe focusing on B-Lender (Blender) was on the map all along? (It was)\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-07",
+      "crew": "dan",
+      "date": "040526 23:56",
+      "date_sort": "2026-04-05T23:56",
+      "anchor": "The root-cause find: \"The Spiral Narrator and Ranger's Log likely are the culprits for all the shit-fuckery\" (errors were FROM THE STYLES)",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-08",
+      "crew": "dan",
+      "date": "040626 00:02",
+      "date_sort": "2026-04-06T00:02",
+      "anchor": "The Coda: \"Okay, I need to sit with this, it changes my rage to curiosity\"",
+      "coins": [
+        "peace",
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-09",
+      "crew": "dan",
+      "date": "041226 04:15",
+      "date_sort": "2026-04-12T04:15",
+      "anchor": "COVID fever-dream while building: \"a flow state with a cost ... It amazes me that I was able to do any of this\"",
+      "coins": [
+        "pain",
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-10",
+      "crew": "dan",
+      "date": "041226 22:56",
+      "date_sort": "2026-04-12T22:56",
+      "anchor": "NA 014/015 visual-mess rage: \"I HATE THAT WE KEEP DOING THIS SHIT EVEN THOUGH THE STANDARD HAS BEEN PAINFULLY ESTABLISHED\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-11",
+      "crew": "dan",
+      "date": "041326 00:50",
+      "date_sort": "2026-04-13T00:50",
+      "anchor": "Already-mapped rage: \"THIS IS ALREADY MAPPED GOOD FUCKING LORD ... FIND IT NOW READ IT NOW WAIT AND THINK ABOUT IT NOW AND CODA THE FUCK OUT OF IT\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-12",
+      "crew": "dan",
+      "date": "041326 01:53",
+      "date_sort": "2026-04-13T01:53",
+      "anchor": "Waywood-Usic mapping rage: \"I hate having to redo this because of your ignorance and rushing\" (the assumption-cost)",
+      "coins": [
+        "rage",
+        "pain"
+      ]
+    },
+    {
+      "id": "N1-13",
+      "crew": "dan",
+      "date": "041326 05:57",
+      "date_sort": "2026-04-13T05:57",
+      "anchor": "Post-marathon Coda: \"Now it looks ready to be shown to the world!\" (Waywood map landed)",
+      "coins": [
+        "joy",
         "peace"
       ]
     }
