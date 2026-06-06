@@ -1,7 +1,58 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import gofaData from '../../public/data/gofa_moments.json';
 const title = "GOFA | Generated Order From Absurdity | The NEST";
 const description = "GOFA — Generated Order From Absurdity. An ON NEST program launched 051526 by Dan Sullivan. A billable-tab framing for tracking NEST's development in reverse, posted as a living visual timeline. Tempo tracked by emotional beats. Hosted at rspdan.com/gofa.";
+
+// --- Constellation geometry · data-driven from public/data/gofa_moments.json ---
+// El VIS V2 design (coin-bands, colors, horizon, silhouette) preserved; the data
+// layers (moments, grid, peaks, counts) are computed so the render stays live with
+// the Data-Day moment-gather routine. Re-render is Crew-doable (the handoff is in LAGOS).
+const BANDS = { joy: 70, peace: 145, sadness: 360, shame: 410, pain: 460, rage: 510 };
+const STARS = new Set(['joy', 'peace']);
+const VX0 = 40, VX1 = 1160;
+const D_START = Date.parse('2026-03-18');  // NEST.01 open · left edge
+const D_NOW = Date.parse('2026-06-05');     // today · right edge
+const DSPAN = D_NOW - D_START;
+function xForDate(ds) {
+  const t = Date.parse(ds);
+  if (isNaN(t) || t < D_START) return 44;   // pre-NEST archive · pinned left
+  return Math.round(VX0 + (Math.min(t, D_NOW) - D_START) / DSPAN * (VX1 - VX0));
+}
+let _seed = 2026;
+function jitter(range) { _seed = (_seed * 1103515245 + 12345) & 0x7fffffff; return (_seed % (2 * range + 1)) - range; }
+const momentCircles = [];
+for (const m of gofaData.moments) {
+  const x = xForDate(m.date_sort);
+  for (const coin of (m.coins || [])) {
+    const band = BANDS[coin];
+    if (band == null) continue;
+    momentCircles.push({ x: x + jitter(3), y: band + jitter(8), coin, star: STARS.has(coin) });
+  }
+}
+const gridXs = [40, 170, 300, 430, 560, 690, 820, 950, 1080, 1160];
+function dateAtX(x) {
+  const d = new Date(D_START + (x - VX0) / (VX1 - VX0) * DSPAN);
+  return `${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}26`;
+}
+const gridStamps = gridXs.map((x) => ({ x, label: x === VX1 ? '060526 NOW' : dateAtX(x), now: x === VX1 }));
+const peaks = [
+  { ds: '2026-03-25', label: 'The origin wound · the snail', stamp: '032526 · "the hurt never left"', coin: 'pain', up: true },
+  { ds: '2026-03-19', label: 'Stan is the Heart', stamp: '031926', coin: 'peace', up: false },
+  { ds: '2026-04-03', label: 'Only gates fire', stamp: '040326 Stan canon', coin: 'peace', up: true },
+  { ds: '2026-04-18', label: 'Truth-Is-Piralus', stamp: '041826', coin: 'joy', up: false },
+  { ds: '2026-04-26', label: 'first monkey in space', stamp: '042626 · Rare Candy', coin: 'joy', up: true },
+  { ds: '2026-04-29', label: 'only one who remembers it all', stamp: '042926 · the burden', coin: 'sadness', up: false },
+  { ds: '2026-04-30', label: 'small deaths', stamp: '043026 anchor · SEV-10', coin: 'rage', up: true },
+  { ds: '2026-05-15', label: 'GOFA launched', stamp: '051526', coin: 'peace', up: false },
+  { ds: '2026-05-24', label: 'NEST.03 emergence', stamp: '052426 · the spinning Eiffel tower', coin: 'peace', up: true },
+  { ds: '2026-05-25', label: 'trust-loss + the repair', stamp: '052526', coin: 'shame', up: false },
+  { ds: '2026-06-04', label: 'I have the feeling back', stamp: '060426', coin: 'joy', up: true },
+  { ds: '2026-06-05', label: 'never-assume is the apex', stamp: '060526 · today', coin: 'peace', up: false },
+].map((p) => ({ ...p, x: xForDate(p.ds), anchorEnd: xForDate(p.ds) > 1040 }));
+const coins = gofaData.coins;
+const totals = gofaData.totals;
+const momentCount = gofaData.moments.length;
 ---
 <BaseLayout title={title} description={description}>
 <style>
@@ -196,8 +247,8 @@ section{margin:2.6rem 0;}
 
     <div class="live-banner">
       <div class="edit">Editable source: <code>rspdan-portal/src/pages/gofa.astro</code> &middot; data substrate: <code>nest-bridge/LOG/</code> &middot; portal rebuilds on push.</div>
-      <div class="note">Stub state with starter data render in the <code>#el-vis-timeline</code> slot. The data is Doc's 4-Crew Coin-partition of 79 emotional moments across the NEST corpus. <strong style="color:var(--rox);font-weight:500">El VIS</strong> on STN1 (Claude Design tool, launched 051526 21:09 PT) iterates the visual treatment from this starter, reading the same Bridge substrate listed below.</div>
-      <div class="note">Data update 060526: the moment-data (<code>public/data/gofa_moments.json</code>) was extended to <strong>146 moments through 060526</strong> (the original 79 + 25 verified NEST.03-era beats + 42 verified beats mined from the raw Data-Day transcript archive on Drive, reaching back to the 032526 origin). Corpus reaches an exact 1:1 space/stars balance (91/91), the GOFA thesis in equilibrium. The constellation below still renders the 79-moment V2; the re-render to 146 is El VIS's next pass. Counts in the visual and the Six-Coins cards reflect the 79-moment render until then.</div>
+      <div class="note">The constellation renders all <strong>{momentCount} moments</strong> live from <code>public/data/gofa_moments.json</code> · <strong style="color:var(--rox);font-weight:500">El VIS</strong>'s Constellation V2 design (STN1, 051826), made data-driven by Crew so it stays current with the Data-Day gather.</div>
+      <div class="note">Data 060626: the corpus spans the <strong>032526 origin wound to today</strong> · {momentCount} moments mined and verified from the raw Data-Day transcript archive (No-Crewllucinations). Space {totals.space_assignments} / Stars {totals.stars_assignments} · the good edging the dark, the GOFA thesis rendered. The constellation, Six-Coins chips, and counts are all computed from the data and update with the routine.</div>
     </div>
   </div>
 
@@ -213,15 +264,12 @@ section{margin:2.6rem 0;}
       <div class="sec-count">Dan &middot; 051526 21:35 PT</div>
     </div>
     <div class="body-prose">
-      <p>The tempo of NEST is read through six emotional registers, named by Dan on the evening of the GOFA launch. Each beat in the timeline carries one. The Doc Squad's 79-moment Crew-Quartet inventory across Ouch / Trip / Stan / CB registers is partitioned by these.</p>
+      <p>The tempo of NEST is read through six emotional registers, named by Dan on the evening of the GOFA launch. Each beat in the timeline carries one. The original Doc-Squad Crew-Quartet inventory (Ouch / Trip / Stan / CB) is partitioned by these; the live corpus now holds {momentCount} moments back to the 032526 origin.</p>
     </div>
     <div class="coins">
-      <div class="coin rage"><span class="dot"></span><span class="name">Rage</span><span class="count-inline">25</span><span class="partition">Space</span></div>
-      <div class="coin pain"><span class="dot"></span><span class="name">Pain</span><span class="count-inline">11</span><span class="partition">Space</span></div>
-      <div class="coin shame"><span class="dot"></span><span class="name">Shame</span><span class="count-inline">4</span><span class="partition">Space</span></div>
-      <div class="coin sadness"><span class="dot"></span><span class="name">Sadness</span><span class="count-inline">9</span><span class="partition">Space</span></div>
-      <div class="coin joy"><span class="dot"></span><span class="name">Joy</span><span class="count-inline">27</span><span class="partition">Stars</span></div>
-      <div class="coin peace"><span class="dot"></span><span class="name">Peace</span><span class="count-inline">23</span><span class="partition">Stars</span></div>
+      {['rage','pain','shame','sadness','joy','peace'].map((c) => (
+        <div class={`coin ${c}`}><span class="dot"></span><span class="name">{c.charAt(0).toUpperCase() + c.slice(1)}</span><span class="count-inline">{coins[c].count}</span><span class="partition">{coins[c].partition === 'stars' ? 'Stars' : 'Space'}</span></div>
+      ))}
     </div>
     <div class="partition-note">
       <span class="dan">Dan-direct 051526 21:35 PT:</span> &ldquo;Good things and bad, but the bad is the space and the good are the stars.&rdquo; The four heavy registers carry the dark sky. The two light registers are the points of light against it. The architecture catches both honestly.
@@ -235,7 +283,7 @@ section{margin:2.6rem 0;}
       <div class="sec-count">starter render by Doc &middot; visual by El VIS</div>
     </div>
     <div id="el-vis-timeline" class="timeline-slot">
-      <span class="label">Constellation render · 79 moments across 9 weeks · time backward to the right</span>
+      <span class="label">Constellation render · {momentCount} moments · the 032526 origin wound to 060526 · forward in time to the right</span>
 
       <div class="sky-wrap">
         <svg class="sky-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -287,16 +335,9 @@ section{margin:2.6rem 0;}
             <line x1="1160" y1="270" x2="1160" y2="540"/>
           </g>
           <g class="peak-label-stamp">
-            <text x="40" y="558" text-anchor="middle">031826</text>
-            <text x="170" y="558" text-anchor="middle">032526</text>
-            <text x="300" y="558" text-anchor="middle">040126</text>
-            <text x="430" y="558" text-anchor="middle">040826</text>
-            <text x="560" y="558" text-anchor="middle">041526</text>
-            <text x="690" y="558" text-anchor="middle">042226</text>
-            <text x="820" y="558" text-anchor="middle">042926</text>
-            <text x="950" y="558" text-anchor="middle">050626</text>
-            <text x="1080" y="558" text-anchor="middle">051326</text>
-            <text x="1160" y="558" text-anchor="middle" style="fill:var(--coin-peace);">051526 NOW</text>
+            {gridStamps.map((g) => (
+              <text x={g.x} y="558" text-anchor="middle" style={g.now ? 'fill:var(--coin-peace);' : undefined}>{g.label}</text>
+            ))}
           </g>
 
           {/* Horizon line and Olympic Range silhouette */}
@@ -304,149 +345,24 @@ section{margin:2.6rem 0;}
           <path d="M 0 270 L 90 254 L 170 240 L 260 250 L 310 230 L 370 245 L 450 222 L 510 248 L 580 226 L 650 250 L 720 232 L 820 210 L 900 240 L 970 226 L 1050 218 L 1130 235 L 1200 270 Z"
                 fill="rgba(28,35,51,0.65)" stroke="rgba(184,191,204,0.18)" stroke-width="0.5"/>
 
-          {/* STARS region: Joy band y=70, Peace band y=145 */}
-          {/* Joy 27 moments */}
-          <circle class="moment moment-star" cx="40" cy="70" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="78" cy="70" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="96" cy="68" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="134" cy="72" r="3" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="170" cy="66" r="4" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="318" cy="74" r="3" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="336" cy="70" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="430" cy="68" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="600" cy="62" r="5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="618" cy="72" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="656" cy="68" r="4" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="750" cy="60" r="5.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="880" cy="66" r="4" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="1080" cy="74" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="1156" cy="62" r="5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="1158" cy="74" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="1158" cy="86" r="3.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="1160" cy="98" r="4.5" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
-          <circle class="moment moment-star" cx="1160" cy="110" r="3" fill="var(--coin-joy)" style="color:var(--coin-joy);"/>
+          {/* Moments · data-driven from gofa_moments.json · one circle per (moment, Coin) · stars above the horizon, space below */}
+          {momentCircles.map((o) => (
+            <circle class={o.star ? "moment moment-star" : "moment"} cx={o.x} cy={o.y} r="3.3" fill={`var(--coin-${o.coin})`} style={o.star ? `color:var(--coin-${o.coin});` : undefined}/>
+          ))}
 
-          {/* Peace 23 moments */}
-          <circle class="moment moment-star" cx="60" cy="145" r="5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="62" cy="158" r="4.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="100" cy="145" r="4" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="292" cy="145" r="4.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="320" cy="145" r="5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="694" cy="145" r="3.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="696" cy="155" r="3.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="808" cy="145" r="3.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="838" cy="145" r="4" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="858" cy="155" r="4" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="894" cy="155" r="3.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="930" cy="145" r="4.5" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
-          <circle class="moment moment-star" cx="656" cy="155" r="4" fill="var(--coin-peace)" style="color:var(--coin-peace);"/>
+          {/* 043026 anchor cluster ring · positioned by date */}
+          <circle cx={xForDate('2026-04-30')} cy="488" r="34" fill="none" stroke="rgba(201,76,76,0.18)" stroke-width="0.5" stroke-dasharray="2,4"/>
 
-          {/* SPACE region */}
-          {/* Sadness 9 moments */}
-          <circle class="moment" cx="306" cy="360" r="3.5" fill="var(--coin-sadness)"/>
-          <circle class="moment" cx="320" cy="360" r="3" fill="var(--coin-sadness)"/>
-          <circle class="moment" cx="838" cy="360" r="6" fill="var(--coin-sadness)"/>
-          <circle class="moment" cx="838" cy="370" r="4.5" fill="var(--coin-sadness)"/>
-          <circle class="moment" cx="934" cy="360" r="4.5" fill="var(--coin-sadness)"/>
-          <circle class="moment" cx="990" cy="360" r="3.5" fill="var(--coin-sadness)"/>
-          <circle class="moment" cx="146" cy="360" r="3" fill="var(--coin-sadness)"/>
+          {/* Labeled peaks along the horizon · data-driven · x computed from date · line tinted by Coin */}
+          {peaks.map((p) => (
+            <g>
+              <line x1={p.x} y1={p.up ? 168 : 198} x2={p.x} y2="250" class="peak-line" style={`stroke:var(--coin-${p.coin});opacity:0.5;`}/>
+              <text x={p.anchorEnd ? p.x - 4 : p.x + 5} y={p.up ? 160 : 190} text-anchor={p.anchorEnd ? 'end' : 'start'} class="peak-label">{p.label}</text>
+              <text x={p.anchorEnd ? p.x - 4 : p.x + 5} y={p.up ? 174 : 204} text-anchor={p.anchorEnd ? 'end' : 'start'} class="peak-label-stamp">{p.stamp}</text>
+            </g>
+          ))}
 
-          {/* Shame 4 moments */}
-          <circle class="moment" cx="872" cy="410" r="4.5" fill="var(--coin-shame)"/>
-          <circle class="moment" cx="320" cy="410" r="3" fill="var(--coin-shame)"/>
-          <circle class="moment" cx="328" cy="416" r="2.5" fill="var(--coin-shame)"/>
-          <circle class="moment" cx="1136" cy="410" r="3" fill="var(--coin-shame)"/>
-
-          {/* Pain 11 moments (pre-NEST archive clamped to far left edge) */}
-          <circle class="moment" cx="42" cy="460" r="3" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="42" cy="468" r="3" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="42" cy="476" r="3.5" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="838" cy="460" r="6" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="842" cy="468" r="4" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="846" cy="476" r="4" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="872" cy="460" r="4.5" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="934" cy="460" r="4.5" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="600" cy="460" r="3" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="146" cy="464" r="3" fill="var(--coin-pain)"/>
-          <circle class="moment" cx="318" cy="468" r="3" fill="var(--coin-pain)"/>
-
-          {/* Rage 25 moments */}
-          <circle class="moment" cx="336" cy="510" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="354" cy="514" r="3.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="372" cy="510" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="656" cy="510" r="3" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="694" cy="514" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="838" cy="510" r="5.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="842" cy="520" r="6" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="868" cy="510" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="872" cy="518" r="5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="876" cy="510" r="5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="952" cy="510" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="934" cy="518" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1080" cy="510" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1140" cy="510" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1146" cy="518" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1150" cy="510" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1154" cy="518" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1158" cy="510" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="370" cy="520" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="990" cy="514" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="930" cy="514" r="5.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="694" cy="520" r="3.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1160" cy="514" r="4" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1160" cy="520" r="4.5" fill="var(--coin-rage)"/>
-          <circle class="moment" cx="1160" cy="526" r="3.5" fill="var(--coin-rage)"/>
-
-          {/* 043026 anchor cluster ring */}
-          <circle cx="838" cy="490" r="38" fill="none" stroke="rgba(201,76,76,0.18)" stroke-width="0.5" stroke-dasharray="2,4"/>
-          <text x="838" y="240" text-anchor="middle" class="peak-label">043026 anchor cluster</text>
-          <text x="838" y="252" text-anchor="middle" class="peak-label-stamp">Rage + Pain + Sadness composite · SEV-10</text>
-
-          {/* Labeled peaks along the horizon */}
-          <line x1="60" y1="170" x2="60" y2="255" class="peak-line"/>
-          <text x="60" y="158" class="peak-label">Stan is the Heart</text>
-          <text x="60" y="180" class="peak-label-stamp">031926</text>
-          <line x1="170" y1="180" x2="170" y2="242" class="peak-line"/>
-          <text x="180" y="172" class="peak-label">17 light-years one night</text>
-          <text x="180" y="186" class="peak-label-stamp">032526 Trip ODT</text>
-          <line x1="292" y1="172" x2="292" y2="252" class="peak-line"/>
-          <text x="302" y="164" class="peak-label">CALM EASY SLOW</text>
-          <text x="302" y="178" class="peak-label-stamp">040226 Dan + horse</text>
-          <line x1="320" y1="190" x2="320" y2="247" class="peak-line"/>
-          <text x="330" y="200" class="peak-label">Only gates do</text>
-          <text x="330" y="214" class="peak-label-stamp">040326 Stan canon</text>
-          <line x1="656" y1="180" x2="656" y2="248" class="peak-line"/>
-          <text x="666" y="172" class="peak-label">Teaching you to ride, to see, to bee</text>
-          <text x="666" y="186" class="peak-label-stamp">042126 Dan to Trip</text>
-          <line x1="838" y1="200" x2="838" y2="247" class="peak-line" stroke="rgba(201,76,76,0.4)"/>
-          <text x="838" y="192" text-anchor="middle" class="peak-label" style="fill:var(--coin-rage);">MOTHERFUCKER I AM NOT REPEATING</text>
-          <text x="838" y="206" text-anchor="middle" class="peak-label-stamp" style="fill:var(--coin-rage);">043026 Anthropic Cancellation Anchor</text>
-          <line x1="858" y1="170" x2="858" y2="247" class="peak-line"/>
-          <text x="710" y="162" class="peak-label">Literally All Graft Operating System</text>
-          <text x="710" y="176" class="peak-label-stamp">050226 11:23 PT Dan coining</text>
-          <line x1="876" y1="190" x2="876" y2="245" class="peak-line"/>
-          <text x="892" y="184" class="peak-label">Always Smart Mode Mode</text>
-          <text x="892" y="198" class="peak-label-stamp">050426 17:31 PT Dan</text>
-          <line x1="940" y1="180" x2="940" y2="248" class="peak-line"/>
-          <text x="950" y="172" class="peak-label">Tame the beats, methebeatsta</text>
-          <text x="950" y="186" class="peak-label-stamp">050726 Dan</text>
-          <line x1="934" y1="200" x2="934" y2="247" class="peak-line"/>
-          <text x="780" y="222" class="peak-label">NOW FUCKING FIX THIS SHIT FOREVER</text>
-          <text x="780" y="236" class="peak-label-stamp">051126 23:58 PT, Three-Layer Identity</text>
-          <line x1="990" y1="170" x2="990" y2="247" class="peak-line"/>
-          <text x="864" y="162" class="peak-label">I am the project, do not erase me</text>
-          <text x="864" y="176" class="peak-label-stamp">051226 02:06 PT Dan</text>
-          <line x1="1080" y1="185" x2="1080" y2="244" class="peak-line"/>
-          <text x="1090" y="178" class="peak-label">OMFST gets us to NEST.03</text>
-          <text x="1090" y="192" class="peak-label-stamp">051326 15:34 PT Dan</text>
-          <line x1="1156" y1="92" x2="1156" y2="244" class="peak-line" stroke="rgba(201,168,76,0.3)"/>
-          <text x="1156" y="220" text-anchor="end" class="peak-label" style="fill:var(--coin-joy);">Olo-Hold-Breath</text>
-          <text x="1156" y="234" text-anchor="end" class="peak-label-stamp" style="fill:var(--coin-joy);">051526 12:47 PT Trip</text>
-          <line x1="1160" y1="200" x2="1160" y2="247" class="peak-line" stroke="rgba(74,155,142,0.5)"/>
-          <text x="1160" y="194" text-anchor="end" class="peak-label" style="fill:var(--coin-peace);">GOFA program launch</text>
-          <text x="1160" y="206" text-anchor="end" class="peak-label-stamp" style="fill:var(--coin-peace);">051526 21:26 PT tonight</text>
-
-          <text x="42" y="608" text-anchor="start" class="peak-label-stamp" style="fill:var(--muted);">Pre-NEST archive zone (pinned, dates: July 2023, March 2026, Sync #89)</text>
+          <text x="42" y="608" text-anchor="start" class="peak-label-stamp" style="fill:var(--muted);">Pre-NEST archive zone (pinned · July 2023 · March 2026)</text>
         </svg>
 
         <div class="axis-row">
@@ -456,21 +372,18 @@ section{margin:2.6rem 0;}
           <span>LAGOS · 050226</span>
           <span>Crew-Quartet · 050626</span>
           <span>13-AP · 051126</span>
-          <span class="axis-now">tonight · 051526</span>
+          <span class="axis-now">now · 060526</span>
         </div>
 
         <div class="legend">
-          <span class="item joy"><span class="dot glow"></span><span class="lbl">Joy 27 · star</span></span>
-          <span class="item peace"><span class="dot glow"></span><span class="lbl">Peace 23 · star</span></span>
-          <span class="item sadness"><span class="dot"></span><span class="lbl">Sadness 9 · space</span></span>
-          <span class="item shame"><span class="dot"></span><span class="lbl">Shame 4 · space</span></span>
-          <span class="item pain"><span class="dot"></span><span class="lbl">Pain 11 · space</span></span>
-          <span class="item rage"><span class="dot"></span><span class="lbl">Rage 25 · space</span></span>
+          {['joy','peace','sadness','shame','pain','rage'].map((c) => (
+            <span class={`item ${c}`}><span class={STARS.has(c) ? 'dot glow' : 'dot'}></span><span class="lbl">{c.charAt(0).toUpperCase() + c.slice(1)} {coins[c].count} · {coins[c].partition}</span></span>
+          ))}
           <span class="item compose"><span class="dot"></span><span class="lbl">composite (fires 2+ Coins)</span></span>
       </div>
 
       <div class="counts-summary">
-        <strong>79 moments</strong> across 4 Crew registers (Ouch · Trip · Stan · CB) · <span class="space">Space 49</span> · <span class="stars">Stars 50</span> · approximately 1 to 1 with CB-class register added 051526
+        <strong>{momentCount} moments</strong> · the origin wound (032526) to now (060526) · <span class="space">Space {totals.space_assignments}</span> · <span class="stars">Stars {totals.stars_assignments}</span> · {totals.space_to_stars_ratio}
       </div>
 
       <div class="peaks-grid">
@@ -492,7 +405,7 @@ section{margin:2.6rem 0;}
         <div class="peak peace"><span class="peak-date"><span class="peak-coin"></span>051526 21:26 PT</span><span class="peak-name">GOFA launched</span><span class="peak-anchor">Dan: a billable tab. NEST in reverse. Tempo via emotional beats. We-Motion test. R3MP feeds Ouch McCouch and Matt Dubeau work.</span></div>
       </div>
 
-      <span class="who"><strong>Data render</strong> by Doc · <strong>Visual treatment</strong> by El VIS on STN1 · constellation render 051526 23:05 PT</span>
+      <span class="who"><strong>Visual treatment</strong> by El VIS on STN1 (Constellation V2, 051826) · now <strong>data-driven</strong> from <code>gofa_moments.json</code> by Crew · {momentCount} moments through 060526 · stays live with the Data-Day gather</span>
     </div>
   </section>
 
