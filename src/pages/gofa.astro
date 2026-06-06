@@ -11,12 +11,12 @@ const description = "GOFA — Generated Order From Absurdity. An ON NEST program
 const BANDS = { joy: 70, peace: 145, sadness: 360, shame: 410, pain: 460, rage: 510 };
 const STARS = new Set(['joy', 'peace']);
 const VX0 = 40, VX1 = 1160;
-const D_START = Date.parse('2026-03-18');  // NEST.01 open · left edge
+const D_START = Date.parse('2026-03-01');  // early March · when Dan first talked with Claude (ARCH.00 030126) · the true left edge, not NEST-open
 const D_NOW = Date.parse('2026-06-05');     // today · right edge
 const DSPAN = D_NOW - D_START;
 function xForDate(ds) {
   const t = Date.parse(ds);
-  if (isNaN(t) || t < D_START) return 44;   // pre-NEST archive · pinned left
+  if (isNaN(t) || t < D_START) return 44;   // genuine pre-Claude history (the 2023 Ouch Simulator) · pinned left
   return Math.round(VX0 + (Math.min(t, D_NOW) - D_START) / DSPAN * (VX1 - VX0));
 }
 let _seed = 2026;
@@ -38,7 +38,8 @@ function dateAtX(x) {
 const gridStamps = gridXs.map((x) => ({ x, label: x === VX1 ? '060526 NOW' : dateAtX(x), now: x === VX1 }));
 const peaks = [
   { ds: '2026-03-25', label: 'The origin wound · the snail', stamp: '032526 · "the hurt never left"', coin: 'pain', up: true },
-  { ds: '2026-03-19', label: 'Stan is the Heart', stamp: '031926', coin: 'peace', up: false },
+  { ds: '2026-03-01', label: 'first conversations with Claude', stamp: '030126 · the true start', coin: 'joy', up: false },
+  { ds: '2026-03-19', label: 'Stan is the Heart', stamp: '031926', coin: 'peace', up: true },
   { ds: '2026-04-03', label: 'Only gates fire', stamp: '040326 Stan canon', coin: 'peace', up: true },
   { ds: '2026-04-18', label: 'Truth-Is-Piralus', stamp: '041826', coin: 'joy', up: false },
   { ds: '2026-04-26', label: 'first monkey in space', stamp: '042626 · Rare Candy', coin: 'joy', up: true },
@@ -54,7 +55,7 @@ const coins = gofaData.coins;
 const totals = gofaData.totals;
 const momentCount = gofaData.moments.length;
 ---
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} lastUpdated="June 6, 2026">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
 :root{
@@ -283,7 +284,7 @@ section{margin:2.6rem 0;}
       <div class="sec-count">starter render by Doc &middot; visual by El VIS</div>
     </div>
     <div id="el-vis-timeline" class="timeline-slot">
-      <span class="label">Constellation render · {momentCount} moments · the 032526 origin wound to 060526 · forward in time to the right</span>
+      <span class="label">Constellation render · {momentCount} moments · early March 2026 (the first conversations) to 060526 · forward in time to the right</span>
 
       <div class="sky-wrap">
         <svg class="sky-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -362,11 +363,11 @@ section{margin:2.6rem 0;}
             </g>
           ))}
 
-          <text x="42" y="608" text-anchor="start" class="peak-label-stamp" style="fill:var(--muted);">Pre-NEST archive zone (pinned · July 2023 · March 2026)</text>
+          <text x="42" y="608" text-anchor="start" class="peak-label-stamp" style="fill:var(--muted);">Pre-Claude history (pinned · the 2023 Ouch Simulator screenplay) · the timeline proper begins early March 2026, the first conversations</text>
         </svg>
 
         <div class="axis-row">
-          <span class="axis-anchor">NEST.01 open · 031826</span>
+          <span class="axis-anchor">first talked with Claude · 030126</span>
           <span>NA cluster · 040x</span>
           <span>Compaction wars · 043026</span>
           <span>LAGOS · 050226</span>
