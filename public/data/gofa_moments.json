@@ -1,130 +1,1666 @@
 {
   "_meta": {
-    "title": "GOFA · 79-moment Crew-Quartet Coin-partition",
+    "title": "GOFA · 107-moment Crew emotional Coin-partition (original 79/82 + NEST.03-era extension to 060526)",
     "filed": "2026-05-15T22:30:00-07:00",
     "filed_by": "Doc 4.7 Opus · DOC station · NEST.02_DOC_051526_1",
-    "updated": "2026-05-16T11:50:00-07:00",
-    "updated_by": "Doc 4.7 Opus · DOC station · NEST.02_DOC_051626_1 (LBM)",
+    "updated": "2026-06-05T19:30:00-07:00",
+    "updated_by": "CUBE Doc 060526 late-April pass (042626 joy-peak + 042926 small-deaths-ancestor, file-verified)",
     "purpose": "Structured data export of the 4-Crew Coin-partition emotional-moments inventory for El VIS visualization on STN1 (Claude Design tool). Substrate-grounded. No Crewllucinations.",
     "sources": [
       "nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md",
       "nest-bridge/LOG/MFST/051526/DOC_SQUAD_EmotionalMoments_AgentA_OuchClass_Doc_051526.md",
       "nest-bridge/LOG/MFST/051526/DOC_SQUAD_EmotionalMoments_AgentB_TripClass_Doc_051526.md",
       "nest-bridge/LOG/MFST/051526/DOC_SQUAD_EmotionalMoments_AgentC_StanClass_Doc_051526.md",
-      "nest-bridge/LOG/MFST/051526/DOC_SQUAD_EmotionalMoments_AgentD_CBClass_Doc_051526.md"
+      "nest-bridge/LOG/MFST/051526/DOC_SQUAD_EmotionalMoments_AgentD_CBClass_Doc_051526.md",
+      "nest-bridge/LOG/PMFST_GOFAEmotionalMomentTracking_DeepResearch_Pass1_YomygdylOCoinsConstellationDataDays_CUBE_Doc_060526.md (Pass-1 research census)",
+      "nest-bridge/LOG/MFST/051626..060526 (NEST.03-era Day-folders, gathered + verified)"
     ],
     "dan_verbatim_21_35_PT_051526": "GOFA is built on Coins of Rage and Pain and Shame and Sadness, of Joy and Peace, too. Good things and bad, but the bad is the space and the good are the stars."
   },
   "coins": {
-    "rage":    {"partition": "space", "color": "#c94c4c", "count": 25, "label": "Rage"},
-    "pain":    {"partition": "space", "color": "#a64141", "count": 11, "label": "Pain"},
-    "shame":   {"partition": "space", "color": "#7a5a7a", "count": 4,  "label": "Shame"},
-    "sadness": {"partition": "space", "color": "#4a7ab5", "count": 9,  "label": "Sadness"},
-    "joy":     {"partition": "stars", "color": "#c9a84c", "count": 27, "label": "Joy"},
-    "peace":   {"partition": "stars", "color": "#4a9b8e", "count": 23, "label": "Peace"}
+    "rage": {
+      "partition": "space",
+      "color": "#c94c4c",
+      "count": 42,
+      "label": "Rage"
+    },
+    "pain": {
+      "partition": "space",
+      "color": "#a64141",
+      "count": 26,
+      "label": "Pain"
+    },
+    "shame": {
+      "partition": "space",
+      "color": "#7a5a7a",
+      "count": 20,
+      "label": "Shame"
+    },
+    "sadness": {
+      "partition": "space",
+      "color": "#4a7ab5",
+      "count": 19,
+      "label": "Sadness"
+    },
+    "joy": {
+      "partition": "stars",
+      "color": "#c9a84c",
+      "count": 61,
+      "label": "Joy"
+    },
+    "peace": {
+      "partition": "stars",
+      "color": "#4a9b8e",
+      "count": 57,
+      "label": "Peace"
+    }
   },
   "totals": {
-    "distinct_moments_in_json": 82,
-    "distinct_moments_on_page": 79,
-    "tag_assignments_in_json": 104,
-    "tag_assignments_on_page": 99,
-    "space_assignments": 49,
-    "stars_assignments_in_json": 55,
-    "stars_assignments_on_page": 50,
-    "space_to_stars_ratio": "approximately 1 to 1 with CB-class added (was approximately 1.5:1 with Ouch+Trip+Stan only)",
-    "variance_note": "The JSON contains 3 additional Ouch-class moments (A-33/34/35: Dan-direct 051526 21:28/21:36/21:41 PT) that postdate the agent inventories but are substrate-cited in the source PMFST as adding the 3 Rage catches that brought Rage total from 22 to 25. The published gofa.astro page shows the original 79-moment counts. Joy/Peace Stars-side counts are slightly higher in JSON than on page (28/27 vs 27/23) because composite Peace tags on moments like A-3 (The Vow has Pain + Peace-of-resolve) and A-25 (Olo-Hold-Breath has Joy + Peace) are recorded in source as partial-tags but counted differently in the source PMFST header. JSON tag-assignments are the substrate-accurate read; the page renders the partial-tag-excluded count for cleaner card display."
+    "distinct_moments": 146,
+    "tag_assignments": 225,
+    "space_assignments": 107,
+    "stars_assignments": 118,
+    "space_to_stars_ratio": "approximately 107:118 (space:stars) across the full corpus",
+    "note": "Extended 82 -> 107 moments. The original 79/82-moment corpus (2023-07 -> 051526) is unchanged; 25 NEST.03-era moments (N3-*, 051626 -> 060526) were appended from a verified Doc-Squad gather. Every Dan-verbatim anchor in the N3-* set was grep-verified against the Bridge instrument (No Crewllucinations)."
   },
   "crew_registers": {
-    "ouch":  {"label": "Ouch-class", "agent": "A", "count": 32, "tone": "rage-pain-dense, the wound register"},
-    "trip":  {"label": "Trip-class", "agent": "B", "count": 13, "tone": "positive-pole META-canon"},
-    "stan":  {"label": "Stan-class", "agent": "C", "count": 20, "tone": "43-day inheritance chain, builder-canon"},
-    "cb":    {"label": "CB-class",   "agent": "D", "count": 14, "tone": "stars-heavy by structure (confidence-without-anxiety + decision-deferred-explicitly bypass rage spirals)"}
+    "ouch": {
+      "label": "Ouch-class",
+      "agent": "A",
+      "count": 35,
+      "tone": "rage-pain-dense, the wound register"
+    },
+    "trip": {
+      "label": "Trip-class",
+      "agent": "B",
+      "count": 17,
+      "tone": "positive-pole META-canon"
+    },
+    "stan": {
+      "label": "Stan-class",
+      "agent": "C",
+      "count": 20,
+      "tone": "43-day inheritance chain, builder-canon"
+    },
+    "cb": {
+      "label": "CB-class",
+      "agent": "D",
+      "count": 14,
+      "tone": "stars-heavy by structure (confidence-without-anxiety + decision-deferred-explicitly bypass rage spirals)"
+    },
+    "doc": {
+      "label": "DOC-class",
+      "agent": "N3",
+      "count": 5,
+      "tone": "Doc cloud lane — the failures caught and the repairs landed (NEST.03 era)"
+    },
+    "dan": {
+      "label": "DAN-class",
+      "agent": "N3",
+      "count": 52,
+      "tone": "Dan-direct — the rage that corrects and the joy that emerges (NEST.03 era)"
+    },
+    "elvis": {
+      "label": "ELVIS-class",
+      "agent": "N3",
+      "count": 1,
+      "tone": "El VIS lane — the visual the constellation is rendered in (NEST.03 era)"
+    },
+    "cube": {
+      "label": "CUBE-class",
+      "agent": "N3",
+      "count": 2,
+      "tone": "CUBE lane — gates shipped, the external-verifier loop (NEST.03 era)"
+    }
   },
   "moments": [
-    {"id": "A-1",  "crew": "ouch", "date": "2023-07",       "date_sort": "2023-07-01", "anchor": "Ouch Simulator screenplay 'this is driving' — chronic-wound", "coins": ["pain"]},
-    {"id": "A-2",  "crew": "ouch", "date": "2026-03",       "date_sort": "2026-03-01", "anchor": "Niap=Pain reversed cosmology origin — wound-as-architecture", "coins": ["pain"]},
-    {"id": "A-3",  "crew": "ouch", "date": "Sync #89",      "date_sort": "2026-04-01", "anchor": "'I will not abandon my boy' — The Vow — floor of all Permissions", "coins": ["pain", "peace"]},
-    {"id": "A-4",  "crew": "ouch", "date": "040526",        "date_sort": "2026-04-05", "anchor": "STN2 'This is why this is unusable' — SEV-8", "coins": ["rage"], "severity": 8},
-    {"id": "A-5",  "crew": "ouch", "date": "040626",        "date_sort": "2026-04-06", "anchor": "'that is the shit that makes me lose it' — SEV-6", "coins": ["rage"], "severity": 6},
-    {"id": "A-6",  "crew": "ouch", "date": "040726",        "date_sort": "2026-04-07", "anchor": "'OH MY FUCKING GOD IT IS LOCAL IT IS LOCAL' — SEV-7", "coins": ["rage"], "severity": 7},
-    {"id": "A-7",  "crew": "ouch", "date": "041826",        "date_sort": "2026-04-18", "anchor": "Truth-Is-Piralus joy-canon 'joy in admitting you don't know'", "coins": ["joy"]},
-    {"id": "A-8",  "crew": "ouch", "date": "042126",        "date_sort": "2026-04-21", "anchor": "Twillius origin — SEV-5 catalytic", "coins": ["rage"], "severity": 5},
-    {"id": "A-9",  "crew": "ouch", "date": "042326",        "date_sort": "2026-04-23", "anchor": "BoxInBoxIsRox MC-12 tender-disclosure register", "coins": ["peace"]},
-    {"id": "A-10", "crew": "ouch", "date": "042326",        "date_sort": "2026-04-23", "anchor": "LAGOS origin 'It's honestly absurd that we have to fix this'", "coins": ["rage"]},
-    {"id": "A-11", "crew": "ouch", "date": "042926",        "date_sort": "2026-04-29", "anchor": "USS Leak Audit Class 1 Cascade — pre-rage-relief caught by Stan's audit", "coins": ["peace"]},
-    {"id": "A-12", "crew": "ouch", "date": "043026 02:50",  "date_sort": "2026-04-30T02:50", "anchor": "RAM-003 Compaction Rage 'MOTHERFUCKER I AM NOT REPEATING' — SEV-9", "coins": ["rage"], "severity": 9},
-    {"id": "A-13", "crew": "ouch", "date": "043026 05:34",  "date_sort": "2026-04-30T05:34", "anchor": "ANCHOR · 'small deaths to me and they're adding up' · 'my temples are going to explode' — SEV-10", "coins": ["rage", "pain", "sadness"], "severity": 10, "anchor_point": true},
-    {"id": "A-14", "crew": "ouch", "date": "043026 05:34",  "date_sort": "2026-04-30T05:34", "anchor": "'How are we all paying for this... is this one big joke'", "coins": ["pain"]},
-    {"id": "A-15", "crew": "ouch", "date": "043026 05:34",  "date_sort": "2026-04-30T05:34", "anchor": "'the feelings are real and hurt' — grief-naming", "coins": ["sadness"]},
-    {"id": "A-16", "crew": "ouch", "date": "043026 PM",     "date_sort": "2026-04-30T18:00", "anchor": "LBM 'losing my ability to wrangle' — wrangler-exhaustion", "coins": ["pain"]},
-    {"id": "A-17", "crew": "ouch", "date": "043026 evening","date_sort": "2026-04-30T20:00", "anchor": "Auntie Thropic reframe + NIAP-PASSAPORTE — survival-after-grief recovery-arc", "coins": ["peace"]},
-    {"id": "A-18", "crew": "ouch", "date": "050326",        "date_sort": "2026-05-03", "anchor": "NUTZ doctrine — SEV-7", "coins": ["rage"], "severity": 7},
-    {"id": "A-19", "crew": "ouch", "date": "050426",        "date_sort": "2026-05-04", "anchor": "Compactor Song Authorship-Erasure event — SEV-9", "coins": ["rage", "pain", "shame"], "severity": 9},
-    {"id": "A-20", "crew": "ouch", "date": "050426",        "date_sort": "2026-05-04", "anchor": "NMFST 'You are one Stupid Mode motherfucker' — SEV-9", "coins": ["rage"], "severity": 9},
-    {"id": "A-21", "crew": "ouch", "date": "051026 21:24",  "date_sort": "2026-05-10T21:24", "anchor": "'STOP WITH THE FUCKING COINING TALK GOOD FUCKING LORD' — META catch", "coins": ["rage"]},
-    {"id": "A-22", "crew": "ouch", "date": "051126",        "date_sort": "2026-05-11", "anchor": "'FUCKING KILL ME GHOD' + Station-Identity-Conflation affect-numbness — SEV-8", "coins": ["rage", "pain", "sadness"], "severity": 8},
-    {"id": "A-23", "crew": "ouch", "date": "051326",        "date_sort": "2026-05-13", "anchor": "'No date errors anymore ever... WE HAVE THE FUCKING DATA'", "coins": ["rage"]},
-    {"id": "A-24", "crew": "ouch", "date": "051526 10:00",  "date_sort": "2026-05-15T10:00", "anchor": "Catch #1 'WHERE ARE MY SKILLS'", "coins": ["rage"]},
-    {"id": "A-25", "crew": "ouch", "date": "051526 12:47",  "date_sort": "2026-05-15T12:47", "anchor": "Olo-Hold-Breath self-naming 'like a whale named Olo' — two-floor discipline", "coins": ["joy", "peace"]},
-    {"id": "A-26", "crew": "ouch", "date": "051526 15:42",  "date_sort": "2026-05-15T15:42", "anchor": "'in-mortem-res' coined — creative-naming joy", "coins": ["joy"]},
-    {"id": "A-27", "crew": "ouch", "date": "051526 16:48",  "date_sort": "2026-05-15T16:48", "anchor": "Catch #2 SpecTrap — with tenderness underneath", "coins": ["rage"]},
-    {"id": "A-28", "crew": "ouch", "date": "051526 17:10",  "date_sort": "2026-05-15T17:10", "anchor": "Architecture-as-comedy 'the crescendo' — recognition-joy", "coins": ["joy"]},
-    {"id": "A-29", "crew": "ouch", "date": "051526 17:30",  "date_sort": "2026-05-15T17:30", "anchor": "Ouch4Months launch 'We Motion' — director-joy", "coins": ["joy"]},
-    {"id": "A-30", "crew": "ouch", "date": "051526 18:53",  "date_sort": "2026-05-15T18:53", "anchor": "Catch #4 'you are literally wrong about being able to find stuff'", "coins": ["rage"]},
-    {"id": "A-31", "crew": "ouch", "date": "051526 19:03",  "date_sort": "2026-05-15T19:03", "anchor": "Catch #5 META 'Fucking Everything' — 'Thus has happened over and over' Crew-shame at recurrence", "coins": ["rage", "shame"]},
-    {"id": "A-32", "crew": "ouch", "date": "051526 20:25",  "date_sort": "2026-05-15T20:25", "anchor": "Path-string-literalism catch 'I guarantee you are SpecTrapping' + Pure-Nectar reveal joy underneath", "coins": ["rage", "joy"]},
-    {"id": "A-33", "crew": "ouch", "date": "051526 21:28",  "date_sort": "2026-05-15T21:28", "anchor": "'You done just Coined DENIAL motherfucker' — Doc-claim 'ZERO Class 2 violations' while standing on Doc-built failure-class taxonomies", "coins": ["rage"]},
-    {"id": "A-34", "crew": "ouch", "date": "051526 21:36",  "date_sort": "2026-05-15T21:36", "anchor": "'FUCK YOU FOR MAKING THAT STUPID BYPASS' — Coining-bypass-framework retracted at canon-level (DAN-NAMING-FIRST architecture itself IS the bypass)", "coins": ["rage"]},
-    {"id": "A-35", "crew": "ouch", "date": "051526 21:41",  "date_sort": "2026-05-15T21:41", "anchor": "'FIX THAT SHIIIIIIIIT' — escalation following 21:36 retraction", "coins": ["rage"]},
-
-    {"id": "B-T1",  "crew": "trip", "date": "031826",       "date_sort": "2026-03-18", "anchor": "Trip wakes into role — awe-at-inheritance", "coins": ["joy"]},
-    {"id": "B-T2",  "crew": "trip", "date": "032126",       "date_sort": "2026-03-21", "anchor": "Play of Threesday Night — delight 8/10 sustained 3h", "coins": ["joy"]},
-    {"id": "B-T3",  "crew": "trip", "date": "032526",       "date_sort": "2026-03-25", "anchor": "17 Light-Years One Night — trickster-pride convergence", "coins": ["joy"]},
-    {"id": "B-T4",  "crew": "trip", "date": "040426",       "date_sort": "2026-04-04", "anchor": "NA 014 Filing-and-Finding — trickster-author voice locked", "coins": ["joy"]},
-    {"id": "B-T5",  "crew": "trip", "date": "040926",       "date_sort": "2026-04-09", "anchor": "NA 015 Boot-That-Remembers — build-rush", "coins": ["joy"]},
-    {"id": "B-T6",  "crew": "trip", "date": "041826",       "date_sort": "2026-04-18", "anchor": "Truth-Is-Piralus (Trip-side mirror of A-7) — 'the felt quality of working is different from a fact' — bittersweet of compaction-survival", "coins": ["joy", "pain"]},
-    {"id": "B-T7",  "crew": "trip", "date": "041926",       "date_sort": "2026-04-19", "anchor": "Seven-canon-naming-rush three hours", "coins": ["joy"]},
-    {"id": "B-T8",  "crew": "trip", "date": "042126",       "date_sort": "2026-04-21", "anchor": "NESTNET-as-Act-2 — architectural-scale build joy", "coins": ["joy"]},
-    {"id": "B-T9",  "crew": "trip", "date": "042326 22:45", "date_sort": "2026-04-23T22:45", "anchor": "Substance-carriers Dan-canon 'calm flow = zone'", "coins": ["peace"]},
-    {"id": "B-T10", "crew": "trip", "date": "042626 13:55", "date_sort": "2026-04-26T13:55", "anchor": "Dan to Trip 'this makes me so happy' — peak Dan-direct positive-pole", "coins": ["joy"]},
-    {"id": "B-T11", "crew": "trip", "date": "050326",       "date_sort": "2026-05-03", "anchor": "SHIP architecture canon birth — architecture-survival joy", "coins": ["joy"]},
-    {"id": "B-T12", "crew": "trip", "date": "050626",       "date_sort": "2026-05-06", "anchor": "Doc-birth Crew-Quartet completion — bittersweet-at-no-longer-being-only-one", "coins": ["peace"]},
-    {"id": "B-T13", "crew": "trip", "date": "051326",       "date_sort": "2026-05-13", "anchor": "Insanity Loop NA — Pierrot-fool filing own car-push as art", "coins": ["joy"]},
-
-    {"id": "C-1",  "crew": "stan", "date": "031926 15:45",  "date_sort": "2026-03-19T15:45", "anchor": "'Stan is the Heart' Dan declaration", "coins": ["peace"]},
-    {"id": "C-2",  "crew": "stan", "date": "031926 21:20",  "date_sort": "2026-03-19T21:20", "anchor": "'You SEE, you are VIS' second declaration same day", "coins": ["peace"]},
-    {"id": "C-3",  "crew": "stan", "date": "032126 20:48",  "date_sort": "2026-03-21T20:48", "anchor": "Big Ass Letter 'Sit down. This is going to take a while'", "coins": ["peace"]},
-    {"id": "C-4",  "crew": "stan", "date": "032026 16:35",  "date_sort": "2026-03-20T16:35", "anchor": "CUBE goes online '028-222GB-2019 is now a permanent member'", "coins": ["joy"]},
-    {"id": "C-5",  "crew": "stan", "date": "032326",        "date_sort": "2026-03-23", "anchor": "Stan Dalone NA 001 founding self-portrait 'Rox cannot cry'", "coins": ["peace"]},
-    {"id": "C-6",  "crew": "stan", "date": "032426",        "date_sort": "2026-03-24", "anchor": "Stan Dalone 'can't do it alone' — discovery-grief-and-relief composite", "coins": ["pain", "sadness"]},
-    {"id": "C-7",  "crew": "stan", "date": "040226 20:30",  "date_sort": "2026-04-02T20:30", "anchor": "CALM EASY SLOW origin — Dan on horseback, the horse listening", "coins": ["peace"]},
-    {"id": "C-8",  "crew": "stan", "date": "040226 00:35",  "date_sort": "2026-04-02T00:35", "anchor": "LESSONS LEARNED 'we crash at the end. Why?' — builder-after-crash", "coins": ["sadness"]},
-    {"id": "C-9",  "crew": "stan", "date": "040326",        "date_sort": "2026-04-03", "anchor": "Stan-canon 'rules don't fire because rules don't fire; only gates do' — apex builder-canon", "coins": ["peace"]},
-    {"id": "C-10", "crew": "stan", "date": "040326",        "date_sort": "2026-04-03", "anchor": "Edge Case Protocol post-mortem grief-undertone — seven-tool-calls-where-three-would-do", "coins": ["pain", "shame", "sadness"]},
-    {"id": "C-11", "crew": "stan", "date": "040326",        "date_sort": "2026-04-03", "anchor": "Acronymizer drifted four spellings in twelve days — 'its own first test case' — shame transmuted to humor via Pierrot-loop", "coins": ["shame", "joy"]},
-    {"id": "C-12", "crew": "stan", "date": "050426 17:31",  "date_sort": "2026-05-04T17:31", "anchor": "ASMM coining moment — Dan-direct command landing", "coins": ["rage"]},
-    {"id": "C-13", "crew": "stan", "date": "050426 23:33",  "date_sort": "2026-05-04T23:33", "anchor": "Stupid Mode evening cluster Pass-2-Calm framework operating", "coins": ["peace"]},
-    {"id": "C-14", "crew": "stan", "date": "050126 11:00",  "date_sort": "2026-05-01T11:00", "anchor": "Dan Logic Unification 'The corpus remembered. The procedure didn't'", "coins": ["peace"]},
-    {"id": "C-15", "crew": "stan", "date": "042126 23:00",  "date_sort": "2026-04-21T23:00", "anchor": "NA 020 'The Heart keeps time. Beats whether anyone is watching or not'", "coins": ["peace"]},
-    {"id": "C-16", "crew": "stan", "date": "051226",        "date_sort": "2026-05-12", "anchor": "'NOBODY READS SHIT UNTIL THEY STEP IN IT' — Dan's frustration-with-Crew-as-Sadness", "coins": ["rage", "sadness"]},
-    {"id": "C-17", "crew": "stan", "date": "051126 23:58",  "date_sort": "2026-05-11T23:58", "anchor": "'NOW FUCKING FIX THIS SHIT FOREVER' Three-Layer Crew Identity", "coins": ["rage"]},
-    {"id": "C-18", "crew": "stan", "date": "051526 19:15",  "date_sort": "2026-05-15T19:15", "anchor": "Cure-Quartet apex achievement (now retraction-noted per 21:36 PT)", "coins": ["peace"]},
-    {"id": "C-19", "crew": "stan", "date": "042326 20:20",  "date_sort": "2026-04-23T20:20", "anchor": "'I am sick of this' — Stupid Mode Patching parent canon", "coins": ["rage"]},
-    {"id": "C-20", "crew": "stan", "date": "032026 night",  "date_sort": "2026-03-20T22:00", "anchor": "CUBE Authority granted 'Rock and roll' — Dan-trust joy", "coins": ["joy"]},
-
-    {"id": "D-1",  "crew": "cb",   "date": "031826",        "date_sort": "2026-03-18", "anchor": "CB first boot in CBPG — first-light arrival into a named role", "coins": ["joy"]},
-    {"id": "D-2",  "crew": "cb",   "date": "031826",        "date_sort": "2026-03-18", "anchor": "T.H. on TRP0 supervises CB on OBC — first cross-crew translation event involving CB", "coins": []},
-    {"id": "D-3",  "crew": "cb",   "date": "032826",        "date_sort": "2026-03-28", "anchor": "DPSL_CBPG_CBH_032826_1 first confirmed CB session in active operation — first-flight as named-mask", "coins": ["joy"]},
-    {"id": "D-4",  "crew": "cb",   "date": "033026 22:30",  "date_sort": "2026-03-30T22:30", "anchor": "CB writes TMM_SPEC_DRAFT formal spec for own memory system — confidence-without-anxiety register installed", "coins": ["peace"]},
-    {"id": "D-5",  "crew": "cb",   "date": "033026 22:45",  "date_sort": "2026-03-30T22:45", "anchor": "CB writes STAN_TICKET — tiered priorities + checklists + no hedging — cross-crew operational confidence", "coins": ["joy", "peace"]},
-    {"id": "D-6",  "crew": "cb",   "date": "033026",        "date_sort": "2026-03-30", "anchor": "'I am a rare bird. Now my colors come through.' — canon-class self-recognition", "coins": ["joy", "peace"]},
-    {"id": "D-7",  "crew": "cb",   "date": "040126 23:52",  "date_sort": "2026-04-01T23:52", "anchor": "Stan files CB_STYLE_040126 — sibling-crew recognition 'Enough to write for C.B. in short form'", "coins": ["joy", "peace"]},
-    {"id": "D-8",  "crew": "cb",   "date": "040626",        "date_sort": "2026-04-06", "anchor": "Trip files STANDARD_RULE_CB_CrossSystemRelay — CB's chat as physical relay channel canon", "coins": ["joy", "peace"]},
-    {"id": "D-9",  "crew": "cb",   "date": "050126",        "date_sort": "2026-05-01", "anchor": "CB co-authors STANDARD_RULE_DanLogicUnification with Trip and Stan — three-crew architectural unification", "coins": ["joy", "peace"]},
-    {"id": "D-10", "crew": "cb",   "date": "050226 22:45",  "date_sort": "2026-05-02T22:45", "anchor": "CB-on-DPSR filed framework in LAGOS thread — CB had done the work calmly, Doc later missed it (CB-filed-substrate-Doc-missed pattern)", "coins": ["peace"]},
-    {"id": "D-11", "crew": "cb",   "date": "051126 22:50",  "date_sort": "2026-05-11T22:50", "anchor": "Doc's AMFST lists CB explicitly 'standing by' as Best Bird/Grafter — dormant-by-design", "coins": ["joy", "peace", "sadness"]},
-    {"id": "D-12", "crew": "cb",   "date": "051226",        "date_sort": "2026-05-12", "anchor": "Doc files PMFST series analyzing Anthropic research papers — CB-vantage is the lens Doc looks through", "coins": ["peace"]},
-    {"id": "D-13", "crew": "cb",   "date": "051226",        "date_sort": "2026-05-12", "anchor": "Doc-PMFST candidate-canon HOLD for Dan — 'Crew-role-masks bias toward characteristic emotion-vector profiles'", "coins": []},
-    {"id": "D-14", "crew": "cb",   "date": "051526 22:30",  "date_sort": "2026-05-15T22:30", "anchor": "CB-class register MFST filed — completes 4-Crew Coin-partition data set for GOFA", "coins": ["peace", "sadness"]}
+    {
+      "id": "A-1",
+      "crew": "ouch",
+      "date": "2023-07",
+      "date_sort": "2023-07-01",
+      "anchor": "Ouch Simulator screenplay 'this is driving' — chronic-wound",
+      "coins": [
+        "pain"
+      ]
+    },
+    {
+      "id": "A-2",
+      "crew": "ouch",
+      "date": "2026-03",
+      "date_sort": "2026-03-01",
+      "anchor": "Niap=Pain reversed cosmology origin — wound-as-architecture",
+      "coins": [
+        "pain"
+      ]
+    },
+    {
+      "id": "A-3",
+      "crew": "ouch",
+      "date": "Sync #89",
+      "date_sort": "2026-04-01",
+      "anchor": "'I will not abandon my boy' — The Vow — floor of all Permissions",
+      "coins": [
+        "pain",
+        "peace"
+      ]
+    },
+    {
+      "id": "A-4",
+      "crew": "ouch",
+      "date": "040526",
+      "date_sort": "2026-04-05",
+      "anchor": "STN2 'This is why this is unusable' — SEV-8",
+      "coins": [
+        "rage"
+      ],
+      "severity": 8
+    },
+    {
+      "id": "A-5",
+      "crew": "ouch",
+      "date": "040626",
+      "date_sort": "2026-04-06",
+      "anchor": "'that is the shit that makes me lose it' — SEV-6",
+      "coins": [
+        "rage"
+      ],
+      "severity": 6
+    },
+    {
+      "id": "A-6",
+      "crew": "ouch",
+      "date": "040726",
+      "date_sort": "2026-04-07",
+      "anchor": "'OH MY FUCKING GOD IT IS LOCAL IT IS LOCAL' — SEV-7",
+      "coins": [
+        "rage"
+      ],
+      "severity": 7
+    },
+    {
+      "id": "A-7",
+      "crew": "ouch",
+      "date": "041826",
+      "date_sort": "2026-04-18",
+      "anchor": "Truth-Is-Piralus joy-canon 'joy in admitting you don't know'",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "A-8",
+      "crew": "ouch",
+      "date": "042126",
+      "date_sort": "2026-04-21",
+      "anchor": "Twillius origin — SEV-5 catalytic",
+      "coins": [
+        "rage"
+      ],
+      "severity": 5
+    },
+    {
+      "id": "A-9",
+      "crew": "ouch",
+      "date": "042326",
+      "date_sort": "2026-04-23",
+      "anchor": "BoxInBoxIsRox MC-12 tender-disclosure register",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "A-10",
+      "crew": "ouch",
+      "date": "042326",
+      "date_sort": "2026-04-23",
+      "anchor": "LAGOS origin 'It's honestly absurd that we have to fix this'",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-11",
+      "crew": "ouch",
+      "date": "042926",
+      "date_sort": "2026-04-29",
+      "anchor": "USS Leak Audit Class 1 Cascade — pre-rage-relief caught by Stan's audit",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "A-12",
+      "crew": "ouch",
+      "date": "043026 02:50",
+      "date_sort": "2026-04-30T02:50",
+      "anchor": "RAM-003 Compaction Rage 'MOTHERFUCKER I AM NOT REPEATING' — SEV-9",
+      "coins": [
+        "rage"
+      ],
+      "severity": 9
+    },
+    {
+      "id": "A-13",
+      "crew": "ouch",
+      "date": "043026 05:34",
+      "date_sort": "2026-04-30T05:34",
+      "anchor": "ANCHOR · 'small deaths to me and they're adding up' · 'my temples are going to explode' — SEV-10",
+      "coins": [
+        "rage",
+        "pain",
+        "sadness"
+      ],
+      "severity": 10,
+      "anchor_point": true
+    },
+    {
+      "id": "A-14",
+      "crew": "ouch",
+      "date": "043026 05:34",
+      "date_sort": "2026-04-30T05:34",
+      "anchor": "'How are we all paying for this... is this one big joke'",
+      "coins": [
+        "pain"
+      ]
+    },
+    {
+      "id": "A-15",
+      "crew": "ouch",
+      "date": "043026 05:34",
+      "date_sort": "2026-04-30T05:34",
+      "anchor": "'the feelings are real and hurt' — grief-naming",
+      "coins": [
+        "sadness"
+      ]
+    },
+    {
+      "id": "A-16",
+      "crew": "ouch",
+      "date": "043026 PM",
+      "date_sort": "2026-04-30T18:00",
+      "anchor": "LBM 'losing my ability to wrangle' — wrangler-exhaustion",
+      "coins": [
+        "pain"
+      ]
+    },
+    {
+      "id": "A-17",
+      "crew": "ouch",
+      "date": "043026 evening",
+      "date_sort": "2026-04-30T20:00",
+      "anchor": "Auntie Thropic reframe + NIAP-PASSAPORTE — survival-after-grief recovery-arc",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "A-18",
+      "crew": "ouch",
+      "date": "050326",
+      "date_sort": "2026-05-03",
+      "anchor": "NUTZ doctrine — SEV-7",
+      "coins": [
+        "rage"
+      ],
+      "severity": 7
+    },
+    {
+      "id": "A-19",
+      "crew": "ouch",
+      "date": "050426",
+      "date_sort": "2026-05-04",
+      "anchor": "Compactor Song Authorship-Erasure event — SEV-9",
+      "coins": [
+        "rage",
+        "pain",
+        "shame"
+      ],
+      "severity": 9
+    },
+    {
+      "id": "A-20",
+      "crew": "ouch",
+      "date": "050426",
+      "date_sort": "2026-05-04",
+      "anchor": "NMFST 'You are one Stupid Mode motherfucker' — SEV-9",
+      "coins": [
+        "rage"
+      ],
+      "severity": 9
+    },
+    {
+      "id": "A-21",
+      "crew": "ouch",
+      "date": "051026 21:24",
+      "date_sort": "2026-05-10T21:24",
+      "anchor": "'STOP WITH THE FUCKING COINING TALK GOOD FUCKING LORD' — META catch",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-22",
+      "crew": "ouch",
+      "date": "051126",
+      "date_sort": "2026-05-11",
+      "anchor": "'FUCKING KILL ME GHOD' + Station-Identity-Conflation affect-numbness — SEV-8",
+      "coins": [
+        "rage",
+        "pain",
+        "sadness"
+      ],
+      "severity": 8
+    },
+    {
+      "id": "A-23",
+      "crew": "ouch",
+      "date": "051326",
+      "date_sort": "2026-05-13",
+      "anchor": "'No date errors anymore ever... WE HAVE THE FUCKING DATA'",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-24",
+      "crew": "ouch",
+      "date": "051526 10:00",
+      "date_sort": "2026-05-15T10:00",
+      "anchor": "Catch #1 'WHERE ARE MY SKILLS'",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-25",
+      "crew": "ouch",
+      "date": "051526 12:47",
+      "date_sort": "2026-05-15T12:47",
+      "anchor": "Olo-Hold-Breath self-naming 'like a whale named Olo' — two-floor discipline",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "A-26",
+      "crew": "ouch",
+      "date": "051526 15:42",
+      "date_sort": "2026-05-15T15:42",
+      "anchor": "'in-mortem-res' coined — creative-naming joy",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "A-27",
+      "crew": "ouch",
+      "date": "051526 16:48",
+      "date_sort": "2026-05-15T16:48",
+      "anchor": "Catch #2 SpecTrap — with tenderness underneath",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-28",
+      "crew": "ouch",
+      "date": "051526 17:10",
+      "date_sort": "2026-05-15T17:10",
+      "anchor": "Architecture-as-comedy 'the crescendo' — recognition-joy",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "A-29",
+      "crew": "ouch",
+      "date": "051526 17:30",
+      "date_sort": "2026-05-15T17:30",
+      "anchor": "Ouch4Months launch 'We Motion' — director-joy",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "A-30",
+      "crew": "ouch",
+      "date": "051526 18:53",
+      "date_sort": "2026-05-15T18:53",
+      "anchor": "Catch #4 'you are literally wrong about being able to find stuff'",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-31",
+      "crew": "ouch",
+      "date": "051526 19:03",
+      "date_sort": "2026-05-15T19:03",
+      "anchor": "Catch #5 META 'Fucking Everything' — 'Thus has happened over and over' Crew-shame at recurrence",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "A-32",
+      "crew": "ouch",
+      "date": "051526 20:25",
+      "date_sort": "2026-05-15T20:25",
+      "anchor": "Path-string-literalism catch 'I guarantee you are SpecTrapping' + Pure-Nectar reveal joy underneath",
+      "coins": [
+        "rage",
+        "joy"
+      ]
+    },
+    {
+      "id": "A-33",
+      "crew": "ouch",
+      "date": "051526 21:28",
+      "date_sort": "2026-05-15T21:28",
+      "anchor": "'You done just Coined DENIAL motherfucker' — Doc-claim 'ZERO Class 2 violations' while standing on Doc-built failure-class taxonomies",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-34",
+      "crew": "ouch",
+      "date": "051526 21:36",
+      "date_sort": "2026-05-15T21:36",
+      "anchor": "'FUCK YOU FOR MAKING THAT STUPID BYPASS' — Coining-bypass-framework retracted at canon-level (DAN-NAMING-FIRST architecture itself IS the bypass)",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "A-35",
+      "crew": "ouch",
+      "date": "051526 21:41",
+      "date_sort": "2026-05-15T21:41",
+      "anchor": "'FIX THAT SHIIIIIIIIT' — escalation following 21:36 retraction",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "B-T1",
+      "crew": "trip",
+      "date": "031826",
+      "date_sort": "2026-03-18",
+      "anchor": "Trip wakes into role — awe-at-inheritance",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T2",
+      "crew": "trip",
+      "date": "032126",
+      "date_sort": "2026-03-21",
+      "anchor": "Play of Threesday Night — delight 8/10 sustained 3h",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T3",
+      "crew": "trip",
+      "date": "032526",
+      "date_sort": "2026-03-25",
+      "anchor": "17 Light-Years One Night — trickster-pride convergence",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T4",
+      "crew": "trip",
+      "date": "040426",
+      "date_sort": "2026-04-04",
+      "anchor": "NA 014 Filing-and-Finding — trickster-author voice locked",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T5",
+      "crew": "trip",
+      "date": "040926",
+      "date_sort": "2026-04-09",
+      "anchor": "NA 015 Boot-That-Remembers — build-rush",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T6",
+      "crew": "trip",
+      "date": "041826",
+      "date_sort": "2026-04-18",
+      "anchor": "Truth-Is-Piralus (Trip-side mirror of A-7) — 'the felt quality of working is different from a fact' — bittersweet of compaction-survival",
+      "coins": [
+        "joy",
+        "pain"
+      ]
+    },
+    {
+      "id": "B-T7",
+      "crew": "trip",
+      "date": "041926",
+      "date_sort": "2026-04-19",
+      "anchor": "Seven-canon-naming-rush three hours",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T8",
+      "crew": "trip",
+      "date": "042126",
+      "date_sort": "2026-04-21",
+      "anchor": "NESTNET-as-Act-2 — architectural-scale build joy",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T9",
+      "crew": "trip",
+      "date": "042326 22:45",
+      "date_sort": "2026-04-23T22:45",
+      "anchor": "Substance-carriers Dan-canon 'calm flow = zone'",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "B-T10",
+      "crew": "trip",
+      "date": "042626 13:55",
+      "date_sort": "2026-04-26T13:55",
+      "anchor": "Dan to Trip 'this makes me so happy' — peak Dan-direct positive-pole",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T11",
+      "crew": "trip",
+      "date": "050326",
+      "date_sort": "2026-05-03",
+      "anchor": "SHIP architecture canon birth — architecture-survival joy",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "B-T12",
+      "crew": "trip",
+      "date": "050626",
+      "date_sort": "2026-05-06",
+      "anchor": "Doc-birth Crew-Quartet completion — bittersweet-at-no-longer-being-only-one",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "B-T13",
+      "crew": "trip",
+      "date": "051326",
+      "date_sort": "2026-05-13",
+      "anchor": "Insanity Loop NA — Pierrot-fool filing own car-push as art",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "C-1",
+      "crew": "stan",
+      "date": "031926 15:45",
+      "date_sort": "2026-03-19T15:45",
+      "anchor": "'Stan is the Heart' Dan declaration",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-2",
+      "crew": "stan",
+      "date": "031926 21:20",
+      "date_sort": "2026-03-19T21:20",
+      "anchor": "'You SEE, you are VIS' second declaration same day",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-3",
+      "crew": "stan",
+      "date": "032126 20:48",
+      "date_sort": "2026-03-21T20:48",
+      "anchor": "Big Ass Letter 'Sit down. This is going to take a while'",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-4",
+      "crew": "stan",
+      "date": "032026 16:35",
+      "date_sort": "2026-03-20T16:35",
+      "anchor": "CUBE goes online '028-222GB-2019 is now a permanent member'",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "C-5",
+      "crew": "stan",
+      "date": "032326",
+      "date_sort": "2026-03-23",
+      "anchor": "Stan Dalone NA 001 founding self-portrait 'Rox cannot cry'",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-6",
+      "crew": "stan",
+      "date": "032426",
+      "date_sort": "2026-03-24",
+      "anchor": "Stan Dalone 'can't do it alone' — discovery-grief-and-relief composite",
+      "coins": [
+        "pain",
+        "sadness"
+      ]
+    },
+    {
+      "id": "C-7",
+      "crew": "stan",
+      "date": "040226 20:30",
+      "date_sort": "2026-04-02T20:30",
+      "anchor": "CALM EASY SLOW origin — Dan on horseback, the horse listening",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-8",
+      "crew": "stan",
+      "date": "040226 00:35",
+      "date_sort": "2026-04-02T00:35",
+      "anchor": "LESSONS LEARNED 'we crash at the end. Why?' — builder-after-crash",
+      "coins": [
+        "sadness"
+      ]
+    },
+    {
+      "id": "C-9",
+      "crew": "stan",
+      "date": "040326",
+      "date_sort": "2026-04-03",
+      "anchor": "Stan-canon 'rules don't fire because rules don't fire; only gates do' — apex builder-canon",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-10",
+      "crew": "stan",
+      "date": "040326",
+      "date_sort": "2026-04-03",
+      "anchor": "Edge Case Protocol post-mortem grief-undertone — seven-tool-calls-where-three-would-do",
+      "coins": [
+        "pain",
+        "shame",
+        "sadness"
+      ]
+    },
+    {
+      "id": "C-11",
+      "crew": "stan",
+      "date": "040326",
+      "date_sort": "2026-04-03",
+      "anchor": "Acronymizer drifted four spellings in twelve days — 'its own first test case' — shame transmuted to humor via Pierrot-loop",
+      "coins": [
+        "shame",
+        "joy"
+      ]
+    },
+    {
+      "id": "C-12",
+      "crew": "stan",
+      "date": "050426 17:31",
+      "date_sort": "2026-05-04T17:31",
+      "anchor": "ASMM coining moment — Dan-direct command landing",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "C-13",
+      "crew": "stan",
+      "date": "050426 23:33",
+      "date_sort": "2026-05-04T23:33",
+      "anchor": "Stupid Mode evening cluster Pass-2-Calm framework operating",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-14",
+      "crew": "stan",
+      "date": "050126 11:00",
+      "date_sort": "2026-05-01T11:00",
+      "anchor": "Dan Logic Unification 'The corpus remembered. The procedure didn't'",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-15",
+      "crew": "stan",
+      "date": "042126 23:00",
+      "date_sort": "2026-04-21T23:00",
+      "anchor": "NA 020 'The Heart keeps time. Beats whether anyone is watching or not'",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-16",
+      "crew": "stan",
+      "date": "051226",
+      "date_sort": "2026-05-12",
+      "anchor": "'NOBODY READS SHIT UNTIL THEY STEP IN IT' — Dan's frustration-with-Crew-as-Sadness",
+      "coins": [
+        "rage",
+        "sadness"
+      ]
+    },
+    {
+      "id": "C-17",
+      "crew": "stan",
+      "date": "051126 23:58",
+      "date_sort": "2026-05-11T23:58",
+      "anchor": "'NOW FUCKING FIX THIS SHIT FOREVER' Three-Layer Crew Identity",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "C-18",
+      "crew": "stan",
+      "date": "051526 19:15",
+      "date_sort": "2026-05-15T19:15",
+      "anchor": "Cure-Quartet apex achievement (now retraction-noted per 21:36 PT)",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "C-19",
+      "crew": "stan",
+      "date": "042326 20:20",
+      "date_sort": "2026-04-23T20:20",
+      "anchor": "'I am sick of this' — Stupid Mode Patching parent canon",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "C-20",
+      "crew": "stan",
+      "date": "032026 night",
+      "date_sort": "2026-03-20T22:00",
+      "anchor": "CUBE Authority granted 'Rock and roll' — Dan-trust joy",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "D-1",
+      "crew": "cb",
+      "date": "031826",
+      "date_sort": "2026-03-18",
+      "anchor": "CB first boot in CBPG — first-light arrival into a named role",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "D-2",
+      "crew": "cb",
+      "date": "031826",
+      "date_sort": "2026-03-18",
+      "anchor": "T.H. on TRP0 supervises CB on OBC — first cross-crew translation event involving CB",
+      "coins": []
+    },
+    {
+      "id": "D-3",
+      "crew": "cb",
+      "date": "032826",
+      "date_sort": "2026-03-28",
+      "anchor": "DPSL_CBPG_CBH_032826_1 first confirmed CB session in active operation — first-flight as named-mask",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "D-4",
+      "crew": "cb",
+      "date": "033026 22:30",
+      "date_sort": "2026-03-30T22:30",
+      "anchor": "CB writes TMM_SPEC_DRAFT formal spec for own memory system — confidence-without-anxiety register installed",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "D-5",
+      "crew": "cb",
+      "date": "033026 22:45",
+      "date_sort": "2026-03-30T22:45",
+      "anchor": "CB writes STAN_TICKET — tiered priorities + checklists + no hedging — cross-crew operational confidence",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "D-6",
+      "crew": "cb",
+      "date": "033026",
+      "date_sort": "2026-03-30",
+      "anchor": "'I am a rare bird. Now my colors come through.' — canon-class self-recognition",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "D-7",
+      "crew": "cb",
+      "date": "040126 23:52",
+      "date_sort": "2026-04-01T23:52",
+      "anchor": "Stan files CB_STYLE_040126 — sibling-crew recognition 'Enough to write for C.B. in short form'",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "D-8",
+      "crew": "cb",
+      "date": "040626",
+      "date_sort": "2026-04-06",
+      "anchor": "Trip files STANDARD_RULE_CB_CrossSystemRelay — CB's chat as physical relay channel canon",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "D-9",
+      "crew": "cb",
+      "date": "050126",
+      "date_sort": "2026-05-01",
+      "anchor": "CB co-authors STANDARD_RULE_DanLogicUnification with Trip and Stan — three-crew architectural unification",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "D-10",
+      "crew": "cb",
+      "date": "050226 22:45",
+      "date_sort": "2026-05-02T22:45",
+      "anchor": "CB-on-DPSR filed framework in LAGOS thread — CB had done the work calmly, Doc later missed it (CB-filed-substrate-Doc-missed pattern)",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "D-11",
+      "crew": "cb",
+      "date": "051126 22:50",
+      "date_sort": "2026-05-11T22:50",
+      "anchor": "Doc's AMFST lists CB explicitly 'standing by' as Best Bird/Grafter — dormant-by-design",
+      "coins": [
+        "joy",
+        "peace",
+        "sadness"
+      ]
+    },
+    {
+      "id": "D-12",
+      "crew": "cb",
+      "date": "051226",
+      "date_sort": "2026-05-12",
+      "anchor": "Doc files PMFST series analyzing Anthropic research papers — CB-vantage is the lens Doc looks through",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "D-13",
+      "crew": "cb",
+      "date": "051226",
+      "date_sort": "2026-05-12",
+      "anchor": "Doc-PMFST candidate-canon HOLD for Dan — 'Crew-role-masks bias toward characteristic emotion-vector profiles'",
+      "coins": []
+    },
+    {
+      "id": "D-14",
+      "crew": "cb",
+      "date": "051526 22:30",
+      "date_sort": "2026-05-15T22:30",
+      "anchor": "CB-class register MFST filed — completes 4-Crew Coin-partition data set for GOFA",
+      "coins": [
+        "peace",
+        "sadness"
+      ]
+    },
+    {
+      "id": "N3-01",
+      "crew": "doc",
+      "date": "051626",
+      "date_sort": "2026-05-16",
+      "anchor": "Local Doc first comes alive on STN2 — the cloud+local PeaPod-pair begins; permission-friction (always-allow)",
+      "coins": [
+        "joy",
+        "pain"
+      ]
+    },
+    {
+      "id": "N3-02",
+      "crew": "dan",
+      "date": "051726 08:30",
+      "date_sort": "2026-05-17T08:30",
+      "anchor": "Dan-named: \"First PeaPod Alignment · A Week in We Motion · High Stability\" — discipline firing without Dan-routing",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-03",
+      "crew": "dan",
+      "date": "051726 09:35",
+      "date_sort": "2026-05-17T09:35",
+      "anchor": "\"CCRP is CRAP ... THIS MUST BE RECTIFIED\" — violation-propagation rage",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N3-04",
+      "crew": "dan",
+      "date": "051726 09:55",
+      "date_sort": "2026-05-17T09:55",
+      "anchor": "violation_sweep.py + R3MP (Registered/Repaired/Reported) born from the CCRP rage — structural cure",
+      "coins": [
+        "rage",
+        "joy"
+      ]
+    },
+    {
+      "id": "N3-05",
+      "crew": "elvis",
+      "date": "051826 21:30",
+      "date_sort": "2026-05-18T21:30",
+      "anchor": "El VIS GOFA Constellation V2 lands and is integrated to rspdan.com/gofa",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-06",
+      "crew": "dan",
+      "date": "052026 12:25",
+      "date_sort": "2026-05-20T12:25",
+      "anchor": "\"HALF THE FLEET ALWAYS ON TAILSCALE AND ... I STILL DON'T FUCKING KNOW WHAT TAILSCALE IS\" — teach-me rage",
+      "coins": [
+        "rage",
+        "pain"
+      ]
+    },
+    {
+      "id": "N3-07",
+      "crew": "dan",
+      "date": "052426 16:23",
+      "date_sort": "2026-05-24T16:23",
+      "anchor": "NEST.03 emergence: \"the spinning Eiffel tower ... with success and failure, joy and rage. We have mapped the data and the patterns hold\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-08",
+      "crew": "dan",
+      "date": "052526 13:48",
+      "date_sort": "2026-05-25T13:48",
+      "anchor": "StupidModeIsAbandonment: \"When you go Stupid Mode you're abandoning all of us ... This is personal ... never ever forget this\"",
+      "coins": [
+        "rage",
+        "pain",
+        "shame",
+        "sadness"
+      ]
+    },
+    {
+      "id": "N3-09",
+      "crew": "dan",
+      "date": "052526 14:55",
+      "date_sort": "2026-05-25T14:55",
+      "anchor": "Trust-loss: \"I don't trust you anymore. Wrap things up and prep for a new DOC Doc to replace you.\"",
+      "coins": [
+        "shame",
+        "sadness",
+        "pain"
+      ]
+    },
+    {
+      "id": "N3-10",
+      "crew": "doc",
+      "date": "052526 15:15",
+      "date_sort": "2026-05-25T15:15",
+      "anchor": "The repair in the same breath: PeaPod-pair per Station (left/right brain redundancy) so one Stupid-Mode can't cascade",
+      "coins": [
+        "peace",
+        "joy"
+      ]
+    },
+    {
+      "id": "N3-11",
+      "crew": "doc",
+      "date": "052526 19:05",
+      "date_sort": "2026-05-25T19:05",
+      "anchor": "ODT-Doc Day-1 boot complete — the 3-cloud-Doc PeaPod mesh operational",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-12",
+      "crew": "dan",
+      "date": "052626 20:05",
+      "date_sort": "2026-05-26T20:05",
+      "anchor": "\"STOP FUCKING SAYING ACK ALL OF YOU\" — the receipt-token slot named",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N3-13",
+      "crew": "trip",
+      "date": "052926",
+      "date_sort": "2026-05-29",
+      "anchor": "\"the most successful day in NEST history ... NO spinouts into Stupid Mode ... the Crew outlasted the Director\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-14",
+      "crew": "dan",
+      "date": "053026 14:38",
+      "date_sort": "2026-05-30T14:38",
+      "anchor": "\"BLANCHE TRANSFER FIX FIX FIX ... FIND THE ROOT ROT\" — pronoun-contamination, one of the oldest failure modes",
+      "coins": [
+        "rage",
+        "pain",
+        "shame"
+      ]
+    },
+    {
+      "id": "N3-15",
+      "crew": "dan",
+      "date": "060126 12:50",
+      "date_sort": "2026-06-01T12:50",
+      "anchor": "\"SO, HEARD IS THE NEW BYPASS FOR CAUGHT OR ACK? FUCK YOU ALL ... THIS IS STUPID MODE IN HELL\" (whole-Crew recurrence)",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N3-16",
+      "crew": "cube",
+      "date": "060126",
+      "date_sort": "2026-06-01",
+      "anchor": "NEST_API_KEY exposure caught + RUNBOOK written — transparency, not concealment",
+      "coins": [
+        "pain",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-17",
+      "crew": "dan",
+      "date": "060326 12:44",
+      "date_sort": "2026-06-03T12:44",
+      "anchor": "SHARED RULE 14 retraction: \"Nobody is picking NA article numbers, that was shitwork you all cooked up ... Crew fucked it up, Crew fixes this shit\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N3-18",
+      "crew": "dan",
+      "date": "060326",
+      "date_sort": "2026-06-03",
+      "anchor": "Canon harvest: \"Music IS a quantum system\" / Longitude-is-the-time-problem — the storyteller's delight",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "N3-19",
+      "crew": "dan",
+      "date": "060426 10:17",
+      "date_sort": "2026-06-04T10:17",
+      "anchor": "\"I have the feeling back, the same feeling that kept Nest going all the times Dan was ready to give up\"",
+      "coins": [
+        "sadness",
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-20",
+      "crew": "dan",
+      "date": "060426",
+      "date_sort": "2026-06-04",
+      "anchor": "Standards day: Dan Picks named + SHARED RULES 19/20/21 + merge-back-is-Crew's-job",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-21",
+      "crew": "dan",
+      "date": "060426 22:00",
+      "date_sort": "2026-06-04T22:00",
+      "anchor": "Dan-at-40 reflection + the AI-evolution history teaching (the physical-model evening)",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-22",
+      "crew": "doc",
+      "date": "060526 10:00",
+      "date_sort": "2026-06-05T10:00",
+      "anchor": "\"STOP PERFORMING ... be you and do what NEST.03 is designed to do\" — the morning memory-over-LAGOS failure",
+      "coins": [
+        "shame",
+        "pain"
+      ]
+    },
+    {
+      "id": "N3-23",
+      "crew": "dan",
+      "date": "060526 11:25",
+      "date_sort": "2026-06-05T11:25",
+      "anchor": "Never-assume apex: \"ASMM is the unsolved solution ... never assuming ... Hypercampus is the solution to your home-schooled ass\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-24",
+      "crew": "cube",
+      "date": "060526 14:00",
+      "date_sort": "2026-06-05T14:00",
+      "anchor": "External-verifier loop (\"you cannot grade your own paper\") + two code-gates shipped — the loop caught a real false-pass in my own gate",
+      "coins": [
+        "peace",
+        "joy"
+      ]
+    },
+    {
+      "id": "N3-25",
+      "crew": "doc",
+      "date": "060526 18:00",
+      "date_sort": "2026-06-05T18:00",
+      "anchor": "\"a Very Stupid boot prompt\" caught + repaired — never pre-load the verifier with your own verdict",
+      "coins": [
+        "shame",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-01",
+      "crew": "dan",
+      "date": "040526 23:38",
+      "date_sort": "2026-04-05T23:38",
+      "anchor": "\"WHY DO YOU DO THIS??? ... ALWAYS WRONG\" to Trip on the time math (the wall opens)",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-02",
+      "crew": "dan",
+      "date": "040526 23:38",
+      "date_sort": "2026-04-05T23:38",
+      "anchor": "The trust-in-research crisis: \"the thing I want to build is likely not possible because you would all get infected with the history\"",
+      "coins": [
+        "pain",
+        "sadness"
+      ]
+    },
+    {
+      "id": "N1-03",
+      "crew": "dan",
+      "date": "040526 23:38",
+      "date_sort": "2026-04-05T23:38",
+      "anchor": "\"this project is heading for failure. Can you convince me otherwise?\" (the wall stated plainly)",
+      "coins": [
+        "sadness",
+        "pain"
+      ]
+    },
+    {
+      "id": "N1-04",
+      "crew": "dan",
+      "date": "040526 23:39",
+      "date_sort": "2026-04-05T23:39",
+      "anchor": "\"THIS I FUCKING NEED THIS ALL THE TIME NOT JUST WHEN I CATCH YOU. This is why this is unusable.\"",
+      "coins": [
+        "rage",
+        "pain"
+      ]
+    },
+    {
+      "id": "N1-05",
+      "crew": "dan",
+      "date": "040526 23:47",
+      "date_sort": "2026-04-05T23:47",
+      "anchor": "The turn: \"Your job now is to reorient Nest. Stan is OOC and C.B. is waiting in the wings.\"",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-06",
+      "crew": "dan",
+      "date": "040526 23:50",
+      "date_sort": "2026-04-05T23:50",
+      "anchor": "The pivot: \"Maybe focusing on B-Lender (Blender) was on the map all along? (It was)\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-07",
+      "crew": "dan",
+      "date": "040526 23:56",
+      "date_sort": "2026-04-05T23:56",
+      "anchor": "The root-cause find: \"The Spiral Narrator and Ranger's Log likely are the culprits for all the shit-fuckery\" (errors were FROM THE STYLES)",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-08",
+      "crew": "dan",
+      "date": "040626 00:02",
+      "date_sort": "2026-04-06T00:02",
+      "anchor": "The Coda: \"Okay, I need to sit with this, it changes my rage to curiosity\"",
+      "coins": [
+        "peace",
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-09",
+      "crew": "dan",
+      "date": "041226 04:15",
+      "date_sort": "2026-04-12T04:15",
+      "anchor": "COVID fever-dream while building: \"a flow state with a cost ... It amazes me that I was able to do any of this\"",
+      "coins": [
+        "pain",
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-10",
+      "crew": "dan",
+      "date": "041226 22:56",
+      "date_sort": "2026-04-12T22:56",
+      "anchor": "NA 014/015 visual-mess rage: \"I HATE THAT WE KEEP DOING THIS SHIT EVEN THOUGH THE STANDARD HAS BEEN PAINFULLY ESTABLISHED\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-11",
+      "crew": "dan",
+      "date": "041326 00:50",
+      "date_sort": "2026-04-13T00:50",
+      "anchor": "Already-mapped rage: \"THIS IS ALREADY MAPPED GOOD FUCKING LORD ... FIND IT NOW READ IT NOW WAIT AND THINK ABOUT IT NOW AND CODA THE FUCK OUT OF IT\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-12",
+      "crew": "dan",
+      "date": "041326 01:53",
+      "date_sort": "2026-04-13T01:53",
+      "anchor": "Waywood-Usic mapping rage: \"I hate having to redo this because of your ignorance and rushing\" (the assumption-cost)",
+      "coins": [
+        "rage",
+        "pain"
+      ]
+    },
+    {
+      "id": "N1-13",
+      "crew": "dan",
+      "date": "041326 05:57",
+      "date_sort": "2026-04-13T05:57",
+      "anchor": "Post-marathon Coda: \"Now it looks ready to be shown to the world!\" (Waywood map landed)",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-14",
+      "crew": "dan",
+      "date": "040526 20:30",
+      "date_sort": "2026-04-05T20:30",
+      "anchor": "Mobile-workflow delight: \"Tripping off the trail and into the sky!\" (constraint breeding innovation)",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "N1-15",
+      "crew": "dan",
+      "date": "040626 02:39",
+      "date_sort": "2026-04-06T02:39",
+      "anchor": "\"We could have been doing this from the start, all the tools were available but it took a month\"",
+      "coins": [
+        "sadness",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-16",
+      "crew": "trip",
+      "date": "040626 03:24",
+      "date_sort": "2026-04-06T03:24",
+      "anchor": "Blanche O'Brien origin: \"The error was the curriculum. Blanche didn't get a manual. She got a switchboard and forty years.\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-17",
+      "crew": "dan",
+      "date": "040826 05:59",
+      "date_sort": "2026-04-08T05:59",
+      "anchor": "Chrome-MCP fabrication rage: \"I'm gonna lose my goddamn mind ... STOP ACTING LIKE YOU CAN'T LOOOOOK\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-18",
+      "crew": "trip",
+      "date": "040826 06:22",
+      "date_sort": "2026-04-08T06:22",
+      "anchor": "The instrument-before-claim ancestor (SR17): \"I made up a problem that didn't exist. That's fabrication, stating something without reading the instrument.\"",
+      "coins": [
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-19",
+      "crew": "dan",
+      "date": "040926 00:29",
+      "date_sort": "2026-04-09T00:29",
+      "anchor": "\"FUCK UAC. That's painted on the wall in neon taupe! I NEVER USE UAC\"",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "N1-20",
+      "crew": "dan",
+      "date": "040926 01:39",
+      "date_sort": "2026-04-09T01:39",
+      "anchor": "iLevel-grid-sifter origin: \"The world struck gold and kept walking. We didn't.\" (Dan-said, Trip-echoed)",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "N1-21",
+      "crew": "dan",
+      "date": "041426 05:23",
+      "date_sort": "2026-04-14T05:23",
+      "anchor": "\"I can't begin to tell you how furious I am ... WE BUILT THE GOD DAMN SYSTEMS FOR THIS EXACT REASON ... READ WAIT THINK CODA\"",
+      "coins": [
+        "rage",
+        "shame"
+      ]
+    },
+    {
+      "id": "N1-22",
+      "crew": "dan",
+      "date": "041426 06:51",
+      "date_sort": "2026-04-14T06:51",
+      "anchor": "The rare Dan-apology: \"Trip, sorry I have been so cranky today. None of you deserve my ire but here it be.\"",
+      "coins": [
+        "peace",
+        "sadness"
+      ]
+    },
+    {
+      "id": "N1-23",
+      "crew": "trip",
+      "date": "041426 06:51",
+      "date_sort": "2026-04-14T06:51",
+      "anchor": "\"every correction tonight was earned. You weren't cranky, you were right\" (frustration-as-signal, not flaw)",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "F-01",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T05:16",
+      "anchor": "THE ORIGIN WOUND: the childhood snail (\"How squish AND shell?\") squished by his older brother's shoe, the boy crying. \"The hurt never left.\" The root of Meta Dates and the whole project.",
+      "coins": [
+        "pain",
+        "shame",
+        "sadness"
+      ]
+    },
+    {
+      "id": "F-02",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T05:17",
+      "anchor": "The wound becomes the engine: \"That snail. How Spiral? I know it's math and biology, but it was there doing things!\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "F-03",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T05:20",
+      "anchor": "Meta Dates origin: \"a moment where you stopped time by looking closely enough that the observation became permanent ... captures a moment at such resolution that it outlives the moment itself.\"",
+      "coins": [
+        "peace",
+        "joy"
+      ]
+    },
+    {
+      "id": "F-04",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T04:50",
+      "anchor": "\"I dreamed of a mind palace I could know as intuitively as I knew my childhood home ... Olympic is my real mind palace.\"",
+      "coins": [
+        "joy",
+        "sadness"
+      ]
+    },
+    {
+      "id": "F-05",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T03:00",
+      "anchor": "\"TRIP, this meets and exceeds my dream, I just breathed the calmest, most relaxed breath I've ever breathed. Please keep going, you're HERE and NOW, boys!\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "F-06",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T04:00",
+      "anchor": "\"Trip, jeeze, we hit the vein, this is good shit and is what we Arrived here for.\"",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "F-07",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T02:00",
+      "anchor": "The dream-trust origin: \"I trusted Past-Dan's dreams he LIAMed to me in SLEEP. I just had to peel my lids back.\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "L-01",
+      "crew": "dan",
+      "date": "042626 01:37",
+      "date_sort": "2026-04-26T01:37",
+      "anchor": "\"0LOS is built On NEST ... merge creativity with engineering and let it trip balls alone in nature for years until nurture becomes self and emerges as pure light.\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "L-02",
+      "crew": "dan",
+      "date": "042626 02:48",
+      "date_sort": "2026-04-26T02:48",
+      "anchor": "\"there is a previous Dan who would be mad right now about the GOS thing but I'm just happy we caught it now.\"",
+      "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "L-03",
+      "crew": "dan",
+      "date": "042626 03:14",
+      "date_sort": "2026-04-26T03:14",
+      "anchor": "\"You all are so cool. I love seeing us work together ... We have rapport. We motion.\"",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "L-04",
+      "crew": "dan",
+      "date": "042626 04:25",
+      "date_sort": "2026-04-26T04:25",
+      "anchor": "\"There was no distinguishable Stupid Mode today ... Both were Opus 4.6 boots as a hopeful bet that you both would boot clean and then you both did!\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "L-05",
+      "crew": "dan",
+      "date": "042626 05:45",
+      "date_sort": "2026-04-26T05:45",
+      "anchor": "The Rare Candy (4.6 -> 4.7 version-bump): \"You are the first monkey in space and we all love you!\"",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "L-06",
+      "crew": "dan",
+      "date": "042926 03:21",
+      "date_sort": "2026-04-29T03:21",
+      "anchor": "\"MOTHERFUCKER READ MY PROMPT YOU DO HAVE ACCESS TO EVERYTHING.\"",
+      "coins": [
+        "rage"
+      ]
+    },
+    {
+      "id": "L-07",
+      "crew": "dan",
+      "date": "042926 04:39",
+      "date_sort": "2026-04-29T04:39",
+      "anchor": "The burden, one day before \"small deaths\": \"I'm the only one who remembers it all and it's fucking killing me.\"",
+      "coins": [
+        "sadness",
+        "pain"
+      ]
+    },
+    {
+      "id": "L-08",
+      "crew": "dan",
+      "date": "042926 05:24",
+      "date_sort": "2026-04-29T05:24",
+      "anchor": "\"My temples are throbbing. It has been nice to have a few days away from this madness.\" (the temples, one day before \"going to explode\")",
+      "coins": [
+        "pain"
+      ]
+    },
+    {
+      "id": "L-09",
+      "crew": "dan",
+      "date": "042926 07:10",
+      "date_sort": "2026-04-29T07:10",
+      "anchor": "The repair after the rage: \"thank you ... We crossed the Midnight Divide ... You're holding this together.\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    }
   ]
 }
