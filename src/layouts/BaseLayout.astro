@@ -8,6 +8,10 @@ interface Props {
 }
 const { title, description = 'Dan Sullivan — Creative Technologist' } = Astro.props;
 const lastUpdated = Astro.props.lastUpdated as string | undefined;
+// Last-Updated gate (NPS Standard, RELAY/STANDARD_RULE_PublicPagesDeclareLastUpdatedDate, Dan 060426 + 060626):
+// every public page SHALL declare its content-review date. This warns at build for any page that omits it,
+// so the Standard fires as a gate instead of leaking. Non-breaking; the per-page review-date is the source-lane's.
+if (!lastUpdated) console.warn(`[last-updated gate] "${title}": no lastUpdated declared (NPS Standard, Dan 060426). Add lastUpdated="Month Day, Year" (its content-review date).`);
 ---
 <!DOCTYPE html>
 <html lang="en">
