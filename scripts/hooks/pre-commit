@@ -1,16 +1,45 @@
 #!/bin/sh
-# Pre-commit mojibake gate for rspdan.com.
-# Blocks commits that introduce the em-dash / en-dash mojibake corruption into .astro pages.
-# Per the SEEGULL mojibake-gate (item 3) + RELAY/STANDARD_RULE_UnicodeSafeFileOps_Stan_040426.
-# Wired via core.hooksPath:  npm run prepare   (or: git config core.hooksPath scripts/hooks)
-staged=$(git diff --cached --name-only --diff-filter=ACM | grep '\.astro$')
-[ -z "$staged" ] && exit 0
-python3 scripts/fix_mojibake.py --dry $staged
-if [ $? -ne 0 ]; then
-  echo ""
-  echo "PRE-COMMIT BLOCKED: mojibake found in staged .astro files."
-  echo "Fix with:  python3 scripts/fix_mojibake.py $staged"
-  echo "then re-stage and commit. Bypass with --no-verify only if certain."
-  exit 1
+# Pre-commit gates for rspdan.com (version-controlled via core.hooksPath).
+#   Gate 2 · mojibake defense (fix_mojibake.py) · .astro
+#   Gate 3 · em-dash defense (fix_emdash.py) · .astro/.md/.mdx
+#            the public face carries no Crew AI-tell em-dashes (Dan-direct 060626)
+# Per RELAY/STANDARD_RULE_UnicodeSafeFileOps_Stan_040426 + the 060626 Fleet-wide em-dash gate.
+# Wire once per clone:  git config core.hooksPath scripts/hooks   (or: npm run prepare)
+# FAIL-OPEN on no-python (exit 0); BLOCK only on a confirmed offender (exit 1).
+
+# Find a Python that ACTUALLY runs (Windows 'python3' is a Store stub that fails the
+# import test, so test each candidate; this fires on local Windows Crew, not just cloud).
+PY=""
+for c in python3 python py; do
+  if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then PY="$c"; break; fi
+done
+[ -z "$PY" ] && exit 0
+
+# Gate 2 · mojibake (.astro)
+moji=$(git diff --cached --name-only --diff-filter=ACM | grep '\.astro$')
+if [ -n "$moji" ]; then
+  "$PY" scripts/fix_mojibake.py --dry $moji
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "PRE-COMMIT BLOCKED: mojibake found in staged .astro files."
+    echo "Fix with:  $PY scripts/fix_mojibake.py $moji"
+    echo "then re-stage and commit. Bypass with --no-verify only if certain."
+    exit 1
+  fi
 fi
+
+# Gate 3 · em-dash (.astro/.md/.mdx) · the public face stays em-dash-free
+emd=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(astro|md|mdx)$')
+if [ -n "$emd" ]; then
+  "$PY" scripts/fix_emdash.py --dry $emd
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "PRE-COMMIT BLOCKED: em-dash found in staged public content (a Crew AI-tell on the public face)."
+    echo "Fix with:  $PY scripts/fix_emdash.py $emd   (converts em-dash -> middot, the house style)"
+    echo "For a FUNCTIONAL em-dash in code (e.g. a regex char-class), write it as the escape \\u2014 instead."
+    echo "then re-stage and commit. Bypass with --no-verify only if certain."
+    exit 1
+  fi
+fi
+
 exit 0

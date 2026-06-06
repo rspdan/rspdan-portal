@@ -1,12 +1,12 @@
 ---
-// BaseLayout.astro — rspdan.com
+// BaseLayout.astro · rspdan.com
 import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
   lastUpdated?: string;
 }
-const { title, description = 'Dan Sullivan — Creative Technologist' } = Astro.props;
+const { title, description = 'Dan Sullivan · Creative Technologist' } = Astro.props;
 const lastUpdated = Astro.props.lastUpdated as string | undefined;
 // Last-Updated gate (NPS Standard, RELAY/STANDARD_RULE_PublicPagesDeclareLastUpdatedDate, Dan 060426 + 060626):
 // every public page SHALL declare its content-review date. This warns at build for any page that omits it,
@@ -19,7 +19,7 @@ if (!lastUpdated) console.warn(`[last-updated gate] "${title}": no lastUpdated d
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
-  <title>{title} — Dan Sullivan</title>
+  <title>{title} · Dan Sullivan</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
 <body>

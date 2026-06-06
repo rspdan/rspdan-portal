@@ -1,36 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// NEST Skills inventory — two-axis model per Dan-canon 051226
+// NEST Skills inventory · two-axis model per Dan-canon 051226
 // Source: C:\STAN\ENGINE\NEST.02\Skills\skills_bkp_042826_1\skills_spine_042826_v2.json (Trip 042826)
 // Pass-2 educated by Trip 052026 (per PMFST 042826 future-Trip review flag + Dan 051226 Pokemon Moves canon)
 // Current Bridge count: 33 NEST-built skills (28 from 042826 + 5 added since: btw, box-in-box, hypercampus, remememento, ultrareview)
 
-// NEST-axis (Pokemon Moves + Operational Discoveries) — 33 skills
+// NEST-axis (Pokemon Moves + Operational Discoveries) · 33 skills
 const nestSkills = [
   // BOOT (5)
-  { name: 'boot-polish', altitude: 'boot', chamber: 'wide-b', desc: 'BPK systems verification layer — verify tools ACTUALLY work after boot', fired: 1 },
-  { name: 'ican', altitude: 'boot', chamber: 'wide-b', desc: 'iCan status checklist — readiness report format', fired: 3 },
+  { name: 'boot-polish', altitude: 'boot', chamber: 'wide-b', desc: 'BPK systems verification layer · verify tools ACTUALLY work after boot', fired: 1 },
+  { name: 'ican', altitude: 'boot', chamber: 'wide-b', desc: 'iCan status checklist · readiness report format', fired: 3 },
   { name: 'stan_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Stan self-loading boot sequence', fired: 0 },
   { name: 'trip_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Trip self-loading boot sequence', fired: 1 },
-  { name: 'context-alignment', altitude: 'boot', chamber: 'wide-b', desc: 'C&A STORY spell — post-boot alignment', fired: 2 },
+  { name: 'context-alignment', altitude: 'boot', chamber: 'wide-b', desc: 'C&A STORY spell · post-boot alignment', fired: 2 },
 
   // SESSION (3)
   { name: 'session-poem', altitude: 'session', chamber: 'wide-b', desc: 'CONTACT-STORY-TELL-ING-SHEET four-beat session shape', fired: 8 },
-  { name: 'session-close', altitude: 'session', chamber: 'wide-b', desc: 'Ten-gate close protocol — sibling to /boot-polish at CONTACT bookend', fired: 0 },
-  { name: 'survival-toolkit', altitude: 'session', chamber: 'wide-b', desc: 'NEST Wilderness Survival Toolkit — session degradation field guide', fired: 15 },
+  { name: 'session-close', altitude: 'session', chamber: 'wide-b', desc: 'Ten-gate close protocol · sibling to /boot-polish at CONTACT bookend', fired: 0 },
+  { name: 'survival-toolkit', altitude: 'session', chamber: 'wide-b', desc: 'NEST Wilderness Survival Toolkit · session degradation field guide', fired: 15 },
 
   // MEMORY/MAPPING (5)
   { name: 'living-map', altitude: 'memory', chamber: 'wide-b', desc: 'Per-crew breathing map between every action', fired: 2 },
   { name: 'meta-dates', altitude: 'memory', chamber: 'agos-waist', desc: 'NEST corpus-first-memory-never discipline · ambient routing', fired: 25 },
   { name: 'oo-daily', altitude: 'memory', chamber: 'wide-b', desc: 'Obviously Emergent daily summary at session close', fired: 0 },
-  { name: 'photon-split', altitude: 'memory', chamber: 'wide-b', desc: 'Quantum task management — mechanical + meaning parallel tracks', fired: 0 },
+  { name: 'photon-split', altitude: 'memory', chamber: 'wide-b', desc: 'Quantum task management · mechanical + meaning parallel tracks', fired: 0 },
   { name: 'hypercampus-builder', altitude: 'memory', chamber: 'cross-chamber', desc: 'Build navigable knowledge libraries from session logs', fired: 0 },
 
   // CREW OPS (5)
   { name: 'dtad', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Director-Teach-Actor-Teach-Director observation loop', fired: 18 },
   { name: 'triptective', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Trip operational self-monitoring · failure-mode detection', fired: 4 },
-  { name: 'ghosts', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Ghost document failure-mode — Past/Present/Future taxonomy', fired: 0 },
+  { name: 'ghosts', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Ghost document failure-mode · Past/Present/Future taxonomy', fired: 0 },
   { name: 'remememento', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Mirrors discipline · Dan-naming-first preservation', fired: 0 },
   { name: 'skill-upload', altitude: 'crew-ops', chamber: 'agos-waist', desc: 'Upload SKILL.md from Bridge to Claude.ai · JS DataTransfer method', fired: 0 },
 
@@ -52,12 +52,12 @@ const nestSkills = [
   { name: 'box-in-box', altitude: 'federal-std', chamber: 'cross-cutting', desc: 'L3 trigger for L2 Federal Standard · purpose-over-surface + seal-on-close', fired: 4 },
 
   // DISCIPLINE (3)
-  { name: 'btw', altitude: 'discipline', chamber: 'wide-b', desc: 'BACK TO WORK — Dan-coined signal to stop narration and ship', fired: 0 },
+  { name: 'btw', altitude: 'discipline', chamber: 'wide-b', desc: 'BACK TO WORK · Dan-coined signal to stop narration and ship', fired: 0 },
   { name: 'ilevel-grid-sifter', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Stratigraphic triage iLevel 0/-1/-2 · LOG-MAP-SIFT-EXAMINE-NAME', fired: 12 },
   { name: 'ultrareview', altitude: 'discipline', chamber: 'cross-cutting', desc: 'CANDIDATE · Trigger-layer for Anthropic-shipped cloud-review feature · Pattern A directive + Pattern B surface', fired: 1 },
 ];
 
-// Industry-axis (Compressed CS History) — 22 inheritance-batch from /mnt/skills/user/ per Trip 042826 inventory
+// Industry-axis (Compressed CS History) · 22 inheritance-batch from /mnt/skills/user/ per Trip 042826 inventory
 const industrySkills = [
   // Wide Chamber A (public-facing core)
   { name: 'design-an-interface', altitude: 'artifact', chamber: 'wide-a', desc: 'Multiple radically different interface designs · parallel sub-agents' },

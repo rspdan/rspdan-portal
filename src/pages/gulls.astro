@@ -7,7 +7,7 @@ import gulls from '../data/seegulls.json';
 const totalOpen = gulls.here.length + gulls.near.length + gulls.far.length;
 const totalDone = gulls.done.length;
 ---
-<BaseLayout lastUpdated="June 5, 2026" title="SEEGULLS" description="NEST task registry — all gulls visible">
+<BaseLayout lastUpdated="June 5, 2026" title="SEEGULLS" description="NEST task registry · all gulls visible">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 :root{--bg:#0c0e14;--card:#13161f;--border:rgba(255,255,255,0.06);--muted:#4a5468;--text:#b8bfcc;--head:#e2e8f0;--here:#c94c4c;--near:#c9a84c;--far:#4a7ab5;--done:#4a9b8e;}
@@ -44,28 +44,28 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
   </div>
 
   <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--here)"></div><span class="section-label">HEREGULLS — do now ({gulls.here.length})</span></div>
+    <div class="section-head"><div class="dot" style="background:var(--here)"></div><span class="section-label">HEREGULLS · do now ({gulls.here.length})</span></div>
     {gulls.here.map(g => (
       <div class="gull"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.filed}</span></div>
     ))}
   </div>
 
   <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--near)"></div><span class="section-label">NEARGULLS — do soon ({gulls.near.length})</span></div>
+    <div class="section-head"><div class="dot" style="background:var(--near)"></div><span class="section-label">NEARGULLS · do soon ({gulls.near.length})</span></div>
     {gulls.near.map(g => (
       <div class="gull"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.filed}</span></div>
     ))}
   </div>
 
   <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--far)"></div><span class="section-label">FARGULLS — track for later ({gulls.far.length})</span></div>
+    <div class="section-head"><div class="dot" style="background:var(--far)"></div><span class="section-label">FARGULLS · track for later ({gulls.far.length})</span></div>
     {gulls.far.map(g => (
       <div class="gull"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.filed}</span></div>
     ))}
   </div>
 
   <div class="section">
-    <div class="section-head"><div class="dot" style="background:var(--done)"></div><span class="section-label">DONE — completed ({gulls.done.length})</span></div>
+    <div class="section-head"><div class="dot" style="background:var(--done)"></div><span class="section-label">DONE · completed ({gulls.done.length})</span></div>
     {gulls.done.map(g => (
       <div class="gull gull--done"><span class="gull-name">{g.name}</span><span class="gull-note">{g.note}</span><span class="gull-date">{g.done}</span></div>
     ))}
