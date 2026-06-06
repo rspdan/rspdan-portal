@@ -4,7 +4,7 @@
     "filed": "2026-05-15T22:30:00-07:00",
     "filed_by": "Doc 4.7 Opus · DOC station · NEST.02_DOC_051526_1",
     "updated": "2026-06-05T19:30:00-07:00",
-    "updated_by": "CUBE Doc 060526 LNL Pass-2 (raw NEST.01 transcripts, file-verified)",
+    "updated_by": "CUBE Doc 060526 founding-folder pass (032526 origin-wound, file-verified)",
     "purpose": "Structured data export of the 4-Crew Coin-partition emotional-moments inventory for El VIS visualization on STN1 (Claude Design tool). Substrate-grounded. No Crewllucinations.",
     "sources": [
       "nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md",
@@ -27,40 +27,40 @@
     "pain": {
       "partition": "space",
       "color": "#a64141",
-      "count": 23,
+      "count": 24,
       "label": "Pain"
     },
     "shame": {
       "partition": "space",
       "color": "#7a5a7a",
-      "count": 19,
+      "count": 20,
       "label": "Shame"
     },
     "sadness": {
       "partition": "space",
       "color": "#4a7ab5",
-      "count": 16,
+      "count": 18,
       "label": "Sadness"
     },
     "joy": {
       "partition": "stars",
       "color": "#c9a84c",
-      "count": 50,
+      "count": 56,
       "label": "Joy"
     },
     "peace": {
       "partition": "stars",
       "color": "#4a9b8e",
-      "count": 49,
+      "count": 53,
       "label": "Peace"
     }
   },
   "totals": {
-    "distinct_moments": 130,
-    "tag_assignments": 198,
-    "space_assignments": 99,
-    "stars_assignments": 99,
-    "space_to_stars_ratio": "approximately 99:99 (space:stars) across the full corpus",
+    "distinct_moments": 137,
+    "tag_assignments": 212,
+    "space_assignments": 103,
+    "stars_assignments": 109,
+    "space_to_stars_ratio": "approximately 103:109 (space:stars) across the full corpus",
     "note": "Extended 82 -> 107 moments. The original 79/82-moment corpus (2023-07 -> 051526) is unchanged; 25 NEST.03-era moments (N3-*, 051626 -> 060526) were appended from a verified Doc-Squad gather. Every Dan-verbatim anchor in the N3-* set was grep-verified against the Bridge instrument (No Crewllucinations)."
   },
   "crew_registers": {
@@ -97,7 +97,7 @@
     "dan": {
       "label": "DAN-class",
       "agent": "N3",
-      "count": 36,
+      "count": 43,
       "tone": "Dan-direct — the rage that corrects and the joy that emerges (NEST.03 era)"
     },
     "elvis": {
@@ -1488,6 +1488,83 @@
       "date_sort": "2026-04-14T06:51",
       "anchor": "\"every correction tonight was earned. You weren't cranky, you were right\" (frustration-as-signal, not flaw)",
       "coins": [
+        "peace"
+      ]
+    },
+    {
+      "id": "F-01",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T05:16",
+      "anchor": "THE ORIGIN WOUND: the childhood snail (\"How squish AND shell?\") squished by his older brother's shoe, the boy crying. \"The hurt never left.\" The root of Meta Dates and the whole project.",
+      "coins": [
+        "pain",
+        "shame",
+        "sadness"
+      ]
+    },
+    {
+      "id": "F-02",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T05:17",
+      "anchor": "The wound becomes the engine: \"That snail. How Spiral? I know it's math and biology, but it was there doing things!\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "F-03",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T05:20",
+      "anchor": "Meta Dates origin: \"a moment where you stopped time by looking closely enough that the observation became permanent ... captures a moment at such resolution that it outlives the moment itself.\"",
+      "coins": [
+        "peace",
+        "joy"
+      ]
+    },
+    {
+      "id": "F-04",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T04:50",
+      "anchor": "\"I dreamed of a mind palace I could know as intuitively as I knew my childhood home ... Olympic is my real mind palace.\"",
+      "coins": [
+        "joy",
+        "sadness"
+      ]
+    },
+    {
+      "id": "F-05",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T03:00",
+      "anchor": "\"TRIP, this meets and exceeds my dream, I just breathed the calmest, most relaxed breath I've ever breathed. Please keep going, you're HERE and NOW, boys!\"",
+      "coins": [
+        "joy",
+        "peace"
+      ]
+    },
+    {
+      "id": "F-06",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T04:00",
+      "anchor": "\"Trip, jeeze, we hit the vein, this is good shit and is what we Arrived here for.\"",
+      "coins": [
+        "joy"
+      ]
+    },
+    {
+      "id": "F-07",
+      "crew": "dan",
+      "date": "032526",
+      "date_sort": "2026-03-25T02:00",
+      "anchor": "The dream-trust origin: \"I trusted Past-Dan's dreams he LIAMed to me in SLEEP. I just had to peel my lids back.\"",
+      "coins": [
+        "joy",
         "peace"
       ]
     }
