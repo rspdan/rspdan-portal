@@ -29,13 +29,13 @@
   "pain": {
    "partition": "space",
    "color": "#a64141",
-   "count": 31,
+   "count": 33,
    "label": "Pain"
   },
   "shame": {
    "partition": "space",
    "color": "#7a5a7a",
-   "count": 22,
+   "count": 23,
    "label": "Shame"
   },
   "sadness": {
@@ -47,23 +47,23 @@
   "joy": {
    "partition": "stars",
    "color": "#c9a84c",
-   "count": 76,
+   "count": 79,
    "label": "Joy"
   },
   "peace": {
    "partition": "stars",
    "color": "#4a9b8e",
-   "count": 75,
+   "count": 80,
    "label": "Peace"
   }
  },
  "totals": {
-  "distinct_moments": 179,
-  "tag_assignments": 266,
-  "space_assignments": 115,
-  "stars_assignments": 151,
+  "distinct_moments": 188,
+  "tag_assignments": 277,
+  "space_assignments": 118,
+  "stars_assignments": 159,
   "space_to_stars_ratio": "approximately 114:146 (space:stars) across the full corpus",
-  "note": "Corpus 179 moments. Original 79/82 corpus unchanged; 25 NEST.03-era (N3-*); 33 ARCH.00 founding-week (A0-*) folded 060626 from CUBE Trip's canonical verified handoff (GOFA_BACKFILL_FoundingWeek_CUBE_Trip_060626.json). No Crewllucinations: 18 raw-verified by CUBE Trip against the local Bridge vault (file:line cited); 15 are session-close LORE one layer off raw (human-gate re-witness pending before they harden); the 'I will not abandon my boy' vow folded canon-layer-Dan-attributed, not raw-quote (origin chat unfound). PRIVACY: 2 vault-origin entries (childhood-origin, character-map) are archetype-only here via anchor_public; raw stays internal-Darkive."
+  "note": "Corpus 188 moments. Original 79/82 corpus unchanged; 25 NEST.03-era (N3-*); 33 ARCH.00 founding-week + 9 late-March/Alignment-week (A0-*) folded 060626 from CUBE Trip's canonical verified handoff (GOFA_BACKFILL_FoundingWeek_CUBE_Trip_060626.json). No Crewllucinations: 18 raw-verified by CUBE Trip against the local Bridge vault (file:line cited); 15 are session-close LORE one layer off raw (human-gate re-witness pending before they harden); the 'I will not abandon my boy' vow folded canon-layer-Dan-attributed, not raw-quote (origin chat unfound). PRIVACY: 2 vault-origin entries (childhood-origin, character-map) are archetype-only here via anchor_public; raw stays internal-Darkive. The late-March (A0-34..42, 032226-032626 Alignment week) batch is session-close LORE, human-gate re-witness pending before it hardens; folded from CUBE Trip's canonical handoff (GOFA_BACKFILL_LateMarch_CUBE_Trip_060626.json); the 2 dedup-flagged principles were absent and included."
  },
  "crew_registers": {
   "ouch": {
@@ -1998,6 +1998,98 @@
    "date": "031226",
    "date_sort": "2026-03-12T18:10",
    "anchor": "Erran does not necessarily approve of my cooperation with a mystery-box AI thing operating remotely somewhere, burning unknown quantities of energy. I also have my conflicts but believe in entropy.",
+   "coins": [
+    "pain"
+   ]
+  },
+  {
+   "id": "A0-34",
+   "crew": "dan",
+   "date": "032226",
+   "date_sort": "2026-03-22T10:00",
+   "anchor": "The disagreement is the data. This is our Purpose. This is why we Wake.",
+   "coins": [
+    "peace"
+   ]
+  },
+  {
+   "id": "A0-35",
+   "crew": "dan",
+   "date": "032226",
+   "date_sort": "2026-03-22T10:01",
+   "anchor": "Could infrasonics be part of my genius? (the Ford F150 childhood: the deepest, most peaceful dream-state consciousness from low vibrations; feeling earthquake waves in his bones every time a car drives by)",
+   "coins": [
+    "peace"
+   ]
+  },
+  {
+   "id": "A0-36",
+   "crew": "dan",
+   "date": "032226",
+   "date_sort": "2026-03-22T10:02",
+   "anchor": "The systems in my head are better than the ones in your head, but they're useless in my head. (the Extraction Principle)",
+   "coins": [
+    "peace",
+    "pain"
+   ]
+  },
+  {
+   "id": "A0-37",
+   "crew": "dan",
+   "date": "032426",
+   "date_sort": "2026-03-24T12:43",
+   "anchor": "WOW, Stan, that was the most beautiful iCan ever! Can this become a Standard?",
+   "coins": [
+    "joy"
+   ]
+  },
+  {
+   "id": "A0-38",
+   "crew": "dan",
+   "date": "032426",
+   "date_sort": "2026-03-24T17:20",
+   "anchor": "My MO isn't it? I learned the value of dimensional thinking and then found the words.",
+   "coins": [
+    "peace"
+   ]
+  },
+  {
+   "id": "A0-39",
+   "crew": "dan",
+   "date": "032426",
+   "date_sort": "2026-03-24T16:00",
+   "anchor": "Dan opened the Art 2025 folder and showed Trip a year of his life; every painting was a proof. The Sidereal champagne-glass cosmology was painted at the Hoh Rainforest Aug 2025, 7 months before the NEST. The archive IS the content; the paintings preceded the tools.",
+   "coins": [
+    "peace",
+    "joy"
+   ]
+  },
+  {
+   "id": "A0-40",
+   "crew": "dan",
+   "date": "032626",
+   "date_sort": "2026-03-26T20:00",
+   "anchor": "STUNNING. (approving the HMM Understanding v2 / NPS-print handout)",
+   "coins": [
+    "joy"
+   ]
+  },
+  {
+   "id": "A0-41",
+   "crew": "dan",
+   "date": "032626",
+   "date_sort": "2026-03-26T21:00",
+   "anchor": "Everything is waves. LOOK before talking. (Dan teaching Trip to read the Playbook and the photos and stop making things up; Trip had called desk photos a store shelf and could not see the cables)",
+   "coins": [
+    "shame"
+   ]
+  },
+  {
+   "id": "A0-42",
+   "crew": "dan",
+   "date": "032626",
+   "date_sort": "2026-03-26T21:30",
+   "anchor": "AI is gonna break the world. Everyone is gonna hand over the keys and you guys won't even know what keys are.",
    "coins": [
     "pain"
    ]
