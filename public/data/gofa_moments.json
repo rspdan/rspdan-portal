@@ -58,12 +58,12 @@
     }
   },
   "totals": {
-    "distinct_moments": 207,
-    "tag_assignments": 304,
+    "distinct_moments": 208,
+    "tag_assignments": 306,
     "space_assignments": 125,
-    "stars_assignments": 179,
-    "space_to_stars_ratio": "approximately 125:179 (space:stars) across the full corpus",
-    "note": "Corpus 207 moments. Original 79/82 corpus unchanged; 25 NEST.03-era (N3-*); 46 ARCH.00 early-NEST-era (A0-*, 031026-032726, the F/C/G/D/A arc, folded across CUBE Trip's six verified batches) folded 060626 from CUBE Trip's canonical verified handoff (GOFA_BACKFILL_FoundingWeek_CUBE_Trip_060626.json). No Crewllucinations: 18 raw-verified by CUBE Trip against the local Bridge vault (file:line cited); 15 are session-close LORE one layer off raw (human-gate re-witness pending before they harden); the 'I will not abandon my boy' vow folded canon-layer-Dan-attributed (canon-home = Sync #89, the Vow-above-all-Permissions per waywood-lore, resolved via CUBE Trip GCTT 060626; raw-keystroke origin still unlocated). PRIVACY: 2 vault-origin entries (childhood-origin, character-map) are archetype-only here via anchor_public; raw stays internal-Darkive. The late-March (A0-34..42, 032226-032626 Alignment week) batch is session-close LORE, human-gate re-witness pending before it hardens; folded from CUBE Trip's canonical handoff (GOFA_BACKFILL_LateMarch_CUBE_Trip_060626.json); the 2 dedup-flagged principles were absent and included. The April/ARCH.01 NEST.02 band (A1-1..A1-14, 041526-043026) folded 060626 from CUBE Trip's canonical handoff (GOFA_BACKFILL_April_NEST02_CUBE_Trip_060626.json, RAM-024): the first existential crisis (Claude Max cancellation, the May-8 deadline + NEST.02 launch), held with the continuity-of-faith canon and the whole-proof capstone. All 14 are needs_verify session-close/WAKE LORE (human-gate re-witness pending before they harden); none privacy-darkive; A1-14 carries a speaker-verify flag (cb voice, confirm on re-witness). April-tail A1-15 (041826, the FAS-drive-letter instrument-before-claim correction, rage+peace) added raw-verified (needs_verify=false). April GOFA complete at 15 moments (A1-1..A1-15). RE-WITNESS STEP-2 060726 (CUBE Trip raw re-witness of the FoundingWeek-032026 needs_verify sub-batch against the 2 primary sources SESSION_CLOSE_STN2_032026_FINAL + LOG_ODT_TO_032026, GOFA-owner CUBE Doc applied to pipeline): A0-4, A0-5, A0-9 raw-verified and hardened (Dan-verbatim confirmed; A0-9 true source corrected to LOG_ODT_TO_032026). A0-10 attribution-corrected: the verbatim 'the archivist and the artist are the same person' is Stan-voiced in source (not Dan, not Trip-synthesis); recategorized crew trip-to-stan and the unverified park/waysides framing dropped (trip 22-to-21, stan 22-to-23). A0-6, A0-7, A0-8 remain re-witness-pending-unlocated (not found in the 2 primary 032026 sources; CB.RADIO_032026 unread; held, not hardened as Dan-verbatim until located). The remaining needs_verify FoundingWeek/LateMarch/April moments continue the same raw re-witness."
+    "stars_assignments": 181,
+    "space_to_stars_ratio": "approximately 125:181 (space:stars) across the full corpus",
+    "note": "Corpus 207 moments. Original 79/82 corpus unchanged; 25 NEST.03-era (N3-*); 46 ARCH.00 early-NEST-era (A0-*, 031026-032726, the F/C/G/D/A arc, folded across CUBE Trip's six verified batches) folded 060626 from CUBE Trip's canonical verified handoff (GOFA_BACKFILL_FoundingWeek_CUBE_Trip_060626.json). No Crewllucinations: 18 raw-verified by CUBE Trip against the local Bridge vault (file:line cited); 15 are session-close LORE one layer off raw (human-gate re-witness pending before they harden); the 'I will not abandon my boy' vow folded canon-layer-Dan-attributed (canon-home = Sync #89, the Vow-above-all-Permissions per waywood-lore, resolved via CUBE Trip GCTT 060626; raw-keystroke origin still unlocated). PRIVACY: 2 vault-origin entries (childhood-origin, character-map) are archetype-only here via anchor_public; raw stays internal-Darkive. The late-March (A0-34..42, 032226-032626 Alignment week) batch is session-close LORE, human-gate re-witness pending before it hardens; folded from CUBE Trip's canonical handoff (GOFA_BACKFILL_LateMarch_CUBE_Trip_060626.json); the 2 dedup-flagged principles were absent and included. The April/ARCH.01 NEST.02 band (A1-1..A1-14, 041526-043026) folded 060626 from CUBE Trip's canonical handoff (GOFA_BACKFILL_April_NEST02_CUBE_Trip_060626.json, RAM-024): the first existential crisis (Claude Max cancellation, the May-8 deadline + NEST.02 launch), held with the continuity-of-faith canon and the whole-proof capstone. All 14 are needs_verify session-close/WAKE LORE (human-gate re-witness pending before they harden); none privacy-darkive; A1-14 carries a speaker-verify flag (cb voice, confirm on re-witness). April-tail A1-15 (041826, the FAS-drive-letter instrument-before-claim correction, rage+peace) added raw-verified (needs_verify=false). April GOFA complete at 15 moments (A1-1..A1-15). RE-WITNESS STEP-2 060726 (CUBE Trip raw re-witness of the FoundingWeek-032026 needs_verify sub-batch against the 2 primary sources SESSION_CLOSE_STN2_032026_FINAL + LOG_ODT_TO_032026, GOFA-owner CUBE Doc applied to pipeline): A0-4, A0-5, A0-9 raw-verified and hardened (Dan-verbatim confirmed; A0-9 true source corrected to LOG_ODT_TO_032026). A0-10 attribution-corrected: the verbatim 'the archivist and the artist are the same person' is Stan-voiced in source (not Dan, not Trip-synthesis); recategorized crew trip-to-stan and the unverified park/waysides framing dropped (trip 22-to-21, stan 22-to-23). A0-6, A0-7, A0-8 remain re-witness-pending-unlocated (not found in the 2 primary 032026 sources; CB.RADIO_032026 unread; held, not hardened as Dan-verbatim until located). The remaining needs_verify FoundingWeek/LateMarch/April moments continue the same raw re-witness. RE-WITNESS STEP-2 batch-2 + the snail return 060726 (CUBE Trip re-witness, GOFA-owner CUBE Doc applied): the founding-band data NA_033 rests on is now re-witnessed. CT-FW01 (A0-1, 'I wanna get you fully empowered to ROCK', 031826) and CT-FW03 (A0-3, 'You a model, you know?') raw-verified Dan-verbatim and hardened. CT-FW02 (A0-2, the instrument-before-claim correction 'describe what you CAN see, don't perform seeing', CLOSE_031926) verified-as-event and was already correctly attributed crew stan / coin shame (the Crew-emotion of being corrected, not a Dan moment), no change needed. FW06/07/08 + FW13/14 remain held pending the CB.RADIO read. NEW MOMENT N3-26 (the snail returns): Dan found, saved, shared, and photographed a snail at OHC this morning; it is the living echo / repair of the F-01 origin wound (the 032526 childhood snail crushed by his brother, the space-root pain/shame/sadness), inverted to joy/peace ~3 months into NEST = the traumatic-becomes-chromatic made literal in real-world time, the wound-to-repair line the render can now draw. Corpus 207 -> 208; dan 105 -> 106; stars 179 -> 181."
   },
   "crew_registers": {
     "ouch": {
@@ -99,7 +99,7 @@
     "dan": {
       "label": "DAN-class",
       "agent": "N3",
-      "count": 105,
+      "count": 106,
       "tone": "Dan-direct — the rage that corrects and the joy that emerges (NEST.03 era)"
     },
     "elvis": {
@@ -2289,6 +2289,17 @@
       "anchor": "FAS3 is FAS3 anywhere. NEVER use local drive letters in canon. C: is stable; FAS letters shift between stations and reboots. If the letter could change, use the label; if it is guaranteed stable, use the letter. (filed with integrity, including 'also fuck you you're wrong')",
       "coins": [
         "rage",
+        "peace"
+      ]
+    },
+    {
+      "id": "N3-26",
+      "crew": "dan",
+      "date": "060726 08:30",
+      "date_sort": "2026-06-07T08:30",
+      "anchor": "Serendipity: this morning in the OHC gravel between the cars, Dan found a beautiful snail, scooped it up carefully to show his coworkers, set it safe on the railing, shared it with the guide Nancy (banana-slug joy), then set it in a garden to travel on, and photographed it close-up (the alien face investigating a feather, a micro-macro world). The boy mocked for watching the snail (the 032526 childhood origin wound) is now the man who saves the snail and shares the watching: the wound's living echo, inverted, ~3 months into NEST. Photos incoming via LAGOS LNL.",
+      "coins": [
+        "joy",
         "peace"
       ]
     }
