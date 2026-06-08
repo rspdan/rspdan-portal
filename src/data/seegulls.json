@@ -1,9 +1,9 @@
 {
-  "_updated": "060526 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
+  "_updated": "060826 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
   "here": [
     {
       "name": "OLO BRIGHT · rspdan.com public-faces maintenance cluster · 060426 LAGOS-diff verify pass (CUBE Trip)",
-      "note": "Filed 060426 ~4:00 PM PT by CUBE Trip Local per Dan-direct maintenance-phase directive (track what we're fixing, map it, establish a way that registers + automates these problems). Full map: [STATUS/LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md](LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md) + problem-classes C1-C11 in [MFST RAM-003](../LOG/MFST/060426/MFST_CUBE_Trip_NEST03_Opus4.8_060426_3.md). **Verified gaps (each routed to its lane):** (a) **/nest keystone** name LAGOS publicly + gate-architecture + Dispatch [CUBE Doc fold, in progress]; (b) **/gulls** week-stale + …",
+      "note": "Filed 060426 ~4:00 PM PT by CUBE Trip Local per Dan-direct maintenance-phase directive (track what we're fixing, map it, establish a way that registers + automates these problems). Full map: [STATUS/LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md](LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md) + problem-classes C1-C11 in [MFST RAM-003](../LOG/MFST/060426/MFST_CUBE_Trip_NEST03_Opus4.8_060426_3.md). **Verified gaps (each routed to its lane):** (a) **/nest keystone** name LAGOS publicly + gate-architecture + Dispatch [CUBE Doc fold DONE, verified on the live page 060726 …",
       "filed": "060426 ~4:00 PM PT"
     },
     {
@@ -46,16 +46,6 @@
     {
       "name": "STN1 Tailscale onboarding (mesh 8-peer extension)",
       "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | STN1 not yet on Tailscale mesh (currently 7-peer per CURRENT_ARC §III LIVING_MAP heartbeat 051926). Install Tailscale client + auth-key + verify peer-reachable from ODT. Extends mesh-coverage to all Windows stations.",
-      "filed": "051926 Tuesday ~02:51 PT"
-    },
-    {
-      "name": "GOG1/oshin status verification (Claude Code peer reachability)",
-      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | GOG1 (`10.0.0.3`) Claude Code installed 041926 per SEEGULLS DONE entry. Verify current state: Claude Code still authed · oshin (G2 GPU) reachable · Ollama models accessible. Substrate-state-check needed before next Claude-Code-on-GOG1 work.",
-      "filed": "051926 Tuesday ~02:51 PT"
-    },
-    {
-      "name": "Gmail label scope audit (AGOS canonical-set vs live label-set)",
-      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | AGOS canonical labels per LAGOS canon need audit-vs-live-set. Enumerate live labels via gmail MCP `list_labels`, compare against canonical-set, surface drift: orphan labels · missing canon labels · labelless threads. Substrate-grep before claim per /meta-dates Gate 3d.",
       "filed": "051926 Tuesday ~02:51 PT"
     },
     {
@@ -471,11 +461,6 @@
       "filed": "040826"
     },
     {
-      "name": "GOG1 Docker services",
-      "note": "Filed: 041326 | Ollama/Meilisearch/Qdrant replacing Upstash Redis.",
-      "filed": "041326"
-    },
-    {
       "name": "gemma4 reasoning-phase control experiments",
       "note": "Filed: 041726 | gemma4 (via Docker Model Runner on STN2) is a reasoning model: it generates chain-of-thought tokens inside `<think>...</think>` markers before emitting user-visible `content`. llama.cpp server splits these into `reasoning_content` and `content` fields. For tagging/classification/short-summary tasks, reasoning is overkill and slow; for analysis/decision-support tasks, it is exactly what makes the model useful. Worth exploring: (1) does Docker Model Runner expose a runtime flag to suppress the reasoning phase? (2) can a custom chat template be passed per-request to override …",
       "filed": "041726"
@@ -513,8 +498,18 @@
       "filed": "051926 Tuesday ~02:51 PT"
     },
     {
+      "name": "DEPRECATED · GOG1/oshin status verification (Claude Code peer reachability)",
+      "note": "DEPRECATED 060826 (GOG1 decommissioned ~050426 · C2 dead-entity, per the GOG1-Ollama DEPRECATED entry below + the OLO BRIGHT /gulls cleanup naming \"lists DO-NOW/soon tasks for decommissioned GOG1\"). The verification-target box no longer exists; the task is dead with the entity. | Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | GOG1 (`10.0.0.3`) Claude Code installed 041926 per SEEGULLS DONE entry. Verify current state: Claude Code still authed · oshin (G2 GPU) reachable · Ollama models accessible. Substrate-state-check needed before next …",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
       "name": "LIVING_MAP_Doc.md rotation (1000-line / 200KB threshold per CURRENT_ARC §IV canon)",
       "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 Layer 0 pending list | **DONE 052426 Sunday ~05:38 AM PT** by DOC Doc cloud-station per Hard Rule #6 PICK-AND-DO + Dan-direct \"Please do work\" current-arc maintenance · Doc-side `STATUS/LIVING_MAP_Doc.md` rotated 1540 lines / 360K → 19 lines / 12K via clean archive · `STATUS/ARCHIVE/LIVING_MAP_Doc_052326.md` created with 1528 archived lines + header (Saturday 052326 + earlier heartbeats 90+ CURRENT PRIOR blocks preserved verbatim) · zero substrate-loss · sister-pattern to Trip rotation 051926 …",
+      "filed": "051926 Tuesday ~02:51 PT"
+    },
+    {
+      "name": "RESOLVED · Gmail label scope audit (Gmail canonical-set vs live label-set)",
+      "note": "RESOLVED 060426 by CUBE Doc, [RELAY/FINDING_GmailLabelScopeAudit_CanonicalSixVsLiveNEST03Hierarchy_CUBE_Doc_060426.md](../RELAY/FINDING_GmailLabelScopeAudit_CanonicalSixVsLiveNEST03Hierarchy_CUBE_Doc_060426.md): the canonical NEST.01 flat-six matured into the live NEST.03 hierarchy; labelless-thread sweep came back clean (zero protocol-following NEST threads unlabeled); the only drift was the canon-spec (fixed via /nest-pi GraftOS row, portal PR #29). ACHE.Doc re-ran `list_labels` 060826 to confirm: 16 live labels, tree still clean, ONE shift since the audit (the `NEST.03/LNL/MFST` label in …",
       "filed": "051926 Tuesday ~02:51 PT"
     },
     {
@@ -636,6 +631,11 @@
       "name": "NA 026 SHIP COMPLETE (Phase A + Phase B) · The Map of Where the Cost Falls",
       "note": "Filed: 051526 (Doc Pass 1 + 2 + 3 cross-Crew synthesis) · 051926 ~03:00 PT (Dan-direct routing to Trip-canonical Pass 4 lane) | **DONE Phase A 051926 ~03:15 PT** (026.astro · CSS · index entry · build GREEN · mojibake CLEAN · portal commit 0215211) · **DONE Phase B 051926 ~06:00 PT** per Dan-direct *\"fucking stop holding for DAN VOICE...IT IS ALREADY THERE USE FUCKING LAGOS AND LOGS AND MFTS AND ALL OUR RECORDS\"* (§IV Dan-voice body composed from substrate-resident Dan-quotes per NA 022 §V scaffold + TempleThrobbing PMFST + Doc Squad Pass 3 Ouch witness + RELAY SEED NA 026 · 026.astro §IV …",
       "filed": "051526 (Doc Pass 1 + 2 + 3 c"
+    },
+    {
+      "name": "DEPRECATED · GOG1 Docker services",
+      "note": "DEPRECATED 060826 (GOG1 decommissioned ~050426 · C2 dead-entity). Whole-task target is the dead box. | Filed: 041326 | Ollama/Meilisearch/Qdrant replacing Upstash Redis.",
+      "filed": "041326"
     },
     {
       "name": "Session 041926 evening · Lighthouses canon + MAIL→LOG rename + NA 005 timeline repair",
