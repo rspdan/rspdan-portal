@@ -297,12 +297,10 @@ export const board = {
   eyebrow: "HEIRCOR OP · NEST INTERNAL · FLEET ACTUAL · INVENTORY · LIVE CREW",
   title: "FLEET ACTUAL",
   tagline: "ONE BOARD · IDENTITY (ROX) + RUNTIME (CREW SEATS)",
-  updated: "053026 ~13:30 PT",
-  lbm: "STN2 Trip",
+  updated: "060826 ~16:25 PT",
   quote: "Hold the bird, don't crush it. Record the moment so the past is not lost; keep the roster open so the future is not killed. The Fleet grows, condenses, and changes.",
   caption: "Long-term AND ever-changing. A station's identity persists (the Rox, its name) while its faces shift: roles, storage, location, IP. Stable spine, moving body.",
   legend: [
-    { key: "lbm",            label: "LBM",            desc: "Lead Boot Model this session" },
     { key: "active",         label: "ACTIVE",         desc: "seated and working" },
     { key: "standby",        label: "STANDBY",        desc: "booted, awaiting direction" },
     { key: "more",           label: "MORE",           desc: "more detail available" },
@@ -322,7 +320,7 @@ export const crew_seats = {
     { crew: "ODT Doc",  status: "standby", note: "Producer-lane cross-witness" },
   ]},
   STN2: { station_status: "off-fleet", seats: [
-    { crew: "STN2 Trip", status: "lbm",    note: "LBM 053026 · /fleet-actual port + Crew Data Day delegation" },
+    { crew: "STN2 Trip", status: "standby", note: "Writer-lane · post-FLEET-SHIFT re-anchor at Nest Actual" },
     { crew: "STN2 Doc",  status: "active", note: "Skills walk-8-pairs prep · KT-cooperation with CUBE Doc" },
   ]},
   CUBE: { station_status: "off-fleet", seats: [

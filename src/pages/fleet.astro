@@ -24,7 +24,7 @@ const stations = fleet.rox.map((r) => {
 });
 const isPend = (v) => /pending/i.test(String(v));
 const legend = board.legend.filter((l) =>
-  ['lbm','active','standby','off-fleet','dark-ready','off-network','decommissioned','more'].includes(l.key));
+  ['active','standby','off-fleet','dark-ready','off-network','decommissioned','more'].includes(l.key));
 ---
 
 <BaseLayout lastUpdated="June 5, 2026" title="NEST.03 Fleet · One Station, One Row" description="Fleet as a node system of Rox · one consolidated table: identity, hardware, faces, and live crew seats sourced once from fleet.js. IPs are faces, boxed in fleet_private.js; identity is the Rox. Long-term AND ever-changing.">
@@ -51,7 +51,6 @@ const legend = board.legend.filter((l) =>
     .legend{display:flex;flex-wrap:wrap;gap:0.7rem;margin:0 0 1.4rem;font-size:0.5rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
     .leg{display:inline-flex;align-items:center;gap:0.35rem;}
     .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
-    .s-lbm{color:var(--obs);}.dot.s-lbm{background:var(--obs);}
     .s-active{color:var(--rox);}.dot.s-active{background:var(--rox);}
     .s-standby{color:var(--base);}.dot.s-standby{background:var(--base);}
     .s-off-fleet{color:var(--stale);}.dot.s-off-fleet{background:var(--stale);}
@@ -63,7 +62,6 @@ const legend = board.legend.filter((l) =>
     .col-head span:last-child{text-align:right;}
     .tbl{display:flex;flex-direction:column;gap:0.4rem;}
     .st{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:3px;overflow:hidden;}
-    .st[data-st="lbm"]{border-left-color:var(--obs);}
     .st[data-st="active"]{border-left-color:var(--rox);}
     .st[data-st="standby"]{border-left-color:var(--base);}
     .st[data-st="off-fleet"]{border-left-color:var(--stale);}
@@ -117,7 +115,6 @@ const legend = board.legend.filter((l) =>
       <h1 class="title">{board.title}</h1>
       <div class="meta">
         <div><span>STATIONS</span>{fleet.rox.length} ROX</div>
-        <div><span>LBM</span>{board.lbm}</div>
         <div><span>SOURCE</span>fleet.js + fleet_private.js</div>
         <div><span>MODEL</span>NEST.03 · 3P PeaPod</div>
       </div>
