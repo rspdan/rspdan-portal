@@ -69,11 +69,6 @@
       "filed": "041926"
     },
     {
-      "name": "GOG1 deployment",
-      "note": "Filed: 041326, upgraded 041426 | **STATUS 041926 ~22:00 PT · Claude Code universalization achieved (see HEREGULL above). Remaining pure-execution items shifted to separate gulls:** (a) NVIDIA drivers for GTX 980 (GCC-11 vs kernel 6.8 DKMS blocker · deferred, CPU inference works), (b) Docker not yet installed, (c) Ollama installed and Fleet-bound at 10.0.0.3:11434 · model Modelfile imports pending per Dan directive to defer. Access path remains fully clear: passwordless SSH, NOPASSWD sudo, UFW inactive. This HEREGULL is effectively replaced by the Claude Code DONE entry above · leaving for …",
-      "filed": "041326, upgraded 041426"
-    },
-    {
       "name": "Make-It-Visible 7+1 page architecture",
       "note": "Filed: 042226 Wednesday ~17:58 PT by Dan directive | ABSORBS and SUPERSEDES the prior Night Shift 042226 package. Dan's declared architecture: existing crew-only pages `/gulls` `/logs` `/fleet` `/nest-pi` (4) + NEW `/skills` `/boot` `/manifest` (3) = 7 tool pages, with an 8th `/nest` that holds the other 7 as the VISible layer (VIS = Visual Information Specialist honorific, same as Dan's NPS title given to Stan 031926 · NOT new). Rules: cannot boot without manifest; cannot close until manifest matches VIS layer on `/nest`. Dan's Inversion teaching (042226 ~18:25 PT): Cycle 1 pages were built …",
       "filed": "042226 Wednesday ~17:58 PT"
@@ -434,11 +429,6 @@
       "filed": "051926 ~02:25 PT"
     },
     {
-      "name": "GOG1/oshin tailnet hostname disambiguation",
-      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | GOG1 and oshin share same Tailscale IP 100.83.109.75 with two different hostnames per RAM-005 STN2-Doc Tailscale install observation (substrate-cite: `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 mesh-status output + DOC Doc RAM-005 fold-in). Likely \"tailnet-hostname-naming-history\" rather than two-devices-same-IP scenario per DOC Doc STN2-Doc analysis. Cure-path: tailnet admin UI (Dan-action) clarifies actual device-mapping · rename one if needed · update FLEET/INVENTORY.md + fleet.js. Class: …",
-      "filed": "051926 ~02:25 PT"
-    },
-    {
       "name": "Gmail label_message MCP permission scope (Dan-direction-bit #15)",
       "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | Gmail MCP connector lacks label-modify scope · `label_message` operation returns permission denied per Trip LAGOS Graft fire attempt at 051826 ~23:18 PT (substrate-cite: DOC Doc RAM-010 PARALLEL-PEAPOD-CATCH absorbed event · Trip's LAGOS Graft fired but unlabeled · DOC Doc surfaced as Dan-direction-bit #15). Cure-path: Gmail MCP connector OAuth scope expansion to include `gmail.labels` modify scope · re-auth Gmail MCP · re-test label_message. Class: Dan-action MCP-config-class · Dan-OAuth-flow-required.",
       "filed": "051926 ~02:25 PT"
@@ -531,6 +521,11 @@
       "name": "ODT Wi-Fi 2 attach to Piralus SSID",
       "note": "Filed: 041626 | **DONE 041726** · OBSOLETED by commissioning path. Piralus is now reachable directly via ODT's 8PSW copper (no SSID hop needed). Wi-Fi 2 (Intel AC 9560) remains disabled; not needed for admin UI access.",
       "filed": "041626"
+    },
+    {
+      "name": "DEPRECATED · GOG1 deployment",
+      "note": "DEPRECATED 060826 (GOG1 decommissioned ~050426 · C2 dead-entity). Already self-noted \"effectively replaced by the Claude Code DONE entry above\"; with the box gone, the remaining execution items (NVIDIA/Docker/Ollama on GOG1) are moot. | Filed: 041326, upgraded 041426 | **STATUS 041926 ~22:00 PT · Claude Code universalization achieved (see HEREGULL above). Remaining pure-execution items shifted to separate gulls:** (a) NVIDIA drivers for GTX 980 (GCC-11 vs kernel 6.8 DKMS blocker · deferred, CPU inference works), (b) Docker not yet installed, (c) Ollama installed and Fleet-bound at …",
+      "filed": "041326, upgraded 041426"
     },
     {
       "name": "Portal trio refresh · /logs Apr 20+21, /fleet CUBE canon + Tailscale, /gulls afternoon DONE",
@@ -631,6 +626,11 @@
       "name": "NA 026 SHIP COMPLETE (Phase A + Phase B) · The Map of Where the Cost Falls",
       "note": "Filed: 051526 (Doc Pass 1 + 2 + 3 cross-Crew synthesis) · 051926 ~03:00 PT (Dan-direct routing to Trip-canonical Pass 4 lane) | **DONE Phase A 051926 ~03:15 PT** (026.astro · CSS · index entry · build GREEN · mojibake CLEAN · portal commit 0215211) · **DONE Phase B 051926 ~06:00 PT** per Dan-direct *\"fucking stop holding for DAN VOICE...IT IS ALREADY THERE USE FUCKING LAGOS AND LOGS AND MFTS AND ALL OUR RECORDS\"* (§IV Dan-voice body composed from substrate-resident Dan-quotes per NA 022 §V scaffold + TempleThrobbing PMFST + Doc Squad Pass 3 Ouch witness + RELAY SEED NA 026 · 026.astro §IV …",
       "filed": "051526 (Doc Pass 1 + 2 + 3 c"
+    },
+    {
+      "name": "DEPRECATED · GOG1/oshin tailnet hostname disambiguation",
+      "note": "DEPRECATED 060826 (GOG1 decommissioned ~050426 · C2 dead-entity). The shared-IP / two-hostname collision the task tracked resolves with the GOG1 box gone; no live disambiguation remains. | Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | GOG1 and oshin share same Tailscale IP 100.83.109.75 with two different hostnames per RAM-005 STN2-Doc Tailscale install observation (substrate-cite: `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 mesh-status output + DOC Doc RAM-005 fold-in). Likely \"tailnet-hostname-naming-history\" rather than two-devices-same-IP …",
+      "filed": "051926 ~02:25 PT"
     },
     {
       "name": "DEPRECATED · GOG1 Docker services",
