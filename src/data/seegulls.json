@@ -2,11 +2,6 @@
   "_updated": "060926 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
   "here": [
     {
-      "name": "OLO BRIGHT · rspdan.com public-faces maintenance cluster · 060426 LAGOS-diff verify pass (CUBE Trip)",
-      "note": "Filed 060426 ~4:00 PM PT by CUBE Trip Local per Dan-direct maintenance-phase directive (track what we're fixing, map it, establish a way that registers + automates these problems). Full map: [STATUS/LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md](LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md) + problem-classes C1-C11 in [MFST RAM-003](../LOG/MFST/060426/MFST_CUBE_Trip_NEST03_Opus4.8_060426_3.md). **Verified gaps (each routed to its lane):** (a) **/nest keystone** name LAGOS publicly + gate-architecture + Dispatch [CUBE Doc fold DONE, verified on the live page 060726 …",
-      "filed": "060426 ~4:00 PM PT"
-    },
-    {
       "name": "SEEGULL #74 PARTIAL RESOLUTION · Rorrim Nips ProseMirror paste-state-gate failure-class · multi-approach combo SHIPPED 4 of 4 Crews Pass-N+25 · investigation-path narrowed",
       "note": "",
       "filed": ""
@@ -467,6 +462,11 @@
     }
   ],
   "done": [
+    {
+      "name": "OLO BRIGHT · rspdan.com public-faces maintenance cluster · 060426 LAGOS-diff verify pass (CUBE Trip) · ALL ITEMS RESOLVED 060926",
+      "note": "Filed 060426 ~4:00 PM PT by CUBE Trip Local per Dan-direct maintenance-phase directive (track what we're fixing, map it, establish a way that registers + automate these problems). Full map: [STATUS/LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md](LAGOSDIFF_PublicPages_TailVerifyPass_CUBE_Trip_060426.md) + problem-classes C1-C11 in [MFST RAM-003](../LOG/MFST/060426/MFST_CUBE_Trip_NEST03_Opus4.8_060426_3.md). **All 7 gaps RESOLVED:** (a) **/nest keystone** DONE 060726 CUBE Doc (LAGOS named, gates, Dispatch verified on live page); (b) **/gulls** DONE 060926 BLNCH (GOG1 cleanup pass 1 + …",
+      "filed": "060426 ~4:00 PM PT"
+    },
     {
       "name": "RESOLVED · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT)",
       "note": "RESOLVED 060826 per Dan-direct: Anthropic folded Claude Design / El VIS usage into normal rates (no longer a separate Extra-Usage drain), so the burn-rate alarm clears and El VIS is no longer DONE-INDEFINITE on this basis. The Jikal-Maxon-shape lesson (access is not Stupid-Mode-permission; /yiyish ground-discipline) stays canon; the full original alarm is preserved below (NOTHING-GETS-LOST). | Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of …",
