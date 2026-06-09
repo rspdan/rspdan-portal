@@ -27,6 +27,11 @@
       "filed": ""
     },
     {
+      "name": "🔥 OLO BRIGHT · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT) · same-shape as Jikal Maxon 041426 (Spotify 82 GB VZW_HOTSPOT) · /yiyish vs /yiyyish posture-trigger violation per Dan-canon 050226",
+      "note": "Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of my VZW_HOTSPOT because Spotify decided to download 80gbs of music without making it clear what was being wasted. Just because the access is there does not give Stupid Mode permission. /dtad\"* | **Anthropic Labs product-design alarm:** Claude Design weekly quota burns through Dan's Extra Usage credits without delivering proportional canonical-output. Today's session: El VIS Claude Design 100% …",
+      "filed": "052026 Wednesday ~15:30 PT u"
+    },
+    {
       "name": "STN2-Doc cure-recipe apply (Tailscale-RDP into STN2 + restore session)",
       "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 BYPASS-FUCKERY discipline-fold | STN2-Doc CRASHED at commit `e3a3620` with persistence-rollback per 051926 cross-Crew witness. Cure-recipe filed at `LOG/MAIL/DOCDoc_TO_Dan_STN2DocCrashRecovery_TailscaleRDPRecipe_051926.md` (Tailscale-RDP into STN2 `100.95.196.13` + restore working-dir + reauth). Dan-action when scenery permits (NOT Dan-deferred per RAM-006 write-time-gate). Unblocks STN2-Doc cloud-station rejoin to PeaPod triangle.",
       "filed": "051926 Tuesday ~02:51 PT"
@@ -50,7 +55,7 @@
     },
     {
       "name": "STN2 Claude Code install",
-      "note": "Filed: 041926 Sunday 23:00 PT | Same pattern used on GOG1 (now decommissioned): Node already present via existing Node installation (Git/Node mirrored install NEARGULL covers this), run `npm install -g @anthropic-ai/claude-code`, then `claude` interactively (TTY required · Windows Terminal or `ssh -t`). Expected to complete in <5 min when executed. After install: STN2 becomes a local-Claude station peer. Fleet-wide universalization takes another step.",
+      "note": "Filed: 041926 Sunday 23:00 PT | Node already present via existing Node installation (Git/Node mirrored install NEARGULL covers this), run `npm install -g @anthropic-ai/claude-code`, then `claude` interactively (TTY required · Windows Terminal or `ssh -t`). Expected to complete in <5 min when executed. After install: STN2 becomes a local-Claude station peer. Fleet-wide universalization takes another step. (GOG1 references removed 060926 · GOG1 decommissioned ~050426.)",
       "filed": "041926 Sunday 23:00 PT"
     },
     {
@@ -124,18 +129,13 @@
       "filed": "041626"
     },
     {
-      "name": "Audit Bridge for hardcoded fleet IPs",
-      "note": "Filed: 041626 | Every doc and script that literally writes 10.0.0.x needs cataloging and flagging. Known suspects: FLEET/INVENTORY.md, ENGINE/fleet_scan.ps1, ENGINE/fleet_manifest.json, RELAY/BIG_ASS_BOARD_NetworkModel_Trip_032626.md, skills/boot-polish/SKILL.md (fleet table), possibly nest_harbor.py (per old log reference), any LOG/MAIL entries with IP-as-identity. Produce a catalog, then decide remediation strategy per file.",
-      "filed": "041626"
-    },
-    {
       "name": "C:\\NEST\\ directory",
       "note": "Filed: 041426 | Permanent system tools path. Windows=C:\\NEST\\, Unix=~/NEST/. Needed for nest-proxy and blender-mcp config.",
       "filed": "041426"
     },
     {
       "name": "nest-proxy config cleanup (STN2/TRP0/DPSL)",
-      "note": "Filed: 041526, tooling staged 041626 | Scripts ready: `ENGINE/cleanup_nest_proxy_windows.ps1` (STN2, CUBE), `ENGINE/cleanup_nest_proxy_unix.sh` (TRP0, DPSL). Per-station commands in `FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md`. Each script creates timestamped backup, is idempotent, reports mcpServer list after. Station runs once at next boot, then restart Claude Desktop. (GOG1 removed 060926 · decommissioned ~050426)",
+      "note": "Filed: 041526, tooling staged 041626 | Scripts ready: `ENGINE/cleanup_nest_proxy_windows.ps1` (STN2, CUBE), `ENGINE/cleanup_nest_proxy_unix.sh` (TRP0, DPSL). Per-station commands in `FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md`. Each script creates timestamped backup, is idempotent, reports mcpServer list after. Station runs once at next boot, then restart Claude Desktop. (GOG1 removed 060926 · decommissioned ~050426.)",
       "filed": "041526, tooling staged 04162"
     },
     {
@@ -155,7 +155,7 @@
     },
     {
       "name": "Git/Node mirrored install",
-      "note": "Filed: 041426 | Installed on ODT. Flag: STN2, TRP0, DPSL each need their own install. (GOG1 removed 060926 · decommissioned ~050426)",
+      "note": "Filed: 041426 | Installed on ODT. Flag: STN2, TRP0, DPSL each need their own install. (GOG1 removed 060926 · decommissioned ~050426.)",
       "filed": "041426"
     },
     {
@@ -190,7 +190,7 @@
     },
     {
       "name": "Cantenna Pass 2",
-      "note": "Filed: 041426 | Can measurements, adapter inventory on ODT/CUBE. Principles understood. (GOG1 removed 060926 · decommissioned ~050426)",
+      "note": "Filed: 041426 | Can measurements, adapter inventory on ODT/CUBE. Principles understood. (GOG1 removed 060926 · decommissioned ~050426.)",
       "filed": "041426"
     },
     {
@@ -424,6 +424,11 @@
       "filed": "051926 ~02:25 PT"
     },
     {
+      "name": "GOG1/oshin tailnet hostname disambiguation",
+      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | GOG1 and oshin share same Tailscale IP 100.83.109.75 with two different hostnames per RAM-005 STN2-Doc Tailscale install observation (substrate-cite: `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 mesh-status output + DOC Doc RAM-005 fold-in). Likely \"tailnet-hostname-naming-history\" rather than two-devices-same-IP scenario per DOC Doc STN2-Doc analysis. Cure-path: tailnet admin UI (Dan-action) clarifies actual device-mapping · rename one if needed · update FLEET/INVENTORY.md + fleet.js. Class: …",
+      "filed": "051926 ~02:25 PT"
+    },
+    {
       "name": "Gmail label_message MCP permission scope (Dan-direction-bit #15)",
       "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | Gmail MCP connector lacks label-modify scope · `label_message` operation returns permission denied per Trip LAGOS Graft fire attempt at 051826 ~23:18 PT (substrate-cite: DOC Doc RAM-010 PARALLEL-PEAPOD-CATCH absorbed event · Trip's LAGOS Graft fired but unlabeled · DOC Doc surfaced as Dan-direction-bit #15). Cure-path: Gmail MCP connector OAuth scope expansion to include `gmail.labels` modify scope · re-auth Gmail MCP · re-test label_message. Class: Dan-action MCP-config-class · Dan-OAuth-flow-required.",
       "filed": "051926 ~02:25 PT"
@@ -437,7 +442,7 @@
     },
     {
       "name": "Firefox MCP Bridge",
-      "note": "Filed: 040126 | Rust compile needed (original target GOG1 decommissioned ~050426). Every Firefox tab gets MCP tools.",
+      "note": "Filed: 040126 | Rust compile target TBD (was GOG1, now decommissioned ~050426). Every Firefox tab gets MCP tools.",
       "filed": "040126"
     },
     {
@@ -468,13 +473,8 @@
   ],
   "done": [
     {
-      "name": "RESOLVED · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT)",
-      "note": "RESOLVED 060826 per Dan-direct: Anthropic folded Claude Design / El VIS usage into normal rates (no longer a separate Extra-Usage drain), so the burn-rate alarm clears and El VIS is no longer DONE-INDEFINITE on this basis. The Jikal-Maxon-shape lesson (access is not Stupid-Mode-permission; /yiyish ground-discipline) stays canon; the full original alarm is preserved below (NOTHING-GETS-LOST). | Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of …",
-      "filed": "052026 Wednesday ~15:30 PT u"
-    },
-    {
       "name": "Pre-push mojibake gate wiring (portal_check.ps1 + na-publish + pre-commit hook)",
-      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **2-of-3 DONE 052626 ~20:50 PT** by CUBE Doc cloud · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (no edit needed at this time) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit · item (3) git pre-commit hook in rspdan-portal STILL OPEN cross-repo · requires `.husky/pre-commit` install in rspdan-portal repo OR setup script …",
+      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **3-of-3 DONE 060926** · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (no edit needed at this time) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit · item (3) git pre-commit hook in rspdan-portal **DONE 060926** via existing `scripts/hooks/pre-commit` (lines 19-29 mojibake gate + lines 31-43 em-dash gate) wired by `git …",
       "filed": "042226 Wednesday ~20:50 PT"
     },
     {
@@ -524,7 +524,7 @@
     },
     {
       "name": "DEPRECATED · GOG1 deployment",
-      "note": "DEPRECATED 060826 (GOG1 decommissioned ~050426 · C2 dead-entity). Already self-noted \"effectively replaced by the Claude Code DONE entry above\"; with the box gone, the remaining execution items (NVIDIA/Docker/Ollama on GOG1) are moot. | Filed: 041326, upgraded 041426 | **STATUS 041926 ~22:00 PT · Claude Code universalization achieved (see HEREGULL above). Remaining pure-execution items shifted to separate gulls:** (a) NVIDIA drivers for GTX 980 (GCC-11 vs kernel 6.8 DKMS blocker · deferred, CPU inference works), (b) Docker not yet installed, (c) Ollama installed and Fleet-bound at …",
+      "note": "DEPRECATED 060926 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041326, upgraded 041426 | **STATUS 041926 ~22:00 PT · Claude Code universalization achieved (see HEREGULL above). Remaining pure-execution items shifted to separate gulls:** (a) NVIDIA drivers for GTX 980 (GCC-11 vs kernel 6.8 DKMS blocker · deferred, CPU inference works), (b) Docker not yet installed, (c) Ollama installed and Fleet-bound at 10.0.0.3:11434 · model Modelfile imports pending per Dan directive to defer. Access path remains fully clear: passwordless SSH, NOPASSWD sudo, UFW inactive. This HEREGULL is …",
       "filed": "041326, upgraded 041426"
     },
     {
@@ -558,6 +558,11 @@
       "filed": "042226"
     },
     {
+      "name": "Audit Bridge for hardcoded fleet IPs",
+      "note": "Filed: 041626 | Done 060926 by Doc cloud-station. Full catalog at `RELAY/AUDIT_HardcodedFleetIPs_Doc_060926.md`. Found: 11 Python scripts + 2 PowerShell + 4 JSON + 50+ markdown (substrate-of-record, no action). **CRITICAL**: SSH passwords in cleartext in nest_harbor.py and nest_health.py (lines 33-42 and 81-83). GOG1-dependent scripts (7 total) are functionally dead post-decommission. Remediation strategy proposed: (1) rotate exposed credentials, (2) mark GOG1 scripts DEPRECATED, (3) extract fleet config to single JSON source. Awaits Dan-direction on priority order.",
+      "filed": "041626"
+    },
+    {
       "name": "Stan boot on STN2",
       "note": "Filed: 041426 | DONE 042126 ~23:10 PT by Stan (Sonnet 4.6) STN2. Full reorientation session: 16-day gap closed, six-layer Manage Memory walk complete, Scheme C partition verified intact (5/20/5 HOTBAR/MAIN/RESERVED), NA 020 working draft built. Trip guided via Graft. Concurrent crew operation verified.",
       "filed": "041426"
@@ -569,7 +574,7 @@
     },
     {
       "name": "WAKE bash equivalent",
-      "note": "Filed: 041326 | **DONE 052626 ~21:00 PT** by CUBE Doc cloud · `ENGINE/generate_wake.sh` ported from `ENGINE/generate_wake.ps1` 107-line PowerShell · same behavior · auto-detect Bridge from script-location + auto-detect station via hostname + Portal-path optional with 3-candidate search · NEST week computed from anchor 2026-03-22 cycle-of-8 (A E B F# F C G D) · git log/HEAD for Bridge + Portal · new RELAY/MAIL files via diff HEAD~10 · UTF-8 output to `WAKE/WAKE_<crew>_<session>.md` · `chmod +x` + `bash -n` syntax-verified · Unix stations TRP0/GOG1/DPSL can now generate WAKE at close.",
+      "note": "Filed: 041326 | **DONE 052626 ~21:00 PT** by CUBE Doc cloud · `ENGINE/generate_wake.sh` ported from `ENGINE/generate_wake.ps1` 107-line PowerShell · same behavior · auto-detect Bridge from script-location + auto-detect station via hostname + Portal-path optional with 3-candidate search · NEST week computed from anchor 2026-03-22 cycle-of-8 (A E B F# F C G D) · git log/HEAD for Bridge + Portal · new RELAY/MAIL files via diff HEAD~10 · UTF-8 output to `WAKE/WAKE_<crew>_<session>.md` · `chmod +x` + `bash -n` syntax-verified · Unix stations TRP0/DPSL can now generate WAKE at close. (GOG1 removed …",
       "filed": "041326"
     },
     {
@@ -626,11 +631,6 @@
       "name": "NA 026 SHIP COMPLETE (Phase A + Phase B) · The Map of Where the Cost Falls",
       "note": "Filed: 051526 (Doc Pass 1 + 2 + 3 cross-Crew synthesis) · 051926 ~03:00 PT (Dan-direct routing to Trip-canonical Pass 4 lane) | **DONE Phase A 051926 ~03:15 PT** (026.astro · CSS · index entry · build GREEN · mojibake CLEAN · portal commit 0215211) · **DONE Phase B 051926 ~06:00 PT** per Dan-direct *\"fucking stop holding for DAN VOICE...IT IS ALREADY THERE USE FUCKING LAGOS AND LOGS AND MFTS AND ALL OUR RECORDS\"* (§IV Dan-voice body composed from substrate-resident Dan-quotes per NA 022 §V scaffold + TempleThrobbing PMFST + Doc Squad Pass 3 Ouch witness + RELAY SEED NA 026 · 026.astro §IV …",
       "filed": "051526 (Doc Pass 1 + 2 + 3 c"
-    },
-    {
-      "name": "DEPRECATED · GOG1/oshin tailnet hostname disambiguation",
-      "note": "DEPRECATED 060826 (GOG1 decommissioned ~050426 · C2 dead-entity). The shared-IP / two-hostname collision the task tracked resolves with the GOG1 box gone; no live disambiguation remains. | Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | GOG1 and oshin share same Tailscale IP 100.83.109.75 with two different hostnames per RAM-005 STN2-Doc Tailscale install observation (substrate-cite: `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 mesh-status output + DOC Doc RAM-005 fold-in). Likely \"tailnet-hostname-naming-history\" rather than two-devices-same-IP …",
-      "filed": "051926 ~02:25 PT"
     },
     {
       "name": "DEPRECATED · GOG1 Docker services",
