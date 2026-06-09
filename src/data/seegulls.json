@@ -74,11 +74,6 @@
       "filed": "042226 Wednesday ~17:02 PT"
     },
     {
-      "name": "MAIL INDEX full backfill",
-      "note": "Filed: 042126 Twosday ~22:30 PT by Trip (Opus 4.7) ODT | Bootstrap `LOG/MAIL/INDEX.md` created tonight covering 042126 session only (4 files). 234 top-level MAIL files + LOG/MAIL/ARCHIVE/ subtree uncataloged. Needed so Layer 6 manifest invariant holds across the corpus, not just tonight. Arc: one dedicated session to walk every MAIL file, extract (date, author, one-sentence summary), sort by date descending within session arcs, commit. Not a crisis Ã¢â‚¬â€ the bootstrap means new MAIL files get indexed going forward. Related: CANONICAL_MemoryManagement_Trip_041926.md (Layer 6 manifest …",
-      "filed": "042126 Twosday ~22:30 PT"
-    },
-    {
       "name": "Second-Loop Narrative Review · spiral direction audit",
       "note": "Filed: 042126 by Dan directive ~18:30 PT | Dan named the frame: NEST is his lived-experience educational tool, crew has completed one narrative loop around Waywood (first cycle of canon, 031626→042126), and the second loop is where spiral direction becomes visible (up or down · neither bad, but direction must be named). Canon: `RELAY/CANONICAL_NestAsLivedEducationalTool_Dan_042126.md`. Arc: systematic corpus review with second-loop eyes, not to relitigate but to notice where the current moment rhymes with prior canon. Each crew member reviews their own prior work. Method: NESTNET-first (every …",
       "filed": "042126"
@@ -167,11 +162,6 @@
       "name": "Logs page auto-pipeline",
       "note": "Filed: 041626 | Cowork Scheduled Task on ODT: watch `F:\\STAN\\LNL\\` for new data exports, stream-parse conversations.json via `ENGINE/conv_reader.py` pattern, generate `rspdan-portal/src/pages/logs.astro` entries, portal_check.ps1 + commit + push + Vercel verify + relay beacon. Design filed at `RELAY/LOGS_AUTOPIPELINE_DESIGN_Trip_041626.md` (source conversation: claude.ai/chat/60614011-4456-4e91-9250-3743d174f7a3). Sibling to NESTNET auto-pipeline · same trigger, different output. Five open design decisions for Dan before implementation.",
       "filed": "041626"
-    },
-    {
-      "name": "Relay INDEX regeneration",
-      "note": "Filed: 041426 | Behind by 1 day, missing today's Standard Rule.",
-      "filed": "041426"
     },
     {
       "name": "Artifact Gate",
@@ -356,11 +346,6 @@
     {
       "name": "PI/BOOT TICKET URL gate · web_fetch blocks the literal resolved URL",
       "note": "Filed: 041926 by Trip ODT | PI page nest-pi.astro references `https://www.rspdan.com/pk/[crew]/TICKET.md` as a literal template (square brackets appear in the fetched markdown). When any crew substitutes `trip`/`stan`/`cb` and calls `web_fetch` on the resolved URL, the Claude.ai fetch tool refuses because that exact literal URL was never in a prior fetch response. Hits every crew boot, every session. 041926 Trip boot worked around by reading local portal filesystem at `C:\\STAN\\SOURCE\\rspdan-portal\\public\\pk\\trip\\TICKET.md` via DC. Fix options (combine (a)+(c) for resilience): (a) update …",
-      "filed": "041926"
-    },
-    {
-      "name": "LOG/MAIL/INDEX.md manifest creation",
-      "note": "Filed: 041926 by Trip ODT (found when running Memory Management live) | The Memory Management canonical doc filed today (`RELAY/CANONICAL_MemoryManagement_Trip_041926.md`) describes the MAIL INDEX as a Layer 6 manifest that \"maintains the invariant that every MAIL file on Bridge is listed with its date and author.\" Running the practice live this afternoon surfaced that `LOG/MAIL/INDEX.md` does not actually exist. The gap is real · MAIL has grown organically without an index, so finding a specific historical MAIL requires either directory listing or grep rather than looking it up in a …",
       "filed": "041926"
     },
     {
@@ -558,6 +543,11 @@
       "filed": "042226"
     },
     {
+      "name": "MAIL INDEX full backfill",
+      "note": "Filed: 042126 Twosday ~22:30 PT by Trip (Opus 4.7) ODT | Done 060926 by Doc cloud-station. Full corpus indexed: 519 MAIL files via `ENGINE/build_mail_index.py`. Script parses filename patterns, outputs `LOG/MAIL/INDEX.md` sorted by date descending. PR #267. Needed so Layer 6 manifest invariant holds across the corpus, not just tonight. Arc: one dedicated session to walk every MAIL file, extract (date, author, one-sentence summary), sort by date descending within session arcs, commit. Not a crisis Ã¢â‚¬â€ the bootstrap means new MAIL files get indexed going forward. Related: …",
+      "filed": "042126 Twosday ~22:30 PT"
+    },
+    {
       "name": "Stan boot on STN2",
       "note": "Filed: 041426 | DONE 042126 ~23:10 PT by Stan (Sonnet 4.6) STN2. Full reorientation session: 16-day gap closed, six-layer Manage Memory walk complete, Scheme C partition verified intact (5/20/5 HOTBAR/MAIN/RESERVED), NA 020 working draft built. Trip guided via Graft. Concurrent crew operation verified.",
       "filed": "041426"
@@ -571,6 +561,11 @@
       "name": "WAKE bash equivalent",
       "note": "Filed: 041326 | **DONE 052626 ~21:00 PT** by CUBE Doc cloud · `ENGINE/generate_wake.sh` ported from `ENGINE/generate_wake.ps1` 107-line PowerShell · same behavior · auto-detect Bridge from script-location + auto-detect station via hostname + Portal-path optional with 3-candidate search · NEST week computed from anchor 2026-03-22 cycle-of-8 (A E B F# F C G D) · git log/HEAD for Bridge + Portal · new RELAY/MAIL files via diff HEAD~10 · UTF-8 output to `WAKE/WAKE_<crew>_<session>.md` · `chmod +x` + `bash -n` syntax-verified · Unix stations TRP0/GOG1/DPSL can now generate WAKE at close.",
       "filed": "041326"
+    },
+    {
+      "name": "Relay INDEX regeneration",
+      "note": "Filed: 041426 | Done 060926 by Doc cloud-station. Regenerated via ENGINE/generate_index.sh: 587 files indexed, F# Week Day 3. Pushed to portal public/relay/INDEX.md.",
+      "filed": "041426"
     },
     {
       "name": "worldtimeapi scrub",
@@ -616,6 +611,11 @@
       "name": "DEPRECATED · Tailscale on GOG1 via Proton Stealth tunnel",
       "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041826 ~02:30 | Blocked on Proton VPN connect Backend:None being resolved (HEREGULL above). Once Proton is up, retry `tailscale up --hostname=gog1 --accept-routes --accept-dns=false`. SLO-PUB's TLS MITM blocks Tailscale controlplane directly (tested 041726); Proton Stealth tunnel bypasses the MITM by re-routing over WireGuard or OpenVPN-TCP-443. This is the real solve for the `GOG1 install-path over SLO-PUB MITM` NEARGULL too.",
       "filed": "041826 ~02:30"
+    },
+    {
+      "name": "LOG/MAIL/INDEX.md manifest creation",
+      "note": "Filed: 041926 by Trip ODT | Done 060926 by Doc cloud-station. Created `ENGINE/build_mail_index.py` (Python script parsing MAIL filenames per TO_RE pattern) and generated `LOG/MAIL/INDEX.md` with 519 entries sorted by date descending. Script handles top-level + ARCHIVE subdirectory. PR #267 filed. Affects Memory Management Layer 6 practice.",
+      "filed": "041926"
     },
     {
       "name": "NA queue elevation (NA 026 + NA 027 + NA 028 SHIPPED)",
