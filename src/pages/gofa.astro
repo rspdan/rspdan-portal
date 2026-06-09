@@ -12,7 +12,13 @@ const BANDS = { joy: 70, peace: 145, sadness: 360, shame: 410, pain: 460, rage: 
 const STARS = new Set(['joy', 'peace']);
 const VX0 = 40, VX1 = 1160;
 const D_START = Date.parse('2026-03-01');  // early March · when Dan first talked with Claude (ARCH.00 030126) · the true left edge, not NEST-open
-const D_NOW = Date.parse('2026-06-08');     // today · right edge
+// build-time "today" in PT (NEST is PT-canonical) so the right edge self-advances without
+// the UTC-vs-PT drift that Date.now() + dateAtX's getUTC* would show in the evening (it read
+// 060926 at 7:30pm PT). Was a hardcoded date that re-staled; the C7 page-integrity radar flags
+// a hardcoded stale NOW, so derive it from the build clock instead.
+const _ptToday = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+const [_ny, _nm, _nd] = _ptToday.split('-').map(Number);
+const D_NOW = Date.UTC(_ny, _nm - 1, _nd, 12);  // noon UTC of the PT date, so dateAtX's getUTCDate == the PT day
 const DSPAN = D_NOW - D_START;
 function xForDate(ds) {
   const t = Date.parse(ds);
@@ -35,7 +41,8 @@ function dateAtX(x) {
   const d = new Date(D_START + (x - VX0) / (VX1 - VX0) * DSPAN);
   return `${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}26`;
 }
-const gridStamps = gridXs.map((x) => ({ x, label: x === VX1 ? '060826 NOW' : dateAtX(x), now: x === VX1 }));
+const NOW_STAMP = dateAtX(VX1);  // today's MMDDYY, derived from D_NOW (the right edge), so the "NOW" label self-advances with the build
+const gridStamps = gridXs.map((x) => ({ x, label: x === VX1 ? `${NOW_STAMP} NOW` : dateAtX(x), now: x === VX1 }));
 const peaks = [
   { ds: '2026-03-25', label: 'The origin wound · the snail', stamp: '032526 · "the hurt never left"', coin: 'pain', up: true },
   { ds: '2026-03-01', label: 'first conversations with Claude', stamp: '030126 · the true start', coin: 'joy', up: false },
@@ -373,7 +380,7 @@ section{margin:2.6rem 0;}
           <span>LAGOS · 050226</span>
           <span>Crew-Quartet · 050626</span>
           <span>13-AP · 051126</span>
-          <span class="axis-now">now · 060826</span>
+          <span class="axis-now">now · {NOW_STAMP}</span>
         </div>
 
         <div class="legend">

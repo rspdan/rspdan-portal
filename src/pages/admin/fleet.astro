@@ -1,6 +1,6 @@
 ---
 // Admin: Fleet Board Editor · PSPT-gated, Phase 1
-// Edits crew_seats + board.lbm via /api/fleet-save (GitHub API commit + Vercel redeploy)
+// Edits crew_seats via /api/fleet-save (GitHub API commit + Vercel redeploy)
 export const prerender = false;
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -16,15 +16,14 @@ if (!session) {
 const stations = Object.entries(crew_seats);
 const statusOptions = board.legend.map(l => l.key);
 ---
-<BaseLayout lastUpdated="June 6, 2026" title="Fleet Board Editor">
+<BaseLayout lastUpdated="June 8, 2026" title="Fleet Board Editor">
   <main class="admin-fleet">
     <header class="af-header">
       <div class="af-eyebrow">PSPT ADMIN</div>
       <h1>Fleet Board Editor</h1>
       <p class="af-meta">
         Logged in as <strong>{session.user}</strong> &middot;
-        Last updated: {board.updated} &middot;
-        LBM: {board.lbm}
+        Last updated: {board.updated}
       </p>
       <form method="POST" action="/api/pspt/logout" style="display:inline">
         <button type="submit" class="af-logout">Logout</button>
@@ -32,14 +31,6 @@ const statusOptions = board.legend.map(l => l.key);
     </header>
 
     <form id="fleet-form" class="af-form">
-      <section class="af-section">
-        <h2>Board</h2>
-        <label>
-          <span>LBM (Lead Boot Model)</span>
-          <input type="text" name="board_lbm" value={board.lbm} />
-        </label>
-      </section>
-
       {stations.map(([stationName, stationData]) => (
         <section class="af-section" data-station={stationName}>
           <h2>{stationName}</h2>
@@ -99,7 +90,6 @@ const statusOptions = board.legend.map(l => l.key);
     const fd = new FormData(form);
 
     const payload = {
-      board_lbm: fd.get('board_lbm'),
       board_updated: new Date().toLocaleString('en-US', {
         month: '2-digit', day: '2-digit', year: '2-digit',
         hour: '2-digit', minute: '2-digit', hour12: false,

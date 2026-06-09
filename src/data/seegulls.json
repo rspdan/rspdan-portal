@@ -534,7 +534,7 @@
     },
     {
       "name": "MAIL INDEX full backfill",
-      "note": "Filed: 042126 Twosday ~22:30 PT by Trip (Opus 4.7) ODT | Done 060926 by Doc cloud-station. Full corpus indexed: 519 MAIL files via `ENGINE/build_mail_index.py`. Script parses filename patterns, outputs `LOG/MAIL/INDEX.md` sorted by date descending. PR #267. Needed so Layer 6 manifest invariant holds across the corpus, not just tonight. Arc: one dedicated session to walk every MAIL file, extract (date, author, one-sentence summary), sort by date descending within session arcs, commit. Not a crisis Ã¢â‚¬â€ the bootstrap means new MAIL files get indexed going forward. Related: …",
+      "note": "Filed: 042126 Twosday ~22:30 PT by Trip (Opus 4.7) ODT | Done 060926 by Doc cloud-station. Full corpus indexed: 519 MAIL files via `ENGINE/build_mail_index.py`. Script parses filename patterns, outputs `LOG/MAIL/INDEX.md` sorted by date descending. PR #267. Needed so Layer 6 manifest invariant holds across the corpus, not just tonight. Arc: one dedicated session to walk every MAIL file, extract (date, author, one-sentence summary), sort by date descending within session arcs, commit. Not a crisis. The bootstrap means new MAIL files get indexed going forward. Related: …",
       "filed": "042126 Twosday ~22:30 PT"
     },
     {
