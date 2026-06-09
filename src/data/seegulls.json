@@ -115,7 +115,7 @@
     },
     {
       "name": "Audit Bridge for hardcoded fleet IPs",
-      "note": "Filed: 041626 | Every doc and script that literally writes 10.0.0.x needs cataloging and flagging. Known suspects: FLEET/INVENTORY.md, ENGINE/fleet_scan.ps1, ENGINE/fleet_manifest.json, RELAY/BIG_ASS_BOARD_NetworkModel_Trip_032626.md, skills/boot-polish/SKILL.md (fleet table), possibly nest_harbor.py (per old log reference), any LOG/MAIL entries with IP-as-identity. Produce a catalog, then decide remediation strategy per file.",
+      "note": "Filed: 041626 | **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedFleetIPs_Doc_060926.md](../RELAY/AUDIT_HardcodedFleetIPs_Doc_060926.md) catalogs 54 total occurrences across ENGINE scripts + FLEET docs. Categories: STALE/VALID/TRANSITIONAL identified. Remediation prioritized; actual fixes pending PR #269 merge.",
       "filed": "041626"
     },
     {
@@ -180,7 +180,7 @@
     },
     {
       "name": "Drive letter hardcoding repair",
-      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters.",
+      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters. **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md](../RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md) catalogs 132 occurrences in ENGINE scripts (33 L:\\FAS2 stale, 8 F:\\, 8 H:\\ project, rest C:\\ canonical). Remediation prioritized; actual fixes pending.",
       "filed": "041326"
     },
     {
@@ -192,11 +192,6 @@
       "name": "Whale Router",
       "note": "Filed: 032026 | Stan flagged, Dan Go pending.",
       "filed": "032026"
-    },
-    {
-      "name": "SEEGULLS auto-pipeline",
-      "note": "Filed: 041426 | Single source (STATUS/SEEGULLS.md) → pipeline → web. Kill manual dual-update. One source, one renderer, always in motion.",
-      "filed": "041426"
     },
     {
       "name": "Clock Out automation",
@@ -284,11 +279,6 @@
       "filed": "041726 22:46"
     },
     {
-      "name": "Windows 10 fleet policy documented",
-      "note": "Filed: 041726 22:46 by Dan | Dan directive: *\"The Windows side has all Windows 10 systems and not planning on doing Windows 11 until I'm forced to.\"* This is a standing fleet policy · file as a STANDARD_RULE if it holds through reflection: `STANDARD_RULE_Win10Until_Forced_Trip_041726.md` or similar. Implication: all NEST.01 Windows-side tooling must target Win 10 compatibility. No Win 11-only features assumed (no snap layouts, no widgets API, no Copilot taskbar integration). Don't plan around Win 11 until Dan signals the transition.",
-      "filed": "041726 22:46"
-    },
-    {
       "name": "Spec probe pass (hardware field per Rox)",
       "note": "Filed: 041726 23:55 by Dan | Dan directive 041726 23:50: *\"Get your fleet map right. That's simple shit you should have listed for each device.\"* Live as of tonight in `src/data/fleet.js → fleet.hardware.{Rox}`. ODT + GOG1 populated fully (CPU + RAM + GPU + storage + every NIC + default route + user + ssh key state). Remaining stations marked `probe-pending`. One SSH/WMI round-trip per station fills in the blanks: Get-CimInstance Win32_Processor/ComputerSystem/LogicalDisk/VideoController on Windows stations; lsb_release + free + df + lspci + ip on Unix. Takes ~5 minutes per station when …",
       "filed": "041726 23:55"
@@ -344,7 +334,7 @@
       "filed": "041826 22:25"
     },
     {
-      "name": "PI/BOOT TICKET URL gate · web_fetch blocks the literal resolved URL",
+      "name": "PI/BOOT TICKET URL gate (PARTIAL 060926) · web_fetch blocks the literal resolved URL",
       "note": "Filed: 041926 by Trip ODT | PI page nest-pi.astro references `https://www.rspdan.com/pk/[crew]/TICKET.md` as a literal template (square brackets appear in the fetched markdown). When any crew substitutes `trip`/`stan`/`cb` and calls `web_fetch` on the resolved URL, the Claude.ai fetch tool refuses because that exact literal URL was never in a prior fetch response. Hits every crew boot, every session. 041926 Trip boot worked around by reading local portal filesystem at `C:\\STAN\\SOURCE\\rspdan-portal\\public\\pk\\trip\\TICKET.md` via DC. Fix options (combine (a)+(c) for resilience): (a) update …",
       "filed": "041926"
     },
@@ -459,7 +449,7 @@
     },
     {
       "name": "Pre-push mojibake gate wiring (portal_check.ps1 + na-publish + pre-commit hook)",
-      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **2-of-3 DONE 052626 ~20:50 PT** by CUBE Doc cloud · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (no edit needed at this time) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit · item (3) git pre-commit hook in rspdan-portal STILL OPEN cross-repo · requires `.husky/pre-commit` install in rspdan-portal repo OR setup script …",
+      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **3-of-3 DONE** · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (052626 CUBE Doc) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit (052626 CUBE Doc) · item (3) git pre-commit hook in rspdan-portal DONE via PR #25 commit `69ef1bf` (later extended with em-dash gate at `e02c40e` per Dan-direct 060626). Hook at …",
       "filed": "042226 Wednesday ~20:50 PT"
     },
     {
@@ -573,6 +563,11 @@
       "filed": "041326"
     },
     {
+      "name": "SEEGULLS auto-pipeline",
+      "note": "Filed: 041426 | **DONE 060926** · Implemented as `rspdan-portal/scripts/sync_seegulls.py` · Single source (STATUS/SEEGULLS.md) → pipeline → seegulls.json → gulls.astro · Kills manual dual-update. Converts HEREGULL/NEARGULL/FARGULL/DONE sections to JSON buckets. Run verified 060926 (84KB output, today's closures reflected).",
+      "filed": "041426"
+    },
+    {
       "name": "Claude Desktop on GOG1 (UNIX side)",
       "note": "Filed: 041726 22:46 by Dan | **DONE 041926 Sunday 22:28 PT as Claude Code (not Claude Desktop)** · Dan directive was *\"I want Claude running locally on everything possible because it gives you the direct ability to do the work I have no idea how to.\"* Claude Desktop has no Linux build. Claude Code CLI (option (a) in original gull) fulfilled the directive: installed via npm, authed via OAuth to Dan's Max plan, runs natively on GOG1, operates `/home/dan` directly. See HEREGULL above and `RELAY/GOG1_STATE_ClaudeCodeOllamaReady_Trip_041926.md`.",
       "filed": "041726 22:46"
@@ -580,6 +575,11 @@
     {
       "name": "GOG1 firewall removal",
       "note": "Filed: 041726 22:46 by Dan | **DONE 041726 ~23:30** | Dan ran `sudo ufw disable` himself on GOG1. Verified inactive via SSH from ODT: `sudo ufw status` = \"Status: inactive.\" No residual iptables rules blocking Fleet LAN. Combined with passwordless SSH + NOPASSWD sudo (filed tonight as Standard Rule `RELAY/STANDARD_RULE_UnixNOPASSWDPlusKeys_Trip_041726.md`), GOG1 is now fully remotely operable by Trip from ODT. Three-tests-green: passwordless SSH âœ“ · passwordless sudo âœ“ · ufw inactive âœ“. Dan directive satisfied.",
+      "filed": "041726 22:46"
+    },
+    {
+      "name": "Windows 10 fleet policy documented",
+      "note": "Filed: 041726 22:46 by Dan | **DONE 060926** · Filed as `RELAY/STANDARD_RULE_Win10UntilForced_FleetWide_Trip_041726.md`. Dan directive: *\"The Windows side has all Windows 10 systems and not planning on doing Windows 11 until I'm forced to.\"* Fleet policy canonical. All Windows-side tooling targets Win 10 compatibility; no Win 11-only features assumed.",
       "filed": "041726 22:46"
     },
     {
