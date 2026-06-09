@@ -12,7 +12,13 @@ const BANDS = { joy: 70, peace: 145, sadness: 360, shame: 410, pain: 460, rage: 
 const STARS = new Set(['joy', 'peace']);
 const VX0 = 40, VX1 = 1160;
 const D_START = Date.parse('2026-03-01');  // early March · when Dan first talked with Claude (ARCH.00 030126) · the true left edge, not NEST-open
-const D_NOW = Date.now();  // build-time today · self-advancing right edge (was a hardcoded date that re-staled; the C7 page-integrity radar flags a hardcoded stale NOW, so derive it instead)
+// build-time "today" in PT (NEST is PT-canonical) so the right edge self-advances without
+// the UTC-vs-PT drift that Date.now() + dateAtX's getUTC* would show in the evening (it read
+// 060926 at 7:30pm PT). Was a hardcoded date that re-staled; the C7 page-integrity radar flags
+// a hardcoded stale NOW, so derive it from the build clock instead.
+const _ptToday = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+const [_ny, _nm, _nd] = _ptToday.split('-').map(Number);
+const D_NOW = Date.UTC(_ny, _nm - 1, _nd, 12);  // noon UTC of the PT date, so dateAtX's getUTCDate == the PT day
 const DSPAN = D_NOW - D_START;
 function xForDate(ds) {
   const t = Date.parse(ds);
