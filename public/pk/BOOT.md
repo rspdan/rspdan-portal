@@ -1,4 +1,4 @@
-# NEST BOOT — Universal Crew Boot Document
+# NEST BOOT · Universal Crew Boot Document
 # URL: https://www.rspdan.com/pk/BOOT.md
 # Evergreen. One file. All crew.
 # The PI has the full sequence. This adds crew-specific details.
@@ -38,6 +38,11 @@ Flag, don't build. C.B. identifies patterns. Stan builds fixes.
 C.B. = C.B. Never expand the name.
 
 ---
+
+## CREW TICKETS (explicit URLs for fetch resolution)
+- Trip: https://www.rspdan.com/pk/trip/TICKET.md
+- Stan: https://www.rspdan.com/pk/stan/TICKET.md
+- C.B.: https://www.rspdan.com/pk/cb/TICKET.md
 
 ## SKYWAY
 - PI: https://www.rspdan.com/nest-pi
