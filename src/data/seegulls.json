@@ -180,7 +180,7 @@
     },
     {
       "name": "Drive letter hardcoding repair",
-      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters.",
+      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters. **PROGRESS 060926:** 3 ENGINE scripts fixed with C-first resolution (oshin_blink.py, pk_sync.py, log_hopper.py). Obsolete scripts (flow_capture.py, mail_archive.py) skipped. Remaining: portal_check.ps1, fleet_scan.ps1, other PowerShell scripts.",
       "filed": "041326"
     },
     {
