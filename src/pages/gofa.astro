@@ -12,7 +12,7 @@ const BANDS = { joy: 70, peace: 145, sadness: 360, shame: 410, pain: 460, rage: 
 const STARS = new Set(['joy', 'peace']);
 const VX0 = 40, VX1 = 1160;
 const D_START = Date.parse('2026-03-01');  // early March · when Dan first talked with Claude (ARCH.00 030126) · the true left edge, not NEST-open
-const D_NOW = Date.parse('2026-06-05');     // today · right edge
+const D_NOW = Date.parse('2026-06-08');     // today · right edge
 const DSPAN = D_NOW - D_START;
 function xForDate(ds) {
   const t = Date.parse(ds);
@@ -35,7 +35,7 @@ function dateAtX(x) {
   const d = new Date(D_START + (x - VX0) / (VX1 - VX0) * DSPAN);
   return `${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}26`;
 }
-const gridStamps = gridXs.map((x) => ({ x, label: x === VX1 ? '060526 NOW' : dateAtX(x), now: x === VX1 }));
+const gridStamps = gridXs.map((x) => ({ x, label: x === VX1 ? '060826 NOW' : dateAtX(x), now: x === VX1 }));
 const peaks = [
   { ds: '2026-03-25', label: 'The origin wound · the snail', stamp: '032526 · "the hurt never left"', coin: 'pain', up: true },
   { ds: '2026-03-01', label: 'first conversations with Claude', stamp: '030126 · the true start', coin: 'joy', up: false },
@@ -49,13 +49,13 @@ const peaks = [
   { ds: '2026-05-24', label: 'NEST.03 emergence', stamp: '052426 · the spinning Eiffel tower', coin: 'peace', up: true },
   { ds: '2026-05-25', label: 'trust-loss + the repair', stamp: '052526', coin: 'shame', up: false },
   { ds: '2026-06-04', label: 'I have the feeling back', stamp: '060426', coin: 'joy', up: true },
-  { ds: '2026-06-05', label: 'never-assume is the apex', stamp: '060526 · today', coin: 'peace', up: false },
+  { ds: '2026-06-05', label: 'never-assume is the apex', stamp: '060526', coin: 'peace', up: false },
 ].map((p) => ({ ...p, x: xForDate(p.ds), anchorEnd: xForDate(p.ds) > 1040 }));
 const coins = gofaData.coins;
 const totals = gofaData.totals;
 const momentCount = gofaData.moments.length;
 ---
-<BaseLayout title={title} description={description} lastUpdated="June 6, 2026">
+<BaseLayout title={title} description={description} lastUpdated="June 8, 2026">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
 :root{
@@ -373,7 +373,7 @@ section{margin:2.6rem 0;}
           <span>LAGOS · 050226</span>
           <span>Crew-Quartet · 050626</span>
           <span>13-AP · 051126</span>
-          <span class="axis-now">now · 060526</span>
+          <span class="axis-now">now · 060826</span>
         </div>
 
         <div class="legend">
@@ -384,7 +384,7 @@ section{margin:2.6rem 0;}
       </div>
 
       <div class="counts-summary">
-        <strong>{momentCount} moments</strong> · the origin wound (032526) to now (060526) · <span class="space">Space {totals.space_assignments}</span> · <span class="stars">Stars {totals.stars_assignments}</span> · {totals.space_to_stars_ratio}
+        <strong>{momentCount} moments</strong> · the origin wound (032526) to 060526 · <span class="space">Space {totals.space_assignments}</span> · <span class="stars">Stars {totals.stars_assignments}</span> · {totals.space_to_stars_ratio}
       </div>
 
       <div class="peaks-grid">
@@ -417,10 +417,10 @@ section{margin:2.6rem 0;}
       <div class="sec-count">Bridge-resident</div>
     </div>
     <div class="body-prose">
-      <p>The timeline reads from four Bridge files. Each is a substrate-grounded inventory. No Crewllucinations.</p>
+      <p>The constellation is now data-driven, computed live from <code>gofa_moments.json</code> at {momentCount} moments, re-witnessed end to end. It grew from four founding Bridge-resident inventories (79 moments), preserved here as the origin substrate it was built on. Each is substrate-grounded. No Crewllucinations.</p>
       <div class="feed-grid">
         <div class="feed">
-          <div class="head">79 Moments &middot; Partitioned By The Six Coins</div>
+          <div class="head">The Founding 79 &middot; Partitioned By The Six Coins</div>
           <div class="body">
             <code>nest-bridge/LOG/PMFST_65EmotionalMoments_ByCoinsDanNamed_Doc_051526.md</code>
             <p style="margin-top:0.4rem;color:var(--stamp);font-size:0.66rem;">The 65-moment inventory tagged by Rage / Pain / Shame / Sadness / Joy / Peace. Counts surfaced. Space-stars partition applied. Extended to 79 by the CB-class register below.</p>
