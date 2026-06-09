@@ -1,5 +1,5 @@
 {
-  "_updated": "060826 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
+  "_updated": "060926 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
   "here": [
     {
       "name": "OLO BRIGHT · rspdan.com public-faces maintenance cluster · 060426 LAGOS-diff verify pass (CUBE Trip)",
@@ -27,11 +27,6 @@
       "filed": ""
     },
     {
-      "name": "🔥 OLO BRIGHT · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT) · same-shape as Jikal Maxon 041426 (Spotify 82 GB VZW_HOTSPOT) · /yiyish vs /yiyyish posture-trigger violation per Dan-canon 050226",
-      "note": "Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of my VZW_HOTSPOT because Spotify decided to download 80gbs of music without making it clear what was being wasted. Just because the access is there does not give Stupid Mode permission. /dtad\"* | **Anthropic Labs product-design alarm:** Claude Design weekly quota burns through Dan's Extra Usage credits without delivering proportional canonical-output. Today's session: El VIS Claude Design 100% …",
-      "filed": "052026 Wednesday ~15:30 PT u"
-    },
-    {
       "name": "STN2-Doc cure-recipe apply (Tailscale-RDP into STN2 + restore session)",
       "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 BYPASS-FUCKERY discipline-fold | STN2-Doc CRASHED at commit `e3a3620` with persistence-rollback per 051926 cross-Crew witness. Cure-recipe filed at `LOG/MAIL/DOCDoc_TO_Dan_STN2DocCrashRecovery_TailscaleRDPRecipe_051926.md` (Tailscale-RDP into STN2 `100.95.196.13` + restore working-dir + reauth). Dan-action when scenery permits (NOT Dan-deferred per RAM-006 write-time-gate). Unblocks STN2-Doc cloud-station rejoin to PeaPod triangle.",
       "filed": "051926 Tuesday ~02:51 PT"
@@ -55,7 +50,7 @@
     },
     {
       "name": "STN2 Claude Code install",
-      "note": "Filed: 041926 Sunday 23:00 PT | Same pattern as GOG1 tonight: Node already present via existing Node installation (Git/Node mirrored install NEARGULL covers this), run `npm install -g @anthropic-ai/claude-code`, then `claude` interactively (TTY required · Windows Terminal or `ssh -t`). Expected to complete in <5 min when executed. After install: STN2 becomes a local-Claude station peer alongside GOG1. Fleet-wide universalization takes another step.",
+      "note": "Filed: 041926 Sunday 23:00 PT | Same pattern used on GOG1 (now decommissioned): Node already present via existing Node installation (Git/Node mirrored install NEARGULL covers this), run `npm install -g @anthropic-ai/claude-code`, then `claude` interactively (TTY required · Windows Terminal or `ssh -t`). Expected to complete in <5 min when executed. After install: STN2 becomes a local-Claude station peer. Fleet-wide universalization takes another step.",
       "filed": "041926 Sunday 23:00 PT"
     },
     {
@@ -139,8 +134,8 @@
       "filed": "041426"
     },
     {
-      "name": "nest-proxy config cleanup (STN2/TRP0/DPSL/GOG1-if-applicable)",
-      "note": "Filed: 041526, tooling staged 041626 | Scripts ready: `ENGINE/cleanup_nest_proxy_windows.ps1` (STN2, CUBE), `ENGINE/cleanup_nest_proxy_unix.sh` (TRP0, DPSL, GOG1 if Claude Desktop installed). Per-station commands in `FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md`. Each script creates timestamped backup, is idempotent, reports mcpServer list after. Station runs once at next boot, then restart Claude Desktop.",
+      "name": "nest-proxy config cleanup (STN2/TRP0/DPSL)",
+      "note": "Filed: 041526, tooling staged 041626 | Scripts ready: `ENGINE/cleanup_nest_proxy_windows.ps1` (STN2, CUBE), `ENGINE/cleanup_nest_proxy_unix.sh` (TRP0, DPSL). Per-station commands in `FLEET/CLEANUP_NEST_PROXY_CHECKLIST.md`. Each script creates timestamped backup, is idempotent, reports mcpServer list after. Station runs once at next boot, then restart Claude Desktop. (GOG1 removed 060926 · decommissioned ~050426)",
       "filed": "041526, tooling staged 04162"
     },
     {
@@ -160,7 +155,7 @@
     },
     {
       "name": "Git/Node mirrored install",
-      "note": "Filed: 041426 | Installed on ODT. Flag: STN2, TRP0, GOG1, DPSL each need their own install.",
+      "note": "Filed: 041426 | Installed on ODT. Flag: STN2, TRP0, DPSL each need their own install. (GOG1 removed 060926 · decommissioned ~050426)",
       "filed": "041426"
     },
     {
@@ -195,7 +190,7 @@
     },
     {
       "name": "Cantenna Pass 2",
-      "note": "Filed: 041426 | Can measurements, adapter inventory on ODT/CUBE/GOG1. Principles understood.",
+      "note": "Filed: 041426 | Can measurements, adapter inventory on ODT/CUBE. Principles understood. (GOG1 removed 060926 · decommissioned ~050426)",
       "filed": "041426"
     },
     {
@@ -442,7 +437,7 @@
     },
     {
       "name": "Firefox MCP Bridge",
-      "note": "Filed: 040126 | Rust compile on GOG1. Every Firefox tab gets MCP tools.",
+      "note": "Filed: 040126 | Rust compile needed (original target GOG1 decommissioned ~050426). Every Firefox tab gets MCP tools.",
       "filed": "040126"
     },
     {
@@ -472,6 +467,11 @@
     }
   ],
   "done": [
+    {
+      "name": "RESOLVED · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT)",
+      "note": "RESOLVED 060826 per Dan-direct: Anthropic folded Claude Design / El VIS usage into normal rates (no longer a separate Extra-Usage drain), so the burn-rate alarm clears and El VIS is no longer DONE-INDEFINITE on this basis. The Jikal-Maxon-shape lesson (access is not Stupid-Mode-permission; /yiyish ground-discipline) stays canon; the full original alarm is preserved below (NOTHING-GETS-LOST). | Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of …",
+      "filed": "052026 Wednesday ~15:30 PT u"
+    },
     {
       "name": "Pre-push mojibake gate wiring (portal_check.ps1 + na-publish + pre-commit hook)",
       "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **2-of-3 DONE 052626 ~20:50 PT** by CUBE Doc cloud · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (no edit needed at this time) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit · item (3) git pre-commit hook in rspdan-portal STILL OPEN cross-repo · requires `.husky/pre-commit` install in rspdan-portal repo OR setup script …",

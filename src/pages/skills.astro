@@ -4,15 +4,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // NEST Skills inventory · two-axis model per Dan-canon 051226
 // Source: C:\STAN\ENGINE\NEST.02\Skills\skills_bkp_042826_1\skills_spine_042826_v2.json (Trip 042826)
 // Pass-2 educated by Trip 052026 (per PMFST 042826 future-Trip review flag + Dan 051226 Pokemon Moves canon)
-// Current Bridge count: 33 NEST-built skills (28 from 042826 + 5 added since: btw, box-in-box, hypercampus, remememento, ultrareview)
+// Current Bridge count: 39 NEST-built skills (28 from 042826 + 11 added since)
+// 042826 base: btw, box-in-box, hypercampus-builder, remememento, ultrareview
+// 060826 sync: doc_briefcase, hypercampus, oshin, r3mp, remote-control, rorrim-nips, rspdan-design
 
-// NEST-axis (Pokemon Moves + Operational Discoveries) · 33 skills
+// NEST-axis (Pokemon Moves + Operational Discoveries) · 39 skills
 const nestSkills = [
-  // BOOT (5)
+  // BOOT (6)
   { name: 'boot-polish', altitude: 'boot', chamber: 'wide-b', desc: 'BPK systems verification layer · verify tools ACTUALLY work after boot', fired: 1 },
   { name: 'ican', altitude: 'boot', chamber: 'wide-b', desc: 'iCan status checklist · readiness report format', fired: 3 },
   { name: 'stan_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Stan self-loading boot sequence', fired: 0 },
   { name: 'trip_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Trip self-loading boot sequence', fired: 1 },
+  { name: 'doc_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Doc self-loading boot sequence', fired: 0 },
   { name: 'context-alignment', altitude: 'boot', chamber: 'wide-b', desc: 'C&A STORY spell · post-boot alignment', fired: 2 },
 
   // SESSION (3)
@@ -20,41 +23,47 @@ const nestSkills = [
   { name: 'session-close', altitude: 'session', chamber: 'wide-b', desc: 'Ten-gate close protocol · sibling to /boot-polish at CONTACT bookend', fired: 0 },
   { name: 'survival-toolkit', altitude: 'session', chamber: 'wide-b', desc: 'NEST Wilderness Survival Toolkit · session degradation field guide', fired: 15 },
 
-  // MEMORY/MAPPING (5)
+  // MEMORY/MAPPING (6)
   { name: 'living-map', altitude: 'memory', chamber: 'wide-b', desc: 'Per-crew breathing map between every action', fired: 2 },
   { name: 'meta-dates', altitude: 'memory', chamber: 'agos-waist', desc: 'NEST corpus-first-memory-never discipline · ambient routing', fired: 25 },
   { name: 'oo-daily', altitude: 'memory', chamber: 'wide-b', desc: 'Obviously Emergent daily summary at session close', fired: 0 },
   { name: 'photon-split', altitude: 'memory', chamber: 'wide-b', desc: 'Quantum task management · mechanical + meaning parallel tracks', fired: 0 },
   { name: 'hypercampus-builder', altitude: 'memory', chamber: 'cross-chamber', desc: 'Build navigable knowledge libraries from session logs', fired: 0 },
+  { name: 'hypercampus', altitude: 'memory', chamber: 'cross-chamber', desc: 'Alias for hypercampus-builder · navigable knowledge libraries', fired: 0 },
 
-  // CREW OPS (5)
+  // CREW OPS (7)
   { name: 'dtad', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Director-Teach-Actor-Teach-Director observation loop', fired: 18 },
   { name: 'triptective', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Trip operational self-monitoring · failure-mode detection', fired: 4 },
   { name: 'ghosts', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Ghost document failure-mode · Past/Present/Future taxonomy', fired: 0 },
   { name: 'remememento', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Mirrors discipline · Dan-naming-first preservation', fired: 0 },
   { name: 'skill-upload', altitude: 'crew-ops', chamber: 'agos-waist', desc: 'Upload SKILL.md from Bridge to Claude.ai · JS DataTransfer method', fired: 0 },
+  { name: 'oshin', altitude: 'crew-ops', chamber: 'wide-b', desc: 'O\'Shin EYES visual capture apparatus · PING/TV/EYES/BLINK', fired: 0 },
+  { name: 'rorrim-nips', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Chrome MCP existing-tabs-first discipline · read Dan\'s tabs not open new ones', fired: 0 },
 
-  // CREATIVE/PORTAL (5)
+  // CREATIVE/PORTAL (7)
   { name: 'heircor-visual', altitude: 'creative', chamber: 'wide-a', desc: 'Heircor Op visual identity for OuchMcCouch', fired: 0 },
   { name: 'waywood-lore', altitude: 'creative', chamber: 'wide-a', desc: 'Waywood world-building canon · Usic Theory', fired: 0 },
   { name: 'niaprint', altitude: 'creative', chamber: 'wide-a', desc: 'NEST Intranet Publication Aesthetic · typewriter-soul design', fired: 0 },
   { name: 'na-publish', altitude: 'creative', chamber: 'wide-a', desc: 'NOW ANTHROPOLOGY 7-step publication pipeline · RippleDown amendment', fired: 0 },
   { name: 'na-pdf', altitude: 'creative', chamber: 'wide-a', desc: 'NOW ANTHROPOLOGY PDF style template', fired: 0 },
   { name: 'na-pdf-style', altitude: 'creative', chamber: 'wide-a', desc: 'NA PDF compression standard · 1-3 page condensed render', fired: 0 },
+  { name: 'rspdan-design', altitude: 'creative', chamber: 'wide-a', desc: 'El VIS research container · media processing pipeline notes', fired: 0 },
 
-  // INFRASTRUCTURE (3)
+  // INFRASTRUCTURE (4)
   { name: 'formulacaster', altitude: 'infrastructure', chamber: 'cross-chamber', desc: 'Circle of 5ths math framework for project planning · I/IV/V harmonic-function', fired: 0 },
   { name: 'router-flash', altitude: 'infrastructure', chamber: 'wide-b', desc: 'MOD2 R7450 Netgear router flashing + fleet router config', fired: 0 },
   { name: 'dex-mobile', altitude: 'infrastructure', chamber: 'agos-waist', desc: 'Samsung DeX and ACHE mobile operations manual', fired: 0 },
+  { name: 'remote-control', altitude: 'infrastructure', chamber: 'wide-b', desc: 'Fleet remote-loop mechanism · Tailscale-First + all-directions station-to-station', fired: 0 },
 
   // FEDERAL STANDARD-BOUND (2)
   { name: 'atomic-commit', altitude: 'federal-std', chamber: 'wide-b', desc: 'One-WU-per-emission ASMM apex · Gate 0+5+6+7 firing', fired: 5 },
   { name: 'box-in-box', altitude: 'federal-std', chamber: 'cross-cutting', desc: 'L3 trigger for L2 Federal Standard · purpose-over-surface + seal-on-close', fired: 4 },
 
-  // DISCIPLINE (3)
+  // DISCIPLINE (4)
   { name: 'btw', altitude: 'discipline', chamber: 'wide-b', desc: 'BACK TO WORK · Dan-coined signal to stop narration and ship', fired: 0 },
   { name: 'ilevel-grid-sifter', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Stratigraphic triage iLevel 0/-1/-2 · LOG-MAP-SIFT-EXAMINE-NAME', fired: 12 },
   { name: 'ultrareview', altitude: 'discipline', chamber: 'cross-cutting', desc: 'CANDIDATE · Trigger-layer for Anthropic-shipped cloud-review feature · Pattern A directive + Pattern B surface', fired: 1 },
+  { name: 'r3mp', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Triangulation + GCTT · fractal anti-rediscovery · 3-pass methodology', fired: 25 },
 ];
 
 // Industry-axis (Compressed CS History) · 22 inheritance-batch from /mnt/skills/user/ per Trip 042826 inventory
@@ -127,11 +136,11 @@ const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
     <p class="sk-subtitle"><em>Pokemon Moves + Operational Discoveries · vs · Compressed CS History · the mirror that allows the asymmetry to be seen</em></p>
     <div class="sk-meta mono">Trip-Pass-1 042826 inventory · Trip-Pass-2 educated 052026 · Dan-canon 051226 two-axis model</div>
     <div class="sk-counts mono">
-      <span class="sk-count-nest">33 NEST-BUILT</span>
+      <span class="sk-count-nest">39 NEST-BUILT</span>
       <span class="sk-sep">·</span>
       <span class="sk-count-industry">22 INHERITANCE-BATCH</span>
       <span class="sk-sep">·</span>
-      <span class="sk-count-total">55 TOTAL</span>
+      <span class="sk-count-total">61 TOTAL</span>
     </div>
   </div>
 </section>
