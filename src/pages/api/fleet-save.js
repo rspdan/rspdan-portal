@@ -15,7 +15,7 @@ export async function POST({ request }) {
 
   try {
     const updates = await request.json();
-    const { board_lbm, board_updated, seats } = updates;
+    const { board_updated, seats } = updates;
 
     // Read current fleet.js from GitHub
     const owner = 'rspdan';
@@ -31,12 +31,9 @@ export async function POST({ request }) {
     let content = Buffer.from(fileData.content, 'base64').toString('utf8');
 
     // Apply board edits
-    if (board_lbm) {
-      content = content.replace(/lbm:\s*"[^"]*"/, `lbm: "${board_lbm}"`);
-    }
     if (board_updated) {
       content = content.replace(
-        /updated:\s*"[^"]*"(,\s*\n\s*lbm:)/,
+        /updated:\s*"[^"]*"(,\s*\n\s*quote:)/,
         `updated: "${board_updated}"$1`
       );
     }
