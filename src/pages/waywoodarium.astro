@@ -45,6 +45,12 @@
     background: rgba(0,0,0,.45); padding: 6px 9px; border-radius: 6px;
   }
   #back:hover { color: #cfe8ff; }
+  #walk {
+    position: fixed; left: 12px; bottom: 40px; z-index: 10;
+    font: 11px/1.5 ui-monospace, monospace; color: #9fb8cc; text-decoration: none;
+    background: rgba(0,0,0,.45); padding: 6px 9px; border-radius: 6px;
+  }
+  #walk:hover { color: #01FFCD; }
 </style>
 </head>
 <body>
@@ -53,6 +59,7 @@
   <div id="hud">aholo-viewer · booting renderer...</div>
   <div id="help">drag = rotate · left-drag (orbit) · wheel = dolly · WASD/QE = fly · R/F = roll</div>
   <a id="back" href="/">&larr; rspdan.com</a>
+  <a id="walk" href="/waywood-walk/">walk the five keys &rarr;</a>
 
 <script type="module" is:inline>
 // ---------------------------------------------------------------------------
