@@ -1,0 +1,474 @@
+---
+// rspdan.com/waywoodarium · 3D Gaussian Splatting viewer (aholo-viewer).
+// Full-page immersive WebGL experience, standalone like /ouch (no BaseLayout nav/footer;
+// the fixed full-screen canvas owns the viewport).
+//
+// Renderer + workers ship as static public assets under /aholo/ so they serve as
+// siblings: /aholo/index.js, /aholo/splat-worker.js, /aholo/transcoder-worker.js.
+// The bundle resolves the two ES-module workers via `new URL("./splat-worker.js",
+// import.meta.url)`, which against /aholo/index.js resolves to /aholo/splat-worker.js,
+// so the three files MUST sit next to each other (they do, in public/aholo/).
+//
+// The init script below is the aholo-demo viewer.html init verbatim, with the only
+// change being the import path (./index.js becomes /aholo/index.js). It is `is:inline`
+// so Astro/Vite does not attempt to bundle the public-asset module at build time.
+//
+// Last updated: June 8, 2026
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Waywoodarium · 3D Gaussian Splatting (aholo-viewer)</title>
+<meta name="description" content="A 3D Gaussian Splatting scene rendered in the browser. Dan Sullivan · NEST Research Division." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #hud {
+    position: fixed; left: 12px; top: 12px; z-index: 10;
+    font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #cfe8ff; background: rgba(0,0,0,.55); padding: 8px 10px; border-radius: 6px;
+    pointer-events: none; max-width: 60ch; white-space: pre-wrap;
+  }
+  #hud b { color: #fff; }
+  #hud.err { color: #ffd0d0; background: rgba(60,0,0,.7); }
+  #help {
+    position: fixed; right: 12px; bottom: 12px; z-index: 10;
+    font: 11px/1.5 ui-monospace, monospace; color: #9fb8cc;
+    background: rgba(0,0,0,.45); padding: 6px 9px; border-radius: 6px; pointer-events: none;
+  }
+  #back {
+    position: fixed; left: 12px; bottom: 12px; z-index: 10;
+    font: 11px/1.5 ui-monospace, monospace; color: #9fb8cc; text-decoration: none;
+    background: rgba(0,0,0,.45); padding: 6px 9px; border-radius: 6px;
+  }
+  #back:hover { color: #cfe8ff; }
+</style>
+</head>
+<body>
+  <!-- The renderer mounts its WebGL canvas into this element (createViewer takes a DOM container, not a canvas). -->
+  <div id="stage"></div>
+  <div id="hud">aholo-viewer · booting renderer...</div>
+  <div id="help">drag = rotate · left-drag (orbit) · wheel = dolly · WASD/QE = fly · R/F = roll</div>
+  <a id="back" href="/">&larr; rspdan.com</a>
+
+<script type="module" is:inline>
+// ---------------------------------------------------------------------------
+// aholo-viewer self-contained init.
+//
+// Init path is a faithful reproduction of the renderer's OWN production init,
+// website/src/client/render-runtime.ts (class RenderSessionRenderer), plus the
+// splat-load logic from website/src/content/examples/splatting-basic.ts.
+// Nothing here is invented: createViewer / setViewerConfig / Scene3D /
+// PerspectiveCamera / BackgroundMode / Color / Vector3 / SplatLoader /
+// SplatUtils are all real exports of /aholo/index.js (verified in the dist bundle).
+//
+// The ES-module workers (splat-worker.js, transcoder-worker.js) are resolved by
+// the bundle via `new URL("./splat-worker.js", import.meta.url)`, so they MUST
+// sit next to index.js and be served over http (module workers do not run from
+// file://). They are shipped as siblings under /aholo/.
+// ---------------------------------------------------------------------------
+
+import {
+  createViewer,
+  setViewerConfig,
+  Scene3D,
+  PerspectiveCamera,
+  BackgroundMode,
+  Color,
+  Vector3,
+  SplatLoader,
+  SplatUtils,
+} from '/aholo/index.js';
+
+const SCENE_URL = 'https://holo-cos.aholo3d.cn/aholo-opensource/gs_file/bear/bear.3d71a266.sog';
+
+const hud = document.getElementById('hud');
+const setHud  = (html) => { hud.classList.remove('err'); hud.innerHTML = html; };
+const setErr  = (html) => { hud.classList.add('err');    hud.innerHTML = html; };
+
+main().catch((e) => {
+  console.error(e);
+  setErr('<b>Render failed.</b>\n' + (e && e.stack ? e.stack : String(e)) +
+         '\n\n(Are you serving over http? Module workers do not run from file://.)');
+});
+
+async function main() {
+  const stage = document.getElementById('stage');
+
+  // --- create the Viewer on the container (mirrors RenderSessionRenderer ctor) ---
+  const viewer = createViewer('aholo-demo', stage, { antialiasing: false });
+  setViewerConfig(viewer, {
+    pixelRatio: 1 / window.devicePixelRatio,
+    pipeline: {
+      Background: {
+        background: { active: BackgroundMode.BasicBackground, basic: { color: new Color(0, 0, 0) } },
+        ground: { enabled: false },
+      },
+      TAA: { enabled: false },
+      Splatting: { enabled: true }, // example enables the splatting pipeline
+    },
+  });
+
+  const scene = new Scene3D();
+  const camera = new PerspectiveCamera(60, 1, 0.1, 2000);
+  viewer.setScene(scene);
+  viewer.setCamera(camera);
+
+  // requestRender flag drives on-demand rendering (per render-runtime)
+  let renderRequested = true;
+  const requestRender = () => { renderRequested = true; };
+  viewer.requestRenderHandler = requestRender;
+
+  // --- camera pose from the example (bear scene uses an inverted up axis) ---
+  camera.up.set(0, -1, 0);
+  camera.position.set(-1.5, -0.5, 0);
+  camera.lookAt(new Vector3(0, 0, 0));
+
+  // --- orbit / free-flight controls (the website's CameraControl, inlined below) ---
+  const control = new CameraControl(camera, stage, { enabled: true, useOrbit: true });
+
+  // initial sizing
+  resize();
+  window.addEventListener('resize', resize);
+  function resize() {
+    viewer.resize();
+    const cam = viewer.getCamera();
+    const el = stage;
+    const w = el.clientWidth || window.innerWidth;
+    const h = el.clientHeight || window.innerHeight;
+    if (cam && typeof cam.aspect === 'number' && h > 0) {
+      cam.aspect = w / h;
+      if (typeof cam.updateProjectionMatrix === 'function') cam.updateProjectionMatrix();
+    }
+    requestRender();
+  }
+
+  // --- load + build the splat (example's load path) ---
+  setHud('aholo-viewer · loading splat data...\n' + SCENE_URL);
+  const data = await SplatLoader.parseSplatData(SplatLoader.SplatFileType.SOG, SCENE_URL);
+  const splat = await SplatUtils.createSplat(data);
+  scene.add(splat);
+  setHud('<b>aholo-viewer</b> · bear.sog loaded. drag to orbit.');
+
+  // --- render loop (mirrors RenderSessionRenderer#tick) ---
+  let last = 0;
+  function tick(time) {
+    const delta = last > 0 ? Math.min((time - last) / 1000, 0.1) : 0;
+    last = time;
+    const moved = control.update(delta);
+    if (moved || renderRequested) {
+      renderRequested = false;
+      viewer.getScene().notifySceneChange();
+      viewer.render();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ===========================================================================
+// CameraControl · copied verbatim (TS types stripped) from
+// website/src/client/camera-control.ts. Lightweight free-flight + orbit camera
+// controls; no dependency on the renderer package. Left-drag orbits when
+// useOrbit is set; wheel dollies; WASD/QE fly; R/F roll.
+// ===========================================================================
+const MAX_PITCH = Math.PI / 2 - 0.001;
+const EPSILON = 1e-6;
+const DEFAULT_UP = { x: 0, y: 1, z: 0 };
+const DEFAULT_ORBIT_CENTER = { x: 0, y: 0, z: 0 };
+const KEYBOARD_CONTROL_KEYS = new Set(['KeyW','KeyA','KeyS','KeyD','KeyQ','KeyE','KeyR','KeyF','ShiftLeft','ShiftRight','ControlLeft','ControlRight','AltLeft','AltRight','CapsLock']);
+const DEFAULT_OPTIONS = {
+  enabled: true, keyboardEnabled: true, pointerEnabled: true, orbitEnabled: true, useOrbit: false,
+  orbitCenter: { x: 0, y: 0, z: 0 }, orbitMinDistance: 0.01, moveSpeed: 0.4, lookSpeed: 0.004,
+  wheelSpeed: 0.006, panSpeed: 0.006, rollSpeed: 1, ctrlMultiplier: 2, shiftMultiplier: 10, capsMultiplier: 20,
+};
+
+class CameraControl {
+  #camera; #element; #pointers = new Map(); #keys = new Set();
+  #orbitCenter = copyVector(DEFAULT_ORBIT_CENTER); #initialTabIndex; #initialTouchAction;
+  #lastTime = 0; #wheelDelta = 0; #capsLock = false; #altKey = false;
+  #moving = false; #rotating = false; #panning = false; #orbiting = false; #disposed = false;
+
+  constructor(camera, element, options = {}) {
+    this.#camera = camera;
+    this.#element = element;
+    this.#initialTabIndex = element.getAttribute('tabindex');
+    this.#initialTouchAction = element.style.touchAction;
+    const r = { ...DEFAULT_OPTIONS, ...options };
+    this.enabled = r.enabled; this.keyboardEnabled = r.keyboardEnabled; this.pointerEnabled = r.pointerEnabled;
+    this.orbitEnabled = r.orbitEnabled; this.useOrbit = r.useOrbit;
+    this.orbitMinDistance = Math.max(EPSILON, r.orbitMinDistance);
+    this.setOrbitCenter(r.orbitCenter);
+    this.moveSpeed = r.moveSpeed; this.lookSpeed = r.lookSpeed; this.wheelSpeed = r.wheelSpeed;
+    this.panSpeed = r.panSpeed; this.rollSpeed = r.rollSpeed;
+    this.shiftMultiplier = r.shiftMultiplier; this.ctrlMultiplier = r.ctrlMultiplier; this.capsMultiplier = r.capsMultiplier;
+    if (this.#initialTabIndex === null) element.tabIndex = 0;
+    element.style.touchAction = 'none';
+    element.addEventListener('pointerdown', this.#onPointerDown);
+    element.addEventListener('pointermove', this.#onPointerMove);
+    element.addEventListener('pointerup', this.#onPointerUp);
+    element.addEventListener('pointercancel', this.#onPointerUp);
+    element.addEventListener('contextmenu', this.#onContextMenu);
+    element.addEventListener('wheel', this.#onWheel, { passive: false });
+    element.addEventListener('keydown', this.#onKeyDown);
+    element.addEventListener('keyup', this.#onKeyUp);
+    window.addEventListener('keyup', this.#onKeyUp);
+    window.addEventListener('blur', this.#onBlur);
+  }
+  setOptions(options) {
+    const { orbitCenter, ...rest } = options;
+    if (orbitCenter !== undefined) this.setOrbitCenter(orbitCenter);
+    for (const [k, v] of Object.entries(rest)) if (v !== undefined) {
+      if (k === 'orbitMinDistance' && typeof v === 'number') this.orbitMinDistance = Math.max(EPSILON, v);
+      else this[k] = v;
+    }
+  }
+  setOrbitCenter(c) { this.#orbitCenter.x = c.x; this.#orbitCenter.y = c.y; this.#orbitCenter.z = c.z; }
+  stop() {
+    for (const p of this.#pointers.values()) if (this.#element.hasPointerCapture(p.pointerId)) this.#element.releasePointerCapture(p.pointerId);
+    this.#keys.clear(); this.#pointers.clear(); this.#wheelDelta = 0; this.#altKey = false;
+    this.#moving = this.#rotating = this.#panning = this.#orbiting = false;
+  }
+  update(deltaSeconds) {
+    if (this.#disposed || !this.enabled) return false;
+    const now = performance.now();
+    const delta = deltaSeconds ?? Math.min((now - (this.#lastTime || now)) / 1000, 0.1);
+    this.#lastTime = now;
+    const a = this.pointerEnabled ? this.#updatePointers() : false;
+    const b = this.keyboardEnabled ? this.#updateKeyboard(delta) : false;
+    const c = this.pointerEnabled ? this.#updateWheel() : false;
+    return a || b || c;
+  }
+  dispose() {
+    if (this.#disposed) return;
+    this.stop(); this.#disposed = true;
+    this.#element.removeEventListener('pointerdown', this.#onPointerDown);
+    this.#element.removeEventListener('pointermove', this.#onPointerMove);
+    this.#element.removeEventListener('pointerup', this.#onPointerUp);
+    this.#element.removeEventListener('pointercancel', this.#onPointerUp);
+    this.#element.removeEventListener('contextmenu', this.#onContextMenu);
+    this.#element.removeEventListener('wheel', this.#onWheel);
+    this.#element.removeEventListener('keydown', this.#onKeyDown);
+    this.#element.removeEventListener('keyup', this.#onKeyUp);
+    window.removeEventListener('keyup', this.#onKeyUp);
+    window.removeEventListener('blur', this.#onBlur);
+    this.#element.style.touchAction = this.#initialTouchAction;
+    if (this.#initialTabIndex === null) this.#element.removeAttribute('tabindex');
+    else this.#element.setAttribute('tabindex', this.#initialTabIndex);
+  }
+  #onPointerDown = (e) => {
+    if (!this.enabled || !this.pointerEnabled) return;
+    this.#element.focus({ preventScroll: true });
+    this.#altKey = e.altKey;
+    this.#pointers.set(e.pointerId, { pointerId: e.pointerId, pointerType: e.pointerType, button: e.button,
+      mode: this.#getPointerMode(e.pointerType, e.button), lastX: e.clientX, lastY: e.clientY, x: e.clientX, y: e.clientY });
+    this.#element.setPointerCapture(e.pointerId); e.preventDefault();
+  };
+  #onPointerMove = (e) => { const p = this.#pointers.get(e.pointerId); if (!p) return; this.#altKey = e.altKey; p.x = e.clientX; p.y = e.clientY; e.preventDefault(); };
+  #onPointerUp = (e) => {
+    if (this.#pointers.has(e.pointerId)) {
+      this.#pointers.delete(e.pointerId);
+      if (this.#element.hasPointerCapture(e.pointerId)) this.#element.releasePointerCapture(e.pointerId);
+      if (this.#pointers.size === 0) { this.#rotating = this.#panning = this.#orbiting = false; }
+    }
+  };
+  #onContextMenu = (e) => { e.preventDefault(); };
+  #onWheel = (e) => { if (!this.enabled || !this.pointerEnabled) return; this.#wheelDelta += e.deltaY; e.preventDefault(); };
+  #onKeyDown = (e) => {
+    if (!this.enabled || !this.keyboardEnabled || !KEYBOARD_CONTROL_KEYS.has(e.code)) return;
+    this.#keys.add(e.code); this.#capsLock = e.getModifierState('CapsLock');
+    this.#altKey = e.altKey || e.code === 'AltLeft' || e.code === 'AltRight'; e.preventDefault();
+  };
+  #onKeyUp = (e) => { this.#keys.delete(e.code); this.#capsLock = e.getModifierState('CapsLock'); this.#altKey = e.altKey; };
+  #onBlur = () => { this.stop(); };
+  #updatePointers() {
+    const ps = Array.from(this.#pointers.values());
+    this.#rotating = this.#panning = this.#orbiting = false;
+    if (ps.length === 0) return false;
+    let updated = false;
+    if (ps.length >= 2) {
+      const f = ps[0], s = ps[1];
+      const lmx = (f.lastX + s.lastX) * .5, lmy = (f.lastY + s.lastY) * .5;
+      const mx = (f.x + s.x) * .5, my = (f.y + s.y) * .5;
+      const ld = distance(f.lastX, f.lastY, s.lastX, s.lastY), cd = distance(f.x, f.y, s.x, s.y);
+      const px = mx - lmx, py = my - lmy, pinch = cd - ld;
+      updated = this.#panByPixels(px, py) || updated;
+      updated = this.#moveAlongView(pinch * this.wheelSpeed) || updated;
+      this.#panning = Math.abs(px) + Math.abs(py) + Math.abs(pinch) > .001;
+    } else {
+      const p = ps[0], mode = this.#getPointerMode(p.pointerType, p.button);
+      if (p.mode !== mode) { p.mode = mode; p.lastX = p.x; p.lastY = p.y; }
+      const dx = p.x - p.lastX, dy = p.y - p.lastY;
+      if (mode === 'pan') { updated = this.#panByPixels(dx, dy); this.#panning = updated; }
+      else if (mode === 'orbit') { updated = this.#orbitByPixels(dx, dy); this.#orbiting = true; }
+      else { updated = this.#rotateByPixels(dx, dy); this.#rotating = updated; }
+    }
+    for (const p of ps) { p.lastX = p.x; p.lastY = p.y; }
+    return updated;
+  }
+  #updateKeyboard(dt) {
+    const fwd = nfk(this.#keys, 'KeyW') - nfk(this.#keys, 'KeyS');
+    const str = nfk(this.#keys, 'KeyD') - nfk(this.#keys, 'KeyA');
+    const ver = nfk(this.#keys, 'KeyQ') - nfk(this.#keys, 'KeyE');
+    const roll = nfk(this.#keys, 'KeyR') - nfk(this.#keys, 'KeyF');
+    const mult = this.#getSpeedMultiplier();
+    let updated = false;
+    const len = Math.hypot(fwd, str, ver); this.#moving = len > 0;
+    if (len > 0) {
+      const scale = (this.moveSpeed * mult * dt) / Math.max(1, len);
+      const basis = getCameraBasis(this.#camera), pos = this.#camera.position;
+      pos.x += (basis.forward.x * fwd + basis.right.x * str + basis.up.x * ver) * scale;
+      pos.y += (basis.forward.y * fwd + basis.right.y * str + basis.up.y * ver) * scale;
+      pos.z += (basis.forward.z * fwd + basis.right.z * str + basis.up.z * ver) * scale;
+      updated = true;
+    }
+    if (roll !== 0) { rollCamera(this.#camera, roll * this.rollSpeed * dt); this.#rotating = true; updated = true; }
+    else if (this.#pointers.size === 0) this.#rotating = false;
+    return updated;
+  }
+  #updateWheel() { if (Math.abs(this.#wheelDelta) < .001) return false; const d = -this.#wheelDelta * this.wheelSpeed; this.#wheelDelta = 0; return this.#moveAlongView(d); }
+  #rotateByPixels(dx, dy) { if (Math.abs(dx) + Math.abs(dy) < .001) return false; rotateCamera(this.#camera, -dx * this.lookSpeed, -dy * this.lookSpeed); return true; }
+  #orbitByPixels(dx, dy) { if (Math.abs(dx) + Math.abs(dy) < .001) return false; return orbitCamera(this.#camera, this.#orbitCenter, -dx * this.lookSpeed, -dy * this.lookSpeed, this.orbitMinDistance); }
+  #panByPixels(dx, dy) {
+    if (Math.abs(dx) + Math.abs(dy) < .001) return false;
+    const basis = getCameraBasis(this.#camera), pos = this.#camera.position, x = dx * this.panSpeed, y = -dy * this.panSpeed;
+    pos.x += basis.right.x * x + basis.viewUp.x * y; pos.y += basis.right.y * x + basis.viewUp.y * y; pos.z += basis.right.z * x + basis.viewUp.z * y;
+    return true;
+  }
+  #moveAlongView(d) {
+    if (Math.abs(d) < .001) return false;
+    const f = getCameraBasis(this.#camera).forward, pos = this.#camera.position;
+    pos.x += f.x * d; pos.y += f.y * d; pos.z += f.z * d; return true;
+  }
+  #getSpeedMultiplier() {
+    let m = 1;
+    if (this.#keys.has('ShiftLeft') || this.#keys.has('ShiftRight')) m *= this.shiftMultiplier;
+    if (this.#keys.has('ControlLeft') || this.#keys.has('ControlRight')) m *= this.ctrlMultiplier;
+    if (this.#capsLock || this.#keys.has('CapsLock')) m *= this.capsMultiplier;
+    return m;
+  }
+  #getPointerMode(type, button) {
+    if (type === 'mouse') {
+      if (button === 1 || button === 2) return 'pan';
+      if (button === 0 && this.orbitEnabled && (this.useOrbit || this.#isOrbitModifierActive())) return 'orbit';
+    }
+    return 'rotate';
+  }
+  #isOrbitModifierActive() { return this.#altKey || this.#keys.has('AltLeft') || this.#keys.has('AltRight'); }
+}
+
+function rotateCamera(camera, yawDelta, pitchDelta) {
+  const basis = getCameraBasis(camera), o = getCameraOrientationBasis(camera);
+  const rollAngle = getForwardAxisRoll(o.forward, o.up, o.viewUp);
+  const cur = Math.asin(clamp(dot(basis.forward, basis.up), -1, 1));
+  const next = clamp(cur + pitchDelta, -MAX_PITCH, MAX_PITCH);
+  const hf = normalize(projectOnPlane(basis.forward, basis.up)) ?? perpUnit(basis.up);
+  const yf = rotateAroundAxis(hf, basis.up, yawDelta);
+  const fwd = normalize(add(mul(yf, Math.cos(next)), mul(basis.up, Math.sin(next))));
+  if (!fwd) return;
+  setCameraLookBasis(camera, fwd, getViewUpWithRoll(fwd, basis.up, rollAngle));
+}
+function orbitCamera(camera, center, yawDelta, pitchDelta, minDistance) {
+  const basis = getCameraBasis(camera), o = getCameraOrientationBasis(camera);
+  const rollAngle = getForwardAxisRoll(o.forward, o.up, o.viewUp);
+  const safeMin = Math.max(EPSILON, minDistance);
+  let dist = length(sub(camera.position, center));
+  let fwd = normalize(sub(center, camera.position)) ?? normalize(o.forward) ?? { x: 0, y: 0, z: -1 };
+  if (dist < safeMin) { dist = safeMin; fwd = normalize(o.forward) ?? fwd; }
+  const cur = Math.asin(clamp(dot(fwd, basis.up), -1, 1));
+  const next = clamp(cur + pitchDelta, -MAX_PITCH, MAX_PITCH);
+  const hf = normalize(projectOnPlane(fwd, basis.up)) ?? perpUnit(basis.up);
+  const yf = rotateAroundAxis(hf, basis.up, yawDelta);
+  const nf = normalize(add(mul(yf, Math.cos(next)), mul(basis.up, Math.sin(next))));
+  if (!nf) return false;
+  camera.position.x = center.x - nf.x * dist; camera.position.y = center.y - nf.y * dist; camera.position.z = center.z - nf.z * dist;
+  setCameraLookBasis(camera, nf, getViewUpWithRoll(nf, basis.up, rollAngle));
+  return true;
+}
+function rollCamera(camera, rollDelta) {
+  const b = getCameraOrientationBasis(camera);
+  const vu = normalize(rotateAroundAxis(b.viewUp, b.forward, -rollDelta));
+  if (!vu) return;
+  setCameraLookBasis(camera, b.forward, vu);
+}
+function getCameraBasis(camera) {
+  const o = getCameraOrientationBasis(camera);
+  const right = normalize(cross(o.forward, o.up)) ?? o.right;
+  const viewUp = normalize(cross(right, o.forward)) ?? o.viewUp;
+  return { forward: o.forward, right, up: o.up, viewUp };
+}
+function getCameraOrientationBasis(camera) {
+  const up = getCameraUp(camera);
+  const m = getCameraRotationMatrix(camera), e = m._elements;
+  const forward = normalize({ x: -e[8], y: -e[9], z: -e[10] }) ?? { x: 0, y: 0, z: -1 };
+  const right = normalize({ x: e[0], y: e[1], z: e[2] }) ?? perpUnit(up);
+  const viewUp = normalize({ x: e[4], y: e[5], z: e[6] }) ?? normalize(cross(right, forward)) ?? up;
+  return { forward, right, up, viewUp };
+}
+function getForwardAxisRoll(forward, up, viewUp) { const lvl = getViewUpWithRoll(forward, up, 0); return angleAroundAxis(lvl, viewUp, forward); }
+function getViewUpWithRoll(forward, up, rollAngle) {
+  const right = normalize(cross(forward, up)) ?? perpUnit(forward);
+  const vu = normalize(cross(right, forward)) ?? up;
+  return normalize(rotateAroundAxis(vu, forward, rollAngle)) ?? vu;
+}
+function setCameraLookBasis(camera, forward, up) {
+  const right = normalize(cross(forward, up)) ?? perpUnit(up);
+  const vu = normalize(cross(right, forward)) ?? up;
+  const back = mul(forward, -1);
+  const m = makeBasisMatrix(right, vu, back);
+  const rot = camera.rotation;
+  if (typeof rot.setFromRotationMatrix === 'function') { rot.setFromRotationMatrix(m, rot.order); return; }
+  const eu = eulerFromMatrix(m, rot.order ?? 'XYZ');
+  if (typeof rot.set === 'function') rot.set(eu.x, eu.y, eu.z, eu.order);
+  else { rot.x = eu.x; rot.y = eu.y; rot.z = eu.z; }
+}
+function getCameraUp(camera) { return normalize(camera.up ?? DEFAULT_UP) ?? DEFAULT_UP; }
+function getCameraRotationMatrix(camera) { return camera.quaternion ? matFromQuat(camera.quaternion) : matFromEuler(camera.rotation); }
+function matFromQuat(q) {
+  const { x, y, z, w } = q, x2 = x + x, y2 = y + y, z2 = z + z;
+  const xx = x * x2, xy = x * y2, xz = x * z2, yy = y * y2, yz = y * z2, zz = z * z2, wx = w * x2, wy = w * y2, wz = w * z2;
+  return makeMatrix([1-(yy+zz), xy+wz, xz-wy, 0, xy-wz, 1-(xx+zz), yz+wx, 0, xz+wy, yz-wx, 1-(xx+yy), 0, 0,0,0,1]);
+}
+function matFromEuler(rot) {
+  const x = rot.x, y = rot.y, z = rot.z;
+  const a = Math.cos(x), b = Math.sin(x), c = Math.cos(y), d = Math.sin(y), e = Math.cos(z), f = Math.sin(z);
+  const ae = a*e, af = a*f, be = b*e, bf = b*f;
+  return makeMatrix([c*e, af+be*d, bf-ae*d, 0, -c*f, ae-bf*d, be+af*d, 0, d, -b*c, a*c, 0, 0,0,0,1]);
+}
+function makeBasisMatrix(x, y, z) { return makeMatrix([x.x,x.y,x.z,0, y.x,y.y,y.z,0, z.x,z.y,z.z,0, 0,0,0,1]); }
+function makeMatrix(e) { return { _elements: Float32Array.from(e) }; }
+function eulerFromMatrix(m, order) {
+  const te = m._elements, m11 = te[0], m12 = te[4], m13 = te[8], m23 = te[9], m33 = te[10];
+  const eu = { x: 0, y: Math.asin(clamp(m13, -1, 1)), z: 0, order };
+  if (Math.abs(m13) < 0.99999) { eu.x = Math.atan2(-m23, m33); eu.z = Math.atan2(-m12, m11); }
+  else { const m22 = te[5], m32 = te[6]; eu.x = Math.atan2(m32, m22); }
+  return eu;
+}
+function projectOnPlane(v, n) { return sub(v, mul(n, dot(v, n))); }
+function angleAroundAxis(from, to, axis) {
+  const pf = normalize(projectOnPlane(from, axis)), pt = normalize(projectOnPlane(to, axis));
+  if (!pf || !pt) return 0;
+  return Math.atan2(dot(cross(pf, pt), axis), dot(pf, pt));
+}
+function rotateAroundAxis(v, axis, angle) {
+  const cos = Math.cos(angle), sin = Math.sin(angle), cr = cross(axis, v), as = dot(axis, v) * (1 - cos);
+  return add(add(mul(v, cos), mul(cr, sin)), mul(axis, as));
+}
+function perpUnit(axis) { const h = Math.abs(axis.y) < 0.9 ? { x:0,y:1,z:0 } : { x:1,y:0,z:0 }; return normalize(cross(axis, h)) ?? { x:1,y:0,z:0 }; }
+function add(a,b){return {x:a.x+b.x,y:a.y+b.y,z:a.z+b.z};}
+function sub(a,b){return {x:a.x-b.x,y:a.y-b.y,z:a.z-b.z};}
+function mul(v,s){return {x:v.x*s,y:v.y*s,z:v.z*s};}
+function copyVector(v){return {x:v.x,y:v.y,z:v.z};}
+function length(v){return Math.hypot(v.x,v.y,v.z);}
+function dot(a,b){return a.x*b.x+a.y*b.y+a.z*b.z;}
+function cross(a,b){return {x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x};}
+function normalize(v){const l=Math.hypot(v.x,v.y,v.z);if(l<EPSILON)return undefined;return {x:v.x/l,y:v.y/l,z:v.z/l};}
+function nfk(keys,code){return keys.has(code)?1:0;}
+function distance(x1,y1,x2,y2){return Math.hypot(x2-x1,y2-y1);}
+function clamp(v,mn,mx){return Math.min(Math.max(v,mn),mx);}
+</script>
+</body>
+</html>
