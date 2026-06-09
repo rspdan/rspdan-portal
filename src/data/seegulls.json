@@ -449,7 +449,7 @@
     },
     {
       "name": "Pre-push mojibake gate wiring (portal_check.ps1 + na-publish + pre-commit hook)",
-      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **2-of-3 DONE 052626 ~20:50 PT** by CUBE Doc cloud · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (no edit needed at this time) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit · item (3) git pre-commit hook in rspdan-portal STILL OPEN cross-repo · requires `.husky/pre-commit` install in rspdan-portal repo OR setup script …",
+      "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **3-of-3 DONE** · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (052626 CUBE Doc) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit (052626 CUBE Doc) · item (3) git pre-commit hook in rspdan-portal DONE via PR #25 commit `69ef1bf` (later extended with em-dash gate at `e02c40e` per Dan-direct 060626). Hook at …",
       "filed": "042226 Wednesday ~20:50 PT"
     },
     {
