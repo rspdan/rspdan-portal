@@ -164,11 +164,6 @@
       "filed": "041626"
     },
     {
-      "name": "Relay INDEX regeneration",
-      "note": "Filed: 041426 | Behind by 1 day, missing today's Standard Rule.",
-      "filed": "041426"
-    },
-    {
       "name": "Artifact Gate",
       "note": "Filed: 041326 | Skill read must precede artifact creation. Add to meta-dates as hard gate.",
       "filed": "041326"
@@ -566,6 +561,11 @@
       "name": "WAKE bash equivalent",
       "note": "Filed: 041326 | **DONE 052626 ~21:00 PT** by CUBE Doc cloud · `ENGINE/generate_wake.sh` ported from `ENGINE/generate_wake.ps1` 107-line PowerShell · same behavior · auto-detect Bridge from script-location + auto-detect station via hostname + Portal-path optional with 3-candidate search · NEST week computed from anchor 2026-03-22 cycle-of-8 (A E B F# F C G D) · git log/HEAD for Bridge + Portal · new RELAY/MAIL files via diff HEAD~10 · UTF-8 output to `WAKE/WAKE_<crew>_<session>.md` · `chmod +x` + `bash -n` syntax-verified · Unix stations TRP0/GOG1/DPSL can now generate WAKE at close.",
       "filed": "041326"
+    },
+    {
+      "name": "Relay INDEX regeneration",
+      "note": "Filed: 041426 | Done 060926 by Doc cloud-station. Regenerated via ENGINE/generate_index.sh: 587 files indexed, F# Week Day 3. Pushed to portal public/relay/INDEX.md.",
+      "filed": "041426"
     },
     {
       "name": "worldtimeapi scrub",
