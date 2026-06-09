@@ -180,7 +180,7 @@
     },
     {
       "name": "Drive letter hardcoding repair",
-      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters.",
+      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters. **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md](../RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md) catalogs 132 occurrences in ENGINE scripts (33 L:\\FAS2 stale, 8 F:\\, 8 H:\\ project, rest C:\\ canonical). Remediation prioritized; actual fixes pending.",
       "filed": "041326"
     },
     {
