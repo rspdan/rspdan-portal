@@ -260,7 +260,7 @@
     },
     {
       "name": "STN2 Model Runner cross-station reach verification",
-      "note": "Filed: 041726 | STN2 Model Runner is now Fleet-bound at `10.0.0.2:12434` via Windows portproxy + firewall rule added 041726 21:00. Self-reach verified from STN2 itself (localhost + Fleet IP both answer). Cross-station reach from DPSL, DPSR, ODT, TRP0, GOG1, CUBE is expected but not empirically proven. At next boot on each of those stations, run `Invoke-RestMethod -Uri 'http://10.0.0.2:12434/engines/v1/models'` (PowerShell) or `curl http://10.0.0.2:12434/engines/v1/models` (Unix) and confirm the two-model catalog returns. Full context: …",
+      "note": "Filed: 041726 | STN2 Model Runner is now Fleet-bound at `10.0.0.2:12434` via Windows portproxy + firewall rule added 041726 21:00. Self-reach verified from STN2 itself (localhost + Fleet IP both answer). Cross-station reach from DPSL, DPSR, ODT, TRP0, CUBE is expected but not empirically proven (GOG1 removed 060926 · decommissioned ~050426). At next boot on each of those stations, run `Invoke-RestMethod -Uri 'http://10.0.0.2:12434/engines/v1/models'` (PowerShell) or `curl http://10.0.0.2:12434/engines/v1/models` (Unix) and confirm the two-model catalog returns. Full context: …",
       "filed": "041726"
     },
     {
@@ -345,7 +345,7 @@
     },
     {
       "name": "Fleet page: per-station SSH / Tailscale / Proton VPN status matrix",
-      "note": "Filed: 041826 22:15 by Dan directive | /fleet needs a clear three-column status for each Rox: (a) SSH configured + verified ground-truth working, (b) Tailscale installed + meshed, (c) Proton VPN configured + active. Current state going into tonight's update: SSH verified on STN2, ODT, CUBE (the three Windows stations after tonight's work); GOG1 SSH known-working with NOPASSWD+keys; TRP0 SSH pending; DPSL/DPSR/STN1 unknown. Tailscale: none confirmed active as of 041826 (was NEARGULL; blocked on GOG1 SLO-PUB MITM). Proton VPN: GOG1 mid-debug (Backend:None HEREGULL); others unknown. Fleet.js …",
+      "note": "Filed: 041826 22:15 by Dan directive | /fleet needs a clear three-column status for each Rox: (a) SSH configured + verified ground-truth working, (b) Tailscale installed + meshed, (c) Proton VPN configured + active. Current state going into tonight's update: SSH verified on STN2, ODT, CUBE (the three Windows stations after tonight's work); TRP0 SSH pending; DPSL/DPSR/STN1 unknown (GOG1 removed 060926 · decommissioned ~050426). Tailscale: STN2+ACHE+ODT confirmed active as of 051926. Proton VPN: status unknown across fleet. Fleet.js update to display this matrix is happening tonight as part of …",
       "filed": "041826 22:15"
     },
     {
@@ -437,7 +437,7 @@
     },
     {
       "name": "Firefox MCP Bridge",
-      "note": "Filed: 040126 | Rust compile needed (original target GOG1 decommissioned ~050426). Every Firefox tab gets MCP tools.",
+      "note": "Filed: 040126 | Rust compile needed (original target GOG1 decommissioned ~050426 · retarget to another Unix station TRP0/DPSL/DPSR). Every Firefox tab gets MCP tools.",
       "filed": "040126"
     },
     {
@@ -503,8 +503,8 @@
       "filed": "051926 Tuesday ~02:51 PT"
     },
     {
-      "name": "Claude Code on GOG1 · universalization first production instance",
-      "note": "Filed: 041926 Sunday ~22:00 PT | **DONE 041926 Sunday ~22:28 PT** · Claude Code 2.1.114 installed via `npm install -g @anthropic-ai/claude-code` under nvm Node v22.22.2, authed via OAuth as rspdan@gmail.com (Claude Max / Opus 4.7 1M context / Organization), workspace `/home/dan` trusted, auth persisted to `~/.claude/`. Dan verified at 22:28 by running `claude` directly at GOG1's terminal and capturing the \"Welcome back Dan\" TUI screen. OAuth survives reboots. `claude` on PATH in any login bash. Full state: `RELAY/GOG1_STATE_ClaudeCodeOllamaReady_Trip_041926.md`. First production instance of …",
+      "name": "DEPRECATED · Claude Code on GOG1 · universalization first production instance",
+      "note": "DEPRECATED 060926 (GOG1 decommissioned ~050426 · C2 dead-entity; the work was done but the box is now gone). | Filed: 041926 Sunday ~22:00 PT | **DONE 041926 Sunday ~22:28 PT** · Claude Code 2.1.114 installed via `npm install -g @anthropic-ai/claude-code` under nvm Node v22.22.2, authed via OAuth as rspdan@gmail.com (Claude Max / Opus 4.7 1M context / Organization), workspace `/home/dan` trusted, auth persisted to `~/.claude/`. Dan verified at 22:28 by running `claude` directly at GOG1's terminal and capturing the \"Welcome back Dan\" TUI screen. OAuth survives reboots. `claude` on PATH in any …",
       "filed": "041926 Sunday ~22:00 PT"
     },
     {
