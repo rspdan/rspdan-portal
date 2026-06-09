@@ -180,7 +180,7 @@
     },
     {
       "name": "Drive letter hardcoding repair",
-      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters. **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md](../RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md) catalogs 132 occurrences in ENGINE scripts (33 L:\\FAS2 stale, 8 F:\\, 8 H:\\ project, rest C:\\ canonical). Remediation prioritized; actual fixes pending.",
+      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters. **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md](../RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md) catalogs 132 occurrences in ENGINE scripts (33 L:\\FAS2 stale, 8 F:\\, 8 H:\\ project, rest C:\\ canonical). **HIGH PRIORITY FIXED 060926** (28ab265): nest_health.py, flow_capture.py, oshin_ping.py now use `_resolve_bridge()` pattern. MEDIUM priority (remove L: fallback once C: confirmed fleet-wide) and LOW priority (skill docs, H:\\ paths) pending.",
       "filed": "041326"
     },
     {
@@ -231,11 +231,6 @@
     {
       "name": "STN2 Docker + Ubuntu WSL survey + mapping",
       "note": "Filed: 041726 | **PARTIAL: 041726 21:35 · Docker operational, Model Runner verified Fleet-reachable at 10.0.0.2:12434 (gemma4, mistral-nemo). See `RELAY/RESEARCH_ModelRunnerSTN2_FleetBinding_Trip_041726.md` for full verification. Survey of pulled images, compose files, Ubuntu WSL contents still open.** Dan installed Docker Desktop + downloaded \"tons of stuff\" without clear tracking. Ubuntu WSL also installed, frequently forgotten in favor of firefighting. Opening snapshot 041726 11:30 PT: Docker Desktop at `C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe`, service `com.docker.service` …",
-      "filed": "041726"
-    },
-    {
-      "name": "Filesystem:edit_file large-append truncation",
-      "note": "Filed: 041726 | Today's finding: Filesystem MCP's edit_file silently collapses/fuses content mid-block on large multi-line appends (~4K byte append landed as ~1.8K with two unrelated sentences fused mid-word). Workaround: small targeted edits or full-file write_file rewrites. Root cause unknown · possibly regex-match limit or line-diff heuristic bug in the MCP. Document in FLEET/MCP_SETUP.md as a known pitfall.",
       "filed": "041726"
     },
     {
@@ -309,11 +304,6 @@
       "filed": "041826 20:02"
     },
     {
-      "name": "`ENGINE/log_deploy.py` needs BUILD-GREEN gate",
-      "note": "Filed: 041826 20:02 by Trip ODT | Current script git-commits and pushes portal changes without running `npm run build` first. Violates `STANDARD_RULE_PortalBuildFirst_Trip_041526` (BUILD GREEN = push; BUILD FAILED = fix first). I did today's 041726 fill-in manually to respect the rule. Fix: add `npm run build` invocation with exit-code gate before `git_commit_and_push`. Also want support for \"already-in-public\" files (script currently errors when target public/*/file already exists from a prior run · should treat as idempotent).",
-      "filed": "041826 20:02"
-    },
-    {
       "name": "O'Shin (Raspberry Pi 4) rejoin fleet",
       "note": "Filed: 041826 22:25 by Dan | Tomorrow job. O'Shin has been off-network for weeks, sitting unused at Nest Actual. Plan: add back to network on Unix side via Public wifi (SLO-PUB). Is a Raspberry Pi 4 · ARM64 Linux station. Role unclear yet · could serve as: always-online cloud-edge node (SLO-PUB always-on), lightweight caching proxy (data-reservoir architecture NEARGULL), Docker host for small services, or fleet monitor. Needs: physical location check, power + SD card verification, OS update + Tailscale install via VZW path (since SLO-PUB TLS MITM blocks fresh installs), fleet registration in …",
       "filed": "041826 22:25"
@@ -330,7 +320,7 @@
     },
     {
       "name": "Ground-truth canon propagation check",
-      "note": "Filed: 041826 22:25 by Trip ODT | After tonight's `STANDARD_RULE_GetLocalUserIsGroundTruth_Trip_041826.md` filing + memory edit #12 replacement + FLEET/INVENTORY.md updates (CUBE, STN2, ODT), audit remaining Bridge files for any references to \"CUBE username Code\" or similar symmetry-assumption errors: `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/**/GROUND_TRUTH.md`, `ENGINE/fleet_manifest.json`, any MAIL files with SSH canon. Correct where crew boot context is fed; leave historical LOG/MAIL as historical record.",
+      "note": "Filed: 041826 22:25 by Trip ODT | After tonight's `STANDARD_RULE_GetLocalUserIsGroundTruth_Trip_041826.md` filing + memory edit #12 replacement + FLEET/INVENTORY.md updates (CUBE, STN2, ODT), audit remaining Bridge files for any references to \"CUBE username Code\" or similar symmetry-assumption errors: `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/**/GROUND_TRUTH.md`, `ENGINE/fleet_manifest.json`, any MAIL files with SSH canon. Correct where crew boot context is fed; leave historical LOG/MAIL as historical record. **AUDIT PARTIAL 060926:** `ENGINE/fleet_manifest.json` line 147 says \"SSH: …",
       "filed": "041826 22:25"
     },
     {
@@ -568,6 +558,11 @@
       "filed": "041426"
     },
     {
+      "name": "Filesystem:edit_file large-append truncation",
+      "note": "Filed: 041726 | DONE 060926 (6ebc221). Documented in FLEET/MCP_SETUP.md DETECTION RULES section. Workaround: small targeted edits or full-file write_file rewrites.",
+      "filed": "041726"
+    },
+    {
       "name": "Claude Desktop on GOG1 (UNIX side)",
       "note": "Filed: 041726 22:46 by Dan | **DONE 041926 Sunday 22:28 PT as Claude Code (not Claude Desktop)** · Dan directive was *\"I want Claude running locally on everything possible because it gives you the direct ability to do the work I have no idea how to.\"* Claude Desktop has no Linux build. Claude Code CLI (option (a) in original gull) fulfilled the directive: installed via npm, authed via OAuth to Dan's Max plan, runs natively on GOG1, operates `/home/dan` directly. See HEREGULL above and `RELAY/GOG1_STATE_ClaudeCodeOllamaReady_Trip_041926.md`.",
       "filed": "041726 22:46"
@@ -611,6 +606,11 @@
       "name": "DEPRECATED · Tailscale on GOG1 via Proton Stealth tunnel",
       "note": "DEPRECATED 060526 (GOG1 decommissioned ~050426 · C2 dead-entity). | Filed: 041826 ~02:30 | Blocked on Proton VPN connect Backend:None being resolved (HEREGULL above). Once Proton is up, retry `tailscale up --hostname=gog1 --accept-routes --accept-dns=false`. SLO-PUB's TLS MITM blocks Tailscale controlplane directly (tested 041726); Proton Stealth tunnel bypasses the MITM by re-routing over WireGuard or OpenVPN-TCP-443. This is the real solve for the `GOG1 install-path over SLO-PUB MITM` NEARGULL too.",
       "filed": "041826 ~02:30"
+    },
+    {
+      "name": "`ENGINE/log_deploy.py` needs BUILD-GREEN gate",
+      "note": "Filed: 041826 20:02 by Trip ODT | **DONE 060926** Added `portal_build_check()` function that runs `npm run build` with exit-code gate before `git_commit_and_push()`. BUILD FAILED = abort + fix first per STANDARD_RULE_PortalBuildFirst_Trip_041526. \"Already-in-public\" files were already handled (line 87-89: EXISTS skipping).",
+      "filed": "041826 20:02"
     },
     {
       "name": "LOG/MAIL/INDEX.md manifest creation",
