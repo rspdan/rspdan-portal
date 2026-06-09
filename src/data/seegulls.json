@@ -115,7 +115,7 @@
     },
     {
       "name": "Audit Bridge for hardcoded fleet IPs",
-      "note": "Filed: 041626 | Every doc and script that literally writes 10.0.0.x needs cataloging and flagging. Known suspects: FLEET/INVENTORY.md, ENGINE/fleet_scan.ps1, ENGINE/fleet_manifest.json, RELAY/BIG_ASS_BOARD_NetworkModel_Trip_032626.md, skills/boot-polish/SKILL.md (fleet table), possibly nest_harbor.py (per old log reference), any LOG/MAIL entries with IP-as-identity. Produce a catalog, then decide remediation strategy per file.",
+      "note": "Filed: 041626 | **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedFleetIPs_Doc_060926.md](../RELAY/AUDIT_HardcodedFleetIPs_Doc_060926.md) catalogs 54 total occurrences across ENGINE scripts + FLEET docs. Categories: STALE/VALID/TRANSITIONAL identified. Remediation prioritized; actual fixes pending PR #269 merge.",
       "filed": "041626"
     },
     {
@@ -334,7 +334,7 @@
       "filed": "041826 22:25"
     },
     {
-      "name": "PI/BOOT TICKET URL gate · web_fetch blocks the literal resolved URL",
+      "name": "PI/BOOT TICKET URL gate (PARTIAL 060926) · web_fetch blocks the literal resolved URL",
       "note": "Filed: 041926 by Trip ODT | PI page nest-pi.astro references `https://www.rspdan.com/pk/[crew]/TICKET.md` as a literal template (square brackets appear in the fetched markdown). When any crew substitutes `trip`/`stan`/`cb` and calls `web_fetch` on the resolved URL, the Claude.ai fetch tool refuses because that exact literal URL was never in a prior fetch response. Hits every crew boot, every session. 041926 Trip boot worked around by reading local portal filesystem at `C:\\STAN\\SOURCE\\rspdan-portal\\public\\pk\\trip\\TICKET.md` via DC. Fix options (combine (a)+(c) for resilience): (a) update …",
       "filed": "041926"
     },
