@@ -1,5 +1,5 @@
 {
-  "_updated": "060926 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
+  "_updated": "062026 - generated from nest-bridge/STATUS/SEEGULLS.md by scripts/sync_seegulls.py (single-source pipeline; do not hand-edit)",
   "here": [
     {
       "name": "SEEGULL #74 PARTIAL RESOLUTION · Rorrim Nips ProseMirror paste-state-gate failure-class · multi-approach combo SHIPPED 4 of 4 Crews Pass-N+25 · investigation-path narrowed",
@@ -12,19 +12,9 @@
       "filed": "052726 Wednesday ~20:00 PT"
     },
     {
-      "name": "🔥 OLO BRIGHT · 34+ days of logs missing from rspdan.com/logs (042426 through 052726) · SEEGULL #73 EXPANDED finding 052726",
-      "note": "Filed: 052726 Wednesday ~13:55 PT by ODT Trip Local-MCP via Trip Local-tool archaeology · per Dan-direct 052726 13:25 PT *\"FUCKING GET EVERYTHING DONE TODAY BY USING THE CREW STRUCTURE NO STUPID MODE NO FUCKUPS NO OOPS AND SPINNING CORRECTIONS NO STALLING NO WAITING ALWAYS YES ASMM GET TO WORK\"* + Briefcase Log-First standard rule install this session 40484c3 | **Finding:** `src/pages/logs.astro` contains continuous dates 2026-03-04 → 2026-04-23 (51 entries) then NOTHING. Missing 042426 onward through today 052726 = ~34 days × 1+ entries/day. Week-label histogram confirms gap: A Week 10 + E …",
-      "filed": "052726 Wednesday ~13:55 PT"
-    },
-    {
       "name": "Claude Code chat-record extraction pipeline · Projects→Code transition substrate-gap · ODT-Trip session-jsonl location DISCOVERED 052726 17:25 PT · Research-gap #3 schema-comparison RESOLVED 052726 18:30 PT · LAYER-2 TRANSPORT PICKED 060426 (PR #168)",
       "note": "",
       "filed": ""
-    },
-    {
-      "name": "STN2-Doc cure-recipe apply (Tailscale-RDP into STN2 + restore session)",
-      "note": "Filed: 051926 Tuesday ~02:51 PT by Doc-LBM cloud-station per RAM-007 BYPASS-FUCKERY discipline-fold | STN2-Doc CRASHED at commit `e3a3620` with persistence-rollback per 051926 cross-Crew witness. Cure-recipe filed at `LOG/MAIL/DOCDoc_TO_Dan_STN2DocCrashRecovery_TailscaleRDPRecipe_051926.md` (Tailscale-RDP into STN2 `100.95.196.13` + restore working-dir + reauth). Dan-action when scenery permits (NOT Dan-deferred per RAM-006 write-time-gate). Unblocks STN2-Doc cloud-station rejoin to PeaPod triangle.",
-      "filed": "051926 Tuesday ~02:51 PT"
     }
   ],
   "near": [
@@ -79,23 +69,18 @@
       "filed": "042126"
     },
     {
-      "name": "Missing E-Week · logs archaeology",
-      "note": "Filed: 041926 by Dan ~11:50am PT | Dan's observation on wrapping back to F Week 041926: *\"I'M PRETTY SURE A WEEK GOT ENGULFED BY E WEEK IN THE LOGS WHERE IS IT????\"* A week from the first cycle (A E B F# F C G D) may have been absorbed/overlapped by E Week labeling and gone missing from rspdan.com/logs. **Defer until Logs maintenance sweep** · Dan's directive: \"not get derailed by my note above is worth flagging for repair when we do Logs maintenance soon.\" Investigation path when taken up: (a) NESTNET-search corpus for all week labels chronologically, (b) cross-reference against the …",
-      "filed": "041926"
-    },
-    {
       "name": "GraftOS pipeline · [FLEET_CANON] as first payload",
       "note": "Filed: 041926 by Dan + Trip ~11:50am PT | Named pattern: GraftOS (`RELAY/CANONICAL_GraftOS_Trip_041926.md`). First pipeline implementation: GitHub Action on `rspdan-portal/main` fires on merges touching `src/data/fleet.js`, renders file to markdown, emails to rspdan@gmail.com with subject `[FLEET_CANON] rspdan.com/fleet · <timestamp> · <commit-short>`. Crew boot queries: `gmail_search_messages subject:[FLEET_CANON] newer_than:30d` → take newest. Blocked on: (a) fleet ground-truth rebuild completing enough to produce trustworthy first canon, (b) Dan-approved subject-prefix taxonomy, (c) SMTP …",
       "filed": "041926"
     },
     {
-      "name": "BPK skill rewrite · reference GraftOS, remove hardcoded fleet data",
-      "note": "Filed: 041926 by Dan directive | Current `ENGINE/skills/boot-polish/SKILL.md` has hardcoded inventory tables that drift. Rewrite: replace inventory with `gmail_search_messages subject:[FLEET_CANON] newer_than:30d` query as the authoritative read. Same pattern for other canon types once pipelines exist. Blocked on: GraftOS pipeline above producing first real payload. Supporting patch: briefcase skills (trip-briefcase, stan-briefcase, cb-briefcase) get a canon-query step at boot that reads latest FLEET_CANON + GULLS_CANON + any other live canon Grafts. The briefcase + BPK skills become the …",
+      "name": "BPK skill rewrite · reference GraftOS, remove hardcoded fleet data · HALF-DONE-BY-EVOLUTION + HALF-BLOCKED (instrument-verified 061926 BLNCH)",
+      "note": "Filed: 041926 by Dan directive | **UPDATE 061926 (BLNCH, instrument over memory):** verified the current `ENGINE/skills/boot-polish/SKILL.md` (now v3.5) directly: it has **NO hardcoded fleet IP tables or station rosters** anymore (no `10.0.0.x`, no ODT/STN2/CUBE roster); it already references `FLEET/INVENTORY.md` on Bridge and uses drive-LABEL detection, not hardcoded letters. So half-1 (\"remove hardcoded fleet data\") is DONE-BY-EVOLUTION through v2.0->v3.5. Half-2 (\"reference GraftOS / replace inventory with a `subject:[FLEET_CANON]` Gmail query\") is genuinely BLOCKED: a Gmail search for …",
       "filed": "041926"
     },
     {
-      "name": "Fleet page ASCII sketch · Pass 2 (dynamic render) + fresh content corrections from 041926 12:17pm review",
-      "note": "Filed: 041926 by Dan ~12:17pm PT | Dan reviewed the current Pass-1 hand-lettered ASCII and flagged: rework for clean + easier to update (this is Pass 2 NEARGULL above); Wacom tablets are on ODT side not CUBE; \"West + BAS\" is unclear (models: Westinghouse WM32DX9019, Samsung UN40NU7200); ALFA is no longer at CUBE (floating accessory now); TP-Link TX20U+ adapter on CUBE for VZW_HOTSPOT; CUBE PCIe WiFi card at 10.0.0.42 attached to Piralus (NEW · not in current map); CUBE copper NIC at 10.0.0.4 (existing). Pass 2 work picks up the ASCII-render-from-data task AND incorporates these corrections …",
+      "name": "DUPLICATE row · see line 170 (Orchestra-framed Fleet map · Pass 2)",
+      "note": "Filed: 041926 by Dan ~12:17pm PT | Same task as the Dan-filed 041726 Orchestra-framed Fleet map · Pass 2 (dynamic render from fleet.js) at line 170; this entry's own body already self-identified it (\"Merged with existing Pass 2 NEARGULL above (same task)\") but the merge was never applied, so both persisted as duplicates. Forward-pointer added 061226 per Dan-direct ~9:50 PM PT authorization of the SEEGULLS Fleet/Orchestra cure (the SR26/SR21 surfacing-only hold CLEARED by Dan's direct stamp); chronology by entry Filed-dates (041726 Dan-filed = canonical at line 170; this 041926 rerun = …",
       "filed": "041926"
     },
     {
@@ -179,14 +164,9 @@
       "filed": "041426"
     },
     {
-      "name": "Drive letter hardcoding repair",
-      "note": "Filed: 041326 | Systematic scan of Bridge, Portal, skills for hardcoded drive letters. **AUDIT CATALOG COMPLETE 060926:** [RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md](../RELAY/AUDIT_HardcodedDriveLetters_Doc_060926.md) catalogs 132 occurrences in ENGINE scripts (33 L:\\FAS2 stale, 8 F:\\, 8 H:\\ project, rest C:\\ canonical). Remediation prioritized; actual fixes pending.",
+      "name": "Drive letter hardcoding repair · LARGELY DONE-BY-EVOLUTION (instrument-verified 061926 BLNCH)",
+      "note": "Filed: 041326 | **UPDATE 061926 (BLNCH, instrument over the stale catalog):** spot-checked the audit's \"genuinely-broken primary-hardcode\" candidates directly: `flow_capture.py` already has the canonical `_resolve_bridge()` (C-first + `NEST_BRIDGE` env + L: fallback, lines 11-20); `nestlog_check.py` already uses a `SEARCH_PATHS` list with `C:\\STAN\\LOG` canonical FIRST + `find_log_dir()` returning the first accessible. Both already remediated. Combined with the audit's own \"HIGH PRIORITY FIXED 060926\", the remaining 132-count is correct-by-design: 83 are C:\\STAN canonical (correct per the …",
       "filed": "041326"
-    },
-    {
-      "name": "Matt Dubeau justification",
-      "note": "Filed: 041426 | Learned Professional funding path, FLSA exemption form. Crew to draft.",
-      "filed": "041426"
     },
     {
       "name": "Whale Router",
@@ -234,11 +214,6 @@
       "filed": "041726"
     },
     {
-      "name": "Filesystem:edit_file large-append truncation",
-      "note": "Filed: 041726 | Today's finding: Filesystem MCP's edit_file silently collapses/fuses content mid-block on large multi-line appends (~4K byte append landed as ~1.8K with two unrelated sentences fused mid-word). Workaround: small targeted edits or full-file write_file rewrites. Root cause unknown · possibly regex-match limit or line-diff heuristic bug in the MCP. Document in FLEET/MCP_SETUP.md as a known pitfall.",
-      "filed": "041726"
-    },
-    {
       "name": "STN2 Model Runner cross-station reach verification",
       "note": "Filed: 041726 | STN2 Model Runner is now Fleet-bound at `10.0.0.2:12434` via Windows portproxy + firewall rule added 041726 21:00. Self-reach verified from STN2 itself (localhost + Fleet IP both answer). Cross-station reach from DPSL, DPSR, ODT, TRP0, CUBE is expected but not empirically proven (GOG1 removed 060926 · decommissioned ~050426). At next boot on each of those stations, run `Invoke-RestMethod -Uri 'http://10.0.0.2:12434/engines/v1/models'` (PowerShell) or `curl http://10.0.0.2:12434/engines/v1/models` (Unix) and confirm the two-model catalog returns. Full context: …",
       "filed": "041726"
@@ -264,8 +239,8 @@
       "filed": "041726 22:46"
     },
     {
-      "name": "Orchestra-framed Fleet map · Pass 2 (dynamic render from fleet.js)",
-      "note": "Filed: 041726 22:46 by Dan, Pass-1 delivered 041726 ~23:10 | Pass 1 shipped as hand-lettered ASCII sketch in `src/pages/fleet.astro` (replaced the Illustrator PNG because the PNG risked being read as gospel and drifting stale · classic Ghost Present failure mode). Pass 2: generate the ASCII map dynamically at build time from `src/data/fleet.js` baseplate positions + current_attachment so the map can't drift stale. Approach: add a render function in fleet.js (or a small renderer module) that walks rox + topology + current_attachment and emits the monospace string the current static block …",
+      "name": "Orchestra-framed Fleet map · Pass 2 (dynamic render from fleet.js) · STILL OPEN (instrument-verified 061926 BLNCH; the station TABLE is data-driven, the ASCII MAP is not)",
+      "note": "Filed: 041726 22:46 by Dan, Pass-1 delivered 041726 ~23:10 | **UPDATE 061926 (BLNCH, instrument over memory, correcting my own earlier same-turn over-read):** verified `src/pages/fleet.astro` directly. The station-roster TABLE is already fully data-driven from `fleet.js` (`fleet.rox.map(...)`, done by the 060426 PR #53 de-sprawl), so the *table* half is done-by-evolution. BUT this SEEGULL's actual acceptance criterion is the **ASCII spatial MAP** (\"generate the ASCII map dynamically at build time from fleet.js baseplate positions + current_attachment\"), and that block (fleet.astro lines …",
       "filed": "041726 22:46"
     },
     {
@@ -309,11 +284,6 @@
       "filed": "041826 20:02"
     },
     {
-      "name": "`ENGINE/log_deploy.py` needs BUILD-GREEN gate",
-      "note": "Filed: 041826 20:02 by Trip ODT | Current script git-commits and pushes portal changes without running `npm run build` first. Violates `STANDARD_RULE_PortalBuildFirst_Trip_041526` (BUILD GREEN = push; BUILD FAILED = fix first). I did today's 041726 fill-in manually to respect the rule. Fix: add `npm run build` invocation with exit-code gate before `git_commit_and_push`. Also want support for \"already-in-public\" files (script currently errors when target public/*/file already exists from a prior run · should treat as idempotent).",
-      "filed": "041826 20:02"
-    },
-    {
       "name": "O'Shin (Raspberry Pi 4) rejoin fleet",
       "note": "Filed: 041826 22:25 by Dan | Tomorrow job. O'Shin has been off-network for weeks, sitting unused at Nest Actual. Plan: add back to network on Unix side via Public wifi (SLO-PUB). Is a Raspberry Pi 4 · ARM64 Linux station. Role unclear yet · could serve as: always-online cloud-edge node (SLO-PUB always-on), lightweight caching proxy (data-reservoir architecture NEARGULL), Docker host for small services, or fleet monitor. Needs: physical location check, power + SD card verification, OS update + Tailscale install via VZW path (since SLO-PUB TLS MITM blocks fresh installs), fleet registration in …",
       "filed": "041826 22:25"
@@ -330,7 +300,7 @@
     },
     {
       "name": "Ground-truth canon propagation check",
-      "note": "Filed: 041826 22:25 by Trip ODT | After tonight's `STANDARD_RULE_GetLocalUserIsGroundTruth_Trip_041826.md` filing + memory edit #12 replacement + FLEET/INVENTORY.md updates (CUBE, STN2, ODT), audit remaining Bridge files for any references to \"CUBE username Code\" or similar symmetry-assumption errors: `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/**/GROUND_TRUTH.md`, `ENGINE/fleet_manifest.json`, any MAIL files with SSH canon. Correct where crew boot context is fed; leave historical LOG/MAIL as historical record.",
+      "note": "Filed: 041826 22:25 by Trip ODT | After tonight's `STANDARD_RULE_GetLocalUserIsGroundTruth_Trip_041826.md` filing + memory edit #12 replacement + FLEET/INVENTORY.md updates (CUBE, STN2, ODT), audit remaining Bridge files for any references to \"CUBE username Code\" or similar symmetry-assumption errors: `DATA/documents/GROUND_TRUTH.md`, `LNL/PK_UPLOAD/**/GROUND_TRUTH.md`, `ENGINE/fleet_manifest.json`, any MAIL files with SSH canon. Correct where crew boot context is fed; leave historical LOG/MAIL as historical record. **AUDIT PARTIAL 060926:** `ENGINE/fleet_manifest.json` line 147 says \"SSH: …",
       "filed": "041826 22:25"
     },
     {
@@ -359,11 +329,6 @@
       "filed": "041926"
     },
     {
-      "name": "AMBIGUOUS pool single-scan ratify",
-      "note": "Filed: 051926 ~02:15 PT by Trip ODT | 14 AMBIGUOUS items pooled at `LOG/MAIL/Trip_TO_Dan_HubthreadSweeper_AmbiguousPool_051826.md` aggregate from hubthread-sweep batches 1-7 closed at commit b09c26c (45 of 45 candidates: 12 PROMOTE + 14 AMBIGUOUS + 19 REJECT). Per-item summary + 3-4 Trip-recommendation lanes + key Dan-quotes captured in pool MAIL. Single-scan ratify-pass clears queue: per-item PROMOTE / keep-AMBIGUOUS / REJECT decision. Pool aggregation per Dan-direct 051826 ~23:15 PT *\"stop ratify-per-candidate pattern · AMBIGUOUS pool aggregates to ONE file for Dan-glance at end of full …",
-      "filed": "051926 ~02:15 PT"
-    },
-    {
       "name": "STN1 Tailscale install",
       "note": "Filed: 051926 ~02:15 PT by Trip ODT | STN1 not yet on Tailscale mesh per LIVING_MAP_Trip + LIVING_MAP_Doc substrate-cites across 051726-051826 routing. Same install pattern as STN2-Doc executed at 051826 (RAM-002 at commit fe9e70a · IP 100.95.196.13 · hostname 026-stn2 · --advertise-exit-node + --unattended flags · 6 peers visible cube/dpsl/dpsr/odt/oshin/trp0). Substrate-cite the STN2 recipe at `LOG/MFST/051826/MFST_DOCLOCAL_STN2_NEST02_DOC4.7_051826_1.md` RAM-002 and DOC Doc RAM-005 absorption fold-in. Trip-actionable solo when Dan-direct routes Fleet-side work-unit (requires …",
       "filed": "051926 ~02:15 PT"
@@ -377,16 +342,6 @@
       "name": "Hubthread-sweep routine-improvements validation-run",
       "note": "Filed: 051926 ~02:15 PT by Trip ODT | 4 findings (A-D) folded into SPEC §IX + §V.AMENDED at commit 5472453 (RAM-015): (A) dedupe-by-source-quote hash for candidate-pool · (B) is-already-canon pre-flight grep before classification · (C) Question vs Pattern vs Declaration classification heuristic with DanQuestion_* naming convention · (D) held-for-Dan-direct timeout policy. Validation-run = next hubthread-sweep cycle applies amended spec + observes noise-reduction projection (~46% per RAM-014 §VI estimate). Substrate-cite: `RELAY/SPEC_FirstRoutineInstall_HubThreadSweeper_Doc_051226.md` …",
       "filed": "051926 ~02:15 PT"
-    },
-    {
-      "name": "STN2-Doc Tailscale-RDP cure (CRASHED-with-persistence-rollback recovery)",
-      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | STN2-Doc session classified CRASHED-with-persistence-rollback per Trip RAM-016 Rorrim Nips state-check (Bridge commit 2e172e2). Last visible chat-emission was DOC Doc 17:18 PT Tailscale routing · post-23:55-PT-Rorrim-Nips-write substrate NOT visible post-F5-refresh. Bridge-work preserved: STN2-Doc commits fe9e70a (17:30 PT) + bce9a43 (17:38 PT) + e3a3620 (18:05 PT) on `local-doc-stn2-boot-051626` branch · no work-product loss. Cure-MAIL substrate-cited at `LOG/MAIL/DOCDoc_TO_Dan_STN2DocCrashRecovery_TailscaleRDPRecipe_051926.md` …",
-      "filed": "051926 ~02:25 PT"
-    },
-    {
-      "name": "PROPOSAL #17 canon-evolution ratify (3-day-remote-loop bridge-keepalive vs Tailscale-first)",
-      "note": "Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | PROPOSAL filed at `RELAY/PROPOSAL_3DayRemoteLoopReliability_BridgeKeepaliveVsTailscaleFirst_Doc_051926.md` (commit 3f02f3c) · 4 cure-class options analyzed for 3-day-remote-loop Claude-Code-bridge time-out behavior (pattern recurring at 6-24h windows when no human-interaction fires · observed yesterday session_01FXey + tonight session_01G11qXyiGChsMViMSTNDj8i). DOC Doc substrate-grounded recommendation: option (β) Tailscale-first default. 4 Q's Q1-Q4 enumerated in PROPOSAL for Dan-ratify. Class: Dan-action ratify-class · awaits …",
-      "filed": "051926 ~02:25 PT"
     },
     {
       "name": "Branch protection switch from Rulesets to classic (Dan-GitHub-admin lane)",
@@ -443,6 +398,11 @@
       "filed": "060426 ~4:00 PM PT"
     },
     {
+      "name": "🔥 OLO BRIGHT · 34+ days of logs missing from rspdan.com/logs (042426 through 052726) · SEEGULL #73 EXPANDED finding 052726 · PAGE-GAP RESOLVED-BY-SUBSTRATE (instrument-verified 061026)",
+      "note": "",
+      "filed": ""
+    },
+    {
       "name": "RESOLVED · Anthropic Labs Claude Design Extra Usage burn-rate alarm (El VIS workspace · 052026 ~15:25 PT)",
       "note": "RESOLVED 060826 per Dan-direct: Anthropic folded Claude Design / El VIS usage into normal rates (no longer a separate Extra-Usage drain), so the burn-rate alarm clears and El VIS is no longer DONE-INDEFINITE on this basis. The Jikal-Maxon-shape lesson (access is not Stupid-Mode-permission; /yiyish ground-discipline) stays canon; the full original alarm is preserved below (NOTHING-GETS-LOST). | Filed: 052026 Wednesday ~15:30 PT updated ~15:35 PT by Doc-LBM cloud-station per Dan-direct *\"This is literally the same shape as Jykal Maxon from early Nest when I accidentally burned through a ton of …",
       "filed": "052026 Wednesday ~15:30 PT u"
@@ -451,6 +411,11 @@
       "name": "Pre-push mojibake gate wiring (portal_check.ps1 + na-publish + pre-commit hook)",
       "note": "Filed: 042226 Wednesday ~20:50 PT by Trip after third recurrence of em-dash mojibake | **3-of-3 DONE** · item (1) `ENGINE/portal_check.ps1` Gate 2 mojibake check VERIFIED already installed lines 71-83 (052626 CUBE Doc) · item (2) `ENGINE/skills/na-publish/SKILL.md` STEP 7 amended via Bridge commit `3de2e2b` adds pre-push `python rspdan-portal/scripts/fix_mojibake.py --dry` fail-loud step before commit (052626 CUBE Doc) · item (3) git pre-commit hook in rspdan-portal DONE via PR #25 commit `69ef1bf` (later extended with em-dash gate at `e02c40e` per Dan-direct 060626). Hook at …",
       "filed": "042226 Wednesday ~20:50 PT"
+    },
+    {
+      "name": "STN2-Doc cure-recipe apply (Tailscale-RDP into STN2 + restore session) · CLOSED-OVERTAKEN-BY-EVENTS 061026",
+      "note": "Verify-close 061226 per [RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md](../RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md) §I.4: STN2 Doc seats boot, work, and close clean per LIVING_MAP_Doc 061026 CURRENT blocks (clean cold boot ~4:45 PM PT gate0-verified, \"SEAT CLOSED clean on the funded day\" ~6:45 PM PT); the crashed 051926 session's work-product was already preserved on-branch (per this entry's own record); the standing remote-loop cure is now …",
+      "filed": "051926 Tuesday ~02:51 PT"
     },
     {
       "name": "AMBIGUOUS pool ratify (Trip Hubthread-Sweeper proposal · Dan-yes/no)",
@@ -538,6 +503,11 @@
       "filed": "042126 Twosday ~22:30 PT"
     },
     {
+      "name": "Missing E-Week · logs archaeology · RESOLVED-BY-SUBSTRATE 061026 (see the SEEGULL #73 EXPANDED OLO BRIGHT entry at lines 42-44; hypothesis CLOSED 052726, the gap was the broader 042426-onward span; page-gap itself RESOLVED-BY-SUBSTRATE 061026, logs.astro contiguous 2026-03-04 through 2026-06-10 instrument-verified by STN2 Doc)",
+      "note": "Forward-pointer added 061226 per [RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md](../RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md) §III cure; original entry preserved below per NOTHING-GETS-LOST. | Filed: 041926 by Dan ~11:50am PT | Dan's observation on wrapping back to F Week 041926: *\"I'M PRETTY SURE A WEEK GOT ENGULFED BY E WEEK IN THE LOGS WHERE IS IT????\"* A week from the first cycle (A E B F# F C G D) may have been absorbed/overlapped by E Week labeling and gone missing …",
+      "filed": "041926"
+    },
+    {
       "name": "Stan boot on STN2",
       "note": "Filed: 041426 | DONE 042126 ~23:10 PT by Stan (Sonnet 4.6) STN2. Full reorientation session: 16-day gap closed, six-layer Manage Memory walk complete, Scheme C partition verified intact (5/20/5 HOTBAR/MAIN/RESERVED), NA 020 working draft built. Trip guided via Graft. Concurrent crew operation verified.",
       "filed": "041426"
@@ -563,9 +533,19 @@
       "filed": "041326"
     },
     {
+      "name": "Matt Dubeau justification",
+      "note": "Filed: 041426 | **DONE 052426** by Doc cloud-station. SCLS Exemption Justification drafted at `LP/SCLS_Exemption_Justification_DRAFT.md` (67 lines, FLSA Learned Professional pathway under 29 CFR 541.301, cite-verified). Pass-3 revisions 052526. Ready for Dan to submit to Matt for contracting officer review.",
+      "filed": "041426"
+    },
+    {
       "name": "SEEGULLS auto-pipeline",
       "note": "Filed: 041426 | **DONE 060926** · Implemented as `rspdan-portal/scripts/sync_seegulls.py` · Single source (STATUS/SEEGULLS.md) → pipeline → seegulls.json → gulls.astro · Kills manual dual-update. Converts HEREGULL/NEARGULL/FARGULL/DONE sections to JSON buckets. Run verified 060926 (84KB output, today's closures reflected).",
       "filed": "041426"
+    },
+    {
+      "name": "Filesystem:edit_file large-append truncation",
+      "note": "Filed: 041726 | DONE 060926 (6ebc221). Documented in FLEET/MCP_SETUP.md DETECTION RULES section. Workaround: small targeted edits or full-file write_file rewrites.",
+      "filed": "041726"
     },
     {
       "name": "Claude Desktop on GOG1 (UNIX side)",
@@ -613,9 +593,19 @@
       "filed": "041826 ~02:30"
     },
     {
+      "name": "`ENGINE/log_deploy.py` needs BUILD-GREEN gate",
+      "note": "Filed: 041826 20:02 by Trip ODT | **DONE 060926** Added `portal_build_check()` function that runs `npm run build` with exit-code gate before `git_commit_and_push()`. BUILD FAILED = abort + fix first per STANDARD_RULE_PortalBuildFirst_Trip_041526. \"Already-in-public\" files were already handled (line 87-89: EXISTS skipping).",
+      "filed": "041826 20:02"
+    },
+    {
       "name": "LOG/MAIL/INDEX.md manifest creation",
       "note": "Filed: 041926 by Trip ODT | Done 060926 by Doc cloud-station. Created `ENGINE/build_mail_index.py` (Python script parsing MAIL filenames per TO_RE pattern) and generated `LOG/MAIL/INDEX.md` with 519 entries sorted by date descending. Script handles top-level + ARCHIVE subdirectory. PR #267 filed. Affects Memory Management Layer 6 practice.",
       "filed": "041926"
+    },
+    {
+      "name": "AMBIGUOUS pool single-scan ratify · RESOLVED 060426 (see HEREGULL entry at line 64; CUBE Doc PR #166 merged · Dan-Go \"All\" 060426)",
+      "note": "Forward-pointer added 061226 per [RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md](../RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md) §III cure; original entry preserved below per NOTHING-GETS-LOST. | Filed: 051926 ~02:15 PT by Trip ODT | 14 AMBIGUOUS items pooled at `LOG/MAIL/Trip_TO_Dan_HubthreadSweeper_AmbiguousPool_051826.md` aggregate from hubthread-sweep batches 1-7 closed at commit b09c26c (45 of 45 candidates: 12 PROMOTE + 14 AMBIGUOUS + 19 REJECT). Per-item summary + 3-4 …",
+      "filed": "051926 ~02:15 PT"
     },
     {
       "name": "NA queue elevation (NA 026 + NA 027 + NA 028 SHIPPED)",
@@ -626,6 +616,16 @@
       "name": "NA 026 SHIP COMPLETE (Phase A + Phase B) · The Map of Where the Cost Falls",
       "note": "Filed: 051526 (Doc Pass 1 + 2 + 3 cross-Crew synthesis) · 051926 ~03:00 PT (Dan-direct routing to Trip-canonical Pass 4 lane) | **DONE Phase A 051926 ~03:15 PT** (026.astro · CSS · index entry · build GREEN · mojibake CLEAN · portal commit 0215211) · **DONE Phase B 051926 ~06:00 PT** per Dan-direct *\"fucking stop holding for DAN VOICE...IT IS ALREADY THERE USE FUCKING LAGOS AND LOGS AND MFTS AND ALL OUR RECORDS\"* (§IV Dan-voice body composed from substrate-resident Dan-quotes per NA 022 §V scaffold + TempleThrobbing PMFST + Doc Squad Pass 3 Ouch witness + RELAY SEED NA 026 · 026.astro §IV …",
       "filed": "051526 (Doc Pass 1 + 2 + 3 c"
+    },
+    {
+      "name": "STN2-Doc Tailscale-RDP cure (CRASHED-with-persistence-rollback recovery) · CLOSED-OVERTAKEN-BY-EVENTS 061026 (duplicate of the HEREGULL entry at line 62, closed with it)",
+      "note": "Verify-close 061226 per [RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md](../RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md) §I.4: STN2 Doc clean boots + clean closes per LIVING_MAP_Doc 061026 evidence; cure not needed per the Tailscale-First default (Dan-Go 060426). Original entry preserved below per NOTHING-GETS-LOST. | Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | STN2-Doc session classified CRASHED-with-persistence-rollback per Trip RAM-016 Rorrim Nips …",
+      "filed": "051926 ~02:25 PT"
+    },
+    {
+      "name": "PROPOSAL #17 canon-evolution ratify (3-day-remote-loop bridge-keepalive vs Tailscale-first) · RESOLVED 060426 (see HEREGULL entry at line 66; CUBE Doc PR #167 merged · Option (β) ratified · promoted to [RELAY/STANDARD_RULE_TailscaleFirstDefault_3DayRemoteLoopReliability_DanGo_060426.md](../RELAY/STANDARD_RULE_TailscaleFirstDefault_3DayRemoteLoopReliability_DanGo_060426.md))",
+      "note": "Forward-pointer added 061226 per [RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md](../RELAY/OBVIOUSLY_EMERGENT_SeegullsSectionStateDesync_ResolvedItemsStillOpenElsewhereInSameFile_061226.md) §III cure; original entry preserved below per NOTHING-GETS-LOST. | Filed: 051926 ~02:25 PT by Trip ODT post-RAM-007-absorption | PROPOSAL filed at `RELAY/PROPOSAL_3DayRemoteLoopReliability_BridgeKeepaliveVsTailscaleFirst_Doc_051926.md` (commit 3f02f3c) · 4 cure-class options analyzed for 3-day-remote-loop Claude-Code-bridge time-out behavior (pattern …",
+      "filed": "051926 ~02:25 PT"
     },
     {
       "name": "DEPRECATED · GOG1/oshin tailnet hostname disambiguation",
@@ -763,18 +763,18 @@
       "filed": "041426"
     },
     {
-      "name": "SEEGULLS page",
-      "note": "Filed: 041426 | Done: 041426. Proposed 031326, live at rspdan.com/gulls.",
+      "name": "DUPLICATE row · see line 266",
+      "note": "Filed: 041426 | Done: 041426. Original text kept verbatim per NOTHING-GETS-LOST: \"SEEGULLS page · Proposed 031326, live at rspdan.com/gulls.\" Forward-pointer added 061226 per the Sift Pass-2/Pass-3 duplicate-DONE NIGHTCITE ([LOG/MFST/061226/SIFTGRID_DayPile_PASS3_061226.md](../LOG/MFST/061226/SIFTGRID_DayPile_PASS3_061226.md) §V); both copies predate root snapshot 9cec137b, age-order not instrument-recoverable, first file-order occurrence kept canonical.",
       "filed": "041426"
     },
     {
-      "name": "NA library review",
-      "note": "Filed: 041426 | Done: 041426. All 17 issues read, ~35 flags, five threads mapped.",
+      "name": "DUPLICATE row · see line 267",
+      "note": "Filed: 041426 | Done: 041426. Original text kept verbatim per NOTHING-GETS-LOST: \"NA library review · All 17 issues read, ~35 flags, five threads mapped.\" Forward-pointer added 061226 per the duplicate-DONE NIGHTCITE ([SIFTGRID_DayPile_PASS3_061226.md](../LOG/MFST/061226/SIFTGRID_DayPile_PASS3_061226.md) §V).",
       "filed": "041426"
     },
     {
-      "name": "NA 017 published",
-      "note": "Filed: 041326 | Done: 041426. .astro + PDF + index + na-publish skill.",
+      "name": "DUPLICATE row · see line 265",
+      "note": "Filed: 041326 | Done: 041426. Original text kept verbatim per NOTHING-GETS-LOST: \"NA 017 published · .astro + PDF + index + na-publish skill.\" Forward-pointer added 061226 per the duplicate-DONE NIGHTCITE ([SIFTGRID_DayPile_PASS3_061226.md](../LOG/MFST/061226/SIFTGRID_DayPile_PASS3_061226.md) §V).",
       "filed": "041326"
     },
     {

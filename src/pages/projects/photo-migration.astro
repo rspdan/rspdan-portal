@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  lastUpdated="June 10, 2026"
+  title="Photo Archive Migration · PastPerfect 5 to NPGallery"
+  description="Practice-based migration framework that preserves controlled vocabulary, provenance chains, and the three-layer archive across the stack-translation. Built on the architecture named in NOW ANTHROPOLOGY 003.">
+<section class="na-hero">
+  <div class="container">
+    <div class="na-series mono">🔬 PROJECT · ARCHIVE MIGRATION</div>
+    <h1 class="na-title">Photo Archive Migration<br/><span style="font-size:0.6em;color:var(--teal)">PastPerfect 5 → NPGallery</span></h1>
+    <div class="na-meta mono">Dan Sullivan with the NEST AI Crew · methodology visible at <a href="/journal" style="color:var(--teal)">/journal</a></div>
+    <p class="na-deck">A migration that preserves the catalog as a catalog, not a spreadsheet of filenames. Three layers travel intact across the stack-translation. The architecture was named in <a href="/journal/003" style="color:var(--teal)"><strong>NOW ANTHROPOLOGY 003</strong></a> ("Three-Layer Archive: Pokémon, PastPerfect, and the Waywoodarium Save State"). This page is the shape of the work that runs on top of it.</p>
+    <div class="na-hero-links">
+      <a href="/journal/003" class="btn btn-outline">Read the architecture (NA-003)</a>
+      <a href="/journal" class="btn btn-outline">All journal issues</a>
+    </div>
+  </div>
+</section>
+
+<section class="na-section"><div class="container na-prose-container">
+  <div class="na-section-label mono">THE SHAPE</div>
+  <h2 class="na-section-title">The project, at a glance</h2>
+  <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin:1rem 0;overflow-x:auto">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" style="max-width:100%;height:auto;display:block;margin:0 auto">
+      <defs>
+        <marker id="par" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2D4A3E"/></marker>
+      </defs>
+      <text x="440" y="32" text-anchor="middle" fill="#2D4A3E" font-size="20" font-weight="700" letter-spacing="0.5">PHOTO ARCHIVE MIGRATION</text>
+      <text x="440" y="52" text-anchor="middle" fill="#888" font-size="11" letter-spacing="2">PASTPERFECT 5  →  NPGALLERY  ·  THREE LAYERS PRESERVED</text>
+      <g>
+        <rect x="40" y="100" width="140" height="240" rx="6" fill="#FFFFFF" stroke="#2D4A3E" stroke-width="2"/>
+        <text x="110" y="125" text-anchor="middle" fill="#2D4A3E" font-size="14" font-weight="700">PASTPERFECT 5</text>
+        <text x="110" y="142" text-anchor="middle" fill="#888" font-size="9" letter-spacing="1.5">SOURCE STACK</text>
+        <text x="110" y="170" text-anchor="middle" fill="#2C2C2C" font-size="11">.DBF tables</text>
+        <text x="110" y="188" text-anchor="middle" fill="#2C2C2C" font-size="11">.FPT memos</text>
+        <text x="110" y="206" text-anchor="middle" fill="#2C2C2C" font-size="11">.CDX indexes</text>
+        <line x1="60" y1="220" x2="160" y2="220" stroke="#EDE9E3" stroke-width="1"/>
+        <text x="110" y="240" text-anchor="middle" fill="#3D6455" font-size="10">150 PHOTOS fields</text>
+        <text x="110" y="256" text-anchor="middle" fill="#3D6455" font-size="10">1,852 PPFIELDS recs</text>
+        <text x="110" y="272" text-anchor="middle" fill="#3D6455" font-size="10">8,567 LEXICON terms</text>
+        <text x="110" y="288" text-anchor="middle" fill="#3D6455" font-size="10">(Chenhall's Revised)</text>
+        <text x="110" y="316" text-anchor="middle" fill="#888" font-size="9" font-style="italic">DECODED, FIELD-BY-FIELD</text>
+      </g>
+      <g>
+        <line x1="180" y1="220" x2="270" y2="220" stroke="#2D4A3E" stroke-width="2" marker-end="url(#par)"/>
+        <line x1="610" y1="220" x2="700" y2="220" stroke="#2D4A3E" stroke-width="2" marker-end="url(#par)"/>
+        <g>
+          <rect x="280" y="110" width="100" height="100" rx="4" fill="#74C9D5" opacity="0.25" stroke="#3a8a95" stroke-width="1.5"/>
+          <text x="330" y="135" text-anchor="middle" fill="#2D4A3E" font-size="12" font-weight="700">PHASE 1</text>
+          <text x="330" y="155" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">Discovery</text>
+          <text x="330" y="172" text-anchor="middle" fill="#555" font-size="10">2 weeks</text>
+          <text x="330" y="187" text-anchor="middle" fill="#555" font-size="10">Audit +</text>
+          <text x="330" y="200" text-anchor="middle" fill="#555" font-size="10">100-rec sample</text>
+        </g>
+        <g>
+          <rect x="390" y="110" width="100" height="100" rx="4" fill="#74C9D5" opacity="0.35" stroke="#3a8a95" stroke-width="1.5"/>
+          <text x="440" y="135" text-anchor="middle" fill="#2D4A3E" font-size="12" font-weight="700">PHASE 2</text>
+          <text x="440" y="155" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">Pilot</text>
+          <text x="440" y="172" text-anchor="middle" fill="#555" font-size="10">3-4 weeks</text>
+          <text x="440" y="187" text-anchor="middle" fill="#555" font-size="10">1,000 records</text>
+          <text x="440" y="200" text-anchor="middle" fill="#555" font-size="10">to sandbox</text>
+        </g>
+        <g>
+          <rect x="500" y="110" width="100" height="100" rx="4" fill="#74C9D5" opacity="0.5" stroke="#3a8a95" stroke-width="1.5"/>
+          <text x="550" y="135" text-anchor="middle" fill="#2D4A3E" font-size="12" font-weight="700">PHASE 3</text>
+          <text x="550" y="155" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">Full migration</text>
+          <text x="550" y="172" text-anchor="middle" fill="#555" font-size="10">4-8 weeks</text>
+          <text x="550" y="187" text-anchor="middle" fill="#555" font-size="10">+ cutover</text>
+          <text x="550" y="200" text-anchor="middle" fill="#555" font-size="10">+ 30-day support</text>
+        </g>
+        <text x="440" y="230" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">EACH PHASE ENDS WITH A DELIVERABLE THE CLIENT REVIEWS BEFORE APPROVING THE NEXT</text>
+        <g>
+          <rect x="280" y="250" width="320" height="22" rx="3" fill="#EDE9E3" stroke="#2D4A3E" stroke-width="1"/>
+          <text x="440" y="266" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">SOURCE LAYER  ·  records + provenance</text>
+          <rect x="280" y="278" width="320" height="22" rx="3" fill="#EDE9E3" stroke="#2D4A3E" stroke-width="1"/>
+          <text x="440" y="294" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">CATALOG LAYER  ·  controlled vocab + relationships</text>
+          <rect x="280" y="306" width="320" height="22" rx="3" fill="#EDE9E3" stroke="#2D4A3E" stroke-width="1"/>
+          <text x="440" y="322" text-anchor="middle" fill="#2D4A3E" font-size="11" font-weight="600">RENDER LAYER  ·  what curator + public see</text>
+          <text x="440" y="354" text-anchor="middle" fill="#888" font-size="10" font-style="italic">A flat CSV export loses ~60% of this. The migration preserves all three.</text>
+        </g>
+      </g>
+      <g>
+        <rect x="700" y="100" width="140" height="240" rx="6" fill="#FFFFFF" stroke="#2D4A3E" stroke-width="2"/>
+        <text x="770" y="125" text-anchor="middle" fill="#2D4A3E" font-size="14" font-weight="700">NPGALLERY</text>
+        <text x="770" y="142" text-anchor="middle" fill="#888" font-size="9" letter-spacing="1.5">TARGET STACK · NPS</text>
+        <text x="770" y="170" text-anchor="middle" fill="#2C2C2C" font-size="11">Read-only · P1</text>
+        <text x="770" y="188" text-anchor="middle" fill="#2C2C2C" font-size="11">Sandbox · P2</text>
+        <text x="770" y="206" text-anchor="middle" fill="#2C2C2C" font-size="11">Production · P3</text>
+        <line x1="720" y1="220" x2="820" y2="220" stroke="#EDE9E3" stroke-width="1"/>
+        <text x="770" y="240" text-anchor="middle" fill="#3D6455" font-size="10">Dublin Core</text>
+        <text x="770" y="256" text-anchor="middle" fill="#3D6455" font-size="10">+ AAT</text>
+        <text x="770" y="272" text-anchor="middle" fill="#3D6455" font-size="10">+ Nomenclature 3.0</text>
+        <text x="770" y="316" text-anchor="middle" fill="#888" font-size="9" font-style="italic">CATALOG STAYS A CATALOG</text>
+      </g>
+    </svg>
+  </div>
+</div></section>
+
+<section class="na-section na-section--alt"><div class="container na-prose-container">
+  <div class="na-section-label mono">THE FOUNDATION</div>
+  <h2 class="na-section-title">Source / Catalog / Render</h2>
+  <p>The architecture was named in <a href="/journal/003"><strong>NOW ANTHROPOLOGY 003 · "The Three-Layer Archive"</strong></a>: three independent fields, game design, museum archival science, and national park interpretation, each independently discovered the same three layers. Source is the irreducible minimum (the bytes that cannot be computed from anything else). Catalog is the authority that says what the source IS and where it has been. Render is the live display, always regenerable from source and catalog. A migration that loses the catalog has lost the archive; a flat CSV export typically discards about 60% of the catalog's meaning. This project's whole job is to keep all three layers intact across the stack-translation.</p>
+</div></section>
+
+<section class="na-section"><div class="container na-prose-container">
+  <div class="na-section-label mono">THE SCHEMA, DECODED</div>
+  <h2 class="na-section-title">What's already documented</h2>
+  <p>Before the first record moves, the schema is mapped. Six weeks of substrate-building produced:</p>
+  <ul>
+    <li><strong>150 fields</strong> in the PHOTOS table, field-by-field with type, length, usage, and the controlled-vocabulary lookups behind each one.</li>
+    <li><strong>1,852 field-definitions</strong> across 33 source-files in PPFIELDS (the schema-of-schemas; what PastPerfect itself believes about its own structure).</li>
+    <li><strong>8,567 controlled-vocabulary terms</strong> in LEXICON.DBF, decoded for cross-walk against Dublin Core, AAT, and Nomenclature 3.0.</li>
+    <li><strong>The cross-stack-translation pattern</strong> from PastPerfect's three-file format (.DBF tables, .FPT memo files, .CDX indexes) into NPGallery's target schema, with date-format normalization, location-stack consolidation, and provenance preservation explicit at every step.</li>
+  </ul>
+  <p>The first two weeks of any specific engagement apply this to that institution's particular install. The rest runs it at scale.</p>
+</div></section>
+
+<section class="na-section na-section--alt"><div class="container na-prose-container">
+  <div class="na-section-label mono">THE POSTURE</div>
+  <h2 class="na-section-title">A note on how the work runs</h2>
+  <p>The migration extends what an archivist already does. It does not replace anyone's judgment; it gives that judgment more reach. The catalog stays the institution's catalog. The metadata stays alive. Infrastructure footprint for the client is zero. The system runs on the contractor's hardware. The institution pays only for the migration work itself.</p>
+  <p>The methodology is visible in the open: <a href="/journal">/journal</a> is the working journal of the practice (over thirty issues; NA-003 is the architectural anchor for this project). The work is done with the NEST AI Crew (Producer / Writer / Curator lanes), at Dan's direction, with full transparency about who-writes-what. The crew structure is named openly in the journal.</p>
+</div></section>
+
+<section class="na-section"><div class="container na-prose-container">
+  <div class="na-section-label mono">STATUS</div>
+  <h2 class="na-section-title">Where this is now</h2>
+  <p>In active engagement with a National Park Service unit. Phase 1 documentation has been delivered. Inquiries about applying this to other PastPerfect or museum-archive installs are welcome.</p>
+  <p style="margin-top:1.5rem"><a href="/" class="btn btn-outline">← Home</a> &nbsp; <a href="/journal/003" class="btn btn-outline">Read NA-003</a> &nbsp; <a href="/research" class="btn btn-outline">Research</a></p>
+</div></section>
+</BaseLayout>
