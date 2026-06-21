@@ -1,0 +1,22 @@
+name: wayback-on-deploy
+on:
+  deployment_status:
+permissions:
+  contents: read
+jobs:
+  archive:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Archive public pages to the Wayback Machine
+        uses: JamieMagee/wayback@v2.2.0
+        with:
+          url: |
+            https://rspdan.com/
+            https://rspdan.com/logs
+            https://rspdan.com/gofa
+            https://rspdan.com/usic
+            https://rspdan.com/fleet
+            https://rspdan.com/map
+          saveOutlinks: true
+          ifNotArchivedWithin: 1 day
