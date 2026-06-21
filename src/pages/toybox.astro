@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Single-source: generated from nest-bridge/STATUS/TOYBOX_CATALOGUE.jsonl by scripts/sync_toybox.py
+import toybox from '../data/toybox.json';
+
+const prioColor = {
+  now: 'var(--here)', near: 'var(--near)', reference: 'var(--far)',
+  hold: 'var(--muted)', examined: 'var(--done)', other: 'var(--muted)',
+};
+---
+<BaseLayout lastUpdated="June 20, 2026" title="Toy Box" description="NEST's Data Days archival system · LOOK before BUILD · the Obvious-and-Outlier discipline extended to everything NEST gathers. Two worlds: bridge-intel (what NEST read and learned) and hdso-source (source material to build from). STN2 is the authoritative ground; this is the legible Bridge view.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+:root{--bg:#0c0e14;--card:#13161f;--border:rgba(255,255,255,0.06);--muted:#4a5468;--text:#b8bfcc;--head:#e2e8f0;--here:#c94c4c;--near:#c9a84c;--far:#4a7ab5;--done:#4a9b8e;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.shell{max-width:900px;margin:0 auto;padding:3rem 1.5rem 8rem;}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
+.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+.title{font-size:1.5rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
+.sub{font-size:0.58rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.1em;line-height:1.6;}
+.stats{font-size:0.6rem;color:var(--muted);margin-top:0.6rem;letter-spacing:0.08em;}
+.world{margin-bottom:3rem;}
+.world-head{display:flex;align-items:baseline;gap:0.6rem;margin-bottom:1.2rem;border-bottom:1px solid var(--border);padding-bottom:0.6rem;}
+.world-name{font-size:0.95rem;color:var(--head);font-weight:400;letter-spacing:0.08em;}
+.world-count{font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;}
+.lane{margin-bottom:1.6rem;}
+.lane-label{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
+.toy{display:grid;grid-template-columns:54px 1fr;gap:0.6rem;padding:0.4rem 0;border-bottom:1px solid var(--border);align-items:baseline;}
+.badge{font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.12rem 0.3rem;border-radius:3px;text-align:center;color:var(--bg);font-weight:500;}
+.toy-body{min-width:0;}
+.toy-name{font-size:0.72rem;color:var(--head);font-weight:400;}
+.toy-files{font-size:0.52rem;color:var(--muted);margin-left:0.4rem;}
+.toy-what{font-size:0.58rem;color:var(--text);margin-top:0.2rem;line-height:1.5;opacity:0.8;}
+</style>
+<div class="shell">
+  <div class="hdr">
+    <div class="eyebrow">NEST · Data Days Archival System</div>
+    <div class="title">The Toy Box</div>
+    <div class="sub">
+      LOOK before BUILD · the Obvious-and-Outlier discipline extended to everything NEST gathers.<br>
+      Two worlds · bridge-intel (what NEST read and learned) · hdso-source (source material to build from).<br>
+      STN2 holds the 100% authoritative HDSO; this is the legible Bridge view, not a parity claim.<br>
+      Source · Bridge STATUS/TOYBOX_CATALOGUE.jsonl
+    </div>
+    <div class="stats">{toybox.total} toys cataloged</div>
+  </div>
+
+  {toybox.worlds.map(w => (
+    <div class="world">
+      <div class="world-head">
+        <span class="world-name">{w.world}</span>
+        <span class="world-count">{w.count} toys · {w.lanes.length} lanes</span>
+      </div>
+      {w.lanes.map(lane => (
+        <div class="lane">
+          <div class="lane-label">{lane.lane} ({lane.count})</div>
+          {lane.items.map(t => (
+            <div class="toy">
+              <span class="badge" style={`background:${prioColor[t.priority] || 'var(--muted)'}`}>{t.priority}</span>
+              <div class="toy-body">
+                <span class="toy-name">{t.title}</span>
+                {t.files && <span class="toy-files">{t.files} files</span>}
+                {t.what && <div class="toy-what">{t.what}</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  ))}
+</div>
+</BaseLayout>
