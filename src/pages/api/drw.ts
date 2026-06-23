@@ -7,6 +7,8 @@ import { verifySession } from '../../lib/pspt.js';
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 const DRAW_INDEX_KEY = 'drw:items';
+const CONFIDENCE_VALUES = new Set(['observed', 'inferred', 'unverified', 'mixed']);
+const DIMENSION_VALUES = new Set(['2D', '3D', '4D+', 'EEE']);
 
 function getRedis() {
   const url = import.meta.env.UPSTASH_REDIS_REST_URL || process.env.UPSTASH_REDIS_REST_URL;
@@ -31,6 +33,23 @@ function decodeDataUrl(dataUrl: string): { bytes: Buffer; contentType: string } 
   } catch {
     return null;
   }
+}
+
+function clampText(value: unknown, max: number) {
+  return (value || '').toString().slice(0, max);
+}
+
+function cleanDimensions(value: unknown): string[] {
+  if (!Array.isArray(value)) return ['2D'];
+  const tags = value
+    .map((tag) => tag?.toString())
+    .filter((tag): tag is string => Boolean(tag && DIMENSION_VALUES.has(tag)));
+  return tags.length ? Array.from(new Set(tags)) : ['2D'];
+}
+
+function cleanConfidence(value: unknown) {
+  const confidence = value?.toString().toLowerCase();
+  return confidence && CONFIDENCE_VALUES.has(confidence) ? confidence : 'observed';
 }
 
 async function writeRelay(redis: Redis, from: string, content: string, context: string) {
@@ -88,7 +107,8 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const image: string | undefined = body?.image;
-  const caption = (body?.caption || '').toString().slice(0, 500);
+  const caption = clampText(body?.caption, 500);
+  const coordinate = body?.coordinate && typeof body.coordinate === 'object' ? body.coordinate : {};
   if (!image || typeof image !== 'string') return json({ error: 'image png data url required' }, 400);
 
   const decoded = decodeDataUrl(image);
@@ -98,7 +118,11 @@ export const POST: APIRoute = async ({ request }) => {
   const ts = Date.now();
   const user = safeUser(session.user);
   const day = new Date(ts).toISOString().slice(0, 10);
-  const key = `drw/${day}/${user}_${ts}.png`;
+  const createdAt = new Date(ts).toISOString();
+  const baseKey = `drw/${day}/${user}_${ts}`;
+  const key = `${baseKey}.png`;
+  const packetKey = `${baseKey}.coordinate.json`;
+  const coordinateId = `HCUS-DRW-${day.replace(/-/g, '')}-${user}-${ts}`;
 
   let blobUrl: string;
   try {
@@ -112,20 +136,85 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ error: 'blob upload failed', detail: err?.message }, 502);
   }
 
+  const dimensionTags = cleanDimensions(coordinate.dimensionTags);
+  const confidence = cleanConfidence(coordinate.confidence);
+  const resolver = clampText(coordinate.resolver, 240) || 'Operating Room cross-witness pending';
+  const sourceContext = clampText(coordinate.sourceContext, 160) || 'rspdan.com/drw';
+  const trace = clampText(coordinate.trace || caption, 500) || 'DRW drawing';
+  const activeInk = clampText(coordinate.activeInk, 32);
+  const activeTool = clampText(coordinate.activeTool, 24) || 'pen';
+  const lineWidth = Number.isFinite(Number(coordinate.lineWidth)) ? Number(coordinate.lineWidth) : null;
+
+  const packet = {
+    coordinate_id: coordinateId,
+    trace,
+    source_surface: 'drw',
+    operator: user,
+    station: 'rspdan-portal',
+    created_at: createdAt,
+    dimension_tags: dimensionTags,
+    color_or_key: {
+      value: '',
+      status: 'none',
+    },
+    source_lenses_read: [
+      {
+        path_or_id: sourceContext,
+        surface: 'web',
+        read_status: 'observed',
+      },
+    ],
+    station_expansion: 'Drawing saved from /drw with PNG and Coordinate Packet sidecar.',
+    evidence: [
+      { kind: 'url', value: blobUrl },
+      { kind: 'path', value: key },
+    ],
+    confidence,
+    resolver,
+    build_gate: 'Promotion requires Operating Room cross-witness; no color/key canon assigned by save.',
+    handoff: 'Operating Room relay and DRW recent list.',
+    drw: {
+      caption,
+      activeInk,
+      activeTool,
+      lineWidth,
+      bytes: decoded.bytes.length,
+    },
+  };
+
+  let packetUrl: string;
+  try {
+    const sidecar = await put(packetKey, Buffer.from(JSON.stringify(packet, null, 2), 'utf8'), {
+      access: 'public',
+      contentType: 'application/json',
+      token: blobToken,
+    });
+    packetUrl = sidecar.url;
+  } catch (err: any) {
+    return json({ error: 'coordinate packet upload failed', detail: err?.message }, 502);
+  }
+
   const item = {
     id: `drw_${ts}_${user}`,
     url: blobUrl,
     key,
+    packetUrl,
+    packetKey,
+    coordinateId,
+    dimensionTags,
+    confidence,
     caption,
     user,
     ts,
-    createdAt: new Date(ts).toISOString(),
+    createdAt,
     bytes: decoded.bytes.length,
   };
 
   await redis.zadd(DRAW_INDEX_KEY, { score: ts, member: JSON.stringify(item) });
-  const relayContent = caption ? `[DRW] ${blobUrl} :: ${caption}` : `[DRW] ${blobUrl}`;
+  const relayContent = caption
+    ? `[DRW] ${blobUrl} :: ${caption} :: packet ${packetUrl}`
+    : `[DRW] ${blobUrl} :: packet ${packetUrl}`;
   const relay = await writeRelay(redis, user, relayContent, 'rspdan.com/drw');
 
-  return json({ ok: true, drawing: item, relay });
+  return json({ ok: true, drawing: item, coordinate: packet, relay });
 };
