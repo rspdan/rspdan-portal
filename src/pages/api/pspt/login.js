@@ -1,13 +1,13 @@
 // POST /api/pspt/login — authenticate and set session cookie
 import { authenticate, createSession, sessionCookie } from '../../../lib/pspt.js';
+import { safeRedirectPath } from '../../../lib/safeRedirectPath.js';
 
 export async function POST({ request }) {
   try {
     const form = await request.formData();
     const username = form.get('username')?.toString().trim();
     const password = form.get('password')?.toString();
-    const nextRaw = form.get('next')?.toString() || '/admin/fleet';
-    const next = nextRaw.startsWith('/') && !nextRaw.startsWith('//') ? nextRaw : '/admin/fleet';
+    const next = safeRedirectPath(form.get('next')?.toString(), '/admin/fleet', new URL(request.url).origin);
 
     if (!username || !password) {
       return new Response(null, { status: 302, headers: { Location: `/pspt?error=missing&next=${encodeURIComponent(next)}` } });

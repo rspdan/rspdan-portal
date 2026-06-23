@@ -4,9 +4,9 @@ export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { verifySession } from '../lib/pspt.js';
+import { safeRedirectPath } from '../lib/safeRedirectPath.js';
 
-const nextRaw = Astro.url.searchParams.get('next') || '/admin/fleet';
-const next = nextRaw.startsWith('/') && !nextRaw.startsWith('//') ? nextRaw : '/admin/fleet';
+const next = safeRedirectPath(Astro.url.searchParams.get('next'), '/admin/fleet', Astro.url.origin);
 
 // If already logged in, redirect to the requested private surface.
 const session = verifySession(Astro.request.headers.get('cookie'));
