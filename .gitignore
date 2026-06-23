@@ -6,3 +6,7 @@ dist/
 
 # Boxed Fleet substrate — credentials/IPs/MACs/SSH (Box-in-Box Rox Genius · 053026)
 src/data/fleet_private.js
+
+# Python bytecode (e.g. scripts/gen_cascade_svg.py)
+__pycache__/
+*.pyc
