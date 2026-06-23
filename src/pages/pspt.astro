@@ -4,11 +4,14 @@ export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { verifySession } from '../lib/pspt.js';
+import { safeRedirectPath } from '../lib/safeRedirectPath.js';
 
-// If already logged in, redirect to admin
+const next = safeRedirectPath(Astro.url.searchParams.get('next'), '/admin/fleet', Astro.url.origin);
+
+// If already logged in, redirect to the requested private surface.
 const session = verifySession(Astro.request.headers.get('cookie'));
 if (session) {
-  return Astro.redirect('/admin/fleet');
+  return Astro.redirect(next);
 }
 
 const error = Astro.url.searchParams.get('error');
@@ -28,6 +31,7 @@ const errorMsg = {
       {errorMsg && <div class="pspt-error">{errorMsg}</div>}
 
       <form method="POST" action="/api/pspt/login" class="pspt-form">
+        <input type="hidden" name="next" value={next} />
         <label>
           <span>Username</span>
           <input type="text" name="username" autocomplete="username" required />

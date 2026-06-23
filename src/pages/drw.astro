@@ -1,0 +1,627 @@
+---
+// DRW: Operating Room drawing workbench. PSPT-gated.
+export const prerender = false;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { verifySession } from '../lib/pspt.js';
+
+const session = verifySession(Astro.request.headers.get('cookie'));
+if (!session) {
+  return Astro.redirect('/pspt?next=/drw');
+}
+---
+<BaseLayout lastUpdated="June 22, 2026" title="DRW">
+  <main class="drw-shell">
+    <section class="drw-window" aria-label="DRW drawing workbench">
+      <header class="drw-titlebar">
+        <div>
+          <span class="drw-title">DRW.EXE</span>
+          <span class="drw-path">rspdan.com/drw</span>
+        </div>
+        <form method="POST" action="/api/pspt/logout">
+          <button type="submit" class="drw-window-btn">LOGOUT</button>
+        </form>
+      </header>
+
+      <div class="drw-menubar" aria-label="Workbench menu">
+        <span>FILE</span>
+        <span>EDIT</span>
+        <span>VIEW</span>
+        <span>ROOM</span>
+        <span class="drw-user">OPERATOR: {session.user}</span>
+      </div>
+
+      <div class="drw-body">
+        <div class="drw-left">
+          <div class="drw-toolbar" aria-label="Drawing controls">
+            <button type="button" class="tool is-active" data-tool="pen">PEN</button>
+            <button type="button" class="tool" data-tool="erase">ERASE</button>
+            <button type="button" id="clear-btn" class="tool">CLEAR</button>
+            <label class="drw-control">
+              <span>WIDTH</span>
+              <input type="range" id="size-input" min="1" max="42" value="5" />
+            </label>
+            <div class="drw-swatches" aria-label="Ink colors">
+              <button type="button" class="swatch is-active" data-color="#111111" style="--swatch:#111111"><span>Black</span></button>
+              <button type="button" class="swatch" data-color="#d82020" style="--swatch:#d82020"><span>Red</span></button>
+              <button type="button" class="swatch" data-color="#1a56b8" style="--swatch:#1a56b8"><span>Blue</span></button>
+              <button type="button" class="swatch" data-color="#237a3b" style="--swatch:#237a3b"><span>Green</span></button>
+              <button type="button" class="swatch" data-color="#f2c230" style="--swatch:#f2c230"><span>Gold</span></button>
+            </div>
+          </div>
+
+          <div class="canvas-frame">
+            <canvas id="draw-canvas" width="960" height="640"></canvas>
+          </div>
+
+          <div class="coordinate-panel" aria-label="Coordinate packet">
+            <div class="panel-title">COORDINATE PACKET</div>
+            <div class="coordinate-grid">
+              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="2D" checked />2D</label>
+              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="3D" />3D</label>
+              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="4D+" />4D+</label>
+              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="EEE" />EEE</label>
+              <label class="packet-field">
+                <span>CONF</span>
+                <select id="confidence-input">
+                  <option value="observed">OBSERVED</option>
+                  <option value="mixed">MIXED</option>
+                  <option value="inferred">INFERRED</option>
+                  <option value="unverified">UNVERIFIED</option>
+                </select>
+              </label>
+              <label class="packet-field packet-wide">
+                <span>SOURCE</span>
+                <input type="text" id="source-input" maxlength="160" value="rspdan.com/drw" />
+              </label>
+              <label class="packet-field packet-wide">
+                <span>RESOLVE</span>
+                <input type="text" id="resolver-input" maxlength="240" value="Operating Room cross-witness pending" />
+              </label>
+            </div>
+          </div>
+
+          <div class="drw-submit">
+            <label for="caption-input">LABEL</label>
+            <input type="text" id="caption-input" maxlength="500" autocomplete="off" />
+            <button type="button" id="save-btn">SAVE + RELAY</button>
+          </div>
+        </div>
+
+        <aside class="drw-right" aria-label="Saved drawings">
+          <div class="panel-title">RECENT DRW</div>
+          <div id="draw-list" class="draw-list">
+            <div class="draw-empty">LOADING...</div>
+          </div>
+        </aside>
+      </div>
+
+      <footer class="drw-status" id="status-line">READY</footer>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const canvas = document.getElementById('draw-canvas');
+  const ctx = canvas.getContext('2d');
+  const sizeInput = document.getElementById('size-input');
+  const clearBtn = document.getElementById('clear-btn');
+  const saveBtn = document.getElementById('save-btn');
+  const captionInput = document.getElementById('caption-input');
+  const statusLine = document.getElementById('status-line');
+  const drawList = document.getElementById('draw-list');
+  const toolButtons = Array.from(document.querySelectorAll('.tool[data-tool]'));
+  const swatches = Array.from(document.querySelectorAll('.swatch'));
+  const dimensionInputs = Array.from(document.querySelectorAll('input[name="dimension-tags"]'));
+  const confidenceInput = document.getElementById('confidence-input');
+  const sourceInput = document.getElementById('source-input');
+  const resolverInput = document.getElementById('resolver-input');
+
+  let drawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let tool = 'pen';
+  let ink = '#111111';
+
+  function setStatus(text) {
+    statusLine.textContent = text;
+  }
+
+  function escapeHtml(value) {
+    return (value || '').toString().replace(/[<>&"]/g, (c) => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', '"':'&quot;' }[c]));
+  }
+
+  function safeHttpUrl(value) {
+    try {
+      const url = new URL(value);
+      return url.protocol === 'https:' || url.protocol === 'http:' ? escapeHtml(url.href) : '';
+    } catch {
+      return '';
+    }
+  }
+
+  function selectedDimensions() {
+    const dimensions = dimensionInputs.filter((input) => input.checked).map((input) => input.value);
+    return dimensions.length ? dimensions : ['2D'];
+  }
+
+  function buildCoordinate() {
+    return {
+      trace: captionInput.value.trim() || 'DRW drawing',
+      sourceSurface: 'drw',
+      dimensionTags: selectedDimensions(),
+      confidence: confidenceInput.value,
+      sourceContext: sourceInput.value.trim(),
+      resolver: resolverInput.value.trim(),
+      activeInk: ink,
+      activeTool: tool,
+      lineWidth: Number(sizeInput.value),
+    };
+  }
+
+  function paintPaper() {
+    ctx.save();
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  }
+
+  function pointerPos(event) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: (event.clientX - rect.left) * (canvas.width / rect.width),
+      y: (event.clientY - rect.top) * (canvas.height / rect.height),
+    };
+  }
+
+  function begin(event) {
+    event.preventDefault();
+    canvas.setPointerCapture(event.pointerId);
+    drawing = true;
+    const p = pointerPos(event);
+    lastX = p.x;
+    lastY = p.y;
+  }
+
+  function move(event) {
+    if (!drawing) return;
+    event.preventDefault();
+    const p = pointerPos(event);
+    ctx.strokeStyle = tool === 'erase' ? '#ffffff' : ink;
+    ctx.lineWidth = Number(sizeInput.value);
+    ctx.lineCap = 'square';
+    ctx.lineJoin = 'miter';
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    lastX = p.x;
+    lastY = p.y;
+  }
+
+  function end(event) {
+    if (!drawing) return;
+    drawing = false;
+    if (event?.pointerId !== undefined) canvas.releasePointerCapture(event.pointerId);
+    setStatus('DRAWING MODIFIED');
+  }
+
+  function renderList(items) {
+    if (!items.length) {
+      drawList.innerHTML = '<div class="draw-empty">NO SAVES YET</div>';
+      return;
+    }
+    drawList.innerHTML = items.map((item) => {
+      const date = new Date(item.createdAt || item.ts).toLocaleString();
+      const caption = escapeHtml(item.caption || '');
+      const dimensions = Array.isArray(item.dimensionTags) ? escapeHtml(item.dimensionTags.join('/')) : '';
+      const confidence = item.confidence ? escapeHtml(item.confidence.toString().toUpperCase()) : '';
+      const imageUrl = safeHttpUrl(item.url);
+      const packetUrl = safeHttpUrl(item.packetUrl);
+      const packet = packetUrl ? `<a class="packet-link" href="${packetUrl}" target="_blank" rel="noreferrer">PACKET</a>` : '';
+      if (!imageUrl) return '';
+      return `
+        <article class="draw-item">
+          <a href="${imageUrl}" target="_blank" rel="noreferrer"><img src="${imageUrl}" alt="${caption || 'Saved drawing'}" loading="lazy" /></a>
+          <div>
+            <strong>${caption || 'UNTITLED'}</strong>
+            <span>${date}</span>
+            ${dimensions || confidence ? `<span>${dimensions}${dimensions && confidence ? ' / ' : ''}${confidence}</span>` : ''}
+            ${packet}
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
+  async function loadDrawings() {
+    try {
+      const res = await fetch('/api/drw?limit=18');
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      renderList(data.drawings || []);
+      setStatus('READY');
+    } catch (err) {
+      drawList.innerHTML = '<div class="draw-empty">INDEX OFFLINE</div>';
+      setStatus(`READ ERROR: ${err.message}`);
+    }
+  }
+
+  async function saveDrawing() {
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'SAVING...';
+    setStatus('SAVING PNG + RELAY MESSAGE');
+    try {
+      const res = await fetch('/api/drw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          image: canvas.toDataURL('image/png'),
+          caption: captionInput.value,
+          coordinate: buildCoordinate(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      captionInput.value = '';
+      await loadDrawings();
+      setStatus(`SAVED ${data.drawing.id}`);
+    } catch (err) {
+      setStatus(`SAVE ERROR: ${err.message}`);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'SAVE + RELAY';
+    }
+  }
+
+  toolButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      tool = button.dataset.tool;
+      toolButtons.forEach((b) => b.classList.toggle('is-active', b === button));
+      setStatus(`${tool.toUpperCase()} SELECTED`);
+    });
+  });
+
+  swatches.forEach((button) => {
+    button.addEventListener('click', () => {
+      ink = button.dataset.color;
+      swatches.forEach((s) => s.classList.toggle('is-active', s === button));
+      setStatus('INK SELECTED');
+    });
+  });
+
+  clearBtn.addEventListener('click', () => {
+    paintPaper();
+    setStatus('CANVAS CLEARED');
+  });
+
+  saveBtn.addEventListener('click', saveDrawing);
+  canvas.addEventListener('pointerdown', begin);
+  canvas.addEventListener('pointermove', move);
+  canvas.addEventListener('pointerup', end);
+  canvas.addEventListener('pointercancel', end);
+
+  paintPaper();
+  loadDrawings();
+</script>
+
+<style>
+  .drw-shell {
+    width: min(1280px, calc(100vw - 2rem));
+    margin: 1rem auto 4rem;
+  }
+  .drw-window {
+    background: #c8c8c8;
+    border: 2px solid #111;
+    box-shadow: 6px 6px 0 #555;
+    color: #111;
+    font-family: var(--font-mono);
+  }
+  .drw-titlebar {
+    min-height: 34px;
+    background: #071b5f;
+    color: #fff;
+    border-bottom: 2px solid #111;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.25rem 0.45rem 0.25rem 0.7rem;
+  }
+  .drw-title {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-right: 1rem;
+  }
+  .drw-path {
+    color: #cfd8ff;
+    font-size: 0.76rem;
+  }
+  .drw-window-btn,
+  .tool,
+  #save-btn {
+    background: #e6e6e6;
+    border: 2px solid;
+    border-color: #fff #333 #333 #fff;
+    color: #111;
+    font: 700 0.74rem/1 var(--font-mono);
+    min-height: 30px;
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+  }
+  .drw-window-btn:active,
+  .tool:active,
+  #save-btn:active,
+  .tool.is-active {
+    border-color: #333 #fff #fff #333;
+    background: #d5d5d5;
+  }
+  .drw-menubar {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    min-height: 28px;
+    padding: 0 0.75rem;
+    border-bottom: 2px solid #777;
+    background: #dfdfdf;
+    font-size: 0.72rem;
+  }
+  .drw-user {
+    margin-left: auto;
+  }
+  .drw-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    min-height: 0;
+  }
+  .drw-left {
+    min-width: 0;
+    padding: 0.75rem;
+  }
+  .drw-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.65rem;
+  }
+  .drw-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 30px;
+    padding: 0 0.45rem;
+    background: #dcdcdc;
+    border: 1px solid #777;
+    font-size: 0.68rem;
+  }
+  .drw-control input {
+    width: 110px;
+  }
+  .drw-swatches {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+  .swatch {
+    width: 30px;
+    height: 30px;
+    border: 2px solid;
+    border-color: #fff #333 #333 #fff;
+    background: var(--swatch);
+    cursor: pointer;
+  }
+  .swatch span {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .swatch.is-active {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+  }
+  .canvas-frame {
+    background: #777;
+    border: 2px solid;
+    border-color: #555 #fff #fff #555;
+    padding: 0.65rem;
+  }
+  #draw-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    background: #fff;
+    border: 1px solid #111;
+    touch-action: none;
+    cursor: crosshair;
+  }
+  .coordinate-panel {
+    margin-top: 0.65rem;
+    background: #d6d6d6;
+    border: 2px solid;
+    border-color: #555 #fff #fff #555;
+    padding: 0.55rem;
+  }
+  .coordinate-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(58px, auto)) minmax(120px, 180px);
+    gap: 0.45rem;
+    align-items: center;
+  }
+  .packet-check,
+  .packet-field {
+    min-height: 30px;
+    background: #e8e8e8;
+    border: 1px solid #777;
+    color: #111;
+    font: 700 0.68rem/1 var(--font-mono);
+  }
+  .packet-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.35rem;
+  }
+  .packet-field {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.35rem;
+  }
+  .packet-field span {
+    white-space: nowrap;
+  }
+  .packet-field input,
+  .packet-field select {
+    min-width: 0;
+    width: 100%;
+    height: 24px;
+    border: 1px solid #555;
+    background: #fff;
+    color: #111;
+    font: 0.68rem var(--font-mono);
+  }
+  .packet-wide {
+    grid-column: span 3;
+  }
+  .drw-submit {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.65rem;
+  }
+  .drw-submit label,
+  .panel-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  #caption-input {
+    min-width: 0;
+    height: 32px;
+    border: 2px solid;
+    border-color: #555 #fff #fff #555;
+    background: #fff;
+    color: #111;
+    font: 0.82rem var(--font-mono);
+    padding: 0.25rem 0.4rem;
+  }
+  #save-btn:disabled {
+    color: #777;
+    cursor: wait;
+  }
+  .drw-right {
+    border-left: 2px solid #777;
+    background: #b8b8b8;
+    padding: 0.75rem;
+    min-width: 0;
+  }
+  .panel-title {
+    border-bottom: 2px solid #777;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.35rem;
+  }
+  .draw-list {
+    display: grid;
+    gap: 0.55rem;
+    max-height: 650px;
+    overflow: auto;
+    padding-right: 0.2rem;
+  }
+  .draw-item {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.35rem;
+    background: #dedede;
+    border: 1px solid #777;
+  }
+  .draw-item img {
+    width: 72px;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background: #fff;
+    border: 1px solid #111;
+  }
+  .draw-item strong,
+  .draw-item span {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+  .draw-item strong {
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+  .draw-item span,
+  .draw-empty {
+    color: #333;
+    font-size: 0.64rem;
+  }
+  .packet-link {
+    display: inline-block;
+    margin-top: 0.25rem;
+    color: #071b5f;
+    font: 700 0.64rem/1 var(--font-mono);
+    text-decoration: underline;
+  }
+  .drw-status {
+    min-height: 28px;
+    padding: 0.35rem 0.7rem;
+    background: #e6e6e6;
+    border-top: 2px solid #777;
+    font-size: 0.72rem;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 900px) {
+    .drw-shell {
+      width: calc(100vw - 1rem);
+      margin-top: 0.5rem;
+    }
+    .drw-body {
+      grid-template-columns: 1fr;
+    }
+    .drw-right {
+      border-left: 0;
+      border-top: 2px solid #777;
+    }
+    .coordinate-grid {
+      grid-template-columns: repeat(4, minmax(58px, auto));
+    }
+    .packet-field {
+      grid-column: span 4;
+    }
+    .draw-list {
+      max-height: none;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+  @media (max-width: 620px) {
+    .drw-titlebar,
+    .drw-menubar,
+    .drw-submit {
+      align-items: stretch;
+    }
+    .drw-titlebar,
+    .drw-menubar {
+      flex-wrap: wrap;
+    }
+    .drw-submit {
+      grid-template-columns: 1fr;
+    }
+    .coordinate-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .packet-field,
+    .packet-wide {
+      grid-column: span 2;
+    }
+    #save-btn {
+      width: 100%;
+    }
+  }
+</style>
