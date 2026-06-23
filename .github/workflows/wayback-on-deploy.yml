@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Archive public pages to the Wayback Machine
+        continue-on-error: true
         uses: JamieMagee/wayback@v2.2.0
         with:
           url: |
