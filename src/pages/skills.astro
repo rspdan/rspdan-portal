@@ -10,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 // NEST-axis (Pokemon Moves + Operational Discoveries) · 46 skills
 const nestSkills = [
-  // BOOT (6)
+  // BOOT (live 7 · 6 here + dna in the 062226 block below)
   { name: 'boot-polish', altitude: 'boot', chamber: 'wide-b', desc: 'BPK systems verification layer · verify tools ACTUALLY work after boot', fired: 1 },
   { name: 'ican', altitude: 'boot', chamber: 'wide-b', desc: 'iCan status checklist · readiness report format', fired: 3 },
   { name: 'stan_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Stan self-loading boot sequence', fired: 0 },
@@ -40,7 +40,7 @@ const nestSkills = [
   { name: 'oshin', altitude: 'crew-ops', chamber: 'wide-b', desc: 'O\'Shin EYES visual capture apparatus · PING/TV/EYES/BLINK', fired: 0 },
   { name: 'rorrim-nips', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Chrome MCP existing-tabs-first discipline · read Dan\'s tabs not open new ones', fired: 0 },
 
-  // CREATIVE/PORTAL (7)
+  // CREATIVE/PORTAL (live 8 · 7 here + fablefallshower in the 062226 block below)
   { name: 'heircor-visual', altitude: 'creative', chamber: 'wide-a', desc: 'Heircor Op visual identity for OuchMcCouch', fired: 0 },
   { name: 'waywood-lore', altitude: 'creative', chamber: 'wide-a', desc: 'Waywood world-building canon · Usic Theory', fired: 0 },
   { name: 'niaprint', altitude: 'creative', chamber: 'wide-a', desc: 'NEST Intranet Publication Aesthetic · typewriter-soul design', fired: 0 },
@@ -49,7 +49,7 @@ const nestSkills = [
   { name: 'na-pdf-style', altitude: 'creative', chamber: 'wide-a', desc: 'NA PDF compression standard · 1-3 page condensed render', fired: 0 },
   { name: 'rspdan-design', altitude: 'creative', chamber: 'wide-a', desc: 'El VIS research container · media processing pipeline notes', fired: 0 },
 
-  // INFRASTRUCTURE (4)
+  // INFRASTRUCTURE (live 5 · 4 here + page-integrity in the 062226 block below)
   { name: 'formulacaster', altitude: 'infrastructure', chamber: 'cross-chamber', desc: 'Circle of 5ths math framework for project planning · I/IV/V harmonic-function', fired: 0 },
   { name: 'router-flash', altitude: 'infrastructure', chamber: 'wide-b', desc: 'MOD2 R7450 Netgear router flashing + fleet router config', fired: 0 },
   { name: 'dex-mobile', altitude: 'infrastructure', chamber: 'agos-waist', desc: 'Samsung DeX and ACHE mobile operations manual', fired: 0 },
@@ -59,13 +59,13 @@ const nestSkills = [
   { name: 'atomic-commit', altitude: 'federal-std', chamber: 'wide-b', desc: 'One-WU-per-emission ASMM apex · Gate 0+5+6+7 firing', fired: 5 },
   { name: 'box-in-box', altitude: 'federal-std', chamber: 'cross-cutting', desc: 'L3 trigger for L2 Federal Standard · purpose-over-surface + seal-on-close', fired: 4 },
 
-  // DISCIPLINE (4)
+  // DISCIPLINE (live 8 · 4 here + dan/lagos-check/continuous-substrate/cba-searching in the 062226 block below)
   { name: 'btw', altitude: 'discipline', chamber: 'wide-b', desc: 'BACK TO WORK · Dan-coined signal to stop narration and ship', fired: 0 },
   { name: 'ilevel-grid-sifter', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Stratigraphic triage iLevel 0/-1/-2 · LOG-MAP-SIFT-EXAMINE-NAME', fired: 12 },
   { name: 'ultrareview', altitude: 'discipline', chamber: 'cross-cutting', desc: 'CANDIDATE · Trigger-layer for Anthropic-shipped cloud-review feature · Pattern A directive + Pattern B surface', fired: 1 },
   { name: 'r3mp', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Triangulation + GCTT · fractal anti-rediscovery · 3-pass methodology', fired: 25 },
 
-  // ADDED 062326 (drift-fix · +7 to 46 · live Bridge count) · fired:0 = not yet counted in the 052026 pass
+  // ADDED 062226 (drift-fix · +7 to 46 · live Bridge count · distributes: boot+1 · creative+1 · infrastructure+1 · discipline+4) · fired:0 = not yet counted in the 052026 pass · per-altitude counts render live from .length below, so the public face is already correct
   { name: 'dna', altitude: 'boot', chamber: 'wide-b', desc: 'the Lighthouse · makes the whole NEST.03 era callable · orient at boot, find where things live in LAGOS', fired: 0 },
   { name: 'dan', altitude: 'discipline', chamber: 'cross-chamber', desc: 'stay grounded in the actual Dan, not the model-of-Dan · the SpecTrap catalog · the mirror of /dna', fired: 0 },
   { name: 'lagos-check', altitude: 'discipline', chamber: 'cross-chamber', desc: 'multi-box LAGOS sweep · the cure for single-box scope-collapse · a swer, not an ans', fired: 0 },
@@ -168,7 +168,7 @@ const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
   <div class="sk-cascade-wrap">
     <img src="/img/skills/cascade-map-v1.2-052026.svg" alt="NEST Skill Cascade Map v1.2 · 33 skills arranged by ARMS session phase with meta-dates as apex always-on trigger · 5 new skills marked since 042926 v1.1" class="sk-cascade-svg" />
   </div>
-  <p class="sk-cascade-note mono"><em>v1.2 cascade-map (052026 · 33-skill state) · updates v1.1 baseline at <code>C:\STAN\ENGINE\NEST.02\Skills\nest02_skill_cascade_map_042926_1.1.svg</code> (Trip 042926 · 28 skills) by adding the 5 skills built since. Frequency-based sizing reserves for next corpus analysis pass. Industry-axis (22 inheritance-batch) not visualized · see AXIS B section below. NOTE 062326: the live NEST-built count is now 46; this v1.2 SVG remains a dated 052026 33-skill snapshot, regen to 46 pending.</em></p>
+  <p class="sk-cascade-note mono"><em>v1.2 cascade-map (052026 · 33-skill state) · updates v1.1 baseline at <code>C:\STAN\ENGINE\NEST.02\Skills\nest02_skill_cascade_map_042926_1.1.svg</code> (Trip 042926 · 28 skills) by adding the 5 skills built since. Frequency-based sizing reserves for next corpus analysis pass. Industry-axis (22 inheritance-batch) not visualized · see AXIS B section below. NOTE 062226: the live NEST-built count is now 46; this v1.2 SVG remains a dated 052026 33-skill snapshot, regen to 46 pending.</em></p>
 </div></section>
 
 <section class="sk-section"><div class="container">
