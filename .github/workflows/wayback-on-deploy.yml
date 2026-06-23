@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Archive public pages to the Wayback Machine
+        # Best-effort archival. The action polls the Wayback Save-Page-Now-2 API
+        # and fails the job if ANY url fails; transient external "fetch failed"
+        # errors then red-X a successful deploy. Verified 062226: 3/6 urls
+        # (usic, fleet, map) fetch-failed transiently while gofa archived fine.
+        # Archival is not a correctness gate, so a transient miss must not block.
+        continue-on-error: true
         uses: JamieMagee/wayback@v2.2.0
         with:
           url: |
