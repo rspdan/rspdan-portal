@@ -1,1 +1,3 @@
-export { prerender, POST } from './drw';
+export const prerender = false;
+
+export { POST } from './drw';
