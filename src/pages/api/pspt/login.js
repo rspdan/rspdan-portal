@@ -2,6 +2,8 @@
 import { authenticate, createSession, sessionCookie } from '../../../lib/pspt.js';
 import { safeRedirectPath } from '../../../lib/safeRedirectPath.js';
 
+export const prerender = false;
+
 export async function POST({ request }) {
   try {
     const form = await request.formData();
