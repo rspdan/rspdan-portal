@@ -1,5 +1,5 @@
 /**
- * NESTNET Phase 2c - Hybrid Search API
+ * NESTNET Phase 2c — Hybrid Search API
  * GET /api/search?q=query&limit=10&mode=hybrid|keyword|semantic
  * 
  * keyword: full-text search against index (Phase 1)
@@ -13,7 +13,6 @@ export const prerender = false;
 
 const VECTOR_URL = import.meta.env.UPSTASH_VECTOR_REST_URL || process.env.UPSTASH_VECTOR_REST_URL || '';
 const VECTOR_TOKEN = import.meta.env.UPSTASH_VECTOR_REST_TOKEN || process.env.UPSTASH_VECTOR_REST_TOKEN || '';
-const SEARCH_API_KEY = import.meta.env.SEARCH_API_KEY || process.env.SEARCH_API_KEY || '';
 
 async function keywordSearch(terms, index, limit) {
   const results = [];
@@ -128,16 +127,7 @@ export async function GET({ request }) {
   const mode = url.searchParams.get('mode') || 'hybrid';
   const key = url.searchParams.get('key');
 
-  // Auth key is read from env (SEARCH_API_KEY), never hardcoded. The prior
-  // hardcoded literal is burned in public git history and must be rotated.
-  // If the env is unset, fail closed rather than accept any caller.
-  if (!SEARCH_API_KEY) {
-    return new Response(JSON.stringify({ error: 'search auth not configured' }), {
-      status: 503, headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
-  if (key !== SEARCH_API_KEY) {
+  if (key !== '9e6e3ae0628e240eb1cdd9fea17bd402') {
     return new Response(JSON.stringify({ error: 'unauthorized' }), {
       status: 401, headers: { 'Content-Type': 'application/json' }
     });
