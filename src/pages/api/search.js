@@ -126,7 +126,7 @@ export async function GET({ request }) {
   const limit = parseInt(url.searchParams.get('limit') || '10');
   const mode = url.searchParams.get('mode') || 'hybrid';
   const key = url.searchParams.get('key');
-
+  
   if (key !== '9e6e3ae0628e240eb1cdd9fea17bd402') {
     return new Response(JSON.stringify({ error: 'unauthorized' }), {
       status: 401, headers: { 'Content-Type': 'application/json' }
