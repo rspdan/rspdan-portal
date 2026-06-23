@@ -6,21 +6,23 @@ export async function POST({ request }) {
     const form = await request.formData();
     const username = form.get('username')?.toString().trim();
     const password = form.get('password')?.toString();
+    const nextRaw = form.get('next')?.toString() || '/admin/fleet';
+    const next = nextRaw.startsWith('/') && !nextRaw.startsWith('//') ? nextRaw : '/admin/fleet';
 
     if (!username || !password) {
-      return new Response(null, { status: 302, headers: { Location: '/pspt?error=missing' } });
+      return new Response(null, { status: 302, headers: { Location: `/pspt?error=missing&next=${encodeURIComponent(next)}` } });
     }
 
     const user = authenticate(username, password);
     if (!user) {
-      return new Response(null, { status: 302, headers: { Location: '/pspt?error=invalid' } });
+      return new Response(null, { status: 302, headers: { Location: `/pspt?error=invalid&next=${encodeURIComponent(next)}` } });
     }
 
     const token = createSession(user);
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/admin/fleet',
+        Location: next,
         'Set-Cookie': sessionCookie(token),
       },
     });
