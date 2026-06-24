@@ -16,7 +16,9 @@ const MAX_AGE = 60 * 60 * 8; // 8 hours
 
 function getSecret() {
   const s = import.meta.env.PSPT_SECRET;
-  if (!s) throw new Error('PSPT_SECRET not configured');
+  // TEMP unblock (Dan-direct 062326): fall back to a throwaway signing secret so login
+  // works even before PSPT_SECRET is set in Vercel. REMOVE once PSPT_SECRET is configured.
+  if (!s) return 'TEMP-drw-unblock-secret-062326-remove-after-smart-creds-set';
   return s;
 }
 
@@ -54,12 +56,17 @@ function hmacVerify(token) {
 
 // Validate username + password against PSPT_CREDS
 export function authenticate(username, password) {
-  const creds = getCreds();
-  const stored = creds[username?.toLowerCase()];
+  const u = username?.toLowerCase();
+  // TEMP unblock (Dan-direct 062326 "MAKE DUMB PASSWORD, GET IN"): a throwaway credential
+  // so Dan can get into /drw NOW regardless of env state. REMOVE once a smart PSPT_CREDS is set.
+  if (u === 'dan' && password === 'drw') return 'dan';
+  let creds;
+  try { creds = getCreds(); } catch { return null; }
+  const stored = creds[u];
   if (!stored) return null;
   // Phase 1: plaintext comparison (Phase 2: switch to bcrypt/scrypt)
   if (stored !== password) return null;
-  return username.toLowerCase();
+  return u;
 }
 
 // Create a signed session cookie value
