@@ -113,6 +113,9 @@ export const POST: APIRoute = async ({ request }) => {
   const image: string | undefined = body?.image;
   const caption = clampText(body?.caption, 500);
   const coordinate = body?.coordinate && typeof body.coordinate === 'object' ? body.coordinate : {};
+  // Optional layered scene (the editable document; nothing gets lost). The flat
+  // composite PNG below stays the canonical proof artifact regardless.
+  const scene = body?.scene && typeof body.scene === 'object' ? body.scene : null;
   if (!image || typeof image !== 'string') return json({ error: 'image png data url required' }, 400);
 
   const decoded = decodeDataUrl(image);
@@ -205,12 +208,34 @@ export const POST: APIRoute = async ({ request }) => {
     }
   }
 
+  // Persist the editable layered scene (additive; never blocks the save). Only
+  // to Blob when configured (a multi-layer scene is too large for Redis-inline).
+  const sceneKey = `${baseKey}.scene.json`;
+  let sceneUrl: string | null = null;
+  if (scene && blobToken) {
+    try {
+      const sceneJson = Buffer.from(JSON.stringify(scene), 'utf8');
+      if (sceneJson.length <= 25 * 1024 * 1024) {
+        const sceneBlob = await put(sceneKey, sceneJson, {
+          access: 'public',
+          contentType: 'application/json',
+          token: blobToken,
+        });
+        sceneUrl = sceneBlob.url;
+      }
+    } catch {
+      sceneUrl = null;
+    }
+  }
+
   const item = {
     id: `drw_${ts}_${user}`,
     url: blobUrl,
     key,
     packetUrl,
     packetKey,
+    sceneUrl,
+    sceneKey: sceneUrl ? sceneKey : null,
     storage,
     coordinateId,
     dimensionTags,
