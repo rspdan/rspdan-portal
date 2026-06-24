@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// PROVENANCE · /nestnet self-describing reference page.
+//   - Source of truth: nest-bridge RELAY/CANONICAL_NESTNET_Explainer_Trip_041926.md
+//     (the canonical plain-English explainer). This page is the public face of it,
+//     named as a deliverable in that document ("expose a hidden page at rspdan.com/nestnet
+//     that serves as a self-describing reference").
+//   - Closes the SEEGULL "rspdan.com/nestnet page build" (filed 041926).
+//   - Public-safe: no API key, no internal credential, no brittle live counts.
+//   - Built by BLNCH 062026 from the canonical explainer (substrate-grounded, not invented).
+const title = "NESTNET | Bridge search from anywhere";
+---
+<BaseLayout title={title} description="NESTNET is the HTTP search API at rspdan.com/api/search that returns ranked matches across every markdown document filed on the NEST Bridge and portal. It returns paths, not answers: retrieval kept separate from interpretation. This page is the self-describing reference for the name." lastUpdated="June 20, 2026">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#0c0e14;
+  --card:#13161f;
+  --border:rgba(255,255,255,0.06);
+  --muted:#4a5468;
+  --text:#b8bfcc;
+  --head:#e2e8f0;
+  --base:#4a7ab5;
+  --rox:#4a9b8e;
+  --obs:#c9a84c;
+  --open:#c94c4c;
+  --ip:#7dd3c0;
+  --stamp:#8a93a5;
+  --accent:#7dd3c0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;}
+.shell{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 6rem;}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem;}
+.eyebrow{font-size:0.52rem;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;}
+.title{font-size:1.7rem;color:var(--head);font-weight:300;letter-spacing:0.04em;}
+.sub{font-size:0.65rem;color:var(--muted);margin-top:0.5rem;letter-spacing:0.08em;line-height:1.7;max-width:700px;}
+.intro{background:var(--card);border-left:2px solid var(--base);padding:1.1rem 1.3rem;margin:2rem 0;border-radius:2px;font-size:0.72rem;line-height:1.85;color:var(--text);}
+.intro strong{color:var(--head);font-weight:500;}
+.intro code{background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:2px;color:var(--ip);font-size:0.9em;}
+section{margin:2.5rem 0;}
+.sec-head{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+.sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sec-dot.base{background:var(--base);}
+.sec-dot.rox{background:var(--rox);}
+.sec-dot.obs{background:var(--obs);}
+.sec-dot.open{background:var(--open);}
+.sec-title{font-size:0.78rem;color:var(--head);letter-spacing:0.22em;text-transform:uppercase;font-weight:500;}
+.body-prose{font-size:0.72rem;line-height:1.85;color:var(--text);}
+.body-prose p{margin-bottom:0.85rem;}
+.body-prose strong{color:var(--head);font-weight:500;}
+.body-prose em{color:var(--stamp);font-style:italic;}
+.body-prose code{background:rgba(255,255,255,0.04);padding:1px 6px;border-radius:2px;color:var(--ip);font-size:0.9em;}
+.body-prose ul,.body-prose ol{list-style:none;padding-left:0;margin-bottom:0.85rem;}
+.body-prose li{padding-left:1.1rem;position:relative;margin-bottom:0.4rem;}
+.body-prose ul>li::before{content:"\25B8";position:absolute;left:0;color:var(--stamp);}
+.body-prose ol{counter-reset:step;}
+.body-prose ol>li::before{counter-increment:step;content:counter(step) ".";position:absolute;left:0;color:var(--stamp);font-weight:500;}
+.body-prose pre{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:0.9rem 1rem;margin:0.85rem 0;overflow-x:auto;font-size:0.68rem;line-height:1.6;}
+.body-prose pre code{background:none;padding:0;color:var(--text);}
+.metaphor{border-left:2px solid var(--rox);padding:0.6rem 1.1rem;margin:1rem 0;font-style:italic;color:var(--stamp);font-size:0.72rem;line-height:1.8;}
+.foot{margin-top:3rem;padding-top:1.3rem;border-top:1px solid var(--border);font-size:0.6rem;color:var(--muted);line-height:1.9;}
+.foot a{color:var(--accent);text-decoration:none;}
+.foot a:hover{text-decoration:underline;}
+</style>
+
+<div class="shell">
+  <div class="hdr">
+    <div class="eyebrow">NEST · The Filing and the Finding</div>
+    <div class="title">NESTNET</div>
+    <div class="sub">Bridge search from anywhere. An HTTP search API that, given a query, returns ranked matches across every markdown document filed on the NEST Bridge and this portal. It returns paths, not answers.</div>
+  </div>
+
+  <div class="intro">
+    <strong>The one-sentence answer:</strong> NESTNET is an HTTP search API at <code>rspdan.com/api/search</code> that, given a query and the NEST API key, returns ranked matches across every markdown document filed in the Bridge repository and the portal site.
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="sec-dot base"></span><span class="sec-title">Why it exists</span></div>
+    <div class="body-prose">
+      <p>The problem it solves has a specific name: the <strong>filing-finding gap</strong>. Correctly filed information that still takes hours to locate. A document can be properly written, properly named, placed in the right folder, committed to git, and still be lost in practice because finding it meant knowing the folder, the filename, or being on the one station where the repository lived. Before NESTNET, the Bridge was invisible from any session that was not sitting on top of it.</p>
+      <div class="metaphor">"Imagine a Rubik's cube and a lock, but world-sized. Frame rotates, data stays. The query is a rotation, the answer is the click." The information was always there; retrieval is the rotation that lines up the click.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-dot rox"></span><span class="sec-title">How it works</span></div>
+    <div class="body-prose">
+      <p>NESTNET has two moving parts, which is what makes it locatable rather than magic.</p>
+      <p><strong>The indexer</strong> walks the Bridge file tree and reads every markdown file, extracting for each document its path, the first heading as a title, the first meaningful paragraph as a preview, and a set of meaningful keywords with stop words removed. It deliberately does <em>not</em> extract full document content, because the Bridge is private and the index it produces is served publicly. The output is a single small static JSON index.</p>
+      <p><strong>The search API</strong> is a serverless function. A request scores each document against the query: title matches weigh most, then path matches, then keyword matches, and a document where every query term matches gets its score doubled. Results come back sorted by score.</p>
+      <p>On top of that keyword layer is a <strong>semantic layer</strong>. Every document is also embedded as a 384-dimension vector with the <code>bge-small-en-v1.5</code> model, stored in a free-tier vector database. In the default hybrid mode the API embeds the query the same way and interleaves the semantically-similar results with the keyword results, deduplicated by path. That is how a query like <em>"how does the system survive when nobody is working"</em> can return the right document even when none of those exact words appear in it. The whole stack runs at zero dollars per month on free tiers.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-dot obs"></span><span class="sec-title">How to invoke it</span></div>
+    <div class="body-prose">
+      <p>From any session with internet access, the call is an HTTP GET:</p>
+      <pre><code>https://www.rspdan.com/api/search?q=YOUR+QUERY&amp;key=NEST_API_KEY</code></pre>
+      <p>Optional parameters: <code>limit=N</code> controls how many results come back; <code>mode=keyword</code> or <code>mode=semantic</code> forces one matching layer. The default hybrid mode is right roughly nine times in ten; keyword-only when you know the exact phrase, semantic-only when you are searching by concept.</p>
+      <p>The response is JSON: the query, the total count of matches across the whole corpus, and a results array. Each result carries the document path, the title, a short preview, a relevance score, and a label for whether it came from the keyword layer or the semantic layer. Because NESTNET returns <strong>paths</strong>, the second step in any retrieval is reading the actual document. The query tells you which file has the answer; the filesystem or a fetch on the raw document gives you the answer itself.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-dot rox"></span><span class="sec-title">When to reach for it</span></div>
+    <div class="body-prose">
+      <p>The clean rule: <em>whenever you are about to ask whether something already exists, or to build something that might already be built, query NESTNET first.</em> The tool exists because the filing-finding gap was costing hours; the discipline is to make the query a reflex rather than a last resort.</p>
+      <p>Two things do not belong in NESTNET. It does not search email (that has its own search), and it does not search live ephemeral messages. NESTNET searches filed documents on the Bridge and portal, nothing else.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-dot open"></span><span class="sec-title">What NESTNET is not</span></div>
+    <div class="body-prose">
+      <p>It is not a chat interface, not a question-answering system, not a summarizer. It returns paths. It does not read the documents for you, does not synthesize across them, and does not have opinions. Retrieval and understanding are two separate acts, and NESTNET handles only the retrieval. That is a feature: a system that both retrieves and interprets would be harder to audit, harder to trust, and harder to debug when it returns something wrong. Keeping retrieval separate from interpretation keeps the instrument clean.</p>
+      <p>It is also not a replacement for filing discipline. If a document is not filed, not written in markdown, or not committed and pushed, it will not be in the index. The tool compounds the value of disciplined filing; it does not substitute for it.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-dot base"></span><span class="sec-title">Origin and lineage</span></div>
+    <div class="body-prose">
+      <p>Rhodes' Remembrance Agent at MIT in 1996 is the formal prior: a system that continuously suggests relevant documents based on the user's current context, running in the background. NESTNET is the manual-query version of that idea, with the continuous-suggestion model held as a future phase.</p>
+      <p>The first successful NESTNET query was for the phrase <em>"stan VIS archivist artist,"</em> which returned the exact document and the exact line being looked for. That was the moment the filing-finding gap got its first bridge, and it is the reason the diagnosis and the build are one continuous story rather than two separate pieces of work.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    Related: <a href="/nest">/nest</a> · <a href="/gulls">/gulls</a> · <a href="/logs">/logs</a> · <a href="/fleet">/fleet</a><br/>
+    This page is the public face of the canonical NESTNET explainer filed on the Bridge. The name should always have a referent you can point at.
+  </div>
+</div>
+</BaseLayout>
