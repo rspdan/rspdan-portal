@@ -1,4 +1,4 @@
-export function safeRedirectPath(value, fallback = '/admin/fleet', origin = 'https://rspdan.com') {
+export function safeRedirectPath(value, fallback = '/drw', origin = 'https://rspdan.com') {
   if (typeof value !== 'string' || !value) return fallback;
   if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\')) return fallback;
 

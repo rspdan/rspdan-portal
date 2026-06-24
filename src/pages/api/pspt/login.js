@@ -9,7 +9,7 @@ export async function POST({ request }) {
     const form = await request.formData();
     const username = form.get('username')?.toString().trim();
     const password = form.get('password')?.toString();
-    const next = safeRedirectPath(form.get('next')?.toString(), '/admin/fleet', new URL(request.url).origin);
+    const next = safeRedirectPath(form.get('next')?.toString(), '/drw', new URL(request.url).origin);
 
     if (!username || !password) {
       return new Response(null, { status: 302, headers: { Location: `/pspt?error=missing&next=${encodeURIComponent(next)}` } });

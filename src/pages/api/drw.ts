@@ -39,6 +39,11 @@ function clampText(value: unknown, max: number) {
   return (value || '').toString().slice(0, max);
 }
 
+function dataJsonUrl(value: unknown) {
+  const jsonText = JSON.stringify(value, null, 2);
+  return `data:application/json;base64,${Buffer.from(jsonText, 'utf8').toString('base64')}`;
+}
+
 function cleanDimensions(value: unknown): string[] {
   if (!Array.isArray(value)) return ['2D'];
   const tags = value
@@ -97,7 +102,6 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN;
-  if (!blobToken) return json({ error: 'blob store not configured' }, 503);
 
   let body: any;
   try {
@@ -124,16 +128,21 @@ export const POST: APIRoute = async ({ request }) => {
   const packetKey = `${baseKey}.coordinate.json`;
   const coordinateId = `HCUS-DRW-${day.replace(/-/g, '')}-${user}-${ts}`;
 
-  let blobUrl: string;
-  try {
-    const blob = await put(key, decoded.bytes, {
-      access: 'public',
-      contentType: 'image/png',
-      token: blobToken,
-    });
-    blobUrl = blob.url;
-  } catch (err: any) {
-    return json({ error: 'blob upload failed', detail: err?.message }, 502);
+  let blobUrl = image;
+  let storage: 'blob' | 'redis-inline' = 'redis-inline';
+
+  if (blobToken) {
+    try {
+      const blob = await put(key, decoded.bytes, {
+        access: 'public',
+        contentType: 'image/png',
+        token: blobToken,
+      });
+      blobUrl = blob.url;
+      storage = 'blob';
+    } catch (err: any) {
+      return json({ error: 'blob upload failed', detail: err?.message }, 502);
+    }
   }
 
   const dimensionTags = cleanDimensions(coordinate.dimensionTags);
@@ -166,7 +175,7 @@ export const POST: APIRoute = async ({ request }) => {
     ],
     station_expansion: 'Drawing saved from /drw with PNG and Coordinate Packet sidecar.',
     evidence: [
-      { kind: 'url', value: blobUrl },
+      { kind: storage === 'blob' ? 'url' : 'data-url', value: blobUrl },
       { kind: 'path', value: key },
     ],
     confidence,
@@ -182,16 +191,18 @@ export const POST: APIRoute = async ({ request }) => {
     },
   };
 
-  let packetUrl: string;
-  try {
-    const sidecar = await put(packetKey, Buffer.from(JSON.stringify(packet, null, 2), 'utf8'), {
-      access: 'public',
-      contentType: 'application/json',
-      token: blobToken,
-    });
-    packetUrl = sidecar.url;
-  } catch (err: any) {
-    return json({ error: 'coordinate packet upload failed', detail: err?.message }, 502);
+  let packetUrl = dataJsonUrl(packet);
+  if (blobToken) {
+    try {
+      const sidecar = await put(packetKey, Buffer.from(JSON.stringify(packet, null, 2), 'utf8'), {
+        access: 'public',
+        contentType: 'application/json',
+        token: blobToken,
+      });
+      packetUrl = sidecar.url;
+    } catch (err: any) {
+      return json({ error: 'coordinate packet upload failed', detail: err?.message }, 502);
+    }
   }
 
   const item = {
@@ -200,6 +211,7 @@ export const POST: APIRoute = async ({ request }) => {
     key,
     packetUrl,
     packetKey,
+    storage,
     coordinateId,
     dimensionTags,
     confidence,
