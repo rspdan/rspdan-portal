@@ -1,5 +1,9 @@
 ---
 // DRW: Operating Room drawing workbench. PSPT-gated.
+// Layer model (0/1/2 nesting · Dan-direct 062326): 0 BKG, 1 CLR, 2 LNS, with
+// decimal children (CLR.01, CLR.02 ...). Every layer has its own canvas and
+// opacity. Save persists the layered scene (nothing gets lost) AND a flat
+// composite PNG (Chad's existing /api/drw proof chain stays intact).
 export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -9,8 +13,27 @@ const session = verifySession(Astro.request.headers.get('cookie'));
 if (!session) {
   return Astro.redirect('/pspt?next=/drw');
 }
+
+// The 14 colors of Usic (12 Circle-of-5ths keys + Storm Violet + OLO).
+// Hex instrument-confirmed from src/pages/usic.astro (the live source-of-truth).
+const USIC_COLORS = [
+  { key: 'C',  name: 'Red',          hex: '#E53327' },
+  { key: 'G',  name: 'Green',        hex: '#31A048' },
+  { key: 'D',  name: 'Pink',         hex: '#D43259' },
+  { key: 'A',  name: 'Yellow',       hex: '#ECD31B' },
+  { key: 'E',  name: 'Purple',       hex: '#9376B3' },
+  { key: 'B',  name: 'Orange',       hex: '#F09021' },
+  { key: 'F',  name: 'Blue',         hex: '#45B7C8' },
+  { key: 'F#', name: 'Sky',          hex: '#80CEE0' },
+  { key: 'C#', name: 'Brick',        hex: '#9B4F3A' },
+  { key: 'G#', name: 'Lime',         hex: '#84C44E' },
+  { key: 'D#', name: 'Magenta',      hex: '#B5338A' },
+  { key: 'A#', name: 'Tan',          hex: '#D4B483' },
+  { key: '·',  name: 'Storm Violet', hex: '#7B2D8E' },
+  { key: '·',  name: 'OLO',          hex: '#01FFCD' },
+];
 ---
-<BaseLayout lastUpdated="June 22, 2026" title="DRW">
+<BaseLayout lastUpdated="June 23, 2026" title="DRW">
   <main class="drw-shell">
     <section class="drw-window" aria-label="DRW drawing workbench">
       <header class="drw-titlebar">
@@ -39,22 +62,35 @@ if (!session) {
             <button type="button" class="tool" data-tool="text">TEXT</button>
             <button type="button" id="undo-btn" class="tool">UNDO</button>
             <button type="button" id="redo-btn" class="tool">REDO</button>
-            <button type="button" id="clear-btn" class="tool">CLEAR</button>
+            <button type="button" id="clear-btn" class="tool">CLEAR LAYER</button>
             <label class="drw-control">
               <span>WIDTH</span>
               <input type="range" id="size-input" min="1" max="42" value="5" />
             </label>
-            <div class="drw-swatches" aria-label="Ink colors">
-              <button type="button" class="swatch is-active" data-color="#111111" style="--swatch:#111111"><span>Black</span></button>
-              <button type="button" class="swatch" data-color="#d82020" style="--swatch:#d82020"><span>Red</span></button>
-              <button type="button" class="swatch" data-color="#1a56b8" style="--swatch:#1a56b8"><span>Blue</span></button>
-              <button type="button" class="swatch" data-color="#237a3b" style="--swatch:#237a3b"><span>Green</span></button>
-              <button type="button" class="swatch" data-color="#f2c230" style="--swatch:#f2c230"><span>Gold</span></button>
-            </div>
+          </div>
+
+          <div class="drw-swatches" aria-label="Usic colors">
+            {USIC_COLORS.map((c, i) => (
+              <button
+                type="button"
+                class={`swatch${i === 0 ? ' is-active' : ''}`}
+                data-color={c.hex}
+                style={`--swatch:${c.hex}`}
+                title={`${c.key !== '·' ? c.key + ' · ' : ''}${c.name}`}
+              ><span>{c.name}</span></button>
+            ))}
           </div>
 
           <div class="canvas-frame">
             <canvas id="draw-canvas" width="960" height="640"></canvas>
+          </div>
+
+          <div class="layers-panel" aria-label="Layers">
+            <div class="panel-title layers-title">
+              <span>LAYERS</span>
+              <span class="layers-hint">0 BKG · 1 CLR · 2 LNS</span>
+            </div>
+            <div id="layer-list" class="layer-list"></div>
           </div>
 
           <div class="coordinate-panel" aria-label="Coordinate packet">
@@ -105,8 +141,12 @@ if (!session) {
 </BaseLayout>
 
 <script>
-  const canvas = document.getElementById('draw-canvas');
-  const ctx = canvas.getContext('2d');
+  const W = 960;
+  const H = 640;
+  const DRAFT_KEY = 'drw:draft:v1';
+
+  const view = document.getElementById('draw-canvas');
+  const vctx = view.getContext('2d');
   const sizeInput = document.getElementById('size-input');
   const clearBtn = document.getElementById('clear-btn');
   const undoBtn = document.getElementById('undo-btn');
@@ -115,6 +155,7 @@ if (!session) {
   const captionInput = document.getElementById('caption-input');
   const statusLine = document.getElementById('status-line');
   const drawList = document.getElementById('draw-list');
+  const layerListEl = document.getElementById('layer-list');
   const toolButtons = Array.from(document.querySelectorAll('.tool[data-tool]'));
   const swatches = Array.from(document.querySelectorAll('.swatch'));
   const dimensionInputs = Array.from(document.querySelectorAll('input[name="dimension-tags"]'));
@@ -126,9 +167,135 @@ if (!session) {
   let lastX = 0;
   let lastY = 0;
   let tool = 'pen';
-  let ink = '#111111';
+  let ink = swatches[0] ? swatches[0].dataset.color : '#E53327';
+
+  // Undo/redo (B-side, ported from Chad's main onto the layer model): a linear
+  // history of per-layer before-snapshots. Snapshots the layer touched, not the
+  // flat canvas, so undo/redo composes with layers + opacity.
   let history = [];
   let redoStack = [];
+
+  // ---- Layer model -------------------------------------------------------
+  // Each layer: { major (0/1/2), minor (0=root), id, name, opacity, visible,
+  //   canvas (offscreen), ctx }. Composite order = sort by (major, minor),
+  //   so a parent paints below its decimal children, BKG below CLR below LNS.
+  const ROOT_NAMES = { 0: 'BKG', 1: 'CLR', 2: 'LNS' };
+  let layers = [];
+  let activeId = null;
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function newCanvas() {
+    const c = document.createElement('canvas');
+    c.width = W;
+    c.height = H;
+    return c;
+  }
+
+  function makeLayer(major, minor, opacity, visible) {
+    const canvas = newCanvas();
+    const id = minor === 0 ? String(major) : `${major}.${pad2(minor)}`;
+    const name = minor === 0 ? ROOT_NAMES[major] : `${ROOT_NAMES[major]}.${pad2(minor)}`;
+    return { major, minor, id, name, opacity, visible, canvas, ctx: canvas.getContext('2d') };
+  }
+
+  function sortLayers() {
+    layers.sort((a, b) => (a.major - b.major) || (a.minor - b.minor));
+  }
+
+  function activeLayer() {
+    return layers.find((l) => l.id === activeId) || null;
+  }
+
+  function defaultLayers() {
+    layers = [
+      makeLayer(0, 0, 1, true), // BKG
+      makeLayer(1, 0, 1, true), // CLR
+      makeLayer(2, 0, 1, true), // LNS
+    ];
+    // BKG starts as white paper.
+    const bkg = layers[0].ctx;
+    bkg.fillStyle = '#ffffff';
+    bkg.fillRect(0, 0, W, H);
+    activeId = '2'; // draw lines by default
+  }
+
+  function nextMinor(major) {
+    const minors = layers.filter((l) => l.major === major && l.minor > 0).map((l) => l.minor);
+    return (minors.length ? Math.max(...minors) : 0) + 1;
+  }
+
+  function addChild(major) {
+    const layer = makeLayer(major, nextMinor(major), 1, true);
+    layers.push(layer);
+    sortLayers();
+    activeId = layer.id;
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`ADDED ${layer.name}`);
+  }
+
+  function deleteLayer(id) {
+    const layer = layers.find((l) => l.id === id);
+    if (!layer || layer.minor === 0) return; // roots are permanent
+    layers = layers.filter((l) => l.id !== id);
+    if (activeId === id) activeId = '2';
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`DELETED ${layer.name}`);
+  }
+
+  // ---- Compositing -------------------------------------------------------
+  function composite() {
+    vctx.clearRect(0, 0, W, H);
+    for (const layer of layers) {
+      if (!layer.visible) continue;
+      vctx.globalAlpha = layer.opacity;
+      vctx.drawImage(layer.canvas, 0, 0);
+    }
+    vctx.globalAlpha = 1;
+  }
+
+  // ---- Undo / redo (per-layer before-snapshots) --------------------------
+  function snapshotBefore() {
+    const layer = activeLayer();
+    if (!layer) return;
+    history.push({ id: layer.id, png: layer.canvas.toDataURL('image/png') });
+    if (history.length > 40) history.shift();
+    redoStack = [];
+  }
+
+  function restoreLayerSnapshot(snap, opposite) {
+    const layer = layers.find((l) => l.id === snap.id);
+    if (!layer) return;
+    opposite.push({ id: snap.id, png: layer.canvas.toDataURL('image/png') });
+    const img = new Image();
+    img.onload = () => {
+      layer.ctx.clearRect(0, 0, W, H);
+      layer.ctx.drawImage(img, 0, 0);
+      composite();
+    };
+    img.src = snap.png;
+    activeId = snap.id;
+    renderLayers();
+    saveDraft();
+  }
+
+  function undo() {
+    const snap = history.pop();
+    if (!snap) { setStatus('NOTHING TO UNDO'); return; }
+    restoreLayerSnapshot(snap, redoStack);
+    setStatus('UNDO');
+  }
+
+  function redo() {
+    const snap = redoStack.pop();
+    if (!snap) { setStatus('NOTHING TO REDO'); return; }
+    restoreLayerSnapshot(snap, history);
+    setStatus('REDO');
+  }
 
   function setStatus(text) {
     statusLine.textContent = text;
@@ -139,9 +306,6 @@ if (!session) {
   }
 
   function safeHttpUrl(value) {
-    if (typeof value === 'string' && /^data:(image\/png|application\/json);base64,[a-z0-9+/=]+$/i.test(value)) {
-      return value;
-    }
     try {
       const url = new URL(value);
       return url.protocol === 'https:' || url.protocol === 'http:' ? escapeHtml(url.href) : '';
@@ -150,6 +314,74 @@ if (!session) {
     }
   }
 
+  // ---- Layer panel UI ----------------------------------------------------
+  function renderLayers() {
+    layerListEl.innerHTML = '';
+    for (const layer of layers) {
+      const row = document.createElement('div');
+      row.className = `layer-row${layer.id === activeId ? ' is-active' : ''}${layer.minor > 0 ? ' is-child' : ''}`;
+
+      const vis = document.createElement('input');
+      vis.type = 'checkbox';
+      vis.checked = layer.visible;
+      vis.className = 'layer-vis';
+      vis.title = 'Show / hide layer';
+      vis.addEventListener('change', () => {
+        layer.visible = vis.checked;
+        composite();
+        saveDraft();
+      });
+
+      const name = document.createElement('button');
+      name.type = 'button';
+      name.className = 'layer-name';
+      name.textContent = layer.name;
+      name.addEventListener('click', () => {
+        activeId = layer.id;
+        renderLayers();
+        setStatus(`ACTIVE ${layer.name}`);
+      });
+
+      const op = document.createElement('input');
+      op.type = 'range';
+      op.min = '0';
+      op.max = '100';
+      op.value = String(Math.round(layer.opacity * 100));
+      op.className = 'layer-op';
+      op.title = 'Opacity';
+      op.addEventListener('input', () => {
+        layer.opacity = Number(op.value) / 100;
+        composite();
+      });
+      op.addEventListener('change', saveDraft);
+
+      row.appendChild(vis);
+      row.appendChild(name);
+      row.appendChild(op);
+
+      if (layer.minor === 0) {
+        const add = document.createElement('button');
+        add.type = 'button';
+        add.className = 'layer-btn';
+        add.textContent = '+';
+        add.title = `Add a ${layer.name} sub-layer`;
+        add.addEventListener('click', () => addChild(layer.major));
+        row.appendChild(add);
+      } else {
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'layer-btn';
+        del.textContent = '×';
+        del.title = 'Delete sub-layer';
+        del.addEventListener('click', () => deleteLayer(layer.id));
+        row.appendChild(del);
+      }
+
+      layerListEl.appendChild(row);
+    }
+  }
+
+  // ---- Drawing (onto the active layer) -----------------------------------
   function selectedDimensions() {
     const dimensions = dimensionInputs.filter((input) => input.checked).map((input) => input.value);
     return dimensions.length ? dimensions : ['2D'];
@@ -169,112 +401,149 @@ if (!session) {
     };
   }
 
-  function paintPaper() {
-    ctx.save();
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.restore();
-  }
-
-  function saveHistory() {
-    history.push(canvas.toDataURL('image/png'));
-    if (history.length > 40) history.shift();
-    redoStack = [];
-  }
-
-  function restoreImage(dataUrl) {
-    const img = new Image();
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    };
-    img.src = dataUrl;
-  }
-
-  function undo() {
-    if (history.length <= 1) {
-      setStatus('NOTHING TO UNDO');
-      return;
-    }
-    redoStack.push(history.pop());
-    restoreImage(history[history.length - 1]);
-    setStatus('UNDO');
-  }
-
-  function redo() {
-    const next = redoStack.pop();
-    if (!next) {
-      setStatus('NOTHING TO REDO');
-      return;
-    }
-    history.push(next);
-    restoreImage(next);
-    setStatus('REDO');
-  }
-
-  function drawTextAt(x, y) {
-    const text = window.prompt('TEXT');
-    if (!text) {
-      setStatus('TEXT CANCELLED');
-      return;
-    }
-    const lines = text.split(/\r?\n/).slice(0, 8);
-    const fontSize = Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
-    ctx.save();
-    ctx.fillStyle = ink;
-    ctx.font = `${fontSize}px "JetBrains Mono", Consolas, monospace`;
-    ctx.textBaseline = 'top';
-    lines.forEach((line, index) => ctx.fillText(line.slice(0, 80), x, y + index * fontSize * 1.15));
-    ctx.restore();
-    saveHistory();
-    setStatus('TEXT PLACED');
-  }
-
   function pointerPos(event) {
-    const rect = canvas.getBoundingClientRect();
+    const rect = view.getBoundingClientRect();
     return {
-      x: (event.clientX - rect.left) * (canvas.width / rect.width),
-      y: (event.clientY - rect.top) * (canvas.height / rect.height),
+      x: (event.clientX - rect.left) * (W / rect.width),
+      y: (event.clientY - rect.top) * (H / rect.height),
     };
   }
 
   function begin(event) {
-    event.preventDefault();
-    const p = pointerPos(event);
-    if (tool === 'text') {
-      drawTextAt(p.x, p.y);
+    const layer = activeLayer();
+    if (!layer || !layer.visible) {
+      setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
       return;
     }
-    canvas.setPointerCapture(event.pointerId);
+    event.preventDefault();
+    if (tool === 'text') {
+      const tp = pointerPos(event);
+      drawTextAt(tp.x, tp.y);
+      return;
+    }
+    snapshotBefore();
+    view.setPointerCapture(event.pointerId);
     drawing = true;
+    const p = pointerPos(event);
     lastX = p.x;
     lastY = p.y;
+  }
+
+  // TEXT tool (B-side, ported from Chad's main onto the active layer).
+  function drawTextAt(x, y) {
+    const layer = activeLayer();
+    if (!layer || !layer.visible) {
+      setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
+      return;
+    }
+    const text = window.prompt('TEXT');
+    if (!text) { setStatus('TEXT CANCELLED'); return; }
+    snapshotBefore();
+    const lines = text.split(/\r?\n/).slice(0, 8);
+    const fontSize = Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+    const lctx = layer.ctx;
+    lctx.save();
+    lctx.fillStyle = ink;
+    lctx.font = `${fontSize}px "JetBrains Mono", Consolas, monospace`;
+    lctx.textBaseline = 'top';
+    lines.forEach((line, index) => lctx.fillText(line.slice(0, 80), x, y + index * fontSize * 1.15));
+    lctx.restore();
+    composite();
+    saveDraft();
+    setStatus('TEXT PLACED');
   }
 
   function move(event) {
     if (!drawing) return;
     event.preventDefault();
+    const layer = activeLayer();
+    if (!layer) return;
+    const lctx = layer.ctx;
     const p = pointerPos(event);
-    ctx.strokeStyle = tool === 'erase' ? '#ffffff' : ink;
-    ctx.lineWidth = Number(sizeInput.value);
-    ctx.lineCap = 'square';
-    ctx.lineJoin = 'miter';
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
+    lctx.save();
+    lctx.globalCompositeOperation = tool === 'erase' ? 'destination-out' : 'source-over';
+    lctx.strokeStyle = ink;
+    lctx.lineWidth = Number(sizeInput.value);
+    lctx.lineCap = 'round';
+    lctx.lineJoin = 'round';
+    lctx.beginPath();
+    lctx.moveTo(lastX, lastY);
+    lctx.lineTo(p.x, p.y);
+    lctx.stroke();
+    lctx.restore();
     lastX = p.x;
     lastY = p.y;
+    composite();
   }
 
   function end(event) {
     if (!drawing) return;
     drawing = false;
-    if (event?.pointerId !== undefined) canvas.releasePointerCapture(event.pointerId);
-    saveHistory();
+    if (event && event.pointerId !== undefined) view.releasePointerCapture(event.pointerId);
     setStatus('DRAWING MODIFIED');
+    saveDraft();
   }
 
+  // ---- Autosave draft (nothing gets lost on a crash / closed tab) ---------
+  let draftTimer = null;
+  function saveDraft() {
+    if (draftTimer) clearTimeout(draftTimer);
+    draftTimer = setTimeout(() => {
+      try {
+        const scene = serializeScene();
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(scene));
+      } catch (err) {
+        // Draft autosave is best-effort; never let it break drawing.
+      }
+    }, 400);
+  }
+
+  function serializeScene() {
+    return {
+      version: 1,
+      width: W,
+      height: H,
+      activeId,
+      layers: layers.map((l) => ({
+        id: l.id,
+        major: l.major,
+        minor: l.minor,
+        name: l.name,
+        opacity: l.opacity,
+        visible: l.visible,
+        png: l.canvas.toDataURL('image/png'),
+      })),
+    };
+  }
+
+  function restoreScene(scene, done) {
+    if (!scene || !Array.isArray(scene.layers) || !scene.layers.length) {
+      defaultLayers();
+      done();
+      return;
+    }
+    const rebuilt = [];
+    let pending = scene.layers.length;
+    scene.layers.forEach((data) => {
+      const layer = makeLayer(data.major, data.minor, typeof data.opacity === 'number' ? data.opacity : 1, data.visible !== false);
+      rebuilt.push(layer);
+      const img = new Image();
+      img.onload = () => {
+        layer.ctx.drawImage(img, 0, 0);
+        if (--pending === 0) finish();
+      };
+      img.onerror = () => { if (--pending === 0) finish(); };
+      img.src = data.png;
+    });
+    function finish() {
+      layers = rebuilt;
+      sortLayers();
+      activeId = scene.activeId && layers.some((l) => l.id === scene.activeId) ? scene.activeId : '2';
+      done();
+    }
+  }
+
+  // ---- Save + relay (scene + flat composite) -----------------------------
   function renderList(items) {
     if (!items.length) {
       drawList.innerHTML = '<div class="draw-empty">NO SAVES YET</div>';
@@ -319,13 +588,16 @@ if (!session) {
   async function saveDrawing() {
     saveBtn.disabled = true;
     saveBtn.textContent = 'SAVING...';
-    setStatus('SAVING PNG + RELAY MESSAGE');
+    setStatus('SAVING SCENE + PNG + RELAY');
     try {
+      composite();
+      const scene = serializeScene();
       const res = await fetch('/api/drw', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          image: canvas.toDataURL('image/png'),
+          image: view.toDataURL('image/png'),
+          scene,
           caption: captionInput.value,
           coordinate: buildCoordinate(),
         }),
@@ -343,6 +615,7 @@ if (!session) {
     }
   }
 
+  // ---- Wiring ------------------------------------------------------------
   toolButtons.forEach((button) => {
     button.addEventListener('click', () => {
       tool = button.dataset.tool;
@@ -355,39 +628,40 @@ if (!session) {
     button.addEventListener('click', () => {
       ink = button.dataset.color;
       swatches.forEach((s) => s.classList.toggle('is-active', s === button));
-      setStatus('INK SELECTED');
+      setStatus(`INK ${button.title || ''}`.trim());
     });
   });
 
   clearBtn.addEventListener('click', () => {
-    paintPaper();
-    saveHistory();
-    setStatus('CANVAS CLEARED');
+    const layer = activeLayer();
+    if (!layer) return;
+    snapshotBefore();
+    layer.ctx.clearRect(0, 0, W, H);
+    if (layer.major === 0 && layer.minor === 0) {
+      layer.ctx.fillStyle = '#ffffff';
+      layer.ctx.fillRect(0, 0, W, H);
+    }
+    composite();
+    saveDraft();
+    setStatus(`CLEARED ${layer.name}`);
   });
 
   undoBtn.addEventListener('click', undo);
   redoBtn.addEventListener('click', redo);
   saveBtn.addEventListener('click', saveDrawing);
-  canvas.addEventListener('pointerdown', begin);
-  canvas.addEventListener('pointermove', move);
-  canvas.addEventListener('pointerup', end);
-  canvas.addEventListener('pointercancel', end);
-  window.addEventListener('keydown', (event) => {
-    if (!event.ctrlKey && !event.metaKey) return;
-    const key = event.key.toLowerCase();
-    if (key === 'z') {
-      event.preventDefault();
-      if (event.shiftKey) redo();
-      else undo();
-    }
-    if (key === 'y') {
-      event.preventDefault();
-      redo();
-    }
-  });
+  view.addEventListener('pointerdown', begin);
+  view.addEventListener('pointermove', move);
+  view.addEventListener('pointerup', end);
+  view.addEventListener('pointercancel', end);
 
-  paintPaper();
-  saveHistory();
+  // Boot: restore the autosaved working draft if present, else default layers.
+  let stored = null;
+  try { stored = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch (err) { stored = null; }
+  restoreScene(stored, () => {
+    renderLayers();
+    composite();
+    setStatus(stored ? 'RESTORED WORKING DRAFT' : 'READY');
+  });
   loadDrawings();
 </script>
 
@@ -469,7 +743,7 @@ if (!session) {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.45rem;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.55rem;
   }
   .drw-control {
     display: inline-flex;
@@ -485,8 +759,10 @@ if (!session) {
     width: 110px;
   }
   .drw-swatches {
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.25rem;
+    margin-bottom: 0.65rem;
   }
   .swatch {
     width: 30px;
@@ -520,10 +796,83 @@ if (!session) {
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 2;
-    background: #fff;
+    background:
+      linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%) 0 0 / 20px 20px,
+      linear-gradient(45deg, #eee 25%, #fff 25%, #fff 75%, #eee 75%) 10px 10px / 20px 20px;
     border: 1px solid #111;
     touch-action: none;
     cursor: crosshair;
+  }
+  .layers-panel {
+    margin-top: 0.65rem;
+    background: #d6d6d6;
+    border: 2px solid;
+    border-color: #555 #fff #fff #555;
+    padding: 0.55rem;
+  }
+  .layers-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .layers-hint {
+    font-weight: 400;
+    font-size: 0.62rem;
+    color: #444;
+  }
+  .layer-list {
+    display: grid;
+    gap: 0.3rem;
+  }
+  .layer-row {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr) 90px 26px;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.3rem;
+    background: #e8e8e8;
+    border: 1px solid #888;
+  }
+  .layer-row.is-child {
+    margin-left: 1rem;
+    background: #ededed;
+  }
+  .layer-row.is-active {
+    outline: 2px solid #071b5f;
+    outline-offset: -1px;
+  }
+  .layer-vis {
+    width: 16px;
+    height: 16px;
+  }
+  .layer-name {
+    text-align: left;
+    background: transparent;
+    border: 0;
+    color: #111;
+    font: 700 0.72rem/1 var(--font-mono);
+    cursor: pointer;
+    padding: 0.15rem 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .layer-op {
+    width: 90px;
+  }
+  .layer-btn {
+    width: 24px;
+    height: 24px;
+    border: 2px solid;
+    border-color: #fff #333 #333 #fff;
+    background: #e6e6e6;
+    color: #111;
+    font: 700 0.8rem/1 var(--font-mono);
+    cursor: pointer;
+  }
+  .layer-btn:active {
+    border-color: #333 #fff #fff #333;
   }
   .coordinate-panel {
     margin-top: 0.65rem;
@@ -708,6 +1057,9 @@ if (!session) {
     }
     #save-btn {
       width: 100%;
+    }
+    .layer-row {
+      grid-template-columns: 18px minmax(0, 1fr) 70px 26px;
     }
   }
 </style>
