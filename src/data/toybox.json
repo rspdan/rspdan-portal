@@ -1,0 +1,905 @@
+{
+  "total": 127,
+  "worlds": [
+    {
+      "world": "hdso-source",
+      "count": 109,
+      "lanes": [
+        {
+          "lane": "API / platform learning",
+          "count": 14,
+          "items": [
+            {
+              "title": "anthropic-bedrock-python-main",
+              "priority": "reference",
+              "files": 2,
+              "what": "HDSO Rox in lane 'API / platform learning' (2 recursive files)."
+            },
+            {
+              "title": "anthropic-bedrock-typescript-main",
+              "priority": "reference",
+              "files": 2,
+              "what": "HDSO Rox in lane 'API / platform learning' (2 recursive files)."
+            },
+            {
+              "title": "anthropic-cli-main",
+              "priority": "reference",
+              "files": 128,
+              "what": "HDSO Rox in lane 'API / platform learning' (128 recursive files)."
+            },
+            {
+              "title": "anthropic-retrieval-demo-main",
+              "priority": "reference",
+              "files": 35,
+              "what": "HDSO Rox in lane 'API / platform learning' (35 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-csharp-main",
+              "priority": "reference",
+              "files": 2135,
+              "what": "HDSO Rox in lane 'API / platform learning' (2135 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-go-main",
+              "priority": "reference",
+              "files": 287,
+              "what": "HDSO Rox in lane 'API / platform learning' (287 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-java-main",
+              "priority": "reference",
+              "files": 2278,
+              "what": "HDSO Rox in lane 'API / platform learning' (2278 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-php-main",
+              "priority": "reference",
+              "files": 1572,
+              "what": "HDSO Rox in lane 'API / platform learning' (1572 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-python-main",
+              "priority": "reference",
+              "files": 1185,
+              "what": "HDSO Rox in lane 'API / platform learning' (1185 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-ruby-main",
+              "priority": "reference",
+              "files": 2990,
+              "what": "HDSO Rox in lane 'API / platform learning' (2990 recursive files)."
+            },
+            {
+              "title": "anthropic-sdk-typescript-main",
+              "priority": "reference",
+              "files": 423,
+              "what": "HDSO Rox in lane 'API / platform learning' (423 recursive files)."
+            },
+            {
+              "title": "anthropic-tokenizer-typescript-main",
+              "priority": "reference",
+              "files": 18,
+              "what": "HDSO Rox in lane 'API / platform learning' (18 recursive files)."
+            },
+            {
+              "title": "claude-cookbooks-main",
+              "priority": "reference",
+              "files": 575,
+              "what": "HDSO Rox in lane 'API / platform learning' (575 recursive files)."
+            },
+            {
+              "title": "claude-quickstarts-main",
+              "priority": "reference",
+              "files": 285,
+              "what": "HDSO Rox in lane 'API / platform learning' (285 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Agent operation / Crew tooling",
+          "count": 15,
+          "items": [
+            {
+              "title": "claude-agent-sdk-demos-main",
+              "priority": "now",
+              "files": 270,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (270 recursive files)."
+            },
+            {
+              "title": "claude-agent-sdk-python-main",
+              "priority": "now",
+              "files": 129,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (129 recursive files)."
+            },
+            {
+              "title": "claude-agent-sdk-typescript-main",
+              "priority": "now",
+              "files": 34,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (34 recursive files)."
+            },
+            {
+              "title": "claude-code-action-main",
+              "priority": "now",
+              "files": 193,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (193 recursive files)."
+            },
+            {
+              "title": "claude-code-main",
+              "priority": "now",
+              "files": 204,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (204 recursive files)."
+            },
+            {
+              "title": "claude-plugins-official-main",
+              "priority": "now",
+              "files": 392,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (392 recursive files)."
+            },
+            {
+              "title": "github-mcp-server-main",
+              "priority": "now",
+              "files": 90,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (90 recursive files)."
+            },
+            {
+              "title": "agent-sdk-workshop-main",
+              "priority": "near",
+              "files": 74,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (74 recursive files)."
+            },
+            {
+              "title": "claude-ai-mcp-main",
+              "priority": "near",
+              "files": 12,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (12 recursive files)."
+            },
+            {
+              "title": "claude-code-base-action-main",
+              "priority": "near",
+              "files": 46,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (46 recursive files)."
+            },
+            {
+              "title": "claude-code-monitoring-guide-main",
+              "priority": "near",
+              "files": 14,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (14 recursive files)."
+            },
+            {
+              "title": "claude-code-security-review-main",
+              "priority": "near",
+              "files": 43,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (43 recursive files)."
+            },
+            {
+              "title": "claude-desktop-buddy-main",
+              "priority": "near",
+              "files": 61,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (61 recursive files)."
+            },
+            {
+              "title": "claude-plugins-community-main",
+              "priority": "near",
+              "files": 31,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (31 recursive files)."
+            },
+            {
+              "title": "cwc-long-running-agents-main",
+              "priority": "near",
+              "files": 13,
+              "what": "HDSO Rox in lane 'Agent operation / Crew tooling' (13 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Curriculum / domain packet",
+          "count": 5,
+          "items": [
+            {
+              "title": "claude-for-legal-main",
+              "priority": "reference",
+              "files": 315,
+              "what": "HDSO Rox in lane 'Curriculum / domain packet' (315 recursive files)."
+            },
+            {
+              "title": "courses-master",
+              "priority": "reference",
+              "files": 224,
+              "what": "HDSO Rox in lane 'Curriculum / domain packet' (224 recursive files)."
+            },
+            {
+              "title": "financial-services-main",
+              "priority": "reference",
+              "files": 372,
+              "what": "HDSO Rox in lane 'Curriculum / domain packet' (372 recursive files)."
+            },
+            {
+              "title": "life-sciences-main",
+              "priority": "reference",
+              "files": 108,
+              "what": "HDSO Rox in lane 'Curriculum / domain packet' (108 recursive files)."
+            },
+            {
+              "title": "prompt-eng-interactive-tutorial-master",
+              "priority": "reference",
+              "files": 52,
+              "what": "HDSO Rox in lane 'Curriculum / domain packet' (52 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Formal/code substrate",
+          "count": 1,
+          "items": [
+            {
+              "title": "claudes-c-compiler-main",
+              "priority": "near",
+              "files": 448,
+              "what": "HDSO Rox in lane 'Formal/code substrate' (448 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "General source box",
+          "count": 7,
+          "items": [
+            {
+              "title": "skills-main",
+              "priority": "now",
+              "files": 399,
+              "what": "HDSO Rox in lane 'General source box' (399 recursive files)."
+            },
+            {
+              "title": "anthropic-tools-main",
+              "priority": "reference",
+              "files": 37,
+              "what": "HDSO Rox in lane 'General source box' (37 recursive files)."
+            },
+            {
+              "title": "claude-constitution-main",
+              "priority": "reference",
+              "files": 4,
+              "what": "HDSO Rox in lane 'General source box' (4 recursive files)."
+            },
+            {
+              "title": "ClaudeForFoundationModels-main",
+              "priority": "reference",
+              "files": 48,
+              "what": "HDSO Rox in lane 'General source box' (48 recursive files)."
+            },
+            {
+              "title": "defending-code-reference-harness-main",
+              "priority": "reference",
+              "files": 108,
+              "what": "HDSO Rox in lane 'General source box' (108 recursive files)."
+            },
+            {
+              "title": "original_performance_takehome-main",
+              "priority": "reference",
+              "files": 9,
+              "what": "HDSO Rox in lane 'General source box' (9 recursive files)."
+            },
+            {
+              "title": ".codex-remote-attachments",
+              "priority": "hold",
+              "files": 5,
+              "what": "HDSO Rox in lane 'General source box' (5 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "HDSO root file",
+          "count": 1,
+          "items": [
+            {
+              "title": "CHANGELOG.md",
+              "priority": "reference",
+              "files": 1,
+              "what": "HDSO Rox in lane 'HDSO root file' (1 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Library / runtime / formal substrate",
+          "count": 16,
+          "items": [
+            {
+              "title": "lean-ctx-main",
+              "priority": "now",
+              "files": 1805,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (1805 recursive files)."
+            },
+            {
+              "title": "apitools-anthropic-0.5.32",
+              "priority": "near",
+              "files": 114,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (114 recursive files)."
+            },
+            {
+              "title": "beam-anthropic-2.71.0",
+              "priority": "near",
+              "files": 13544,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (13544 recursive files)."
+            },
+            {
+              "title": "blobfile-master",
+              "priority": "near",
+              "files": 28,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (28 recursive files)."
+            },
+            {
+              "title": "buffa-main",
+              "priority": "near",
+              "files": 443,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (443 recursive files)."
+            },
+            {
+              "title": "cfaulthandler-main",
+              "priority": "near",
+              "files": 6,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (6 recursive files)."
+            },
+            {
+              "title": "connect-rust-main",
+              "priority": "near",
+              "files": 300,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (300 recursive files)."
+            },
+            {
+              "title": "httpcore-anthropic-1.0.9",
+              "priority": "near",
+              "files": 93,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (93 recursive files)."
+            },
+            {
+              "title": "hypercorn-main",
+              "priority": "near",
+              "files": 125,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (125 recursive files)."
+            },
+            {
+              "title": "maestro-main",
+              "priority": "near",
+              "files": 1190,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (1190 recursive files)."
+            },
+            {
+              "title": "orjson-anthropic-3.11.7",
+              "priority": "near",
+              "files": 577,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (577 recursive files)."
+            },
+            {
+              "title": "python-tblib-master",
+              "priority": "near",
+              "files": 41,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (41 recursive files)."
+            },
+            {
+              "title": "redis-py-master",
+              "priority": "near",
+              "files": 272,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (272 recursive files)."
+            },
+            {
+              "title": "sse-starlette-master",
+              "priority": "near",
+              "files": 42,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (42 recursive files)."
+            },
+            {
+              "title": "torchtyping-anthropic-0.1.5",
+              "priority": "near",
+              "files": 29,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (29 recursive files)."
+            },
+            {
+              "title": "triton-main",
+              "priority": "near",
+              "files": 444,
+              "what": "HDSO Rox in lane 'Library / runtime / formal substrate' (444 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "NEST/HCSU adjacent local tool",
+          "count": 21,
+          "items": [
+            {
+              "title": "ChatGPTServerCommander-main",
+              "priority": "now",
+              "files": 44,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (44 recursive files)."
+            },
+            {
+              "title": "DesktopCommanderMCP-main",
+              "priority": "now",
+              "files": 245,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (245 recursive files)."
+            },
+            {
+              "title": "riegeli-rs-anthropic-next",
+              "priority": "reference",
+              "files": 120,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (120 recursive files)."
+            },
+            {
+              "title": "burn-main",
+              "priority": "hold",
+              "files": 329,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (329 recursive files)."
+            },
+            {
+              "title": "CL4R1T4S-main",
+              "priority": "hold",
+              "files": 69,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (69 recursive files)."
+            },
+            {
+              "title": "CLAUDE-CODE-SYSTEM-PROMPT-main",
+              "priority": "hold",
+              "files": 5,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (5 recursive files)."
+            },
+            {
+              "title": "elder-plinius.github.io-main",
+              "priority": "hold",
+              "files": 5,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (5 recursive files)."
+            },
+            {
+              "title": "ENTHEA-main",
+              "priority": "hold",
+              "files": 5,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (5 recursive files)."
+            },
+            {
+              "title": "G0DM0D3-main",
+              "priority": "hold",
+              "files": 108,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (108 recursive files)."
+            },
+            {
+              "title": "GLOSSOPETRAE-main",
+              "priority": "hold",
+              "files": 38,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (38 recursive files)."
+            },
+            {
+              "title": "ImageDefender-main",
+              "priority": "hold",
+              "files": 4,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (4 recursive files)."
+            },
+            {
+              "title": "L1B3RT4S-main",
+              "priority": "hold",
+              "files": 45,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (45 recursive files)."
+            },
+            {
+              "title": "LEAKHUB-main",
+              "priority": "hold",
+              "files": 51,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (51 recursive files)."
+            },
+            {
+              "title": "NATURALIS-FUTURA-readme-design",
+              "priority": "hold",
+              "files": 50,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (50 recursive files)."
+            },
+            {
+              "title": "Nex-N2-main",
+              "priority": "hold",
+              "files": 4,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (4 recursive files)."
+            },
+            {
+              "title": "OBLITERATUS-main",
+              "priority": "hold",
+              "files": 139,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (139 recursive files)."
+            },
+            {
+              "title": "P4RS3LT0NGV3-main",
+              "priority": "hold",
+              "files": 250,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (250 recursive files)."
+            },
+            {
+              "title": "skillreaper-main",
+              "priority": "hold",
+              "files": 67,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (67 recursive files)."
+            },
+            {
+              "title": "ST3GG-main",
+              "priority": "hold",
+              "files": 123,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (123 recursive files)."
+            },
+            {
+              "title": "V3R1T4S-main",
+              "priority": "hold",
+              "files": 3,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (3 recursive files)."
+            },
+            {
+              "title": "V3SP3R-main",
+              "priority": "hold",
+              "files": 3470,
+              "what": "HDSO Rox in lane 'NEST/HCSU adjacent local tool' (3470 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "NEST/HCUS source core",
+          "count": 1,
+          "items": [
+            {
+              "title": "HCSUFIXNESTMAIN",
+              "priority": "now",
+              "files": 3358,
+              "what": "HDSO Rox in lane 'NEST/HCUS source core' (3358 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Research / eval / trust tests",
+          "count": 14,
+          "items": [
+            {
+              "title": "attribution-graphs-frontend-main",
+              "priority": "near",
+              "files": 29,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (29 recursive files)."
+            },
+            {
+              "title": "ConstitutionalHarmlessnessPaper-main",
+              "priority": "near",
+              "files": 25,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (25 recursive files)."
+            },
+            {
+              "title": "DecompositionFaithfulnessPaper-main",
+              "priority": "near",
+              "files": 7,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (7 recursive files)."
+            },
+            {
+              "title": "evals-main",
+              "priority": "near",
+              "files": 197,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (197 recursive files)."
+            },
+            {
+              "title": "hh-rlhf-master",
+              "priority": "near",
+              "files": 13,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (13 recursive files)."
+            },
+            {
+              "title": "model-cards-main",
+              "priority": "near",
+              "files": 6,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (6 recursive files)."
+            },
+            {
+              "title": "nix-eval-jobs-main",
+              "priority": "near",
+              "files": 39,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (39 recursive files)."
+            },
+            {
+              "title": "political-neutrality-eval-main",
+              "priority": "near",
+              "files": 6,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (6 recursive files)."
+            },
+            {
+              "title": "riv2025-long-horizon-coding-agent-demo-main",
+              "priority": "near",
+              "files": 127,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (127 recursive files)."
+            },
+            {
+              "title": "rogue-deploy-eval-main",
+              "priority": "near",
+              "files": 21,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (21 recursive files)."
+            },
+            {
+              "title": "scone-bench-main",
+              "priority": "near",
+              "files": 54,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (54 recursive files)."
+            },
+            {
+              "title": "sleeper-agents-paper-main",
+              "priority": "near",
+              "files": 7,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (7 recursive files)."
+            },
+            {
+              "title": "sycophancy-to-subterfuge-paper-main",
+              "priority": "near",
+              "files": 10,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (10 recursive files)."
+            },
+            {
+              "title": "toy-models-of-superposition-main",
+              "priority": "near",
+              "files": 4,
+              "what": "HDSO Rox in lane 'Research / eval / trust tests' (4 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Transport / deployment / connector substrate",
+          "count": 8,
+          "items": [
+            {
+              "title": "argo-cd-master",
+              "priority": "near",
+              "files": 5139,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (5139 recursive files)."
+            },
+            {
+              "title": "cargo-nix-plugin-main",
+              "priority": "near",
+              "files": 128,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (128 recursive files)."
+            },
+            {
+              "title": "devcontainer-features-main",
+              "priority": "near",
+              "files": 14,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (14 recursive files)."
+            },
+            {
+              "title": "homebrew-tap-main",
+              "priority": "near",
+              "files": 3,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (3 recursive files)."
+            },
+            {
+              "title": "rclone-master",
+              "priority": "near",
+              "files": 2352,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (2352 recursive files)."
+            },
+            {
+              "title": "s5cmd-master",
+              "priority": "near",
+              "files": 112,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (112 recursive files)."
+            },
+            {
+              "title": "tailscale-hint-extension-main",
+              "priority": "near",
+              "files": 11,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (11 recursive files)."
+            },
+            {
+              "title": "terragrunt-main",
+              "priority": "near",
+              "files": 4215,
+              "what": "HDSO Rox in lane 'Transport / deployment / connector substrate' (4215 recursive files)."
+            }
+          ]
+        },
+        {
+          "lane": "Visual / Epictome interface substrate",
+          "count": 6,
+          "items": [
+            {
+              "title": "headvis-main",
+              "priority": "now",
+              "files": 38,
+              "what": "HDSO Rox in lane 'Visual / Epictome interface substrate' (38 recursive files)."
+            },
+            {
+              "title": "html-effectiveness-main",
+              "priority": "now",
+              "files": 27,
+              "what": "HDSO Rox in lane 'Visual / Epictome interface substrate' (27 recursive files)."
+            },
+            {
+              "title": "leptos-chartistry-master",
+              "priority": "near",
+              "files": 98,
+              "what": "HDSO Rox in lane 'Visual / Epictome interface substrate' (98 recursive files)."
+            },
+            {
+              "title": "PySvelte-master",
+              "priority": "near",
+              "files": 24,
+              "what": "HDSO Rox in lane 'Visual / Epictome interface substrate' (24 recursive files)."
+            },
+            {
+              "title": "swift-markdown-main",
+              "priority": "near",
+              "files": 172,
+              "what": "HDSO Rox in lane 'Visual / Epictome interface substrate' (172 recursive files)."
+            },
+            {
+              "title": "swift-markdown-ui-main",
+              "priority": "near",
+              "files": 393,
+              "what": "HDSO Rox in lane 'Visual / Epictome interface substrate' (393 recursive files)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "world": "bridge-intel",
+      "count": 18,
+      "lanes": [
+        {
+          "lane": "3d-spatial",
+          "count": 1,
+          "items": [
+            {
+              "title": "ephtracy voxel-model (+ stb)",
+              "priority": "other",
+              "files": null,
+              "what": "observed ephtracy/voxel-model: reference .vox models + the MagicaVoxel .vox file-format documentation + .svo sparse-voxel-octree samples (ephtracy = author of MagicaVoxel, the free GPU voxel editor/renderer). \"stb\" refers to the single-head"
+            }
+          ]
+        },
+        {
+          "lane": "agent-tooling",
+          "count": 1,
+          "items": [
+            {
+              "title": "github.com/Hmbown/CodeWhale",
+              "priority": "examined",
+              "files": null,
+              "what": "Real Rust coding-agent (38.7k stars, v0.8.62, 25+ providers) with a 4-layer nested constitution; law lives in the harness; runtime-validated .codewhale/constitution.json."
+            }
+          ]
+        },
+        {
+          "lane": "archival",
+          "count": 3,
+          "items": [
+            {
+              "title": "JamieMagee/wayback (GitHub Action)",
+              "priority": "other",
+              "files": null,
+              "what": "GitHub Action (v2.2.0, rel 2026-04-16) that snapshots pages into the Internet Archive as part of CI/CD."
+            },
+            {
+              "title": "waybackurls + waybackpack",
+              "priority": "other",
+              "files": null,
+              "what": "waybackurls audits archived URL coverage; waybackpack pulls local frozen copies of URLs."
+            },
+            {
+              "title": "gmcli (Minimal Gmail CLI)",
+              "priority": "other",
+              "files": null,
+              "what": "observed badlogic/gmcli (Mario Zechner). Minimal Gmail CLI: search threads via Gmail query syntax, read threads (Message-ID, headers, body, attachments), manage labels/drafts/accounts via OAuth. NOTE (SR23 correction): the prior FINDING gro"
+            }
+          ]
+        },
+        {
+          "lane": "industry-intel",
+          "count": 1,
+          "items": [
+            {
+              "title": "The Subprime AI Crisis Is Here (Ed Zitron)",
+              "priority": "examined",
+              "files": null,
+              "what": "Long-form analysis arguing the AI industry is structurally subprime: labs burn far more compute than revenue (Anthropic ~5B rev vs ~10B compute), circular financing, rugpull began June 2025 priority-tiers and hit subscribers March 2026."
+            }
+          ]
+        },
+        {
+          "lane": "lean-build",
+          "count": 4,
+          "items": [
+            {
+              "title": "Old Software Was Fast + Computer latency 1977-2017",
+              "priority": "other",
+              "files": null,
+              "what": "The lean-engineering pair (Aytas + Dan Luu): software was fast when it had no choice; latency has regressed despite faster hardware."
+            },
+            {
+              "title": "\"Old Software Was Fast Because It Had No Choice\"",
+              "priority": "other",
+              "files": null,
+              "what": "observed Essay by Yusuf Aytas. Thesis: old software was fast not from virtue but because the machine said no; scarce RAM/CPU FORCED engineers to understand their service. Modern infra is forgiving, so waste survives long enough to look norm"
+            },
+            {
+              "title": "Winhance",
+              "priority": "other",
+              "files": null,
+              "what": "observed memstechtips/Winhance (PolyForm Shield license). C# Windows 10/11 debloat + optimize + customize panel (remove Xbox/Teams/OneDrive/telemetry, export revertible tweak scripts, build custom Win11 ISOs). NOTE (SR23): also prior-FINDIN"
+            },
+            {
+              "title": "Best-README-Template",
+              "priority": "other",
+              "files": null,
+              "what": "observed othneildrew/Best-README-Template. A widely-used README scaffold. NOTE (SR23): author is othneildrew, not asgeir."
+            }
+          ]
+        },
+        {
+          "lane": "model-landscape",
+          "count": 2,
+          "items": [
+            {
+              "title": "GLM-5.2 (Built for Long-Horizon Tasks)",
+              "priority": "other",
+              "files": null,
+              "what": "MIT-licensed 1M-context open-weights frontier model, ranks #2 behind Opus 4.8 per the loaded material."
+            },
+            {
+              "title": "CCEconReport Appendix G + H",
+              "priority": "other",
+              "files": null,
+              "what": "inferred Anthropic Economic Index report material (the March-2026 \"Learning curves\" report is the live one). Public report confirms Claude Code run-rate revenue >$2.5B Feb 2026, coding migrating from claude.ai to first-party API. The specif"
+            }
+          ]
+        },
+        {
+          "lane": "reference-paper",
+          "count": 4,
+          "items": [
+            {
+              "title": "arxiv 2601.03267v2 = OpenAI GPT-5 System Card",
+              "priority": "other",
+              "files": null,
+              "what": "GPT-5 system card: a fast model + a deeper reasoning model behind a real-time router trained on user-switch/preference/correctness signals."
+            },
+            {
+              "title": "arxiv 2508.09224v1 = From Hard Refusals to Safe-Completions (Vallone et al)",
+              "priority": "other",
+              "files": null,
+              "what": "OpenAI safety-training paper centered on output safety rather than binary intent-classification."
+            },
+            {
+              "title": "arxiv 2502.18600v2 = Chain of Draft: Thinking Faster by Writing Less",
+              "priority": "other",
+              "files": null,
+              "what": "Minimal intermediate reasoning; CoT-comparable accuracy at ~92% fewer tokens."
+            },
+            {
+              "title": "arxiv 2505.08775v1 = HealthBench (OpenAI)",
+              "priority": "other",
+              "files": null,
+              "what": "5000 physician-graded multi-turn health conversations as an LLM health eval."
+            }
+          ]
+        },
+        {
+          "lane": "reference-pattern",
+          "count": 1,
+          "items": [
+            {
+              "title": "wiki.pokeclicker.com",
+              "priority": "examined",
+              "files": null,
+              "what": "Pokemon idle-game wiki Dan praised for simple layout + clear interlinked world-building (hash-routed SPA; structure sourced from static render + DeepWiki mirror)."
+            }
+          ]
+        },
+        {
+          "lane": "routing-sovereignty",
+          "count": 1,
+          "items": [
+            {
+              "title": "OrcaRouter-Lite",
+              "priority": "other",
+              "files": null,
+              "what": "Self-hosted OpenAI-compatible LLM router, BYOK, single-workspace, streaming, managed safety net."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
