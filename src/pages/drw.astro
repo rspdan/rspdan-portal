@@ -59,6 +59,9 @@ const USIC_COLORS = [
           <div class="drw-toolbar" aria-label="Drawing controls">
             <button type="button" class="tool is-active" data-tool="pen">PEN</button>
             <button type="button" class="tool" data-tool="erase">ERASE</button>
+            <button type="button" class="tool" data-tool="text">TEXT</button>
+            <button type="button" id="undo-btn" class="tool">UNDO</button>
+            <button type="button" id="redo-btn" class="tool">REDO</button>
             <button type="button" id="clear-btn" class="tool">CLEAR LAYER</button>
             <label class="drw-control">
               <span>WIDTH</span>
@@ -146,6 +149,8 @@ const USIC_COLORS = [
   const vctx = view.getContext('2d');
   const sizeInput = document.getElementById('size-input');
   const clearBtn = document.getElementById('clear-btn');
+  const undoBtn = document.getElementById('undo-btn');
+  const redoBtn = document.getElementById('redo-btn');
   const saveBtn = document.getElementById('save-btn');
   const captionInput = document.getElementById('caption-input');
   const statusLine = document.getElementById('status-line');
@@ -163,6 +168,12 @@ const USIC_COLORS = [
   let lastY = 0;
   let tool = 'pen';
   let ink = swatches[0] ? swatches[0].dataset.color : '#E53327';
+
+  // Undo/redo (B-side, ported from Chad's main onto the layer model): a linear
+  // history of per-layer before-snapshots. Snapshots the layer touched, not the
+  // flat canvas, so undo/redo composes with layers + opacity.
+  let history = [];
+  let redoStack = [];
 
   // ---- Layer model -------------------------------------------------------
   // Each layer: { major (0/1/2), minor (0=root), id, name, opacity, visible,
@@ -245,6 +256,45 @@ const USIC_COLORS = [
       vctx.drawImage(layer.canvas, 0, 0);
     }
     vctx.globalAlpha = 1;
+  }
+
+  // ---- Undo / redo (per-layer before-snapshots) --------------------------
+  function snapshotBefore() {
+    const layer = activeLayer();
+    if (!layer) return;
+    history.push({ id: layer.id, png: layer.canvas.toDataURL('image/png') });
+    if (history.length > 40) history.shift();
+    redoStack = [];
+  }
+
+  function restoreLayerSnapshot(snap, opposite) {
+    const layer = layers.find((l) => l.id === snap.id);
+    if (!layer) return;
+    opposite.push({ id: snap.id, png: layer.canvas.toDataURL('image/png') });
+    const img = new Image();
+    img.onload = () => {
+      layer.ctx.clearRect(0, 0, W, H);
+      layer.ctx.drawImage(img, 0, 0);
+      composite();
+    };
+    img.src = snap.png;
+    activeId = snap.id;
+    renderLayers();
+    saveDraft();
+  }
+
+  function undo() {
+    const snap = history.pop();
+    if (!snap) { setStatus('NOTHING TO UNDO'); return; }
+    restoreLayerSnapshot(snap, redoStack);
+    setStatus('UNDO');
+  }
+
+  function redo() {
+    const snap = redoStack.pop();
+    if (!snap) { setStatus('NOTHING TO REDO'); return; }
+    restoreLayerSnapshot(snap, history);
+    setStatus('REDO');
   }
 
   function setStatus(text) {
@@ -366,11 +416,41 @@ const USIC_COLORS = [
       return;
     }
     event.preventDefault();
+    if (tool === 'text') {
+      const tp = pointerPos(event);
+      drawTextAt(tp.x, tp.y);
+      return;
+    }
+    snapshotBefore();
     view.setPointerCapture(event.pointerId);
     drawing = true;
     const p = pointerPos(event);
     lastX = p.x;
     lastY = p.y;
+  }
+
+  // TEXT tool (B-side, ported from Chad's main onto the active layer).
+  function drawTextAt(x, y) {
+    const layer = activeLayer();
+    if (!layer || !layer.visible) {
+      setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
+      return;
+    }
+    const text = window.prompt('TEXT');
+    if (!text) { setStatus('TEXT CANCELLED'); return; }
+    snapshotBefore();
+    const lines = text.split(/\r?\n/).slice(0, 8);
+    const fontSize = Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+    const lctx = layer.ctx;
+    lctx.save();
+    lctx.fillStyle = ink;
+    lctx.font = `${fontSize}px "JetBrains Mono", Consolas, monospace`;
+    lctx.textBaseline = 'top';
+    lines.forEach((line, index) => lctx.fillText(line.slice(0, 80), x, y + index * fontSize * 1.15));
+    lctx.restore();
+    composite();
+    saveDraft();
+    setStatus('TEXT PLACED');
   }
 
   function move(event) {
@@ -555,6 +635,7 @@ const USIC_COLORS = [
   clearBtn.addEventListener('click', () => {
     const layer = activeLayer();
     if (!layer) return;
+    snapshotBefore();
     layer.ctx.clearRect(0, 0, W, H);
     if (layer.major === 0 && layer.minor === 0) {
       layer.ctx.fillStyle = '#ffffff';
@@ -565,6 +646,8 @@ const USIC_COLORS = [
     setStatus(`CLEARED ${layer.name}`);
   });
 
+  undoBtn.addEventListener('click', undo);
+  redoBtn.addEventListener('click', redo);
   saveBtn.addEventListener('click', saveDrawing);
   view.addEventListener('pointerdown', begin);
   view.addEventListener('pointermove', move);
