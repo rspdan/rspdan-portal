@@ -36,6 +36,9 @@ if (!session) {
           <div class="drw-toolbar" aria-label="Drawing controls">
             <button type="button" class="tool is-active" data-tool="pen">PEN</button>
             <button type="button" class="tool" data-tool="erase">ERASE</button>
+            <button type="button" class="tool" data-tool="text">TEXT</button>
+            <button type="button" id="undo-btn" class="tool">UNDO</button>
+            <button type="button" id="redo-btn" class="tool">REDO</button>
             <button type="button" id="clear-btn" class="tool">CLEAR</button>
             <label class="drw-control">
               <span>WIDTH</span>
@@ -106,6 +109,8 @@ if (!session) {
   const ctx = canvas.getContext('2d');
   const sizeInput = document.getElementById('size-input');
   const clearBtn = document.getElementById('clear-btn');
+  const undoBtn = document.getElementById('undo-btn');
+  const redoBtn = document.getElementById('redo-btn');
   const saveBtn = document.getElementById('save-btn');
   const captionInput = document.getElementById('caption-input');
   const statusLine = document.getElementById('status-line');
@@ -122,6 +127,8 @@ if (!session) {
   let lastY = 0;
   let tool = 'pen';
   let ink = '#111111';
+  let history = [];
+  let redoStack = [];
 
   function setStatus(text) {
     statusLine.textContent = text;
@@ -132,6 +139,9 @@ if (!session) {
   }
 
   function safeHttpUrl(value) {
+    if (typeof value === 'string' && /^data:(image\/png|application\/json);base64,[a-z0-9+/=]+$/i.test(value)) {
+      return value;
+    }
     try {
       const url = new URL(value);
       return url.protocol === 'https:' || url.protocol === 'http:' ? escapeHtml(url.href) : '';
@@ -166,6 +176,60 @@ if (!session) {
     ctx.restore();
   }
 
+  function saveHistory() {
+    history.push(canvas.toDataURL('image/png'));
+    if (history.length > 40) history.shift();
+    redoStack = [];
+  }
+
+  function restoreImage(dataUrl) {
+    const img = new Image();
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = dataUrl;
+  }
+
+  function undo() {
+    if (history.length <= 1) {
+      setStatus('NOTHING TO UNDO');
+      return;
+    }
+    redoStack.push(history.pop());
+    restoreImage(history[history.length - 1]);
+    setStatus('UNDO');
+  }
+
+  function redo() {
+    const next = redoStack.pop();
+    if (!next) {
+      setStatus('NOTHING TO REDO');
+      return;
+    }
+    history.push(next);
+    restoreImage(next);
+    setStatus('REDO');
+  }
+
+  function drawTextAt(x, y) {
+    const text = window.prompt('TEXT');
+    if (!text) {
+      setStatus('TEXT CANCELLED');
+      return;
+    }
+    const lines = text.split(/\r?\n/).slice(0, 8);
+    const fontSize = Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+    ctx.save();
+    ctx.fillStyle = ink;
+    ctx.font = `${fontSize}px "JetBrains Mono", Consolas, monospace`;
+    ctx.textBaseline = 'top';
+    lines.forEach((line, index) => ctx.fillText(line.slice(0, 80), x, y + index * fontSize * 1.15));
+    ctx.restore();
+    saveHistory();
+    setStatus('TEXT PLACED');
+  }
+
   function pointerPos(event) {
     const rect = canvas.getBoundingClientRect();
     return {
@@ -176,9 +240,13 @@ if (!session) {
 
   function begin(event) {
     event.preventDefault();
+    const p = pointerPos(event);
+    if (tool === 'text') {
+      drawTextAt(p.x, p.y);
+      return;
+    }
     canvas.setPointerCapture(event.pointerId);
     drawing = true;
-    const p = pointerPos(event);
     lastX = p.x;
     lastY = p.y;
   }
@@ -203,6 +271,7 @@ if (!session) {
     if (!drawing) return;
     drawing = false;
     if (event?.pointerId !== undefined) canvas.releasePointerCapture(event.pointerId);
+    saveHistory();
     setStatus('DRAWING MODIFIED');
   }
 
@@ -292,16 +361,33 @@ if (!session) {
 
   clearBtn.addEventListener('click', () => {
     paintPaper();
+    saveHistory();
     setStatus('CANVAS CLEARED');
   });
 
+  undoBtn.addEventListener('click', undo);
+  redoBtn.addEventListener('click', redo);
   saveBtn.addEventListener('click', saveDrawing);
   canvas.addEventListener('pointerdown', begin);
   canvas.addEventListener('pointermove', move);
   canvas.addEventListener('pointerup', end);
   canvas.addEventListener('pointercancel', end);
+  window.addEventListener('keydown', (event) => {
+    if (!event.ctrlKey && !event.metaKey) return;
+    const key = event.key.toLowerCase();
+    if (key === 'z') {
+      event.preventDefault();
+      if (event.shiftKey) redo();
+      else undo();
+    }
+    if (key === 'y') {
+      event.preventDefault();
+      redo();
+    }
+  });
 
   paintPaper();
+  saveHistory();
   loadDrawings();
 </script>
 
