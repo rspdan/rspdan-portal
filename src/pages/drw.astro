@@ -88,36 +88,8 @@ const USIC_COLORS = [
           <div class="layers-panel" aria-label="Layers">
             <div class="panel-title layers-title">
               <span>LAYERS</span>
-              <span class="layers-hint">0 BKG · 1 CLR · 2 LNS</span>
             </div>
             <div id="layer-list" class="layer-list"></div>
-          </div>
-
-          <div class="coordinate-panel" aria-label="Coordinate packet">
-            <div class="panel-title">COORDINATE PACKET</div>
-            <div class="coordinate-grid">
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="2D" checked />2D</label>
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="3D" />3D</label>
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="4D+" />4D+</label>
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="EEE" />EEE</label>
-              <label class="packet-field">
-                <span>CONF</span>
-                <select id="confidence-input">
-                  <option value="observed">OBSERVED</option>
-                  <option value="mixed">MIXED</option>
-                  <option value="inferred">INFERRED</option>
-                  <option value="unverified">UNVERIFIED</option>
-                </select>
-              </label>
-              <label class="packet-field packet-wide">
-                <span>SOURCE</span>
-                <input type="text" id="source-input" maxlength="160" value="rspdan.com/drw" />
-              </label>
-              <label class="packet-field packet-wide">
-                <span>RESOLVE</span>
-                <input type="text" id="resolver-input" maxlength="240" value="Operating Room cross-witness pending" />
-              </label>
-            </div>
           </div>
 
           <div class="drw-submit">
@@ -181,7 +153,7 @@ const USIC_COLORS = [
   //   array (first element = back of the stack). The operator reorders freely
   //   with the up/down controls; major/minor are identity + name only, never
   //   a fixed order-lock. The saved array order is what persists.
-  const ROOT_NAMES = { 0: 'BKG', 1: 'CLR', 2: 'LNS' };
+  const ROOT_NAMES = { 0: 'Background', 1: 'Color', 2: 'Lines' };
   let layers = [];
   let activeId = null;
 
@@ -427,9 +399,9 @@ const USIC_COLORS = [
       trace: captionInput.value.trim() || 'DRW drawing',
       sourceSurface: 'drw',
       dimensionTags: selectedDimensions(),
-      confidence: confidenceInput.value,
-      sourceContext: sourceInput.value.trim(),
-      resolver: resolverInput.value.trim(),
+      confidence: confidenceInput ? confidenceInput.value : 'observed',
+      sourceContext: sourceInput ? sourceInput.value.trim() : 'rspdan.com/drw',
+      resolver: resolverInput ? resolverInput.value.trim() : '',
       activeInk: ink,
       activeTool: tool,
       lineWidth: Number(sizeInput.value),
