@@ -88,36 +88,8 @@ const USIC_COLORS = [
           <div class="layers-panel" aria-label="Layers">
             <div class="panel-title layers-title">
               <span>LAYERS</span>
-              <span class="layers-hint">0 BKG · 1 CLR · 2 LNS</span>
             </div>
             <div id="layer-list" class="layer-list"></div>
-          </div>
-
-          <div class="coordinate-panel" aria-label="Coordinate packet">
-            <div class="panel-title">COORDINATE PACKET</div>
-            <div class="coordinate-grid">
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="2D" checked />2D</label>
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="3D" />3D</label>
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="4D+" />4D+</label>
-              <label class="packet-check"><input type="checkbox" name="dimension-tags" value="EEE" />EEE</label>
-              <label class="packet-field">
-                <span>CONF</span>
-                <select id="confidence-input">
-                  <option value="observed">OBSERVED</option>
-                  <option value="mixed">MIXED</option>
-                  <option value="inferred">INFERRED</option>
-                  <option value="unverified">UNVERIFIED</option>
-                </select>
-              </label>
-              <label class="packet-field packet-wide">
-                <span>SOURCE</span>
-                <input type="text" id="source-input" maxlength="160" value="rspdan.com/drw" />
-              </label>
-              <label class="packet-field packet-wide">
-                <span>RESOLVE</span>
-                <input type="text" id="resolver-input" maxlength="240" value="Operating Room cross-witness pending" />
-              </label>
-            </div>
           </div>
 
           <div class="drw-submit">
@@ -177,9 +149,11 @@ const USIC_COLORS = [
 
   // ---- Layer model -------------------------------------------------------
   // Each layer: { major (0/1/2), minor (0=root), id, name, opacity, visible,
-  //   canvas (offscreen), ctx }. Composite order = sort by (major, minor),
-  //   so a parent paints below its decimal children, BKG below CLR below LNS.
-  const ROOT_NAMES = { 0: 'BKG', 1: 'CLR', 2: 'LNS' };
+  //   canvas (offscreen), ctx }. Composite + panel order follow the layers
+  //   array (first element = back of the stack). The operator reorders freely
+  //   with the up/down controls; major/minor are identity + name only, never
+  //   a fixed order-lock. The saved array order is what persists.
+  const ROOT_NAMES = { 0: 'Background', 1: 'Color', 2: 'Lines' };
   let layers = [];
   let activeId = null;
 
@@ -199,8 +173,20 @@ const USIC_COLORS = [
     return { major, minor, id, name, opacity, visible, canvas, ctx: canvas.getContext('2d') };
   }
 
-  function sortLayers() {
-    layers.sort((a, b) => (a.major - b.major) || (a.minor - b.minor));
+  // Move a layer one step through the stack. dir +1 = toward the front (up),
+  // dir -1 = toward the back (down). Any layer moves, including the roots;
+  // the operator is in control of the order, nothing is pinned.
+  function moveLayer(id, dir) {
+    const i = layers.findIndex((l) => l.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= layers.length) return;
+    const moved = layers[i];
+    layers[i] = layers[j];
+    layers[j] = moved;
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`MOVED ${moved.name}`);
   }
 
   function activeLayer() {
@@ -227,8 +213,7 @@ const USIC_COLORS = [
 
   function addChild(major) {
     const layer = makeLayer(major, nextMinor(major), 1, true);
-    layers.push(layer);
-    sortLayers();
+    layers.push(layer); // new sub-layer lands on top of the stack; reorder freely
     activeId = layer.id;
     renderLayers();
     composite();
@@ -317,7 +302,9 @@ const USIC_COLORS = [
   // ---- Layer panel UI ----------------------------------------------------
   function renderLayers() {
     layerListEl.innerHTML = '';
-    for (const layer of layers) {
+    // Render top-of-stack at the top of the panel (standard editor order).
+    for (let idx = layers.length - 1; idx >= 0; idx--) {
+      const layer = layers[idx];
       const row = document.createElement('div');
       row.className = `layer-row${layer.id === activeId ? ' is-active' : ''}${layer.minor > 0 ? ' is-child' : ''}`;
 
@@ -359,6 +346,26 @@ const USIC_COLORS = [
       row.appendChild(name);
       row.appendChild(op);
 
+      // Reorder controls: up = toward the front of the stack, down = toward the back.
+      const up = document.createElement('button');
+      up.type = 'button';
+      up.className = 'layer-btn';
+      up.textContent = '▲';
+      up.title = 'Move layer up (toward front)';
+      up.disabled = idx === layers.length - 1;
+      up.addEventListener('click', () => moveLayer(layer.id, 1));
+
+      const down = document.createElement('button');
+      down.type = 'button';
+      down.className = 'layer-btn';
+      down.textContent = '▼';
+      down.title = 'Move layer down (toward back)';
+      down.disabled = idx === 0;
+      down.addEventListener('click', () => moveLayer(layer.id, -1));
+
+      row.appendChild(up);
+      row.appendChild(down);
+
       if (layer.minor === 0) {
         const add = document.createElement('button');
         add.type = 'button';
@@ -392,9 +399,9 @@ const USIC_COLORS = [
       trace: captionInput.value.trim() || 'DRW drawing',
       sourceSurface: 'drw',
       dimensionTags: selectedDimensions(),
-      confidence: confidenceInput.value,
-      sourceContext: sourceInput.value.trim(),
-      resolver: resolverInput.value.trim(),
+      confidence: confidenceInput ? confidenceInput.value : 'observed',
+      sourceContext: sourceInput ? sourceInput.value.trim() : 'rspdan.com/drw',
+      resolver: resolverInput ? resolverInput.value.trim() : '',
       activeInk: ink,
       activeTool: tool,
       lineWidth: Number(sizeInput.value),
@@ -536,8 +543,7 @@ const USIC_COLORS = [
       img.src = data.png;
     });
     function finish() {
-      layers = rebuilt;
-      sortLayers();
+      layers = rebuilt; // keep the saved array order (the operator's order persists)
       activeId = scene.activeId && layers.some((l) => l.id === scene.activeId) ? scene.activeId : '2';
       done();
     }
@@ -827,7 +833,7 @@ const USIC_COLORS = [
   }
   .layer-row {
     display: grid;
-    grid-template-columns: 18px minmax(0, 1fr) 90px 26px;
+    grid-template-columns: 18px minmax(0, 1fr) 64px 24px 24px 24px;
     align-items: center;
     gap: 0.4rem;
     padding: 0.2rem 0.3rem;
@@ -859,7 +865,8 @@ const USIC_COLORS = [
     white-space: nowrap;
   }
   .layer-op {
-    width: 90px;
+    width: 100%;
+    min-width: 0;
   }
   .layer-btn {
     width: 24px;
@@ -873,6 +880,10 @@ const USIC_COLORS = [
   }
   .layer-btn:active {
     border-color: #333 #fff #fff #333;
+  }
+  .layer-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
   }
   .coordinate-panel {
     margin-top: 0.65rem;
@@ -1059,7 +1070,7 @@ const USIC_COLORS = [
       width: 100%;
     }
     .layer-row {
-      grid-template-columns: 18px minmax(0, 1fr) 70px 26px;
+      grid-template-columns: 18px minmax(0, 1fr) 54px 24px 24px 24px;
     }
   }
 </style>
