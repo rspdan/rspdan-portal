@@ -11,7 +11,7 @@ export const hi_registry = {
     categories: 13,
     on_disk_files: '~220 instruction-carrying files + off-disk boxes',
     engine_scripts: 134,
-    engine_accounted: 46, // 25 active + 21 declared-unwired; ~88 unaccounted
+    engine_accounted: 134, // CLOSED 070126: 24 active gates + 114 declared-unwired (accounting-closure applied to nestrust_policy.json); 0 unaccounted
     settings_layers: 3,
     skills_ambient: 48,
   },
@@ -32,9 +32,9 @@ export const hi_registry = {
     },
     {
       rank: 2,
-      title: '134 ENGINE scripts, 46 accounted',
-      detail: '~88 scripts are neither declared-active nor declared-unwired in the constitution — the "read-not-fired" leak the policy itself names. Ungoverned instruction surface.',
-      class: 'coverage / change-control',
+      title: 'ENGINE script accounting — CLOSED 070126',
+      detail: 'Was: 88 scripts neither declared-active nor declared-unwired (the read-not-fired gap). Closed 070126: every one classified header-grounded and folded into the constitution (24 active gates + 114 accounted-unwired). nestrust_validate can now fail on any future unaccounted ENGINE/*.py.',
+      class: 'coverage / change-control (resolved)',
     },
     {
       rank: 3,
