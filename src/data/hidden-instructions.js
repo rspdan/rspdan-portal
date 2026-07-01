@@ -26,9 +26,9 @@ export const hi_registry = {
   highest_risk: [
     {
       rank: 1,
-      title: 'Secrets in config',
-      detail: 'nest_proxy_config.json carries an api_key in plaintext. Should move to a credential store / env, not sit in tracked-adjacent config.',
-      class: 'security / access-control',
+      title: 'Secrets in config — RESOLVED 070126',
+      detail: 'Was: nest_proxy_config.json carried an api_key in plaintext in the public repo. Resolved 070126 (Dan-direct "NOT ROTATE. DELETE"): the api_key field was deleted and the file untracked (git rm --cached; it was already gitignored). The proxy uses the NEST_API_KEY env var (credential store). No key material remains in any tracked file.',
+      class: 'security / access-control (resolved)',
     },
     {
       rank: 2,
