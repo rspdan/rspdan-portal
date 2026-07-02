@@ -908,6 +908,7 @@ const USIC_COLORS = [
 
   // ---- Autosave draft (nothing gets lost on a crash / closed tab) ---------
   let draftTimer = null;
+  let draftWarned = false; // U7: warn once, honestly, instead of silent loss
   function saveDraft() {
     if (draftTimer) clearTimeout(draftTimer);
     draftTimer = setTimeout(() => {
@@ -915,9 +916,25 @@ const USIC_COLORS = [
         const scene = serializeScene();
         localStorage.setItem(DRAFT_KEY, JSON.stringify(scene));
       } catch (err) {
-        // Draft autosave is best-effort; never let it break drawing.
+        // Autosave stays best-effort (never breaks drawing), but a failing
+        // autosave is not silently swallowed: the operator is told once and
+        // pointed at the export that keeps the work safe.
+        if (!draftWarned) {
+          draftWarned = true;
+          setStatus('WARNING: DRAFT AUTOSAVE FAILING (storage full?) · USE FILE > EXPORT DRAFT TO KEEP WORK SAFE');
+        }
       }
     }, 400);
+  }
+
+  // U7: an expired PSPT session mid-work surfaced as a cryptic READ/SAVE
+  // error before. Name it, reassure (the autosave holds the work), and route
+  // back through the login with return-to-/drw.
+  function handleSessionExpiry(res) {
+    if (res.status !== 401) return false;
+    setStatus('SESSION EXPIRED · WORK SAFE IN AUTOSAVE · REDIRECTING TO LOGIN...');
+    setTimeout(() => { window.location.href = '/pspt?next=/drw'; }, 1400);
+    return true;
   }
 
   function serializeScene() {
@@ -1007,6 +1024,7 @@ const USIC_COLORS = [
     setStatus('LOADING SAVED SCENE...');
     try {
       const res = await fetch(`/api/drw?scene=${encodeURIComponent(id)}`);
+      if (handleSessionExpiry(res)) return;
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
       const scene = data.scene;
@@ -1033,6 +1051,7 @@ const USIC_COLORS = [
   async function loadDrawings() {
     try {
       const res = await fetch('/api/drw?limit=18');
+      if (handleSessionExpiry(res)) return;
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
       renderList(data.drawings || []);
@@ -1060,6 +1079,7 @@ const USIC_COLORS = [
           coordinate: buildCoordinate(),
         }),
       });
+      if (handleSessionExpiry(res)) return;
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
       captionInput.value = '';
