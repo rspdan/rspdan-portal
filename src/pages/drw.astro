@@ -1287,19 +1287,21 @@ const USIC_COLORS = [
   }
   .game-frame {
     /* The console well stays a dark screen (the game is the light source). */
-    background: #111;
-    border: 2px solid var(--forest);
+    background: #000;
+    border: 2px solid rgba(1, 255, 205, 0.35);
+    box-shadow: 0 0 18px rgba(1, 255, 205, 0.12);
     padding: 0.65rem;
   }
   .game-cartridge {
-    background: var(--panel);
-    border: 1px solid var(--line);
+    background: var(--lb-panel);
+    border: 1px solid var(--lb-line);
     padding: 0.55rem;
     margin-bottom: 0.65rem;
-    color: var(--text);
+    color: var(--lb-txt);
   }
   .cartridge-name {
-    font: 700 0.85rem var(--font-mono);
+    font: 400 1.15rem var(--font-crt);
+    color: #fff;
     margin: 0.35rem 0;
     overflow-wrap: anywhere;
   }
@@ -1310,8 +1312,8 @@ const USIC_COLORS = [
   }
   .cartridge-note {
     margin-top: 0.45rem;
-    font-size: 0.62rem;
-    color: var(--text-lt);
+    font-size: 0.95rem;
+    color: var(--lb-dim);
   }
   #ejs-mount-wrap {
     width: 100%;
@@ -1344,9 +1346,10 @@ const USIC_COLORS = [
     gap: 0.45rem;
     min-height: 30px;
     padding: 0 0.45rem;
-    background: var(--off-white);
-    border: 1px solid var(--line);
-    font-size: 0.68rem;
+    background: var(--lb-panel);
+    border: 1px solid var(--lb-line);
+    color: var(--lb-txt);
+    font-size: 1rem;
   }
   .drw-control input {
     width: 110px;
@@ -1354,17 +1357,21 @@ const USIC_COLORS = [
   .drw-swatches {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0.55rem;
     margin-bottom: 0.65rem;
+    padding: 0.35rem 0.15rem;
   }
   .swatch {
     /* The Usic colors + non-colors: Dan's palette, untouched by the skin.
-       Bevel frame only; the swatch face is the color itself. */
+       Rendered as glowing pegs per the kit's .dot idiom: radial white hotspot
+       at 36% 30% + the color's own box-shadow glow. The non-colors read as
+       dark pegs / holes on the board, which is true to a Lite-Brite. */
     width: 30px;
     height: 30px;
-    border: 2px solid;
-    border-color: var(--bevel-lt) var(--bevel-dk) var(--bevel-dk) var(--bevel-lt);
-    background: var(--swatch);
+    border: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #fff 0%, var(--swatch) 52%, var(--swatch) 100%);
+    box-shadow: 0 0 9px var(--swatch), 0 0 20px var(--swatch);
     cursor: pointer;
   }
   .swatch span {
@@ -1377,16 +1384,17 @@ const USIC_COLORS = [
     white-space: nowrap;
   }
   .swatch.is-active {
-    outline: 2px solid var(--forest);
-    outline-offset: 2px;
+    outline: 2px solid var(--olo);
+    outline-offset: 3px;
   }
   .canvas-frame {
-    /* Forest mat around the paper; position:relative anchors the inline
-       text-tool editor overlay. */
+    /* Black bezel around the paper (the CRT frame); position:relative anchors
+       the inline text-tool editor overlay. */
     position: relative;
-    background: var(--forest);
+    background: #000;
     border: 2px solid;
-    border-color: var(--forest-lt) var(--bevel-lt) var(--bevel-lt) var(--forest-lt);
+    border-color: rgba(1, 255, 205, 0.4) rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.4);
+    box-shadow: 0 0 18px rgba(1, 255, 205, 0.1);
     padding: 0.65rem;
   }
   .text-editor {
@@ -1397,7 +1405,7 @@ const USIC_COLORS = [
     min-width: 6ch;
     max-width: calc(100% - 1.3rem);
     background: rgba(255, 255, 255, 0.85);
-    border: 1px dashed var(--forest);
+    border: 1px dashed var(--olo);
     outline: none;
     padding: 0;
     margin: 0;
@@ -1419,10 +1427,10 @@ const USIC_COLORS = [
     cursor: crosshair;
   }
   .layers-panel {
+    /* The kit's .term idiom: OLO-tinted terminal panel. */
     margin-top: 0.65rem;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--forest);
+    background: rgba(1, 255, 205, 0.02);
+    border: 1px solid rgba(1, 255, 205, 0.18);
     padding: 0.55rem;
   }
   .layers-title {
@@ -1433,8 +1441,8 @@ const USIC_COLORS = [
   }
   .layers-hint {
     font-weight: 400;
-    font-size: 0.62rem;
-    color: var(--text-lt);
+    font-size: 0.95rem;
+    color: var(--lb-dim);
   }
   .layer-list {
     display: grid;
@@ -1446,17 +1454,18 @@ const USIC_COLORS = [
     align-items: center;
     gap: 0.4rem;
     padding: 0.2rem 0.3rem;
-    background: var(--bg);
-    border: 1px solid var(--line);
+    background: var(--lb-well);
+    border: 1px dashed var(--lb-line);
   }
   .layer-row.is-child {
     margin-left: 1rem;
-    background: var(--warm-white);
+    background: var(--lb-panel);
   }
   .layer-row.is-active {
-    /* The active layer is the warm/alive one: gold, per the kit warmth axis. */
-    outline: 2px solid var(--gold);
+    /* The active layer is the lit peg: OLO ring + glow. */
+    outline: 2px solid var(--olo);
     outline-offset: -1px;
+    box-shadow: 0 0 10px rgba(1, 255, 205, 0.25);
   }
   .layer-vis {
     width: 16px;
@@ -1466,8 +1475,8 @@ const USIC_COLORS = [
     text-align: left;
     background: transparent;
     border: 0;
-    color: var(--forest);
-    font: 700 0.72rem/1 var(--font-mono);
+    color: var(--lb-txt);
+    font: 400 1.05rem/1 var(--font-crt);
     cursor: pointer;
     padding: 0.15rem 0;
     overflow: hidden;
@@ -1478,10 +1487,10 @@ const USIC_COLORS = [
     min-width: 0;
     width: 100%;
     height: 22px;
-    border: 1px solid var(--gold);
-    background: var(--panel);
-    color: var(--text);
-    font: 700 0.72rem/1 var(--font-mono);
+    border: 1px solid var(--olo);
+    background: #000;
+    color: var(--lb-txt);
+    font: 400 1.05rem/1 var(--font-crt);
     padding: 0 0.2rem;
   }
   .layer-op {
@@ -1492,14 +1501,14 @@ const USIC_COLORS = [
     width: 24px;
     height: 24px;
     border: 2px solid;
-    border-color: var(--bevel-lt) var(--bevel-dk) var(--bevel-dk) var(--bevel-lt);
-    background: var(--off-white);
-    color: var(--text);
-    font: 700 0.8rem/1 var(--font-mono);
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    background: var(--lb-panel);
+    color: var(--lb-txt);
+    font: 400 1rem/1 var(--font-crt);
     cursor: pointer;
   }
   .layer-btn:active {
-    border-color: var(--bevel-dk) var(--bevel-lt) var(--bevel-lt) var(--bevel-dk);
+    border-color: var(--lb-bevel-dk) var(--lb-bevel-lt) var(--lb-bevel-lt) var(--lb-bevel-dk);
   }
   .layer-btn:disabled {
     opacity: 0.35;
@@ -1507,9 +1516,9 @@ const USIC_COLORS = [
   }
   .coordinate-panel {
     margin-top: 0.65rem;
-    background: #d6d6d6;
+    background: var(--lb-panel);
     border: 2px solid;
-    border-color: #555 #fff #fff #555;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
     padding: 0.55rem;
   }
   .coordinate-grid {
@@ -1521,10 +1530,10 @@ const USIC_COLORS = [
   .packet-check,
   .packet-field {
     min-height: 30px;
-    background: #e8e8e8;
-    border: 1px solid #777;
-    color: #111;
-    font: 700 0.68rem/1 var(--font-mono);
+    background: var(--lb-well);
+    border: 1px solid var(--lb-line);
+    color: var(--lb-txt);
+    font: 400 1rem/1 var(--font-crt);
   }
   .packet-check {
     display: inline-flex;
@@ -1547,10 +1556,10 @@ const USIC_COLORS = [
     min-width: 0;
     width: 100%;
     height: 24px;
-    border: 1px solid #555;
-    background: #fff;
-    color: #111;
-    font: 0.68rem var(--font-mono);
+    border: 1px solid var(--lb-dim);
+    background: #000;
+    color: var(--lb-txt);
+    font: 1rem var(--font-crt);
   }
   .packet-wide {
     grid-column: span 3;
@@ -1564,35 +1573,44 @@ const USIC_COLORS = [
   }
   .drw-submit label,
   .panel-title {
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-family: var(--font-pix);
+    font-size: 0.58rem;
+    font-weight: 400;
   }
   #caption-input {
     min-width: 0;
     height: 32px;
-    border: 1px solid var(--bevel-dk);
-    background: var(--panel);
-    color: var(--text);
-    font: 0.82rem var(--font-mono);
+    border: 1px solid var(--lb-dim);
+    background: #000;
+    color: var(--lb-txt);
+    font: 1.1rem var(--font-crt);
     padding: 0.25rem 0.4rem;
   }
+  #caption-input:focus,
+  .layer-rename:focus {
+    outline: 2px solid var(--olo);
+    outline-offset: 1px;
+    box-shadow: 0 0 10px rgba(1, 255, 205, 0.3);
+  }
   #save-btn:disabled {
-    color: var(--muted);
+    color: var(--lb-dim);
     cursor: wait;
   }
   .drw-right {
-    border-left: 2px solid var(--line);
-    background: var(--off-white);
+    border-left: 1px dashed var(--lb-line);
+    background: rgba(255, 255, 255, 0.02);
     padding: 0.75rem;
     min-width: 0;
   }
   .panel-title {
-    /* The kit eyebrow: mono, letterspaced, forest-lt. */
-    border-bottom: 1px solid var(--line);
+    /* The kit .lbl eyebrow: Silkscreen, letterspaced, OLO with soft glow. */
+    border-bottom: 1px dashed var(--lb-line);
     margin-bottom: 0.55rem;
     padding-bottom: 0.35rem;
-    letter-spacing: 0.18em;
-    color: var(--forest-lt);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--olo);
+    text-shadow: 0 0 8px rgba(1, 255, 205, 0.4);
   }
   .draw-list {
     display: grid;
@@ -1606,15 +1624,15 @@ const USIC_COLORS = [
     grid-template-columns: 72px minmax(0, 1fr);
     gap: 0.45rem;
     padding: 0.35rem;
-    background: var(--panel);
-    border: 1px solid var(--line);
+    background: var(--lb-well);
+    border: 1px solid var(--lb-line);
   }
   .draw-item img {
     width: 72px;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     background: #fff;
-    border: 1px solid var(--line);
+    border: 1px solid var(--lb-line);
   }
   .draw-item strong,
   .draw-item span {
@@ -1622,41 +1640,49 @@ const USIC_COLORS = [
     overflow-wrap: anywhere;
   }
   .draw-item strong {
-    font-size: 0.72rem;
+    color: var(--lb-txt);
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 1.25;
   }
   .draw-item span,
   .draw-empty {
-    color: var(--text-lt);
-    font-size: 0.64rem;
+    color: var(--lb-dim);
+    font-size: 0.95rem;
   }
   .packet-link {
     display: inline-block;
     margin-top: 0.25rem;
-    color: var(--forest-lt);
-    font: 700 0.64rem/1 var(--font-mono);
+    color: var(--olo);
+    font: 400 0.95rem/1 var(--font-crt);
     text-decoration: underline;
   }
   .drw-status {
-    /* The live line. OLO (#01FFCD) is the kit's live/fresh signal and this is
-       the one place it appears: the dot marks the status readout as live. */
+    /* The live line: black CRT strip; the OLO peg pulses like the kit's OLO
+       dot (the one always-lit peg on the board). */
     min-height: 28px;
     padding: 0.35rem 0.7rem;
-    background: var(--forest);
-    color: var(--warm-white);
-    border-top: 2px solid var(--forest);
-    font-size: 0.72rem;
+    background: #000;
+    color: var(--lb-txt);
+    border-top: 1px solid rgba(1, 255, 205, 0.25);
+    font-size: 1.05rem;
     overflow-wrap: anywhere;
   }
   .drw-status::before {
     content: '';
     display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--olo);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #fff 0%, var(--olo) 52%, var(--olo) 100%);
+    box-shadow: 0 0 9px var(--olo), 0 0 20px var(--olo);
     margin-right: 0.55rem;
     vertical-align: baseline;
+    animation: peg-pulse 2.3s ease-in-out infinite;
+  }
+  @keyframes peg-pulse {
+    0%, 100% { box-shadow: 0 0 9px var(--olo), 0 0 20px var(--olo); }
+    50% { box-shadow: 0 0 16px var(--olo), 0 0 34px var(--olo), 0 0 54px rgba(1, 255, 205, 0.5); }
   }
   @media (max-width: 900px) {
     .drw-shell {
@@ -1668,7 +1694,7 @@ const USIC_COLORS = [
     }
     .drw-right {
       border-left: 0;
-      border-top: 2px solid var(--line);
+      border-top: 1px dashed var(--lb-line);
     }
     .coordinate-grid {
       grid-template-columns: repeat(4, minmax(58px, auto));
