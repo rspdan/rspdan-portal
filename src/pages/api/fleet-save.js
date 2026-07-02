@@ -1,6 +1,8 @@
 // POST /api/fleet-save — save fleet board edits via GitHub API commit
 import { verifySession } from '../../lib/pspt.js';
 
+export const prerender = false;
+
 export async function POST({ request }) {
   // Auth check
   const session = verifySession(request.headers.get('cookie'));

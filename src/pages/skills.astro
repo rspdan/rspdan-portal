@@ -4,13 +4,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // NEST Skills inventory · two-axis model per Dan-canon 051226
 // Source: C:\STAN\ENGINE\NEST.02\Skills\skills_bkp_042826_1\skills_spine_042826_v2.json (Trip 042826)
 // Pass-2 educated by Trip 052026 (per PMFST 042826 future-Trip review flag + Dan 051226 Pokemon Moves canon)
-// Current Bridge count: 39 NEST-built skills (28 from 042826 + 11 added since)
+// Current Bridge count: 46 NEST-built skills (28 from 042826 + 18 added since)
 // 042826 base: btw, box-in-box, hypercampus-builder, remememento, ultrareview
 // 060826 sync: doc_briefcase, hypercampus, oshin, r3mp, remote-control, rorrim-nips, rspdan-design
 
-// NEST-axis (Pokemon Moves + Operational Discoveries) · 39 skills
+// NEST-axis (Pokemon Moves + Operational Discoveries) · 46 skills
 const nestSkills = [
-  // BOOT (6)
+  // BOOT (live 7 · 6 here + dna in the 062226 block below)
   { name: 'boot-polish', altitude: 'boot', chamber: 'wide-b', desc: 'BPK systems verification layer · verify tools ACTUALLY work after boot', fired: 1 },
   { name: 'ican', altitude: 'boot', chamber: 'wide-b', desc: 'iCan status checklist · readiness report format', fired: 3 },
   { name: 'stan_briefcase', altitude: 'boot', chamber: 'wide-b', desc: 'Stan self-loading boot sequence', fired: 0 },
@@ -40,7 +40,7 @@ const nestSkills = [
   { name: 'oshin', altitude: 'crew-ops', chamber: 'wide-b', desc: 'O\'Shin EYES visual capture apparatus · PING/TV/EYES/BLINK', fired: 0 },
   { name: 'rorrim-nips', altitude: 'crew-ops', chamber: 'wide-b', desc: 'Chrome MCP existing-tabs-first discipline · read Dan\'s tabs not open new ones', fired: 0 },
 
-  // CREATIVE/PORTAL (7)
+  // CREATIVE/PORTAL (live 8 · 7 here + fablefallshower in the 062226 block below)
   { name: 'heircor-visual', altitude: 'creative', chamber: 'wide-a', desc: 'Heircor Op visual identity for OuchMcCouch', fired: 0 },
   { name: 'waywood-lore', altitude: 'creative', chamber: 'wide-a', desc: 'Waywood world-building canon · Usic Theory', fired: 0 },
   { name: 'niaprint', altitude: 'creative', chamber: 'wide-a', desc: 'NEST Intranet Publication Aesthetic · typewriter-soul design', fired: 0 },
@@ -49,7 +49,7 @@ const nestSkills = [
   { name: 'na-pdf-style', altitude: 'creative', chamber: 'wide-a', desc: 'NA PDF compression standard · 1-3 page condensed render', fired: 0 },
   { name: 'rspdan-design', altitude: 'creative', chamber: 'wide-a', desc: 'El VIS research container · media processing pipeline notes', fired: 0 },
 
-  // INFRASTRUCTURE (4)
+  // INFRASTRUCTURE (live 5 · 4 here + page-integrity in the 062226 block below)
   { name: 'formulacaster', altitude: 'infrastructure', chamber: 'cross-chamber', desc: 'Circle of 5ths math framework for project planning · I/IV/V harmonic-function', fired: 0 },
   { name: 'router-flash', altitude: 'infrastructure', chamber: 'wide-b', desc: 'MOD2 R7450 Netgear router flashing + fleet router config', fired: 0 },
   { name: 'dex-mobile', altitude: 'infrastructure', chamber: 'agos-waist', desc: 'Samsung DeX and ACHE mobile operations manual', fired: 0 },
@@ -59,11 +59,20 @@ const nestSkills = [
   { name: 'atomic-commit', altitude: 'federal-std', chamber: 'wide-b', desc: 'One-WU-per-emission ASMM apex · Gate 0+5+6+7 firing', fired: 5 },
   { name: 'box-in-box', altitude: 'federal-std', chamber: 'cross-cutting', desc: 'L3 trigger for L2 Federal Standard · purpose-over-surface + seal-on-close', fired: 4 },
 
-  // DISCIPLINE (4)
+  // DISCIPLINE (live 8 · 4 here + dan/lagos-check/continuous-substrate/cba-searching in the 062226 block below)
   { name: 'btw', altitude: 'discipline', chamber: 'wide-b', desc: 'BACK TO WORK · Dan-coined signal to stop narration and ship', fired: 0 },
   { name: 'ilevel-grid-sifter', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Stratigraphic triage iLevel 0/-1/-2 · LOG-MAP-SIFT-EXAMINE-NAME', fired: 12 },
   { name: 'ultrareview', altitude: 'discipline', chamber: 'cross-cutting', desc: 'CANDIDATE · Trigger-layer for Anthropic-shipped cloud-review feature · Pattern A directive + Pattern B surface', fired: 1 },
   { name: 'r3mp', altitude: 'discipline', chamber: 'cross-cutting', desc: 'Triangulation + GCTT · fractal anti-rediscovery · 3-pass methodology', fired: 25 },
+
+  // ADDED 062226 (drift-fix · +7 to 46 · live Bridge count · distributes: boot+1 · creative+1 · infrastructure+1 · discipline+4) · fired:0 = not yet counted in the 052026 pass · per-altitude counts render live from .length below, so the public face is already correct
+  { name: 'dna', altitude: 'boot', chamber: 'wide-b', desc: 'the Lighthouse · makes the whole NEST.03 era callable · orient at boot, find where things live in LAGOS', fired: 0 },
+  { name: 'dan', altitude: 'discipline', chamber: 'cross-chamber', desc: 'stay grounded in the actual Dan, not the model-of-Dan · the SpecTrap catalog · the mirror of /dna', fired: 0 },
+  { name: 'lagos-check', altitude: 'discipline', chamber: 'cross-chamber', desc: 'multi-box LAGOS sweep · the cure for single-box scope-collapse · a swer, not an ans', fired: 0 },
+  { name: 'continuous-substrate', altitude: 'discipline', chamber: 'cross-cutting', desc: 'KT + MFST + LIVING_MAP as ambient continuous-discipline between every work-unit', fired: 0 },
+  { name: 'cba-searching', altitude: 'discipline', chamber: 'wide-a', desc: 'prior-art / competitive-landscape GitHub scan · has someone already built this', fired: 0 },
+  { name: 'page-integrity', altitude: 'infrastructure', chamber: 'wide-b', desc: 'the public-pages integrity radar for rspdan.com · currency + integrity + render + sprawl', fired: 0 },
+  { name: 'fablefallshower', altitude: 'creative', chamber: 'wide-a', desc: "Dan's shower-idea reception method · Box-in-Box for capturing visions", fired: 0 },
 ];
 
 // Industry-axis (Compressed CS History) · 22 inheritance-batch from /mnt/skills/user/ per Trip 042826 inventory
@@ -127,7 +136,7 @@ const nestOrder = ['boot', 'session', 'memory', 'crew-ops', 'creative', 'infrast
 const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
 ---
 
-<BaseLayout lastUpdated="June 8, 2026" title="NEST Skills" description="Two-axis skill catalog. NEST-built Pokemon Moves + operational discoveries vs Industry-inherited compressed CS history. Per Dan-canon 051226: 'the point is not to pick one but to create the conditions where both exist and create the mirror that allows the asymmetry to be seen.'">
+<BaseLayout lastUpdated="June 23, 2026" title="NEST Skills" description="Two-axis skill catalog. NEST-built Pokemon Moves + operational discoveries vs Industry-inherited compressed CS history. Per Dan-canon 051226: 'the point is not to pick one but to create the conditions where both exist and create the mirror that allows the asymmetry to be seen.'">
 
 <section class="sk-hero">
   <div class="container">
@@ -136,11 +145,11 @@ const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
     <p class="sk-subtitle"><em>Pokemon Moves + Operational Discoveries · vs · Compressed CS History · the mirror that allows the asymmetry to be seen</em></p>
     <div class="sk-meta mono">Trip-Pass-1 042826 inventory · Trip-Pass-2 educated 052026 · Dan-canon 051226 two-axis model</div>
     <div class="sk-counts mono">
-      <span class="sk-count-nest">39 NEST-BUILT</span>
+      <span class="sk-count-nest">46 NEST-BUILT</span>
       <span class="sk-sep">·</span>
       <span class="sk-count-industry">22 INHERITANCE-BATCH</span>
       <span class="sk-sep">·</span>
-      <span class="sk-count-total">61 TOTAL</span>
+      <span class="sk-count-total">68 TOTAL</span>
     </div>
   </div>
 </section>
@@ -153,13 +162,13 @@ const industryOrder = ['artifact', 'discipline', 'fleet-ops'];
 </div></section>
 
 <section class="sk-cascade"><div class="container">
-  <div class="sk-axis-label mono" style="color:var(--teal);">SKILL CASCADE MAP · NEST.02 · v1.2 · 052026</div>
-  <h2 class="sk-section-title sk-section-title--light">33 NEST skills arranged by ARMS session phase</h2>
-  <p class="sk-section-desc sk-section-desc--light"><code>meta-dates</code> at apex · always-on ambient trigger. Cascade-map shows skill firing-relationships across CONTACT · STORY · TELL-ING · SHEET phases. ★ marks 5 skills added since 042926 baseline (btw + box-in-box + hypercampus alias + remememento + ultrareview CANDIDATE). ◆ marks Federal-Standard-bound L3 trigger-layer skills.</p>
+  <div class="sk-axis-label mono" style="color:var(--teal);">SKILL CASCADE MAP · NEST.03 · v1.3 · 062226</div>
+  <h2 class="sk-section-title sk-section-title--light">The cascade map · all 46 NEST skills arranged by altitude tier</h2>
+  <p class="sk-section-desc sk-section-desc--light"><code>meta-dates</code> at apex · always-on ambient trigger. The cascade shows all 46 NEST-built skills grouped by their altitude tier, boot through discipline, matching the live skill set below. v1.3 is generated data-driven from that set, so the count cannot drift again.</p>
   <div class="sk-cascade-wrap">
-    <img src="/img/skills/cascade-map-v1.2-052026.svg" alt="NEST Skill Cascade Map v1.2 · 33 skills arranged by ARMS session phase with meta-dates as apex always-on trigger · 5 new skills marked since 042926 v1.1" class="sk-cascade-svg" />
+    <img src="/img/skills/cascade-map-v1.3-062226.svg" alt="NEST Skill Cascade Map v1.3 · all 46 NEST-built skills arranged by altitude tier (boot through discipline) with meta-dates as the apex always-on trigger" class="sk-cascade-svg" />
   </div>
-  <p class="sk-cascade-note mono"><em>v1.2 cascade-map (052026 · 33-skill state) · updates v1.1 baseline at <code>C:\STAN\ENGINE\NEST.02\Skills\nest02_skill_cascade_map_042926_1.1.svg</code> (Trip 042926 · 28 skills) by adding the 5 skills built since. Frequency-based sizing reserves for next corpus analysis pass. Industry-axis (22 inheritance-batch) not visualized · see AXIS B section below.</em></p>
+  <p class="sk-cascade-note mono"><em>v1.3 cascade-map (062226 · 46-skill state, data-driven) · regenerated from the live skills.astro skill set so the visual and the page agree and the count cannot drift. Lineage: v1.1 (Trip 042926 · 28 skills) -> v1.2 (052026 · 33-skill hand-authored snapshot) -> v1.3 (062226 · 46, generated by <code>scripts/gen_cascade_svg.py</code>). Industry-axis (22 inheritance-batch) not visualized · see AXIS B section below.</em></p>
 </div></section>
 
 <section class="sk-section"><div class="container">
