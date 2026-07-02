@@ -1101,7 +1101,14 @@ const USIC_COLORS = [
   }
 </script>
 
-<style>
+<style is:global>
+  /* is:global (070226): the layers panel rows (.layer-row, .layer-name,
+     .layer-rename, .layer-btn ...) and the RECENT list (.draw-item) are
+     created by the page script at runtime; Astro's default scoped styles
+     never match JS-created nodes, so those elements rendered UNSTYLED under
+     the previous skin too (verified via computed-style in Playwright). The
+     selectors are all /drw-local (.drw-*, .layer-*, .swatch, #ids), and page
+     styles ship only with this page. */
   /* ==== VISdev.01 LITE BRITE register skin (El VIS kit,
      VISdev-Kit-LiteBrite.html: "real-artificial · 1996 chrome, 2026 engine").
      Black pegboard #08080a with the peg-hole texture, VT323 CRT terminal type
