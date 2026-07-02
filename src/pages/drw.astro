@@ -980,6 +980,11 @@ const USIC_COLORS = [
       const imageUrl = safeHttpUrl(item.url);
       const packetUrl = safeHttpUrl(item.packetUrl);
       const packet = packetUrl ? `<a class="packet-link" href="${packetUrl}" target="_blank" rel="noreferrer">PACKET</a>` : '';
+      // U6: saves that carry a layered scene can be LOADED back for continued
+      // work (the read half of nothing-gets-lost; the API proxies the JSON).
+      const load = item.sceneUrl && item.id
+        ? `<button type="button" class="scene-load" data-scene-id="${escapeHtml(item.id)}" title="Load this saved scene back into the workbench (current work is backed up first)">LOAD</button>`
+        : '';
       if (!imageUrl) return '';
       return `
         <article class="draw-item">
@@ -988,12 +993,42 @@ const USIC_COLORS = [
             <strong>${caption || 'UNTITLED'}</strong>
             <span>${date}</span>
             ${dimensions || confidence ? `<span>${dimensions}${dimensions && confidence ? ' / ' : ''}${confidence}</span>` : ''}
-            ${packet}
+            ${packet}${load}
           </div>
         </article>
       `;
     }).join('');
   }
+
+  // U6: load a saved layered scene back from the RECENT list. NOTHING GETS
+  // LOST: the current working scene is backed up before the load replaces it.
+  async function loadSavedScene(id, btn) {
+    if (btn) btn.disabled = true;
+    setStatus('LOADING SAVED SCENE...');
+    try {
+      const res = await fetch(`/api/drw?scene=${encodeURIComponent(id)}`);
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const scene = data.scene;
+      if (!scene || !Array.isArray(scene.layers) || !scene.layers.length) throw new Error('not a DRW scene');
+      const backed = backupCurrentScene();
+      restoreScene(scene, () => {
+        renderLayers();
+        composite();
+        saveDraft();
+        setStatus(`LOADED SAVED SCENE${backed ? ' · PREVIOUS WORK BACKED UP' : ' · WARNING: BACKUP FAILED (storage full)'}`);
+      });
+    } catch (err) {
+      setStatus(`LOAD ERROR: ${err.message}`);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  drawList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.scene-load');
+    if (btn) loadSavedScene(btn.dataset.sceneId, btn);
+  });
 
   async function loadDrawings() {
     try {
@@ -2142,6 +2177,23 @@ const USIC_COLORS = [
     color: var(--olo);
     font: 400 0.95rem/1 var(--font-crt);
     text-decoration: underline;
+  }
+  .scene-load {
+    /* U6: the LOAD-saved-scene button, in the packet-link register (runtime-
+       created node: styles must live in this is:global block). */
+    display: inline-block;
+    margin-top: 0.25rem;
+    margin-left: 0.6rem;
+    background: transparent;
+    border: 1px solid var(--olo);
+    color: var(--olo);
+    font: 400 0.95rem/1 var(--font-crt);
+    padding: 0.1rem 0.4rem;
+    cursor: pointer;
+  }
+  .scene-load:disabled {
+    opacity: 0.4;
+    cursor: wait;
   }
   .drw-status {
     /* The live line: black CRT strip; the OLO peg pulses like the kit's OLO
