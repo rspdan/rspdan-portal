@@ -393,16 +393,36 @@ const USIC_COLORS = [
     return layer;
   }
 
+  // U8: deleting a sub-layer used to be unrecoverable (a NOTHING-GETS-LOST
+  // violation: one misclick on the small x and the pixels were gone). The
+  // delete now rides the undo history as a tagged entry carrying the whole
+  // layer; UNDO restores it in place.
   function deleteLayer(id) {
     endTransformIfAny();
-    const layer = layers.find((l) => l.id === id);
+    const i = layers.findIndex((l) => l.id === id);
+    const layer = layers[i];
     if (!layer || layer.minor === 0) return; // roots are permanent
-    layers = layers.filter((l) => l.id !== id);
+    history.push({
+      kind: 'layerDelete',
+      index: i,
+      data: {
+        id: layer.id,
+        major: layer.major,
+        minor: layer.minor,
+        label: layer.label || '',
+        opacity: layer.opacity,
+        visible: layer.visible,
+        png: layer.canvas.toDataURL('image/png'),
+      },
+    });
+    if (history.length > 40) history.shift();
+    redoStack = [];
+    layers.splice(i, 1);
     if (activeId === id) activeId = '2';
     renderLayers();
     composite();
     saveDraft();
-    setStatus(`DELETED ${displayName(layer)}`);
+    setStatus(`DELETED ${displayName(layer)} · UNDO RESTORES IT`);
   }
 
   // ---- TRANSFORM tool session (U4) ----------------------------------------
@@ -491,19 +511,39 @@ const USIC_COLORS = [
     vctx.globalAlpha = 1;
   }
 
-  // ---- Undo / redo (per-layer before-snapshots) --------------------------
+  // ---- Undo / redo (tagged history, U8) -----------------------------------
+  // Entries: { kind: 'pixels', id, png } for stroke / text / clear / transform
+  // commits; { kind: 'layerDelete', index, data } for sub-layer deletes.
   function snapshotBefore(target) {
     const layer = target || activeLayer();
     if (!layer) return;
-    history.push({ id: layer.id, png: layer.canvas.toDataURL('image/png') });
+    history.push({ kind: 'pixels', id: layer.id, png: layer.canvas.toDataURL('image/png') });
     if (history.length > 40) history.shift();
     redoStack = [];
+  }
+
+  // Rebuild a layer from a serialized record (the layerDelete undo). If the
+  // canonical id is now occupied (a new child took the minor after the
+  // delete), the restored layer takes the next free minor; the label survives.
+  function rebuildLayer(data, done) {
+    let minor = data.minor;
+    if (layers.some((l) => l.major === data.major && l.minor === minor)) {
+      minor = nextMinor(data.major);
+    }
+    const layer = makeLayer(data.major, minor, typeof data.opacity === 'number' ? data.opacity : 1, data.visible !== false, data.label);
+    const img = new Image();
+    img.onload = () => {
+      layer.ctx.drawImage(img, 0, 0);
+      if (done) done();
+    };
+    img.src = data.png;
+    return layer;
   }
 
   function restoreLayerSnapshot(snap, opposite) {
     const layer = layers.find((l) => l.id === snap.id);
     if (!layer) return;
-    opposite.push({ id: snap.id, png: layer.canvas.toDataURL('image/png') });
+    opposite.push({ kind: 'pixels', id: snap.id, png: layer.canvas.toDataURL('image/png') });
     const img = new Image();
     img.onload = () => {
       layer.ctx.clearRect(0, 0, W, H);
@@ -516,10 +556,36 @@ const USIC_COLORS = [
     saveDraft();
   }
 
+  function undoLayerDelete(snap) {
+    const layer = rebuildLayer(snap.data, () => composite());
+    layers.splice(Math.min(snap.index, layers.length), 0, layer);
+    activeId = layer.id;
+    redoStack.push({ ...snap, data: { ...snap.data, id: layer.id, minor: layer.minor } });
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`RESTORED ${displayName(layer)}`);
+  }
+
+  function redoLayerDelete(snap) {
+    const i = layers.findIndex((l) => l.id === snap.data.id);
+    if (i >= 0) {
+      const layer = layers[i];
+      history.push({ kind: 'layerDelete', index: i, data: snap.data });
+      layers.splice(i, 1);
+      if (activeId === layer.id) activeId = '2';
+      renderLayers();
+      composite();
+      saveDraft();
+      setStatus(`DELETED ${displayName(layer)}`);
+    }
+  }
+
   function undo() {
     endTransformIfAny();
     const snap = history.pop();
     if (!snap) { setStatus('NOTHING TO UNDO'); return; }
+    if (snap.kind === 'layerDelete') { undoLayerDelete(snap); return; }
     restoreLayerSnapshot(snap, redoStack);
     setStatus('UNDO');
   }
@@ -528,6 +594,7 @@ const USIC_COLORS = [
     endTransformIfAny();
     const snap = redoStack.pop();
     if (!snap) { setStatus('NOTHING TO REDO'); return; }
+    if (snap.kind === 'layerDelete') { redoLayerDelete(snap); return; }
     restoreLayerSnapshot(snap, history);
     setStatus('REDO');
   }
@@ -1350,6 +1417,48 @@ const USIC_COLORS = [
       const action = menuActions[btn.dataset.action];
       if (action) action();
     });
+  });
+
+  // ---- Keyboard shortcuts (U8) --------------------------------------------
+  // Guarded OFF while typing (text editor, rename, caption, any input), and
+  // whole-hog in game mode (the emulator owns the keys). Announced in status.
+  function anyMenuOpen() {
+    return menus.some((menu) => !menu.querySelector('.drw-menu-list').hidden);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (anyMenuOpen()) { closeMenus(); return; }
+      if (transform && textEditor.hidden) { endTransform(false); return; }
+      return; // text editor handles its own Escape
+    }
+    if (drwWindowEl.classList.contains('is-game')) return;
+    if (!textEditor.hidden) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.key === 'Enter' && transform) { e.preventDefault(); endTransform(true); return; }
+    const mod = e.ctrlKey || e.metaKey;
+    const k = e.key.toLowerCase();
+    if (mod && k === 'z' && !e.shiftKey) { e.preventDefault(); undo(); return; }
+    if ((mod && k === 'z' && e.shiftKey) || (mod && k === 'y')) { e.preventDefault(); redo(); return; }
+    if (mod || e.altKey) return; // never steal other browser combos
+    switch (k) {
+      case 'p': selectTool('pen'); break;
+      case 'e': selectTool('erase'); break;
+      case 't': selectTool('text'); break;
+      case 'm': selectTool('transform'); break;
+      case 'x': swapInks(); break;
+      case '[':
+        sizeInput.value = String(Math.max(1, Number(sizeInput.value) - 2));
+        setStatus(`WIDTH ${sizeInput.value}`);
+        break;
+      case ']':
+        sizeInput.value = String(Math.min(42, Number(sizeInput.value) + 2));
+        setStatus(`WIDTH ${sizeInput.value}`);
+        break;
+      default:
+        break;
+    }
   });
 
   // The console script (game mode + the L&L entry) dispatches into these.
