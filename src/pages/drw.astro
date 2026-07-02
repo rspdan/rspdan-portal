@@ -148,15 +148,12 @@ const USIC_COLORS = [
   let redoStack = [];
 
   // ---- Layer model -------------------------------------------------------
-  // Each layer: { major (0/1/2/3), minor (0=root), id, name, opacity, visible,
+  // Each layer: { major (0/1/2), minor (0=root), id, name, opacity, visible,
   //   canvas (offscreen), ctx }. Composite + panel order follow the layers
   //   array (first element = back of the stack). The operator reorders freely
   //   with the up/down controls; major/minor are identity + name only, never
   //   a fixed order-lock. The saved array order is what persists.
-  // Structure follows Dan's Procreate build (the 070126 Circle-of-Colors
-  // sketch): color layers discrete and addressable, lines their own group,
-  // text its own layer. Text is separate, never painted into Color or Lines.
-  const ROOT_NAMES = { 0: 'Background', 1: 'Color', 2: 'Lines', 3: 'Text' };
+  const ROOT_NAMES = { 0: 'Background', 1: 'Color', 2: 'Lines' };
   let layers = [];
   let activeId = null;
 
@@ -198,10 +195,9 @@ const USIC_COLORS = [
 
   function defaultLayers() {
     layers = [
-      makeLayer(0, 0, 1, true), // Background
-      makeLayer(1, 0, 1, true), // Color
-      makeLayer(2, 0, 1, true), // Lines
-      makeLayer(3, 0, 1, true), // Text (its own layer, per the sketch)
+      makeLayer(0, 0, 1, true), // BKG
+      makeLayer(1, 0, 1, true), // CLR
+      makeLayer(2, 0, 1, true), // LNS
     ];
     // BKG starts as white paper.
     const bkg = layers[0].ctx;
@@ -421,19 +417,17 @@ const USIC_COLORS = [
   }
 
   function begin(event) {
-    if (tool === 'text') {
-      // Text routes to the Text layer (its own gate lives in drawTextAt).
-      event.preventDefault();
-      const tp = pointerPos(event);
-      drawTextAt(tp.x, tp.y);
-      return;
-    }
     const layer = activeLayer();
     if (!layer || !layer.visible) {
       setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
       return;
     }
     event.preventDefault();
+    if (tool === 'text') {
+      const tp = pointerPos(event);
+      drawTextAt(tp.x, tp.y);
+      return;
+    }
     snapshotBefore();
     view.setPointerCapture(event.pointerId);
     drawing = true;
@@ -442,33 +436,16 @@ const USIC_COLORS = [
     lastY = p.y;
   }
 
-  // TEXT tool: text goes on the Text layer, never into Color or Lines
-  // (per Dan's sketch structure: text separate). If the operator has a Text
-  // layer active (root or sub-layer) it is used; otherwise the Text root.
-  function textTargetLayer() {
-    const active = activeLayer();
-    if (active && active.major === 3) return active;
-    let root = layers.find((l) => l.major === 3 && l.minor === 0);
-    if (!root) {
-      // Scene predates the Text layer: add the root on top of the stack.
-      root = makeLayer(3, 0, 1, true);
-      layers.push(root);
-      renderLayers();
-    }
-    return root;
-  }
-
+  // TEXT tool (B-side, ported from Chad's main onto the active layer).
   function drawTextAt(x, y) {
-    const layer = textTargetLayer();
-    if (!layer.visible) {
-      setStatus('TEXT LAYER HIDDEN');
+    const layer = activeLayer();
+    if (!layer || !layer.visible) {
+      setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
       return;
     }
     const text = window.prompt('TEXT');
     if (!text) { setStatus('TEXT CANCELLED'); return; }
-    history.push({ id: layer.id, png: layer.canvas.toDataURL('image/png') });
-    if (history.length > 40) history.shift();
-    redoStack = [];
+    snapshotBefore();
     const lines = text.split(/\r?\n/).slice(0, 8);
     const fontSize = Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
     const lctx = layer.ctx;
