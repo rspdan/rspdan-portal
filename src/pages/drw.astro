@@ -1,9 +1,27 @@
 ---
-// DRW: Operating Room drawing workbench. PSPT-gated.
+// DRW: Operating Room drawing workbench. PSPT-gated. The ConsOlo (Dan's name,
+// 070226, for the Nest Console this version: Console + Olo).
 // Layer model (0/1/2 nesting · Dan-direct 062326): 0 BKG, 1 CLR, 2 LNS, with
 // decimal children (CLR.01, CLR.02 ...). Every layer has its own canvas and
 // opacity. Save persists the layered scene (nothing gets lost) AND a flat
 // composite PNG (Chad's existing /api/drw proof chain stays intact).
+//
+// ConsOlo UI pass (Dan-direct 070226 "apply the VISdev look? Fix the text
+// tool? Add ability to rename layers ... L&L (Launch & Load) << Should
+// function as a general 'open anything and it works' + nothing gets lost +
+// Make It Visible"):
+// - Chrome skinned in VISdev.01 Standard register (the delivered El VIS kit,
+//   VISdev-Kit-HCUS.html: forest/teal/gold/warm-white, Crimson Pro/Inter/
+//   JetBrains Mono, OLO #01FFCD reserved for live/fresh signals). The skin
+//   WRAPS the workbench; the Usic colors + non-colors stay the palette.
+// - Text tool: inline on-canvas editor (was a blocking window.prompt).
+// - Layers: rename affordance (double-click a layer name); the 0/1/2 +
+//   decimal-children identity model is untouched, a label rides along.
+// - L&L (Launch & Load): the LOAD GAME seed generalized. One entry opens a
+//   game cartridge, an image (lands on a new Color child layer), or a DRW
+//   draft (.drw.json; current work is backed up first, nothing gets lost).
+//   EXPORT DRAFT writes the file L&L can open back. Unknown types get an
+//   honest status line; the handler registry extends.
 export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -43,13 +61,14 @@ const USIC_COLORS = [
   { key: '·',  name: 'White',        hex: '#FFFFFF' },
 ];
 ---
-<BaseLayout lastUpdated="June 23, 2026" title="DRW">
+<BaseLayout lastUpdated="July 2, 2026" title="DRW">
   <main class="drw-shell">
     <section class="drw-window" aria-label="DRW drawing workbench">
       <header class="drw-titlebar">
         <div>
           <span class="drw-title">DRW.EXE</span>
           <span class="drw-path">rspdan.com/drw</span>
+          <span class="drw-tag">THE CONSOLO</span>
         </div>
         <form method="POST" action="/api/pspt/logout">
           <button type="submit" class="drw-window-btn">LOGOUT</button>
@@ -61,7 +80,8 @@ const USIC_COLORS = [
         <span>EDIT</span>
         <span>VIEW</span>
         <span>ROOM</span>
-        <button type="button" id="load-game-btn" class="drw-menu-action" title="Load a game cartridge (.gba ROM) and play it in the console">LOAD GAME</button>
+        <button type="button" id="lnl-btn" class="drw-menu-action drw-lnl" title="L&L · Launch & Load: open anything and it works. Opens a game cartridge (.gba/.gb/.gbc/.zip), an image (new layer), or a DRW draft (.drw.json)">L&amp;L</button>
+        <button type="button" id="export-draft-btn" class="drw-menu-action" title="Save the current working draft as a .drw.json file. L&L opens it back; nothing gets lost">EXPORT DRAFT</button>
         <button type="button" id="eject-game-btn" class="drw-menu-action" hidden title="Eject the cartridge and return to DRW">EJECT</button>
         <span class="drw-user">OPERATOR: {session.user}</span>
       </div>
@@ -95,6 +115,8 @@ const USIC_COLORS = [
 
           <div class="canvas-frame">
             <canvas id="draw-canvas" width="960" height="640"></canvas>
+            <textarea id="text-editor" class="text-editor" hidden rows="1"
+              spellcheck="false" aria-label="Type text, Enter places it, Escape cancels"></textarea>
           </div>
 
           <!-- NEST CONSOLE game mode (additive · Dan-direct 070226): DRW is the
@@ -116,7 +138,10 @@ const USIC_COLORS = [
             </div>
             <div id="ejs-mount-wrap"><div id="ejs-mount"></div></div>
           </div>
-          <input type="file" id="rom-input" accept=".gba,.gb,.gbc,.zip" hidden />
+          <!-- L&L (Launch & Load) takes ANY file; the dispatch below routes it
+               to the handler that knows it (game / image / draft) and says so
+               honestly when a type is not wired yet. -->
+          <input type="file" id="lnl-input" hidden />
           <input type="file" id="sav-input" accept=".sav,.srm" hidden />
 
           <div class="layers-panel" aria-label="Layers">
@@ -150,9 +175,14 @@ const USIC_COLORS = [
   const W = 960;
   const H = 640;
   const DRAFT_KEY = 'drw:draft:v1';
+  // L&L nothing-gets-lost: before a draft-file replaces the working scene,
+  // the current scene is stashed under a timestamped backup key (last 3 kept).
+  const BACKUP_PREFIX = 'drw:draft:backup:';
 
   const view = document.getElementById('draw-canvas');
   const vctx = view.getContext('2d');
+  const textEditor = document.getElementById('text-editor');
+  const exportDraftBtn = document.getElementById('export-draft-btn');
   const sizeInput = document.getElementById('size-input');
   const clearBtn = document.getElementById('clear-btn');
   const undoBtn = document.getElementById('undo-btn');
@@ -200,11 +230,18 @@ const USIC_COLORS = [
     return c;
   }
 
-  function makeLayer(major, minor, opacity, visible) {
+  function makeLayer(major, minor, opacity, visible, label) {
     const canvas = newCanvas();
     const id = minor === 0 ? String(major) : `${major}.${pad2(minor)}`;
     const name = minor === 0 ? ROOT_NAMES[major] : `${ROOT_NAMES[major]}.${pad2(minor)}`;
-    return { major, minor, id, name, opacity, visible, canvas, ctx: canvas.getContext('2d') };
+    // label = operator-given display name (rename affordance, Dan-direct
+    // 070226). Identity (major/minor/id/name) is the 0/1/2 + decimal-children
+    // model and never changes; the label rides along and persists.
+    return { major, minor, id, name, label: label || '', opacity, visible, canvas, ctx: canvas.getContext('2d') };
+  }
+
+  function displayName(layer) {
+    return layer.label || layer.name;
   }
 
   // Move a layer one step through the stack. dir +1 = toward the front (up),
@@ -220,7 +257,7 @@ const USIC_COLORS = [
     renderLayers();
     composite();
     saveDraft();
-    setStatus(`MOVED ${moved.name}`);
+    setStatus(`MOVED ${displayName(moved)}`);
   }
 
   function activeLayer() {
@@ -245,14 +282,15 @@ const USIC_COLORS = [
     return (minors.length ? Math.max(...minors) : 0) + 1;
   }
 
-  function addChild(major) {
-    const layer = makeLayer(major, nextMinor(major), 1, true);
+  function addChild(major, label) {
+    const layer = makeLayer(major, nextMinor(major), 1, true, label);
     layers.push(layer); // new sub-layer lands on top of the stack; reorder freely
     activeId = layer.id;
     renderLayers();
     composite();
     saveDraft();
-    setStatus(`ADDED ${layer.name}`);
+    setStatus(`ADDED ${displayName(layer)}`);
+    return layer;
   }
 
   function deleteLayer(id) {
@@ -263,7 +301,7 @@ const USIC_COLORS = [
     renderLayers();
     composite();
     saveDraft();
-    setStatus(`DELETED ${layer.name}`);
+    setStatus(`DELETED ${displayName(layer)}`);
   }
 
   // ---- Compositing -------------------------------------------------------
@@ -356,11 +394,23 @@ const USIC_COLORS = [
       const name = document.createElement('button');
       name.type = 'button';
       name.className = 'layer-name';
-      name.textContent = layer.name;
+      name.textContent = displayName(layer);
+      name.title = `${layer.id} · ${layer.name} · double-click to rename`;
+      // Single click activates, double-click renames. The activation re-render
+      // is DEFERRED past the double-click window; re-rendering on the first
+      // click would destroy this button before the dblclick could land.
+      let clickTimer = null;
       name.addEventListener('click', () => {
-        activeId = layer.id;
-        renderLayers();
-        setStatus(`ACTIVE ${layer.name}`);
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          activeId = layer.id;
+          renderLayers();
+          setStatus(`ACTIVE ${displayName(layer)}`);
+        }, 250);
+      });
+      name.addEventListener('dblclick', () => {
+        clearTimeout(clickTimer);
+        startRename(row, name, layer);
       });
 
       const op = document.createElement('input');
@@ -422,6 +472,38 @@ const USIC_COLORS = [
     }
   }
 
+  // Rename affordance (Dan-direct 070226): double-click a layer name, type,
+  // Enter commits (empty resets to the canonical 0/1/2-model name), Escape
+  // cancels. Only the display label changes; the layer identity is untouched.
+  function startRename(row, nameBtn, layer) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'layer-rename';
+    input.maxLength = 40;
+    input.value = layer.label || '';
+    input.placeholder = layer.name;
+    row.replaceChild(input, nameBtn);
+    input.focus();
+    input.select();
+    let doneOnce = false;
+    const finish = (commit) => {
+      if (doneOnce) return;
+      doneOnce = true;
+      if (commit) {
+        const was = displayName(layer);
+        layer.label = input.value.trim();
+        saveDraft();
+        setStatus(`RENAMED ${was} -> ${displayName(layer)}`);
+      }
+      renderLayers();
+    };
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+      if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+    });
+    input.addEventListener('blur', () => finish(true));
+  }
+
   // ---- Drawing (onto the active layer) -----------------------------------
   function selectedDimensions() {
     const dimensions = dimensionInputs.filter((input) => input.checked).map((input) => input.value);
@@ -459,7 +541,7 @@ const USIC_COLORS = [
     event.preventDefault();
     if (tool === 'text') {
       const tp = pointerPos(event);
-      drawTextAt(tp.x, tp.y);
+      openTextEditor(tp.x, tp.y);
       return;
     }
     snapshotBefore();
@@ -470,29 +552,86 @@ const USIC_COLORS = [
     lastY = p.y;
   }
 
-  // TEXT tool (B-side, ported from Chad's main onto the active layer).
-  function drawTextAt(x, y) {
+  // TEXT tool · FIXED 070226 (Dan-direct "Fix the text tool"). What was
+  // broken: the old tool fired a blocking window.prompt() from inside the
+  // pointerdown handler. The text was invisible until committed (no preview,
+  // no position feedback), single-line only in practice (a prompt box cannot
+  // enter the newlines the code then split on), it froze the whole page while
+  // open, and it was unusable on touch. Now an inline on-canvas editor: click
+  // opens a type-box AT the click point, in the current ink and size (Make It
+  // Visible: what you type previews where it lands). Enter places it on the
+  // ACTIVE layer, Shift+Enter adds a line, Escape cancels, clicking away
+  // places it. Same 8-line/80-char bounds and per-layer undo as before.
+  let textAt = null; // canvas-space anchor while the editor is open
+
+  function canvasFontSize() {
+    return Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+  }
+
+  function openTextEditor(x, y) {
     const layer = activeLayer();
     if (!layer || !layer.visible) {
       setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
       return;
     }
-    const text = window.prompt('TEXT');
-    if (!text) { setStatus('TEXT CANCELLED'); return; }
+    textAt = { x, y };
+    const rect = view.getBoundingClientRect();
+    const scale = rect.width / W;
+    const fontPx = canvasFontSize() * scale;
+    textEditor.hidden = false;
+    textEditor.value = '';
+    textEditor.style.left = `${view.offsetLeft + x * scale}px`;
+    textEditor.style.top = `${view.offsetTop + y * scale}px`;
+    textEditor.style.font = `${fontPx}px "JetBrains Mono", Consolas, monospace`;
+    textEditor.style.color = ink;
+    textEditor.style.height = `${fontPx * 1.35}px`;
+    textEditor.focus();
+    setStatus('TEXT: TYPE · ENTER PLACES · SHIFT+ENTER NEW LINE · ESC CANCELS');
+  }
+
+  function closeTextEditor() {
+    textEditor.hidden = true;
+    textEditor.value = '';
+    textAt = null;
+  }
+
+  function commitText() {
+    const layer = activeLayer();
+    const text = textEditor.value.replace(/\s+$/, '');
+    if (!textAt || !layer || !layer.visible || !text) {
+      closeTextEditor();
+      setStatus('TEXT CANCELLED');
+      return;
+    }
     snapshotBefore();
     const lines = text.split(/\r?\n/).slice(0, 8);
-    const fontSize = Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+    const fontSize = canvasFontSize();
+    const anchor = textAt;
     const lctx = layer.ctx;
     lctx.save();
     lctx.fillStyle = ink;
     lctx.font = `${fontSize}px "JetBrains Mono", Consolas, monospace`;
     lctx.textBaseline = 'top';
-    lines.forEach((line, index) => lctx.fillText(line.slice(0, 80), x, y + index * fontSize * 1.15));
+    lines.forEach((line, index) => lctx.fillText(line.slice(0, 80), anchor.x, anchor.y + index * fontSize * 1.15));
     lctx.restore();
+    closeTextEditor();
     composite();
     saveDraft();
     setStatus('TEXT PLACED');
   }
+
+  textEditor.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitText(); }
+    if (e.key === 'Escape') { e.preventDefault(); closeTextEditor(); setStatus('TEXT CANCELLED'); }
+  });
+  textEditor.addEventListener('blur', () => { if (!textEditor.hidden) commitText(); });
+  textEditor.addEventListener('input', () => {
+    // Auto-grow with the typed lines so the preview stays visible.
+    const rect = view.getBoundingClientRect();
+    const fontPx = canvasFontSize() * (rect.width / W);
+    const lineCount = textEditor.value.split(/\r?\n/).length;
+    textEditor.style.height = `${fontPx * 1.35 * Math.max(1, lineCount)}px`;
+  });
 
   function move(event) {
     if (!drawing) return;
@@ -550,6 +689,7 @@ const USIC_COLORS = [
         major: l.major,
         minor: l.minor,
         name: l.name,
+        label: l.label || '',
         opacity: l.opacity,
         visible: l.visible,
         png: l.canvas.toDataURL('image/png'),
@@ -566,7 +706,7 @@ const USIC_COLORS = [
     const rebuilt = [];
     let pending = scene.layers.length;
     scene.layers.forEach((data) => {
-      const layer = makeLayer(data.major, data.minor, typeof data.opacity === 'number' ? data.opacity : 1, data.visible !== false);
+      const layer = makeLayer(data.major, data.minor, typeof data.opacity === 'number' ? data.opacity : 1, data.visible !== false, data.label);
       rebuilt.push(layer);
       const img = new Image();
       img.onload = () => {
@@ -683,7 +823,7 @@ const USIC_COLORS = [
     }
     composite();
     saveDraft();
-    setStatus(`CLEARED ${layer.name}`);
+    setStatus(`CLEARED ${displayName(layer)}`);
   });
 
   undoBtn.addEventListener('click', undo);
@@ -693,6 +833,94 @@ const USIC_COLORS = [
   view.addEventListener('pointermove', move);
   view.addEventListener('pointerup', end);
   view.addEventListener('pointercancel', end);
+
+  // ---- L&L (Launch & Load) handlers · the drawing-side half ---------------
+  // Dan-direct 070226: L&L "Should function as a general 'open anything and
+  // it works' + nothing gets lost + Make It Visible." The console script owns
+  // the L&L entry + dispatch; these are the handlers that land inside the
+  // drawing model. Each is a working increment; the registry extends.
+
+  // Open an image: it lands on a NEW Color child layer named after the file
+  // (Make It Visible: the layer is active and announced; nothing existing is
+  // painted over).
+  function openImageFile(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const label = file.name.replace(/\.[^.]+$/, '').slice(0, 40);
+        const layer = addChild(1, label);
+        // Fit-contain, centered: the whole image is visible, aspect kept.
+        const scale = Math.min(W / img.width, H / img.height, 1);
+        const dw = img.width * scale;
+        const dh = img.height * scale;
+        layer.ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+        composite();
+        saveDraft();
+        setStatus(`L&L: IMAGE ${file.name} -> LAYER ${displayName(layer)} (${layer.id})`);
+      };
+      img.onerror = () => setStatus(`L&L: COULD NOT DECODE IMAGE ${file.name}`);
+      img.src = reader.result;
+    };
+    reader.onerror = () => setStatus(`L&L: COULD NOT READ ${file.name}`);
+    reader.readAsDataURL(file);
+  }
+
+  // Open a DRW draft (.drw.json, the file EXPORT DRAFT writes). NOTHING GETS
+  // LOST: the current working scene is backed up to a timestamped key before
+  // the draft replaces it (last 3 backups kept).
+  function backupCurrentScene() {
+    try {
+      localStorage.setItem(BACKUP_PREFIX + Date.now(), JSON.stringify(serializeScene()));
+      const keys = Object.keys(localStorage).filter((k) => k.startsWith(BACKUP_PREFIX)).sort();
+      while (keys.length > 3) localStorage.removeItem(keys.shift());
+      return true;
+    } catch (err) {
+      return false; // quota: the operator is told below, not silently dropped
+    }
+  }
+
+  function openDraftFile(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      let scene = null;
+      try { scene = JSON.parse(reader.result); } catch (err) { scene = null; }
+      if (!scene || !Array.isArray(scene.layers) || !scene.layers.length) {
+        setStatus(`L&L: ${file.name} IS NOT A DRW DRAFT (expected the .drw.json EXPORT DRAFT writes)`);
+        return;
+      }
+      const backed = backupCurrentScene();
+      restoreScene(scene, () => {
+        renderLayers();
+        composite();
+        saveDraft();
+        setStatus(`L&L: DRAFT ${file.name} LOADED${backed ? ' · PREVIOUS WORK BACKED UP' : ' · WARNING: BACKUP FAILED (storage full)'}`);
+      });
+    };
+    reader.onerror = () => setStatus(`L&L: COULD NOT READ ${file.name}`);
+    reader.readAsText(file);
+  }
+
+  // EXPORT DRAFT: writes the file L&L opens back (the round-trip that makes
+  // "open anything" include your own work).
+  function exportDraft() {
+    const scene = serializeScene();
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace('T', '_').slice(0, 13);
+    const blob = new Blob([JSON.stringify(scene)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `DRW_${stamp}.drw.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    setStatus(`EXPORTED DRAFT ${a.download} (L&L opens it back)`);
+  }
+
+  exportDraftBtn.addEventListener('click', exportDraft);
+
+  // The console script (game mode + the L&L entry) dispatches into these.
+  window.DRW = { openImageFile, openDraftFile, exportDraft, setStatus };
 
   // Boot: restore the autosaved working draft if present, else default layers.
   let stored = null;
@@ -706,9 +934,12 @@ const USIC_COLORS = [
 </script>
 
 <script>
-  // ---- NEST CONSOLE · game mode ------------------------------------------
+  // ---- NEST CONSOLE (the ConsOlo) · game mode + the L&L entry -------------
   // The console is DRW by default but can LOAD GAMES and play them
-  // (Dan-direct 070226). The emulator is EmulatorJS (its bundled GBA core,
+  // (Dan-direct 070226). L&L (Launch & Load, Dan-direct 070226) generalizes
+  // the LOAD GAME seed: one entry opens anything the registry knows (game
+  // cartridge here; images + DRW drafts dispatch into the drawing script's
+  // window.DRW handlers). The emulator is EmulatorJS (its bundled GBA core,
   // mGBA-family), SELF-HOSTED at /vendor/emulatorjs/data/ (vendored 4.2.3,
   // see public/vendor/emulatorjs/README.md) so play does not depend on a
   // third-party CDN at runtime; the CDN is only the automatic fallback if
@@ -720,9 +951,9 @@ const USIC_COLORS = [
   const EJS_CDN = 'https://cdn.emulatorjs.org/stable/data/';
 
   const gameFrame = document.getElementById('game-frame');
-  const loadGameBtn = document.getElementById('load-game-btn');
+  const lnlBtn = document.getElementById('lnl-btn');
   const ejectGameBtn = document.getElementById('eject-game-btn');
-  const romInput = document.getElementById('rom-input');
+  const lnlInput = document.getElementById('lnl-input');
   const savInput = document.getElementById('sav-input');
   const savBtn = document.getElementById('sav-btn');
   const powerBtn = document.getElementById('power-btn');
@@ -738,26 +969,49 @@ const USIC_COLORS = [
     if (consoleStatusLine) consoleStatusLine.textContent = text;
   }
 
-  loadGameBtn.addEventListener('click', () => {
+  // ---- L&L (Launch & Load) dispatch ---------------------------------------
+  // "Open anything and it works" (Dan-direct 070226). One entry; the registry
+  // routes by type. Opens NOW: a game cartridge, an image (new Color child
+  // layer), a DRW draft (.drw.json, with the current work backed up first).
+  // Extending = add a matcher + handler here; unknown types get an HONEST
+  // status line naming what opens today, never a silent no-op.
+  const GAME_EXTS = ['gba', 'gb', 'gbc', 'zip'];
+  const IMAGE_EXTS = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg'];
+
+  lnlBtn.addEventListener('click', () => {
     if (consolePowered) {
-      // EmulatorJS has no clean teardown; swapping cartridges is a reload.
-      // The DRW working draft is autosaved to localStorage, nothing is lost.
+      // EmulatorJS has no clean teardown; opening something else mid-game is
+      // a reload. The DRW working draft is autosaved to localStorage, nothing
+      // is lost.
       window.location.reload();
       return;
     }
-    romInput.click();
+    lnlInput.click();
   });
 
-  romInput.addEventListener('change', () => {
-    const file = romInput.files && romInput.files[0];
+  lnlInput.addEventListener('change', () => {
+    const file = lnlInput.files && lnlInput.files[0];
+    lnlInput.value = '';
     if (!file) return;
+    openAnything(file);
+  });
+
+  function openAnything(file) {
+    const ext = (file.name.toLowerCase().split('.').pop() || '');
+    if (GAME_EXTS.includes(ext)) { openCartridge(file); return; }
+    if (IMAGE_EXTS.includes(ext) || (file.type || '').startsWith('image/')) { window.DRW.openImageFile(file); return; }
+    if (ext === 'json') { window.DRW.openDraftFile(file); return; }
+    consoleStatus(`L&L: .${ext || '?'} NOT WIRED YET · opens now: game .gba/.gb/.gbc/.zip · image · DRW draft .drw.json · the registry extends`);
+  }
+
+  function openCartridge(file) {
     romFile = file;
     cartridgeName.textContent = file.name;
     drwWindow.classList.add('is-game');
     gameFrame.hidden = false;
     ejectGameBtn.hidden = false;
     consoleStatus(`CARTRIDGE LOADED: ${file.name} · INSERT .SAV (OPTIONAL) THEN POWER ON`);
-  });
+  }
 
   savBtn.addEventListener('click', () => savInput.click());
 
@@ -840,22 +1094,39 @@ const USIC_COLORS = [
 </script>
 
 <style>
+  /* ==== VISdev.01 Standard register skin (El VIS kit, VISdev-Kit-HCUS.html:
+     forest #2D4A3E / teal #74C9D5 / gold #C9A84C / warm-white field; Crimson
+     Pro head, Inter body, JetBrains Mono signal; OLO #01FFCD reserved for
+     live/fresh signals only). The skin WRAPS the DRW.EXE workbench chrome;
+     the .EXE window/menu/bevel idiom stays (the 90s-workstation surface),
+     the Usic colors + non-colors stay the drawing palette untouched. ==== */
   .drw-shell {
     width: min(1280px, calc(100vw - 2rem));
     margin: 1rem auto 4rem;
+    /* Local tokens: kit values that global.css does not carry. */
+    --olo: #01FFCD;
+    --line: rgba(45, 74, 62, 0.14);
+    --bevel-lt: #FBFAF7;
+    --bevel-dk: #9DB0A6;
+    --panel: #FFFFFF;
   }
   .drw-window {
-    background: #c8c8c8;
-    border: 2px solid #111;
-    box-shadow: 6px 6px 0 #555;
-    color: #111;
+    background: var(--warm-white);
+    border: 2px solid var(--forest);
+    box-shadow: 6px 6px 0 rgba(45, 74, 62, 0.28);
+    color: var(--text);
     font-family: var(--font-mono);
+  }
+  .drw-window input[type='range'],
+  .drw-window input[type='checkbox'] {
+    /* Native controls take the register too (no default-blue accent). */
+    accent-color: var(--forest);
   }
   .drw-titlebar {
     min-height: 34px;
-    background: #071b5f;
-    color: #fff;
-    border-bottom: 2px solid #111;
+    background: var(--forest);
+    color: var(--warm-white);
+    border-bottom: 2px solid var(--forest);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -868,16 +1139,28 @@ const USIC_COLORS = [
     margin-right: 1rem;
   }
   .drw-path {
-    color: #cfd8ff;
+    color: var(--teal);
     font-size: 0.76rem;
+  }
+  .drw-tag {
+    /* The kit-badge idiom (gold chip): names this console version, Dan-named
+       070226 "the ConsOlo". */
+    margin-left: 0.9rem;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    padding: 0.14rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
   }
   .drw-window-btn,
   .tool,
   #save-btn {
-    background: #e6e6e6;
+    background: var(--off-white);
     border: 2px solid;
-    border-color: #fff #333 #333 #fff;
-    color: #111;
+    border-color: var(--bevel-lt) var(--bevel-dk) var(--bevel-dk) var(--bevel-lt);
+    color: var(--text);
     font: 700 0.74rem/1 var(--font-mono);
     min-height: 30px;
     padding: 0.35rem 0.7rem;
@@ -887,8 +1170,12 @@ const USIC_COLORS = [
   .tool:active,
   #save-btn:active,
   .tool.is-active {
-    border-color: #333 #fff #fff #333;
-    background: #d5d5d5;
+    border-color: var(--bevel-dk) var(--bevel-lt) var(--bevel-lt) var(--bevel-dk);
+    background: #E2DDD3;
+  }
+  .tool.is-active {
+    /* Kit warmth-axis "alive" = the gold inset. Active tool reads warm. */
+    box-shadow: inset 0 0 0 2px var(--gold);
   }
   .drw-menubar {
     display: flex;
@@ -896,23 +1183,30 @@ const USIC_COLORS = [
     gap: 1.2rem;
     min-height: 28px;
     padding: 0 0.75rem;
-    border-bottom: 2px solid #777;
-    background: #dfdfdf;
+    border-bottom: 2px solid var(--line);
+    background: var(--warm-white);
+    color: var(--forest-lt);
     font-size: 0.72rem;
+    letter-spacing: 0.08em;
   }
   .drw-user {
     margin-left: auto;
   }
   .drw-menu-action {
-    background: #dfdfdf;
-    border: 1px solid #777;
-    color: #071b5f;
+    background: transparent;
+    border: 1px solid var(--forest-lt);
+    color: var(--forest);
     font: 700 0.72rem/1 var(--font-mono);
     padding: 0.2rem 0.55rem;
     cursor: pointer;
   }
   .drw-menu-action:active {
-    background: #c9c9c9;
+    background: var(--off-white);
+  }
+  .drw-lnl {
+    /* L&L is the console's open-anything door; the gold border marks it. */
+    border-color: var(--gold);
+    letter-spacing: 0.1em;
   }
   /* Game mode: hide the drawing surface + controls (DOM and state stay
      intact); show the console frame. EJECT / reload returns to DRW. */
@@ -924,17 +1218,17 @@ const USIC_COLORS = [
     display: none;
   }
   .game-frame {
+    /* The console well stays a dark screen (the game is the light source). */
     background: #111;
-    border: 2px solid;
-    border-color: #555 #fff #fff #555;
+    border: 2px solid var(--forest);
     padding: 0.65rem;
   }
   .game-cartridge {
-    background: #d6d6d6;
-    border: 1px solid #777;
+    background: var(--panel);
+    border: 1px solid var(--line);
     padding: 0.55rem;
     margin-bottom: 0.65rem;
-    color: #111;
+    color: var(--text);
   }
   .cartridge-name {
     font: 700 0.85rem var(--font-mono);
@@ -949,7 +1243,7 @@ const USIC_COLORS = [
   .cartridge-note {
     margin-top: 0.45rem;
     font-size: 0.62rem;
-    color: #444;
+    color: var(--text-lt);
   }
   #ejs-mount-wrap {
     width: 100%;
@@ -982,8 +1276,8 @@ const USIC_COLORS = [
     gap: 0.45rem;
     min-height: 30px;
     padding: 0 0.45rem;
-    background: #dcdcdc;
-    border: 1px solid #777;
+    background: var(--off-white);
+    border: 1px solid var(--line);
     font-size: 0.68rem;
   }
   .drw-control input {
@@ -996,10 +1290,12 @@ const USIC_COLORS = [
     margin-bottom: 0.65rem;
   }
   .swatch {
+    /* The Usic colors + non-colors: Dan's palette, untouched by the skin.
+       Bevel frame only; the swatch face is the color itself. */
     width: 30px;
     height: 30px;
     border: 2px solid;
-    border-color: #fff #333 #333 #fff;
+    border-color: var(--bevel-lt) var(--bevel-dk) var(--bevel-dk) var(--bevel-lt);
     background: var(--swatch);
     cursor: pointer;
   }
@@ -1013,14 +1309,34 @@ const USIC_COLORS = [
     white-space: nowrap;
   }
   .swatch.is-active {
-    outline: 2px solid #111;
+    outline: 2px solid var(--forest);
     outline-offset: 2px;
   }
   .canvas-frame {
-    background: #777;
+    /* Forest mat around the paper; position:relative anchors the inline
+       text-tool editor overlay. */
+    position: relative;
+    background: var(--forest);
     border: 2px solid;
-    border-color: #555 #fff #fff #555;
+    border-color: var(--forest-lt) var(--bevel-lt) var(--bevel-lt) var(--forest-lt);
     padding: 0.65rem;
+  }
+  .text-editor {
+    /* The text tool's inline editor: previews at the click point in the
+       current ink + size, commits onto the active layer. */
+    position: absolute;
+    z-index: 5;
+    min-width: 6ch;
+    max-width: calc(100% - 1.3rem);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px dashed var(--forest);
+    outline: none;
+    padding: 0;
+    margin: 0;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.15;
+    white-space: pre;
   }
   #draw-canvas {
     display: block;
@@ -1036,9 +1352,9 @@ const USIC_COLORS = [
   }
   .layers-panel {
     margin-top: 0.65rem;
-    background: #d6d6d6;
-    border: 2px solid;
-    border-color: #555 #fff #fff #555;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--forest);
     padding: 0.55rem;
   }
   .layers-title {
@@ -1050,7 +1366,7 @@ const USIC_COLORS = [
   .layers-hint {
     font-weight: 400;
     font-size: 0.62rem;
-    color: #444;
+    color: var(--text-lt);
   }
   .layer-list {
     display: grid;
@@ -1062,15 +1378,16 @@ const USIC_COLORS = [
     align-items: center;
     gap: 0.4rem;
     padding: 0.2rem 0.3rem;
-    background: #e8e8e8;
-    border: 1px solid #888;
+    background: var(--bg);
+    border: 1px solid var(--line);
   }
   .layer-row.is-child {
     margin-left: 1rem;
-    background: #ededed;
+    background: var(--warm-white);
   }
   .layer-row.is-active {
-    outline: 2px solid #071b5f;
+    /* The active layer is the warm/alive one: gold, per the kit warmth axis. */
+    outline: 2px solid var(--gold);
     outline-offset: -1px;
   }
   .layer-vis {
@@ -1081,13 +1398,23 @@ const USIC_COLORS = [
     text-align: left;
     background: transparent;
     border: 0;
-    color: #111;
+    color: var(--forest);
     font: 700 0.72rem/1 var(--font-mono);
     cursor: pointer;
     padding: 0.15rem 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .layer-rename {
+    min-width: 0;
+    width: 100%;
+    height: 22px;
+    border: 1px solid var(--gold);
+    background: var(--panel);
+    color: var(--text);
+    font: 700 0.72rem/1 var(--font-mono);
+    padding: 0 0.2rem;
   }
   .layer-op {
     width: 100%;
@@ -1097,14 +1424,14 @@ const USIC_COLORS = [
     width: 24px;
     height: 24px;
     border: 2px solid;
-    border-color: #fff #333 #333 #fff;
-    background: #e6e6e6;
-    color: #111;
+    border-color: var(--bevel-lt) var(--bevel-dk) var(--bevel-dk) var(--bevel-lt);
+    background: var(--off-white);
+    color: var(--text);
     font: 700 0.8rem/1 var(--font-mono);
     cursor: pointer;
   }
   .layer-btn:active {
-    border-color: #333 #fff #fff #333;
+    border-color: var(--bevel-dk) var(--bevel-lt) var(--bevel-lt) var(--bevel-dk);
   }
   .layer-btn:disabled {
     opacity: 0.35;
@@ -1175,27 +1502,29 @@ const USIC_COLORS = [
   #caption-input {
     min-width: 0;
     height: 32px;
-    border: 2px solid;
-    border-color: #555 #fff #fff #555;
-    background: #fff;
-    color: #111;
+    border: 1px solid var(--bevel-dk);
+    background: var(--panel);
+    color: var(--text);
     font: 0.82rem var(--font-mono);
     padding: 0.25rem 0.4rem;
   }
   #save-btn:disabled {
-    color: #777;
+    color: var(--muted);
     cursor: wait;
   }
   .drw-right {
-    border-left: 2px solid #777;
-    background: #b8b8b8;
+    border-left: 2px solid var(--line);
+    background: var(--off-white);
     padding: 0.75rem;
     min-width: 0;
   }
   .panel-title {
-    border-bottom: 2px solid #777;
+    /* The kit eyebrow: mono, letterspaced, forest-lt. */
+    border-bottom: 1px solid var(--line);
     margin-bottom: 0.55rem;
     padding-bottom: 0.35rem;
+    letter-spacing: 0.18em;
+    color: var(--forest-lt);
   }
   .draw-list {
     display: grid;
@@ -1209,15 +1538,15 @@ const USIC_COLORS = [
     grid-template-columns: 72px minmax(0, 1fr);
     gap: 0.45rem;
     padding: 0.35rem;
-    background: #dedede;
-    border: 1px solid #777;
+    background: var(--panel);
+    border: 1px solid var(--line);
   }
   .draw-item img {
     width: 72px;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     background: #fff;
-    border: 1px solid #111;
+    border: 1px solid var(--line);
   }
   .draw-item strong,
   .draw-item span {
@@ -1230,23 +1559,36 @@ const USIC_COLORS = [
   }
   .draw-item span,
   .draw-empty {
-    color: #333;
+    color: var(--text-lt);
     font-size: 0.64rem;
   }
   .packet-link {
     display: inline-block;
     margin-top: 0.25rem;
-    color: #071b5f;
+    color: var(--forest-lt);
     font: 700 0.64rem/1 var(--font-mono);
     text-decoration: underline;
   }
   .drw-status {
+    /* The live line. OLO (#01FFCD) is the kit's live/fresh signal and this is
+       the one place it appears: the dot marks the status readout as live. */
     min-height: 28px;
     padding: 0.35rem 0.7rem;
-    background: #e6e6e6;
-    border-top: 2px solid #777;
+    background: var(--forest);
+    color: var(--warm-white);
+    border-top: 2px solid var(--forest);
     font-size: 0.72rem;
     overflow-wrap: anywhere;
+  }
+  .drw-status::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--olo);
+    margin-right: 0.55rem;
+    vertical-align: baseline;
   }
   @media (max-width: 900px) {
     .drw-shell {
@@ -1258,7 +1600,7 @@ const USIC_COLORS = [
     }
     .drw-right {
       border-left: 0;
-      border-top: 2px solid #777;
+      border-top: 2px solid var(--line);
     }
     .coordinate-grid {
       grid-template-columns: repeat(4, minmax(58px, auto));
