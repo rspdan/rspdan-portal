@@ -1,0 +1,95 @@
+---
+// Admin: Hidden Instructions (HI) Governance · PSPT-gated inside-face surface · Pass-1 (read-only)
+// The single-common-link governance registry Dan directed 070126: every config/instruction box
+// that shapes NEST operations, in one Crew/staff-accessible place. Descriptive (lists what exists),
+// grounded in nest-bridge/STATUS/HIDDEN_INSTRUCTIONS_INVENTORY.md.
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { verifySession } from '../../lib/pspt.js';
+import { hi_registry as hi } from '../../data/hidden-instructions.js';
+
+// Auth gate: inside-face = Crew/staff only, not public-public.
+const session = verifySession(Astro.request.headers.get('cookie'));
+if (!session) {
+  return Astro.redirect('/pspt');
+}
+---
+<BaseLayout lastUpdated="July 1, 2026" title="Hidden Instructions Governance">
+  <main class="admin-gov">
+    <header class="ag-header">
+      <div class="ag-eyebrow">PSPT ADMIN &middot; INSIDE FACE</div>
+      <h1>Hidden Instructions Governance</h1>
+      <p class="ag-meta">
+        Logged in as <strong>{session.user}</strong> &middot; updated {hi.updated} &middot;
+        SSOT: <code>{hi.source_of_truth}</code>
+      </p>
+      <form method="POST" action="/api/pspt/logout" style="display:inline">
+        <button type="submit" class="ag-logout">Logout</button>
+      </form>
+    </header>
+
+    <section class="ag-summary">
+      <div class="ag-stat"><b>{hi.summary.categories}</b><span>categories</span></div>
+      <div class="ag-stat"><b>{hi.summary.on_disk_files}</b><span>instruction files</span></div>
+      <div class="ag-stat ag-warn"><b>{hi.summary.engine_accounted}/{hi.summary.engine_scripts}</b><span>ENGINE scripts accounted</span></div>
+      <div class="ag-stat"><b>{hi.summary.settings_layers}</b><span>settings layers</span></div>
+    </section>
+
+    <section class="ag-block">
+      <h2>Highest-risk ungoverned HI</h2>
+      {hi.highest_risk.map(r => (
+        <div class="ag-risk">
+          <div class="ag-risk-h"><span class="ag-rank">{r.rank}</span><strong>{r.title}</strong><em>{r.class}</em></div>
+          <p>{r.detail}</p>
+        </div>
+      ))}
+    </section>
+
+    <section class="ag-block">
+      <h2>Precedence (higher overrides lower)</h2>
+      <ol class="ag-prec">{hi.precedence.map(p => <li>{p}</li>)}</ol>
+    </section>
+
+    <section class="ag-block">
+      <h2>The HI registry</h2>
+      <table class="ag-table">
+        <thead><tr><th>Category</th><th>Count</th><th>What it influences</th><th>Editable how</th></tr></thead>
+        <tbody>
+          {hi.categories.map(c => (
+            <tr><td><strong>{c.name}</strong></td><td>{c.count}</td><td>{c.influences}</td><td><code>{c.editable}</code></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="ag-block">
+      <h2>Governance principles (ARMA GARP)</h2>
+      <ul class="ag-princ">{hi.governance_principles.map(p => <li>{p}</li>)}</ul>
+    </section>
+  </main>
+
+  <style>
+    .admin-gov { max-width: 1000px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .ag-eyebrow { font-size: .72rem; letter-spacing: .12em; opacity: .6; }
+    .ag-meta { font-size: .85rem; opacity: .75; }
+    .ag-meta code, .ag-table code { font-size: .8em; opacity: .85; }
+    .ag-logout { font-size: .75rem; opacity: .7; background: none; border: 1px solid currentColor; border-radius: 4px; padding: .2rem .5rem; cursor: pointer; }
+    .ag-summary { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+    .ag-stat { flex: 1 1 140px; border: 1px solid rgba(128,128,128,.25); border-radius: 8px; padding: .8rem 1rem; }
+    .ag-stat b { display: block; font-size: 1.5rem; }
+    .ag-stat span { font-size: .75rem; opacity: .7; }
+    .ag-stat.ag-warn b { color: #c0392b; }
+    .ag-block { margin: 2rem 0; }
+    .ag-block h2 { font-size: 1.05rem; border-bottom: 1px solid rgba(128,128,128,.2); padding-bottom: .3rem; }
+    .ag-risk { margin: .8rem 0; padding-left: .75rem; border-left: 3px solid #c0392b; }
+    .ag-risk-h { display: flex; align-items: baseline; gap: .5rem; }
+    .ag-rank { display: inline-flex; width: 1.4rem; height: 1.4rem; align-items: center; justify-content: center; border-radius: 50%; background: #c0392b; color: #fff; font-size: .8rem; }
+    .ag-risk-h em { font-size: .72rem; opacity: .6; margin-left: auto; }
+    .ag-risk p { font-size: .88rem; opacity: .85; margin: .3rem 0 0; }
+    .ag-prec, .ag-princ { font-size: .88rem; line-height: 1.6; }
+    .ag-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    .ag-table th, .ag-table td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid rgba(128,128,128,.15); vertical-align: top; }
+    .ag-table th { opacity: .7; font-weight: 600; }
+  </style>
+</BaseLayout>
