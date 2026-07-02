@@ -1817,6 +1817,13 @@ const USIC_COLORS = [
     color: var(--olo);
     text-shadow: 0 0 8px rgba(1, 255, 205, 0.5);
   }
+  /* UNFORESEEN-1 (caught by the U9 proof drive): display:grid/flex on these
+     containers overrides the UA [hidden] rule, leaving them permanently open.
+     The explicit [hidden] guard restores the contract. */
+  .drw-menu-list[hidden],
+  .transform-bar[hidden] {
+    display: none;
+  }
   .drw-menu-list {
     position: absolute;
     top: calc(100% + 4px);
