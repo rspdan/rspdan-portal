@@ -14,8 +14,12 @@ if (!session) {
   return Astro.redirect('/pspt?next=/drw');
 }
 
-// The 14 colors of Usic (12 Circle-of-5ths keys + Storm Violet + OLO).
-// Hex instrument-confirmed from src/pages/usic.astro (the live source-of-truth).
+// The 14 colors of Usic (12 Circle-of-5ths keys + Storm Violet + OLO) PLUS
+// the non-colors (black / white / gray ramp). Dan-direct 070226: "the Usic
+// colors literally ARE MY COLORS. FUCKING USE THEM. DO NOT FORGET THE
+// NON-COLORS, B&W, GRAY, ETC." Key hexes instrument-confirmed from
+// src/pages/usic.astro (the live source-of-truth); the non-colors are the
+// true non-colors (not a claimed Dan-specific brand hex).
 const USIC_COLORS = [
   { key: 'C',  name: 'Red',          hex: '#E53327' },
   { key: 'G',  name: 'Green',        hex: '#31A048' },
@@ -31,6 +35,12 @@ const USIC_COLORS = [
   { key: 'A#', name: 'Tan',          hex: '#D4B483' },
   { key: '·',  name: 'Storm Violet', hex: '#7B2D8E' },
   { key: '·',  name: 'OLO',          hex: '#01FFCD' },
+  // Non-colors (Dan-direct: do not forget these).
+  { key: '·',  name: 'Black',        hex: '#000000' },
+  { key: '·',  name: 'Gray 3',       hex: '#404040' },
+  { key: '·',  name: 'Gray 2',       hex: '#808080' },
+  { key: '·',  name: 'Gray 1',       hex: '#BFBFBF' },
+  { key: '·',  name: 'White',        hex: '#FFFFFF' },
 ];
 ---
 <BaseLayout lastUpdated="June 23, 2026" title="DRW">
