@@ -83,11 +83,47 @@ const USIC_COLORS = [
         </form>
       </header>
 
+      <!-- Menus (U3, Dan-direct 062426: "Anything that doesn't work (Like
+           File, Edit, View, Room) needs to actually work or be removed ...
+           actually thought about and done with design intent"). Design intent:
+           the menus earn their existence by organizing the real action set
+           that outgrew the toolbar; every item calls a working function, no
+           stubs. FILE owns the document lifecycle, EDIT the reversible ops,
+           VIEW the chrome, ROOM the Operating Room surfaces. -->
       <div class="drw-menubar" aria-label="Workbench menu">
-        <span>FILE</span>
-        <span>EDIT</span>
-        <span>VIEW</span>
-        <span>ROOM</span>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">FILE</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="new">NEW BOARD (BACKS UP CURRENT)</button>
+            <button type="button" data-action="open">OPEN... (L&amp;L)</button>
+            <button type="button" data-action="export-draft">EXPORT DRAFT (.DRW.JSON)</button>
+            <button type="button" data-action="export-png">EXPORT PNG</button>
+            <button type="button" data-action="save-relay">SAVE + RELAY</button>
+          </div>
+        </div>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">EDIT</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="undo">UNDO (CTRL+Z)</button>
+            <button type="button" data-action="redo">REDO (CTRL+Y)</button>
+            <button type="button" data-action="swap-inks">SWAP INKS (X)</button>
+            <button type="button" data-action="clear-layer">CLEAR ACTIVE LAYER</button>
+          </div>
+        </div>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">VIEW</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="toggle-crt">TOGGLE CRT FX</button>
+            <button type="button" data-action="toggle-recent">TOGGLE RECENT PANEL</button>
+          </div>
+        </div>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">ROOM</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="refresh-recent">REFRESH RECENT DRW</button>
+            <button type="button" data-action="open-logs">OPEN OPERATING ROOM LOGS</button>
+          </div>
+        </div>
         <button type="button" id="lnl-btn" class="drw-menu-action drw-lnl" title="L&L · Launch & Load: open anything and it works. Opens a game cartridge (.gba/.gb/.gbc/.zip), an image (new layer), or a DRW draft (.drw.json)">L&amp;L</button>
         <button type="button" id="export-draft-btn" class="drw-menu-action" title="Save the current working draft as a .drw.json file. L&L opens it back; nothing gets lost">EXPORT DRAFT</button>
         <button type="button" id="eject-game-btn" class="drw-menu-action" hidden title="Eject the cartridge and return to DRW">EJECT</button>
@@ -874,7 +910,7 @@ const USIC_COLORS = [
   colorPicker.addEventListener('input', () => setWellColor(colorPicker.value));
   refreshInkUI();
 
-  clearBtn.addEventListener('click', () => {
+  function clearActiveLayer() {
     const layer = activeLayer();
     if (!layer) return;
     snapshotBefore();
@@ -886,7 +922,9 @@ const USIC_COLORS = [
     composite();
     saveDraft();
     setStatus(`CLEARED ${displayName(layer)}`);
-  });
+  }
+
+  clearBtn.addEventListener('click', clearActiveLayer);
 
   undoBtn.addEventListener('click', undo);
   redoBtn.addEventListener('click', redo);
@@ -980,6 +1018,102 @@ const USIC_COLORS = [
   }
 
   exportDraftBtn.addEventListener('click', exportDraft);
+
+  // ---- Menus (U3): FILE / EDIT / VIEW / ROOM actually work ----------------
+  const drwWindowEl = document.querySelector('.drw-window');
+  const menus = Array.from(document.querySelectorAll('.drw-menu'));
+
+  function closeMenus() {
+    menus.forEach((menu) => {
+      menu.querySelector('.drw-menu-head').setAttribute('aria-expanded', 'false');
+      menu.querySelector('.drw-menu-list').hidden = true;
+    });
+  }
+
+  menus.forEach((menu) => {
+    const head = menu.querySelector('.drw-menu-head');
+    const list = menu.querySelector('.drw-menu-list');
+    head.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const opening = list.hidden;
+      closeMenus();
+      if (opening) {
+        list.hidden = false;
+        head.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.drw-menu')) closeMenus();
+  });
+
+  // FILE > NEW: fresh default board. NOTHING GETS LOST: the current scene is
+  // backed up first (same timestamped-backup path L&L uses for drafts).
+  function fileNew() {
+    const backed = backupCurrentScene();
+    defaultLayers();
+    history = [];
+    redoStack = [];
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`NEW BOARD${backed ? ' · PREVIOUS WORK BACKED UP' : ' · WARNING: BACKUP FAILED (storage full)'}`);
+  }
+
+  // FILE > EXPORT PNG: the flat composite as a local file (no cloud write).
+  function exportPng() {
+    composite();
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace('T', '_').slice(0, 13);
+    const a = document.createElement('a');
+    a.href = view.toDataURL('image/png');
+    a.download = `DRW_${stamp}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setStatus(`EXPORTED PNG ${a.download}`);
+  }
+
+  // VIEW toggles persist per operator (localStorage; chrome preference, not
+  // scene state). no-crt hides the scanline/vignette overlays; hide-recent
+  // gives the board the full width.
+  const CRT_KEY = 'drw:crt';
+  const RECENT_KEY = 'drw:recent';
+  function readPref(key) {
+    try { return localStorage.getItem(key) !== '0'; } catch { return true; }
+  }
+  function writePref(key, on) {
+    try { localStorage.setItem(key, on ? '1' : '0'); } catch { /* best-effort */ }
+  }
+  let crtOn = readPref(CRT_KEY);
+  let recentOn = readPref(RECENT_KEY);
+  function applyViewPrefs() {
+    drwWindowEl.classList.toggle('no-crt', !crtOn);
+    drwWindowEl.classList.toggle('hide-recent', !recentOn);
+  }
+  applyViewPrefs();
+
+  const menuActions = {
+    'new': fileNew,
+    'open': () => document.getElementById('lnl-btn').click(),
+    'export-draft': exportDraft,
+    'export-png': exportPng,
+    'save-relay': saveDrawing,
+    'undo': undo,
+    'redo': redo,
+    'swap-inks': swapInks,
+    'clear-layer': clearActiveLayer,
+    'toggle-crt': () => { crtOn = !crtOn; writePref(CRT_KEY, crtOn); applyViewPrefs(); setStatus(`CRT FX ${crtOn ? 'ON' : 'OFF'}`); },
+    'toggle-recent': () => { recentOn = !recentOn; writePref(RECENT_KEY, recentOn); applyViewPrefs(); setStatus(`RECENT PANEL ${recentOn ? 'SHOWN' : 'HIDDEN'}`); },
+    'refresh-recent': () => { setStatus('REFRESHING RECENT DRW...'); loadDrawings(); },
+    'open-logs': () => { window.open('/logs', '_blank', 'noopener'); setStatus('OPENED OPERATING ROOM LOGS'); },
+  };
+  document.querySelectorAll('.drw-menu-list [data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      closeMenus();
+      const action = menuActions[btn.dataset.action];
+      if (action) action();
+    });
+  });
 
   // The console script (game mode + the L&L entry) dispatches into these.
   window.DRW = { openImageFile, openDraftFile, exportDraft, setStatus };
@@ -1316,6 +1450,66 @@ const USIC_COLORS = [
   }
   .drw-user {
     margin-left: auto;
+  }
+  /* Menus (U3): the heads keep the menubar's pixel-label register; the open
+     list is a LITE BRITE panel above the CRT overlays (z 70 > overlays 59/60). */
+  .drw-menu {
+    position: relative;
+  }
+  .drw-menu-head {
+    background: transparent;
+    border: 0;
+    color: var(--lb-dim);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: uppercase;
+    padding: 0.2rem 0.1rem;
+    cursor: pointer;
+  }
+  .drw-menu-head:hover,
+  .drw-menu-head[aria-expanded='true'] {
+    color: var(--olo);
+    text-shadow: 0 0 8px rgba(1, 255, 205, 0.5);
+  }
+  .drw-menu-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 70;
+    min-width: 230px;
+    display: grid;
+    padding: 0.25rem;
+    background: var(--lb-panel);
+    border: 1px solid rgba(1, 255, 205, 0.35);
+    box-shadow: 0 0 14px rgba(1, 255, 205, 0.15), 4px 4px 0 rgba(0, 0, 0, 0.55);
+  }
+  .drw-menu-list button {
+    text-align: left;
+    background: transparent;
+    border: 0;
+    color: var(--lb-txt);
+    font: 400 1.05rem/1.35 var(--font-crt);
+    letter-spacing: 0.03em;
+    text-transform: none;
+    padding: 0.28rem 0.5rem;
+    cursor: pointer;
+  }
+  .drw-menu-list button:hover,
+  .drw-menu-list button:focus-visible {
+    background: var(--lb-well);
+    color: var(--olo);
+    outline: none;
+  }
+  /* VIEW preferences (U3). */
+  .drw-window.no-crt::before,
+  .drw-window.no-crt::after {
+    display: none;
+  }
+  .drw-window.hide-recent .drw-right {
+    display: none;
+  }
+  .drw-window.hide-recent .drw-body {
+    grid-template-columns: 1fr;
   }
   .drw-menu-action {
     background: transparent;
