@@ -110,6 +110,16 @@ const USIC_COLORS = [
           </div>
 
           <div class="drw-swatches" aria-label="Usic colors">
+            <!-- Ink pair (U2, Dan-direct 062426 backlog: "Primary and secondary
+                 color selections like Photoshop" + "a manual color picker").
+                 Tools always draw with the PRIMARY well; swatches + the picker
+                 set whichever well is selected; X (or the swap button) swaps. -->
+            <div class="drw-inks" aria-label="Ink pair: primary draws, secondary holds, X swaps">
+              <button type="button" id="well-a" class="ink-well is-active" title="Primary ink (tools draw with this) · click to select"><span>Primary ink</span></button>
+              <button type="button" id="well-b" class="ink-well" title="Secondary ink (held) · click to select"><span>Secondary ink</span></button>
+              <button type="button" id="swap-inks-btn" class="ink-swap" title="Swap primary and secondary inks (X)">X</button>
+              <input type="color" id="color-picker" value="#E53327" title="Manual color picker: sets the selected well" aria-label="Manual color picker" />
+            </div>
             {USIC_COLORS.map((c, i) => (
               <button
                 type="button"
@@ -207,7 +217,44 @@ const USIC_COLORS = [
   let lastX = 0;
   let lastY = 0;
   let tool = 'pen';
-  let ink = swatches[0] ? swatches[0].dataset.color : '#E53327';
+
+  // ---- Ink pair (U2) ------------------------------------------------------
+  // Photoshop law: tools draw with the PRIMARY (A) well, always. Swatches and
+  // the manual picker write to whichever well is selected; X swaps A and B.
+  // `ink` stays the single read-point for every tool (it mirrors inks.A).
+  const wellA = document.getElementById('well-a');
+  const wellB = document.getElementById('well-b');
+  const swapInksBtn = document.getElementById('swap-inks-btn');
+  const colorPicker = document.getElementById('color-picker');
+  const inks = { A: swatches[0] ? swatches[0].dataset.color : '#E53327', B: '#FFFFFF' };
+  let activeWell = 'A';
+  let ink = inks.A;
+
+  function refreshInkUI() {
+    ink = inks.A;
+    wellA.style.setProperty('--swatch', inks.A);
+    wellB.style.setProperty('--swatch', inks.B);
+    wellA.classList.toggle('is-active', activeWell === 'A');
+    wellB.classList.toggle('is-active', activeWell === 'B');
+    // The picker mirrors the selected well; a swatch peg lights only when it
+    // matches the selected well's color.
+    if (/^#[0-9a-fA-F]{6}$/.test(inks[activeWell])) colorPicker.value = inks[activeWell];
+    swatches.forEach((s) => s.classList.toggle('is-active', s.dataset.color.toLowerCase() === inks[activeWell].toLowerCase()));
+  }
+
+  function setWellColor(color, label) {
+    inks[activeWell] = color;
+    refreshInkUI();
+    setStatus(`INK ${activeWell} ${label || color}`.trim());
+  }
+
+  function swapInks() {
+    const t = inks.A;
+    inks.A = inks.B;
+    inks.B = t;
+    refreshInkUI();
+    setStatus(`SWAPPED INKS · PRIMARY ${inks.A}`);
+  }
 
   // Undo/redo (B-side, ported from Chad's main onto the layer model): a linear
   // history of per-layer before-snapshots. Snapshots the layer touched, not the
@@ -809,11 +856,23 @@ const USIC_COLORS = [
 
   swatches.forEach((button) => {
     button.addEventListener('click', () => {
-      ink = button.dataset.color;
-      swatches.forEach((s) => s.classList.toggle('is-active', s === button));
-      setStatus(`INK ${button.title || ''}`.trim());
+      setWellColor(button.dataset.color, button.title);
     });
   });
+
+  wellA.addEventListener('click', () => {
+    activeWell = 'A';
+    refreshInkUI();
+    setStatus(`SELECTED PRIMARY INK ${inks.A}`);
+  });
+  wellB.addEventListener('click', () => {
+    activeWell = 'B';
+    refreshInkUI();
+    setStatus(`SELECTED SECONDARY INK ${inks.B}`);
+  });
+  swapInksBtn.addEventListener('click', swapInks);
+  colorPicker.addEventListener('input', () => setWellColor(colorPicker.value));
+  refreshInkUI();
 
   clearBtn.addEventListener('click', () => {
     const layer = activeLayer();
@@ -1376,7 +1435,8 @@ const USIC_COLORS = [
     box-shadow: 0 0 9px var(--swatch), 0 0 20px var(--swatch);
     cursor: pointer;
   }
-  .swatch span {
+  .swatch span,
+  .ink-well span {
     position: absolute;
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -1388,6 +1448,65 @@ const USIC_COLORS = [
   .swatch.is-active {
     outline: 2px solid var(--olo);
     outline-offset: 3px;
+  }
+  /* Ink pair cluster (U2): the two wells are pegs in the same idiom as the
+     swatches; the selected well carries the OLO ring. A dashed divider
+     separates the pair from the palette. */
+  .drw-inks {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-right: 0.65rem;
+    margin-right: 0.15rem;
+    border-right: 1px dashed var(--lb-line);
+  }
+  .ink-well {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 50%;
+    --swatch: #E53327;
+    background: radial-gradient(circle at 36% 30%, #fff 0%, var(--swatch) 52%, var(--swatch) 100%);
+    box-shadow: 0 0 9px var(--swatch), 0 0 20px var(--swatch);
+    cursor: pointer;
+  }
+  .ink-well.is-active {
+    outline: 2px solid var(--olo);
+    outline-offset: 3px;
+  }
+  #well-b {
+    width: 24px;
+    height: 24px;
+    opacity: 0.85;
+  }
+  .ink-swap {
+    width: 24px;
+    height: 24px;
+    border: 2px solid;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    background: var(--lb-panel);
+    color: var(--lb-txt);
+    font: 400 0.95rem/1 var(--font-crt);
+    cursor: pointer;
+  }
+  .ink-swap:active {
+    border-color: var(--lb-bevel-dk) var(--lb-bevel-lt) var(--lb-bevel-lt) var(--lb-bevel-dk);
+  }
+  #color-picker {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 2px solid;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    background: var(--lb-panel);
+    cursor: pointer;
+  }
+  #color-picker:focus-visible,
+  .ink-well:focus-visible,
+  .ink-swap:focus-visible {
+    outline: 2px solid var(--olo);
+    outline-offset: 2px;
   }
   .canvas-frame {
     /* Black bezel around the paper (the CRT frame); position:relative anchors
