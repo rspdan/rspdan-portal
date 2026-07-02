@@ -61,6 +61,8 @@ const USIC_COLORS = [
         <span>EDIT</span>
         <span>VIEW</span>
         <span>ROOM</span>
+        <button type="button" id="load-game-btn" class="drw-menu-action" title="Load a game cartridge (.gba ROM) and play it in the console">LOAD GAME</button>
+        <button type="button" id="eject-game-btn" class="drw-menu-action" hidden title="Eject the cartridge and return to DRW">EJECT</button>
         <span class="drw-user">OPERATOR: {session.user}</span>
       </div>
 
@@ -94,6 +96,28 @@ const USIC_COLORS = [
           <div class="canvas-frame">
             <canvas id="draw-canvas" width="960" height="640"></canvas>
           </div>
+
+          <!-- NEST CONSOLE game mode (additive · Dan-direct 070226): DRW is the
+               default screen; LOAD GAME boots a cartridge in-browser. Hidden
+               until a cartridge is loaded; DRW markup/state stays intact. -->
+          <div class="game-frame" id="game-frame" hidden aria-label="Game console">
+            <div class="game-cartridge" id="game-cartridge">
+              <div class="panel-title">CARTRIDGE</div>
+              <div id="cartridge-name" class="cartridge-name">NO CARTRIDGE</div>
+              <div class="cartridge-actions">
+                <button type="button" id="sav-btn" class="tool">INSERT .SAV (OPTIONAL)</button>
+                <button type="button" id="power-btn" class="tool">POWER ON</button>
+              </div>
+              <div class="cartridge-note">
+                The cartridge runs in this browser only; nothing is uploaded.
+                Battery saves round-trip via the emulator menu's EXPORT SAVE /
+                IMPORT SAVE (same .sav format as MyBoy / mGBA).
+              </div>
+            </div>
+            <div id="ejs-mount-wrap"><div id="ejs-mount"></div></div>
+          </div>
+          <input type="file" id="rom-input" accept=".gba,.gb,.gbc,.zip" hidden />
+          <input type="file" id="sav-input" accept=".sav,.srm" hidden />
 
           <div class="layers-panel" aria-label="Layers">
             <div class="panel-title layers-title">
@@ -681,6 +705,140 @@ const USIC_COLORS = [
   loadDrawings();
 </script>
 
+<script>
+  // ---- NEST CONSOLE · game mode ------------------------------------------
+  // The console is DRW by default but can LOAD GAMES and play them
+  // (Dan-direct 070226). The emulator is EmulatorJS (its bundled GBA core,
+  // mGBA-family), SELF-HOSTED at /vendor/emulatorjs/data/ (vendored 4.2.3,
+  // see public/vendor/emulatorjs/README.md) so play does not depend on a
+  // third-party CDN at runtime; the CDN is only the automatic fallback if
+  // the vendored copy fails to load. We do not hand-write an emulator and
+  // no ROM ships in this repo. Dan loads his own cartridge from disk
+  // (Pokemon LeafGreen is the first game); an optional .sav battery save
+  // (MyBoy/mGBA raw format) loads with it.
+  const EJS_LOCAL = '/vendor/emulatorjs/data/';
+  const EJS_CDN = 'https://cdn.emulatorjs.org/stable/data/';
+
+  const gameFrame = document.getElementById('game-frame');
+  const loadGameBtn = document.getElementById('load-game-btn');
+  const ejectGameBtn = document.getElementById('eject-game-btn');
+  const romInput = document.getElementById('rom-input');
+  const savInput = document.getElementById('sav-input');
+  const savBtn = document.getElementById('sav-btn');
+  const powerBtn = document.getElementById('power-btn');
+  const cartridgeName = document.getElementById('cartridge-name');
+  const consoleStatusLine = document.getElementById('status-line');
+  const drwWindow = document.querySelector('.drw-window');
+
+  let romFile = null;
+  let savBytes = null;
+  let consolePowered = false;
+
+  function consoleStatus(text) {
+    if (consoleStatusLine) consoleStatusLine.textContent = text;
+  }
+
+  loadGameBtn.addEventListener('click', () => {
+    if (consolePowered) {
+      // EmulatorJS has no clean teardown; swapping cartridges is a reload.
+      // The DRW working draft is autosaved to localStorage, nothing is lost.
+      window.location.reload();
+      return;
+    }
+    romInput.click();
+  });
+
+  romInput.addEventListener('change', () => {
+    const file = romInput.files && romInput.files[0];
+    if (!file) return;
+    romFile = file;
+    cartridgeName.textContent = file.name;
+    drwWindow.classList.add('is-game');
+    gameFrame.hidden = false;
+    ejectGameBtn.hidden = false;
+    consoleStatus(`CARTRIDGE LOADED: ${file.name} · INSERT .SAV (OPTIONAL) THEN POWER ON`);
+  });
+
+  savBtn.addEventListener('click', () => savInput.click());
+
+  savInput.addEventListener('change', async () => {
+    const file = savInput.files && savInput.files[0];
+    if (!file) return;
+    savBytes = new Uint8Array(await file.arrayBuffer());
+    savBtn.textContent = `SAV: ${file.name}`;
+    consoleStatus(`BATTERY SAVE INSERTED: ${file.name} (${savBytes.length} bytes)`);
+  });
+
+  ejectGameBtn.addEventListener('click', () => {
+    // Reload returns the console to its DRW default screen.
+    window.location.reload();
+  });
+
+  powerBtn.addEventListener('click', () => {
+    if (!romFile || consolePowered) return;
+    consolePowered = true;
+    powerBtn.disabled = true;
+    savBtn.disabled = true;
+    consoleStatus('BOOTING EMULATOR CORE...');
+
+    const ext = romFile.name.toLowerCase().split('.').pop();
+    window.EJS_player = '#ejs-mount';
+    window.EJS_core = ext === 'gb' || ext === 'gbc' ? 'gb' : 'gba';
+    window.EJS_gameUrl = URL.createObjectURL(romFile);
+    window.EJS_gameName = romFile.name.replace(/\.(gba|gb|gbc|zip)$/i, '');
+    window.EJS_pathtodata = EJS_LOCAL;
+    window.EJS_startOnLoaded = true;
+    window.EJS_backgroundColor = '#111111';
+    // Ensure the battery-save round-trip buttons are present in the
+    // emulator's control bar (Export Save File / Import Save File).
+    window.EJS_Buttons = { saveSavFiles: true, loadSavFiles: true };
+    window.EJS_onGameStart = () => {
+      consoleStatus(`PLAYING: ${romFile.name}`);
+      if (savBytes) injectBatterySave();
+    };
+
+    // Boot from the vendored runtime; if it is missing (e.g. a stripped
+    // deploy), fall back to the upstream CDN once.
+    const bootLoader = (pathtodata, onFail) => {
+      window.EJS_pathtodata = pathtodata;
+      const loader = document.createElement('script');
+      loader.src = pathtodata + 'loader.js';
+      loader.onerror = onFail;
+      document.body.appendChild(loader);
+    };
+    bootLoader(EJS_LOCAL, () => {
+      consoleStatus('VENDORED EMULATOR MISSING · TRYING CDN FALLBACK...');
+      bootLoader(EJS_CDN, () => {
+        consoleStatus('EMULATOR CORE FAILED TO LOAD (vendored copy and CDN both unreachable)');
+      });
+    });
+  });
+
+  function injectBatterySave() {
+    // Write the inserted .sav where the core expects the battery save, then
+    // ask the core to load it (the same path the emulator's own IMPORT SAVE
+    // button uses). If the internal API shape differs, the built-in IMPORT
+    // SAVE button in the emulator menu is the fallback.
+    try {
+      const gm = window.EJS_emulator.gameManager;
+      const path = gm.getSaveFilePath();
+      const dir = path.substring(0, path.lastIndexOf('/'));
+      let walk = '';
+      for (const part of dir.split('/')) {
+        if (!part) continue;
+        walk += '/' + part;
+        try { gm.FS.mkdir(walk); } catch (e) { /* dir exists */ }
+      }
+      try { gm.FS.unlink(path); } catch (e) { /* no prior save */ }
+      gm.FS.writeFile(path, savBytes);
+      gm.loadSaveFiles();
+      consoleStatus(`PLAYING: ${romFile.name} · BATTERY SAVE LOADED`);
+    } catch (err) {
+      consoleStatus('SAV AUTO-LOAD FAILED · use IMPORT SAVE in the emulator menu');
+    }
+  }
+</script>
+
 <style>
   .drw-shell {
     width: min(1280px, calc(100vw - 2rem));
@@ -744,6 +902,63 @@ const USIC_COLORS = [
   }
   .drw-user {
     margin-left: auto;
+  }
+  .drw-menu-action {
+    background: #dfdfdf;
+    border: 1px solid #777;
+    color: #071b5f;
+    font: 700 0.72rem/1 var(--font-mono);
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+  }
+  .drw-menu-action:active {
+    background: #c9c9c9;
+  }
+  /* Game mode: hide the drawing surface + controls (DOM and state stay
+     intact); show the console frame. EJECT / reload returns to DRW. */
+  .drw-window.is-game .canvas-frame,
+  .drw-window.is-game .drw-toolbar,
+  .drw-window.is-game .drw-swatches,
+  .drw-window.is-game .layers-panel,
+  .drw-window.is-game .drw-submit {
+    display: none;
+  }
+  .game-frame {
+    background: #111;
+    border: 2px solid;
+    border-color: #555 #fff #fff #555;
+    padding: 0.65rem;
+  }
+  .game-cartridge {
+    background: #d6d6d6;
+    border: 1px solid #777;
+    padding: 0.55rem;
+    margin-bottom: 0.65rem;
+    color: #111;
+  }
+  .cartridge-name {
+    font: 700 0.85rem var(--font-mono);
+    margin: 0.35rem 0;
+    overflow-wrap: anywhere;
+  }
+  .cartridge-actions {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+  .cartridge-note {
+    margin-top: 0.45rem;
+    font-size: 0.62rem;
+    color: #444;
+  }
+  #ejs-mount-wrap {
+    width: 100%;
+    aspect-ratio: 3 / 2; /* GBA screen is 240x160 */
+    background: #000;
+  }
+  #ejs-mount {
+    width: 100%;
+    height: 100%;
   }
   .drw-body {
     display: grid;
