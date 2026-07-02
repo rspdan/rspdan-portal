@@ -136,6 +136,7 @@ const USIC_COLORS = [
             <button type="button" class="tool is-active" data-tool="pen">PEN</button>
             <button type="button" class="tool" data-tool="erase">ERASE</button>
             <button type="button" class="tool" data-tool="text">TEXT</button>
+            <button type="button" class="tool" data-tool="transform" title="Move / scale / rotate the active layer. Drag moves; the bar scales and rotates; APPLY commits (undoable), CANCEL discards">TRANS</button>
             <button type="button" id="undo-btn" class="tool">UNDO</button>
             <button type="button" id="redo-btn" class="tool">REDO</button>
             <button type="button" id="clear-btn" class="tool">CLEAR LAYER</button>
@@ -168,6 +169,14 @@ const USIC_COLORS = [
           </div>
 
           <div class="canvas-frame">
+            <!-- Transform bar (U4, Dan-direct 062426 "Move, scale, rotate
+                 tools"): visible only while the TRANS tool has a session. -->
+            <div class="transform-bar" id="transform-bar" hidden aria-label="Transform controls">
+              <label>SCALE <input type="range" id="trans-scale" min="10" max="400" value="100" /><span id="trans-scale-val">100%</span></label>
+              <label>ROTATE <input type="range" id="trans-rot" min="-180" max="180" value="0" /><span id="trans-rot-val">0 DEG</span></label>
+              <button type="button" id="trans-apply" class="tool">APPLY</button>
+              <button type="button" id="trans-cancel" class="tool">CANCEL</button>
+            </div>
             <canvas id="draw-canvas" width="960" height="640"></canvas>
             <textarea id="text-editor" class="text-editor" hidden rows="1"
               spellcheck="false" aria-label="Type text, Enter places it, Escape cancels"></textarea>
@@ -335,6 +344,7 @@ const USIC_COLORS = [
   // dir -1 = toward the back (down). Any layer moves, including the roots;
   // the operator is in control of the order, nothing is pinned.
   function moveLayer(id, dir) {
+    endTransformIfAny();
     const i = layers.findIndex((l) => l.id === id);
     const j = i + dir;
     if (i < 0 || j < 0 || j >= layers.length) return;
@@ -370,6 +380,7 @@ const USIC_COLORS = [
   }
 
   function addChild(major, label) {
+    endTransformIfAny();
     const layer = makeLayer(major, nextMinor(major), 1, true, label);
     layers.push(layer); // new sub-layer lands on top of the stack; reorder freely
     activeId = layer.id;
@@ -381,6 +392,7 @@ const USIC_COLORS = [
   }
 
   function deleteLayer(id) {
+    endTransformIfAny();
     const layer = layers.find((l) => l.id === id);
     if (!layer || layer.minor === 0) return; // roots are permanent
     layers = layers.filter((l) => l.id !== id);
@@ -391,20 +403,95 @@ const USIC_COLORS = [
     setStatus(`DELETED ${displayName(layer)}`);
   }
 
+  // ---- TRANSFORM tool session (U4) ----------------------------------------
+  // Move / scale / rotate the ACTIVE layer (Dan-direct 062426). The layer's
+  // canvas is untouched during the session; composite() previews the source
+  // snapshot under the live matrix. APPLY commits (undoable via the normal
+  // per-layer snapshot); CANCEL or any structural change discards. Exactly
+  // one exit point (endTransform) so the preview special-case cannot leak.
+  let transform = null; // { src, dx, dy, scale, rot, layerId }
+  const transformBar = document.getElementById('transform-bar');
+  const transScale = document.getElementById('trans-scale');
+  const transRot = document.getElementById('trans-rot');
+  const transScaleVal = document.getElementById('trans-scale-val');
+  const transRotVal = document.getElementById('trans-rot-val');
+
+  function updateTransReadouts() {
+    if (!transform) return;
+    transScaleVal.textContent = `${Math.round(transform.scale * 100)}%`;
+    transRotVal.textContent = `${Math.round(transform.rot)} DEG`;
+  }
+
+  function drawTransformed(ctx, t) {
+    ctx.save();
+    ctx.translate(W / 2 + t.dx, H / 2 + t.dy);
+    ctx.rotate((t.rot * Math.PI) / 180);
+    ctx.scale(t.scale, t.scale);
+    ctx.drawImage(t.src, -W / 2, -H / 2);
+    ctx.restore();
+  }
+
+  function startTransform() {
+    const layer = activeLayer();
+    if (!layer || !layer.visible) {
+      setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
+      return false;
+    }
+    const src = newCanvas();
+    src.getContext('2d').drawImage(layer.canvas, 0, 0);
+    transform = { src, dx: 0, dy: 0, scale: 1, rot: 0, layerId: layer.id };
+    transScale.value = '100';
+    transRot.value = '0';
+    updateTransReadouts();
+    transformBar.hidden = false;
+    composite();
+    setStatus(`TRANSFORM ${displayName(layer)} · DRAG MOVES · APPLY COMMITS · CANCEL DISCARDS`);
+    return true;
+  }
+
+  function endTransform(commit) {
+    if (!transform) return;
+    const t = transform;
+    const layer = layers.find((l) => l.id === t.layerId);
+    const changed = t.dx || t.dy || t.scale !== 1 || t.rot;
+    if (commit && layer && changed) {
+      snapshotBefore(layer); // pre-transform pixels (layer canvas untouched until now)
+      transform = null; // leave preview mode BEFORE mutating + compositing
+      layer.ctx.clearRect(0, 0, W, H);
+      drawTransformed(layer.ctx, t);
+      saveDraft();
+      setStatus(`TRANSFORM APPLIED TO ${displayName(layer)}`);
+    } else {
+      transform = null;
+      setStatus(commit ? 'TRANSFORM UNCHANGED' : 'TRANSFORM CANCELLED');
+    }
+    transformBar.hidden = true;
+    composite();
+  }
+
+  // Structural changes mid-session discard the preview (announced honestly).
+  function endTransformIfAny() {
+    if (transform) endTransform(false);
+  }
+
   // ---- Compositing -------------------------------------------------------
   function composite() {
     vctx.clearRect(0, 0, W, H);
     for (const layer of layers) {
       if (!layer.visible) continue;
       vctx.globalAlpha = layer.opacity;
-      vctx.drawImage(layer.canvas, 0, 0);
+      if (transform && layer.id === transform.layerId) {
+        drawTransformed(vctx, transform);
+      } else {
+        vctx.drawImage(layer.canvas, 0, 0);
+      }
     }
     vctx.globalAlpha = 1;
   }
 
   // ---- Undo / redo (per-layer before-snapshots) --------------------------
-  function snapshotBefore() {
-    const layer = activeLayer();
+  function snapshotBefore(target) {
+    const layer = target || activeLayer();
     if (!layer) return;
     history.push({ id: layer.id, png: layer.canvas.toDataURL('image/png') });
     if (history.length > 40) history.shift();
@@ -428,6 +515,7 @@ const USIC_COLORS = [
   }
 
   function undo() {
+    endTransformIfAny();
     const snap = history.pop();
     if (!snap) { setStatus('NOTHING TO UNDO'); return; }
     restoreLayerSnapshot(snap, redoStack);
@@ -435,6 +523,7 @@ const USIC_COLORS = [
   }
 
   function redo() {
+    endTransformIfAny();
     const snap = redoStack.pop();
     if (!snap) { setStatus('NOTHING TO REDO'); return; }
     restoreLayerSnapshot(snap, history);
@@ -490,6 +579,7 @@ const USIC_COLORS = [
       name.addEventListener('click', () => {
         clearTimeout(clickTimer);
         clickTimer = setTimeout(() => {
+          endTransformIfAny();
           activeId = layer.id;
           renderLayers();
           setStatus(`ACTIVE ${displayName(layer)}`);
@@ -630,6 +720,17 @@ const USIC_COLORS = [
       openTextEditor(tp.x, tp.y);
       return;
     }
+    if (tool === 'transform') {
+      // Drag = move. A session is opened by selecting the tool; if it was
+      // discarded (structural change) a fresh drag reopens it.
+      if (!transform && !startTransform()) return;
+      view.setPointerCapture(event.pointerId);
+      drawing = true;
+      const tp = pointerPos(event);
+      lastX = tp.x;
+      lastY = tp.y;
+      return;
+    }
     snapshotBefore();
     view.setPointerCapture(event.pointerId);
     drawing = true;
@@ -722,6 +823,16 @@ const USIC_COLORS = [
   function move(event) {
     if (!drawing) return;
     event.preventDefault();
+    if (tool === 'transform') {
+      if (!transform) return;
+      const p = pointerPos(event);
+      transform.dx += p.x - lastX;
+      transform.dy += p.y - lastY;
+      lastX = p.x;
+      lastY = p.y;
+      composite();
+      return;
+    }
     const layer = activeLayer();
     if (!layer) return;
     const lctx = layer.ctx;
@@ -746,6 +857,11 @@ const USIC_COLORS = [
     if (!drawing) return;
     drawing = false;
     if (event && event.pointerId !== undefined) view.releasePointerCapture(event.pointerId);
+    if (tool === 'transform') {
+      // Uncommitted preview: nothing persisted until APPLY.
+      setStatus('TRANSFORM: DRAG MOVES · APPLY COMMITS · CANCEL DISCARDS');
+      return;
+    }
     setStatus('DRAWING MODIFIED');
     saveDraft();
   }
@@ -784,6 +900,7 @@ const USIC_COLORS = [
   }
 
   function restoreScene(scene, done) {
+    endTransformIfAny();
     if (!scene || !Array.isArray(scene.layers) || !scene.layers.length) {
       defaultLayers();
       done();
@@ -882,13 +999,36 @@ const USIC_COLORS = [
   }
 
   // ---- Wiring ------------------------------------------------------------
+  function selectTool(next) {
+    if (tool === 'transform' && next !== 'transform') endTransformIfAny();
+    tool = next;
+    toolButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.tool === next));
+    if (next === 'transform') {
+      if (!startTransform()) return;
+    } else {
+      setStatus(`${next.toUpperCase()} SELECTED`);
+    }
+  }
+
   toolButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      tool = button.dataset.tool;
-      toolButtons.forEach((b) => b.classList.toggle('is-active', b === button));
-      setStatus(`${tool.toUpperCase()} SELECTED`);
-    });
+    button.addEventListener('click', () => selectTool(button.dataset.tool));
   });
+
+  // Transform bar wiring (U4).
+  transScale.addEventListener('input', () => {
+    if (!transform) return;
+    transform.scale = Number(transScale.value) / 100;
+    updateTransReadouts();
+    composite();
+  });
+  transRot.addEventListener('input', () => {
+    if (!transform) return;
+    transform.rot = Number(transRot.value);
+    updateTransReadouts();
+    composite();
+  });
+  document.getElementById('trans-apply').addEventListener('click', () => endTransform(true));
+  document.getElementById('trans-cancel').addEventListener('click', () => endTransform(false));
 
   swatches.forEach((button) => {
     button.addEventListener('click', () => {
@@ -911,6 +1051,7 @@ const USIC_COLORS = [
   refreshInkUI();
 
   function clearActiveLayer() {
+    endTransformIfAny();
     const layer = activeLayer();
     if (!layer) return;
     snapshotBefore();
@@ -1050,6 +1191,7 @@ const USIC_COLORS = [
   // FILE > NEW: fresh default board. NOTHING GETS LOST: the current scene is
   // backed up first (same timestamped-backup path L&L uses for drafts).
   function fileNew() {
+    endTransformIfAny();
     const backed = backupCurrentScene();
     defaultLayers();
     history = [];
@@ -1711,6 +1853,31 @@ const USIC_COLORS = [
     border-color: rgba(1, 255, 205, 0.4) rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.4);
     box-shadow: 0 0 18px rgba(1, 255, 205, 0.1);
     padding: 0.65rem;
+  }
+  .transform-bar {
+    /* U4: the TRANS session controls, in the terminal-panel idiom. */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    background: rgba(1, 255, 205, 0.04);
+    border: 1px dashed rgba(1, 255, 205, 0.35);
+    color: var(--lb-txt);
+    font-size: 1rem;
+  }
+  .transform-bar label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .transform-bar input[type='range'] {
+    width: 120px;
+  }
+  .transform-bar span {
+    min-width: 4.5ch;
+    color: var(--olo);
   }
   .text-editor {
     /* The text tool's inline editor: previews at the click point in the
