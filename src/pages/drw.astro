@@ -180,6 +180,8 @@ const USIC_COLORS = [
             <canvas id="draw-canvas" width="960" height="640"></canvas>
             <textarea id="text-editor" class="text-editor" hidden rows="1"
               spellcheck="false" aria-label="Type text, Enter places it, Escape cancels"></textarea>
+            <button type="button" id="text-editor-handle" class="text-editor-handle" hidden
+              title="Drag to reposition the text before placing (U5: the re-positionable half of the text-tool fix)">::</button>
           </div>
 
           <!-- NEST CONSOLE game mode (additive · Dan-direct 070226): DRW is the
@@ -750,9 +752,21 @@ const USIC_COLORS = [
   // ACTIVE layer, Shift+Enter adds a line, Escape cancels, clicking away
   // places it. Same 8-line/80-char bounds and per-layer undo as before.
   let textAt = null; // canvas-space anchor while the editor is open
+  const textHandle = document.getElementById('text-editor-handle');
+  let draggingText = null; // pointer-drag state for the reposition handle (U5)
 
   function canvasFontSize() {
     return Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+  }
+
+  // Position the editor + its move-handle at a canvas-space anchor (U5).
+  function placeTextEditorAt(x, y) {
+    const rect = view.getBoundingClientRect();
+    const scale = rect.width / W;
+    textEditor.style.left = `${view.offsetLeft + x * scale}px`;
+    textEditor.style.top = `${view.offsetTop + y * scale}px`;
+    textHandle.style.left = `${view.offsetLeft + x * scale}px`;
+    textHandle.style.top = `${view.offsetTop + y * scale - 20}px`;
   }
 
   function openTextEditor(x, y) {
@@ -767,20 +781,46 @@ const USIC_COLORS = [
     const fontPx = canvasFontSize() * scale;
     textEditor.hidden = false;
     textEditor.value = '';
-    textEditor.style.left = `${view.offsetLeft + x * scale}px`;
-    textEditor.style.top = `${view.offsetTop + y * scale}px`;
+    placeTextEditorAt(x, y);
     textEditor.style.font = `${fontPx}px "JetBrains Mono", Consolas, monospace`;
     textEditor.style.color = ink;
     textEditor.style.height = `${fontPx * 1.35}px`;
+    textHandle.hidden = false;
     textEditor.focus();
-    setStatus('TEXT: TYPE · ENTER PLACES · SHIFT+ENTER NEW LINE · ESC CANCELS');
+    setStatus('TEXT: TYPE · ENTER PLACES · SHIFT+ENTER NEW LINE · ESC CANCELS · DRAG :: MOVES');
   }
 
   function closeTextEditor() {
     textEditor.hidden = true;
     textEditor.value = '';
+    textHandle.hidden = true;
+    draggingText = null;
     textAt = null;
   }
+
+  // Reposition drag (U5): the handle moves the anchor; the text stays typed.
+  // The blur-commit contract is guarded so grabbing the handle never commits.
+  textHandle.addEventListener('pointerdown', (e) => {
+    if (!textAt) return;
+    e.preventDefault();
+    draggingText = { id: e.pointerId, startX: e.clientX, startY: e.clientY, ax: textAt.x, ay: textAt.y };
+    textHandle.setPointerCapture(e.pointerId);
+  });
+  textHandle.addEventListener('pointermove', (e) => {
+    if (!draggingText || e.pointerId !== draggingText.id || !textAt) return;
+    const rect = view.getBoundingClientRect();
+    const k = W / rect.width;
+    textAt.x = Math.min(W - 10, Math.max(0, draggingText.ax + (e.clientX - draggingText.startX) * k));
+    textAt.y = Math.min(H - 10, Math.max(0, draggingText.ay + (e.clientY - draggingText.startY) * k));
+    placeTextEditorAt(textAt.x, textAt.y);
+  });
+  const endTextDrag = () => {
+    if (!draggingText) return;
+    draggingText = null;
+    if (!textEditor.hidden) textEditor.focus();
+  };
+  textHandle.addEventListener('pointerup', endTextDrag);
+  textHandle.addEventListener('pointercancel', endTextDrag);
 
   function commitText() {
     const layer = activeLayer();
@@ -811,7 +851,7 @@ const USIC_COLORS = [
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitText(); }
     if (e.key === 'Escape') { e.preventDefault(); closeTextEditor(); setStatus('TEXT CANCELLED'); }
   });
-  textEditor.addEventListener('blur', () => { if (!textEditor.hidden) commitText(); });
+  textEditor.addEventListener('blur', () => { if (!textEditor.hidden && !draggingText) commitText(); });
   textEditor.addEventListener('input', () => {
     // Auto-grow with the typed lines so the preview stays visible.
     const rect = view.getBoundingClientRect();
@@ -1895,6 +1935,20 @@ const USIC_COLORS = [
     overflow: hidden;
     line-height: 1.15;
     white-space: pre;
+  }
+  .text-editor-handle {
+    /* U5: the text reposition handle rides just above the editor. */
+    position: absolute;
+    z-index: 6;
+    width: 34px;
+    height: 18px;
+    border: 1px dashed var(--olo);
+    background: var(--lb-panel);
+    color: var(--olo);
+    font: 400 0.7rem/1 var(--font-pix);
+    cursor: move;
+    touch-action: none;
+    padding: 0;
   }
   #draw-canvas {
     display: block;
