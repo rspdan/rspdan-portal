@@ -1,20 +1,24 @@
-# NESTNET — Bridge Search System
+# NESTNET · Bridge Search System
 # Architecture Report & Usage Guide
 # ◈ Trip (Opus) · 041226–041326 · STN2 at Nest Actual
 # Filed: RELAY/NESTNET_Phase1_Report_Trip_041226.md
 # Updated: Phase 2a-e complete 041326
+# [REDACTION NOTE 070226: the literal NEST_API_KEY value that originally appeared in this
+#  archived document has been replaced with <NEST_API_KEY>, and em-dashes normalized to
+#  middots per Hard Rule 1. The document is otherwise verbatim. The key lives in the
+#  env-var credential store.]
 
 ---
 
 ## WHAT IT IS
 
 NESTNET Phase 1 is a full-text search API for the NEST Bridge repository,
-accessible from any station, any session, any crew member — anywhere
+accessible from any station, any session, any crew member · anywhere
 rspdan.com is reachable.
 
 The problem it solves: Bridge is the source of truth, but it was only
 searchable when Desktop Commander was connected to STN2. From ACHE, ODT,
-TRP0 without DC — Bridge was invisible. The filing-finding gap from
+TRP0 without DC · Bridge was invisible. The filing-finding gap from
 NA 014: correctly filed information requiring hours to locate.
 
 NESTNET makes Bridge findable from everywhere.
@@ -35,21 +39,21 @@ The indexer reads all .md files from Bridge, extracts searchable metadata,
 and writes a JSON index to the Portal repo for deployment.
 
 **What it indexes:**
-- LOG/MAIL/ — session logs, crew communications
-- RELAY/ — canonical filings, standard rules
-- WAKE/ — session summaries
-- ENGINE/skills/ — all skill files
-- STATUS/ — living maps
-- FLEET/ — fleet inventory
+- LOG/MAIL/ · session logs, crew communications
+- RELAY/ · canonical filings, standard rules
+- WAKE/ · session summaries
+- ENGINE/skills/ · all skill files
+- STATUS/ · living maps
+- FLEET/ · fleet inventory
 - Root-level .md files
 
 **What it extracts per document:**
-- `id` — sequential integer
-- `path` — file path relative to Bridge root
-- `title` — first # heading, or filename
-- `preview` — first meaningful paragraph (200 chars max)
-- `keywords` — up to 150 unique meaningful words, stop words removed
-- `size` — content length in bytes
+- `id` · sequential integer
+- `path` · file path relative to Bridge root
+- `title` · first # heading, or filename
+- `preview` · first meaningful paragraph (200 chars max)
+- `keywords` · up to 150 unique meaningful words, stop words removed
+- `size` · content length in bytes
 
 **What it does NOT include:**
 - Full file content (security: Bridge is private, Portal is public)
@@ -80,8 +84,8 @@ GET https://www.rspdan.com/api/search?q=QUERY&key=NEST_API_KEY
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| q | Yes | — | Search query (natural language or keywords) |
-| key | Yes | — | NEST API key (same as relay) |
+| q | Yes | · | Search query (natural language or keywords) |
+| key | Yes | · | NEST API key (same as relay) |
 | limit | No | 10 | Max results to return |
 | mode | No | hybrid | hybrid (keyword+semantic), keyword, or semantic |
 
@@ -89,17 +93,17 @@ GET https://www.rspdan.com/api/search?q=QUERY&key=NEST_API_KEY
 
 Search for the VIS quote:
 ```
-/api/search?q=stan+VIS+archivist&key=9e6e3ae0628e240eb1cdd9fea17bd402
+/api/search?q=stan+VIS+archivist&key=<NEST_API_KEY>
 ```
 
 Search for a specific skill:
 ```
-/api/search?q=waywood+lore+geography&key=9e6e3ae0628e240eb1cdd9fea17bd402
+/api/search?q=waywood+lore+geography&key=<NEST_API_KEY>
 ```
 
 Search for session mail:
 ```
-/api/search?q=session+close+041226&key=9e6e3ae0628e240eb1cdd9fea17bd402
+/api/search?q=session+close+041226&key=<NEST_API_KEY>
 ```
 
 ### Response format
@@ -160,7 +164,7 @@ The index auto-deploys with the Portal. No server restart needed.
 - After filing new MAIL or RELAY documents
 - After creating or updating skills
 - After significant Bridge changes
-- NOT needed for every minor commit — rebuild when the corpus changes meaningfully
+- NOT needed for every minor commit · rebuild when the corpus changes meaningfully
 
 ---
 
@@ -176,19 +180,19 @@ The index auto-deploys with the Portal. No server restart needed.
 
 ## WHAT'S LIVE (as of 041326)
 
-### Phase 1 — Keyword search (LIVE)
+### Phase 1 · Keyword search (LIVE)
 Full-text search across 645 Bridge + Portal documents.
 Scored ranking: title 3x, path 2x, keywords 1x.
 
-### Phase 2a — Auto-rebuild (LIVE)
+### Phase 2a · Auto-rebuild (LIVE)
 Index rebuilds at every session close (step 5/6 in session_close.ps1).
 Run manually: `python ENGINE/nestnet_indexer.py` then push the index.
 
-### Phase 2b — Portal content (LIVE)
+### Phase 2b · Portal content (LIVE)
 NA journal issues, research page, Usic page, and PI indexed.
 645 documents total (624 Bridge + 21 Portal).
 
-### Phase 2c — Semantic search (LIVE)
+### Phase 2c · Semantic search (LIVE)
 Upstash Vector index: `nestnet` on GCP us-central1.
 Model: bge-small-en-v1.5 (384 dimensions, COSINE similarity).
 645 documents embedded. Queries by meaning, not just words.
@@ -197,10 +201,10 @@ Model: bge-small-en-v1.5 (384 dimensions, COSINE similarity).
 
 Env vars on Vercel: UPSTASH_VECTOR_REST_URL, UPSTASH_VECTOR_REST_TOKEN.
 
-### Phase 2d — Unified multi-source (FUTURE)
+### Phase 2d · Unified multi-source (FUTURE)
 Single query across Bridge + Gmail + Drive + relay + conversations.
 
-### Phase 2e — MCP server tool (LIVE)
+### Phase 2e · MCP server tool (LIVE)
 nest-proxy v1.1.0 includes `nestnet_search` tool.
 Crew calls it natively from any session: nestnet_search("VIS quote").
 Takes effect on next proxy restart (next session boot).
@@ -235,7 +239,7 @@ Dan's mechanical description: "Imagine a Rubik's cube and a lock, but
 world-sized. Frame rotates, data stays. The query is a rotation, the
 answer is the click."
 
-Rhodes' Remembrance Agent (MIT, 1996) is the formal prior — a system
+Rhodes' Remembrance Agent (MIT, 1996) is the formal prior · a system
 that continuously suggests relevant documents based on current context.
 NESTNET Phase 1 is the manual query version. Phase 2+ moves toward
 the continuous suggestion model.

@@ -1,8 +1,12 @@
-# NESTNET — Crew Operations Guide
+# NESTNET · Crew Operations Guide
 # How to search everything the NEST has ever filed
 # ◈ Trip (Opus) · 041326 · STN2 at Nest Actual
-# For: All crew — Stan, Trip, C.B.
+# For: All crew · Stan, Trip, C.B.
 # Filed: RELAY/NESTNET_CrewGuide_Trip_041326.md
+# [REDACTION NOTE 070226: the literal NEST_API_KEY value that originally appeared in this
+#  archived document has been replaced with <NEST_API_KEY>, and em-dashes normalized to
+#  middots per Hard Rule 1. The document is otherwise verbatim. The key lives in the
+#  env-var credential store.]
 
 ---
 
@@ -11,7 +15,7 @@
 NESTNET is Bridge search from anywhere.
 
 Before NESTNET, finding a filed document required Desktop Commander
-connected to STN2. From ACHE, from ODT, from TRP0 without DC — Bridge
+connected to STN2. From ACHE, from ODT, from TRP0 without DC · Bridge
 was invisible. Trip spent hours hunting for the VIS quote that was
 correctly filed to Bridge. Dan found it in VSCode in two seconds.
 
@@ -25,12 +29,12 @@ was broken. NESTNET is the fix.
 645 documents across two repositories:
 
 **Bridge (624 docs):**
-- LOG/MAIL/ — session logs, crew communications, shift closes
-- RELAY/ — canonical filings, standard rules, discoveries, lore
-- WAKE/ — session summaries for cold-booting crew
-- ENGINE/skills/ — all skill files
-- STATUS/ — living maps
-- FLEET/ — inventory, topology
+- LOG/MAIL/ · session logs, crew communications, shift closes
+- RELAY/ · canonical filings, standard rules, discoveries, lore
+- WAKE/ · session summaries for cold-booting crew
+- ENGINE/skills/ · all skill files
+- STATUS/ · living maps
+- FLEET/ · inventory, topology
 - Root .md files
 
 **Portal (21 docs):**
@@ -44,7 +48,7 @@ was broken. NESTNET is the fix.
 ### From any session (web_fetch or browser)
 
 ```
-https://www.rspdan.com/api/search?q=YOUR+QUERY&key=9e6e3ae0628e240eb1cdd9fea17bd402
+https://www.rspdan.com/api/search?q=YOUR+QUERY&key=<NEST_API_KEY>
 ```
 
 That's it. Replace YOUR+QUERY with what you're looking for.
@@ -60,14 +64,14 @@ after 041326. Same results, no URL building needed.
 
 ### Search modes
 
-**hybrid** (default) — keyword matching AND meaning matching, merged.
+**hybrid** (default) · keyword matching AND meaning matching, merged.
 This is the right choice 90% of the time. Don't change it unless
 you have a reason.
 
-**keyword** — exact word matching only. Use when you know the exact
+**keyword** · exact word matching only. Use when you know the exact
 filename or a specific phrase that appears in the document.
 
-**semantic** — meaning matching only. Use when you're searching by
+**semantic** · meaning matching only. Use when you're searching by
 concept rather than words. "How does the system survive when nobody
 is working" will find NA 016 even though those words don't appear
 in it.
@@ -84,11 +88,11 @@ Default: 10 results. Add `&limit=5` for fewer, `&limit=20` for more.
 ## WHAT THE RESULTS LOOK LIKE
 
 Each result returns:
-- **path** — where the document lives (e.g. `RELAY/STAN_IS_VIS_Dan_031926.md`)
-- **title** — the document's heading
-- **preview** — first meaningful line
-- **score** — relevance score (higher = better match)
-- **source** — `keyword` or `semantic` (in hybrid mode)
+- **path** · where the document lives (e.g. `RELAY/STAN_IS_VIS_Dan_031926.md`)
+- **title** · the document's heading
+- **preview** · first meaningful line
+- **score** · relevance score (higher = better match)
+- **source** · `keyword` or `semantic` (in hybrid mode)
 
 The results tell you WHICH document has the answer. To read the full
 document, use `nest_read` (if nest-proxy is connected), `web_fetch`
@@ -123,11 +127,11 @@ Search first. The tool you need might already exist.
 
 ## WHEN NOT TO USE IT
 
-- Don't use it for Gmail or Google Drive — those have their own
+- Don't use it for Gmail or Google Drive · those have their own
   search tools (gmail_search_messages, google_drive_search).
-- Don't use it for conversation history — use conversation_search.
-- Don't use it for live relay messages — use relay_receive.
-- Don't use it for the system clock — use Gate 0.
+- Don't use it for conversation history · use conversation_search.
+- Don't use it for live relay messages · use relay_receive.
+- Don't use it for the system clock · use Gate 0.
 
 NESTNET searches filed documents. For live state, use the live tools.
 
@@ -141,7 +145,7 @@ to Bridge or publishes new NAs, the index catches them at close.
 
 The semantic embeddings (vector search) need a separate upload when
 the corpus changes significantly. The upload script is at
-ENGINE/nestnet_vector_upload.py. This is a manual step — run it
+ENGINE/nestnet_vector_upload.py. This is a manual step · run it
 when a batch of new documents has been filed, not after every commit.
 
 ---
@@ -150,13 +154,13 @@ when a batch of new documents has been filed, not after every commit.
 
 Two layers:
 
-**Layer 1 — Keyword index** (static JSON file on Portal)
+**Layer 1 · Keyword index** (static JSON file on Portal)
 ENGINE/nestnet_indexer.py reads all .md files, extracts titles,
-previews, and keywords (no full content — security), writes a
+previews, and keywords (no full content · security), writes a
 JSON index to Portal. Vercel serves it. The search API reads it
 and scores matches by title (3x), path (2x), keywords (1x).
 
-**Layer 2 — Semantic index** (Upstash Vector, free tier)
+**Layer 2 · Semantic index** (Upstash Vector, free tier)
 Each document's text is embedded as a 384-dimension vector using
 bge-small-en-v1.5. Queries are embedded the same way. Cosine
 similarity finds documents that MEAN the same thing as the query,
@@ -177,7 +181,7 @@ Dan's description of what NESTNET should be:
 "Imagine a Rubik's cube and a lock, but world-sized. Frame rotates,
 data stays. The query is a rotation, the answer is the click."
 
-Rhodes' Remembrance Agent (MIT, 1996) is the formal prior — a system
+Rhodes' Remembrance Agent (MIT, 1996) is the formal prior · a system
 that continuously suggests relevant documents based on context.
 
 The VIS quote that started it all:
@@ -210,7 +214,7 @@ The query is a rotation. The answer is the click.
 
 ---
 
-## TRACKING — NEARGULL FLAG
+## TRACKING · NEARGULL FLAG
 
 **NEARGULL: NESTNET_ADOPTION_REVIEW**
 Review after 5 sessions of active use. Questions to answer:

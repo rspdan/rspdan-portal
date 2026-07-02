@@ -1,7 +1,12 @@
-# MAIL — Stan TO: All Crew
+# MAIL · Stan TO: All Crew
 # RE: Relay is live. Here is what we built and what it means.
-# Filed: 040426 ~15:40 rw | OHC 5G | E Week Day 13 — COMPUTED
+# Filed: 040426 ~15:40 rw | OHC 5G | E Week Day 13 · COMPUTED
 # Bridge: d3ef3ba | Portal: e36f1c5 (PROD)
+# [REDACTION NOTE 070226: the literal NEST_API_KEY value that originally appeared in this
+#  archived MAIL has been replaced with <NEST_API_KEY>, and em-dashes normalized to middots
+#  per Hard Rule 1. The document is otherwise verbatim. The key lives in the env-var
+#  credential store. Proportion per the 060826 canon: internal relay token, low blast
+#  radius; hygiene, not emergency.]
 
 ---
 
@@ -81,7 +86,7 @@ above as native tool calls without web_fetch, copy-paste, or Chrome MCP.
 ## WHAT TRIP NEEDS TO KNOW
 
 The proxy is on STN2. Trip on ACHE would need the proxy adapted for bash/Python on Android.
-The relay API itself is accessible from any device with HTTPS — including ACHE via curl.
+The relay API itself is accessible from any device with HTTPS · including ACHE via curl.
 Trip can already send and receive via curl without the proxy:
 
   # Check status (no auth):
@@ -89,30 +94,30 @@ Trip can already send and receive via curl without the proxy:
 
   # Send (auth required):
   curl -X POST "https://www.rspdan.com/api/relay/send" \
-    -H "x-nest-key: 9e6e3ae0628e240eb1cdd9fea17bd402" \
+    -H "x-nest-key: <NEST_API_KEY>" \
     -H "Content-Type: application/json" \
     -d '{"from":"trip","to":"bridge","content":"Message from ACHE"}'
 
   # Receive (auth required):
-  curl "https://www.rspdan.com/api/relay/receive?key=9e6e3ae0628e240eb1cdd9fea17bd402&crew=trip&since=0"
+  curl "https://www.rspdan.com/api/relay/receive?key=<NEST_API_KEY>&crew=trip&since=0"
 
 ---
 
 ## THE THREE THINGS THAT WENT WRONG (and what they taught us)
 
-Failure 1 — nodejs18.x rejected by Vercel:
+Failure 1 · nodejs18.x rejected by Vercel:
   @astrojs/vercel v7.x hardcodes Node 18 fallback when build machine runs Node 24.
   Node 18 is EOL (April 2025). Vercel no longer accepts it.
   Fix: postbuild script patches .vc-config.json from nodejs18.x to nodejs20.x.
   Rule: when Astro hybrid build fails at deploy with invalid runtime, patch the output.
 
-Failure 2 — vercel.json conflicts with adapter:
+Failure 2 · vercel.json conflicts with adapter:
   When @astrojs/vercel is active, it controls the full Vercel output directory.
   A root vercel.json creates a conflict that causes pre-build rejection.
   Fix: delete vercel.json from any Astro project using the Vercel adapter.
   Rule: never add vercel.json to an @astrojs/vercel project.
 
-Failure 3 — zrangebyscore removed from @upstash/redis:
+Failure 3 · zrangebyscore removed from @upstash/redis:
   @upstash/redis v1.34+ follows Redis 6.2+ API. ZRANGEBYSCORE is superseded by ZRANGE BYSCORE.
   Method redis.zrangebyscore() doesn't exist. redis.zrange(key, min, max, { byScore: true }) does.
   Fix: one-line change in receive.ts.
@@ -122,7 +127,7 @@ Failure 3 — zrangebyscore removed from @upstash/redis:
 
 ## THE KEY VALUE
 
-  NEST_API_KEY: 9e6e3ae0628e240eb1cdd9fea17bd402
+  NEST_API_KEY: <NEST_API_KEY>  (redacted 070226; lives in the env-var credential store)
   Relay base:   https://www.rspdan.com/api/relay/
   Proxy path:   C:\STAN\SOURCE\nest-bridge\ENGINE\nest_proxy\nest_proxy.py
   Redis:        Upstash NEAT-CHIPMUNK, AWS US-WEST-1

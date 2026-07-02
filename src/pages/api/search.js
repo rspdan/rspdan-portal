@@ -13,6 +13,9 @@ export const prerender = false;
 
 const VECTOR_URL = import.meta.env.UPSTASH_VECTOR_REST_URL || process.env.UPSTASH_VECTOR_REST_URL || '';
 const VECTOR_TOKEN = import.meta.env.UPSTASH_VECTOR_REST_TOKEN || process.env.UPSTASH_VECTOR_REST_TOKEN || '';
+// Auth gate key. Lives in the env-var credential store (Vercel), never in source.
+// Fails closed: if the env var is unset, every request 401s.
+const SEARCH_KEY = import.meta.env.NEST_API_KEY || process.env.NEST_API_KEY || '';
 
 async function keywordSearch(terms, index, limit) {
   const results = [];
@@ -127,7 +130,7 @@ export async function GET({ request }) {
   const mode = url.searchParams.get('mode') || 'hybrid';
   const key = url.searchParams.get('key');
   
-  if (key !== '9e6e3ae0628e240eb1cdd9fea17bd402') {
+  if (!SEARCH_KEY || key !== SEARCH_KEY) {
     return new Response(JSON.stringify({ error: 'unauthorized' }), {
       status: 401, headers: { 'Content-Type': 'application/json' }
     });
