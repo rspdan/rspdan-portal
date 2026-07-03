@@ -25,6 +25,9 @@
 //   draft (.drw.json; current work is backed up first, nothing gets lost).
 //   EXPORT DRAFT writes the file L&L can open back. Unknown types get an
 //   honest status line; the handler registry extends.
+// - Pass-3 (070326, the July-ready feedback loop): FILL (flood fill, F) +
+//   PICK (eyedropper, I) complete the working tool set; the save status now
+//   says honestly whether the layered scene persisted alongside the PNG.
 export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -64,7 +67,7 @@ const USIC_COLORS = [
   { key: '·',  name: 'White',        hex: '#FFFFFF' },
 ];
 ---
-<BaseLayout lastUpdated="July 2, 2026" title="DRW">
+<BaseLayout lastUpdated="July 3, 2026" title="DRW">
   <!-- LITE BRITE kit fonts (the kit's exact Google Fonts import): VT323 CRT
        terminal + Silkscreen pixel labels. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -136,6 +139,8 @@ const USIC_COLORS = [
             <button type="button" class="tool is-active" data-tool="pen">PEN</button>
             <button type="button" class="tool" data-tool="erase">ERASE</button>
             <button type="button" class="tool" data-tool="text">TEXT</button>
+            <button type="button" class="tool" data-tool="fill" title="Flood-fill the region you click on the ACTIVE layer with the primary ink (undoable). Keyboard: F">FILL</button>
+            <button type="button" class="tool" data-tool="pick" title="Eyedropper: click the board to read that pixel's color into the selected ink well. Keyboard: I">PICK</button>
             <button type="button" class="tool" data-tool="transform" title="Move / scale / rotate the active layer. Drag moves; the bar scales and rotates; APPLY commits (undoable), CANCEL discards">TRANS</button>
             <button type="button" id="undo-btn" class="tool">UNDO</button>
             <button type="button" id="redo-btn" class="tool">REDO</button>
@@ -777,13 +782,115 @@ const USIC_COLORS = [
     };
   }
 
+  // ---- PICK (eyedropper, Pass-3 W1) ---------------------------------------
+  // The read-half of the U2 ink-well pair: click the board, the COMPOSITED
+  // pixel (what the operator sees, transform previews included) lands in the
+  // selected well through the same setWellColor path the swatches use. Reads
+  // only; no history entry.
+  function pickColorAt(x, y) {
+    composite();
+    const px = Math.max(0, Math.min(W - 1, Math.round(x)));
+    const py = Math.max(0, Math.min(H - 1, Math.round(y)));
+    let d;
+    try {
+      d = vctx.getImageData(px, py, 1, 1).data;
+    } catch (err) {
+      // Same-origin by construction today (L&L images arrive as data URLs);
+      // if a tainted canvas ever appears the tool fails honestly.
+      setStatus('PICK FAILED (CANVAS TAINTED)');
+      return;
+    }
+    if (d[3] === 0) {
+      setStatus('PICK: EMPTY PIXEL');
+      return;
+    }
+    const hex = '#' + [d[0], d[1], d[2]].map((v) => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+    setWellColor(hex, `PICKED ${hex}`);
+  }
+
+  // ---- FILL (flood fill, Pass-3 W2) ---------------------------------------
+  // Fills the clicked region of the ACTIVE layer with the primary ink.
+  // Region detection runs on the active layer's OWN pixels (editor
+  // convention; other layers do not fence the fill). Per-channel tolerance
+  // lets anti-aliased stroke edges fill clean instead of leaving halos.
+  // Undoable via the normal pixels-history snapshot, taken only when the
+  // fill will actually change something (no junk history entries).
+  const FILL_TOLERANCE = 40;
+
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  function fillAt(layer, x, y) {
+    const px = Math.max(0, Math.min(W - 1, Math.round(x)));
+    const py = Math.max(0, Math.min(H - 1, Math.round(y)));
+    const imageData = layer.ctx.getImageData(0, 0, W, H);
+    const data = imageData.data;
+    const seed = (py * W + px) * 4;
+    const target = [data[seed], data[seed + 1], data[seed + 2], data[seed + 3]];
+    const fill = hexToRgb(ink);
+    if (target[3] === 255 && target[0] === fill[0] && target[1] === fill[1] && target[2] === fill[2]) {
+      setStatus('FILL: NO CHANGE (ALREADY THAT INK)');
+      return;
+    }
+    const match = (i) =>
+      Math.abs(data[i] - target[0]) <= FILL_TOLERANCE &&
+      Math.abs(data[i + 1] - target[1]) <= FILL_TOLERANCE &&
+      Math.abs(data[i + 2] - target[2]) <= FILL_TOLERANCE &&
+      Math.abs(data[i + 3] - target[3]) <= FILL_TOLERANCE;
+    snapshotBefore(layer); // pre-fill pixels; UNDO restores them
+    const visited = new Uint8Array(W * H);
+    const stack = [py * W + px];
+    visited[py * W + px] = 1;
+    let filled = 0;
+    while (stack.length) {
+      const p = stack.pop();
+      const i = p * 4;
+      if (!match(i)) continue;
+      data[i] = fill[0];
+      data[i + 1] = fill[1];
+      data[i + 2] = fill[2];
+      data[i + 3] = 255;
+      filled++;
+      const cx = p % W;
+      if (cx > 0 && !visited[p - 1]) { visited[p - 1] = 1; stack.push(p - 1); }
+      if (cx < W - 1 && !visited[p + 1]) { visited[p + 1] = 1; stack.push(p + 1); }
+      if (p >= W && !visited[p - W]) { visited[p - W] = 1; stack.push(p - W); }
+      if (p < W * (H - 1) && !visited[p + W]) { visited[p + W] = 1; stack.push(p + W); }
+    }
+    if (!filled) {
+      // The seed itself failed the match (cannot happen: target matches
+      // itself), kept as a guard; drop the snapshot we did not use.
+      history.pop();
+      setStatus('FILL: NO CHANGE');
+      return;
+    }
+    layer.ctx.putImageData(imageData, 0, 0);
+    composite();
+    saveDraft();
+    setStatus(`FILLED ${filled} PX ON ${displayName(layer)} WITH ${ink}`);
+  }
+
   function begin(event) {
+    if (tool === 'pick') {
+      // PICK reads the composite; it does not need a visible active layer.
+      event.preventDefault();
+      const pp = pointerPos(event);
+      pickColorAt(pp.x, pp.y);
+      return;
+    }
     const layer = activeLayer();
     if (!layer || !layer.visible) {
       setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
       return;
     }
     event.preventDefault();
+    if (tool === 'fill') {
+      const fp = pointerPos(event);
+      fillAt(layer, fp.x, fp.y);
+      return;
+    }
     if (tool === 'text') {
       const tp = pointerPos(event);
       openTextEditor(tp.x, tp.y);
@@ -1151,7 +1258,15 @@ const USIC_COLORS = [
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
       captionInput.value = '';
       await loadDrawings();
-      setStatus(`SAVED ${data.drawing.id}`);
+      // Pass-3 W3: the server never fails a save just because the layered
+      // scene could not be stored (no blob token / scene too large / blob
+      // error -> sceneUrl null). That is the right call for the PNG, but the
+      // operator must not be left believing the EDITABLE scene persisted
+      // when it did not (nothing gets lost includes knowing when it would).
+      const sceneStored = Boolean(data.drawing && data.drawing.sceneUrl);
+      setStatus(sceneStored
+        ? `SAVED ${data.drawing.id} · SCENE + PNG STORED`
+        : `SAVED ${data.drawing.id} · FLAT PNG ONLY (LAYERED SCENE NOT STORED · FILE > EXPORT DRAFT KEEPS THE EDITABLE COPY)`);
     } catch (err) {
       setStatus(`SAVE ERROR: ${err.message}`);
     } finally {
@@ -1446,6 +1561,8 @@ const USIC_COLORS = [
       case 'p': selectTool('pen'); break;
       case 'e': selectTool('erase'); break;
       case 't': selectTool('text'); break;
+      case 'f': selectTool('fill'); break;
+      case 'i': selectTool('pick'); break;
       case 'm': selectTool('transform'); break;
       case 'x': swapInks(); break;
       case '[':
