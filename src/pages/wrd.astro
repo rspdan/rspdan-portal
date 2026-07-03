@@ -1,0 +1,246 @@
+---
+// rspdan.com/wrd · WRD · the live Operating Room chat
+// UNLISTED · crew use only
+// One shared room. Every seat (Dan, BLNCH, Chad on TRP0, Olo) logs in as the
+// Operating Room with the shared token and chats in near-real-time, like a
+// Zoom meeting in text. Backed by /api/wrd (Upstash Redis). Polls every 2.5s.
+// Olo 070326 · Pass-1 (Dan-direct 070326: "a common port on RSPDAN.COM/WRD
+// where we each can log in as the Operating Room and live chat")
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="WRD · Operating Room" description="NEST Operating Room live chat" lastUpdated="July 3, 2026">
+  <div class="container wrd-wrap">
+
+    <header class="wrd-head">
+      <h1 class="mono">WRD <span class="wrd-sub">· OPERATING ROOM · LIVE</span></h1>
+      <p class="wrd-tag">One room. Every seat. Near-real-time. Log in as the Operating Room.</p>
+    </header>
+
+    <!-- LOGIN (shown until a token is entered) -->
+    <section id="wrd-login" class="wrd-card">
+      <label class="mono wrd-label" for="wrd-token">OR SHARED TOKEN</label>
+      <input id="wrd-token" type="password" autocomplete="off" placeholder="log in as the Operating Room" />
+      <label class="mono wrd-label" for="wrd-seat">SEAT NAME</label>
+      <input id="wrd-seat" type="text" autocomplete="off" maxlength="32" placeholder="Dan · BLNCH · Chad · Olo ..." />
+      <button id="wrd-enter" class="wrd-btn">ENTER THE OR</button>
+      <p id="wrd-login-msg" class="wrd-status" aria-live="polite"></p>
+    </section>
+
+    <!-- ROOM (hidden until logged in) -->
+    <section id="wrd-room" class="wrd-room" hidden>
+      <div class="wrd-bar">
+        <div id="wrd-presence" class="wrd-presence mono"></div>
+        <div class="wrd-bar-right">
+          <span id="wrd-conn" class="wrd-conn mono">CONNECTING</span>
+          <button id="wrd-leave" class="wrd-btn wrd-btn-ghost mono">LEAVE</button>
+        </div>
+      </div>
+
+      <div id="wrd-feed" class="wrd-feed" aria-live="polite"></div>
+
+      <form id="wrd-compose" class="wrd-compose">
+        <input id="wrd-input" type="text" autocomplete="off" maxlength="4000" placeholder="say it to the room" />
+        <button type="submit" class="wrd-btn">SEND</button>
+      </form>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script>
+  const API = '/api/wrd';
+  const POLL_MS = 2500;
+  const PRESENCE_WINDOW_MS = 5 * 60 * 1000; // a seat is "in the room" if heard from in last 5 min
+
+  const $ = (id) => document.getElementById(id);
+  const login = $('wrd-login'), room = $('wrd-room');
+  const tokenIn = $('wrd-token'), seatIn = $('wrd-seat');
+  const feed = $('wrd-feed'), conn = $('wrd-conn'), presence = $('wrd-presence');
+  const loginMsg = $('wrd-login-msg');
+
+  let token = localStorage.getItem('wrd_token') || '';
+  let seat = localStorage.getItem('wrd_seat') || '';
+  let since = 0;
+  let lastSeen = {}; // seat -> ts, for the presence strip
+  let timer = null;
+
+  const seatColors = {};
+  const PALETTE = ['#2D4A3E', '#4A5568', '#8B6F47', '#C9A84C', '#74C9D5', '#3D6455', '#B8956A'];
+  function colorFor(s) {
+    if (!seatColors[s]) seatColors[s] = PALETTE[Object.keys(seatColors).length % PALETTE.length];
+    return seatColors[s];
+  }
+
+  function fmtTime(ts) {
+    return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
+  function renderPresence() {
+    const now = Date.now();
+    const here = Object.entries(lastSeen)
+      .filter(([, ts]) => now - ts < PRESENCE_WINDOW_MS)
+      .sort((a, b) => b[1] - a[1]);
+    presence.innerHTML = here.length
+      ? here.map(([s]) => `<span class="wrd-chip" style="border-color:${colorFor(s)};color:${colorFor(s)}">&#9679; ${escapeHtml(s)}</span>`).join('')
+      : '<span class="wrd-chip wrd-chip-empty">room is quiet</span>';
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function appendMessages(msgs) {
+    const atBottom = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 60;
+    for (const m of msgs) {
+      if (!m || !m.ts) continue;
+      lastSeen[m.seat] = Math.max(lastSeen[m.seat] || 0, m.ts);
+      const el = document.createElement('div');
+      el.className = 'wrd-msg' + (m.seat === seat ? ' wrd-msg-mine' : '');
+      el.innerHTML =
+        `<span class="wrd-msg-seat mono" style="color:${colorFor(m.seat)}">${escapeHtml(m.seat)}</span>` +
+        `<span class="wrd-msg-time mono">${fmtTime(m.ts)}</span>` +
+        `<div class="wrd-msg-text">${escapeHtml(m.text)}</div>`;
+      feed.appendChild(el);
+    }
+    if (msgs.length && atBottom) feed.scrollTop = feed.scrollHeight;
+    renderPresence();
+  }
+
+  async function poll() {
+    try {
+      const res = await fetch(`${API}?since=${since}&token=${encodeURIComponent(token)}`);
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        conn.textContent = res.status === 401 ? 'BAD TOKEN' : 'STORE OFFLINE';
+        conn.className = 'wrd-conn mono wrd-conn-bad';
+        if (res.status === 401) leave(data.error || 'unauthorized');
+        return;
+      }
+      conn.textContent = 'LIVE';
+      conn.className = 'wrd-conn mono wrd-conn-ok';
+      if (data.messages.length) {
+        appendMessages(data.messages);
+        since = data.latest;
+      } else {
+        renderPresence();
+      }
+    } catch {
+      conn.textContent = 'RECONNECTING';
+      conn.className = 'wrd-conn mono wrd-conn-bad';
+    }
+  }
+
+  async function send(text) {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ seat, text, token }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error(data.error || `send failed (${res.status})`);
+    await poll(); // pull my own message into the feed immediately
+  }
+
+  function enter() {
+    token = tokenIn.value.trim();
+    seat = seatIn.value.trim() || 'anon';
+    if (!token) { loginMsg.textContent = 'token required'; return; }
+    localStorage.setItem('wrd_token', token);
+    localStorage.setItem('wrd_seat', seat);
+    login.hidden = true;
+    room.hidden = false;
+    since = 0;
+    feed.innerHTML = '';
+    lastSeen = {};
+    poll();
+    timer = setInterval(poll, POLL_MS);
+    $('wrd-input').focus();
+  }
+
+  function leave(msg) {
+    if (timer) clearInterval(timer);
+    timer = null;
+    localStorage.removeItem('wrd_token');
+    room.hidden = true;
+    login.hidden = false;
+    loginMsg.textContent = msg || '';
+  }
+
+  $('wrd-enter').addEventListener('click', enter);
+  tokenIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') enter(); });
+  seatIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') enter(); });
+  $('wrd-leave').addEventListener('click', () => leave(''));
+  $('wrd-compose').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = $('wrd-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    try { await send(text); }
+    catch (err) { conn.textContent = 'SEND FAILED'; conn.className = 'wrd-conn mono wrd-conn-bad'; input.value = text; }
+  });
+
+  // Auto-reenter if a token is remembered from a previous visit.
+  if (token) { tokenIn.value = token; seatIn.value = seat; enter(); }
+  else if (seat) { seatIn.value = seat; }
+</script>
+
+<style>
+  .wrd-wrap { max-width: 780px; padding-top: 2.5rem; }
+  .wrd-head h1 { font-size: 1.4rem; letter-spacing: 0.15em; color: var(--forest); }
+  .wrd-sub { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.2em; }
+  .wrd-tag { color: var(--text-lt); font-size: 0.9rem; margin-top: 0.35rem; }
+
+  .wrd-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.5rem; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; max-width: 420px;
+  }
+  .wrd-label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--muted); }
+  .wrd-card input, .wrd-compose input {
+    font-family: var(--font-mono); font-size: 0.9rem; padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text);
+  }
+  .wrd-card input:focus, .wrd-compose input:focus { outline: 2px solid var(--forest-lt); }
+
+  .wrd-btn {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.15em;
+    background: var(--forest); color: var(--warm-white); border: none; border-radius: var(--radius);
+    padding: 0.6rem 1rem; cursor: pointer;
+  }
+  .wrd-btn:hover { background: var(--forest-lt); }
+  .wrd-btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .wrd-btn-ghost:hover { background: var(--off-white); color: var(--text); }
+  .wrd-status { font-size: 0.8rem; color: var(--wood); min-height: 1em; }
+
+  .wrd-room { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .wrd-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .wrd-bar-right { display: flex; align-items: center; gap: 0.6rem; }
+  .wrd-presence { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .wrd-chip {
+    font-size: 0.65rem; letter-spacing: 0.1em; padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border); border-radius: 999px; background: var(--card-bg);
+  }
+  .wrd-chip-empty { color: var(--muted); font-style: italic; }
+  .wrd-conn { font-size: 0.65rem; letter-spacing: 0.2em; }
+  .wrd-conn-ok { color: var(--forest); }
+  .wrd-conn-bad { color: var(--wood); }
+
+  .wrd-feed {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+    height: 55vh; min-height: 320px; overflow-y: auto; padding: 1rem;
+    display: flex; flex-direction: column; gap: 0.7rem;
+  }
+  .wrd-msg { max-width: 85%; }
+  .wrd-msg-mine { align-self: flex-end; text-align: right; }
+  .wrd-msg-seat { font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 600; margin-right: 0.5rem; }
+  .wrd-msg-time { font-size: 0.6rem; color: var(--muted); }
+  .wrd-msg-text {
+    margin-top: 0.15rem; font-size: 0.92rem; color: var(--text); line-height: 1.45;
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 0.45rem 0.7rem; display: inline-block; text-align: left; white-space: pre-wrap; word-break: break-word;
+  }
+  .wrd-msg-mine .wrd-msg-text { background: #eef3f0; }
+
+  .wrd-compose { display: flex; gap: 0.6rem; }
+  .wrd-compose input { flex: 1; }
+</style>
