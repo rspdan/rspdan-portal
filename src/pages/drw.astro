@@ -21,7 +21,8 @@
 // - Layers: rename affordance (double-click a layer name); the 0/1/2 +
 //   decimal-children identity model is untouched, a label rides along.
 // - L&L (Launch & Load): the LOAD GAME seed generalized. One entry opens a
-//   game cartridge, an image (lands on a new Color child layer), or a DRW
+//   game cartridge, an image (lands on a new Color child layer), a video
+//   (plays on the console screen; EJECT returns to DRW, no reload), or a DRW
 //   draft (.drw.json; current work is backed up first, nothing gets lost).
 //   EXPORT DRAFT writes the file L&L can open back. Unknown types get an
 //   honest status line; the handler registry extends.
@@ -88,7 +89,7 @@ const USIC_COLORS = [
         <span>EDIT</span>
         <span>VIEW</span>
         <span>ROOM</span>
-        <button type="button" id="lnl-btn" class="drw-menu-action drw-lnl" title="L&L · Launch & Load: open anything and it works. Opens a game cartridge (.gba/.gb/.gbc/.zip), an image (new layer), or a DRW draft (.drw.json)">L&amp;L</button>
+        <button type="button" id="lnl-btn" class="drw-menu-action drw-lnl" title="L&L · Launch & Load: open anything and it works. Opens a game cartridge (.gba/.gb/.gbc/.zip), an image (new layer), a video (.mp4/.webm/.mov), or a DRW draft (.drw.json)">L&amp;L</button>
         <button type="button" id="export-draft-btn" class="drw-menu-action" title="Save the current working draft as a .drw.json file. L&L opens it back; nothing gets lost">EXPORT DRAFT</button>
         <button type="button" id="eject-game-btn" class="drw-menu-action" hidden title="Eject the cartridge and return to DRW">EJECT</button>
         <span class="drw-user">OPERATOR: {session.user}</span>
@@ -145,6 +146,22 @@ const USIC_COLORS = [
               </div>
             </div>
             <div id="ejs-mount-wrap"><div id="ejs-mount"></div></div>
+          </div>
+          <!-- NEST CONSOLE video mode (additive · registry extension 070326):
+               L&L opens a video the same way it opens a cartridge; the video
+               plays on the console screen. Hidden until a video is loaded;
+               DRW markup/state stays intact. EJECT returns to DRW without a
+               reload (nothing is lost; the working draft never left). -->
+          <div class="video-frame" id="video-frame" hidden aria-label="Video player">
+            <div class="video-reel">
+              <div class="panel-title">VIDEO</div>
+              <div id="video-name" class="cartridge-name">NO VIDEO</div>
+              <div class="cartridge-note">
+                The video plays in this browser only; nothing is uploaded.
+                EJECT returns to DRW; the working draft is untouched.
+              </div>
+            </div>
+            <video id="video-player" controls playsinline preload="metadata"></video>
           </div>
           <!-- L&L (Launch & Load) takes ANY file; the dispatch below routes it
                to the handler that knows it (game / image / draft) and says so
@@ -959,6 +976,9 @@ const USIC_COLORS = [
   const EJS_CDN = 'https://cdn.emulatorjs.org/stable/data/';
 
   const gameFrame = document.getElementById('game-frame');
+  const videoFrame = document.getElementById('video-frame');
+  const videoPlayer = document.getElementById('video-player');
+  const videoName = document.getElementById('video-name');
   const lnlBtn = document.getElementById('lnl-btn');
   const ejectGameBtn = document.getElementById('eject-game-btn');
   const lnlInput = document.getElementById('lnl-input');
@@ -985,6 +1005,7 @@ const USIC_COLORS = [
   // status line naming what opens today, never a silent no-op.
   const GAME_EXTS = ['gba', 'gb', 'gbc', 'zip'];
   const IMAGE_EXTS = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg'];
+  const VIDEO_EXTS = ['mp4', 'webm', 'mov', 'm4v', 'ogv'];
 
   lnlBtn.addEventListener('click', () => {
     if (consolePowered) {
@@ -1006,11 +1027,55 @@ const USIC_COLORS = [
 
   function openAnything(file) {
     const ext = (file.name.toLowerCase().split('.').pop() || '');
+    // A playing video yields to whatever opens next (no reload needed; the
+    // DRW draft never left). Closing first keeps every path's UI sane.
+    if (videoLoaded && !VIDEO_EXTS.includes(ext) && !(file.type || '').startsWith('video/')) closeVideo(false);
     if (GAME_EXTS.includes(ext)) { openCartridge(file); return; }
     if (IMAGE_EXTS.includes(ext) || (file.type || '').startsWith('image/')) { window.DRW.openImageFile(file); return; }
+    if (VIDEO_EXTS.includes(ext) || (file.type || '').startsWith('video/')) { openVideoFile(file); return; }
     if (ext === 'json') { window.DRW.openDraftFile(file); return; }
-    consoleStatus(`L&L: .${ext || '?'} NOT WIRED YET · opens now: game .gba/.gb/.gbc/.zip · image · DRW draft .drw.json · the registry extends`);
+    consoleStatus(`L&L: .${ext || '?'} NOT WIRED YET · opens now: game .gba/.gb/.gbc/.zip · image · video .mp4/.webm/.mov · DRW draft .drw.json · the registry extends`);
   }
+
+  // ---- Video (registry extension 070326) ----------------------------------
+  // Same mechanic as the cartridge: the console screen shows the media, DRW
+  // markup/state stays intact underneath. Unlike a game there is no emulator
+  // teardown problem, so EJECT restores DRW in place (no reload). The file
+  // plays from a local object URL; nothing is uploaded and nothing is
+  // persisted (persistence is a deliberate follow-up, not wired this pass).
+  let videoLoaded = false;
+  let videoUrl = null;
+
+  function openVideoFile(file) {
+    if (consolePowered || romFile) { consoleStatus('CARTRIDGE OWNS THE SCREEN · EJECT FIRST'); return; }
+    if (videoUrl) URL.revokeObjectURL(videoUrl);
+    videoUrl = URL.createObjectURL(file);
+    videoPlayer.src = videoUrl;
+    videoName.textContent = file.name;
+    videoLoaded = true;
+    drwWindow.classList.add('is-video');
+    videoFrame.hidden = false;
+    ejectGameBtn.hidden = false;
+    consoleStatus(`L&L: VIDEO ${file.name} ON THE CONSOLE SCREEN · EJECT RETURNS TO DRW`);
+  }
+
+  function closeVideo(announce) {
+    if (!videoLoaded) return;
+    try { videoPlayer.pause(); } catch (err) { /* not playing */ }
+    videoPlayer.removeAttribute('src');
+    videoPlayer.load();
+    if (videoUrl) { URL.revokeObjectURL(videoUrl); videoUrl = null; }
+    videoLoaded = false;
+    videoFrame.hidden = true;
+    drwWindow.classList.remove('is-video');
+    ejectGameBtn.hidden = true;
+    if (announce) consoleStatus('VIDEO EJECTED · BACK TO DRW');
+  }
+
+  videoPlayer.addEventListener('error', () => {
+    if (!videoLoaded) return;
+    consoleStatus(`L&L: THIS BROWSER COULD NOT DECODE ${videoName.textContent} (codec) · EJECT RETURNS TO DRW`);
+  });
 
   function openCartridge(file) {
     romFile = file;
@@ -1032,7 +1097,9 @@ const USIC_COLORS = [
   });
 
   ejectGameBtn.addEventListener('click', () => {
-    // Reload returns the console to its DRW default screen.
+    // Video mode restores DRW in place (no emulator teardown problem).
+    if (videoLoaded && !consolePowered && !romFile) { closeVideo(true); return; }
+    // Game mode: reload returns the console to its DRW default screen.
     window.location.reload();
   });
 
@@ -1289,8 +1356,38 @@ const USIC_COLORS = [
   .drw-window.is-game .drw-toolbar,
   .drw-window.is-game .drw-swatches,
   .drw-window.is-game .layers-panel,
-  .drw-window.is-game .drw-submit {
+  .drw-window.is-game .drw-submit,
+  .drw-window.is-video .canvas-frame,
+  .drw-window.is-video .drw-toolbar,
+  .drw-window.is-video .drw-swatches,
+  .drw-window.is-video .layers-panel,
+  .drw-window.is-video .drw-submit {
     display: none;
+  }
+  /* Video mode (registry extension 070326): same console-well idiom as the
+     game frame. [hidden] guard mirrors the U9 menu fix (display would
+     override the UA hidden rule otherwise). */
+  .video-frame {
+    background: #000;
+    border: 2px solid rgba(1, 255, 205, 0.35);
+    box-shadow: 0 0 18px rgba(1, 255, 205, 0.12);
+    padding: 0.65rem;
+  }
+  .video-frame[hidden] {
+    display: none;
+  }
+  .video-reel {
+    background: var(--lb-panel);
+    border: 1px solid var(--lb-line);
+    padding: 0.55rem;
+    margin-bottom: 0.65rem;
+    color: var(--lb-txt);
+  }
+  #video-player {
+    display: block;
+    width: 100%;
+    max-height: 70vh;
+    background: #000;
   }
   .game-frame {
     /* The console well stays a dark screen (the game is the light source). */
