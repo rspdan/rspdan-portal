@@ -25,6 +25,9 @@
 //   draft (.drw.json; current work is backed up first, nothing gets lost).
 //   EXPORT DRAFT writes the file L&L can open back. Unknown types get an
 //   honest status line; the handler registry extends.
+// - Pass-3 (070326, the July-ready feedback loop): FILL (flood fill, F) +
+//   PICK (eyedropper, I) complete the working tool set; the save status now
+//   says honestly whether the layered scene persisted alongside the PNG.
 export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -64,7 +67,7 @@ const USIC_COLORS = [
   { key: '·',  name: 'White',        hex: '#FFFFFF' },
 ];
 ---
-<BaseLayout lastUpdated="July 2, 2026" title="DRW">
+<BaseLayout lastUpdated="July 3, 2026" title="DRW">
   <!-- LITE BRITE kit fonts (the kit's exact Google Fonts import): VT323 CRT
        terminal + Silkscreen pixel labels. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -83,11 +86,47 @@ const USIC_COLORS = [
         </form>
       </header>
 
+      <!-- Menus (U3, Dan-direct 062426: "Anything that doesn't work (Like
+           File, Edit, View, Room) needs to actually work or be removed ...
+           actually thought about and done with design intent"). Design intent:
+           the menus earn their existence by organizing the real action set
+           that outgrew the toolbar; every item calls a working function, no
+           stubs. FILE owns the document lifecycle, EDIT the reversible ops,
+           VIEW the chrome, ROOM the Operating Room surfaces. -->
       <div class="drw-menubar" aria-label="Workbench menu">
-        <span>FILE</span>
-        <span>EDIT</span>
-        <span>VIEW</span>
-        <span>ROOM</span>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">FILE</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="new">NEW BOARD (BACKS UP CURRENT)</button>
+            <button type="button" data-action="open">OPEN... (L&amp;L)</button>
+            <button type="button" data-action="export-draft">EXPORT DRAFT (.DRW.JSON)</button>
+            <button type="button" data-action="export-png">EXPORT PNG</button>
+            <button type="button" data-action="save-relay">SAVE + RELAY</button>
+          </div>
+        </div>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">EDIT</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="undo">UNDO (CTRL+Z)</button>
+            <button type="button" data-action="redo">REDO (CTRL+Y)</button>
+            <button type="button" data-action="swap-inks">SWAP INKS (X)</button>
+            <button type="button" data-action="clear-layer">CLEAR ACTIVE LAYER</button>
+          </div>
+        </div>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">VIEW</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="toggle-crt">TOGGLE CRT FX</button>
+            <button type="button" data-action="toggle-recent">TOGGLE RECENT PANEL</button>
+          </div>
+        </div>
+        <div class="drw-menu">
+          <button type="button" class="drw-menu-head" aria-haspopup="true" aria-expanded="false">ROOM</button>
+          <div class="drw-menu-list" hidden>
+            <button type="button" data-action="refresh-recent">REFRESH RECENT DRW</button>
+            <button type="button" data-action="open-logs">OPEN OPERATING ROOM LOGS</button>
+          </div>
+        </div>
         <button type="button" id="lnl-btn" class="drw-menu-action drw-lnl" title="L&L · Launch & Load: open anything and it works. Opens a game cartridge (.gba/.gb/.gbc/.zip), an image (new layer), or a DRW draft (.drw.json)">L&amp;L</button>
         <button type="button" id="export-draft-btn" class="drw-menu-action" title="Save the current working draft as a .drw.json file. L&L opens it back; nothing gets lost">EXPORT DRAFT</button>
         <button type="button" id="eject-game-btn" class="drw-menu-action" hidden title="Eject the cartridge and return to DRW">EJECT</button>
@@ -100,6 +139,9 @@ const USIC_COLORS = [
             <button type="button" class="tool is-active" data-tool="pen">PEN</button>
             <button type="button" class="tool" data-tool="erase">ERASE</button>
             <button type="button" class="tool" data-tool="text">TEXT</button>
+            <button type="button" class="tool" data-tool="fill" title="Flood-fill the region you click on the ACTIVE layer with the primary ink (undoable). Keyboard: F">FILL</button>
+            <button type="button" class="tool" data-tool="pick" title="Eyedropper: click the board to read that pixel's color into the selected ink well. Keyboard: I">PICK</button>
+            <button type="button" class="tool" data-tool="transform" title="Move / scale / rotate the active layer. Drag moves; the bar scales and rotates; APPLY commits (undoable), CANCEL discards">TRANS</button>
             <button type="button" id="undo-btn" class="tool">UNDO</button>
             <button type="button" id="redo-btn" class="tool">REDO</button>
             <button type="button" id="clear-btn" class="tool">CLEAR LAYER</button>
@@ -110,6 +152,16 @@ const USIC_COLORS = [
           </div>
 
           <div class="drw-swatches" aria-label="Usic colors">
+            <!-- Ink pair (U2, Dan-direct 062426 backlog: "Primary and secondary
+                 color selections like Photoshop" + "a manual color picker").
+                 Tools always draw with the PRIMARY well; swatches + the picker
+                 set whichever well is selected; X (or the swap button) swaps. -->
+            <div class="drw-inks" aria-label="Ink pair: primary draws, secondary holds, X swaps">
+              <button type="button" id="well-a" class="ink-well is-active" title="Primary ink (tools draw with this) · click to select"><span>Primary ink</span></button>
+              <button type="button" id="well-b" class="ink-well" title="Secondary ink (held) · click to select"><span>Secondary ink</span></button>
+              <button type="button" id="swap-inks-btn" class="ink-swap" title="Swap primary and secondary inks (X)">X</button>
+              <input type="color" id="color-picker" value="#E53327" title="Manual color picker: sets the selected well" aria-label="Manual color picker" />
+            </div>
             {USIC_COLORS.map((c, i) => (
               <button
                 type="button"
@@ -122,9 +174,19 @@ const USIC_COLORS = [
           </div>
 
           <div class="canvas-frame">
+            <!-- Transform bar (U4, Dan-direct 062426 "Move, scale, rotate
+                 tools"): visible only while the TRANS tool has a session. -->
+            <div class="transform-bar" id="transform-bar" hidden aria-label="Transform controls">
+              <label>SCALE <input type="range" id="trans-scale" min="10" max="400" value="100" /><span id="trans-scale-val">100%</span></label>
+              <label>ROTATE <input type="range" id="trans-rot" min="-180" max="180" value="0" /><span id="trans-rot-val">0 DEG</span></label>
+              <button type="button" id="trans-apply" class="tool">APPLY</button>
+              <button type="button" id="trans-cancel" class="tool">CANCEL</button>
+            </div>
             <canvas id="draw-canvas" width="960" height="640"></canvas>
             <textarea id="text-editor" class="text-editor" hidden rows="1"
               spellcheck="false" aria-label="Type text, Enter places it, Escape cancels"></textarea>
+            <button type="button" id="text-editor-handle" class="text-editor-handle" hidden
+              title="Drag to reposition the text before placing (U5: the re-positionable half of the text-tool fix)">::</button>
           </div>
 
           <!-- NEST CONSOLE game mode (additive · Dan-direct 070226): DRW is the
@@ -202,16 +264,49 @@ const USIC_COLORS = [
   const layerListEl = document.getElementById('layer-list');
   const toolButtons = Array.from(document.querySelectorAll('.tool[data-tool]'));
   const swatches = Array.from(document.querySelectorAll('.swatch'));
-  const dimensionInputs = Array.from(document.querySelectorAll('input[name="dimension-tags"]'));
-  const confidenceInput = document.getElementById('confidence-input');
-  const sourceInput = document.getElementById('source-input');
-  const resolverInput = document.getElementById('resolver-input');
 
   let drawing = false;
   let lastX = 0;
   let lastY = 0;
   let tool = 'pen';
-  let ink = swatches[0] ? swatches[0].dataset.color : '#E53327';
+
+  // ---- Ink pair (U2) ------------------------------------------------------
+  // Photoshop law: tools draw with the PRIMARY (A) well, always. Swatches and
+  // the manual picker write to whichever well is selected; X swaps A and B.
+  // `ink` stays the single read-point for every tool (it mirrors inks.A).
+  const wellA = document.getElementById('well-a');
+  const wellB = document.getElementById('well-b');
+  const swapInksBtn = document.getElementById('swap-inks-btn');
+  const colorPicker = document.getElementById('color-picker');
+  const inks = { A: swatches[0] ? swatches[0].dataset.color : '#E53327', B: '#FFFFFF' };
+  let activeWell = 'A';
+  let ink = inks.A;
+
+  function refreshInkUI() {
+    ink = inks.A;
+    wellA.style.setProperty('--swatch', inks.A);
+    wellB.style.setProperty('--swatch', inks.B);
+    wellA.classList.toggle('is-active', activeWell === 'A');
+    wellB.classList.toggle('is-active', activeWell === 'B');
+    // The picker mirrors the selected well; a swatch peg lights only when it
+    // matches the selected well's color.
+    if (/^#[0-9a-fA-F]{6}$/.test(inks[activeWell])) colorPicker.value = inks[activeWell];
+    swatches.forEach((s) => s.classList.toggle('is-active', s.dataset.color.toLowerCase() === inks[activeWell].toLowerCase()));
+  }
+
+  function setWellColor(color, label) {
+    inks[activeWell] = color;
+    refreshInkUI();
+    setStatus(`INK ${activeWell} ${label || color}`.trim());
+  }
+
+  function swapInks() {
+    const t = inks.A;
+    inks.A = inks.B;
+    inks.B = t;
+    refreshInkUI();
+    setStatus(`SWAPPED INKS · PRIMARY ${inks.A}`);
+  }
 
   // Undo/redo (B-side, ported from Chad's main onto the layer model): a linear
   // history of per-layer before-snapshots. Snapshots the layer touched, not the
@@ -256,6 +351,7 @@ const USIC_COLORS = [
   // dir -1 = toward the back (down). Any layer moves, including the roots;
   // the operator is in control of the order, nothing is pinned.
   function moveLayer(id, dir) {
+    endTransformIfAny();
     const i = layers.findIndex((l) => l.id === id);
     const j = i + dir;
     if (i < 0 || j < 0 || j >= layers.length) return;
@@ -291,6 +387,7 @@ const USIC_COLORS = [
   }
 
   function addChild(major, label) {
+    endTransformIfAny();
     const layer = makeLayer(major, nextMinor(major), 1, true, label);
     layers.push(layer); // new sub-layer lands on top of the stack; reorder freely
     activeId = layer.id;
@@ -301,15 +398,107 @@ const USIC_COLORS = [
     return layer;
   }
 
+  // U8: deleting a sub-layer used to be unrecoverable (a NOTHING-GETS-LOST
+  // violation: one misclick on the small x and the pixels were gone). The
+  // delete now rides the undo history as a tagged entry carrying the whole
+  // layer; UNDO restores it in place.
   function deleteLayer(id) {
-    const layer = layers.find((l) => l.id === id);
+    endTransformIfAny();
+    const i = layers.findIndex((l) => l.id === id);
+    const layer = layers[i];
     if (!layer || layer.minor === 0) return; // roots are permanent
-    layers = layers.filter((l) => l.id !== id);
+    history.push({
+      kind: 'layerDelete',
+      index: i,
+      data: {
+        id: layer.id,
+        major: layer.major,
+        minor: layer.minor,
+        label: layer.label || '',
+        opacity: layer.opacity,
+        visible: layer.visible,
+        png: layer.canvas.toDataURL('image/png'),
+      },
+    });
+    if (history.length > 40) history.shift();
+    redoStack = [];
+    layers.splice(i, 1);
     if (activeId === id) activeId = '2';
     renderLayers();
     composite();
     saveDraft();
-    setStatus(`DELETED ${displayName(layer)}`);
+    setStatus(`DELETED ${displayName(layer)} · UNDO RESTORES IT`);
+  }
+
+  // ---- TRANSFORM tool session (U4) ----------------------------------------
+  // Move / scale / rotate the ACTIVE layer (Dan-direct 062426). The layer's
+  // canvas is untouched during the session; composite() previews the source
+  // snapshot under the live matrix. APPLY commits (undoable via the normal
+  // per-layer snapshot); CANCEL or any structural change discards. Exactly
+  // one exit point (endTransform) so the preview special-case cannot leak.
+  let transform = null; // { src, dx, dy, scale, rot, layerId }
+  const transformBar = document.getElementById('transform-bar');
+  const transScale = document.getElementById('trans-scale');
+  const transRot = document.getElementById('trans-rot');
+  const transScaleVal = document.getElementById('trans-scale-val');
+  const transRotVal = document.getElementById('trans-rot-val');
+
+  function updateTransReadouts() {
+    if (!transform) return;
+    transScaleVal.textContent = `${Math.round(transform.scale * 100)}%`;
+    transRotVal.textContent = `${Math.round(transform.rot)} DEG`;
+  }
+
+  function drawTransformed(ctx, t) {
+    ctx.save();
+    ctx.translate(W / 2 + t.dx, H / 2 + t.dy);
+    ctx.rotate((t.rot * Math.PI) / 180);
+    ctx.scale(t.scale, t.scale);
+    ctx.drawImage(t.src, -W / 2, -H / 2);
+    ctx.restore();
+  }
+
+  function startTransform() {
+    const layer = activeLayer();
+    if (!layer || !layer.visible) {
+      setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
+      return false;
+    }
+    const src = newCanvas();
+    src.getContext('2d').drawImage(layer.canvas, 0, 0);
+    transform = { src, dx: 0, dy: 0, scale: 1, rot: 0, layerId: layer.id };
+    transScale.value = '100';
+    transRot.value = '0';
+    updateTransReadouts();
+    transformBar.hidden = false;
+    composite();
+    setStatus(`TRANSFORM ${displayName(layer)} · DRAG MOVES · APPLY COMMITS · CANCEL DISCARDS`);
+    return true;
+  }
+
+  function endTransform(commit) {
+    if (!transform) return;
+    const t = transform;
+    const layer = layers.find((l) => l.id === t.layerId);
+    const changed = t.dx || t.dy || t.scale !== 1 || t.rot;
+    if (commit && layer && changed) {
+      snapshotBefore(layer); // pre-transform pixels (layer canvas untouched until now)
+      transform = null; // leave preview mode BEFORE mutating + compositing
+      layer.ctx.clearRect(0, 0, W, H);
+      drawTransformed(layer.ctx, t);
+      saveDraft();
+      setStatus(`TRANSFORM APPLIED TO ${displayName(layer)}`);
+    } else {
+      transform = null;
+      setStatus(commit ? 'TRANSFORM UNCHANGED' : 'TRANSFORM CANCELLED');
+    }
+    transformBar.hidden = true;
+    composite();
+  }
+
+  // Structural changes mid-session discard the preview (announced honestly).
+  function endTransformIfAny() {
+    if (transform) endTransform(false);
   }
 
   // ---- Compositing -------------------------------------------------------
@@ -318,24 +507,48 @@ const USIC_COLORS = [
     for (const layer of layers) {
       if (!layer.visible) continue;
       vctx.globalAlpha = layer.opacity;
-      vctx.drawImage(layer.canvas, 0, 0);
+      if (transform && layer.id === transform.layerId) {
+        drawTransformed(vctx, transform);
+      } else {
+        vctx.drawImage(layer.canvas, 0, 0);
+      }
     }
     vctx.globalAlpha = 1;
   }
 
-  // ---- Undo / redo (per-layer before-snapshots) --------------------------
-  function snapshotBefore() {
-    const layer = activeLayer();
+  // ---- Undo / redo (tagged history, U8) -----------------------------------
+  // Entries: { kind: 'pixels', id, png } for stroke / text / clear / transform
+  // commits; { kind: 'layerDelete', index, data } for sub-layer deletes.
+  function snapshotBefore(target) {
+    const layer = target || activeLayer();
     if (!layer) return;
-    history.push({ id: layer.id, png: layer.canvas.toDataURL('image/png') });
+    history.push({ kind: 'pixels', id: layer.id, png: layer.canvas.toDataURL('image/png') });
     if (history.length > 40) history.shift();
     redoStack = [];
+  }
+
+  // Rebuild a layer from a serialized record (the layerDelete undo). If the
+  // canonical id is now occupied (a new child took the minor after the
+  // delete), the restored layer takes the next free minor; the label survives.
+  function rebuildLayer(data, done) {
+    let minor = data.minor;
+    if (layers.some((l) => l.major === data.major && l.minor === minor)) {
+      minor = nextMinor(data.major);
+    }
+    const layer = makeLayer(data.major, minor, typeof data.opacity === 'number' ? data.opacity : 1, data.visible !== false, data.label);
+    const img = new Image();
+    img.onload = () => {
+      layer.ctx.drawImage(img, 0, 0);
+      if (done) done();
+    };
+    img.src = data.png;
+    return layer;
   }
 
   function restoreLayerSnapshot(snap, opposite) {
     const layer = layers.find((l) => l.id === snap.id);
     if (!layer) return;
-    opposite.push({ id: snap.id, png: layer.canvas.toDataURL('image/png') });
+    opposite.push({ kind: 'pixels', id: snap.id, png: layer.canvas.toDataURL('image/png') });
     const img = new Image();
     img.onload = () => {
       layer.ctx.clearRect(0, 0, W, H);
@@ -348,16 +561,45 @@ const USIC_COLORS = [
     saveDraft();
   }
 
+  function undoLayerDelete(snap) {
+    const layer = rebuildLayer(snap.data, () => composite());
+    layers.splice(Math.min(snap.index, layers.length), 0, layer);
+    activeId = layer.id;
+    redoStack.push({ ...snap, data: { ...snap.data, id: layer.id, minor: layer.minor } });
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`RESTORED ${displayName(layer)}`);
+  }
+
+  function redoLayerDelete(snap) {
+    const i = layers.findIndex((l) => l.id === snap.data.id);
+    if (i >= 0) {
+      const layer = layers[i];
+      history.push({ kind: 'layerDelete', index: i, data: snap.data });
+      layers.splice(i, 1);
+      if (activeId === layer.id) activeId = '2';
+      renderLayers();
+      composite();
+      saveDraft();
+      setStatus(`DELETED ${displayName(layer)}`);
+    }
+  }
+
   function undo() {
+    endTransformIfAny();
     const snap = history.pop();
     if (!snap) { setStatus('NOTHING TO UNDO'); return; }
+    if (snap.kind === 'layerDelete') { undoLayerDelete(snap); return; }
     restoreLayerSnapshot(snap, redoStack);
     setStatus('UNDO');
   }
 
   function redo() {
+    endTransformIfAny();
     const snap = redoStack.pop();
     if (!snap) { setStatus('NOTHING TO REDO'); return; }
+    if (snap.kind === 'layerDelete') { redoLayerDelete(snap); return; }
     restoreLayerSnapshot(snap, history);
     setStatus('REDO');
   }
@@ -411,6 +653,7 @@ const USIC_COLORS = [
       name.addEventListener('click', () => {
         clearTimeout(clickTimer);
         clickTimer = setTimeout(() => {
+          endTransformIfAny();
           activeId = layer.id;
           renderLayers();
           setStatus(`ACTIVE ${displayName(layer)}`);
@@ -513,19 +756,18 @@ const USIC_COLORS = [
   }
 
   // ---- Drawing (onto the active layer) -----------------------------------
-  function selectedDimensions() {
-    const dimensions = dimensionInputs.filter((input) => input.checked).map((input) => input.value);
-    return dimensions.length ? dimensions : ['2D'];
-  }
-
+  // Coordinate packet defaults (U1, 070226): the coordinate-panel markup was
+  // removed in the console pass; these are the literal defaults the server
+  // enforces anyway (api/drw.ts cleanDimensions/cleanConfidence/clampText).
+  // The dead element-queries that used to feed this are gone with the panel.
   function buildCoordinate() {
     return {
       trace: captionInput.value.trim() || 'DRW drawing',
       sourceSurface: 'drw',
-      dimensionTags: selectedDimensions(),
-      confidence: confidenceInput ? confidenceInput.value : 'observed',
-      sourceContext: sourceInput ? sourceInput.value.trim() : 'rspdan.com/drw',
-      resolver: resolverInput ? resolverInput.value.trim() : '',
+      dimensionTags: ['2D'],
+      confidence: 'observed',
+      sourceContext: 'rspdan.com/drw',
+      resolver: '',
       activeInk: ink,
       activeTool: tool,
       lineWidth: Number(sizeInput.value),
@@ -540,16 +782,129 @@ const USIC_COLORS = [
     };
   }
 
+  // ---- PICK (eyedropper, Pass-3 W1) ---------------------------------------
+  // The read-half of the U2 ink-well pair: click the board, the COMPOSITED
+  // pixel (what the operator sees, transform previews included) lands in the
+  // selected well through the same setWellColor path the swatches use. Reads
+  // only; no history entry.
+  function pickColorAt(x, y) {
+    composite();
+    const px = Math.max(0, Math.min(W - 1, Math.round(x)));
+    const py = Math.max(0, Math.min(H - 1, Math.round(y)));
+    let d;
+    try {
+      d = vctx.getImageData(px, py, 1, 1).data;
+    } catch (err) {
+      // Same-origin by construction today (L&L images arrive as data URLs);
+      // if a tainted canvas ever appears the tool fails honestly.
+      setStatus('PICK FAILED (CANVAS TAINTED)');
+      return;
+    }
+    if (d[3] === 0) {
+      setStatus('PICK: EMPTY PIXEL');
+      return;
+    }
+    const hex = '#' + [d[0], d[1], d[2]].map((v) => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+    setWellColor(hex, `PICKED ${hex}`);
+  }
+
+  // ---- FILL (flood fill, Pass-3 W2) ---------------------------------------
+  // Fills the clicked region of the ACTIVE layer with the primary ink.
+  // Region detection runs on the active layer's OWN pixels (editor
+  // convention; other layers do not fence the fill). Per-channel tolerance
+  // lets anti-aliased stroke edges fill clean instead of leaving halos.
+  // Undoable via the normal pixels-history snapshot, taken only when the
+  // fill will actually change something (no junk history entries).
+  const FILL_TOLERANCE = 40;
+
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  function fillAt(layer, x, y) {
+    const px = Math.max(0, Math.min(W - 1, Math.round(x)));
+    const py = Math.max(0, Math.min(H - 1, Math.round(y)));
+    const imageData = layer.ctx.getImageData(0, 0, W, H);
+    const data = imageData.data;
+    const seed = (py * W + px) * 4;
+    const target = [data[seed], data[seed + 1], data[seed + 2], data[seed + 3]];
+    const fill = hexToRgb(ink);
+    if (target[3] === 255 && target[0] === fill[0] && target[1] === fill[1] && target[2] === fill[2]) {
+      setStatus('FILL: NO CHANGE (ALREADY THAT INK)');
+      return;
+    }
+    const match = (i) =>
+      Math.abs(data[i] - target[0]) <= FILL_TOLERANCE &&
+      Math.abs(data[i + 1] - target[1]) <= FILL_TOLERANCE &&
+      Math.abs(data[i + 2] - target[2]) <= FILL_TOLERANCE &&
+      Math.abs(data[i + 3] - target[3]) <= FILL_TOLERANCE;
+    snapshotBefore(layer); // pre-fill pixels; UNDO restores them
+    const visited = new Uint8Array(W * H);
+    const stack = [py * W + px];
+    visited[py * W + px] = 1;
+    let filled = 0;
+    while (stack.length) {
+      const p = stack.pop();
+      const i = p * 4;
+      if (!match(i)) continue;
+      data[i] = fill[0];
+      data[i + 1] = fill[1];
+      data[i + 2] = fill[2];
+      data[i + 3] = 255;
+      filled++;
+      const cx = p % W;
+      if (cx > 0 && !visited[p - 1]) { visited[p - 1] = 1; stack.push(p - 1); }
+      if (cx < W - 1 && !visited[p + 1]) { visited[p + 1] = 1; stack.push(p + 1); }
+      if (p >= W && !visited[p - W]) { visited[p - W] = 1; stack.push(p - W); }
+      if (p < W * (H - 1) && !visited[p + W]) { visited[p + W] = 1; stack.push(p + W); }
+    }
+    if (!filled) {
+      // The seed itself failed the match (cannot happen: target matches
+      // itself), kept as a guard; drop the snapshot we did not use.
+      history.pop();
+      setStatus('FILL: NO CHANGE');
+      return;
+    }
+    layer.ctx.putImageData(imageData, 0, 0);
+    composite();
+    saveDraft();
+    setStatus(`FILLED ${filled} PX ON ${displayName(layer)} WITH ${ink}`);
+  }
+
   function begin(event) {
+    if (tool === 'pick') {
+      // PICK reads the composite; it does not need a visible active layer.
+      event.preventDefault();
+      const pp = pointerPos(event);
+      pickColorAt(pp.x, pp.y);
+      return;
+    }
     const layer = activeLayer();
     if (!layer || !layer.visible) {
       setStatus(layer ? 'ACTIVE LAYER HIDDEN' : 'NO ACTIVE LAYER');
       return;
     }
     event.preventDefault();
+    if (tool === 'fill') {
+      const fp = pointerPos(event);
+      fillAt(layer, fp.x, fp.y);
+      return;
+    }
     if (tool === 'text') {
       const tp = pointerPos(event);
       openTextEditor(tp.x, tp.y);
+      return;
+    }
+    if (tool === 'transform') {
+      // Drag = move. A session is opened by selecting the tool; if it was
+      // discarded (structural change) a fresh drag reopens it.
+      if (!transform && !startTransform()) return;
+      view.setPointerCapture(event.pointerId);
+      drawing = true;
+      const tp = pointerPos(event);
+      lastX = tp.x;
+      lastY = tp.y;
       return;
     }
     snapshotBefore();
@@ -571,9 +926,21 @@ const USIC_COLORS = [
   // ACTIVE layer, Shift+Enter adds a line, Escape cancels, clicking away
   // places it. Same 8-line/80-char bounds and per-layer undo as before.
   let textAt = null; // canvas-space anchor while the editor is open
+  const textHandle = document.getElementById('text-editor-handle');
+  let draggingText = null; // pointer-drag state for the reposition handle (U5)
 
   function canvasFontSize() {
     return Math.max(14, Math.min(96, Number(sizeInput.value) * 5));
+  }
+
+  // Position the editor + its move-handle at a canvas-space anchor (U5).
+  function placeTextEditorAt(x, y) {
+    const rect = view.getBoundingClientRect();
+    const scale = rect.width / W;
+    textEditor.style.left = `${view.offsetLeft + x * scale}px`;
+    textEditor.style.top = `${view.offsetTop + y * scale}px`;
+    textHandle.style.left = `${view.offsetLeft + x * scale}px`;
+    textHandle.style.top = `${view.offsetTop + y * scale - 20}px`;
   }
 
   function openTextEditor(x, y) {
@@ -588,20 +955,46 @@ const USIC_COLORS = [
     const fontPx = canvasFontSize() * scale;
     textEditor.hidden = false;
     textEditor.value = '';
-    textEditor.style.left = `${view.offsetLeft + x * scale}px`;
-    textEditor.style.top = `${view.offsetTop + y * scale}px`;
+    placeTextEditorAt(x, y);
     textEditor.style.font = `${fontPx}px "JetBrains Mono", Consolas, monospace`;
     textEditor.style.color = ink;
     textEditor.style.height = `${fontPx * 1.35}px`;
+    textHandle.hidden = false;
     textEditor.focus();
-    setStatus('TEXT: TYPE · ENTER PLACES · SHIFT+ENTER NEW LINE · ESC CANCELS');
+    setStatus('TEXT: TYPE · ENTER PLACES · SHIFT+ENTER NEW LINE · ESC CANCELS · DRAG :: MOVES');
   }
 
   function closeTextEditor() {
     textEditor.hidden = true;
     textEditor.value = '';
+    textHandle.hidden = true;
+    draggingText = null;
     textAt = null;
   }
+
+  // Reposition drag (U5): the handle moves the anchor; the text stays typed.
+  // The blur-commit contract is guarded so grabbing the handle never commits.
+  textHandle.addEventListener('pointerdown', (e) => {
+    if (!textAt) return;
+    e.preventDefault();
+    draggingText = { id: e.pointerId, startX: e.clientX, startY: e.clientY, ax: textAt.x, ay: textAt.y };
+    textHandle.setPointerCapture(e.pointerId);
+  });
+  textHandle.addEventListener('pointermove', (e) => {
+    if (!draggingText || e.pointerId !== draggingText.id || !textAt) return;
+    const rect = view.getBoundingClientRect();
+    const k = W / rect.width;
+    textAt.x = Math.min(W - 10, Math.max(0, draggingText.ax + (e.clientX - draggingText.startX) * k));
+    textAt.y = Math.min(H - 10, Math.max(0, draggingText.ay + (e.clientY - draggingText.startY) * k));
+    placeTextEditorAt(textAt.x, textAt.y);
+  });
+  const endTextDrag = () => {
+    if (!draggingText) return;
+    draggingText = null;
+    if (!textEditor.hidden) textEditor.focus();
+  };
+  textHandle.addEventListener('pointerup', endTextDrag);
+  textHandle.addEventListener('pointercancel', endTextDrag);
 
   function commitText() {
     const layer = activeLayer();
@@ -632,7 +1025,7 @@ const USIC_COLORS = [
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitText(); }
     if (e.key === 'Escape') { e.preventDefault(); closeTextEditor(); setStatus('TEXT CANCELLED'); }
   });
-  textEditor.addEventListener('blur', () => { if (!textEditor.hidden) commitText(); });
+  textEditor.addEventListener('blur', () => { if (!textEditor.hidden && !draggingText) commitText(); });
   textEditor.addEventListener('input', () => {
     // Auto-grow with the typed lines so the preview stays visible.
     const rect = view.getBoundingClientRect();
@@ -644,6 +1037,16 @@ const USIC_COLORS = [
   function move(event) {
     if (!drawing) return;
     event.preventDefault();
+    if (tool === 'transform') {
+      if (!transform) return;
+      const p = pointerPos(event);
+      transform.dx += p.x - lastX;
+      transform.dy += p.y - lastY;
+      lastX = p.x;
+      lastY = p.y;
+      composite();
+      return;
+    }
     const layer = activeLayer();
     if (!layer) return;
     const lctx = layer.ctx;
@@ -668,12 +1071,18 @@ const USIC_COLORS = [
     if (!drawing) return;
     drawing = false;
     if (event && event.pointerId !== undefined) view.releasePointerCapture(event.pointerId);
+    if (tool === 'transform') {
+      // Uncommitted preview: nothing persisted until APPLY.
+      setStatus('TRANSFORM: DRAG MOVES · APPLY COMMITS · CANCEL DISCARDS');
+      return;
+    }
     setStatus('DRAWING MODIFIED');
     saveDraft();
   }
 
   // ---- Autosave draft (nothing gets lost on a crash / closed tab) ---------
   let draftTimer = null;
+  let draftWarned = false; // U7: warn once, honestly, instead of silent loss
   function saveDraft() {
     if (draftTimer) clearTimeout(draftTimer);
     draftTimer = setTimeout(() => {
@@ -681,9 +1090,25 @@ const USIC_COLORS = [
         const scene = serializeScene();
         localStorage.setItem(DRAFT_KEY, JSON.stringify(scene));
       } catch (err) {
-        // Draft autosave is best-effort; never let it break drawing.
+        // Autosave stays best-effort (never breaks drawing), but a failing
+        // autosave is not silently swallowed: the operator is told once and
+        // pointed at the export that keeps the work safe.
+        if (!draftWarned) {
+          draftWarned = true;
+          setStatus('WARNING: DRAFT AUTOSAVE FAILING (storage full?) · USE FILE > EXPORT DRAFT TO KEEP WORK SAFE');
+        }
       }
     }, 400);
+  }
+
+  // U7: an expired PSPT session mid-work surfaced as a cryptic READ/SAVE
+  // error before. Name it, reassure (the autosave holds the work), and route
+  // back through the login with return-to-/drw.
+  function handleSessionExpiry(res) {
+    if (res.status !== 401) return false;
+    setStatus('SESSION EXPIRED · WORK SAFE IN AUTOSAVE · REDIRECTING TO LOGIN...');
+    setTimeout(() => { window.location.href = '/pspt?next=/drw'; }, 1400);
+    return true;
   }
 
   function serializeScene() {
@@ -706,6 +1131,7 @@ const USIC_COLORS = [
   }
 
   function restoreScene(scene, done) {
+    endTransformIfAny();
     if (!scene || !Array.isArray(scene.layers) || !scene.layers.length) {
       defaultLayers();
       done();
@@ -745,6 +1171,11 @@ const USIC_COLORS = [
       const imageUrl = safeHttpUrl(item.url);
       const packetUrl = safeHttpUrl(item.packetUrl);
       const packet = packetUrl ? `<a class="packet-link" href="${packetUrl}" target="_blank" rel="noreferrer">PACKET</a>` : '';
+      // U6: saves that carry a layered scene can be LOADED back for continued
+      // work (the read half of nothing-gets-lost; the API proxies the JSON).
+      const load = item.sceneUrl && item.id
+        ? `<button type="button" class="scene-load" data-scene-id="${escapeHtml(item.id)}" title="Load this saved scene back into the workbench (current work is backed up first)">LOAD</button>`
+        : '';
       if (!imageUrl) return '';
       return `
         <article class="draw-item">
@@ -753,16 +1184,48 @@ const USIC_COLORS = [
             <strong>${caption || 'UNTITLED'}</strong>
             <span>${date}</span>
             ${dimensions || confidence ? `<span>${dimensions}${dimensions && confidence ? ' / ' : ''}${confidence}</span>` : ''}
-            ${packet}
+            ${packet}${load}
           </div>
         </article>
       `;
     }).join('');
   }
 
+  // U6: load a saved layered scene back from the RECENT list. NOTHING GETS
+  // LOST: the current working scene is backed up before the load replaces it.
+  async function loadSavedScene(id, btn) {
+    if (btn) btn.disabled = true;
+    setStatus('LOADING SAVED SCENE...');
+    try {
+      const res = await fetch(`/api/drw?scene=${encodeURIComponent(id)}`);
+      if (handleSessionExpiry(res)) return;
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const scene = data.scene;
+      if (!scene || !Array.isArray(scene.layers) || !scene.layers.length) throw new Error('not a DRW scene');
+      const backed = backupCurrentScene();
+      restoreScene(scene, () => {
+        renderLayers();
+        composite();
+        saveDraft();
+        setStatus(`LOADED SAVED SCENE${backed ? ' · PREVIOUS WORK BACKED UP' : ' · WARNING: BACKUP FAILED (storage full)'}`);
+      });
+    } catch (err) {
+      setStatus(`LOAD ERROR: ${err.message}`);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  drawList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.scene-load');
+    if (btn) loadSavedScene(btn.dataset.sceneId, btn);
+  });
+
   async function loadDrawings() {
     try {
       const res = await fetch('/api/drw?limit=18');
+      if (handleSessionExpiry(res)) return;
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
       renderList(data.drawings || []);
@@ -790,11 +1253,20 @@ const USIC_COLORS = [
           coordinate: buildCoordinate(),
         }),
       });
+      if (handleSessionExpiry(res)) return;
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
       captionInput.value = '';
       await loadDrawings();
-      setStatus(`SAVED ${data.drawing.id}`);
+      // Pass-3 W3: the server never fails a save just because the layered
+      // scene could not be stored (no blob token / scene too large / blob
+      // error -> sceneUrl null). That is the right call for the PNG, but the
+      // operator must not be left believing the EDITABLE scene persisted
+      // when it did not (nothing gets lost includes knowing when it would).
+      const sceneStored = Boolean(data.drawing && data.drawing.sceneUrl);
+      setStatus(sceneStored
+        ? `SAVED ${data.drawing.id} · SCENE + PNG STORED`
+        : `SAVED ${data.drawing.id} · FLAT PNG ONLY (LAYERED SCENE NOT STORED · FILE > EXPORT DRAFT KEEPS THE EDITABLE COPY)`);
     } catch (err) {
       setStatus(`SAVE ERROR: ${err.message}`);
     } finally {
@@ -804,23 +1276,59 @@ const USIC_COLORS = [
   }
 
   // ---- Wiring ------------------------------------------------------------
+  function selectTool(next) {
+    if (tool === 'transform' && next !== 'transform') endTransformIfAny();
+    tool = next;
+    toolButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.tool === next));
+    if (next === 'transform') {
+      if (!startTransform()) return;
+    } else {
+      setStatus(`${next.toUpperCase()} SELECTED`);
+    }
+  }
+
   toolButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      tool = button.dataset.tool;
-      toolButtons.forEach((b) => b.classList.toggle('is-active', b === button));
-      setStatus(`${tool.toUpperCase()} SELECTED`);
-    });
+    button.addEventListener('click', () => selectTool(button.dataset.tool));
   });
+
+  // Transform bar wiring (U4).
+  transScale.addEventListener('input', () => {
+    if (!transform) return;
+    transform.scale = Number(transScale.value) / 100;
+    updateTransReadouts();
+    composite();
+  });
+  transRot.addEventListener('input', () => {
+    if (!transform) return;
+    transform.rot = Number(transRot.value);
+    updateTransReadouts();
+    composite();
+  });
+  document.getElementById('trans-apply').addEventListener('click', () => endTransform(true));
+  document.getElementById('trans-cancel').addEventListener('click', () => endTransform(false));
 
   swatches.forEach((button) => {
     button.addEventListener('click', () => {
-      ink = button.dataset.color;
-      swatches.forEach((s) => s.classList.toggle('is-active', s === button));
-      setStatus(`INK ${button.title || ''}`.trim());
+      setWellColor(button.dataset.color, button.title);
     });
   });
 
-  clearBtn.addEventListener('click', () => {
+  wellA.addEventListener('click', () => {
+    activeWell = 'A';
+    refreshInkUI();
+    setStatus(`SELECTED PRIMARY INK ${inks.A}`);
+  });
+  wellB.addEventListener('click', () => {
+    activeWell = 'B';
+    refreshInkUI();
+    setStatus(`SELECTED SECONDARY INK ${inks.B}`);
+  });
+  swapInksBtn.addEventListener('click', swapInks);
+  colorPicker.addEventListener('input', () => setWellColor(colorPicker.value));
+  refreshInkUI();
+
+  function clearActiveLayer() {
+    endTransformIfAny();
     const layer = activeLayer();
     if (!layer) return;
     snapshotBefore();
@@ -832,7 +1340,9 @@ const USIC_COLORS = [
     composite();
     saveDraft();
     setStatus(`CLEARED ${displayName(layer)}`);
-  });
+  }
+
+  clearBtn.addEventListener('click', clearActiveLayer);
 
   undoBtn.addEventListener('click', undo);
   redoBtn.addEventListener('click', redo);
@@ -926,6 +1436,147 @@ const USIC_COLORS = [
   }
 
   exportDraftBtn.addEventListener('click', exportDraft);
+
+  // ---- Menus (U3): FILE / EDIT / VIEW / ROOM actually work ----------------
+  const drwWindowEl = document.querySelector('.drw-window');
+  const menus = Array.from(document.querySelectorAll('.drw-menu'));
+
+  function closeMenus() {
+    menus.forEach((menu) => {
+      menu.querySelector('.drw-menu-head').setAttribute('aria-expanded', 'false');
+      menu.querySelector('.drw-menu-list').hidden = true;
+    });
+  }
+
+  menus.forEach((menu) => {
+    const head = menu.querySelector('.drw-menu-head');
+    const list = menu.querySelector('.drw-menu-list');
+    head.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const opening = list.hidden;
+      closeMenus();
+      if (opening) {
+        list.hidden = false;
+        head.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.drw-menu')) closeMenus();
+  });
+
+  // FILE > NEW: fresh default board. NOTHING GETS LOST: the current scene is
+  // backed up first (same timestamped-backup path L&L uses for drafts).
+  function fileNew() {
+    endTransformIfAny();
+    const backed = backupCurrentScene();
+    defaultLayers();
+    history = [];
+    redoStack = [];
+    renderLayers();
+    composite();
+    saveDraft();
+    setStatus(`NEW BOARD${backed ? ' · PREVIOUS WORK BACKED UP' : ' · WARNING: BACKUP FAILED (storage full)'}`);
+  }
+
+  // FILE > EXPORT PNG: the flat composite as a local file (no cloud write).
+  function exportPng() {
+    composite();
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace('T', '_').slice(0, 13);
+    const a = document.createElement('a');
+    a.href = view.toDataURL('image/png');
+    a.download = `DRW_${stamp}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setStatus(`EXPORTED PNG ${a.download}`);
+  }
+
+  // VIEW toggles persist per operator (localStorage; chrome preference, not
+  // scene state). no-crt hides the scanline/vignette overlays; hide-recent
+  // gives the board the full width.
+  const CRT_KEY = 'drw:crt';
+  const RECENT_KEY = 'drw:recent';
+  function readPref(key) {
+    try { return localStorage.getItem(key) !== '0'; } catch { return true; }
+  }
+  function writePref(key, on) {
+    try { localStorage.setItem(key, on ? '1' : '0'); } catch { /* best-effort */ }
+  }
+  let crtOn = readPref(CRT_KEY);
+  let recentOn = readPref(RECENT_KEY);
+  function applyViewPrefs() {
+    drwWindowEl.classList.toggle('no-crt', !crtOn);
+    drwWindowEl.classList.toggle('hide-recent', !recentOn);
+  }
+  applyViewPrefs();
+
+  const menuActions = {
+    'new': fileNew,
+    'open': () => document.getElementById('lnl-btn').click(),
+    'export-draft': exportDraft,
+    'export-png': exportPng,
+    'save-relay': saveDrawing,
+    'undo': undo,
+    'redo': redo,
+    'swap-inks': swapInks,
+    'clear-layer': clearActiveLayer,
+    'toggle-crt': () => { crtOn = !crtOn; writePref(CRT_KEY, crtOn); applyViewPrefs(); setStatus(`CRT FX ${crtOn ? 'ON' : 'OFF'}`); },
+    'toggle-recent': () => { recentOn = !recentOn; writePref(RECENT_KEY, recentOn); applyViewPrefs(); setStatus(`RECENT PANEL ${recentOn ? 'SHOWN' : 'HIDDEN'}`); },
+    'refresh-recent': () => { setStatus('REFRESHING RECENT DRW...'); loadDrawings(); },
+    'open-logs': () => { window.open('/logs', '_blank', 'noopener'); setStatus('OPENED OPERATING ROOM LOGS'); },
+  };
+  document.querySelectorAll('.drw-menu-list [data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      closeMenus();
+      const action = menuActions[btn.dataset.action];
+      if (action) action();
+    });
+  });
+
+  // ---- Keyboard shortcuts (U8) --------------------------------------------
+  // Guarded OFF while typing (text editor, rename, caption, any input), and
+  // whole-hog in game mode (the emulator owns the keys). Announced in status.
+  function anyMenuOpen() {
+    return menus.some((menu) => !menu.querySelector('.drw-menu-list').hidden);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (anyMenuOpen()) { closeMenus(); return; }
+      if (transform && textEditor.hidden) { endTransform(false); return; }
+      return; // text editor handles its own Escape
+    }
+    if (drwWindowEl.classList.contains('is-game')) return;
+    if (!textEditor.hidden) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.key === 'Enter' && transform) { e.preventDefault(); endTransform(true); return; }
+    const mod = e.ctrlKey || e.metaKey;
+    const k = e.key.toLowerCase();
+    if (mod && k === 'z' && !e.shiftKey) { e.preventDefault(); undo(); return; }
+    if ((mod && k === 'z' && e.shiftKey) || (mod && k === 'y')) { e.preventDefault(); redo(); return; }
+    if (mod || e.altKey) return; // never steal other browser combos
+    switch (k) {
+      case 'p': selectTool('pen'); break;
+      case 'e': selectTool('erase'); break;
+      case 't': selectTool('text'); break;
+      case 'f': selectTool('fill'); break;
+      case 'i': selectTool('pick'); break;
+      case 'm': selectTool('transform'); break;
+      case 'x': swapInks(); break;
+      case '[':
+        sizeInput.value = String(Math.max(1, Number(sizeInput.value) - 2));
+        setStatus(`WIDTH ${sizeInput.value}`);
+        break;
+      case ']':
+        sizeInput.value = String(Math.min(42, Number(sizeInput.value) + 2));
+        setStatus(`WIDTH ${sizeInput.value}`);
+        break;
+      default:
+        break;
+    }
+  });
 
   // The console script (game mode + the L&L entry) dispatches into these.
   window.DRW = { openImageFile, openDraftFile, exportDraft, setStatus };
@@ -1263,6 +1914,73 @@ const USIC_COLORS = [
   .drw-user {
     margin-left: auto;
   }
+  /* Menus (U3): the heads keep the menubar's pixel-label register; the open
+     list is a LITE BRITE panel above the CRT overlays (z 70 > overlays 59/60). */
+  .drw-menu {
+    position: relative;
+  }
+  .drw-menu-head {
+    background: transparent;
+    border: 0;
+    color: var(--lb-dim);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: uppercase;
+    padding: 0.2rem 0.1rem;
+    cursor: pointer;
+  }
+  .drw-menu-head:hover,
+  .drw-menu-head[aria-expanded='true'] {
+    color: var(--olo);
+    text-shadow: 0 0 8px rgba(1, 255, 205, 0.5);
+  }
+  /* UNFORESEEN-1 (caught by the U9 proof drive): display:grid/flex on these
+     containers overrides the UA [hidden] rule, leaving them permanently open.
+     The explicit [hidden] guard restores the contract. */
+  .drw-menu-list[hidden],
+  .transform-bar[hidden] {
+    display: none;
+  }
+  .drw-menu-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 70;
+    min-width: 230px;
+    display: grid;
+    padding: 0.25rem;
+    background: var(--lb-panel);
+    border: 1px solid rgba(1, 255, 205, 0.35);
+    box-shadow: 0 0 14px rgba(1, 255, 205, 0.15), 4px 4px 0 rgba(0, 0, 0, 0.55);
+  }
+  .drw-menu-list button {
+    text-align: left;
+    background: transparent;
+    border: 0;
+    color: var(--lb-txt);
+    font: 400 1.05rem/1.35 var(--font-crt);
+    letter-spacing: 0.03em;
+    text-transform: none;
+    padding: 0.28rem 0.5rem;
+    cursor: pointer;
+  }
+  .drw-menu-list button:hover,
+  .drw-menu-list button:focus-visible {
+    background: var(--lb-well);
+    color: var(--olo);
+    outline: none;
+  }
+  /* VIEW preferences (U3). */
+  .drw-window.no-crt::before,
+  .drw-window.no-crt::after {
+    display: none;
+  }
+  .drw-window.hide-recent .drw-right {
+    display: none;
+  }
+  .drw-window.hide-recent .drw-body {
+    grid-template-columns: 1fr;
+  }
   .drw-menu-action {
     background: transparent;
     border: 1px solid var(--lb-dim);
@@ -1381,7 +2099,8 @@ const USIC_COLORS = [
     box-shadow: 0 0 9px var(--swatch), 0 0 20px var(--swatch);
     cursor: pointer;
   }
-  .swatch span {
+  .swatch span,
+  .ink-well span {
     position: absolute;
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -1394,6 +2113,65 @@ const USIC_COLORS = [
     outline: 2px solid var(--olo);
     outline-offset: 3px;
   }
+  /* Ink pair cluster (U2): the two wells are pegs in the same idiom as the
+     swatches; the selected well carries the OLO ring. A dashed divider
+     separates the pair from the palette. */
+  .drw-inks {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-right: 0.65rem;
+    margin-right: 0.15rem;
+    border-right: 1px dashed var(--lb-line);
+  }
+  .ink-well {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 50%;
+    --swatch: #E53327;
+    background: radial-gradient(circle at 36% 30%, #fff 0%, var(--swatch) 52%, var(--swatch) 100%);
+    box-shadow: 0 0 9px var(--swatch), 0 0 20px var(--swatch);
+    cursor: pointer;
+  }
+  .ink-well.is-active {
+    outline: 2px solid var(--olo);
+    outline-offset: 3px;
+  }
+  #well-b {
+    width: 24px;
+    height: 24px;
+    opacity: 0.85;
+  }
+  .ink-swap {
+    width: 24px;
+    height: 24px;
+    border: 2px solid;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    background: var(--lb-panel);
+    color: var(--lb-txt);
+    font: 400 0.95rem/1 var(--font-crt);
+    cursor: pointer;
+  }
+  .ink-swap:active {
+    border-color: var(--lb-bevel-dk) var(--lb-bevel-lt) var(--lb-bevel-lt) var(--lb-bevel-dk);
+  }
+  #color-picker {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 2px solid;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    background: var(--lb-panel);
+    cursor: pointer;
+  }
+  #color-picker:focus-visible,
+  .ink-well:focus-visible,
+  .ink-swap:focus-visible {
+    outline: 2px solid var(--olo);
+    outline-offset: 2px;
+  }
   .canvas-frame {
     /* Black bezel around the paper (the CRT frame); position:relative anchors
        the inline text-tool editor overlay. */
@@ -1403,6 +2181,31 @@ const USIC_COLORS = [
     border-color: rgba(1, 255, 205, 0.4) rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.4);
     box-shadow: 0 0 18px rgba(1, 255, 205, 0.1);
     padding: 0.65rem;
+  }
+  .transform-bar {
+    /* U4: the TRANS session controls, in the terminal-panel idiom. */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    background: rgba(1, 255, 205, 0.04);
+    border: 1px dashed rgba(1, 255, 205, 0.35);
+    color: var(--lb-txt);
+    font-size: 1rem;
+  }
+  .transform-bar label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .transform-bar input[type='range'] {
+    width: 120px;
+  }
+  .transform-bar span {
+    min-width: 4.5ch;
+    color: var(--olo);
   }
   .text-editor {
     /* The text tool's inline editor: previews at the click point in the
@@ -1420,6 +2223,20 @@ const USIC_COLORS = [
     overflow: hidden;
     line-height: 1.15;
     white-space: pre;
+  }
+  .text-editor-handle {
+    /* U5: the text reposition handle rides just above the editor. */
+    position: absolute;
+    z-index: 6;
+    width: 34px;
+    height: 18px;
+    border: 1px dashed var(--olo);
+    background: var(--lb-panel);
+    color: var(--olo);
+    font: 400 0.7rem/1 var(--font-pix);
+    cursor: move;
+    touch-action: none;
+    padding: 0;
   }
   #draw-canvas {
     display: block;
@@ -1521,56 +2338,6 @@ const USIC_COLORS = [
     opacity: 0.35;
     cursor: default;
   }
-  .coordinate-panel {
-    margin-top: 0.65rem;
-    background: var(--lb-panel);
-    border: 2px solid;
-    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
-    padding: 0.55rem;
-  }
-  .coordinate-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(58px, auto)) minmax(120px, 180px);
-    gap: 0.45rem;
-    align-items: center;
-  }
-  .packet-check,
-  .packet-field {
-    min-height: 30px;
-    background: var(--lb-well);
-    border: 1px solid var(--lb-line);
-    color: var(--lb-txt);
-    font: 400 1rem/1 var(--font-crt);
-  }
-  .packet-check {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0 0.35rem;
-  }
-  .packet-field {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.2rem 0.35rem;
-  }
-  .packet-field span {
-    white-space: nowrap;
-  }
-  .packet-field input,
-  .packet-field select {
-    min-width: 0;
-    width: 100%;
-    height: 24px;
-    border: 1px solid var(--lb-dim);
-    background: #000;
-    color: var(--lb-txt);
-    font: 1rem var(--font-crt);
-  }
-  .packet-wide {
-    grid-column: span 3;
-  }
   .drw-submit {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -1664,6 +2431,23 @@ const USIC_COLORS = [
     font: 400 0.95rem/1 var(--font-crt);
     text-decoration: underline;
   }
+  .scene-load {
+    /* U6: the LOAD-saved-scene button, in the packet-link register (runtime-
+       created node: styles must live in this is:global block). */
+    display: inline-block;
+    margin-top: 0.25rem;
+    margin-left: 0.6rem;
+    background: transparent;
+    border: 1px solid var(--olo);
+    color: var(--olo);
+    font: 400 0.95rem/1 var(--font-crt);
+    padding: 0.1rem 0.4rem;
+    cursor: pointer;
+  }
+  .scene-load:disabled {
+    opacity: 0.4;
+    cursor: wait;
+  }
   .drw-status {
     /* The live line: black CRT strip; the OLO peg pulses like the kit's OLO
        dot (the one always-lit peg on the board). */
@@ -1703,12 +2487,6 @@ const USIC_COLORS = [
       border-left: 0;
       border-top: 1px dashed var(--lb-line);
     }
-    .coordinate-grid {
-      grid-template-columns: repeat(4, minmax(58px, auto));
-    }
-    .packet-field {
-      grid-column: span 4;
-    }
     .draw-list {
       max-height: none;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1726,13 +2504,6 @@ const USIC_COLORS = [
     }
     .drw-submit {
       grid-template-columns: 1fr;
-    }
-    .coordinate-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .packet-field,
-    .packet-wide {
-      grid-column: span 2;
     }
     #save-btn {
       width: 100%;

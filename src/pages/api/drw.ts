@@ -77,6 +77,34 @@ export const GET: APIRoute = async ({ request, url }) => {
     return json({ error: 'drawing index not configured', detail: err?.message }, 503);
   }
 
+  // Scene proxy (U6, 070226): ?scene=<itemId> returns the saved layered-scene
+  // JSON for that item, fetched server-side from Blob. Server-side because a
+  // browser fetch would depend on the blob store's CORS posture (an assumption
+  // engineered out rather than relied on). Host allowlist prevents SSRF via a
+  // forged index entry.
+  const sceneFor = url.searchParams.get('scene');
+  if (sceneFor) {
+    const raw = await redis.zrange(DRAW_INDEX_KEY, 0, 199, { rev: true });
+    const item = raw
+      .map((entry: any) => {
+        try { return typeof entry === 'string' ? JSON.parse(entry) : entry; }
+        catch { return null; }
+      })
+      .filter(Boolean)
+      .find((it: any) => it.id === sceneFor);
+    if (!item || !item.sceneUrl) return json({ error: 'scene not found (older saves have no layered scene)' }, 404);
+    let sceneLoc: URL;
+    try { sceneLoc = new URL(item.sceneUrl); } catch { return json({ error: 'scene url invalid' }, 502); }
+    if (sceneLoc.protocol !== 'https:' || !sceneLoc.hostname.endsWith('.public.blob.vercel-storage.com')) {
+      return json({ error: 'scene url not allowed' }, 502);
+    }
+    const upstream = await fetch(sceneLoc.href);
+    if (!upstream.ok) return json({ error: `scene fetch failed (${upstream.status})` }, 502);
+    const scene = await upstream.json().catch(() => null);
+    if (!scene || !Array.isArray((scene as any).layers)) return json({ error: 'scene json invalid' }, 502);
+    return json({ ok: true, scene });
+  }
+
   const limitRaw = parseInt(url.searchParams.get('limit') || '24', 10);
   const limit = Number.isFinite(limitRaw) ? Math.min(Math.max(limitRaw, 1), 50) : 24;
   const raw = await redis.zrange(DRAW_INDEX_KEY, 0, limit - 1, { rev: true });
