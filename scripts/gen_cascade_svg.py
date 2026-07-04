@@ -2,23 +2,23 @@
 """
 gen_cascade_svg.py · generate the NEST skill cascade map SVG from the live skill set.
 
-Data-driven regen (v1.3, 062226): the previous v1.2 was a hand-authored 33-skill
+Data-driven regen (v1.4, 070426): the previous v1.2 was a hand-authored 33-skill
 snapshot. This generates the cascade from the live 46-by-altitude data that
 src/pages/skills.astro renders, so the visual and the page agree and the count
 never drifts again. Same palette + type tokens as v1.2 (teal/amber, IBM Plex Mono);
 apex = meta-dates (the always-on trigger); tiers = the 8 altitude bands.
 
-Run: python3 scripts/gen_cascade_svg.py > public/img/skills/cascade-map-v1.3-062226.svg
+Run: python3 scripts/gen_cascade_svg.py > public/img/skills/cascade-map-v1.4-070426.svg
 """
 
-# The 46 NEST-built skills by altitude, mirroring src/pages/skills.astro's nestSkills.
+# The 51 NEST-built skills by altitude, mirroring src/pages/skills.astro's nestSkills.
 # Order of tiers is the session-arc order (boot -> close).
 TIERS = [
-    ("BOOT", ["boot-polish", "ican", "stan_briefcase", "trip_briefcase", "doc_briefcase", "context-alignment", "dna"]),
+    ("BOOT", ["boot-polish", "ican", "stan_briefcase", "trip_briefcase", "doc_briefcase", "context-alignment", "dna", "allskill"]),
     ("SESSION", ["session-poem", "session-close", "survival-toolkit"]),
-    ("MEMORY / MAPPING", ["living-map", "meta-dates", "oo-daily", "photon-split", "hypercampus-builder", "hypercampus"]),
-    ("CREW OPS", ["dtad", "triptective", "ghosts", "remememento", "skill-upload", "oshin", "rorrim-nips"]),
-    ("CREATIVE / PORTAL", ["heircor-visual", "waywood-lore", "niaprint", "na-publish", "na-pdf", "na-pdf-style", "rspdan-design", "fablefallshower"]),
+    ("MEMORY / MAPPING", ["living-map", "meta-dates", "oo-daily", "photon-split", "hypercampus-builder", "hypercampus", "worderiver"]),
+    ("CREW OPS", ["dtad", "triptective", "ghosts", "remememento", "skill-upload", "oshin", "rorrim-nips", "oloskill", "oshin-oddit"]),
+    ("CREATIVE / PORTAL", ["heircor-visual", "waywood-lore", "niaprint", "na-publish", "na-pdf", "na-pdf-style", "rspdan-design", "fablefallshower", "fivier"]),
     ("INFRASTRUCTURE", ["formulacaster", "router-flash", "dex-mobile", "remote-control", "page-integrity"]),
     ("FEDERAL STANDARD", ["atomic-commit", "box-in-box"]),
     ("DISCIPLINE", ["btw", "ilevel-grid-sifter", "ultrareview", "r3mp", "dan", "lagos-check", "continuous-substrate", "cba-searching"]),
@@ -92,7 +92,7 @@ def layout():
 def main():
     inner, H, total = layout()
     svg = f'''<svg width="100%" viewBox="0 0 {W} {int(H)}" xmlns="http://www.w3.org/2000/svg" role="img">
-  <title>NEST Skill Cascade Map v1.3 · {total}-skill state · 062226</title>
+  <title>NEST Skill Cascade Map v1.4 · {total}-skill state · 070426</title>
   <desc>{total} NEST-built skills arranged by altitude tier (boot through discipline) with meta-dates as apex always-on trigger. Data-driven regen of the v1.2 33-skill snapshot; generated from the live skills.astro skill set so the count cannot drift.</desc>
   <defs>
     <style>

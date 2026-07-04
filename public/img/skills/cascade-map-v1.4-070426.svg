@@ -1,0 +1,143 @@
+<svg width="100%" viewBox="0 0 800 998" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>NEST Skill Cascade Map v1.4 · 51-skill state · 070426</title>
+  <desc>51 NEST-built skills arranged by altitude tier (boot through discipline) with meta-dates as apex always-on trigger. Data-driven regen of the v1.2 33-skill snapshot; generated from the live skills.astro skill set so the count cannot drift.</desc>
+  <defs>
+    <style>
+      .apex-title { fill: #FAC775; font: 500 16px 'IBM Plex Mono', system-ui, sans-serif; text-anchor: middle; }
+      .apex-meta { fill: #EF9F27; font: 400 11px 'IBM Plex Mono', system-ui, sans-serif; text-anchor: middle; }
+      .phase-title { fill: #9FE1CB; font: 500 13px 'IBM Plex Mono', system-ui, sans-serif; }
+      .phase-count { fill: #8A93A5; font: 400 10px 'IBM Plex Mono', system-ui, sans-serif; }
+      .node-text { fill: #C9F0E2; font: 400 11px 'IBM Plex Mono', system-ui, sans-serif; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="800" height="998" fill="#0d1411"/>
+  <rect x="240" y="24" width="320" height="56" rx="8" fill="#633806" stroke="#EF9F27" stroke-width="1"/>
+  <text x="400" y="46" class="apex-title">meta-dates</text>
+  <text x="400" y="64" class="apex-meta">apex always-on trigger (corpus-first, memory-never)</text>
+  <rect x="24" y="98" width="752" height="116" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="122" class="phase-title">BOOT</text>
+  <text x="38" y="140" class="phase-count">8 skills</text>
+  <rect x="186" y="107" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="124" class="node-text">boot-polish</text>
+  <rect x="344" y="107" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="124" class="node-text">ican</text>
+  <rect x="502" y="107" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="124" class="node-text">stan_briefcase</text>
+  <rect x="186" y="143" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="160" class="node-text">trip_briefcase</text>
+  <rect x="344" y="143" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="160" class="node-text">doc_briefcase</text>
+  <rect x="502" y="143" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="160" class="node-text">context-alignment</text>
+  <rect x="186" y="179" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="196" class="node-text">dna</text>
+  <rect x="344" y="179" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="196" class="node-text">allskill</text>
+  <rect x="24" y="230" width="752" height="44" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="254" class="phase-title">SESSION</text>
+  <text x="38" y="272" class="phase-count">3 skills</text>
+  <rect x="186" y="239" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="256" class="node-text">session-poem</text>
+  <rect x="344" y="239" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="256" class="node-text">session-close</text>
+  <rect x="502" y="239" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="256" class="node-text">survival-toolkit</text>
+  <rect x="24" y="290" width="752" height="116" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="314" class="phase-title">MEMORY / MAPPING</text>
+  <text x="38" y="332" class="phase-count">7 skills</text>
+  <rect x="186" y="299" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="316" class="node-text">living-map</text>
+  <rect x="344" y="299" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="316" class="node-text">meta-dates</text>
+  <rect x="502" y="299" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="316" class="node-text">oo-daily</text>
+  <rect x="186" y="335" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="352" class="node-text">photon-split</text>
+  <rect x="344" y="335" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="352" class="node-text">hypercampus-builder</text>
+  <rect x="502" y="335" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="352" class="node-text">hypercampus</text>
+  <rect x="186" y="371" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="388" class="node-text">worderiver</text>
+  <rect x="24" y="422" width="752" height="116" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="446" class="phase-title">CREW OPS</text>
+  <text x="38" y="464" class="phase-count">9 skills</text>
+  <rect x="186" y="431" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="448" class="node-text">dtad</text>
+  <rect x="344" y="431" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="448" class="node-text">triptective</text>
+  <rect x="502" y="431" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="448" class="node-text">ghosts</text>
+  <rect x="186" y="467" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="484" class="node-text">remememento</text>
+  <rect x="344" y="467" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="484" class="node-text">skill-upload</text>
+  <rect x="502" y="467" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="484" class="node-text">oshin</text>
+  <rect x="186" y="503" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="520" class="node-text">rorrim-nips</text>
+  <rect x="344" y="503" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="520" class="node-text">oloskill</text>
+  <rect x="502" y="503" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="520" class="node-text">oshin-oddit</text>
+  <rect x="24" y="554" width="752" height="116" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="578" class="phase-title">CREATIVE / PORTAL</text>
+  <text x="38" y="596" class="phase-count">9 skills</text>
+  <rect x="186" y="563" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="580" class="node-text">heircor-visual</text>
+  <rect x="344" y="563" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="580" class="node-text">waywood-lore</text>
+  <rect x="502" y="563" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="580" class="node-text">niaprint</text>
+  <rect x="186" y="599" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="616" class="node-text">na-publish</text>
+  <rect x="344" y="599" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="616" class="node-text">na-pdf</text>
+  <rect x="502" y="599" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="616" class="node-text">na-pdf-style</text>
+  <rect x="186" y="635" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="652" class="node-text">rspdan-design</text>
+  <rect x="344" y="635" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="652" class="node-text">fablefallshower</text>
+  <rect x="502" y="635" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="652" class="node-text">fivier</text>
+  <rect x="24" y="686" width="752" height="80" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="710" class="phase-title">INFRASTRUCTURE</text>
+  <text x="38" y="728" class="phase-count">5 skills</text>
+  <rect x="186" y="695" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="712" class="node-text">formulacaster</text>
+  <rect x="344" y="695" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="712" class="node-text">router-flash</text>
+  <rect x="502" y="695" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="712" class="node-text">dex-mobile</text>
+  <rect x="186" y="731" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="748" class="node-text">remote-control</text>
+  <rect x="344" y="731" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="748" class="node-text">page-integrity</text>
+  <rect x="24" y="782" width="752" height="44" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="806" class="phase-title">FEDERAL STANDARD</text>
+  <text x="38" y="824" class="phase-count">2 skills</text>
+  <rect x="186" y="791" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="808" class="node-text">atomic-commit</text>
+  <rect x="344" y="791" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="808" class="node-text">box-in-box</text>
+  <rect x="24" y="842" width="752" height="116" rx="8" fill="#085041" fill-opacity="0.35" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text x="38" y="866" class="phase-title">DISCIPLINE</text>
+  <text x="38" y="884" class="phase-count">8 skills</text>
+  <rect x="186" y="851" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="868" class="node-text">btw</text>
+  <rect x="344" y="851" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="868" class="node-text">ilevel-grid-sifter</text>
+  <rect x="502" y="851" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="868" class="node-text">ultrareview</text>
+  <rect x="186" y="887" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="904" class="node-text">r3mp</text>
+  <rect x="344" y="887" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="904" class="node-text">dan</text>
+  <rect x="502" y="887" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="577" y="904" class="node-text">lagos-check</text>
+  <rect x="186" y="923" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="261" y="940" class="node-text">continuous-substrate</text>
+  <rect x="344" y="923" width="150" height="26" rx="13" fill="#0f2a24" stroke="#5DCAA5" stroke-width="0.75"/>
+  <text x="419" y="940" class="node-text">cba-searching</text>
+</svg>
