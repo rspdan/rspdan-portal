@@ -1,0 +1,735 @@
+---
+// rspdan.com/wrd · WRD · the live Operating Room chat · THE FLIP OF DRW
+// UNLISTED · crew use only
+//
+// Pass-2 (Dan-direct 070326 "PLEASE STUDY HOW RSPDAN.COM/DRW WAS BUILT. WRD IS
+// THE FLIP AND SHOULD LOOK AS SUCH!!!!! p.s. WRD needs a Log."):
+//
+// WRD is DRW reversed, and now it looks as such. Same design language as
+// src/pages/drw.astro (the VISdev.01 LITE BRITE register: black pegboard
+// #08080a with peg-hole texture, VT323 CRT terminal type + Silkscreen pixel
+// labels, OLO #01FFCD as THE glow, CRT scanline + vignette overlays, the .EXE
+// window / menubar / bevel-button 1996 chrome, the pulsing status peg), with
+// the flip read into the same family:
+//   - The body grid is MIRRORED: DRW puts its RECENT panel on the RIGHT
+//     (1fr 260px); WRD puts THE LOG panel on the LEFT (260px 1fr).
+//   - DRW's surface is a white paper canvas in dark chrome (images on paper);
+//     WRD's surface is a black CRT screen in the same chrome (words as light).
+//   - The titlebar badge reads THE FLIP and carries a mirrored DRW.EXE link
+//     back to the other face; /drw and /wrd are two faces of one thing.
+//   - Seat identity uses the same Usic colors DRW draws with, rendered as the
+//     kit's glowing pegs.
+// One shared room. Every seat (Dan, BLNCH, Chad on TRP0, Olo) logs in as the
+// Operating Room with the shared token and chats in near-real-time. Backed by
+// /api/wrd (Upstash Redis, full history, never trimmed + Vercel Blob mirror
+// per message = the log floor, NOTHING-GETS-LOST). Polls every 2.5s.
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// The Usic colors (the same palette DRW draws with, hexes byte-equal to
+// src/pages/drw.astro / src/pages/usic.astro) become seat-identity pegs here.
+const SEAT_PALETTE = [
+  '#E53327', '#31A048', '#D43259', '#ECD31B', '#9376B3', '#F09021',
+  '#45B7C8', '#80CEE0', '#9B4F3A', '#84C44E', '#B5338A', '#D4B483',
+  '#7B2D8E',
+];
+---
+<BaseLayout title="WRD" description="NEST Operating Room live chat · the flip of DRW" lastUpdated="July 3, 2026">
+  <!-- LITE BRITE kit fonts (same import as /drw): VT323 CRT + Silkscreen. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+  <main class="wrd-shell" data-seat-palette={JSON.stringify(SEAT_PALETTE)}>
+    <section class="wrd-window" aria-label="WRD Operating Room live chat">
+      <header class="wrd-titlebar">
+        <div class="wrd-titlebar-left">
+          <span class="wrd-title">WRD.EXE</span>
+          <span class="wrd-path">rspdan.com/wrd</span>
+          <span class="wrd-tag">THE FLIP</span>
+        </div>
+        <a class="wrd-mirrorlink" href="/drw" title="The other face: DRW, the drawing workbench. WRD is DRW reversed."><span class="wrd-mirror-glyph" aria-hidden="true">DRW.EXE</span><span class="wrd-mirror-label">&#8646; OTHER FACE</span></a>
+      </header>
+
+      <div class="wrd-menubar" aria-label="Room menu">
+        <span>ROOM</span>
+        <span>LOG</span>
+        <span>VIEW</span>
+        <button type="button" id="wrd-leave" class="wrd-menu-action" hidden>LEAVE THE OR</button>
+        <span class="wrd-operator" id="wrd-operator"></span>
+      </div>
+
+      <!-- LOGIN (shown until a token is entered): log in as the Operating Room. -->
+      <div id="wrd-login" class="wrd-login">
+        <div class="panel-title">LOG IN AS THE OPERATING ROOM</div>
+        <label class="wrd-label" for="wrd-token">OR SHARED TOKEN</label>
+        <input id="wrd-token" type="password" autocomplete="off" placeholder="the one shared token" />
+        <label class="wrd-label" for="wrd-seat">SEAT NAME</label>
+        <input id="wrd-seat" type="text" autocomplete="off" maxlength="32" placeholder="Dan / BLNCH / Chad / Olo ..." />
+        <button id="wrd-enter" class="wrd-btn">ENTER THE OR</button>
+        <p id="wrd-login-msg" class="wrd-login-msg" aria-live="polite"></p>
+      </div>
+
+      <!-- ROOM (hidden until logged in). The grid is DRW's, mirrored: the
+           panel rides the LEFT edge where DRW's RECENT rides the RIGHT. -->
+      <div id="wrd-room" class="wrd-body" hidden>
+        <aside class="wrd-left" aria-label="The log and the room">
+          <div class="panel-title">IN THE ROOM</div>
+          <div id="wrd-presence" class="wrd-presence"></div>
+
+          <div class="panel-title wrd-log-title">THE LOG</div>
+          <div id="wrd-floor" class="wrd-floor">CHECKING THE FLOOR...</div>
+          <div class="wrd-log-links" id="wrd-log-links" hidden>
+            <a id="log-md" target="_blank" rel="noopener">TRANSCRIPT.MD</a>
+            <a id="log-full" target="_blank" rel="noopener">FULL JSON</a>
+            <a id="log-blob" target="_blank" rel="noopener">BLOB MIRROR</a>
+          </div>
+          <p class="wrd-log-note">Full history. Never trimmed. Mirrored per message to Blob. TRANSCRIPT.MD folds to the Bridge.</p>
+        </aside>
+
+        <div class="wrd-right">
+          <div class="screen-frame">
+            <div id="wrd-feed" class="wrd-feed" aria-live="polite"></div>
+          </div>
+          <form id="wrd-compose" class="wrd-compose">
+            <label for="wrd-input">SAY</label>
+            <input id="wrd-input" type="text" autocomplete="off" maxlength="4000" placeholder="say it to the room" />
+            <button type="submit" id="wrd-send" class="wrd-btn">SEND + LOG</button>
+          </form>
+        </div>
+      </div>
+
+      <footer class="wrd-status" id="wrd-conn">READY · ENTER THE OR</footer>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const API = '/api/wrd';
+  const POLL_MS = 2500;
+  const PRESENCE_WINDOW_MS = 5 * 60 * 1000; // a seat is "in the room" if heard from in last 5 min
+  const FLOOR_MS = 60 * 1000; // refresh the log-floor readout each minute
+
+  const $ = (id) => document.getElementById(id);
+  const login = $('wrd-login'), room = $('wrd-room');
+  const tokenIn = $('wrd-token'), seatIn = $('wrd-seat');
+  const feed = $('wrd-feed'), conn = $('wrd-conn'), presence = $('wrd-presence');
+  const loginMsg = $('wrd-login-msg');
+  const floorEl = $('wrd-floor'), logLinks = $('wrd-log-links');
+  const operatorEl = $('wrd-operator'), leaveBtn = $('wrd-leave');
+
+  let token = localStorage.getItem('wrd_token') || '';
+  let seat = localStorage.getItem('wrd_seat') || '';
+  let since = 0;
+  let lastSeen = {}; // seat -> ts, for the presence panel
+  let timer = null;
+  let floorTimer = null;
+
+  // Seat identity in the Usic colors (the same palette DRW draws with).
+  const PALETTE = JSON.parse(document.querySelector('.wrd-shell').dataset.seatPalette);
+  const seatColors = {};
+  function colorFor(s) {
+    if (!seatColors[s]) seatColors[s] = PALETTE[Object.keys(seatColors).length % PALETTE.length];
+    return seatColors[s];
+  }
+
+  function fmtTime(ts) {
+    return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function setConn(text, ok) {
+    conn.textContent = text;
+    conn.className = 'wrd-status' + (ok === true ? ' is-ok' : ok === false ? ' is-bad' : '');
+  }
+
+  function renderPresence() {
+    const now = Date.now();
+    const here = Object.entries(lastSeen)
+      .filter(([, ts]) => now - ts < PRESENCE_WINDOW_MS)
+      .sort((a, b) => b[1] - a[1]);
+    presence.innerHTML = here.length
+      ? here.map(([s]) => `<div class="wrd-seat-row"><span class="wrd-peg" style="--peg:${colorFor(s)}"></span>${escapeHtml(s)}</div>`).join('')
+      : '<div class="wrd-seat-row is-empty">ROOM IS QUIET</div>';
+  }
+
+  function appendMessages(msgs) {
+    const atBottom = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 60;
+    for (const m of msgs) {
+      if (!m || !m.ts) continue;
+      lastSeen[m.seat] = Math.max(lastSeen[m.seat] || 0, m.ts);
+      const el = document.createElement('div');
+      el.className = 'wrd-msg' + (m.seat === seat ? ' wrd-msg-mine' : '');
+      el.innerHTML =
+        `<span class="wrd-peg" style="--peg:${colorFor(m.seat)}"></span>` +
+        `<span class="wrd-msg-seat" style="color:${colorFor(m.seat)}">${escapeHtml(m.seat)}</span>` +
+        `<span class="wrd-msg-time">${fmtTime(m.ts)}</span>` +
+        `<div class="wrd-msg-text">${escapeHtml(m.text)}</div>`;
+      feed.appendChild(el);
+    }
+    if (msgs.length && atBottom) feed.scrollTop = feed.scrollHeight;
+    renderPresence();
+  }
+
+  async function poll() {
+    try {
+      const res = await fetch(`${API}?since=${since}&token=${encodeURIComponent(token)}`);
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setConn(res.status === 401 ? 'BAD TOKEN' : 'STORE OFFLINE', false);
+        if (res.status === 401) leave(data.error || 'unauthorized');
+        return;
+      }
+      setConn('LIVE · THE OR IS OPEN', true);
+      if (data.messages.length) {
+        appendMessages(data.messages);
+        since = data.latest;
+      } else {
+        renderPresence();
+      }
+    } catch {
+      setConn('RECONNECTING', false);
+    }
+  }
+
+  // The log floor readout (Make It Visible): message count + whether the
+  // Blob mirror is armed, straight from /api/wrd?log=status.
+  async function floor() {
+    try {
+      const res = await fetch(`${API}?log=status&token=${encodeURIComponent(token)}`);
+      const data = await res.json();
+      if (!res.ok || !data.ok) { floorEl.textContent = 'FLOOR UNREADABLE'; return; }
+      const blob = data.blob.armed ? 'BLOB MIRROR ARMED' : 'BLOB MIRROR OFF (set BLOB_READ_WRITE_TOKEN)';
+      floorEl.innerHTML = `${data.redis.total} MESSAGES HELD<br/>REDIS: FULL, NEVER TRIMMED<br/>${blob}`;
+      floorEl.className = 'wrd-floor' + (data.blob.armed ? ' is-armed' : '');
+    } catch {
+      floorEl.textContent = 'FLOOR UNREADABLE';
+    }
+  }
+
+  function armLogLinks() {
+    const t = encodeURIComponent(token);
+    $('log-md').href = `${API}?log=md&token=${t}`;
+    $('log-full').href = `${API}?log=full&token=${t}`;
+    $('log-blob').href = `${API}?log=blob&token=${t}`;
+    logLinks.hidden = false;
+  }
+
+  async function send(text) {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ seat, text, token }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error(data.error || `send failed (${res.status})`);
+    await poll(); // pull my own message into the feed immediately
+  }
+
+  function enter() {
+    token = tokenIn.value.trim();
+    seat = seatIn.value.trim() || 'anon';
+    if (!token) { loginMsg.textContent = 'TOKEN REQUIRED'; return; }
+    localStorage.setItem('wrd_token', token);
+    localStorage.setItem('wrd_seat', seat);
+    login.hidden = true;
+    room.hidden = false;
+    leaveBtn.hidden = false;
+    operatorEl.textContent = `SEAT: ${seat}`;
+    since = 0;
+    feed.innerHTML = '';
+    lastSeen = {};
+    poll();
+    floor();
+    armLogLinks();
+    timer = setInterval(poll, POLL_MS);
+    floorTimer = setInterval(floor, FLOOR_MS);
+    $('wrd-input').focus();
+  }
+
+  function leave(msg) {
+    if (timer) clearInterval(timer);
+    if (floorTimer) clearInterval(floorTimer);
+    timer = null;
+    floorTimer = null;
+    localStorage.removeItem('wrd_token');
+    room.hidden = true;
+    leaveBtn.hidden = true;
+    operatorEl.textContent = '';
+    login.hidden = false;
+    loginMsg.textContent = msg || '';
+    setConn('READY · ENTER THE OR');
+  }
+
+  $('wrd-enter').addEventListener('click', enter);
+  tokenIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') enter(); });
+  seatIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') enter(); });
+  leaveBtn.addEventListener('click', () => leave(''));
+  $('wrd-compose').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = $('wrd-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    try { await send(text); }
+    catch (err) { setConn('SEND FAILED', false); input.value = text; }
+  });
+
+  // Auto-reenter if a token is remembered from a previous visit.
+  if (token) { tokenIn.value = token; seatIn.value = seat; enter(); }
+  else if (seat) { seatIn.value = seat; }
+</script>
+
+<style is:global>
+  /* ==== The LITE BRITE register, same kit as /drw (VISdev.01,
+     VISdev-Kit-LiteBrite.html: "real-artificial · 1996 chrome, 2026 engine").
+     Token values byte-equal to src/pages/drw.astro so the two faces read as
+     one thing. is:global for the same reason as /drw: the feed rows, presence
+     rows, and pegs are created by the page script at runtime and Astro's
+     scoped styles never match JS-created nodes. Every selector is /wrd-local
+     (.wrd-*, .panel-title inside .wrd-shell, #ids). ==== */
+  .wrd-shell {
+    width: min(1280px, calc(100vw - 2rem));
+    margin: 1rem auto 4rem;
+    /* LITE BRITE tokens (kit :root values, byte-equal to /drw). */
+    --lb-bg: #08080a;
+    --lb-hole: rgba(255, 255, 255, 0.045);
+    --lb-txt: #dce1e4;
+    --lb-dim: #7e858a;
+    --olo: #01FFCD;
+    --lb-line: rgba(255, 255, 255, 0.08);
+    --lb-panel: #101014;
+    --lb-well: #0b0b0e;
+    --lb-bevel-lt: rgba(255, 255, 255, 0.22);
+    --lb-bevel-dk: #000000;
+    --font-crt: 'VT323', monospace;
+    --font-pix: 'Silkscreen', monospace;
+  }
+  .wrd-window {
+    /* The pegboard: near-black field + the kit's peg-hole texture. relative
+       anchors the CRT overlays. */
+    position: relative;
+    background-color: var(--lb-bg);
+    background-image: radial-gradient(circle, var(--lb-hole) 1.1px, transparent 1.7px);
+    background-size: 15px 15px;
+    background-position: center top;
+    border: 2px solid rgba(1, 255, 205, 0.35);
+    box-shadow: 0 0 24px rgba(1, 255, 205, 0.12), -6px 6px 0 rgba(0, 0, 0, 0.55); /* drop shadow flipped left (DRW throws right) */
+    color: var(--lb-txt);
+    font-family: var(--font-crt);
+    -webkit-font-smoothing: none;
+    display: flex;
+    flex-direction: column;
+  }
+  /* CRT overlays (kit scanlines + vignette), same as /drw. */
+  .wrd-window::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 3px);
+  }
+  .wrd-window::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 59;
+    background: radial-gradient(125% 90% at 50% 28%, transparent 52%, rgba(0, 0, 0, 0.6));
+  }
+  .wrd-titlebar {
+    min-height: 34px;
+    background: #000;
+    color: var(--lb-txt);
+    border-bottom: 1px solid rgba(1, 255, 205, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.25rem 0.7rem 0.25rem 0.45rem;
+  }
+  .wrd-titlebar-left {
+    display: flex;
+    align-items: center;
+  }
+  .wrd-title {
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    margin-right: 1rem;
+    color: #fff;
+    /* The kit's white-hot CRT glow (same idiom as DRW.EXE's title). */
+    text-shadow: 0 0 7px rgba(255, 255, 255, 0.55), 0 0 20px rgba(1, 255, 205, 0.45);
+  }
+  .wrd-path {
+    color: var(--lb-dim);
+    font-size: 1.05rem;
+  }
+  .wrd-tag {
+    /* THE FLIP badge: same pixel-badge idiom as DRW's THE CONSOLO, pulsing
+       the same OLO. Names what this page is: DRW reversed (Dan-direct
+       070326 "WRD IS THE FLIP AND SHOULD LOOK AS SUCH"). */
+    margin-left: 0.9rem;
+    font-family: var(--font-pix);
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    border: 1px solid var(--olo);
+    color: var(--olo);
+    text-shadow: 0 0 8px rgba(1, 255, 205, 0.6);
+    padding: 0.18rem 0.5rem;
+    white-space: nowrap;
+    animation: flip-pulse 2.3s ease-in-out infinite;
+  }
+  @keyframes flip-pulse {
+    0%, 100% { box-shadow: 0 0 9px rgba(1, 255, 205, 0.35), inset 0 0 6px rgba(1, 255, 205, 0.12); }
+    50% { box-shadow: 0 0 16px rgba(1, 255, 205, 0.6), 0 0 34px rgba(1, 255, 205, 0.3), inset 0 0 8px rgba(1, 255, 205, 0.22); }
+  }
+  .wrd-mirrorlink {
+    /* The door to the other face. The DRW.EXE glyph renders MIRRORED
+       (scaleX(-1)): the literal flip, worn on the titlebar. */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--lb-dim);
+    font-family: var(--font-pix);
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    border: 1px solid var(--lb-line);
+    padding: 0.18rem 0.5rem;
+  }
+  .wrd-mirror-glyph {
+    display: inline-block;
+    transform: scaleX(-1);
+    font-family: var(--font-crt);
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    color: var(--lb-txt);
+    text-shadow: 0 0 7px rgba(255, 255, 255, 0.25);
+  }
+  .wrd-mirrorlink:hover {
+    border-color: var(--olo);
+    color: var(--olo);
+  }
+  .wrd-menubar {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    min-height: 30px;
+    padding: 0.2rem 0.75rem;
+    border-bottom: 1px dashed var(--lb-line);
+    color: var(--lb-dim);
+    font-family: var(--font-pix);
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .wrd-operator {
+    margin-left: auto;
+  }
+  .wrd-menu-action {
+    background: transparent;
+    border: 1px solid var(--lb-dim);
+    color: var(--lb-txt);
+    font: 400 0.58rem/1.4 var(--font-pix);
+    letter-spacing: 0.18em;
+    padding: 0.22rem 0.55rem;
+    cursor: pointer;
+  }
+  .wrd-menu-action:active {
+    background: var(--lb-panel);
+  }
+  .wrd-shell .panel-title {
+    /* The kit .lbl eyebrow, same as /drw. */
+    font-family: var(--font-pix);
+    font-size: 0.58rem;
+    font-weight: 400;
+    border-bottom: 1px dashed var(--lb-line);
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.35rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--olo);
+    text-shadow: 0 0 8px rgba(1, 255, 205, 0.4);
+  }
+  /* ---- LOGIN ---- */
+  .wrd-login {
+    max-width: 460px;
+    margin: 2.5rem auto 3rem;
+    padding: 0.75rem;
+    background: var(--lb-panel);
+    border: 2px solid;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .wrd-label {
+    font-family: var(--font-pix);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--lb-dim);
+  }
+  .wrd-login input,
+  .wrd-compose input {
+    min-width: 0;
+    height: 32px;
+    border: 1px solid var(--lb-dim);
+    background: #000;
+    color: var(--lb-txt);
+    font: 1.1rem var(--font-crt);
+    padding: 0.25rem 0.4rem;
+  }
+  .wrd-login input:focus,
+  .wrd-compose input:focus {
+    outline: 2px solid var(--olo);
+    outline-offset: 1px;
+    box-shadow: 0 0 10px rgba(1, 255, 205, 0.3);
+  }
+  .wrd-btn {
+    background: var(--lb-panel);
+    border: 2px solid;
+    border-color: var(--lb-bevel-lt) var(--lb-bevel-dk) var(--lb-bevel-dk) var(--lb-bevel-lt);
+    color: var(--lb-txt);
+    font: 400 1.05rem/1 var(--font-crt);
+    min-height: 30px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+  }
+  .wrd-btn:active {
+    border-color: var(--lb-bevel-dk) var(--lb-bevel-lt) var(--lb-bevel-lt) var(--lb-bevel-dk);
+    background: var(--lb-well);
+  }
+  .wrd-login-msg {
+    min-height: 1.1em;
+    margin: 0;
+    color: var(--lb-dim);
+    font-size: 1rem;
+  }
+  /* ---- ROOM: DRW's grid, MIRRORED (panel left, work surface right). ---- */
+  .wrd-body {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr); /* DRW: minmax(0,1fr) 260px */
+    min-height: 0;
+    flex: 1;
+  }
+  .wrd-left {
+    border-right: 1px dashed var(--lb-line); /* DRW: border-left on .drw-right */
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.75rem;
+    min-width: 0;
+  }
+  .wrd-right {
+    min-width: 0;
+    padding: 0.75rem;
+  }
+  .wrd-presence {
+    display: grid;
+    gap: 0.3rem;
+    margin-bottom: 0.9rem;
+  }
+  .wrd-seat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.2rem 0.3rem;
+    background: var(--lb-well);
+    border: 1px dashed var(--lb-line);
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+  .wrd-seat-row.is-empty {
+    color: var(--lb-dim);
+  }
+  .wrd-peg {
+    /* A seat is a lit peg in its Usic color (the kit .dot idiom, same as
+       DRW's swatches: radial white hotspot + the color's own glow). */
+    flex: 0 0 auto;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #fff 0%, var(--peg) 52%, var(--peg) 100%);
+    box-shadow: 0 0 7px var(--peg), 0 0 14px var(--peg);
+  }
+  .wrd-log-title {
+    margin-top: 0.4rem;
+  }
+  .wrd-floor {
+    background: var(--lb-well);
+    border: 1px solid var(--lb-line);
+    padding: 0.45rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--lb-txt);
+  }
+  .wrd-floor.is-armed {
+    border-color: rgba(1, 255, 205, 0.3);
+    box-shadow: 0 0 10px rgba(1, 255, 205, 0.12);
+  }
+  .wrd-log-links {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.45rem;
+  }
+  .wrd-log-links a {
+    display: block;
+    padding: 0.25rem 0.4rem;
+    border: 1px solid var(--lb-dim);
+    color: var(--olo);
+    font: 400 0.95rem/1.2 var(--font-crt);
+    text-decoration: underline;
+    text-shadow: 0 0 8px rgba(1, 255, 205, 0.35);
+    overflow-wrap: anywhere;
+  }
+  .wrd-log-links a:hover {
+    border-color: var(--olo);
+  }
+  .wrd-log-note {
+    margin: 0.5rem 0 0;
+    color: var(--lb-dim);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  /* ---- The screen: WRD's work surface. DRW frames a WHITE paper canvas in
+     this same bezel; the flip frames a BLACK CRT screen (words as light). */
+  .screen-frame {
+    position: relative;
+    background: #000;
+    border: 2px solid;
+    border-color: rgba(1, 255, 205, 0.14) rgba(1, 255, 205, 0.4) rgba(1, 255, 205, 0.4) rgba(1, 255, 205, 0.14); /* DRW's bezel bevel, mirrored */
+    box-shadow: 0 0 18px rgba(1, 255, 205, 0.1);
+    padding: 0.65rem;
+  }
+  .wrd-feed {
+    height: 58vh;
+    min-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    scrollbar-color: var(--lb-panel) #000;
+  }
+  .wrd-msg {
+    max-width: 88%;
+  }
+  .wrd-msg-mine {
+    align-self: flex-end;
+    text-align: right;
+  }
+  .wrd-msg .wrd-peg {
+    width: 9px;
+    height: 9px;
+    margin-right: 0.4rem;
+    vertical-align: baseline;
+  }
+  .wrd-msg-seat {
+    font-family: var(--font-pix);
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+    text-shadow: 0 0 6px currentColor;
+  }
+  .wrd-msg-time {
+    color: var(--lb-dim);
+    font-size: 0.9rem;
+  }
+  .wrd-msg-text {
+    margin-top: 0.15rem;
+    display: inline-block;
+    text-align: left;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    color: var(--lb-txt);
+    background: var(--lb-well);
+    border: 1px solid var(--lb-line);
+    padding: 0.3rem 0.55rem;
+  }
+  .wrd-msg-mine .wrd-msg-text {
+    border-color: rgba(1, 255, 205, 0.3);
+    background: rgba(1, 255, 205, 0.05);
+  }
+  /* ---- Compose: DRW's .drw-submit row (LABEL / input / SAVE + RELAY),
+     flipped to SAY / input / SEND + LOG. ---- */
+  .wrd-compose {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.65rem;
+  }
+  .wrd-compose label {
+    font-family: var(--font-pix);
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+  }
+  /* ---- Status strip: the same pulsing OLO peg as DRW's READY line. ---- */
+  .wrd-status {
+    min-height: 28px;
+    padding: 0.35rem 0.7rem;
+    background: #000;
+    color: var(--lb-txt);
+    border-top: 1px solid rgba(1, 255, 205, 0.25);
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+  .wrd-status::before {
+    content: '';
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #fff 0%, var(--olo) 52%, var(--olo) 100%);
+    box-shadow: 0 0 9px var(--olo), 0 0 20px var(--olo);
+    margin-right: 0.55rem;
+    vertical-align: baseline;
+    animation: wrd-peg-pulse 2.3s ease-in-out infinite;
+  }
+  .wrd-status.is-bad::before {
+    --olo: #E53327; /* the peg goes Usic Red when the room drops */
+  }
+  @keyframes wrd-peg-pulse {
+    0%, 100% { box-shadow: 0 0 9px var(--olo), 0 0 20px var(--olo); }
+    50% { box-shadow: 0 0 16px var(--olo), 0 0 34px var(--olo), 0 0 54px rgba(1, 255, 205, 0.5); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wrd-tag,
+    .wrd-status::before {
+      animation: none;
+    }
+  }
+  @media (max-width: 900px) {
+    .wrd-shell {
+      width: calc(100vw - 1rem);
+      margin-top: 0.5rem;
+    }
+    .wrd-body {
+      grid-template-columns: 1fr;
+    }
+    .wrd-left {
+      border-right: 0;
+      border-bottom: 1px dashed var(--lb-line);
+    }
+    .wrd-feed {
+      height: 48vh;
+    }
+  }
+  @media (max-width: 620px) {
+    .wrd-titlebar {
+      flex-wrap: wrap;
+    }
+    .wrd-compose {
+      grid-template-columns: 1fr;
+    }
+    #wrd-send {
+      width: 100%;
+    }
+  }
+</style>
