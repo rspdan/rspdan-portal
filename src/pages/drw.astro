@@ -264,6 +264,8 @@ const USIC_COLORS = [
 </BaseLayout>
 
 <script>
+  import { saveStatusLine } from '../lib/drwSaveStatus.js';
+
   const W = 960;
   const H = 640;
   const DRAFT_KEY = 'drw:draft:v1';
@@ -1285,10 +1287,10 @@ const USIC_COLORS = [
       // error -> sceneUrl null). That is the right call for the PNG, but the
       // operator must not be left believing the EDITABLE scene persisted
       // when it did not (nothing gets lost includes knowing when it would).
-      const sceneStored = Boolean(data.drawing && data.drawing.sceneUrl);
-      setStatus(sceneStored
-        ? `SAVED ${data.drawing.id} · SCENE + PNG STORED`
-        : `SAVED ${data.drawing.id} · FLAT PNG ONLY (LAYERED SCENE NOT STORED · FILE > EXPORT DRAFT KEEPS THE EDITABLE COPY)`);
+      // saveStatusLine is the single source of the honest disclosure, unit-tested
+      // in src/lib/drwSaveStatus.test.mjs so the "knowing when it would" guarantee
+      // cannot silently regress (the RWD codec-bug lesson applied to E3).
+      setStatus(saveStatusLine(data.drawing));
     } catch (err) {
       setStatus(`SAVE ERROR: ${err.message}`);
     } finally {
