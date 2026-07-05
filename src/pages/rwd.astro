@@ -288,14 +288,17 @@ const SEAT_PALETTE = [
     strip.scrollLeft = strip.scrollWidth; // newest into view
   }
   // Scrubbing the strip to an event REWINDS the room to that moment.
-  // Only ever load an http(s) media/ref url (never javascript:/data: from a
-  // stored ref); build DOM by property, never by innerHTML, so a ref cannot inject.
+  // Guards. isHttp: for a <a href> sink (data:/javascript: hrefs are XSS, http(s)
+  // only). isPlayableAudio: for the audio player src, which safely plays a blob
+  // http(s) url OR a data:audio/ url (the redis-inline fallback take), never any
+  // other scheme. DOM is built by property, never innerHTML, so a ref cannot inject.
   function isHttp(u) { return typeof u === 'string' && /^https?:\/\//i.test(u); }
+  function isPlayableAudio(u) { return typeof u === 'string' && (/^https?:\/\//i.test(u) || /^data:audio\//i.test(u)); }
   function rewindTo(e) {
     const when = new Date(e.ts).toLocaleString();
     if (e.world === 'rwd') {
-      if (isHttp(e.ref)) { player.src = e.ref; player.play().catch(() => {}); enablePlayback(); nowPlaying.textContent = `▶ ${e.seat} · ${when}${e.label ? ' · ' + e.label : ''}`; }
-      else nowPlaying.textContent = `RWD take (inline or no url) · ${e.seat} · ${when}`;
+      if (isPlayableAudio(e.ref)) { player.src = e.ref; player.play().catch(() => {}); enablePlayback(); nowPlaying.textContent = `▶ ${e.seat} · ${when}${e.label ? ' · ' + e.label : ''}`; }
+      else nowPlaying.textContent = `RWD take (no playable url) · ${e.seat} · ${when}`;
     } else if (e.world === 'wrd') {
       nowPlaying.textContent = `WRD · ${e.seat} · ${when} · "${e.label}"`;
     } else if (e.world === 'drw') {
@@ -455,7 +458,8 @@ const SEAT_PALETTE = [
   }
   function playById(id) {
     const t = takesById[id];
-    if (t && t.url) { player.src = t.url; player.play().catch(() => {}); enablePlayback(); echo(`PLAYING ${id}`, 'is-ok'); }
+    if (t && isPlayableAudio(t.url)) { player.src = t.url; player.play().catch(() => {}); enablePlayback(); echo(`PLAYING ${id}`, 'is-ok'); }
+    else if (t) echo(`TAKE '${id}' HAS NO PLAYABLE URL`, 'is-bad');
     else echo(`TAKE '${id}' NOT IN THE LOADED SET · try list`, 'is-bad');
   }
   function rewindArg(a) {
