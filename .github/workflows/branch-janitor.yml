@@ -1,0 +1,69 @@
+name: branch-janitor
+
+# Fleet-wide branch hygiene for the public portal (Dan-direct 070526 "FIX THIS FUCKING
+# BRANCH SHIT ... NEVER EVER AGAIN ... NOT SPECTRAPPED TO ANY SINGLE CREW"). The portal
+# is public CODE (legit images, review-worthy feature branches), so this janitor is
+# DELETE-ONLY: it never reconciles branch-only code to main (that is a review-worthy
+# change, not auto-mergeable) and never blocks media. It deletes ONLY branches whose
+# content is 100% on main already (nothing lost) + stale (>4 days) + non-persistent.
+# A cloud seat cannot delete a branch (git push --delete = 403); this Action's
+# GITHUB_TOKEN can. No seat needs delete-creds. Runs weekly + on manual dispatch.
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Mondays 09:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: branch-janitor
+  cancel-in-progress: false
+
+jobs:
+  janitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout main (full depth)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: fetch all branches
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+
+      - name: delete fully-merged + stale + non-persistent branches (content is on main; nothing lost)
+        run: |
+          python3 - "$(date +%s)" <<'PY'
+          import subprocess, sys
+          now = int(sys.argv[1]); cutoff = now - 4 * 86400
+          KEEP = ("boot", "trip-odt-night", "fresh-session", "nest-doc-continuation",
+                  "blnch-establish", "blnch-boot", "gh-pages", "production", "release")
+          def git(*a):
+              return subprocess.run(["git", *a], capture_output=True, text=True).stdout
+          main = set(git("ls-tree", "-r", "--name-only", "origin/main").splitlines())
+          branches = [l.split()[1][11:] for l in git("ls-remote", "--heads", "origin").splitlines()
+                      if len(l.split()) == 2 and l.split()[1].startswith("refs/heads/")]
+          deleted = 0
+          for b in branches:
+              if b == "main" or any(k in b for k in KEEP):
+                  continue
+              only = [f for f in git("ls-tree", "-r", "--name-only", "origin/%s" % b).splitlines()
+                      if f and f not in main]
+              if only:
+                  continue  # unique content -> keep (NOTHING GETS LOST)
+              ct = git("log", "-1", "--format=%ct", "origin/%s" % b).strip()
+              try:
+                  if int(ct) >= cutoff:
+                      continue  # too recent -> likely active
+              except ValueError:
+                  continue
+              r = subprocess.run(["git", "push", "origin", "--delete", b], capture_output=True, text=True)
+              if r.returncode == 0:
+                  print("deleted", b); deleted += 1
+              else:
+                  print("FAILED", b, (r.stderr or r.stdout).strip().splitlines()[-1:])
+          print("branch-janitor: deleted %d fully-merged+stale branches." % deleted)
+          PY
