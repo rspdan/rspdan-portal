@@ -1,0 +1,329 @@
+---
+// map.astro · rspdan.com/map
+// DRAFT world-map · a node-and-edge map of the NEST world (GOFA, Waywood, NOW
+// ANTHROPOLOGY, the Crew/Fleet, LAGOS, HypercampUS). For Dan's review.
+//
+// PROVENANCE + AUTHORIZATION (SR26 source-1, verbatim Dan-direct 062026): "ALL" + "Work
+// WITH ME." on the portal world-map lane (DANOTE item B1). This is a DRAFT page that
+// TOUCHES Dan's structure (SR21), so it lands as a draft PR for Dan's review, never a
+// silent change to a live page. Built by the BLNCH Doc Squad NUG (Opus 4.8), 062026.
+//
+// BUILD SPEC: the pokeclicker interlinked-worldbuilding mine,
+// RELAY/RESEARCH_PokeclickerWikiMine_InterlinkedWorldbuildingComponentParts_DANOTEItemB1_NUG_062026.md
+// on the nest-bridge Bridge. The grammar applied here:
+//   P1 flat typed spine (the legend, one row of node-classes, never deepened).
+//   P2 one node-template (every node: name + type + which-world + what-it-links-to + href).
+//   P3 routes-as-edges (the connectors between worlds are first-class, listed objects, and
+//      drawn as the lines of the SVG graph; the interlink IS the data, not a "see also").
+//   P5 guessable per-node address (each node carries its real /route).
+//
+// NO fabricated lore: every node is a real NEST domain that already exists on the portal
+// or in the Bridge prose; every edge is a real relationship. Where a node has no standalone
+// page yet (LAGOS, HypercampUS), it points at the page that describes it (/nest) and is
+// marked as such, rather than inventing a route.
+//
+// Style: BaseLayout + inline CSS in the existing page idiom (PNW palette, mono eyebrows,
+// box-drawing glyphs, card grid). Self-contained; no new dependency.
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// ---- NODES (P2 uniform template) · the real NEST worlds ----
+// type = its node-class (the flat typed spine, P1). href = its real address (P5).
+// "has page" distinguishes a node with its own live route from a node described inside
+// another page (so we never invent a route that does not exist).
+const nodes = [
+  { id: 'nest',    name: 'NEST',            type: 'Practice',  href: '/nest',         hasPage: true,
+    blurb: 'The research practice itself · one director, a crew of AI instances, one shared memory. The keystone every other node hangs from.' },
+  { id: 'crew',    name: 'Crew + Fleet',    type: 'People',    href: '/fleet',        hasPage: true,
+    blurb: 'The AI collaborators (Trip, Doc, El VIS, and the rest) running across the fleet of physical stations. /fleet is the internal node-map; /nest is the public account.' },
+  { id: 'lagos',   name: 'LAGOS',           type: 'Memory',    href: '/nest',         hasPage: false,
+    blurb: 'The shared memory · not one store but the whole graft of boxes read as one substrate (git bridge, mail, drive, calendar, photos, manifests, conversation). Described on /nest.' },
+  { id: 'na',      name: 'NOW ANTHROPOLOGY', type: 'Journal',  href: '/journal',      hasPage: true,
+    blurb: 'The journal · field notes written from inside the system that produces them. The published record of the practice.' },
+  { id: 'gofa',    name: 'GOFA',            type: 'Timeline',  href: '/gofa',         hasPage: true,
+    blurb: 'Generated Order From Absurdity · a living visual timeline tracking the development in reverse, tempo read by emotional beats.' },
+  { id: 'waywood', name: 'Waywood',         type: 'World',     href: '/waywoodarium', hasPage: true,
+    blurb: 'The creative world · cosmology, geography, the Circle-of-5ths key system. Surfaced as the Waywoodarium 3D scene and the Ouch McCouch lore.' },
+  { id: 'usic',    name: 'Usic Theory',     type: 'World',     href: '/usic',         hasPage: true,
+    blurb: 'The music-theory layer of Waywood · the Circle-of-5ths framework the world is built on.' },
+  { id: 'research',name: 'Research',        type: 'Method',    href: '/research',     hasPage: true,
+    blurb: 'The methods surface · the STORY Protocol and the discipline that turns a boot into aligned work.' },
+  { id: 'skills',  name: 'Skills',          type: 'Method',    href: '/skills',       hasPage: true,
+    blurb: 'The Crew-built skill library · the callable disciplines the practice runs on.' },
+  { id: 'hcus',    name: 'HypercampUS',     type: 'Archive',   href: '/start-here',   hasPage: false,
+    blurb: 'The traversable knowledge-archive idea · box-in-box navigation that walks a newcomer into the work in order. The entry-path is /start-here.' },
+];
+
+// ---- EDGES (P3 routes-as-edges) · the real relationships ----
+// Each edge is a first-class connector: from -> to, with the real relationship named.
+const edges = [
+  { from: 'nest',    to: 'crew',     rel: 'runs as' },
+  { from: 'crew',    to: 'lagos',    rel: 'shares' },
+  { from: 'nest',    to: 'lagos',    rel: 'remembers via' },
+  { from: 'crew',    to: 'na',       rel: 'writes' },
+  { from: 'nest',    to: 'gofa',     rel: 'tracked by' },
+  { from: 'nest',    to: 'research', rel: 'documents method in' },
+  { from: 'research',to: 'skills',   rel: 'runs on' },
+  { from: 'crew',    to: 'waywood',  rel: 'builds' },
+  { from: 'waywood', to: 'usic',     rel: 'keyed by' },
+  { from: 'na',      to: 'waywood',  rel: 'reports on' },
+  { from: 'lagos',   to: 'hcus',     rel: 'traversed via' },
+  { from: 'hcus',    to: 'na',       rel: 'archives' },
+];
+
+const nodeById = Object.fromEntries(nodes.map((n) => [n.id, n]));
+
+// ---- SVG graph layout (P3 drawn) · fixed flat positions, kept SIMPLE per the mine ----
+// Hand-placed on a 920x520 board so the spine reads left-to-right; depth lives in the
+// node cards below, not in the diagram. Coordinates are the node centers.
+const pos = {
+  nest:     { x: 460, y: 70  },
+  crew:     { x: 220, y: 190 },
+  lagos:    { x: 460, y: 200 },
+  na:       { x: 700, y: 190 },
+  research: { x: 700, y: 320 },
+  skills:   { x: 700, y: 440 },
+  gofa:     { x: 460, y: 330 },
+  hcus:     { x: 230, y: 330 },
+  waywood:  { x: 220, y: 460 },
+  usic:     { x: 440, y: 460 },
+};
+const R = 30;
+const drawnEdges = edges
+  .filter((e) => pos[e.from] && pos[e.to])
+  .map((e) => ({ ...e, a: pos[e.from], b: pos[e.to] }));
+---
+
+<BaseLayout
+  title="World Map (DRAFT)"
+  description="DRAFT · a node-and-edge map of the NEST world · GOFA, Waywood, NOW ANTHROPOLOGY, the Crew and Fleet, LAGOS, HypercampUS. Nodes are the real NEST domains; routes are the real relationships between them."
+  lastUpdated="June 20, 2026"
+>
+
+<section class="hero-map">
+  <div class="container">
+    <p class="eyebrow mono">&#9638; NEST WORLD MAP · DRAFT FOR REVIEW</p>
+    <h1>The World Map</h1>
+    <p class="subtitle">One flat spine, the depth in the nodes. The NEST worlds drawn as
+      nodes and the real relationships between them drawn as routes · the way a town-map
+      reads a world: simple layout, clear interlinks.</p>
+    <p class="draft-flag mono">&#9888; DRAFT · not a live portal page · a proposal for Dan to review.</p>
+  </div>
+</section>
+
+<article class="container map-body">
+
+  <section class="map-section">
+    <p class="section-eyebrow mono">&#9638; The spine</p>
+    <div class="legend">
+      {[...new Set(nodes.map((n) => n.type))].map((t) => (
+        <span class="legend-chip mono">{t}</span>
+      ))}
+    </div>
+    <p class="note">Every node is one of these classes; the spine never deepens. Read the
+      template once and read any node cold.</p>
+  </section>
+
+  <section class="map-section">
+    <p class="section-eyebrow mono">&#9673; The map</p>
+    <div class="graph-wrap">
+      <svg viewBox="0 0 920 520" role="img" aria-label="Node and edge map of the NEST world" class="graph">
+        <!-- edges (routes) drawn first so nodes sit on top -->
+        {drawnEdges.map((e) => (
+          <line x1={e.a.x} y1={e.a.y} x2={e.b.x} y2={e.b.y} class="edge-line" />
+        ))}
+        {drawnEdges.map((e) => (
+          <text x={(e.a.x + e.b.x) / 2} y={(e.a.y + e.b.y) / 2 - 4} class="edge-label mono">{e.rel}</text>
+        ))}
+        <!-- nodes -->
+        {nodes.filter((n) => pos[n.id]).map((n) => (
+          <g class="graph-node">
+            <a href={n.href}>
+              <circle cx={pos[n.id].x} cy={pos[n.id].y} r={R} class="node-dot" />
+              <text x={pos[n.id].x} y={pos[n.id].y + 4} class="node-label mono" text-anchor="middle">{n.name}</text>
+            </a>
+          </g>
+        ))}
+      </svg>
+    </div>
+    <p class="note">Routes are the lines, named with the real relationship. Click a node to
+      open its page. Nodes without a standalone page yet (LAGOS, HypercampUS) open the page
+      that describes them.</p>
+  </section>
+
+  <section class="map-section">
+    <p class="section-eyebrow mono">&#9680; The nodes</p>
+    <div class="node-grid">
+      {nodes.map((n) => {
+        const links = edges
+          .filter((e) => e.from === n.id || e.to === n.id)
+          .map((e) => (e.from === n.id ? nodeById[e.to] : nodeById[e.from]))
+          .filter((x, i, arr) => x && arr.indexOf(x) === i);
+        return (
+          <a href={n.href} class="node-card">
+            <div class="node-card-head">
+              <span class="node-name">{n.name}</span>
+              <span class="node-type mono">{n.type}</span>
+            </div>
+            <span class="node-blurb">{n.blurb}</span>
+            <div class="node-links mono">
+              {!n.hasPage && <span class="no-page">described page</span>}
+              {links.map((l) => (
+                <span class="node-link-chip">{l.name}</span>
+              ))}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="map-section">
+    <p class="section-eyebrow mono">&#9135; The routes</p>
+    <p class="note">The interlink is the data, not a footnote. Each route is the named
+      relationship between two worlds.</p>
+    <ul class="route-list mono">
+      {edges.map((e) => (
+        <li>
+          <span class="route-from">{nodeById[e.from].name}</span>
+          <span class="route-rel">{e.rel}</span>
+          <span class="route-to">{nodeById[e.to].name}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+</article>
+
+<style>
+  .hero-map {
+    padding: 4rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.18em;
+    color: var(--wood); text-transform: uppercase;
+  }
+  .hero-map h1 {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    color: var(--forest);
+    margin: 0.6rem 0 1rem;
+  }
+  .subtitle {
+    max-width: 46rem;
+    color: var(--text-lt);
+    font-size: 1.05rem;
+  }
+  .draft-flag {
+    margin-top: 1.2rem;
+    font-size: 0.72rem; letter-spacing: 0.1em;
+    color: var(--wood);
+  }
+
+  .map-body { padding-top: 2.5rem; }
+  .map-section { margin-bottom: 3.5rem; }
+  .section-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    color: var(--slate-lt); text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .note {
+    color: var(--muted);
+    font-size: 0.9rem;
+    max-width: 44rem;
+    margin-top: 0.8rem;
+  }
+
+  /* === legend (flat typed spine) === */
+  .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .legend-chip {
+    font-size: 0.72rem; letter-spacing: 0.06em;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    color: var(--slate);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  /* === graph === */
+  .graph-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  .graph { width: 100%; height: auto; display: block; min-width: 640px; }
+  .edge-line { stroke: var(--wood-lt); stroke-width: 1.4; opacity: 0.7; }
+  .edge-label { fill: var(--muted); font-size: 10px; }
+  .node-dot {
+    fill: var(--forest);
+    transition: fill 0.2s;
+  }
+  .graph-node a:hover .node-dot { fill: var(--forest-lt); }
+  .node-label { fill: var(--warm-white); font-size: 10px; font-weight: 500; }
+
+  /* === node cards (P2 uniform template) === */
+  .node-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  .node-card {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .node-card:hover {
+    border-color: var(--forest-lt);
+    transform: translateY(-2px);
+  }
+  .node-card-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;
+  }
+  .node-name {
+    font-family: var(--font-head);
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--forest);
+  }
+  .node-type {
+    font-size: 0.65rem; letter-spacing: 0.08em;
+    color: var(--wood); text-transform: uppercase;
+  }
+  .node-blurb { color: var(--text-lt); font-size: 0.9rem; }
+  .node-links { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.3rem; }
+  .node-link-chip {
+    font-size: 0.62rem; letter-spacing: 0.04em;
+    background: var(--off-white);
+    color: var(--slate-lt);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+  .no-page {
+    font-size: 0.62rem; letter-spacing: 0.04em;
+    color: var(--wood-lt);
+    padding: 0.2rem 0.5rem;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+  }
+
+  /* === route list (P3 edges as first-class objects) === */
+  .route-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .route-list li {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .route-from { color: var(--forest); font-weight: 500; }
+  .route-rel  { color: var(--muted); font-style: normal; }
+  .route-to   { color: var(--slate); font-weight: 500; }
+
+  @media (max-width: 600px) {
+    .hero-map { padding: 3rem 0 1.5rem; }
+  }
+</style>
+
+</BaseLayout>
