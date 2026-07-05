@@ -46,7 +46,11 @@ const SEAT_PALETTE = [
           <span class="wrd-path">rspdan.com/wrd</span>
           <span class="wrd-tag">THE FLIP</span>
         </div>
-        <a class="wrd-mirrorlink" href="/drw" title="The other face: DRW, the drawing workbench. WRD is DRW reversed."><span class="wrd-mirror-glyph" aria-hidden="true">DRW.EXE</span><span class="wrd-mirror-label">&#8646; OTHER FACE</span></a>
+        <div class="wrd-mirrorlinks">
+          <a class="wrd-mirrorlink" href="/drw" title="The other face: DRW, the drawing workbench. WRD is DRW reversed."><span class="wrd-mirror-glyph" aria-hidden="true">DRW.EXE</span></a>
+          <a class="wrd-mirrorlink" href="/rwd" title="The third face: RWD, the audio tool + the rewind."><span class="wrd-mirror-glyph" aria-hidden="true">RWD.EXE</span></a>
+          <span class="wrd-mirror-label">&#8646; OTHER FACES</span>
+        </div>
       </header>
 
       <div class="wrd-menubar" aria-label="Room menu">
@@ -385,19 +389,32 @@ const SEAT_PALETTE = [
     0%, 100% { box-shadow: 0 0 9px rgba(1, 255, 205, 0.35), inset 0 0 6px rgba(1, 255, 205, 0.12); }
     50% { box-shadow: 0 0 16px rgba(1, 255, 205, 0.6), 0 0 34px rgba(1, 255, 205, 0.3), inset 0 0 8px rgba(1, 255, 205, 0.22); }
   }
-  .wrd-mirrorlink {
-    /* The door to the other face. The DRW.EXE glyph renders MIRRORED
-       (scaleX(-1)): the literal flip, worn on the titlebar. */
+  .wrd-mirrorlinks {
+    /* The doors to the other two faces, closing the triangle (DRW / WRD / RWD). */
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
+  }
+  .wrd-mirror-label {
+    font-family: var(--font-pix);
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+    color: var(--lb-dim);
+    margin-left: 0.2rem;
+    white-space: nowrap;
+  }
+  .wrd-mirrorlink {
+    /* The door to another face. The .EXE glyph renders MIRRORED (scaleX(-1)):
+       the literal flip, worn on the titlebar. */
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
     color: var(--lb-dim);
     font-family: var(--font-pix);
     font-size: 0.55rem;
     letter-spacing: 0.18em;
     border: 1px solid var(--lb-line);
-    padding: 0.18rem 0.5rem;
+    padding: 0.14rem 0.4rem;
   }
   .wrd-mirror-glyph {
     display: inline-block;

@@ -81,6 +81,11 @@ const USIC_COLORS = [
           <span class="drw-title">DRW.EXE</span>
           <span class="drw-path">rspdan.com/drw</span>
           <span class="drw-tag">THE CONSOLO</span>
+          <span class="drw-mirrorlinks">
+            <a class="drw-mirrorlink" href="/wrd" title="The words face: WRD, the Operating Room chat."><span class="drw-mirror-glyph" aria-hidden="true">WRD.EXE</span></a>
+            <a class="drw-mirrorlink" href="/rwd" title="The audio face: RWD, the tool + the rewind."><span class="drw-mirror-glyph" aria-hidden="true">RWD.EXE</span></a>
+            <span class="drw-mirror-label">&#8646; OTHER FACES</span>
+          </span>
         </div>
         <form method="POST" action="/api/pspt/logout">
           <button type="submit" class="drw-window-btn">LOGOUT</button>
@@ -1932,6 +1937,40 @@ const USIC_COLORS = [
   @keyframes consolo-pulse {
     0%, 100% { box-shadow: 0 0 9px rgba(1, 255, 205, 0.35), inset 0 0 6px rgba(1, 255, 205, 0.12); }
     50% { box-shadow: 0 0 16px rgba(1, 255, 205, 0.6), 0 0 34px rgba(1, 255, 205, 0.3), inset 0 0 8px rgba(1, 255, 205, 0.22); }
+  }
+  .drw-mirrorlinks {
+    /* The doors to the other two faces (WRD words, RWD audio), closing the
+       triangle. The .EXE glyphs render MIRRORED (scaleX(-1)), the family idiom. */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.9rem;
+  }
+  .drw-mirrorlink {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid var(--lb-line);
+    padding: 0.14rem 0.4rem;
+  }
+  .drw-mirror-glyph {
+    display: inline-block;
+    transform: scaleX(-1);
+    font-family: var(--font-crt);
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    color: var(--lb-txt);
+    text-shadow: 0 0 7px rgba(255, 255, 255, 0.25);
+  }
+  .drw-mirrorlink:hover { border-color: var(--olo); }
+  .drw-mirrorlink:hover .drw-mirror-glyph { color: var(--olo); }
+  .drw-mirror-label {
+    font-family: var(--font-pix);
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+    color: var(--lb-dim);
+    margin-left: 0.2rem;
+    white-space: nowrap;
   }
   @media (prefers-reduced-motion: reduce) {
     .drw-tag,
