@@ -117,10 +117,13 @@ function safeSeat(seat) {
 }
 
 // data:audio/*;base64,... -> { bytes, contentType } | null (the DRW decodeDataUrl idiom).
+// The media type may carry parameters (Chrome/Firefox MediaRecorder emit
+// data:audio/webm;codecs=opus;base64,...), so capture the whole type up to the
+// ;base64, marker. The old /([^;]+)/ stopped at the first ';' and 400'd every
+// recorded take on Chrome and Firefox (external cross-witness catch 070426).
 function decodeAudioDataUrl(dataUrl) {
-  const match = /^data:([^;]+);base64,(.+)$/s.exec(dataUrl || '');
+  const match = /^data:(audio\/[^,]+);base64,(.+)$/s.exec(dataUrl || '');
   if (!match) return null;
-  if (!match[1].startsWith('audio/')) return null;
   try {
     return { bytes: Buffer.from(match[2], 'base64'), contentType: match[1] };
   } catch {
@@ -470,9 +473,15 @@ export async function POST({ request, url }) {
   }
 
   // Announce to the Bridge relay (best-effort; never blocks the take).
+  // Never put a multi-MB inline data: URL on the shared relay (ch:bridge/ch:all):
+  // in the redis-inline fallback audioUrl IS the full data url, which would flood
+  // the cross-surface relay ~16MB per take. Announce the coordinate id instead so
+  // the relay stays light; the take itself carries the audio (external cross-witness
+  // catch 070426). When storage is blob, audioUrl is a short URL and is fine to relay.
+  const relayAudioRef = storage === 'blob' ? audioUrl : coordinateId;
   const content = caption
-    ? `[RWD] ${audioUrl} :: ${caption}${packetUrl ? ` :: packet ${packetUrl}` : ''}`
-    : `[RWD] ${audioUrl}${packetUrl ? ` :: packet ${packetUrl}` : ''}`;
+    ? `[RWD] ${relayAudioRef} :: ${caption}${packetUrl ? ` :: packet ${packetUrl}` : ''}`
+    : `[RWD] ${relayAudioRef}${packetUrl ? ` :: packet ${packetUrl}` : ''}`;
   const relay = await announce(redis, safe, content);
 
   return json({
