@@ -47,6 +47,7 @@ export const prerender = false;
 
 import { Redis } from '@upstash/redis';
 import { put, list } from '@vercel/blob';
+import { decodeAudioDataUrl } from '../../lib/rwdAudio.js';
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 const KEY = 'rwd:or:takes';            // this face's index (sibling of wrd:or:messages, drw:items)
@@ -116,20 +117,8 @@ function safeSeat(seat) {
   return seat.toLowerCase().replace(/[^a-z0-9_-]/g, '-') || 'anon';
 }
 
-// data:audio/*;base64,... -> { bytes, contentType } | null (the DRW decodeDataUrl idiom).
-// The media type may carry parameters (Chrome/Firefox MediaRecorder emit
-// data:audio/webm;codecs=opus;base64,...), so capture the whole type up to the
-// ;base64, marker. The old /([^;]+)/ stopped at the first ';' and 400'd every
-// recorded take on Chrome and Firefox (external cross-witness catch 070426).
-function decodeAudioDataUrl(dataUrl) {
-  const match = /^data:(audio\/[^,]+);base64,(.+)$/s.exec(dataUrl || '');
-  if (!match) return null;
-  try {
-    return { bytes: Buffer.from(match[2], 'base64'), contentType: match[1] };
-  } catch {
-    return null;
-  }
-}
+// decodeAudioDataUrl is imported from ../../lib/rwdAudio.js (extracted so the
+// codecs-parameter behavior is unit-tested in src/lib/rwdAudio.test.mjs).
 
 // Derive the file extension from the recorded mime (Chrome: audio/webm;codecs=opus,
 // Safari: audio/mp4). Never hardcoded (SR23 open-risk: recorder mime varies by browser).
