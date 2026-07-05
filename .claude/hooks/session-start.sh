@@ -23,4 +23,11 @@ exit 0
 PRECOMMIT_EOF
   chmod +x "$REPO/.git/hooks/pre-commit" 2>/dev/null || true
   echo "[NEST portal hook] pre-commit gates installed (em-dash + retired-acronym + lexicon-radar) for the PUBLIC face"
+  # SHALLOW-HEAL (Dan-direct 070526 "fix this branch shit forever, lose nothing"): a shallow
+  # clone makes `git merge-base` return empty, which reads as "unrelated histories / orphan"
+  # (the false-orphan-panic). Unshallow ONCE in the background so no seat working the portal
+  # ever misreads depth as a lineage break. Idempotent (no-op once full), non-blocking.
+  if [ "$(git -C "$REPO" rev-parse --is-shallow-repository 2>/dev/null)" = "true" ]; then
+    ( git -C "$REPO" fetch --unshallow origin >/dev/null 2>&1 & ) 2>/dev/null || true
+  fi
 fi
