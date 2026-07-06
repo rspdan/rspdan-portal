@@ -144,7 +144,7 @@ def deletable():
 
 # Persistent / boot-referenced branches a seat re-fetches at boot: NEVER auto-delete.
 KEEP_SUBSTRINGS = ("boot", "trip-odt-night", "fresh-session", "nest-doc-continuation",
-                   "blnch-establish", "blnch-boot")
+                   "blnch-establish", "blnch-boot", "gh-pages", "production", "release")
 
 
 def _tip_ct(branch):

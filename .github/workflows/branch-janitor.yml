@@ -34,36 +34,22 @@ jobs:
       - name: fetch all branches
         run: git fetch origin '+refs/heads/*:refs/remotes/origin/*'
 
-      - name: delete fully-merged + stale + non-persistent branches (content is on main; nothing lost)
+      - name: set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: delete fully-merged + stale branches (record SHA to ledger first; nothing lost)
         run: |
-          python3 - "$(date +%s)" <<'PY'
-          import subprocess, sys
-          now = int(sys.argv[1]); cutoff = now - 4 * 86400
-          KEEP = ("boot", "trip-odt-night", "fresh-session", "nest-doc-continuation",
-                  "blnch-establish", "blnch-boot", "gh-pages", "production", "release")
-          def git(*a):
-              return subprocess.run(["git", *a], capture_output=True, text=True).stdout
-          main = set(git("ls-tree", "-r", "--name-only", "origin/main").splitlines())
-          branches = [l.split()[1][11:] for l in git("ls-remote", "--heads", "origin").splitlines()
-                      if len(l.split()) == 2 and l.split()[1].startswith("refs/heads/")]
-          deleted = 0
-          for b in branches:
-              if b == "main" or any(k in b for k in KEEP):
-                  continue
-              only = [f for f in git("ls-tree", "-r", "--name-only", "origin/%s" % b).splitlines()
-                      if f and f not in main]
-              if only:
-                  continue  # unique content -> keep (NOTHING GETS LOST)
-              ct = git("log", "-1", "--format=%ct", "origin/%s" % b).strip()
-              try:
-                  if int(ct) >= cutoff:
-                      continue  # too recent -> likely active
-              except ValueError:
-                  continue
-              r = subprocess.run(["git", "push", "origin", "--delete", b], capture_output=True, text=True)
-              if r.returncode == 0:
-                  print("deleted", b); deleted += 1
-              else:
-                  print("FAILED", b, (r.stderr or r.stdout).strip().splitlines()[-1:])
-          print("branch-janitor: deleted %d fully-merged+stale branches." % deleted)
-          PY
+          git config user.name "nest-branch-janitor"
+          git config user.email "noreply@anthropic.com"
+          python3 ENGINE/branch_hygiene.py --delete-merged --include-deletion-only --now "$(date +%s)" --stale-days 4 --yes
+          if ! git diff --quiet -- STATUS/DELETED_BRANCHES_LEDGER.md; then
+            git add STATUS/DELETED_BRANCHES_LEDGER.md
+            git commit --no-verify -m "branch-janitor: record deleted-branch tip SHAs to the ledger (nothing-gets-lost, recoverable)"
+            for i in 1 2 3 4; do
+              git push origin HEAD:main && break
+              git fetch origin main && git rebase origin/main || true
+              sleep $((2 ** i))
+            done
+          fi
