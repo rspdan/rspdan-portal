@@ -56,7 +56,7 @@ export const fleet = {
   rox: [
     { name: "ODT",  hw: "Desktop tower",               os: "Windows 10",             loc: "Nest Actual, Windows Desk 1",               role: "Primary workstation · Trip host",          mobility: "stationary", mobility_note: "NEVER leaves. Permanent install at Windows Desk 1.", faces: "Ethernet (Fleet) · WiFi · Tailscale", ssh: "Crew-internal (boxed)", tailscale: "Crew-internal (boxed)", proton_vpn: "unknown (probe pending)" },
     { name: "STN2", hw: "Dell Latitude",               os: "Windows 10",             loc: "OHC Actual semi-permanent (PeaPod-pair with CUBE since 051626)",  role: "Stan host · mobile · Doc-Local at OHC",        mobility: "roaming",    mobility_note: "OHC Actual semi-permanent since 051626 PeaPod-pair config. Goes between OHC + Nest + truck. Reachable on the Fleet LAN when docked at Nest; Tailscale path valid from anywhere.", faces: "Ethernet (Fleet) · onboard wifi · VZW when mobile · OHC WiFi when at OHC · Tailscale", ssh: "Crew-internal (boxed)", tailscale: "Crew-internal (boxed)", proton_vpn: "unknown (probe pending)" },
-    { name: "GOG1", hw: "Dell XPS 8700 · DECOMMISSIONED ~050426",  os: "Ubuntu 22.04.5 LTS (pre-decom)",  loc: "Nest Actual, Unix Desk 2 (north) · physical position retained for fan-upgrade access",  role: "DECOMMISSIONED ~050426 · ~1 month dark for fan upgrade",  mobility: "stationary", mobility_note: "DECOMMISSIONED ~050426. Pre-decom: stationary Unix Desk 2 with WiFi + wired NIC paths. 1.7TB internal storage available as CUBE-SSD-source candidate.", faces: "DECOMMISSIONED · physical retained for fan-upgrade-or-recommission decision", ssh: "not active (decommissioned)", tailscale: "not peered (decommissioned)", proton_vpn: "n/a (decommissioned)" },
+    { name: "GOG1", hw: "Dell XPS 8700", os: "Ubuntu 22.04.5 LTS", loc: "Nest Actual, Unix Desk 2 (north) · physical position retained for fan-upgrade access", role: "Dark · in development · off by choice, staged for fan upgrade (dark since ~050426)", mobility: "stationary", mobility_note: "Dark since ~050426, staged for hardware work. Stationary Unix Desk 2 with WiFi + wired NIC paths. 1.7TB internal storage available as CUBE-SSD-source candidate.", faces: "Dark while staged for the fan upgrade · physical position retained", ssh: "not active while dark", tailscale: "not peered while dark", proton_vpn: "n/a while dark" },
     { name: "CUBE", hw: "ASUS Z87 DIY desktop · 931GB SSD post-swap", os: "Windows 10 install in progress", loc: "OHC Actual PERMANENT since 051526 ~16:55 PT", role: "Workplace-class workstation · PeaPod-pair partner to STN2 at OHC",  mobility: "stationary", mobility_note: "OHC Actual PERMANENT since 051526. ASUS Z87 DIY desktop · i5-4670K 4c/4t · 20 GB RAM · GTX 745 4 GB. CUBE-as-super-laptop: beefy desktop, compact enough for portability between OHC + Nest Actual. SSD upgrade executed 052026 evening: 931GB Crucial BX500 swapped into CUBE chassis. Win10 install in progress after Win11 HID-regression abandoned.", faces: "Ethernet (paired with STN2 at OHC) · onboard wifi · Tailscale", ssh: "Crew-internal (boxed)", tailscale: "Crew-internal (boxed)", proton_vpn: "not installed (deferred)" },
     { name: "DPSL", hw: "iMac Late 2013",              os: "macOS",                  loc: "Nest Actual, Unix Desk 1 (south-west)",     role: "C.B. host · Trip mirror · DPSR twin",       mobility: "stationary", mobility_note: "Stationary on Unix Desk 1. Universal-Control-paired with DPSR.",                                             faces: "Ethernet (Fleet) · Guest wifi + ProtonVPN · Universal Control <-> DPSR", ssh: "pending setup", tailscale: "Crew-internal (boxed)", proton_vpn: "active on Guest wifi" },
     { name: "DPSR", hw: "iMac Late 2013 (DPSL clone)", os: "macOS",                  loc: "Nest Actual, Unix Desk 2 (alongside GOG1)", role: "Trip power mirror · DPSL twin",             mobility: "stationary", mobility_note: "Stationary on Unix Desk 2. Universal-Control-paired with DPSL.",                                             faces: "Ethernet (Fleet) · Guest wifi · Universal Control <-> DPSL", ssh: "pending setup", tailscale: "not peered yet", proton_vpn: "likely active (twin of DPSL, verify)" },
@@ -152,7 +152,7 @@ export const fleet = {
       gpu: "NVIDIA GeForce GTX 980 · 4 GB VRAM · Maxwell",
       storage: "1.8 TB ext4 root · 512 MB EFI",
       net_adapters: ["(boxed)"],
-      fleet_role: "DECOMMISSIONED ~050426 · ~1 month dark for fan upgrade",
+      fleet_role: "Dark · in development · off by choice, staged for fan upgrade (dark since ~050426)",
       verified_at: "041726",
       probe: "(boxed)",
     },
@@ -263,7 +263,7 @@ export const fleet = {
     { rox: "ODT",  face: "WiFi (VZW)",          ip: "(boxed)", detail: "(boxed)", verified_at: "041626", probe: "(boxed)" },
     { rox: "ODT",  face: "Tailscale",           ip: "(boxed)", detail: "(boxed)", verified_at: "041626", probe: "(boxed)" },
     { rox: "STN2", face: "Ethernet (Fleet)",    ip: "(boxed)", detail: "Roaming by role; on the Fleet when docked at Nest.", verified_at: "041726", probe: "(boxed)" },
-    { rox: "GOG1", face: "WiFi (Fleet)",        ip: "(boxed)", detail: "(boxed) · DECOMMISSIONED", verified_at: "041726", probe: "(boxed)" },
+    { rox: "GOG1", face: "WiFi (Fleet)",        ip: "(boxed)", detail: "(boxed) · dark, in development", verified_at: "041726", probe: "(boxed)" },
     { rox: "CUBE", face: "Ethernet (Fleet)",    ip: "(boxed)", detail: "Hosts the ALFA WiFi testbed alongside its internal card.", verified_at: "041726", probe: "(boxed)" },
     { rox: "DPSL", face: "Ethernet (Fleet)",    ip: "(boxed)", detail: "(boxed)", verified_at: "041726", probe: "(boxed)" },
     { rox: "DPSL", face: "Tailscale (tailnet)", ip: "(boxed)", detail: "Joined tailnet 033026 during DPSL commissioning; status unverified.", verified_at: "033026", probe: "(boxed)" },
@@ -275,9 +275,9 @@ export const fleet = {
 
   open_faces: [
     { rox: "Piralus", face: "Address reservations unpopulated", issue: "Piralus's Address Reservation table is empty. All fleet stations have hardcoded static IPs on their OS side, so DHCP reservations are belt-and-suspenders. Not urgent.", action: "Populate Address Reservation rows for the 8 fleet stations (MAC data ready in fleet_private.js).", verified_at: "041726", status: "NEARGULL" },
-    { rox: "GOG1", face: "ICMP + SSH silence on wired NIC", issue: "Wired NIC historically silent. GOG1 currently on WiFi path anyway. Firewall-level drop on the wired interface.", action: "From GOG1 console: check ufw status; allow Fleet subnet on wired NIC.", verified_at: "041726", status: "blocked on GOG1 console (decommissioned)" },
+    { rox: "GOG1", face: "ICMP + SSH silence on wired NIC", issue: "Wired NIC historically silent. GOG1 currently on WiFi path anyway. Firewall-level drop on the wired interface.", action: "From GOG1 console: check ufw status; allow Fleet subnet on wired NIC.", verified_at: "041726", status: "blocked on GOG1 console (dark, in development)" },
     { rox: "CUBE", face: "Phantom WiFi ghost", issue: "Piralus saw a WiFi client with CUBE's hostname on a DHCP-pool address while CUBE is wired. Hypothesis: a legacy hostname from early NEST days.", action: "NESTNET hunt: search early-NEST Bridge docs + DHCP lease history (details in fleet_private.js).", verified_at: "041726", status: "audit pending" },
-    { rox: "GOG1", face: "Wired vs WiFi preference", issue: "GOG1 was on WiFi while the map expects it wired. Linux preferring WiFi — unusual. May be unplugged or bridging drift.", action: "Verify at GOG1 console: ip link / ip route. (Decommissioned — deferred.)", verified_at: "041726", status: "diagnostic pending (decommissioned)" },
+    { rox: "GOG1", face: "Wired vs WiFi preference", issue: "GOG1 was on WiFi while the map expects it wired. Linux preferring WiFi — unusual. May be unplugged or bridging drift.", action: "Verify at GOG1 console: ip link / ip route. (Dark, in development; deferred.)", verified_at: "041726", status: "diagnostic pending (dark, in development)" },
   ],
 };
 
@@ -308,7 +308,7 @@ export const board = {
     { key: "dark",           label: "DARK",           desc: "powered but unseated" },
     { key: "dark-ready",     label: "DARK-READY",     desc: "ready to wake" },
     { key: "off-network",    label: "OFF-NETWORK",    desc: "unreachable" },
-    { key: "decommissioned", label: "DECOMMISSIONED", desc: "retired" },
+    { key: "dark-in-development", label: "DARK · IN DEVELOPMENT", desc: "off by choice, staged for hardware work" },
   ],
 };
 
@@ -342,6 +342,6 @@ export const crew_seats = {
     { crew: "DPSL", status: "dark-ready", note: "C.B. host · Trip mirror · at Nest Actual" },
   ]},
   DPSR: { station_status: "dark-ready", seats: [] },
-  GOG1: { station_status: "decommissioned", seats: [] },
+  GOG1: { station_status: "dark-in-development", seats: [] },
   "O'Shin": { station_status: "off-network", seats: [] },
 };
