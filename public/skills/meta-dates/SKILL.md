@@ -2,6 +2,16 @@
 name: meta-dates
 description: NEST corpus-first-memory-never discipline. Use before any factual or definitional claim, mid-turn or at session boundaries. Full spec: rspdan.com/skills/meta-dates/SKILL.md
 ---
+## Current applicability — November 4, 2026
+
+This public copy preserves an earlier source edition. Its historical paths, roles, tools, permission recipes and boot gates do not establish current availability or authorization. A public URL or a CANONICAL label does not prove this is the latest maintained edition.
+
+For the selected work, recover the applicable maintained skill and Dan's current directions through the existing work entrance. Reconcile dated source instructions with later owner corrections and actual current tools. Reuse adequate evidence; search additional sources when they resolve a material gap. No universal all-box sweep, fixed number of discovery calls, blind invocation or fresh approval for already-authorized work is created by this copy. Preserve actual operation-specific permission boundaries and continue independent authorized work.
+
+The original body below remains intact for provenance and still-applicable guidance. This notice does not revoke Dan's source canon or establish that any session has loaded the maintained edition.
+
+---
+
 
 # META-DATES
 # ENGINE/skills/meta-dates/SKILL.md
