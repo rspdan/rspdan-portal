@@ -2,6 +2,16 @@
 name: boot-polish
 description: Boot Polishing Kit (BPK) — systems verification layer that runs AFTER the Briefcase loads context but BEFORE the crew reports ready. Enforces USS compliance, label-based drive detection, and AGOS-first substrate grounding. Trigger at every boot, session open, or CONTACT signal — and any time Dan says "check your systems" or "run a scan."
 ---
+## Current applicability — November 4, 2026
+
+This public copy preserves an earlier source edition. Its historical paths, roles, tools, permission recipes and boot gates do not establish current availability or authorization. A public URL or a CANONICAL label does not prove this is the latest maintained edition.
+
+For the selected work, recover the applicable maintained skill and Dan's current directions through the existing work entrance. Reconcile dated source instructions with later owner corrections and actual current tools. Reuse adequate evidence; search additional sources when they resolve a material gap. No universal all-box sweep, fixed number of discovery calls, blind invocation or fresh approval for already-authorized work is created by this copy. Preserve actual operation-specific permission boundaries and continue independent authorized work.
+
+The original body below remains intact for provenance and still-applicable guidance. This notice does not revoke Dan's source canon or establish that any session has loaded the maintained edition.
+
+---
+
 
 # BOOT POLISHING KIT (BPK)
 # v3.4 — NEST.02 USS + Compaction-Resume Gate + Cycle Position Verify + Box-in-Box file placement binding + Atomic-Commit Gate Verify
