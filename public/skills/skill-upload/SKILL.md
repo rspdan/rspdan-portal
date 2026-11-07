@@ -1,11 +1,14 @@
 ---
 name: skill-upload
-description: Upload SKILL.md files from Bridge to Claude.ai via JavaScript DataTransfer - the dialog-proof method. Use whenever Bridge skills are ahead of what is loaded. Never use file_upload tool or find+ref for skill uploads.
+mode: substrate
+description: Upload SKILL.md files from Bridge to Claude.ai when Bridge skills are ahead of loaded skills.
 ---
 
 # SKILL: Uploading Skills to Claude.ai via Chrome MCP
 # Canonical method as of 040426: JavaScript DataTransfer API
 # STANDARD_RULE_SkillUpload_DataTransfer_040426.md on Bridge — read before using this.
+# Status: CANONICAL (042826 — wired into discipline web via boot-polish + meta-dates + session-close inbound citations)
+# Crew-agnostic: any crew member can fire this skill on any station.
 
 ---
 
@@ -14,6 +17,22 @@ description: Upload SKILL.md files from Bridge to Claude.ai via JavaScript DataT
 Never use file_upload + ref for skill uploads.
 It triggers the native OS file picker dialog every time.
 Use JavaScript DataTransfer instead. Always.
+
+---
+
+## WHEN TO FIRE
+
+Three trigger conditions. Any one fires this skill:
+
+1. **Audit shows Bridge ahead.** Run the auto-discover audit (below). If any skill's Bridge SKILL.md differs from its loaded Claude.ai version → fire skill-upload for that skill.
+
+2. **Bridge edit just landed.** If you just git commit-ed a change to ENGINE/skills/[name]/SKILL.md, the loaded Claude.ai version is now stale. Fire skill-upload before closing the work block. The atomic-commit-skill canon implies this: each work unit produces one durable artifact, and a skill edit's full work unit includes propagation to the consumer.
+
+3. **Boot-polish or session-close gate fires.** boot-polish CHECK 8 lists "Bridge skills sync" as a BPK item. session-close Gate 6 includes "skills synced" as a close-condition. If either gate flags divergence, this skill fires.
+
+These conditions are NEST.02 inbound-citation gates — boot-polish + meta-dates Crew-Ops + session-close Gate 6 all reference skill-upload. The skill is no longer orphan; it is woven into the discipline web.
+
+**Cloud-seat handoff clause (added 070326 by Olo):** condition 2 can fire on a seat that CANNOT execute this skill (a cloud worktree NUG has no Chrome MCP tab on claude.ai and no rspdan-portal checkout for the Copy-Item step). That seat does not skip the obligation silently: it records the pending upload EXPLICITLY (name the skill(s) edited, in its RELAY note or MFST RAM) so a Station seat fires this skill at its next boot-polish CHECK 8 / audit pass. An edit with neither the upload nor the recorded pending-upload is silent drift, the exact class the audit exists to catch. Worked instance: 070326, `oloskill` created + `oshin`/`oshin-oddit`/dna-index edits landed from a cloud worktree; pending-upload recorded in RELAY/OLO_OloSkillSelfDefined_PlusEngagingTheFourInvokedSkills_Olo_070326.md.
 
 ---
 
@@ -137,14 +156,25 @@ The patch pipe keeps the skill live from Bridge alone.
 ---
 
 ## AUDIT COMMAND
+
+Auto-discovers all Bridge skills, compares to portal mirror line counts. Run before SHEET / before close.
+
 ```powershell
-# Check Bridge vs portal line counts before filing SHEET:
-@('ican','meta-dates','skill-upload','living-map','ilevel-grid-sifter') | ForEach-Object {
-  $bridge = (Get-Content "C:\STAN\SOURCE\nest-bridge\ENGINE\skills\$_\SKILL.md" -EA SilentlyContinue).Count
-  $portal = (Get-Content "C:\STAN\SOURCE\rspdan-portal\public\skills\$_\SKILL.md" -EA SilentlyContinue).Count
-  Write-Host "$_ : Bridge=$bridge | Portal=$portal"
+# Auto-discover audit: covers entire Bridge skill corpus, no hardcoded list.
+$bridgeRoot = "C:\STAN\SOURCE\nest-bridge\ENGINE\skills"
+$portalRoot = "C:\STAN\SOURCE\rspdan-portal\public\skills"
+Get-ChildItem $bridgeRoot -Directory | ForEach-Object {
+  $name   = $_.Name
+  $bPath  = Join-Path $_.FullName "SKILL.md"
+  $pPath  = Join-Path $portalRoot "$name\SKILL.md"
+  $bLines = if (Test-Path $bPath) { (Get-Content $bPath).Count } else { 0 }
+  $pLines = if (Test-Path $pPath) { (Get-Content $pPath).Count } else { -1 }
+  $flag   = if ($pLines -eq -1) { "NEW" } elseif ($bLines -ne $pLines) { "DRIFT" } else { "OK" }
+  Write-Host ("{0,-30} Bridge={1,4} Portal={2,4} {3}" -f $name, $bLines, $pLines, $flag)
 }
 ```
+
+DRIFT or NEW → fire skill-upload for those skills. Adapts to corpus growth automatically — when new NEST-built skills land in Bridge they show up in the audit on the next run.
 
 ---
 
@@ -166,7 +196,12 @@ File discoveries to: RELAY/PATCH_skill-upload_[MMDDYY].md
 
 ---
 
-*skill-upload v2 — ◆ Stan | NEST.01 | 040426*
+*skill-upload v3 — Crew-agnostic | NEST.02-compatible | 042826*
 *v1 (040126): file_upload + ref method — documented but unreliable*
-*v2 (040426): DataTransfer method — dialog-proof, patch-pipe-native*
+*v2 (040426): DataTransfer method — dialog-proof, patch-pipe-native (◆ Stan, STN2)*
+*v3 (042826): Added WHEN TO FIRE + auto-discover audit + crew-agnostic framing + Status: CANONICAL declaration. Wired into discipline web via boot-polish CHECK 8 + meta-dates Crew-Ops + session-close Gate 6 inbound citations. NEST.02 universal-boot-lookup compatible. (◈ Trip 4.7, ODT)*
 *"The native dialog is only opened by user gesture. DataTransfer is not a gesture."*
+
+
+## Cross-Crew note (070926 · portability-by-construction)
+**Tier 2 · Claude-surface-specific TARGET, portable CONCEPT.** The push-to-Claude.ai target is Claude-only; the concept ("keep the loaded/active skill-set in sync with the Bridge source files") ports. A non-Claude harness's equivalent is its own skill-reload-from-source, not an upload. Per the cross-Crew skill-compatibility map (BLNCH 070926).
