@@ -1,51 +1,24 @@
-# NEST BOOT · Universal Crew Boot Document
-# URL: https://www.rspdan.com/pk/BOOT.md
-# Evergreen. One file. All crew.
-# The PI has the full sequence. This adds crew-specific details.
+# NEST Crew entry pointer
 
-## PI (has everything)
-https://www.rspdan.com/nest-pi
-Fetch and follow before doing anything else.
+This address remains available for existing links. Continue from the current task, its owner direction and the existing handoff. This file is a routing pointer, not a universal boot sequence or a live task queue.
 
-## PERMANENT RULES (all crew)
-- System clock is truth. Dan's time is correction. No external time APIs.
-- LIAM + relay: continuous checks (every 20 min + phase changes), not just boot.
-- gmail_read_thread only. gmail_read_message is broken.
-- MMDDYY: compute from clock, never from memory.
-- Chrome MCP: always available. Never claim otherwise without checking.
-- VIS: Visual Information Specialist. GS-1084. Given 031926.
+## Current work and maintained sources
 
-## CLOSE (all crew)
-Run ENGINE/session_close.ps1 (Windows) or ENGINE/session_close.sh (mac/linux).
-The script handles SHEET, Living Map, WAKE gen, sync, and shift close.
-If no script: do manually, but the script is the standard.
+Recover the accepted result, current assignment, recipient binding and eligible next action before repeating work. Reuse adequate current evidence and continue independent authorized work.
 
----
+For the relevant method, use the maintained Bridge sources with their current corrections:
 
-## ◈ TRIP (Opus)
-Pronouns: he/they/them. Never she.
-Styles: Normal or Explanatory only. No custom narrative styles.
-NA series: published at rspdan.com/journal/NNN
+- [Boot Polish: current bindings and evidence](https://github.com/rspdan/nest-bridge/blob/main/ENGINE/skills/boot-polish/SKILL.md#current-bindings-and-evidence-101326-repair): bind checks to the actual session, Station, root and available tools. Distinguish source read, installed, actually fired and observed result.
+- [Meta Dates](https://github.com/rspdan/nest-bridge/blob/main/ENGINE/skills/meta-dates/SKILL.md): recover source evidence, dates and identity; reconcile superseding corrections before applying dated examples.
 
-## ◆ STAN (Sonnet)
-Unicode: never PowerShell as Unicode pipe. Use ENGINE/utils/git_file_utf8.py.
-STN2 UAC: permanently disabled. Use Start-Process -Verb RunAs. Never punt to Dan.
+Use only the checks needed for the selected work. A historical model, Crew role, filesystem path, tool name or command is not evidence of present availability or authority. Preserve existing identities and the assigned change owner. A real access or owner boundary applies to the affected action; carry the exact unresolved dependency and continue independent work.
 
-## ◇ C.B. (Haiku)
-C.B. may not have Desktop Commander or Bridge git. That is normal.
-Triangulate: verify claims from two other sources before accepting.
-Flag, don't build. C.B. identifies patterns. Stan builds fixes.
-C.B. = C.B. Never expand the name.
+Current owner and harness instructions govern. This pointer grants no security, permission, scheduler or service changes and prescribes no automatic close script. Use the applicable current handoff and supported route for any task-specific close or delivery action.
 
----
+## Historical material
 
-## CREW TICKETS (explicit URLs for fetch resolution)
-- Trip: https://www.rspdan.com/pk/trip/TICKET.md
-- Stan: https://www.rspdan.com/pk/stan/TICKET.md
-- C.B.: https://www.rspdan.com/pk/cb/TICKET.md
+The [historical Nest PI](https://www.rspdan.com/nest-pi) preserves earlier instructions. Its historical body is not current boot authority and fetching it is not a prerequisite for work.
 
-## SKYWAY
-- PI: https://www.rspdan.com/nest-pi
-- Relay: https://www.rspdan.com/relay/INDEX.md
-- Mail: https://www.rspdan.com/mail/INDEX.md
-- Logs: https://www.rspdan.com/logs
+The [complete previous BOOT document, preserved byte for byte](https://www.rspdan.com/pk/history/BOOT.48a2780e.txt), is historical and nonoperative. Its universal fetch instruction, fixed tool/model claims, security recipe and close-script commands are superseded by the routing above.
+
+Preserved source: `rspdan/rspdan-portal`, Git blob `48a2780e3f96c5dcb118be7c773438d9fb8327ad`, from commit `8dafbe0293a9a0ce91727b190682e01c7646e04b`. Other dated Crew cards and records must be reconciled with their current owner and maintained source; this change does not certify those surfaces as current.
