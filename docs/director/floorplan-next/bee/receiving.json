@@ -1,0 +1,267 @@
+{
+  "author": "Bee",
+  "recorded_utc": "2026-11-25T09:03:35.360561+00:00",
+  "status": "Bounded actual desktop and emulated-touch receiving complete; no material defect found in final exercised flows",
+  "portal_baseline": "895c5ff",
+  "surfaces": {
+    "origin": "http://127.0.0.1:4341/director",
+    "desktop": [
+      1440,
+      1000
+    ],
+    "touch_emulated": [
+      390,
+      844
+    ],
+    "physical_phone": false,
+    "os_keyboard_coverage": false
+  },
+  "final_loaded_response_hashes": {
+    "/director/floorplan-editor.js": {
+      "path": "/director/floorplan-editor.js",
+      "at": "2026-11-25T08:57:20.658552+00:00",
+      "status": 200,
+      "sha256": "61331e6a67f15008ea8a943f8e3bb478a6bffc40dd90cd9e4c32979916bf2c85"
+    },
+    "/director/floorplan-editor.css": {
+      "path": "/director/floorplan-editor.css",
+      "at": "2026-11-25T08:57:17.723676+00:00",
+      "status": 200,
+      "sha256": "70d9d99b40758fd623f010c5c43e334562eb3e59b12e9fb167899fe644f60cfd"
+    },
+    "/director/floorplan-overview.js": {
+      "path": "/director/floorplan-overview.js",
+      "at": "2026-11-25T08:57:20.794843+00:00",
+      "status": 200,
+      "sha256": "4f5bbe9654de78c9f77a7873c7a254aa70031eb492ea5f9f1005c4ae0b3c96f5"
+    },
+    "/director/floorplan-overview.css": {
+      "path": "/director/floorplan-overview.css",
+      "at": "2026-11-25T08:57:17.724436+00:00",
+      "status": 200,
+      "sha256": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
+    },
+    "/director/director.css": {
+      "path": "/director/director.css",
+      "at": "2026-11-25T08:57:17.711749+00:00",
+      "status": 200,
+      "sha256": "a2b289dc22db4860cf18886dfbce5c4b0dcad07ef14b0bef6da79817f23a30f6"
+    }
+  },
+  "matches_supplied_freeze": {
+    "/director/floorplan-editor.js": true,
+    "/director/floorplan-editor.css": true,
+    "/director/floorplan-overview.js": true,
+    "/director/floorplan-overview.css": true,
+    "/director/director.css": true
+  },
+  "test_set": {
+    "source_import": "../../floorplan-play/bee/Bee-pocket-studio.export.floorplan.json",
+    "new_levels_created_through_UI": true,
+    "levels": [
+      {
+        "id": "level-ground",
+        "name": "Warm-up",
+        "elevation": 0,
+        "height": 2.7
+      },
+      {
+        "id": "level-5607b33b-5df8-4162-a99b-2374c2bb3063",
+        "name": "Light loft",
+        "elevation": 3.2,
+        "height": 2.7
+      },
+      {
+        "id": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+        "name": "Understage",
+        "elevation": -2.5,
+        "height": 2.2
+      },
+      {
+        "id": "level-34fff09a-6b3f-4938-b031-91a5778f7c40",
+        "name": "Open sky idea — empty",
+        "elevation": 8.1,
+        "height": 2.2
+      }
+    ],
+    "room_counts_by_level": {
+      "Warm-up": 1,
+      "Light loft": 1,
+      "Understage": 1,
+      "Open sky idea — empty": 0
+    },
+    "not_Lighthouse_canon": true,
+    "final_plan": "final-plan.json",
+    "final_plan_sha256": "187092032aa6db0f471a28974402daba681b2c2e9d2288e593f573ce0ed25bba"
+  },
+  "observations": {
+    "selection_does_not_auto_focus_input": true,
+    "final_edit_receipt": {
+      "before": {
+        "scroll": 0,
+        "svg": {
+          "x": 0,
+          "y": 262,
+          "width": 390,
+          "height": 220.03125
+        },
+        "roomRelative": [
+          142.9812469482422,
+          67.99948120117188,
+          144.03749084472656,
+          124.03228759765625
+        ],
+        "selection": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+        "focusTag": "DIV"
+      },
+      "after": {
+        "scroll": 0,
+        "svg": {
+          "x": 0,
+          "y": 262,
+          "width": 390,
+          "height": 220.03125
+        },
+        "roomRelative": [
+          142.9812469482422,
+          67.99948120117188,
+          144.03749084472656,
+          124.03228759765625
+        ],
+        "selection": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+        "focusTag": "DIV"
+      },
+      "width": 1.2
+    },
+    "inspector_actual_touch_scroll_px": 218,
+    "document_scroll_during_inspector_swipe": 0,
+    "tabs_visible_during_swipe": true,
+    "overview_opens_without_plan_mutation": true,
+    "level_order_observed": [
+      8.1,
+      3.2,
+      0,
+      -2.5
+    ],
+    "empty_level_has_no_drawn_room": true,
+    "navigation_and_undo_redo": {
+      "overviewReadOnly": true,
+      "endpointActive": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+      "expectedUnder": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+      "sameAuthoredExceptActive": true,
+      "upperWindow": {
+        "added": 1,
+        "undone": 0,
+        "redone": 1
+      }
+    },
+    "useful_discovery": "Overview shows inherited Quiet stair footprint extends past smaller authored Understage room; no automatic geometry correction.",
+    "residual": "Labels can overlap in crowded miniature plans; no additional change requested in this pass."
+  },
+  "historical_limit": "Earlier sticky-canvas navigation problem was observed and superseded by refreshed final workspace receiving. Earlier hidden Selected dropdown timeout was harness tab-choice error.",
+  "images": [
+    {
+      "file": "desktop-building-floorcards.png",
+      "sha256": "49839aac930a138c790a04c141b659cecc56381ca9c45b7ac61218a679f278b4",
+      "personally_opened": true
+    },
+    {
+      "file": "desktop-building-overview.png",
+      "sha256": "c578c88ccb35f8a99effe8b7af99d0ff49c9f408d16bb440c2474df6d50441a0",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-edit-door-width.png",
+      "sha256": "c9c1fee096dccd6b241a7675a4c45baecb874e22260fb4f2ff25ba5868600743",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-fixed-building-connections.png",
+      "sha256": "572dd5c7efbf297044f70b2e304c6a62b9f6f5e40da1ec702347bfa3f6ed62c5",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-fixed-building-floorcards.png",
+      "sha256": "33cdf0f1a17a0c376bbe30c3e490756a0123acc949dcf4c9f6715fad7a80a6f4",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-fixed-building-levels.png",
+      "sha256": "a2a1b4c6b809a448e8e41711de6891b312a142a7a0b4177fb6fdb113bc6f1159",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-fixed-inspector-scrolled.png",
+      "sha256": "0beff57d9d5079d4c818afbacdd1c88dce0b5f1a50414767bde0820803091d4c",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-fixed-return-plan.png",
+      "sha256": "ed787c41928861e10194b72d7b9327ee45ced7174f8e216cde84ef24ff95256e",
+      "personally_opened": false
+    },
+    {
+      "file": "phone-fixed-width-edit.png",
+      "sha256": "edf21a98dbb8bd45125eafb3e836ecbd525fd9633bdccf17399e1feca23bfe49",
+      "personally_opened": false
+    },
+    {
+      "file": "phone-fixed-workspace.png",
+      "sha256": "e8dc6f875641e9c0f5e234d3dbac66221a00d9e2aea8da026319cdc4a58e20cf",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-imported-plan.png",
+      "sha256": "1da9532cd0642907e1416c23f2a774192ca74b56b0841ceddac828ee6130cf9c",
+      "personally_opened": false
+    },
+    {
+      "file": "phone-overview-to-understage.png",
+      "sha256": "88f4dd8ad0fc5edc6f2067a8ee4a0c34d9629067e14c91efb8cb887ac172e6e9",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-prelayout-checkpoint.png",
+      "sha256": "c42ae531b3381fa0093030182d5514e85dbd463c3a62e49005c08cd95284f190",
+      "personally_opened": false
+    },
+    {
+      "file": "phone-return-to-door.png",
+      "sha256": "29197e7eff6db7ce0bbb2a8ab6626fc80081098e49a131c572741036203c30ad",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-selected-door.png",
+      "sha256": "fe956f7c33e8c6df9215d55eb67526f189940a158befbc9cec06d56937d0d0ae",
+      "personally_opened": true
+    },
+    {
+      "file": "phone-upper-window-redone.png",
+      "sha256": "6585334056adf6421db752dcb9017dc855a937058ca2d994ee75eba0dbcebaaf",
+      "personally_opened": true
+    }
+  ],
+  "page_errors": [
+    {
+      "surface": "touch",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    },
+    {
+      "surface": "desktop",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    },
+    {
+      "surface": "touch",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    }
+  ],
+  "scope": {
+    "product_edits": false,
+    "native_edits": false,
+    "production_saves": false,
+    "send_to_crew": false,
+    "commits": false,
+    "only_owned_folder_written": true,
+    "no_unrelated_final_tests": true
+  }
+}

@@ -2,6 +2,16 @@
 
 Open **Floor plan** in the Director to edit the plan stored with the current take. New takes start with an empty plan; the editor does not assume a canonical OHC/CHO or Lighthouse layout.
 
+## Finding the right controls
+
+The **Level** selector beside the canvas switches the active floor without scrolling through the inspector. Level names that repeat receive a visible ordinal so the choices remain distinguishable.
+
+On a phone, the canvas and inspector occupy separate panes. The inspector scrolls independently beneath its **Selected**, **Level**, and **Plan** tabs. Selected keeps the current item's main controls first: opening dimensions precede its room settings, and a connection shows its name, type and endpoints before its expandable position and size controls. Level holds the current floor's name, elevation and wall height. Plan holds naming, units, grid, numerical room creation, import and export. Switching tabs reuses the same fields, returns that pane to its top, and does not modify the plan. Arrow keys, Home and End navigate the tabs when they have keyboard focus.
+
+Placing or selecting an item makes **Selected** ready without scrolling or opening the keyboard. **Return to plan** resets the inspector scroll and focuses the canvas while preserving the selection and current pan/zoom. Desktop keeps all inspector groups available together. The small phone canvas footer shows only grid and snap; the active level remains in the nearby selector.
+
+**Building** shows every level and its connections in a separate overview. Entering it cancels an unfinished drawing or placement without creating geometry. Choose a level in the overview to return to its editable plan and fit that level in the canvas; changing the active level is an undoable plan change. Switching between Plan and Building alone does not add history. The overview does not replace the separate active-level **Preview in 3D**.
+
 ## Drawing and editing
 
 - **Draw room:** drag opposite corners. **Polygon:** tap each corner, then tap the first corner or press Enter to finish. With a mouse, double-clicking the same final corner also finishes. Nearby distinct taps remain separate corners, and trying to finish with fewer than three preserves the draft. Escape cancels the unfinished gesture.
@@ -12,6 +22,7 @@ Open **Floor plan** in the Director to edit the plan stored with the current tak
 - The item selector provides keyboard access to rooms, openings and connections. With the plan surface focused, arrow keys move the selected item by one grid step; Shift multiplies the step by ten. With no selection, arrows pan. Plus/minus zoom and zero fits the active level. Exact corner coordinates and opening properties remain available in the inspector.
 - Drag empty space, use **Pan**, or Alt-drag to pan. Mouse-wheel zoom is anchored to the pointer. **Fit plan** includes rotated connection footprints on the active level.
 - Undo and redo use the Director's take history. A completed drag is one change. Invalid geometry or property edits leave the last valid plan in place.
+- Connection markers show their custom name and a short type/destination line. Long labels shorten on the canvas; the inspector and hover labels retain the full text. Undo/redo feedback identifies the restored active level instead of leaving a stale placement message.
 
 Working units and metres are labels for the existing dimensions. Changing the units does not rescale a plan. Level elevation and height use those same units.
 

@@ -1,0 +1,11 @@
+{
+  "overviewReadOnly": true,
+  "endpointActive": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+  "expectedUnder": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+  "sameAuthoredExceptActive": true,
+  "upperWindow": {
+    "added": 1,
+    "undone": 0,
+    "redone": 1
+  }
+}

@@ -1,4 +1,5 @@
 import { createPlan, validatePlan, nearestEdge, createPlanPackage, LIMITS } from './floorplan-model.js';
+import { createFloorplanOverview } from './floorplan-overview.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const clone = value => structuredClone(value);
@@ -19,6 +20,8 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   let view = { x: 2, z: 1.5, zoom: 65 }, fitted = false;
   let history = { undo: 0, redo: 0 };
   let toolbarDrag = null, suppressedClick = null, polygonClick = null;
+  let editorView = 'plan', inspectorTab = 'selected', lastSelectionKey = '', committing = false;
+  const instanceId = id('floorplan-editor');
   const cleanups = [];
   const listen = (node, event, fn, options) => { node.addEventListener(event, fn, options); cleanups.push(() => node.removeEventListener(event, fn, options)); };
   const say = (message, showAddLevel = false) => {
@@ -30,6 +33,13 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   canvasHost.classList.add('fp-canvas-host');
   inspectorHost.classList.add('fp-inspector');
   canvasHost.innerHTML = `
+    <div class="fp-navigation">
+      <div class="fp-view-switch" role="group" aria-label="Floor plan view">
+        <button type="button" data-action="view-plan" aria-pressed="true">Plan</button>
+        <button type="button" data-action="view-building" aria-pressed="false">Building</button>
+      </div>
+      <label class="fp-canvas-level">Level<select data-canvas-level aria-label="Canvas level"></select></label>
+    </div>
     <div class="fp-toolbar" role="toolbar" aria-label="Floor plan drawing tools">
       <div class="fp-tool-group">
         <button type="button" data-tool="select" aria-pressed="true" title="Select and move a room or point">Select</button>
@@ -56,8 +66,9 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
         <button type="button" data-action="zoom-in" aria-label="Zoom in">+</button>
         <button type="button" data-action="fit">Fit plan</button>
       </div>
-      <div class="fp-scale" aria-hidden="true"></div>
+      <div class="fp-scale" aria-hidden="true"><span class="fp-scale-level"></span><span class="fp-scale-grid"></span></div>
     </div>
+    <div class="fp-building-host" hidden></div>
     <div class="fp-hint" role="status" aria-live="polite"><span class="fp-hint-text">Draw rooms and place openings on their edges.</span><button class="fp-hint-action" type="button" data-action="add-level" hidden>+ Level</button></div>`;
   inspectorHost.innerHTML = `
     <section class="fp-section">
@@ -91,9 +102,27 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       <a class="fp-download" href="/director/odk_floorplan_import.py" download>Blender importer</a>
     </section>`;
 
+  // Keep a single set of fields. Phone tabs only change which group is visible.
+  const sections = [...inspectorHost.children];
+  const inspectorNav = document.createElement('div'); inspectorNav.className = 'fp-inspector-navigation';
+  inspectorNav.innerHTML = `<div class="fp-inspector-tabs" role="tablist" aria-label="Floor plan properties">
+    <button type="button" role="tab" data-inspector-tab="selected" id="${instanceId}-selected-tab" aria-controls="${instanceId}-selected-panel" aria-selected="true">Selected</button>
+    <button type="button" role="tab" data-inspector-tab="level" id="${instanceId}-level-tab" aria-controls="${instanceId}-level-panel" aria-selected="false" tabindex="-1">Level</button>
+    <button type="button" role="tab" data-inspector-tab="plan" id="${instanceId}-plan-tab" aria-controls="${instanceId}-plan-panel" aria-selected="false" tabindex="-1">Plan</button>
+    </div><button type="button" data-action="return-plan" class="fp-return-plan">Return to plan</button>`;
+  const panels = ['selected', 'level', 'plan'].map(name => {
+    const panel = document.createElement('div'); panel.dataset.inspectorPanel = name; panel.id = `${instanceId}-${name}-panel`;
+    panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', `${instanceId}-${name}-tab`); return panel;
+  });
+  panels[0].append(sections[2]); panels[1].append(sections[1]); panels[2].append(sections[0], sections[3], sections[4]);
+  inspectorHost.replaceChildren(inspectorNav, ...panels);
+  inspectorHost.dataset.tab = inspectorTab;
+
   const svg = canvasHost.querySelector('.fp-svg');
   const toolbar = canvasHost.querySelector('.fp-toolbar');
   const surface = canvasHost.querySelector('.fp-surface');
+  const canvasLevel = canvasHost.querySelector('[data-canvas-level]');
+  const buildingHost = canvasHost.querySelector('.fp-building-host');
   const hint = canvasHost.querySelector('.fp-hint-text');
   const hintAction = canvasHost.querySelector('.fp-hint-action');
   const empty = canvasHost.querySelector('.fp-empty');
@@ -106,6 +135,18 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   const snapped = point => point.map(value => round(snap ? Math.round(value / plan.grid) * plan.grid : value));
   const units = () => plan.units === 'm' ? 'm' : 'u';
   const selectedOpening = (p = current()) => room(p)?.openings.find(item => item.id === selection?.id);
+  const levelLabel = (item, p = plan) => p.levels.filter(l => l.name === item.name).length > 1 ? `${item.name} · level ${p.levels.indexOf(item) + 1}` : item.name;
+  const levelOptions = () => plan.levels.map(item => new Option(levelLabel(item), item.id));
+  const textMeasure = document.createElement('canvas').getContext('2d');
+  function labelText(text, maxPixels, size, weight = 400) {
+    const chars = Array.from(text); if (!textMeasure) return chars.length > 22 ? chars.slice(0, 21).join('') + '…' : text;
+    textMeasure.font = `${weight} ${size}px system-ui, sans-serif`;
+    if (textMeasure.measureText(text).width <= maxPixels) return text;
+    let low = 0, high = chars.length;
+    while (low < high) { const middle = Math.ceil((low + high) / 2); if (textMeasure.measureText(chars.slice(0, middle).join('') + '…').width <= maxPixels) low = middle; else high = middle - 1; }
+    return chars.slice(0, low).join('') + '…';
+  }
+  const overview = createFloorplanOverview({ host: buildingHost, onSelectLevel: levelId => selectLevel(levelId, { returnToPlan: true }) });
   const dragBadge = document.createElement('div');
   dragBadge.className = 'fp-drag-badge'; dragBadge.hidden = true; dragBadge.setAttribute('aria-hidden', 'true'); document.body.append(dragBadge);
   for (const button of toolbar.querySelectorAll('button[data-tool]')) if (placementTools.has(button.dataset.tool)) {
@@ -133,6 +174,35 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     if (pointerId !== undefined && svg.hasPointerCapture(pointerId)) svg.releasePointerCapture(pointerId);
     renderPlan();
   }
+  function setInspectorTab(name, focus = false, scroll = false) {
+    if (!['selected', 'level', 'plan'].includes(name)) return;
+    inspectorTab = name; inspectorHost.dataset.tab = name;
+    for (const button of inspectorNav.querySelectorAll('[data-inspector-tab]')) {
+      const selected = button.dataset.inspectorTab === name;
+      button.setAttribute('aria-selected', String(selected)); button.tabIndex = selected ? 0 : -1;
+      if (selected && focus) button.focus({ preventScroll: true });
+    }
+    if (scroll) inspectorHost.closest('.inspector')?.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  function setEditorView(next) {
+    if (!['plan', 'building'].includes(next)) return;
+    resetGesture(); editorView = next;
+    canvasHost.dataset.view = next;
+    toolbar.hidden = next === 'building'; surface.hidden = next === 'building';
+    canvasHost.querySelector('[data-action="view-plan"]').setAttribute('aria-pressed', String(next === 'plan'));
+    canvasHost.querySelector('[data-action="view-building"]').setAttribute('aria-pressed', String(next === 'building'));
+    overview.setPlan(plan); overview.setVisible(active && next === 'building');
+    if (next === 'building') say('All levels and their connections. Choose a level to edit its plan.');
+    else { renderPlan(); if (!fitted && (plan.rooms.length || plan.connectors.length)) fit(); say(`Plan view · ${level(plan).name}.`); }
+  }
+  function selectLevel(levelId, { returnToPlan = false } = {}) {
+    const nextLevel = plan.levels.find(l => l.id === levelId); if (!nextLevel) return;
+    resetGesture(); selection = null;
+    const changed = levelId === plan.activeLevelId || change(next => { next.activeLevelId = levelId; }, `Showing ${nextLevel.name}.`);
+    if (!changed) return;
+    if (returnToPlan) setEditorView('plan');
+    renderAll(); if (editorView === 'plan') fit(); say(`Showing ${nextLevel.name}.`);
+  }
   function validSelection() {
     if (!selection) return;
     const r = room(plan), c = connector(plan);
@@ -144,7 +214,8 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       const validated = validatePlan(next);
       if (JSON.stringify(before) === JSON.stringify(validated)) { draft = null; renderAll(); return false; }
       plan = validated; draft = null; validSelection();
-      onCommit?.(clone(plan), before);
+      committing = true;
+      try { onCommit?.(clone(plan), before); } finally { committing = false; }
       renderAll(); if (message) say(message); return true;
     } catch (error) {
       plan = before; draft = null; validSelection(); renderAll();
@@ -266,6 +337,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     }, 'Selection removed. Undo restores it.');
   }
   function fit() {
+    if (editorView !== 'plan') { fitted = false; return; }
     const rooms = plan.rooms.filter(r => r.levelId === plan.activeLevelId);
     const points = rooms.flatMap(r => r.points);
     for (const c of plan.connectors.filter(c => c.fromLevelId === plan.activeLevelId || c.toLevelId === plan.activeLevelId)) {
@@ -321,9 +393,12 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     for (const c of p.connectors.filter(c => c.fromLevelId === p.activeLevelId || c.toLevelId === p.activeLevelId)) {
       const selected = selection?.id === c.id, x = c.position[0], z = c.position[1], angle = c.rotation;
       shape('rect', { x: x - c.size[0] / 2, y: z - c.size[1] / 2, width: c.size[0], height: c.size[1], transform: `rotate(${angle},${x},${z})`, fill: selected ? '#c6e2d2' : '#e8ecf4', stroke: selected ? '#087652' : '#526a8a', 'stroke-width': 2, 'stroke-dasharray': '5 3', 'vector-effect': 'non-scaling-stroke' }, 'connector', c.id);
-      const marker = shape('text', { x, y: z - 3 / view.zoom, 'font-size': 12 / view.zoom, 'text-anchor': 'middle', fill: '#314b68' }, 'connector', c.id); marker.textContent = c.type === 'stairs' ? '↗ Stairs' : '↕ Elevator';
       const targetId = c.fromLevelId === p.activeLevelId ? c.toLevelId : c.fromLevelId;
-      const caption = shape('text', { x, y: z + 12 / view.zoom, 'font-size': 10 / view.zoom, 'text-anchor': 'middle', fill: '#526a8a' }, 'connector', c.id); caption.textContent = p.levels.find(l => l.id === targetId)?.name || '';
+      const target = p.levels.find(l => l.id === targetId), context = `${toolLabel(c.type)} ${c.fromLevelId === p.activeLevelId ? 'to' : 'from'} ${target ? levelLabel(target, p) : ''}`;
+      const maxWidth = clamp(c.size[0] * view.zoom + 24, 78, selected ? 210 : 145);
+      const marker = shape('text', { x, y: z - 3 / view.zoom, 'font-size': 12 / view.zoom, 'font-weight': 600, 'text-anchor': 'middle', fill: '#243d54', 'paint-order': 'stroke', stroke: '#f4f7f1', 'stroke-width': 3 / view.zoom, 'aria-label': c.name }, 'connector', c.id); marker.textContent = labelText(c.name, maxWidth, 12, 600);
+      const caption = shape('text', { x, y: z + 12 / view.zoom, 'font-size': 10 / view.zoom, 'text-anchor': 'middle', fill: '#3d536e', 'paint-order': 'stroke', stroke: '#f4f7f1', 'stroke-width': 2 / view.zoom, 'aria-label': context }, 'connector', c.id); caption.textContent = labelText(context, maxWidth, 10);
+      for (const [node, titleText] of [[marker, c.name], [caption, context]]) { const title = document.createElementNS(SVG_NS, 'title'); title.textContent = titleText; node.append(title); }
     }
     if (drag?.kind === 'rectangle' && hover) {
       const a = drag.start, b = hover;
@@ -352,28 +427,35 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       if (!preview.valid) ghost('path', { d: `M ${x - 3 / view.zoom} ${z - 3 / view.zoom} L ${x + 3 / view.zoom} ${z + 3 / view.zoom} M ${x + 3 / view.zoom} ${z - 3 / view.zoom} L ${x - 3 / view.zoom} ${z + 3 / view.zoom}`, stroke: color, 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' });
     }
     empty.hidden = Boolean(rooms.length || polygon.length || drag || toolbarDrag?.started);
-    canvasHost.querySelector('.fp-scale').textContent = `${level(p)?.name || ''} · grid ${numberText(p.grid)} ${units()}${snap ? ' · snap' : ''}`;
+    canvasHost.querySelector('.fp-scale-level').textContent = level(p)?.name || '';
+    canvasHost.querySelector('.fp-scale-grid').textContent = `grid ${numberText(p.grid)} ${units()}${snap ? ' · snap' : ''}`;
   }
 
   function updateValue(name, value) { const node = input(name); if (node) node.value = value; }
   function renderInspector() {
     const focused = selectionPanel.contains(document.activeElement) ? document.activeElement : null;
     const focusData = focused?.dataset.field ? { ...focused.dataset } : null;
-    const cornersOpen = selectionPanel.querySelector('.fp-vertices')?.open;
+    const openDetails = [...selectionPanel.querySelectorAll('details[open]')].map(node => node.className);
     const previousRoomId = selectionPanel.dataset.roomId;
     renderInspectorFields();
+    const selectionKey = selection ? `${selection.kind}:${selection.id}` : '';
+    if (selectionKey && selectionKey !== lastSelectionKey) setInspectorTab('selected');
+    lastSelectionKey = selectionKey;
     const sameRoom = previousRoomId === selectionPanel.dataset.roomId;
-    if (sameRoom && cornersOpen && selectionPanel.querySelector('.fp-vertices')) selectionPanel.querySelector('.fp-vertices').open = true;
+    if (sameRoom) for (const node of selectionPanel.querySelectorAll('details')) if (openDetails.includes(node.className)) node.open = true;
     if (focusData && sameRoom) {
       const replacement = [...selectionPanel.querySelectorAll('[data-field]')].find(node => Object.entries(focusData).every(([key, value]) => node.dataset[key] === value));
-      replacement?.focus({ preventScroll: true });
+      const visible = node => node && node.getClientRects().length && !node.closest('details:not([open])');
+      const focusTarget = visible(replacement) ? replacement : [input('opening-type'), input('selection')].find(visible);
+      focusTarget?.focus({ preventScroll: true });
     }
   }
   function renderInspectorFields() {
     validSelection(); const l = level(plan);
     updateValue('plan-name', plan.name); updateValue('units', plan.units); updateValue('grid', plan.grid);
     input('snap').checked = snap;
-    const levels = input('level-select'); levels.replaceChildren(...plan.levels.map(item => new Option(item.name, item.id))); levels.value = plan.activeLevelId;
+    const levels = input('level-select'); levels.replaceChildren(...levelOptions()); levels.value = plan.activeLevelId;
+    canvasLevel.replaceChildren(...levelOptions()); canvasLevel.value = plan.activeLevelId;
     updateValue('level-name', l.name); updateValue('level-elevation', l.elevation); updateValue('level-height', l.height);
     inspectorHost.querySelector('[data-action="delete-level"]').disabled = plan.levels.length < 2;
     const items = input('selection');
@@ -387,27 +469,34 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     if (selection.kind === 'connector') {
       const c = connector(plan);
       selectionPanel.innerHTML = `<div class="fp-heading"><h2>Level connection</h2><button type="button" data-action="delete-selection">Delete</button></div>
+        <p class="fp-selection-summary"></p>
         <label>Name<input data-field="connection-name" maxlength="80" /></label>
         <label>Type<select data-field="connection-type"><option value="stairs">Stairs</option><option value="elevator">Elevator</option></select></label>
         <label>From level<select data-field="connection-from"></select></label><label>To level<select data-field="connection-to"></select></label>
+        <details class="fp-connection-geometry"><summary>Position and size</summary>
         <div class="fp-pair"><label>X<input data-field="connection-x" type="number" min="-10000" max="10000" step="any" /></label><label>Z<input data-field="connection-z" type="number" min="-10000" max="10000" step="any" /></label></div>
         <div class="fp-pair"><label>Width<input data-field="connection-width" type="number" min=".1" max="1000" step="any" /></label><label>Depth<input data-field="connection-depth" type="number" min=".1" max="1000" step="any" /></label></div>
-        <label>Rotation °<input data-field="connection-rotation" type="number" min="-360" max="360" step="any" /></label>
+        <label>Rotation °<input data-field="connection-rotation" type="number" min="-360" max="360" step="any" /></label></details>
         <p class="fp-small">Marks a planned connection between levels. Its footprint stays editable.</p>`;
-      for (const field of ['connection-from', 'connection-to']) input(field).replaceChildren(...plan.levels.map(item => new Option(item.name, item.id)));
+      const from = plan.levels.find(item => item.id === c.fromLevelId), to = plan.levels.find(item => item.id === c.toLevelId);
+      selectionPanel.querySelector('.fp-selection-summary').textContent = `${levelLabel(from)} → ${levelLabel(to)}`;
+      for (const field of ['connection-from', 'connection-to']) input(field).replaceChildren(...levelOptions());
       for (const [field, value] of Object.entries({ 'connection-name': c.name, 'connection-type': c.type, 'connection-from': c.fromLevelId, 'connection-to': c.toLevelId, 'connection-x': c.position[0], 'connection-z': c.position[1], 'connection-width': c.size[0], 'connection-depth': c.size[1], 'connection-rotation': c.rotation })) updateValue(field, value);
       return;
     }
     const r = room(plan);
     selectionPanel.innerHTML = `<div class="fp-heading"><h2>${selection.kind === 'opening' ? 'Opening' : 'Room'}</h2><button type="button" data-action="delete-selection">Delete</button></div>
+      <p class="fp-selection-summary"></p>
+      <div class="fp-opening-properties"></div>
+      ${selection.kind === 'opening' ? '<details class="fp-room-settings"><summary>Room settings</summary>' : ''}
       <label>Room name<input data-field="room-name" maxlength="80" /></label>
       <div class="fp-pair"><label>Wall thickness<input data-field="wall-thickness" type="number" min=".01" max="5" step="any" /></label><label>Move to level<select data-field="room-level"></select></label></div>
       <div class="fp-pair"><label>Floor color<input data-field="floor-color" type="color" /></label><label>Wall color<input data-field="wall-color" type="color" /></label></div>
       <label>Opening<select data-field="opening-select"><option value="">Select an opening…</option></select></label>
-      <div class="fp-opening-properties"></div>
       <details class="fp-vertices"><summary>Corner coordinates</summary><div class="fp-vertex-fields"></div></details>
-      <button type="button" class="fp-subtle" data-action="duplicate-room">Duplicate room</button>`;
-    input('room-level').replaceChildren(...plan.levels.map(item => new Option(item.name, item.id)));
+      <button type="button" class="fp-subtle" data-action="duplicate-room">Duplicate room</button>${selection.kind === 'opening' ? '</details>' : ''}`;
+    selectionPanel.querySelector('.fp-selection-summary').textContent = `${r.name} · ${levelLabel(l)}`;
+    input('room-level').replaceChildren(...levelOptions());
     for (const [field, value] of Object.entries({ 'room-name': r.name, 'wall-thickness': r.wallThickness, 'room-level': r.levelId, 'floor-color': r.floorColor, 'wall-color': r.wallColor })) updateValue(field, value);
     const openingSelect = input('opening-select');
     for (const [i, o] of r.openings.entries()) openingSelect.add(new Option(`${o.type[0].toUpperCase()}${o.type.slice(1)} ${i + 1} · edge ${o.edge + 1}`, o.id));
@@ -437,11 +526,19 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     undo.disabled = !history.undo; redo.disabled = !history.redo;
     undo.title = `Undo · ${history.undo} back`; redo.title = `Redo · ${history.redo} forward`;
   }
-  function renderAll() { renderPlan(); renderInspector(); renderHistory(); }
+  function renderAll() { renderPlan(); renderInspector(); renderHistory(); overview.setPlan(plan); }
+
+  listen(canvasLevel, 'change', event => selectLevel(event.target.value, { returnToPlan: true }));
+  listen(inspectorNav, 'keydown', event => {
+    const button = event.target.closest('[data-inspector-tab]'); if (!button) return;
+    const names = ['selected', 'level', 'plan'], index = names.indexOf(button.dataset.inspectorTab);
+    const next = event.key === 'ArrowRight' ? names[(index + 1) % names.length] : event.key === 'ArrowLeft' ? names[(index + 2) % names.length] : event.key === 'Home' ? names[0] : event.key === 'End' ? names[2] : null;
+    if (next) { event.preventDefault(); setInspectorTab(next, true, true); }
+  });
 
   listen(toolbar, 'pointerdown', event => {
     const button = event.target.closest('button[data-placeable]');
-    if (!active || !button || event.button !== 0 || event.isPrimary === false || drag || toolbarDrag) return;
+    if (!active || editorView !== 'plan' || !button || event.button !== 0 || event.isPrimary === false || drag || toolbarDrag) return;
     resetGesture(); suppressedClick = null; button.focus({ preventScroll: true }); event.preventDefault();
     toolbarDrag = { button, type: button.dataset.tool, pointerId: event.pointerId, itemId: id('placement'), start: [event.clientX, event.clientY], started: false, candidate: null };
     button.setPointerCapture(event.pointerId);
@@ -474,7 +571,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   });
 
   listen(svg, 'pointerdown', event => {
-    if (!active || event.button > 1 || drag || toolbarDrag || event.isPrimary === false) return;
+    if (!active || editorView !== 'plan' || event.button > 1 || drag || toolbarDrag || event.isPrimary === false) return;
     const point = world(event), target = event.target.closest('[data-kind]');
     surface.focus({ preventScroll: true });
     if (event.button === 1 || tool === 'pan' || event.altKey) { drag = { kind: 'pan', client: [event.clientX, event.clientY], view: { ...view } }; }
@@ -558,9 +655,22 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   }, { passive: false });
 
   function action(name) {
+    if (name === 'view-plan') setEditorView('plan');
+    if (name === 'view-building') setEditorView('building');
+    if (name === 'return-plan') {
+      if (editorView !== 'plan') setEditorView('plan');
+      const inspectorScroll = inspectorHost.closest('.inspector');
+      if (inspectorScroll && ['auto', 'scroll'].includes(getComputedStyle(inspectorScroll).overflowY)) inspectorScroll.scrollTo({ top: 0, behavior: 'auto' });
+      else canvasHost.scrollIntoView({ block: 'start', behavior: 'auto' });
+      surface.focus({ preventScroll: true });
+    }
     if (name === 'preview') { resetGesture(); onPreview?.(); }
-    if (name === 'undo') { resetGesture(); onUndo?.(); }
-    if (name === 'redo') { resetGesture(); onRedo?.(); }
+    if (name === 'undo' || name === 'redo') {
+      resetGesture();
+      if (!history[name]) { say(`No more changes to ${name}.`); return; }
+      try { (name === 'undo' ? onUndo : onRedo)?.(); say(`${name === 'undo' ? 'Undid' : 'Redid'} the last change. Showing ${levelLabel(level(plan))}.`); }
+      catch (error) { say(error?.message || `Could not ${name} that change.`); }
+    }
     if (name === 'fit') fit();
     if (name === 'zoom-in' || name === 'zoom-out') { view.zoom = clamp(view.zoom * (name === 'zoom-in' ? 1.3 : 1 / 1.3), 6, 240); renderPlan(); }
     if (name === 'delete-selection') deleteSelection();
@@ -577,7 +687,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     }
     if (name === 'add-level') {
       const l = level(plan), nextLevel = { id: id('level'), name: `Level ${plan.levels.length + 1}`, elevation: round(l.elevation + l.height), height: l.height };
-      selection = null; change(next => { next.levels.push(nextLevel); next.activeLevelId = nextLevel.id; }, `${nextLevel.name} added and selected. ${l.name} is still in the level list.`);
+      selection = null; if (change(next => { next.levels.push(nextLevel); next.activeLevelId = nextLevel.id; }, `${nextLevel.name} added and selected. ${l.name} is still in the level list.`)) setInspectorTab('level');
     }
     if (name === 'delete-level' && plan.levels.length > 1) {
       const removed = plan.activeLevelId; selection = null;
@@ -596,6 +706,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     const button = event.target.closest('button'); if (!button || !host.contains(button)) return;
     if (suppressedClick?.button === button && performance.now() < suppressedClick.until && (event.detail > 0 || event.pointerType)) { event.preventDefault(); event.stopPropagation(); return; }
     if (button.dataset.tool) setTool(button.dataset.tool);
+    if (button.dataset.inspectorTab) setInspectorTab(button.dataset.inspectorTab, false, true);
     if (button.dataset.action) action(button.dataset.action);
   });
 
@@ -604,6 +715,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     if (!field) return;
     if (field === 'snap') { snap = event.target.checked; renderPlan(); return; }
     if (['new-width', 'new-depth'].includes(field)) return;
+    if (field === 'level-select') { selectLevel(value); return; }
     if (field === 'selection') {
       resetGesture();
       const openingRoom = plan.rooms.find(r => r.openings.some(o => o.id === value));
@@ -617,7 +729,6 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       if (field === 'plan-name') next.name = value;
       if (field === 'units') next.units = value;
       if (field === 'grid') next.grid = numeric;
-      if (field === 'level-select') { next.activeLevelId = value; selection = null; }
       if (field === 'level-name') l.name = value;
       if (field === 'level-elevation') l.elevation = numeric;
       if (field === 'level-height') l.height = numeric;
@@ -657,8 +768,9 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     if (!active || editable(event.target)) return;
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); event.stopImmediatePropagation(); action(event.shiftKey ? 'redo' : 'undo'); }
     else if (event.ctrlKey && event.key.toLowerCase() === 'y') { event.preventDefault(); event.stopImmediatePropagation(); action('redo'); }
+    else if (editorView === 'building') { if (event.key === 'Escape') { event.preventDefault(); setEditorView('plan'); } }
     else if (event.key === 'Escape') { event.preventDefault(); resetGesture(); setTool('select'); }
-    else if (event.key === 'Enter' && tool === 'polygon') { event.preventDefault(); finishPolygon(); }
+    else if (event.key === 'Enter' && tool === 'polygon' && (event.target === surface || svg.contains(event.target))) { event.preventDefault(); finishPolygon(); }
     else if (event.key === 'Delete' || event.key === 'Backspace') { event.preventDefault(); deleteSelection(); }
     else if (event.target === surface && !event.ctrlKey && !event.metaKey) {
       const directions = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
@@ -690,8 +802,13 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       resetGesture(); plan = next; validSelection(); renderAll();
       if (active && !fitted && plan.rooms.length) fit();
     },
-    setActive(value) { active = Boolean(value); canvasHost.hidden = !active; if (!active) resetGesture(); else { renderAll(); if (!fitted && plan.rooms.length) fit(); } },
-    setHistory(value) { history = { undo: Number(value?.undo) || 0, redo: Number(value?.redo) || 0 }; renderHistory(); },
-    dispose() { clearToolbarDrag(); disposed = true; resize.disconnect(); cleanups.forEach(fn => fn()); dragBadge.remove(); canvasHost.replaceChildren(); inspectorHost.replaceChildren(); },
+    setActive(value) { active = Boolean(value); canvasHost.hidden = !active; overview.setVisible(active && editorView === 'building'); if (!active) resetGesture(); else { renderAll(); if (editorView === 'plan' && !fitted && plan.rooms.length) fit(); } },
+    setHistory(value) {
+      const previous = history; history = { undo: Number(value?.undo) || 0, redo: Number(value?.redo) || 0 }; renderHistory();
+      if (!active || committing) return;
+      if (history.undo < previous.undo && history.redo > previous.redo) say(`Undid the last change. Showing ${levelLabel(level(plan))}.`);
+      else if (history.redo < previous.redo && history.undo > previous.undo) say(`Redid the last change. Showing ${levelLabel(level(plan))}.`);
+    },
+    dispose() { clearToolbarDrag(); disposed = true; overview.dispose(); resize.disconnect(); cleanups.forEach(fn => fn()); dragBadge.remove(); canvasHost.replaceChildren(); inspectorHost.replaceChildren(); },
   });
 }

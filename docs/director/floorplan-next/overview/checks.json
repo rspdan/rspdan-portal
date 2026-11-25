@@ -1,0 +1,86 @@
+[
+  {
+    "check": "Four independent level cards",
+    "passed": true
+  },
+  {
+    "check": "Exact descending elevation groups",
+    "passed": true
+  },
+  {
+    "check": "Duplicate elevations are grouped explicitly",
+    "passed": true
+  },
+  {
+    "check": "Three distinct connection records",
+    "passed": true
+  },
+  {
+    "check": "No plan mutation",
+    "passed": true
+  },
+  {
+    "check": "No phone horizontal overflow",
+    "passed": true
+  },
+  {
+    "check": "Level callback uses level-ground-id",
+    "passed": true
+  },
+  {
+    "check": "Level callback uses level-upper-id",
+    "passed": true
+  },
+  {
+    "check": "Level callback uses level-empty-same-name-id",
+    "passed": true
+  },
+  {
+    "check": "Level callback uses level-below-id",
+    "passed": true
+  },
+  {
+    "check": "Empty level stays visible",
+    "passed": true
+  },
+  {
+    "check": "Hidden overview",
+    "passed": true
+  },
+  {
+    "check": "Keyboard selection fires callback",
+    "passed": true
+  },
+  {
+    "check": "Level names remain literal text",
+    "passed": true
+  },
+  {
+    "check": "No desktop horizontal overflow",
+    "passed": true
+  },
+  {
+    "check": "Tiny distinct elevation retains exact value",
+    "passed": true
+  },
+  {
+    "check": "Tiny connection difference is nonzero",
+    "passed": true
+  },
+  {
+    "check": "Clockwise door glyph stays inside mini-plan",
+    "passed": true
+  },
+  {
+    "check": "Overview is a named accessible region",
+    "passed": true
+  },
+  {
+    "check": "Dispose removes content",
+    "passed": true
+  },
+  {
+    "check": "No runtime exceptions",
+    "passed": true
+  }
+]

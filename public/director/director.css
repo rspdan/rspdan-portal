@@ -25,3 +25,10 @@
 .inspector[data-mode=floorplan] .floorplan-panel{order:0}
 .inspector[data-mode=floorplan] .takes-panel{order:1}
 @media(max-width:680px){#director[data-mode=floorplan]{grid-template-rows:62px auto 40px}#director[data-mode=floorplan] .stage{height:64dvh;min-height:430px}}
+/* Keep phone plan controls in reach while the inspector scrolls independently. */
+@media(max-width:680px){
+  #director[data-mode=floorplan]{height:100dvh;min-height:522px;grid-template-rows:62px minmax(0,1fr) 40px}
+  #director[data-mode=floorplan] .workbench{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(260px,62fr) minmax(160px,38fr);min-height:0}
+  #director[data-mode=floorplan] .stage{position:relative;top:auto;height:auto;min-height:0}
+  #director[data-mode=floorplan] .inspector{min-height:0;overflow:auto;overscroll-behavior:contain;scroll-padding-top:60px}
+}

@@ -1,0 +1,54 @@
+{
+  "beforeSelect": {
+    "scroll": 0,
+    "svg": {
+      "x": 0,
+      "y": 262,
+      "width": 390,
+      "height": 300.15625
+    },
+    "roomRelative": [
+      74.90625762939453,
+      46.6640625,
+      240.18749237060547,
+      206.828125
+    ],
+    "selection": "",
+    "focusTag": "BUTTON"
+  },
+  "afterSelect": {
+    "scroll": 0,
+    "svg": {
+      "x": 0,
+      "y": 262,
+      "width": 390,
+      "height": 300.15625
+    },
+    "roomRelative": [
+      74.90625762939453,
+      46.6640625,
+      240.18749237060547,
+      206.828125
+    ],
+    "selection": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+    "focusTag": "DIV"
+  },
+  "afterReturn": {
+    "scroll": 124,
+    "svg": {
+      "x": 0,
+      "y": 200,
+      "width": 390,
+      "height": 300.15625
+    },
+    "roomRelative": [
+      74.90625762939453,
+      46.66407775878906,
+      240.18749237060547,
+      206.82810974121094
+    ],
+    "selection": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+    "focusTag": "DIV"
+  },
+  "editedWidth": 1.1
+}
