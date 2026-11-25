@@ -14,6 +14,8 @@ if (!session) return Astro.redirect('/pspt?next=/director');
     <link rel="stylesheet" href="/director/director.css" />
     <script is:inline src="/director/vendor/babylon.js" defer></script>
     <script is:inline src="/director/vendor/babylonjs.loaders.min.js" defer></script>
+    <script is:inline src="/director/animation.js" defer></script>
+    <script is:inline src="/director/direct-manipulation.js" defer></script>
     <script is:inline src="/director/director.js" defer></script>
   </head>
   <body>
@@ -27,7 +29,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
       </header>
       <div class="workbench">
         <section class="stage" aria-label="Character stage">
-          <canvas id="room" aria-label="Ouch in the white room. Select a joint and drag its rotation rings to pose." tabindex="0"></canvas>
+          <div id="frame-window"><canvas id="room" aria-label="Ouch in the white room. Select a joint and drag its rotation rings to pose." tabindex="0"></canvas></div>
           <div class="stage-top">
             <div class="room-tag"><span class="live-dot"></span> <span id="room-title">THE WHITE ROOM</span> <span id="look-label">OUCH</span></div>
             <div class="stage-controls">
@@ -55,6 +57,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
               <label><span class="axis z">Z</span><input id="rot-z" type="range" min="-180" max="180" step="1" value="0" /><output id="value-z">0°</output></label>
             </div>
             <div class="button-row"><button id="reset-joint" disabled>Reset joint</button><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div>
+            <p id="history-count" class="small" aria-live="polite" title="Up to 60 edit steps in this session. Saved takes can be reopened separately.">0 back · 0 forward</p>
             <details><summary>Move the whole character</summary><div id="position-controls" class="joint-axes">
               <label><span>↔</span><input id="pos-x" type="range" min="-2" max="2" step=".01" value="0" aria-label="Character across" /><output id="pos-value-x">0</output></label>
               <label><span>↕</span><input id="pos-y" type="range" min="-1" max="3" step=".01" value="0" aria-label="Character height" /><output id="pos-value-y">0</output></label>
@@ -65,7 +68,28 @@ if (!session) return Astro.redirect('/pspt?next=/director');
           <section class="panel">
             <div class="section-title"><h2>Stage</h2><span>03</span></div>
             <label>Background<select id="background"><option value="white">White room</option><option value="green">Green screen</option><option value="transparent">Transparent</option></select></label>
+            <label>Frame size<select id="frame-size"><option value="720x720">Square · 720 × 720</option><option value="1280x720">Landscape · 1280 × 720</option><option value="1920x1080">Full HD · 1920 × 1080</option><option value="720x1280">Portrait · 720 × 1280</option><option value="1080x1920">Portrait HD · 1080 × 1920</option><option value="custom">Custom size</option></select></label>
+            <div class="paired-fields"><label>Width<input id="output-width" type="number" min="64" max="4096" value="720" /></label><span>×</span><label>Height<input id="output-height" type="number" min="64" max="4096" value="720" /></label></div>
+            <p class="small">The image area matches these proportions. Frame size is saved with your take.</p>
             <label>Direction notes<textarea id="notes" rows="2" maxlength="4000" placeholder="A little more swagger. Hold the pause…"></textarea></label>
+          </section>
+          <section class="panel animation-panel">
+            <div class="section-title"><h2>Motion & timing</h2><span>04</span></div>
+            <label>Between poses<select id="transition"><option value="ease-in-out">Ease in & out</option><option value="linear">Linear · steady speed</option><option value="ease-in">Ease in · slow start</option><option value="ease-out">Ease out · slow finish</option><option value="hold">Hold · stop motion</option></select></label>
+            <div class="paired-fields"><label>Length (seconds)<input id="duration" type="number" min="0.017" max="10000" step="0.1" value="3" /></label><label>FPS change<select id="fps-behavior"><option value="seconds">Keep seconds</option><option value="frames">Keep frame numbers</option></select></label></div>
+            <label class="check-label"><input id="retime-keys" type="checkbox" checked /> Scale key spacing with length</label>
+            <label class="check-label"><input id="loop" type="checkbox" checked /> Loop playback</label>
+            <details open><summary>Edit a key</summary>
+              <label>Keyed pose<select id="key-select"><option value="">No keys yet</option></select></label>
+              <div class="paired-fields"><label>Move to frame<input id="key-frame" type="number" min="1" max="72" value="1" disabled /></label><button id="move-key" disabled>Move key</button></div>
+              <label>Motion to the next key<select id="key-transition" disabled><option value="inherit">Use take setting</option><option value="ease-in-out">Ease in & out</option><option value="linear">Linear</option><option value="ease-in">Ease in</option><option value="ease-out">Ease out</option><option value="hold">Hold</option></select></label>
+              <p id="key-description" class="small">Key two poses to make a motion.</p>
+            </details>
+            <details><summary>Try a motion</summary>
+              <label>Editable study<select id="motion-example"><option value="nerve">Find some nerve</option><option value="plan">There goes the plan</option></select></label>
+              <div class="button-row"><button id="load-example">Load study</button><button id="frame-motion">Frame motion</button></div>
+              <p class="small">Loads four poses into this timeline. Undo brings your previous take back.</p>
+            </details>
           </section>
           <section class="panel takes-panel">
             <div class="section-title"><h2>Saved takes</h2><button id="refresh-takes" class="text-button">Refresh</button></div>
@@ -73,10 +97,10 @@ if (!session) return Astro.redirect('/pspt?next=/director');
           </section>
         </aside>
       </div>
-      <section class="timeline" aria-label="Stop motion timeline">
-        <div class="transport"><button id="play" aria-label="Play take" disabled>▶</button><label>Frame <input id="frame" type="number" min="1" max="120" value="1" /></label><span class="timeline-divider">/</span><label><span class="sr-only">End frame</span><input id="end-frame" type="number" min="1" max="720" value="120" /></label><label class="fps"><input id="fps" type="number" min="1" max="60" value="12" /> fps</label><span class="timing">STOP MOTION</span></div>
-        <div class="timeline-track"><input id="scrub" aria-label="Scrub frames" type="range" min="1" max="120" step="1" value="1" /><div id="keys" aria-label="Keyed poses"></div></div>
-        <div class="key-actions"><button id="key-pose" class="primary" disabled>+ Key pose</button><button id="remove-key" disabled>Remove key</button></div>
+      <section class="timeline" aria-label="Animation timeline">
+        <div class="transport"><button id="play" aria-label="Play take" disabled>▶</button><label>Frame <input id="frame" type="number" min="1" max="72" value="1" /></label><span class="timeline-divider">/</span><label><span class="sr-only">End frame</span><input id="end-frame" type="number" min="1" max="10000" value="72" /></label><label class="fps"><input id="fps" type="number" min="1" max="60" value="24" /> fps</label><span id="timing-label" class="timing">EASE IN & OUT</span></div>
+        <div class="timeline-track"><input id="scrub" aria-label="Scrub frames" type="range" min="1" max="72" step="1" value="1" /><div id="keys" aria-label="Keyed poses"></div></div>
+        <div class="key-actions"><button id="key-pose" class="primary" disabled>+ Key pose</button><button id="remove-key" disabled>Remove key</button><button id="motion-settings">Timing</button></div>
       </section>
       <footer><span id="status" role="status" aria-live="polite">Preparing the model.</span><span id="storage-label">BROWSER DRAFT</span></footer>
     </main>

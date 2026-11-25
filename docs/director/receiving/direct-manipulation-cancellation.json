@@ -1,0 +1,103 @@
+{
+  "events": [
+    {
+      "type": "pointerdown",
+      "id": 2,
+      "primary": true,
+      "x": 160.01890563964844,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "pointerdown",
+      "id": 3,
+      "primary": false,
+      "x": 220.01890563964844,
+      "y": 241.23568725585938
+    },
+    {
+      "type": "pointermove",
+      "id": 3,
+      "primary": false,
+      "x": 245.01890563964844,
+      "y": 261.2356872558594
+    },
+    {
+      "type": "pointerup",
+      "id": 3,
+      "primary": false,
+      "x": 245.01890563964844,
+      "y": 261.2356872558594
+    },
+    {
+      "type": "lostpointercapture",
+      "id": 3,
+      "primary": false,
+      "x": 245.01890563964844,
+      "y": 261.2356872558594
+    },
+    {
+      "type": "pointermove",
+      "id": 2,
+      "primary": true,
+      "x": 180.01890563964844,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "pointerup",
+      "id": 2,
+      "primary": true,
+      "x": 180.01890563964844,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "lostpointercapture",
+      "id": 2,
+      "primary": true,
+      "x": 180.01890563964844,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "pointerdown",
+      "id": 4,
+      "primary": true,
+      "x": 180.01902770996094,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "pointermove",
+      "id": 4,
+      "primary": true,
+      "x": 162.01902770996094,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "lostpointercapture",
+      "id": 4,
+      "primary": true,
+      "x": 162.01902770996094,
+      "y": 211.23568725585938
+    },
+    {
+      "type": "pointerup",
+      "id": 4,
+      "primary": true,
+      "x": 162.01902770996094,
+      "y": 211.23568725585938
+    }
+  ],
+  "checks": {
+    "active_hold_suppresses_contextmenu": true,
+    "second_finger_does_not_move_pose": true,
+    "second_finger_does_not_move_camera": true,
+    "primary_drag_continues_after_second_finger": true,
+    "two_finger_sequence_keeps_camera": true,
+    "blur_restores_starting_pose": true,
+    "blur_keeps_camera": true
+  },
+  "passed": true,
+  "note": "Real CDP multi-touch; contextmenu and window blur dispatched explicitly in the page.",
+  "source_sha256": {
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "director.js": "b6121019a17bdafcf64d8a1ed683009a88ba8b64e41c1c1d2be4f2b089bd37a8"
+  }
+}

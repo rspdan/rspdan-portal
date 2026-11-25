@@ -1,0 +1,191 @@
+{
+  "scope": "Focused actual mobile touch edits during playback; local browser draft only, no saved take or message.",
+  "browser": {
+    "is_mobile": true,
+    "has_touch": true,
+    "device_scale_factor": 3,
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "checks": {
+    "touch_rotation_stops_playback_and_holds_frame": true,
+    "touch_rotation_changes_only_x": true,
+    "touch_root_stops_playback_and_holds_frame": true,
+    "touch_root_changes_only_x": true,
+    "keyboard_rotation_stops_and_preserves_other_axes": true,
+    "zero_page_errors": true
+  },
+  "metrics": {
+    "touch_rotation": {
+      "playing_before_touch": {
+        "frame": 36,
+        "euler": [
+          0.005263008558816333,
+          -0.0035421995781886114,
+          -1.1847741149880253
+        ],
+        "root": [
+          0.24583333333333335,
+          0.43333333333333335,
+          0.10291666666666666
+        ],
+        "inputs": [
+          -3,
+          2,
+          -66
+        ],
+        "playing": true
+      },
+      "pointerdown_after_stop_sync": {
+        "frame": 41,
+        "euler": [
+          0.045159205274421674,
+          -0.031378618139141626,
+          -1.2144294028634264
+        ],
+        "root": [
+          0.26666666666666666,
+          0.45666666666666667,
+          0.07333333333333336
+        ],
+        "inputs": [
+          3,
+          -2,
+          -70
+        ],
+        "playing": false
+      },
+      "after": {
+        "frame": 41,
+        "euler": [
+          -0.05235987925523562,
+          -0.03137861813914167,
+          -1.2144294028634262
+        ],
+        "root": [
+          0.26666666666666666,
+          0.45666666666666667,
+          0.07333333333333336
+        ],
+        "inputs": [
+          -3,
+          -2,
+          -70
+        ],
+        "playing": false
+      },
+      "inactive_axis_delta_radians": [
+        4.163336342344337e-17,
+        2.220446049250313e-16
+      ]
+    },
+    "touch_root": {
+      "playing_before_touch": {
+        "frame": 48,
+        "euler": [
+          0.09955368955219894,
+          -0.07245763532886626,
+          -1.2579430782667802
+        ],
+        "root": [
+          0.29583333333333334,
+          0.4893333333333333,
+          0.031916666666666704
+        ],
+        "inputs": [
+          -3,
+          -2,
+          -70
+        ],
+        "playing": true
+      },
+      "pointerdown_after_stop_sync": {
+        "frame": 51,
+        "euler": [
+          0.12230031259567586,
+          -0.09085722243982768,
+          -1.2773499364240108
+        ],
+        "root": [
+          0.30833333333333335,
+          0.5033333333333333,
+          0.01416666666666666
+        ],
+        "inputs": [
+          7,
+          -5,
+          -73
+        ],
+        "playing": false
+      },
+      "after": {
+        "frame": 51,
+        "euler": [
+          0.12230031259567575,
+          -0.09085722243982766,
+          -1.2773499364240108
+        ],
+        "root": [
+          0.27,
+          0.5033333333333333,
+          0.01416666666666666
+        ],
+        "inputs": [
+          7,
+          -5,
+          -73
+        ],
+        "playing": false
+      }
+    },
+    "keyboard_rotation": {
+      "before": {
+        "frame": 59,
+        "euler": [
+          0.1811311815416788,
+          -0.14240009340557358,
+          -1.3314845757113958
+        ],
+        "root": [
+          0.3416666666666667,
+          0.5406666666666666,
+          -0.03316666666666668
+        ],
+        "inputs": [
+          10,
+          -8,
+          -76
+        ],
+        "playing": false
+      },
+      "after": {
+        "frame": 59,
+        "euler": [
+          0.19198622400763146,
+          -0.1424000934055735,
+          -1.3314845757113956
+        ],
+        "root": [
+          0.3416666666666667,
+          0.5406666666666666,
+          -0.03316666666666668
+        ],
+        "inputs": [
+          11,
+          -8,
+          -76
+        ],
+        "playing": false
+      },
+      "inactive_axis_delta_radians": [
+        8.326672684688674e-17,
+        2.220446049250313e-16
+      ]
+    }
+  },
+  "page_errors": [],
+  "served_source_sha256": "937af638d6a49a8b1e5869139cca1b64f435469f11ffef34ff4c2288a179332f",
+  "passed": true
+}

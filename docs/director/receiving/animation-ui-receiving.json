@@ -1,0 +1,87 @@
+{
+  "scope": "Actual local Astro browser UI and disposable local saves; no external messages.",
+  "checks": {
+    "desktop_study_has_four_keys": true,
+    "desktop_midpoint_matches_animation_math": true,
+    "desktop_midpoint_differs_both_endpoints": true,
+    "global_hold_holds_start_pose": true,
+    "global_ease_updates_current_preview": true,
+    "key_override_updates_midpoint_preview_immediately": true,
+    "key_outgoing_hold_overrides_global": true,
+    "next_interval_inherits_global": true,
+    "key_collision_refused_without_mutation": true,
+    "key_move_retains_pose_and_override": true,
+    "duration_with_scale_retimes_keys": true,
+    "duration_without_scale_preserves_keys": true,
+    "fps_keep_seconds_retimes": true,
+    "fps_keep_frames_preserves_keys_and_range": true,
+    "nonloop_playback_stops_on_end": true,
+    "rendered_aspect_720x1280": true,
+    "rendered_aspect_1280x720": true,
+    "v2_reopen_exact_settings": true,
+    "v1_loaded_take_retains_hold": true,
+    "mobile_touch_loads_four_key_study": true,
+    "mobile_touch_loop_setting": true,
+    "mobile_touch_retime_setting": true,
+    "mobile_portrait_camera_gate": true,
+    "mobile_touch_scrub_uses_interpolation": true,
+    "mobile_touch_joint_selects_inside_frame_window": true,
+    "mobile_touch_ring_edits_pose_in_camera_gate": true,
+    "mobile_touch_ring_keeps_camera": true,
+    "mobile_touch_keys_edited_pose": true,
+    "zero_page_errors": true,
+    "mobile_actual_touch_slider_changes_pose_after_gate_resize": true,
+    "mobile_touch_slider_keeps_camera": true,
+    "v2_reopen_pose_matches": true
+  },
+  "metrics": {
+    "desktop_midpoint_math_delta": 2.220446049250313e-16,
+    "desktop_aspect_720x1280": {
+      "css": [
+        451.125,
+        802
+      ],
+      "buffer": [
+        451,
+        802
+      ],
+      "actual": 0.5625
+    },
+    "desktop_aspect_1280x720": {
+      "css": [
+        1158,
+        651.375
+      ],
+      "buffer": [
+        1158,
+        651
+      ],
+      "actual": 1.7777777777777777
+    },
+    "v2_pose_reopen_delta": 2.220446049250313e-16,
+    "touch_slider_degrees": {
+      "before": 0,
+      "after": 54.0
+    },
+    "v2_pose_reopen_exact": false,
+    "v2_pose_reopen_tolerance": 1e-12
+  },
+  "page_errors": [],
+  "desktop": {
+    "width": 1440,
+    "height": 1000,
+    "device_scale_factor": 1
+  },
+  "mobile": {
+    "width": 390,
+    "height": 844,
+    "is_mobile": true,
+    "has_touch": true,
+    "device_scale_factor": 3,
+    "touch_input": "CDP Input.dispatchTouchEvent"
+  },
+  "source_sha256": "ae14aca676eac55556ab2d677f7b00e081b11ee390e8a11df235b37d462940a6",
+  "saved_local_take_id": "dir_3eeb6f81-f31d-46b4-bc8c-66d8274f0d16",
+  "passed": true,
+  "served_source_sha256": "ae14aca676eac55556ab2d677f7b00e081b11ee390e8a11df235b37d462940a6"
+}

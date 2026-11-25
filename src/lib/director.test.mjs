@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { validateTake, DirectorError, MAX_BODY_BYTES } from './directorSchema.js';
 import { createDirectorService } from './directorService.js';
@@ -15,6 +15,17 @@ const actor = { kind: 'operator', user: 'dan' };
 const crew = { kind: 'crew' };
 function pose() { return { bones: Object.fromEntries(registry.assets[0].bones.map((name) => [name, { position: [0, 1, 0], rotation: [0, 0, 0, 1], scale: [1, 1, 1] }])), morphs: { curl: .4 } }; }
 function take() { return { schema: 'nest-director-take/v1', asset: { id: 'ouch-test', sha256: 'a'.repeat(64) }, name: 'Dan’s falling take', notes: 'Keep the long pause.', look: 'trip', fps: 12, frame: 12, range: { start: 1, end: 120 }, stage: { background: 'transparent' }, camera: { mode: 'orthographic', position: [2, 2, 4], target: [0, 1, 0], fov: .8, orthoSize: 3 }, pose: pose(), keyframes: [{ frame: 1, pose: pose() }, { frame: 12, pose: pose() }] }; }
+function animatedTake() {
+  const value = take();
+  value.schema = 'nest-director-take/v2';
+  value.animation = { transition: 'ease-in-out', loop: false };
+  value.output = { width: 1920, height: 1080 };
+  value.keyframes[0].transition = 'ease-out';
+  value.keyframes[1].pose.bones.root.position[0] = .8;
+  value.keyframes[1].pose.morphs.curl = .9;
+  value.pose = structuredClone(value.keyframes[1].pose);
+  return value;
+}
 async function fixture(t, now) {
   const directory = await mkdtemp(join(tmpdir(), 'nest-director-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
@@ -43,6 +54,78 @@ test('complete take preserves all editable controls and rejects malformed or unr
     (v) => { v.fps = 12.5; },
   ];
   for (const mutate of mutations) { const value = take(); mutate(value); assert.throws(() => validateTake(value, registry), errorStatus(400)); }
+});
+
+test('v1 normalization keeps its frozen serialized hash and rejects v2-only fields', () => {
+  const normalized = validateTake(take(), registry);
+  // Captured from the v1 validator before v2 was added, not recomputed from a
+  // second copy of the new normalization implementation.
+  assert.equal(createHash('sha256').update(JSON.stringify(normalized)).digest('hex'), '3803ed3c1150d4b3f111bf0d52406ddfa67e344e8a478f642c63aef54c5d15bc');
+  assert.equal(Object.hasOwn(normalized, 'animation'), false);
+  assert.equal(Object.hasOwn(normalized, 'output'), false);
+  assert.ok(normalized.keyframes.every((key) => !Object.hasOwn(key, 'transition')));
+  for (const field of ['animation', 'output']) {
+    const value = take(); value[field] = animatedTake()[field];
+    assert.throws(() => validateTake(value, registry), /unknown fields/);
+  }
+  const value = take(); value.keyframes[0].transition = 'hold';
+  assert.throws(() => validateTake(value, registry), /unknown fields/);
+});
+
+test('v2 retains global animation, optional interval overrides and bounded output dimensions', () => {
+  for (const transition of ['hold', 'linear', 'ease-in', 'ease-out', 'ease-in-out']) {
+    const value = animatedTake(); value.animation.transition = transition; value.keyframes[0].transition = transition;
+    const normalized = validateTake(value, registry);
+    assert.deepEqual(JSON.parse(JSON.stringify(normalized)), value);
+    assert.equal(Object.hasOwn(normalized.keyframes[1], 'transition'), false, 'inherited transition stays omitted');
+  }
+  for (const [width, height] of [[64, 64], [4096, 2160], [2160, 4096]]) {
+    const value = animatedTake(); value.output = { width, height }; value.animation.loop = true;
+    assert.deepEqual(validateTake(value, registry).output, value.output);
+    assert.equal(validateTake(value, registry).animation.loop, true);
+  }
+  const mutations = [
+    ['missing animation', (v) => { delete v.animation; }],
+    ['missing output', (v) => { delete v.output; }],
+    ['missing transition', (v) => { delete v.animation.transition; }],
+    ['missing loop', (v) => { delete v.animation.loop; }],
+    ['invalid transition', (v) => { v.animation.transition = 'spline'; }],
+    ['invalid key override', (v) => { v.keyframes[0].transition = 'inherit'; }],
+    ['null key override', (v) => { v.keyframes[0].transition = null; }],
+    ['string loop', (v) => { v.animation.loop = 'false'; }],
+    ['animation unknown field', (v) => { v.animation.duration = 5; }],
+    ['output unknown field', (v) => { v.output.url = 'https://example.com'; }],
+    ['key unknown field', (v) => { v.keyframes[0].duration = 5; }],
+    ['take unknown field', (v) => { v.duration = 5; }],
+    ['width below minimum', (v) => { v.output.width = 63; }],
+    ['height above maximum', (v) => { v.output.height = 4097; }],
+    ['fractional width', (v) => { v.output.width = 1080.5; }],
+    ['nonfinite height', (v) => { v.output.height = Infinity; }],
+    ['excess pixel area', (v) => { v.output = { width: 4096, height: 2161 }; }],
+    ['fps unchanged upper bound', (v) => { v.fps = 61; }],
+    ['range unchanged upper bound', (v) => { v.range.end = 36001; }],
+  ];
+  for (const [label, mutate] of mutations) {
+    const value = animatedTake(); mutate(value);
+    assert.throws(() => validateTake(value, registry), errorStatus(400), label);
+  }
+});
+
+test('v2 animation settings and overrides survive another process and immutable retries', async (t) => {
+  const { directory, service } = await fixture(t);
+  const value = animatedTake(); const requestId = randomUUID();
+  const saved = await service.save({ take: value, requestId }, actor);
+  const childScript = `import {createLocalDirectorStore} from ${JSON.stringify(new URL('./directorLocalStore.js', import.meta.url).href)}; const r=await createLocalDirectorStore(process.argv[1]).get(process.argv[2]); process.stdout.write(JSON.stringify(r));`;
+  const child = spawnSync(process.execPath, ['--input-type=module', '-e', childScript, directory, saved.saved.id], { encoding: 'utf8' });
+  assert.equal(child.status, 0, child.stderr);
+  const reopened = JSON.parse(child.stdout);
+  assert.deepEqual(reopened.take, value); assert.equal(reopened.takeHash, saved.saved.takeHash);
+  assert.deepEqual(await service.save({ take: value, requestId }, actor), saved);
+  const changed = structuredClone(value); changed.keyframes[0].transition = 'hold';
+  await assert.rejects(service.save({ take: changed, requestId }, actor), errorStatus(409));
+  const revised = await service.save({ take: changed, requestId: randomUUID() }, actor);
+  assert.notEqual(revised.saved.takeHash, saved.saved.takeHash, 'interval override contributes to immutable take identity');
+  assert.equal((await service.list(crew)).takes.length, 0);
 });
 
 test('save survives another process reading the disk, and local success never claims shared delivery', async (t) => {

@@ -1,11 +1,13 @@
 // The editable document is the saved artifact. Asset bytes and rig names are
 // selected by the server registry, never by an arbitrary URL in a browser save.
 export const TAKE_SCHEMA = 'nest-director-take/v1';
+export const TAKE_SCHEMA_V2 = 'nest-director-take/v2';
 export const MAX_BODY_BYTES = 2 * 1024 * 1024;
 export const TAKE_ID = /^dir_[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const HASH = /^[0-9a-f]{64}$/;
 const NAME = /^[A-Za-z0-9][A-Za-z0-9 _.:|()\-]{0,95}$/;
+const TRANSITIONS = ['hold', 'linear', 'ease-in', 'ease-out', 'ease-in-out'];
 
 export class DirectorError extends Error {
   constructor(message, status = 400) { super(message); this.status = status; }
@@ -57,8 +59,9 @@ export function validateOwner(value) {
 }
 
 export function validateTake(input, registry) {
-  keys(input, ['schema', 'asset', 'name', 'notes', 'look', 'fps', 'frame', 'range', 'stage', 'camera', 'pose', 'keyframes'], 'take');
-  requireValue(input.schema === TAKE_SCHEMA, 'unsupported take schema');
+  const isV2 = input?.schema === TAKE_SCHEMA_V2;
+  keys(input, ['schema', 'asset', 'name', 'notes', 'look', 'fps', 'frame', 'range', 'stage', 'camera', 'pose', 'keyframes', ...(isV2 ? ['animation', 'output'] : [])], 'take');
+  requireValue(input.schema === TAKE_SCHEMA || isV2, 'unsupported take schema');
   keys(input.asset, ['id', 'sha256'], 'asset');
   requireValue(typeof input.asset.id === 'string' && typeof input.asset.sha256 === 'string' && HASH.test(input.asset.sha256), 'asset id and SHA256 are required');
   const asset = registry?.assets?.find((candidate) => candidate.id === input.asset.id && candidate.sha256 === input.asset.sha256);
@@ -101,14 +104,18 @@ export function validateTake(input, registry) {
   requireValue(Array.isArray(input.keyframes) && input.keyframes.length <= 600, 'at most 600 keyframes are supported');
   let lastFrame = start - 1;
   const keyframes = input.keyframes.map((keyframe, index) => {
-    keys(keyframe, ['frame', 'pose'], `keyframes[${index}]`);
+    keys(keyframe, ['frame', 'pose', ...(isV2 ? ['transition'] : [])], `keyframes[${index}]`);
     const frame = number(keyframe.frame, start, end, `keyframes[${index}].frame`, true);
     requireValue(frame > lastFrame, 'keyframes must have distinct increasing frames');
     lastFrame = frame;
-    return { frame, pose: pose(keyframe.pose, `keyframes[${index}].pose`) };
+    const key = { frame, pose: pose(keyframe.pose, `keyframes[${index}].pose`) };
+    // A key override governs the interval starting at this key. Omission is
+    // retained so changing the take default still affects inherited intervals.
+    if (isV2 && Object.hasOwn(keyframe, 'transition')) key.transition = member(keyframe.transition, TRANSITIONS, `keyframes[${index}].transition`);
+    return key;
   });
   const take = {
-    schema: TAKE_SCHEMA,
+    schema: input.schema,
     asset: { id: asset.id, sha256: asset.sha256 },
     name: text(input.name, 100, 'name'), notes: text(input.notes, 4000, 'notes'),
     look: member(input.look, ['ouch', 'trip'], 'look'),
@@ -124,6 +131,18 @@ export function validateTake(input, registry) {
     },
     pose: pose(input.pose, 'pose'), keyframes,
   };
+  // Keep the v1 object shape and ordering unchanged: existing immutable takes
+  // retain their hashes and stepped playback, without injected v2 defaults.
+  if (isV2) {
+    keys(input.animation, ['transition', 'loop'], 'animation');
+    requireValue(typeof input.animation.loop === 'boolean', 'animation.loop must be a boolean');
+    keys(input.output, ['width', 'height'], 'output');
+    const width = number(input.output.width, 64, 4096, 'output.width', true);
+    const height = number(input.output.height, 64, 4096, 'output.height', true);
+    requireValue(width * height <= 4096 * 2160, 'output pixel area is outside its supported range');
+    take.animation = { transition: member(input.animation.transition, TRANSITIONS, 'animation.transition'), loop: input.animation.loop };
+    take.output = { width, height };
+  }
   requireValue(new TextEncoder().encode(JSON.stringify(take)).length <= MAX_BODY_BYTES - 1024, 'take is too large');
   return take;
 }

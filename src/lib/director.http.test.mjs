@@ -14,7 +14,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const repo = fileURLToPath(new URL('../../', import.meta.url));
 const origin = 'http://127.0.0.1:4327';
 
-test('actual API authenticates, saves, restarts and reopens editable take; explicit local send stays local', { timeout: 120000 }, async (t) => {
+test('actual API preserves v1 and v2 takes across restart; explicit local send stays local', { timeout: 120000 }, async (t) => {
   const directory = await mkdtemp(join(tmpdir(), 'nest-director-http-'));
   const password = randomBytes(24).toString('hex');
   const signingSecret = randomBytes(32).toString('hex');
@@ -58,14 +58,34 @@ test('actual API authenticates, saves, restarts and reopens editable take; expli
   assert.equal(saved.shared, false); assert.equal(saved.storage, 'local-workspace');
   const id = saved.saved.id;
   assert.deepEqual(await (await request({ take, requestId })).json(), saved);
+  const animated = structuredClone(take);
+  animated.schema = 'nest-director-take/v2';
+  animated.animation = { transition: 'ease-in-out', loop: false };
+  animated.output = { width: 1080, height: 1920 };
+  animated.keyframes[0].transition = 'ease-out';
+  animated.keyframes[1].pose.bones[asset.bones[0]].position[0] = .5;
+  const animatedRequest = { take: animated, requestId: randomUUID() };
+  const animatedResponse = await request(animatedRequest);
+  const animatedSaved = await animatedResponse.json();
+  assert.equal(animatedResponse.status, 200, JSON.stringify(animatedSaved));
+  assert.equal(animatedSaved.shared, false);
+  assert.deepEqual(await (await request(animatedRequest)).json(), animatedSaved);
   const crewList = await (await fetch(`${origin}/api/director`, { headers: { 'x-nest-key': crewKey } })).json();
   assert.equal(crewList.takes.length, 0, 'save did not post anything');
   const invalid = structuredClone(take); invalid.pose.bones[asset.bones[0]].rotation = [0, 0, 0, 0];
   assert.equal((await request({ take: invalid, requestId: randomUUID() })).status, 400);
+  const invalidOutput = structuredClone(animated); invalidOutput.output = { width: 4096, height: 4096 };
+  assert.equal((await request({ take: invalidOutput, requestId: randomUUID() })).status, 400);
+  const invalidTransition = structuredClone(animated); invalidTransition.keyframes[0].transition = 'teleport';
+  assert.equal((await request({ take: invalidTransition, requestId: randomUUID() })).status, 400);
   assert.equal((await fetch(`${origin}/api/director`, { method: 'POST', headers: { cookie, origin, 'content-type': 'application/json' }, body: 'x'.repeat(2 * 1024 * 1024 + 1) })).status, 413);
   await stop(); await start();
   const reopened = await (await fetch(`${origin}/api/director?id=${id}`, { headers: { cookie } })).json();
   assert.deepEqual(reopened.take, take); assert.equal(reopened.saved.takeHash, saved.saved.takeHash);
+  const animatedReopened = await (await fetch(`${origin}/api/director?id=${animatedSaved.saved.id}`, { headers: { cookie } })).json();
+  assert.deepEqual(animatedReopened.take, animated);
+  assert.equal(animatedReopened.saved.takeHash, animatedSaved.saved.takeHash);
+  assert.equal(Object.hasOwn(animatedReopened.take.keyframes[1], 'transition'), false, 'omitted override still inherits the global transition');
   const sent = await (await request({ action: 'send', id, requestId: randomUUID(), origin: 'https://untrusted.example' })).json();
   assert.equal(sent.delivery, 'local-workspace-only'); assert.equal(sent.shared, false);
   assert.equal(sent.relay.href, `${origin}/director?take=${id}`);

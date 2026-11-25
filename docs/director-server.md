@@ -17,7 +17,7 @@ The send link and context use the current API deployment's server-provided `url.
 
 ## Editable document
 
-The schema is `nest-director-take/v1`. Required fields:
+The server accepts `nest-director-take/v1` and `nest-director-take/v2`. Both require the fields below. Version 1 keeps its original normalization, field order and hash, with stepped/hold playback; it receives no version 2 defaults.
 
 | Field | Content |
 | --- | --- |
@@ -32,13 +32,33 @@ The schema is `nest-director-take/v1`. Required fields:
 
 Each `pose.bones[name]` is `{position:[x,y,z], rotation:[x,y,z,w], scale:[x,y,z]}` in the exported node's local space. Rotation is a unit quaternion. `pose.morphs[name]` holds each registered shape's weight. The server bounds numeric ranges, rejects nonfinite values, unknown fields and missing/extra bones or morphs. The complete request is limited to 2 MiB.
 
+Version 2 additionally requires:
+
+| Field | Content |
+| --- | --- |
+| `animation` | `{transition, loop}`. `transition` is `hold`, `linear`, `ease-in`, `ease-out` or `ease-in-out`; `loop` is a boolean. |
+| `output` | `{width, height}` in pixels. Each dimension is an integer from 64 through 4096, with total area no greater than 4096 × 2160 pixels. Portrait and landscape use the same limit. |
+| `keyframes[].transition` | Optional override using the same transition names. It governs the interval **starting at this key** and ending at the following key. Omission means use `animation.transition`. |
+
+The server retains omitted key overrides as omitted, so changing the global transition still affects inherited intervals. `hold` keeps the starting pose until the next key. The existing `range` controls length in frames and `fps` controls playback rate; those limits remain unchanged. Version 1 rejects the new fields rather than silently changing legacy playback. Unknown fields inside `animation`, `output` and each key are rejected. Saving changed easing or output size creates a new immutable take whose hash includes those settings; existing saved takes remain unchanged.
+
+The room's **Timing** button opens the motion controls. Length is the inclusive frame count divided by FPS. Length changes can scale the key spacing; changing FPS can preserve either seconds or frame numbers. Integer rounding that would merge two keys is rejected. The selected key's transition explicitly governs motion to the next key. Cubic easing drives position, scale and morph interpolation, with normalized shortest-path quaternion SLERP for rotation. Playback can loop or stop at the last frame.
+
+Frame size changes the visible camera gate and is retained for native rendering. Browser preview resolution remains capped for the device; selecting a large output size does not force the phone to render that many pixels while editing. **Frame motion** uses bounded samples and one fixed camera; it is a staging aid, not an exhaustive guarantee for extreme or densely keyed takes. Two four-pose studies are editable starting points, not approved final animation.
+
+A quick tap selects a joint dot; holding it for 350 ms enables camera-plane repositioning. Release commits one undoable edit; cancelling restores its original position. This is direct joint translation, with the attached skin and child bones following, rather than fixed-length inverse kinematics. Position is already part of each saved pose and follows the selected interpolation. Rotation rings retain their separate gesture.
+
+Undo/Redo keeps up to 60 edit states within the current browser session, with visible backward/forward counts. Separate drags remain separate steps. Pose controls, timing, keys, stage/look, frame dimensions, grouped text edits and camera gestures enter that history; a new edit after Undo clears the old forward branch. Saved takes remain the durable version history across reloads; the session Undo stack is not claimed to persist through a reload.
+
+The v2 Blender receiver is maintained separately in `rspdan/nest-bridge`, under `ShellGame.Development/ODK.Pass2/animation-v2`. It preserves render dimensions and timing, with integer-frame samples matching the browser. The earlier frozen portable ZIP retains its v1 importer; it does not acquire v2 support through a documentation update.
+
 `src/data/director-assets.json` is the server's asset/rig allowlist and is owned by the exporter. Preserve prior asset bytes and registry entries when adding an edition if existing takes must continue to replay. A saved take's hash never silently follows a newer model.
 
 ## Stores and configuration
 
 Production requires configured `PSPT_SECRET` (at least 32 characters), `PSPT_CREDS`, `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`. `NEST_API_KEY` enables Crew API reading. The old temporary PSPT login and signing-secret fallbacks were removed; configured users and the signed-cookie format are unchanged.
 
-Redis keeps the whole take and owner index in one Lua operation under `director:v1:*`. The send receipt and two existing relay channels are likewise written in one operation. Both paths preflight index types before writing. Version 1 saves are immutable; subsequent edits receive a new save ID. Store failures produce an explicit unconfirmed-operation response, never a false saved state. This first slice has no independent Blob mirror; Redis backup and retention remain the deployment's responsibility.
+Redis keeps the whole take and owner index in one Lua operation under `director:v1:*`. The send receipt and two existing relay channels are likewise written in one operation. Both paths preflight index types before writing. The storage envelope stays at version 1 for both take schemas. Saves are immutable; subsequent edits receive a new save ID. Store failures produce an explicit unconfirmed-operation response, never a false saved state. This first slice has no independent Blob mirror; Redis backup and retention remain the deployment's responsibility.
 
 For development only, explicitly set `DIRECTOR_DEV_STORE_DIR` while running `astro dev`. This selects immutable filesystem records with atomic installation. It is never enabled in a production build and never activates merely because shared storage is missing. Responses are `storage: "local-workspace", shared: false`; sends are `delivery: "local-workspace-only"`. This does not contact any Crew or imply cross-device availability.
 
@@ -52,7 +72,7 @@ Run:
 node --test src/lib/pspt.test.mjs src/lib/director.test.mjs src/lib/director.http.test.mjs
 ```
 
-The HTTP test starts actual Astro on loopback port 4327 using randomized test-only credentials and a disposable local store, logs in, saves, restarts the server, and compares the reopened take and hash. It also checks unauthenticated, cross-origin, malformed and oversized requests, and verifies that explicit local sending remains local. The test stops its own server and removes its temporary store.
+The HTTP test starts actual Astro on loopback port 4327 using randomized test-only credentials and a disposable local store, logs in, saves both take schemas, restarts the server, and compares each reopened take and hash. Version 2 coverage includes easing, an interval override, loop mode and portrait output size. It also checks unauthenticated, cross-origin, malformed and oversized requests, and verifies that explicit local sending remains local. The test stops its own server and removes its temporary store. A separate frozen hash test verifies that version 1 normalization is byte-for-byte unchanged.
 
 Other checks cover owner boundaries, concurrent immutable-save conflicts, idempotent save/send retries, missing configuration, expired/invalid cookies, stable pagination and storage failure. The Redis adapter test verifies script/argument construction. These local tests do not exercise live Upstash or Crew relay receiving.
 
