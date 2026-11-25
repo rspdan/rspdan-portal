@@ -6,7 +6,7 @@
   const clone = value => structuredClone(value);
   const draftKey = 'nest.director.draft.v1';
   const ui = { ready: false, dirty: true, savedId: null, playing: false, handles: true, frame: 1, end: 120, fps: 12, keys: [], undo: [], redo: [], look: 'ouch', background: 'white' };
-  let engine, scene, camera, floor, gizmo, manifest, nodes = {}, morphs = {}, handles = [], selected, savedSnapshot, saveRequest = null, sendRequest = null;
+  let engine, scene, camera, floor, gizmo, manifest, neutralPose, nodes = {}, morphs = {}, handles = [], selected, savedSnapshot, saveRequest = null, sendRequest = null, savePayload = null;
   let playStart = 0, playFrame = 1, restoring = false, dragBefore = null;
   const label = name => ({ root: 'Whole character', 'torso.lower': 'Lower body', 'torso.upper': 'Torso', head: 'Head', 'upper_arm.L': 'Left shoulder', 'lower_arm.L': 'Left elbow', 'upper_arm.R': 'Right shoulder', 'lower_arm.R': 'Right elbow', 'thigh.L': 'Left hip', 'shin.L': 'Left knee', 'thigh.R': 'Right hip', 'shin.R': 'Right knee' }[name] || name);
   function status(message) { $('status').textContent = message; }
@@ -22,7 +22,12 @@
       node.position.copyFromFloats(...p.position); node.rotationQuaternion = B.Quaternion.FromArray(p.rotation).normalize(); node.scaling.copyFromFloats(...p.scale);
     }
     for (const name of manifest.morphs) for (const target of morphs[name] || []) target.influence = value.morphs[name] || 0;
-    syncJoint();
+    syncJoint(); syncPreset(value);
+  }
+  function syncPreset(value) {
+    const near = (a, b) => a.length === b.length && a.every((n, i) => Math.abs(n - b[i]) < 0.0001);
+    const match = manifest.presets.find(p => p.pose && manifest.bones.every(n => ["position", "rotation", "scale"].every(k => near(value.bones[n][k], p.pose.bones[n][k]))) && manifest.morphs.every(n => Math.abs((value.morphs[n] || 0) - (p.pose.morphs[n] || 0)) < 0.0001));
+    $("preset").value = match?.id || "";
   }
   function setCamera(value) {
     camera.setTarget(B.Vector3.FromArray(value.target)); camera.setPosition(B.Vector3.FromArray(value.position)); camera.fov = value.fov;
@@ -42,7 +47,7 @@
   function remember(value = snapshot()) { ui.undo.push(clone(value)); if (ui.undo.length > 60) ui.undo.shift(); ui.redo.length = 0; buttons(); }
   function changed(message = 'Pose changed. Your browser draft is kept here.') {
     if (restoring || !ui.ready) return;
-    ui.dirty = true; saveRequest = null; sendRequest = null;
+    syncPreset(pose()); ui.dirty = true; saveRequest = null; sendRequest = null;
     try { localStorage.setItem(draftKey, JSON.stringify(snapshot())); } catch { status('Browser draft storage is full. Use Save take to keep this work.'); }
     $('storage-label').textContent = 'BROWSER DRAFT'; buttons(); status(message);
   }
@@ -76,7 +81,7 @@
   }
   function syncJoint() {
     if (!selected || !nodes[selected]) return;
-    const rest = B.Quaternion.FromArray(manifest.restPose.bones[selected].rotation);
+    const rest = B.Quaternion.FromArray(neutralPose.bones[selected].rotation);
     const q = nodes[selected].rotationQuaternion || B.Quaternion.Identity();
     const angles = rest.conjugate().multiply(q).toEulerAngles();
     ['x', 'y', 'z'].forEach(axis => { const degrees = Math.round(angles[axis] * 180 / Math.PI); $('rot-' + axis).value = degrees; $('value-' + axis).value = degrees + '°'; });
@@ -130,13 +135,13 @@
         stop();
         if (input.id.startsWith('rot')) {
           const angles = ['x', 'y', 'z'].map(a => Number($('rot-' + a).value) * Math.PI / 180);
-          nodes[selected].rotationQuaternion = B.Quaternion.FromArray(manifest.restPose.bones[selected].rotation).multiply(B.Quaternion.FromEulerAngles(...angles)).normalize();
+          nodes[selected].rotationQuaternion = B.Quaternion.FromArray(neutralPose.bones[selected].rotation).multiply(B.Quaternion.FromEulerAngles(...angles)).normalize();
         } else for (const axis of ['x', 'y', 'z']) nodes.root.position[axis] = Number($('pos-' + axis).value);
         syncJoint(); changed();
       });
       input.addEventListener('change', () => { if (dragBefore) remember(dragBefore); dragBefore = null; });
     }
-    $('reset-joint').onclick = () => { remember(); const p = pose(); p.bones[selected] = clone(manifest.restPose.bones[selected]); applyPose(p); changed('Selected joint reset.'); };
+    $('reset-joint').onclick = () => { remember(); const p = pose(); p.bones[selected] = clone(neutralPose.bones[selected]); applyPose(p); changed('Selected joint reset.'); };
     $('handles').onclick = () => { ui.handles = !ui.handles; handles.forEach(handle => handle.setEnabled(ui.handles)); gizmo.attachToNode(ui.handles ? nodes[selected] : null); $('handles').textContent = 'Joint controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles)); };
     for (const look of ['ouch', 'trip']) $(look).onclick = () => { remember(); setLook(look); changed(`Same character, ${look === 'trip' ? 'white' : 'black'} clay.`); };
     $('background').onchange = () => { remember(); setBackground($('background').value); changed('Stage background changed.'); };
@@ -151,7 +156,7 @@
     for (const [id, alpha] of [['front', Math.PI / 2], ['side', 0], ['quarter', Math.PI / 2 - .35]]) $(id).onclick = () => { remember(); camera.alpha = alpha; camera.beta = Math.PI / 2 - .11; changed('Camera view updated.'); };
     $('camera-mode').onclick = () => { remember(); camera.mode = camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? B.Camera.PERSPECTIVE_CAMERA : B.Camera.ORTHOGRAPHIC_CAMERA; fitOrtho(); $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA)); changed('Camera projection updated.'); };
     $('save').onclick = async () => {
-      stop(); $('save').disabled = true; const take = snapshot(), serialized = JSON.stringify(take); saveRequest ||= crypto.randomUUID();
+      stop(); $('save').disabled = true; const take = snapshot(), serialized = JSON.stringify(take); if (savePayload !== serialized) saveRequest = null; savePayload = serialized; saveRequest ||= crypto.randomUUID();
       try { const result = await api('', { method: 'POST', body: JSON.stringify({ take, requestId: saveRequest }) }); const record = result.saved || result.record || result; ui.savedId = record.id || result.id; ui.dirty = JSON.stringify(snapshot()) !== serialized; savedSnapshot = serialized; $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; status(result.shared === false ? 'Take saved in this development workspace. Shared Nest storage is not connected here.' : 'Take saved in Nest. Crew can receive this exact version.'); await refreshTakes(); }
       catch (error) { status(error.message); } finally { buttons(); }
     };
@@ -173,11 +178,12 @@
     const manifestFile = requestedHash ? index?.assets.find(a => a.sha256 === requestedHash)?.manifest : index?.current || 'ouch-director.json';
     if (!manifestFile || /[\/]/.test(manifestFile)) throw new Error('That character revision is not available in this room. The saved take is unchanged.');
     manifest = await fetch('/director/assets/' + manifestFile).then(r => { if (!r.ok) throw new Error('The character manifest could not be loaded.'); return r.json(); });
+    neutralPose = manifest.presets.find(p => p.id === 'neutral')?.pose || manifest.restPose;
     engine = new B.Engine($('room'), true, { preserveDrawingBuffer: true, stencil: true, alpha: true });
     engine.setHardwareScalingLevel(Math.max(1, devicePixelRatio / 1.5));
     scene = new B.Scene(engine); scene.useRightHandedSystem = true;
     camera = new B.ArcRotateCamera('Director camera', Math.PI / 2 - .35, Math.PI / 2 - .11, 2.1, new B.Vector3(0, .56, 0), scene);
-    camera.attachControl($('room'), true); camera.lowerRadiusLimit = .4; camera.upperRadiusLimit = 7; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
+    camera.attachControl($('room'), true); camera.inertia = 0; camera.lowerRadiusLimit = .4; camera.upperRadiusLimit = 7; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
     const fill = new B.HemisphericLight('Room fill', new B.Vector3(0, 1, 0), scene); fill.intensity = .8; fill.groundColor = new B.Color3(.55, .58, .54);
     const key = new B.DirectionalLight('Window light', new B.Vector3(.4, -1, -.5), scene); key.position = new B.Vector3(-2, 4, 3); key.intensity = 1.3; key.shadowFrustumSize = 3; key.shadowMinZ = .1; key.shadowMaxZ = 10;
     const shadows = new B.ShadowGenerator(1024, key); shadows.usePercentageCloserFiltering = true; shadows.filteringQuality = B.ShadowGenerator.QUALITY_HIGH; shadows.setDarkness(.25); shadows.bias = .001;
@@ -201,11 +207,11 @@
     }
     scene.onPointerObservable.add(info => { if (info.type === B.PointerEventTypes.POINTERPICK && info.pickInfo?.pickedMesh?.metadata?.joint) selectJoint(info.pickInfo.pickedMesh.metadata.joint); });
     $('joint').replaceChildren(...manifest.bones.map(name => new Option(label(name), name))); $('joint').disabled = false;
-    $('preset').replaceChildren(...manifest.presets.map(preset => new Option(preset.label, preset.id))); $('preset').disabled = false; $('preset').value = 'neutral';
+    $('preset').replaceChildren(new Option('Custom pose', ''), ...manifest.presets.map(preset => new Option(preset.label, preset.id))); $('preset').disabled = false; $('preset').value = 'neutral';
     for (const name of manifest.morphs.filter(name => !/overhead|shoulder/i.test(name))) {
       const wrap = document.createElement('label'); wrap.textContent = name.replace(/^Ouch \| /, ''); const input = document.createElement('input'); input.type = 'range'; input.min = 0; input.max = 1; input.step = .01; input.value = 0; input.dataset.morph = name; input.setAttribute('aria-label', wrap.textContent); input.onpointerdown = () => { dragBefore = snapshot(); }; input.oninput = () => { for (const target of morphs[name] || []) target.influence = Number(input.value); changed(); }; input.onchange = () => { if (dragBefore) remember(dragBefore); dragBefore = null; }; wrap.append(input); $('morph-controls').append(wrap);
     }
-    applyPose(manifest.presets.find(p => p.id === 'neutral')?.pose || manifest.restPose); setLook('ouch'); setBackground('white'); fitOrtho(); selectJoint('upper_arm.L'); bind(); ui.ready = true; buttons();
+    applyPose(neutralPose); setLook('ouch'); setBackground('white'); fitOrtho(); selectJoint('upper_arm.L'); bind(); ui.ready = true; buttons();
     $('loading').hidden = true; status('Ouch is ready. Pick a gesture or move a joint.');
     engine.runRenderLoop(() => { if (ui.playing) { const frame = 1 + ((playFrame - 1 + Math.floor((performance.now() - playStart) / 1000 * ui.fps)) % ui.end); if (frame !== ui.frame) scrub(frame, true); } scene.render(); });
     window.addEventListener('resize', () => { engine.resize(); fitOrtho(); }); new ResizeObserver(() => { engine.resize(); fitOrtho(); }).observe($('room'));
