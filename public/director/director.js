@@ -142,7 +142,7 @@
       input.addEventListener('change', () => { if (dragBefore) remember(dragBefore); dragBefore = null; });
     }
     $('reset-joint').onclick = () => { remember(); const p = pose(); p.bones[selected] = clone(neutralPose.bones[selected]); applyPose(p); changed('Selected joint reset.'); };
-    $('handles').onclick = () => { ui.handles = !ui.handles; handles.forEach(handle => handle.setEnabled(ui.handles)); gizmo.attachToNode(ui.handles ? nodes[selected] : null); $('handles').textContent = 'Joint controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles)); };
+    $('handles').onclick = () => { ui.handles = !ui.handles; handles.forEach(handle => handle.setEnabled(ui.handles)); gizmo.attachToNode(ui.handles ? nodes[selected] : null); $('handles').textContent = 'Joint controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles)); $('hint').textContent = ui.handles ? label(selected) + ' · drag a colored ring to rotate' : 'Controls hidden · drag the room to orbit the camera'; };
     for (const look of ['ouch', 'trip']) $(look).onclick = () => { remember(); setLook(look); changed(`Same character, ${look === 'trip' ? 'white' : 'black'} clay.`); };
     $('background').onchange = () => { remember(); setBackground($('background').value); changed('Stage background changed.'); };
     for (const id of ['take-name', 'notes']) $(id).addEventListener('input', () => changed('Take details updated.'));
