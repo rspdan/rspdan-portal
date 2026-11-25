@@ -78,7 +78,7 @@
     selected = name; $('joint').value = name;
     gizmo.attachToNode(ui.handles ? nodes[name] : null);
     for (const handle of handles) handle.scaling.setAll(handle.metadata.joint === name ? 1.4 : 1);
-    syncJoint(); $('hint').textContent = `${label(name)} · drag a colored ring to rotate`;
+    syncJoint(); $('hint').textContent = `${label(name)} · drag a ring or use the sliders`;
   }
   function syncJoint() {
     if (!selected || !nodes[selected]) return;
@@ -103,6 +103,70 @@
     const key = ui.keys.filter(key => key.frame <= ui.frame).at(-1) || ui.keys[0]; if (key) applyPose(key.pose);
     syncTimeline(); if (!playing) changed(`Frame ${ui.frame}. Key the pose when it is ready.`);
   }
+
+/* Manual Frame action: fit the visible, evaluated character; preserve view direction.
+   Call frameDirectorCharacter(scene, camera, canvas), then fitOrtho()/changed().
+   No default camera, resize handler, pose or saved take is changed automatically. */
+function frameDirectorCharacter(scene, camera, canvas) {
+  const B = BABYLON;
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width < 1 || rect.height < 1) return null;
+  scene.render(); // flush current linked-node, skin and morph state before measuring
+  camera.getViewMatrix(true);
+  const outward = camera.position.subtract(camera.target).normalize();
+  if (outward.lengthSquared() < .5) return null;
+  let right = B.Vector3.Cross(camera.upVector, outward);
+  if (right.lengthSquared() < 1e-8) right = B.Vector3.Cross(new B.Vector3(0, 0, 1), outward);
+  if (right.lengthSquared() < 1e-8) return null;
+  right.normalize();
+  const up = B.Vector3.Cross(outward, right).normalize();
+  const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+  const point = new B.Vector3();
+  let count = 0;
+  for (const mesh of scene.meshes) {
+    if (!mesh.metadata?.directorCharacter || !mesh.isEnabled() || !mesh.getTotalVertices()) continue;
+    mesh.skeleton?.prepare(true); // refresh linked bone transforms even within the same render frame
+    const positions = mesh.getPositionData(true, true); // skeleton and morphs, not the construction-rest bounds
+    if (!positions) continue;
+    const world = mesh.computeWorldMatrix(true);
+    for (let i = 0; i < positions.length; i += 3) {
+      B.Vector3.TransformCoordinatesFromFloatsToRef(positions[i], positions[i + 1], positions[i + 2], world, point);
+      const x = B.Vector3.Dot(point, right), y = B.Vector3.Dot(point, up), z = B.Vector3.Dot(point, outward);
+      if (!Number.isFinite(x + y + z)) continue;
+      lo[0] = Math.min(lo[0], x); hi[0] = Math.max(hi[0], x);
+      lo[1] = Math.min(lo[1], y); hi[1] = Math.max(hi[1], y);
+      lo[2] = Math.min(lo[2], z); hi[2] = Math.max(hi[2], z);
+      count++;
+    }
+  }
+  if (!count) return null;
+  const center = right.scale((lo[0] + hi[0]) / 2).add(up.scale((lo[1] + hi[1]) / 2)).add(outward.scale((lo[2] + hi[2]) / 2));
+  const halfX = Math.max(.001, (hi[0] - lo[0]) / 2), halfY = Math.max(.001, (hi[1] - lo[1]) / 2), halfZ = Math.max(.001, (hi[2] - lo[2]) / 2);
+  const aspect = rect.width / rect.height;
+  const padX = Math.min(32, rect.width * .08), padY = Math.min(56, rect.height * .20);
+  const usableX = Math.max(.2, 1 - 2 * padX / rect.width), usableY = Math.max(.2, 1 - 2 * padY / rect.height);
+  const near = Math.max(.001, camera.minZ || .01);
+  let distance;
+  if (camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA) {
+    const half = Math.max(halfY / usableY, halfX / (aspect * usableX)) * 1.04;
+    camera.orthoTop = half; camera.orthoBottom = -half;
+    camera.orthoLeft = -half * aspect; camera.orthoRight = half * aspect;
+    distance = Math.max(camera.radius || 1, halfZ + 2 * near);
+  } else {
+    const tangent = Math.tan(Math.max(.05, Math.min(3, camera.fov)) / 2);
+    const tanY = camera.fovMode === B.Camera.FOVMODE_HORIZONTAL_FIXED ? tangent / aspect : tangent;
+    const tanX = tanY * aspect;
+    distance = halfZ + Math.max(halfX / (tanX * usableX), halfY / (tanY * usableY), 2 * near) * 1.04;
+  }
+  distance = Math.max(distance, camera.lowerRadiusLimit || .01);
+  if (camera.upperRadiusLimit != null && distance > camera.upperRadiusLimit) camera.upperRadiusLimit = distance * 1.1;
+  camera.setTarget(center);
+  camera.setPosition(center.add(outward.scale(distance)));
+  camera.maxZ = Math.max(camera.maxZ || 1000, distance + halfZ + 1);
+  camera.getViewMatrix(true);
+  return { vertices: count, radius: camera.radius, aspect, padding: { x: padX, y: padY }, mode: camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? 'orthographic' : 'perspective' };
+}
+
   function fitOrtho() { if (!camera) return; const half = camera.orthoTop || .75; const ratio = engine.getRenderWidth() / engine.getRenderHeight(); camera.orthoLeft = -half * ratio; camera.orthoRight = half * ratio; }
   function stop() { ui.playing = false; $('play').textContent = '▶'; $('play').setAttribute('aria-label', 'Play take'); }
   async function api(url = '', options = {}) {
@@ -156,6 +220,7 @@
     $('play').onclick = () => { if (ui.playing) stop(); else if (!ui.keys.length) status('Key at least one pose to play a take.'); else { ui.playing = true; playStart = performance.now(); playFrame = ui.frame; $('play').textContent = 'Ⅱ'; $('play').setAttribute('aria-label', 'Pause take'); } };
     for (const direction of ['undo', 'redo']) $(direction).onclick = () => { const from = ui[direction], to = ui[direction === 'undo' ? 'redo' : 'undo']; if (!from.length) return; stop(); to.push(snapshot()); restore(from.pop()); changed(direction === 'undo' ? 'Undone.' : 'Redone.'); };
     for (const [id, alpha] of [['front', Math.PI / 2], ['side', 0], ['quarter', Math.PI / 2 - .35]]) $(id).onclick = () => { remember(); camera.alpha = alpha; camera.beta = Math.PI / 2 - .11; changed('Camera view updated.'); };
+    $('frame-character').onclick = () => { stop(); remember(); if (frameDirectorCharacter(scene, camera, $('room'))) { fitOrtho(); changed('Whole character framed. Your pose is unchanged.'); } };
     $('camera-mode').onclick = () => { remember(); camera.mode = camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? B.Camera.PERSPECTIVE_CAMERA : B.Camera.ORTHOGRAPHIC_CAMERA; fitOrtho(); $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA)); changed('Camera projection updated.'); };
     $('save').onclick = async () => {
       stop(); $('save').disabled = true; const take = snapshot(), serialized = JSON.stringify(take); if (savePayload !== serialized) saveRequest = null; savePayload = serialized; saveRequest ||= crypto.randomUUID();
@@ -182,7 +247,9 @@
     manifest = await fetch('/director/assets/' + manifestFile).then(r => { if (!r.ok) throw new Error('The character manifest could not be loaded.'); return r.json(); });
     neutralPose = manifest.presets.find(p => p.id === 'neutral')?.pose || manifest.restPose;
     engine = new B.Engine($('room'), true, { preserveDrawingBuffer: true, stencil: true, alpha: true });
-    engine.setHardwareScalingLevel(Math.max(1, devicePixelRatio / 1.5));
+    // Babylon's scaling level is inverse resolution. Keep phones sharp without
+    // asking high-density screens to render an unbounded number of pixels.
+    engine.setHardwareScalingLevel(1 / Math.min(devicePixelRatio || 1, 2));
     scene = new B.Scene(engine); scene.useRightHandedSystem = true;
     camera = new B.ArcRotateCamera('Director camera', Math.PI / 2 - .35, Math.PI / 2 - .11, 2.1, new B.Vector3(0, .56, 0), scene);
     camera.attachControl($('room'), true); camera.inertia = 0; camera.lowerRadiusLimit = .4; camera.upperRadiusLimit = 7; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
@@ -196,7 +263,7 @@
     for (const name of manifest.bones) { const node = scene.getTransformNodeByName(name) || result.skeletons.flatMap(skeleton => skeleton.bones).find(bone => bone.name === name)?.getTransformNode(); if (!node) throw new Error(`The model is missing its ${name} control.`); nodes[name] = node; }
     for (const mesh of result.meshes) {
       if (!mesh.getTotalVertices()) continue;
-      mesh.metadata = { ...mesh.metadata, directorCharacter: true }; shadows.addShadowCaster(mesh); mesh.receiveShadows = false;
+      mesh.metadata = { ...mesh.metadata, directorCharacter: true }; shadows.addShadowCaster(mesh); mesh.receiveShadows = false; mesh.isPickable = false;
       const manager = mesh.morphTargetManager;
       if (manager) for (let i = 0; i < manager.numTargets; i++) { const target = manager.getTarget(i); (morphs[target.name] ||= []).push(target); }
     }
@@ -207,7 +274,23 @@
       const handle = B.MeshBuilder.CreateSphere('Joint handle ' + name, { diameter: .022, segments: 8 }, scene); handle.parent = nodes[name]; handle.metadata = { joint: name }; handle.renderingGroupId = 2;
       const material = new B.StandardMaterial('Control ' + name, scene); material.disableLighting = true; material.emissiveColor = name.endsWith('.L') ? B.Color3.FromHexString('#709bc2') : name.endsWith('.R') ? B.Color3.FromHexString('#8bb99c') : B.Color3.FromHexString('#c4a06f'); handle.material = material; handles.push(handle);
     }
-    scene.onPointerObservable.add(info => { if (info.type === B.PointerEventTypes.POINTERPICK && info.pickInfo?.pickedMesh?.metadata?.joint) selectJoint(info.pickInfo.pickedMesh.metadata.joint); });
+    scene.onPointerObservable.add(info => {
+      if (info.type === B.PointerEventTypes.POINTERPICK && info.pickInfo?.pickedMesh?.metadata?.joint) selectJoint(info.pickInfo.pickedMesh.metadata.joint);
+      if (info.type !== B.PointerEventTypes.POINTERTAP || info.event.pointerType !== 'touch' || !ui.handles) return;
+      // A fingertip needs a stable screen-sized target, even when the joint dot
+      // is small. The utility layer handles ring drags before this scene tap.
+      const rect = $('room').getBoundingClientRect();
+      const viewport = new B.Viewport(0, 0, rect.width, rect.height);
+      let nearest = null, distance = 22;
+      for (const handle of handles) {
+        if (!handle.isEnabled()) continue;
+        const screen = B.Vector3.Project(handle.getAbsolutePosition(), B.Matrix.Identity(), scene.getTransformMatrix(), viewport);
+        if (screen.z < 0 || screen.z > 1) continue;
+        const d = Math.hypot(screen.x - (info.event.clientX - rect.left), screen.y - (info.event.clientY - rect.top));
+        if (d < distance) { distance = d; nearest = handle.metadata.joint; }
+      }
+      if (nearest) selectJoint(nearest);
+    });
     $('joint').replaceChildren(...manifest.bones.map(name => new Option(label(name), name))); $('joint').disabled = false;
     $('preset').replaceChildren(new Option('Custom pose', ''), ...manifest.presets.map(preset => new Option(preset.label, preset.id))); $('preset').disabled = false; $('preset').value = 'neutral';
     for (const name of manifest.morphs.filter(name => !/overhead|shoulder/i.test(name))) {

@@ -62,6 +62,12 @@ The Director preview branch is `codex/nest-director-white-room`, with entrance `
 
 The current browser asset is the clean Pass 2c edition, `ouch-director-pass2-ad640bbaf1fd.glb`, derived from native SHA256 `85f6d78d9548da19b97d800425d236c58d08bca3e8654b784cb319ecb62eff28`. The original Pass 1 asset remains immutable and registered so saved takes can reopen against their original rig. Browser drafts are kept separately per asset hash. The browser uses a rough PBR approximation of the native clay material; it does not reproduce the native procedural surface exactly.
 
+### ACHE as the first device baseline
+
+Dan's actual ACHE Chrome receiving found blurred rendering and joint controls that could not be manipulated. Earlier narrow desktop screenshots did not establish touch usability. High-DPI resolution had been scaled backwards, and character geometry intercepted taps on joint dots drawn over it. The corrected room renders up to two pixels per CSS pixel, excludes the body from picking, and allows touch taps within 22 CSS pixels of a joint. Rotation rings keep priority and camera dragging stays separate. Frame fits the evaluated pose into the available camera view.
+
+`mobile-touch-diagnosis.json` and `mobile-touch-baseline.json` in the receiving directory use Chromium with mobile mode, touch enabled and DPR3, with actual CDP touch events. They verify joint selection, finger rotation without camera movement, keying, local save and exact reopening. This is mobile emulation; Dan's next ACHE run is the actual device receiving. ACHE is the first acceptance target, with other Stations still requiring their own platform/input checks.
+
 ## Reused source entrances
 
 - `src/pages/api/drw.ts`: existing authenticated browser persistence and explicit relay precedent. Director differs by requiring the editable artifact itself to be saved; a flat-image-only result cannot count as a saved take.

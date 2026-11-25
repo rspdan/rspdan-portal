@@ -1,0 +1,59 @@
+{
+  "scope": "Actual local Astro :5174 touch interactions and local save/reopen; no external Crew messages.",
+  "browser": {
+    "engine": "Chromium",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "is_mobile": true,
+    "has_touch": true,
+    "device_scale_factor": 3,
+    "input": "CDP Input.dispatchTouchEvent touchStart/touchMove/touchEnd"
+  },
+  "checks": {
+    "offset_touch_selects_head": true,
+    "offset_touch_selects_shin.L": true,
+    "ring_touch_drag_changes_selected_joint": true,
+    "ring_touch_drag_holds_camera": true,
+    "ring_touch_drag_keeps_selected_joint": true,
+    "touch_key_pose_captures_edited_pose": true,
+    "touch_save_local_only": true,
+    "fresh_reopen_exact_pose": true,
+    "fresh_reopen_exact_keyframes": true,
+    "fresh_reopen_exact_asset": true,
+    "fresh_reopen_exact_frame_and_name": true,
+    "zero_page_errors": true
+  },
+  "page_errors": [],
+  "served_source_sha256": "3c6ff6d14f324d2378487bd48aa63b65042e3b516845db6217e78b249c1ef4d7",
+  "asset": {
+    "id": "ouch-director-pass2",
+    "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+  },
+  "offset_taps": [
+    {
+      "joint": "head",
+      "offset_css_pixels": [
+        0,
+        -14
+      ],
+      "selected": "head"
+    },
+    {
+      "joint": "shin.L",
+      "offset_css_pixels": [
+        16,
+        0
+      ],
+      "selected": "shin.L"
+    }
+  ],
+  "key_pose_receiving": {
+    "key_count": 1,
+    "max_numeric_delta": 2.220446049250313e-16,
+    "tolerance": 1e-12,
+    "note": "Unit-quaternion normalization can change last floating-point bits; actual save/reopen equality is checked separately."
+  },
+  "passed": true
+}

@@ -1,0 +1,491 @@
+{
+  "mode": "Chromium mobile emulation, not actual ACHE hardware",
+  "isMobile": true,
+  "hasTouch": true,
+  "deviceScaleFactor": 3,
+  "sourceScriptSha256": "14d1bd173678f896c43e2cde8bf4dd5919d3fb8e3601cebc1a040adc1100ecea",
+  "scriptSha256": "cc70657638272d001531d7c8d92933cf9bcd61bfc8f8d81ba42e2fe05a42871d",
+  "controlledBaseline": "Only in fetched response: restored original hardware scaling expression; then changed runtime to reciprocal cap2.",
+  "errors": [],
+  "states": [
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 195,
+      "canvasHeight": 177,
+      "renderWidth": 195,
+      "renderHeight": 177,
+      "hardwareScaling": 2,
+      "camera": {
+        "radius": 2.1,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            72.2840186855556,
+            29.591116570875297,
+            0.9949867079253889
+          ],
+          "screenMax": [
+            123.74514254929578,
+            162.19807844594985,
+            0.9955115735595568
+          ],
+          "cssMin": [
+            144.5680373711112,
+            59.26059944622855
+          ],
+          "cssMax": [
+            247.49028509859156,
+            324.82570688778407
+          ]
+        }
+      ],
+      "label": "before-neutral"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 2.1,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            289.1360747422224,
+            118.36446628350119,
+            0.9949867079253889
+          ],
+          "screenMax": [
+            494.9805701971831,
+            648.7923137837994,
+            0.9955115735595568
+          ],
+          "cssMin": [
+            144.5680373711112,
+            59.26059944622855
+          ],
+          "cssMax": [
+            247.49028509859156,
+            324.82570688778407
+          ]
+        }
+      ],
+      "label": "reciprocal-cap2-neutral"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 2.1,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            241.1361544270235,
+            136.97612398849327,
+            0.994077776811414
+          ],
+          "screenMax": [
+            456.4313097622971,
+            644.0943181916398,
+            0.9956127229164164
+          ],
+          "cssMin": [
+            120.56807721351176,
+            68.57875063565851
+          ],
+          "cssMax": [
+            228.21565488114854,
+            322.4735986603006
+          ]
+        }
+      ],
+      "label": "cap2-acting-ready"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 2.1,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            241.1361544270235,
+            136.97612398849327,
+            0.994077776811414
+          ],
+          "screenMax": [
+            456.4313097622971,
+            644.0943181916398,
+            0.9956127229164164
+          ],
+          "cssMin": [
+            120.56807721351176,
+            68.57875063565851
+          ],
+          "cssMax": [
+            228.21565488114854,
+            322.4735986603006
+          ]
+        }
+      ],
+      "label": "cap2-acting-victorious"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 2.1,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            190.59903149780325,
+            134.84385763180126,
+            0.994749174616824
+          ],
+          "screenMax": [
+            626.8933826425853,
+            537.7398498361808,
+            0.9957235662845465
+          ],
+          "cssMin": [
+            95.29951574890164,
+            67.51120573435388
+          ],
+          "cssMax": [
+            313.44669132129263,
+            269.2259497127383
+          ]
+        }
+      ],
+      "label": "cap2-acting-falling"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 2.4876660127696275,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            304.9090066387719,
+            126.83138807401276,
+            0.9957835655645143
+          ],
+          "screenMax": [
+            479.3680210415545,
+            576.4541064238558,
+            0.996161150724477
+          ],
+          "cssMin": [
+            152.45450331938596,
+            63.499666089491825
+          ],
+          "cssMax": [
+            239.68401052077726,
+            288.6087097972191
+          ]
+        }
+      ],
+      "label": "framed-neutral-perspective"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 2.9375882175708554,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            284.62173290481155,
+            123.52112729786796,
+            0.9963950949869926
+          ],
+          "screenMax": [
+            503.23098593998077,
+            572.4134778683715,
+            0.996777273908254
+          ],
+          "cssMin": [
+            142.31086645240578,
+            61.8423440563081
+          ],
+          "cssMax": [
+            251.61549296999038,
+            286.5857203151897
+          ]
+        }
+      ],
+      "label": "framed-acting-victorious-perspective"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 1.9611358199448177,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            172.34711976596438,
+            143.11766364056047,
+            0.9942679314866236
+          ],
+          "screenMax": [
+            644.4449068211039,
+            583.1210732107605,
+            0.9954096710419541
+          ],
+          "cssMin": [
+            86.17355988298219,
+            71.65358662936428
+          ],
+          "cssMax": [
+            322.22245341055196,
+            291.9466072311819
+          ]
+        }
+      ],
+      "label": "framed-acting-falling-perspective"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 0.6,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            275.5627694398446,
+            121.16529437503647,
+            4.256169026004518e-05
+          ],
+          "screenMax": [
+            504.4372628536249,
+            586.8346989954522,
+            7.543830309939567e-05
+          ],
+          "cssMin": [
+            137.7813847199223,
+            60.662867853815264
+          ],
+          "cssMax": [
+            252.21863142681244,
+            293.8058788270398
+          ]
+        }
+      ],
+      "label": "framed-acting-victorious-ortho"
+    },
+    {
+      "dpr": 3,
+      "touchPoints": 1,
+      "cssWidth": 390,
+      "cssHeight": 354.46875,
+      "canvasWidth": 780,
+      "canvasHeight": 708,
+      "renderWidth": 780,
+      "renderHeight": 708,
+      "hardwareScaling": 0.5,
+      "camera": {
+        "radius": 0.6,
+        "fov": 0.62,
+        "alpha": 1.2207963267948965,
+        "beta": 1.4607963267948965
+      },
+      "boxes": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "screenMin": [
+            127.2355653921993,
+            121.16531456347684,
+            3.729457524900967e-05
+          ],
+          "screenMax": [
+            652.764465210314,
+            586.8347368488992,
+            8.066936442011177e-05
+          ],
+          "cssMin": [
+            63.61778269609966,
+            60.66287796140174
+          ],
+          "cssMax": [
+            326.382232605157,
+            293.80589777882517
+          ]
+        }
+      ],
+      "label": "framed-acting-falling-ortho"
+    }
+  ],
+  "frameTests": [
+    {
+      "vertices": 23134,
+      "radius": 2.4876660127696275,
+      "aspect": 1.100238032266596,
+      "padding": {
+        "x": 31.2,
+        "y": 56
+      },
+      "mode": "perspective",
+      "directionDelta": 0,
+      "pose": "neutral",
+      "fits": true
+    },
+    {
+      "vertices": 23134,
+      "radius": 2.9375882175708554,
+      "aspect": 1.100238032266596,
+      "padding": {
+        "x": 31.2,
+        "y": 56
+      },
+      "mode": "perspective",
+      "directionDelta": 0,
+      "pose": "acting-victorious",
+      "fits": true
+    },
+    {
+      "vertices": 23134,
+      "radius": 1.9611358199448177,
+      "aspect": 1.100238032266596,
+      "padding": {
+        "x": 31.2,
+        "y": 56
+      },
+      "mode": "perspective",
+      "directionDelta": 0,
+      "pose": "acting-falling",
+      "fits": true
+    },
+    {
+      "vertices": 23134,
+      "radius": 0.6,
+      "aspect": 1.100238032266596,
+      "padding": {
+        "x": 31.2,
+        "y": 56
+      },
+      "mode": "orthographic",
+      "directionDelta": 0,
+      "pose": "acting-victorious",
+      "fits": true
+    },
+    {
+      "vertices": 23134,
+      "radius": 0.6,
+      "aspect": 1.100238032266596,
+      "padding": {
+        "x": 31.2,
+        "y": 56
+      },
+      "mode": "orthographic",
+      "directionDelta": 0,
+      "pose": "acting-falling",
+      "fits": true
+    }
+  ],
+  "scope": "Local Chromium Android emulation with is_mobile/has_touch and DPR3; controlled old-scaling response followed by reciprocal cap2. Manual Frame tested on current evaluated character. No claim of execution on physical ACHE.",
+  "frameSnippetSha256": "95c090145032d6a73fae3ef550d9f43c29c0d5a91e79204aa98210052e678b61"
+}
