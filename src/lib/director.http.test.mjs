@@ -66,7 +66,8 @@ test('actual API authenticates, saves, restarts and reopens editable take; expli
   await stop(); await start();
   const reopened = await (await fetch(`${origin}/api/director?id=${id}`, { headers: { cookie } })).json();
   assert.deepEqual(reopened.take, take); assert.equal(reopened.saved.takeHash, saved.saved.takeHash);
-  const sent = await (await request({ action: 'send', id, requestId: randomUUID() })).json();
+  const sent = await (await request({ action: 'send', id, requestId: randomUUID(), origin: 'https://untrusted.example' })).json();
   assert.equal(sent.delivery, 'local-workspace-only'); assert.equal(sent.shared, false);
+  assert.equal(sent.relay.href, `${origin}/director?take=${id}`);
   assert.equal((await (await fetch(`${origin}/api/director`, { headers: { 'x-nest-key': crewKey } })).json()).takes[0].id, id);
 });

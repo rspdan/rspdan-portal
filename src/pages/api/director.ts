@@ -27,15 +27,15 @@ function actor(request: Request, allowCrew = false) {
   if (!session || typeof session.user !== 'string' || !Number.isFinite(session.exp) || session.exp <= Date.now()) throw new DirectorError('session expired; sign in to save or load', 401);
   return { kind: 'operator', user: session.user };
 }
-function service() {
+function service(origin: string) {
   const localDirectory = env('DIRECTOR_DEV_STORE_DIR');
   if (import.meta.env.DEV && localDirectory) {
-    return createDirectorService({ registry, store: createLocalDirectorStore(localDirectory) });
+    return createDirectorService({ registry, origin, store: createLocalDirectorStore(localDirectory) });
   }
   const url = env('UPSTASH_REDIS_REST_URL');
   const token = env('UPSTASH_REDIS_REST_TOKEN');
   if (!url || !token) throw new DirectorError('Shared Director storage is not configured', 503);
-  return createDirectorService({ registry, store: createRedisDirectorStore(new Redis({ url, token })) });
+  return createDirectorService({ registry, origin, store: createRedisDirectorStore(new Redis({ url, token })) });
 }
 async function body(request: Request) {
   if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) throw new DirectorError('JSON content type required', 415);
@@ -64,7 +64,7 @@ function failure(error: any) {
 export const GET: APIRoute = async ({ request, url }) => {
   try {
     const who = actor(request, true);
-    const store = service();
+    const store = service(url.origin);
     const id = url.searchParams.get('id');
     return json(id ? await store.get(id, who) : await store.list(who, {
       before: url.searchParams.get('before'),
@@ -78,7 +78,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     if (request.headers.get('origin') !== url.origin) throw new DirectorError('same-origin request required', 403);
     const input = await body(request);
     if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DirectorError('request object required');
-    const store = service();
+    const store = service(url.origin);
     if (input.action === 'send') return json(await store.send(input, who));
     if (input.action !== undefined && input.action !== 'save') throw new DirectorError('unknown Director action');
     return json(await store.save(input, who));

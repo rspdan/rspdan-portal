@@ -42,12 +42,11 @@ export function createRedisDirectorStore(redis) {
     listRouted(options) { return index(`${PREFIX}routed`, options); },
     async route(record, request) {
       const ts = Date.parse(request.createdAt);
-      const href = `/director?take=${record.id}`;
       const receipt = { ...request, takeId: record.id, takeHash: record.takeHash,
-        owner: record.owner, channel: 'bridge', href };
+        owner: record.owner, channel: 'bridge' };
       const message = { id: request.id, from: record.owner, to: 'bridge', type: 'director-take',
-        context: 'rspdan.com/director', ts,
-        content: `[Director] ${record.take.name || 'Untitled take'} · https://rspdan.com${href} · asset ${record.take.asset.id} · take SHA256 ${record.takeHash}`,
+        context: `${request.sourceOrigin}/director`, ts,
+        content: `[Director] ${record.take.name || 'Untitled take'} · ${request.href} · asset ${record.take.asset.id} · take SHA256 ${record.takeHash}`,
         director: { takeId: record.id, takeHash: record.takeHash, asset: record.take.asset } };
       return parse(await redis.eval(ROUTE,
         [`${PREFIX}send:${request.id}`, 'ch:bridge', 'ch:all', `${PREFIX}routed`],

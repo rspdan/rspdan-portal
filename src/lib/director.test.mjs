@@ -19,7 +19,7 @@ async function fixture(t, now) {
   const directory = await mkdtemp(join(tmpdir(), 'nest-director-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const store = createLocalDirectorStore(directory);
-  return { directory, store, service: createDirectorService({ store, registry, now }) };
+  return { directory, store, service: createDirectorService({ store, registry, origin: 'https://director-preview.example', now }) };
 }
 const errorStatus = (status) => (error) => error instanceof DirectorError && error.status === status;
 
@@ -127,6 +127,26 @@ test('Redis adapter uses atomic save and explicit route scripts, and lexicograph
   await service.list(actor);
   assert.equal(calls[1].zrange[3].byLex, true);
   // This checks our adapter contract, not an assertion of live Upstash use.
+});
+
+test('Crew route uses the API deployment origin and ignores client origin or URL fields', async () => {
+  const calls = []; let record;
+  const redis = {
+    async eval(script, keys, args) { calls.push({ script, keys, args }); if (keys[0].includes(':take:')) record = JSON.parse(args[0]); return args[0]; },
+    async get() { return record; },
+  };
+  const origin = 'https://nest-director-preview.example';
+  const service = createDirectorService({ registry, origin, store: createRedisDirectorStore(redis) });
+  const saved = await service.save({ take: take(), requestId: randomUUID() }, actor);
+  const sent = await service.send({ id: saved.saved.id, requestId: randomUUID(), origin: 'https://untrusted.example', href: 'https://untrusted.example/forged' }, actor);
+  const expected = `${origin}/director?take=${saved.saved.id}`;
+  assert.equal(sent.relay.href, expected);
+  assert.equal(sent.relay.sourceOrigin, origin);
+  const message = JSON.parse(calls[1].args[2]);
+  assert.ok(message.content.includes(expected));
+  assert.equal(message.context, `${origin}/director`);
+  assert.equal(JSON.stringify(message).includes('untrusted.example'), false);
+  assert.equal(JSON.stringify(message).includes('https://rspdan.com'), false);
 });
 
 test('size bound protects oversized animation even when each scalar field is valid', () => {

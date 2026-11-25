@@ -45,7 +45,7 @@ export function createLocalDirectorStore(directory) {
     },
     async route(record, request) {
       return install(`${request.id}.json`, { ...request, takeId: record.id, takeHash: record.takeHash,
-        owner: record.owner, channel: 'local-workspace', href: `/director?take=${record.id}` });
+        owner: record.owner, channel: 'local-workspace' });
     },
   };
 }

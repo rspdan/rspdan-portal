@@ -11,6 +11,8 @@ November 25, 2026 UTC. This is the server slice for the Nest browser directing r
 
 Shared saves return `storage: "nest-shared", shared: true`. A successful send means **posted to the Bridge relay**. It does not claim recipient reading, automatic wake, dispatch or action.
 
+The send link and context use the current API deployment's server-provided `url.origin`. Preview deployments therefore route back to their own Director room. Client take fields and POST origin/URL fields cannot change that destination. The editable take stores no deployment origin; a send receipt preserves the origin used for that send.
+
 `saved` contains the immutable ID, version, owner, time, SHA256 of normalized editable take JSON, pinned asset, frame count, look and `/director?take=<id>` entrance. `GET` supplies the complete editable document; no download/upload step is required.
 
 ## Editable document

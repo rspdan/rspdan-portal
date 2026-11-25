@@ -3,7 +3,7 @@ import { DirectorError, validateOwner, validateRequestId, validateTake, validate
 
 export const directorCursor = (record) => `${Date.parse(record.createdAt)}:${record.id}`;
 
-export function createDirectorService({ store, registry, now = () => new Date().toISOString() }) {
+export function createDirectorService({ store, registry, origin, now = () => new Date().toISOString() }) {
   function owner(actor) {
     if (actor?.kind !== 'operator') throw new DirectorError('operator session required', 403);
     return validateOwner(actor.user);
@@ -51,7 +51,13 @@ export function createDirectorService({ store, registry, now = () => new Date().
       owner(actor);
       validateRequestId(input.requestId);
       const record = await owned(input.id, actor);
-      const receipt = await store.route(record, { id: `dirsend_${input.requestId}`, createdAt: now() });
+      // The route supplies its own deployment origin. Never take a destination
+      // from editable take data, POST fields, or a hardcoded production host.
+      let source;
+      try { source = new URL(origin); } catch { throw new DirectorError('Director route origin is not configured', 503); }
+      if (!['https:', 'http:'].includes(source.protocol) || source.origin !== origin) throw new DirectorError('Director route origin is not configured', 503);
+      const href = new URL(`/director?take=${record.id}`, source).href;
+      const receipt = await store.route(record, { id: `dirsend_${input.requestId}`, createdAt: now(), sourceOrigin: source.origin, href });
       if (receipt.takeId !== record.id || receipt.owner !== record.owner) throw new DirectorError('requestId already belongs to a different send', 409);
       return { ok: true, saved: summary(record), relay: receipt, storage: store.storage, shared: store.shared,
         delivery: store.shared ? 'posted-to-bridge' : 'local-workspace-only' };
