@@ -22,10 +22,21 @@ This deliberately conservative check requires names in paragraphs containing nam
 
 At session start, resume and compaction recovery, read this file before relying on summaries. Carry the author's identity with a return. Summary prose is interpretation, not an identity authority. Review the resulting third-person wording against the original return before publishing.
 
+Then run `python3 scripts/crew-identity/install_identity_hooks.py --repo .` from this repository root. The startup command verifies the effective Git hook route and preserves the previous route and legacy checks. It is safe to repeat. Portal setup uses the bundled installer through `npm run prepare`. Source files alone do not establish installation; require the successful returned route.
+
+To deliver the checked text without reconstructing it from memory, prepare and release an exact message packet. Use a new packet path for each revised draft:
+
+```sh
+python3 scripts/crew-identity/crew_identity_delivery.py prepare --text-file /path/to/draft.txt --packet /path/to/new-packet.json --channel final
+python3 scripts/crew-identity/crew_identity_delivery.py release --packet /path/to/new-packet.json --channel final
+```
+
+Use the returned `text` unchanged. The commands support commentary, final, handoff and assembly channels. Preparation performs strict checking; release reruns that check and rejects changed text, subject, policy, validator or destination channel. Tool callers consume the released JSON text directly. This supplements the required exact-draft preflight above; it is not permission to paraphrase the approved text afterward. Packets are local authored-message data, not signed attestations or proof that a destination received the text.
+
 Enforcement and its limits:
 
 - The preflight validates supplied text. Repository hooks and configured tool hooks must actually invoke it to block a write.
-- In this bridge checkout, `core.hooksPath` is `.githooks`; the portal uses `scripts/hooks` and a verified portable snapshot. Git configuration is local and is not installed by cloning a repository. At setup, verify the actual hook path and activate the versioned checks while preserving existing hooks; never infer installation from the presence of a script.
+- Both current checkouts use a managed `nest-identity-hooks` directory inside Git metadata. The installer retains `.githooks` for the bridge and `scripts/hooks` for the portal as prior delegates; different existing routes are preserved when present. Git configuration is local, so startup/resume and portal setup invoke installation and verify its effective route.
 - A retrospective transcript audit detects a previous emission; it cannot prevent that emission.
 - This hosted Codex conversation exposes no verified interceptor between generated text and display. Exact-draft preflight here is an explicit assistant operation. Do not represent it as an unavoidable host barrier or a universal guarantee.
 - Preserve historical quotations and original evidence. Correct current authored summaries, retain the correction's provenance, and prevent contaminated summaries from becoming future instructions.

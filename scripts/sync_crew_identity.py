@@ -21,6 +21,8 @@ FILES = {
     "crew_identity_registry.json": "ENGINE/crew_identity_registry.json",
     "crew_identity_preflight.py": "ENGINE/crew_identity_preflight.py",
     "crew_identity_commit_gate.py": "ENGINE/crew_identity_commit_gate.py",
+    "install_identity_hooks.py": "ENGINE/install_identity_hooks.py",
+    "crew_identity_delivery.py": "ENGINE/crew_identity_delivery.py",
     "CREW_IDENTITY.md": "RELAY/CREW_IDENTITY.md",
 }
 
@@ -34,7 +36,8 @@ def local_copy(name, raw, source_ref):
         return raw
     text = raw.decode("utf-8")
     text = text.replace("../ENGINE/crew_identity_registry.json", "crew_identity_registry.json")
-    text = text.replace("python3 ENGINE/crew_identity_preflight.py", "python3 scripts/crew-identity/crew_identity_preflight.py")
+    for script in ("crew_identity_preflight.py", "crew_identity_delivery.py", "install_identity_hooks.py"):
+        text = text.replace(f"python3 ENGINE/{script}", f"python3 scripts/crew-identity/{script}")
     # These provenance files remain in the authority repository, not this bundle.
     for reference in ("INCIDENT_Bee_Pronoun_112526.md", "CONTAMINATION_NOTE_BLanche_Transfer_Stan_040526.md"):
         text = text.replace(f"]({reference})", f"](https://github.com/rspdan/nest-bridge/blob/{source_ref}/RELAY/{reference})")

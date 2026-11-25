@@ -9,7 +9,7 @@
     "postbuild": "node ./patch-runtime.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare": "git config core.hooksPath scripts/hooks || true"
+    "prepare": "node scripts/install_identity_hooks.mjs"
   },
   "dependencies": {
     "@astrojs/vercel": "^7.8.2",

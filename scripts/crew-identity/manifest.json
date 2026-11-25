@@ -19,10 +19,20 @@
       "source_sha256": "96c62983889841df2ac4ec7be44124651bc3807c07de2a8048fc0996234735ec",
       "sha256": "96c62983889841df2ac4ec7be44124651bc3807c07de2a8048fc0996234735ec"
     },
+    "install_identity_hooks.py": {
+      "source": "ENGINE/install_identity_hooks.py",
+      "source_sha256": "1a04913761f963d6e1496cb23523ab33b97dfbe25126c7ad6dec7b3335a98d06",
+      "sha256": "1a04913761f963d6e1496cb23523ab33b97dfbe25126c7ad6dec7b3335a98d06"
+    },
+    "crew_identity_delivery.py": {
+      "source": "ENGINE/crew_identity_delivery.py",
+      "source_sha256": "38eba36c05ce2f4740ce4f123b0300dfc669c32b982b97b4a37d9c431c7f0953",
+      "sha256": "38eba36c05ce2f4740ce4f123b0300dfc669c32b982b97b4a37d9c431c7f0953"
+    },
     "CREW_IDENTITY.md": {
       "source": "RELAY/CREW_IDENTITY.md",
-      "source_sha256": "50e67f20bfadc8fab3e3c607db2b3b5f6de0a1584e17c731e1800cbbc16e98e0",
-      "sha256": "8b2271c04931b8e5536afc1e5c418d688b9cc78631a5eccc116508a6e17dc868"
+      "source_sha256": "71c0d3484d2cd94a3000ca1effcf1326b4445f389ef61f9f0f9a665e13e2b414",
+      "sha256": "bc0d9fa987fdfd21e3267ebd6f10f76396c0fca39e605e2c1a7a2471c712e10d"
     }
   }
 }
