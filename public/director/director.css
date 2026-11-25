@@ -13,3 +13,15 @@
 .lens-editor{margin-top:12px}.lens-editor>details{margin-top:10px}.lens-components{display:grid;gap:0 12px;grid-template-columns:repeat(2,minmax(0,1fr))}.lens-components label{min-width:0;font-size:11px}.lens-components output{font-variant-numeric:tabular-nums}.lens-components input[type=range]{width:100%}
 .inspector[data-mode]{display:flex;flex-direction:column;gap:0}.inspector[data-mode]>.panel{flex:0 0 auto}.inspector .tools-panel{order:0}.inspector .character-panel{order:1}.inspector .pose-panel{order:2}.inspector .frame-panel{order:4}.inspector .animation-panel{order:5}.inspector .takes-panel{order:6}.inspector[data-mode=lighting] .lighting-panel,.inspector[data-mode=stage] .stage-design-panel{order:1}.inspector[data-mode=lighting] .scene-transform-panel,.inspector[data-mode=stage] .scene-transform-panel{order:2}.inspector[data-mode=lighting] .character-panel,.inspector[data-mode=stage] .character-panel{order:3}
 @media(max-width:680px){.mode-switcher button{font-size:10px;min-width:44px;min-height:36px;padding:5px 6px}.mode-switcher{gap:2px}}
+
+/* Floor-plan mode uses the same take, history and set, with its own overhead view. */
+#floorplan-canvas-host{position:absolute;inset:62px 0 0;z-index:1}
+#floorplan-canvas-host[hidden]{display:none}
+.stage[data-floorplan=true] #frame-window{visibility:hidden}
+.stage[data-floorplan=true] .stage-top,.stage[data-floorplan=true] .stage-bottom{display:none}
+.stage[data-floorplan=true] .mode-switcher{top:12px}
+#director[data-mode=floorplan]{grid-template-rows:72px minmax(0,1fr) 30px}
+#director[data-mode=floorplan] .timeline{display:none}
+.inspector[data-mode=floorplan] .floorplan-panel{order:0}
+.inspector[data-mode=floorplan] .takes-panel{order:1}
+@media(max-width:680px){#director[data-mode=floorplan]{grid-template-rows:62px auto 40px}#director[data-mode=floorplan] .stage{height:64dvh;min-height:430px}}

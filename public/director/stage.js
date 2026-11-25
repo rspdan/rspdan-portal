@@ -38,7 +38,7 @@
       color: color(value.color, 'Object color'), position: vector(value.position, -100, 100, 'Object position'),
       rotation: vector(value.rotation, -100, 100, 'Object rotation'), scale: vector(value.scale, .01, 100, 'Object scale') };
   }
-  function validateDesign(value) {
+  function validateDesign(value, validateFloorplan) {
     record(value, 'Stage design');
     const b = record(value.backdrop, 'Backdrop'), f = record(value.floor, 'Floor');
     if (!['color', 'image'].includes(b.type) || !['cover', 'contain'].includes(b.fit)) throw new TypeError('Unsupported backdrop or image fit.');
@@ -53,8 +53,10 @@
     if (!Array.isArray(value.objects) || value.objects.length > 32) throw new RangeError('A stage supports up to 32 objects.');
     const objects = value.objects.map(validateObject);
     if (new Set(objects.map(o => o.id)).size !== objects.length) throw new TypeError('Stage object ids must be unique.');
+    if (own(value, 'floorplan') && typeof validateFloorplan !== 'function') throw new TypeError('Floor-plan tools are unavailable.');
     return { backdrop: { type: b.type, color: color(b.color, 'Backdrop color'), image, fit: b.fit },
-      floor: { enabled: f.enabled, color: color(f.color, 'Floor color'), size: number(f.size, 1, 200, 'Floor size'), height: number(f.height, -10, 10, 'Floor height') }, objects };
+      floor: { enabled: f.enabled, color: color(f.color, 'Floor color'), size: number(f.size, 1, 200, 'Floor size'), height: number(f.height, -10, 10, 'Floor height') }, objects,
+      ...(own(value, 'floorplan') ? { floorplan: validateFloorplan(value.floorplan) } : {}) };
   }
 
   function create(scene, options = {}) {
@@ -208,7 +210,7 @@
       syncShadows();
     }
     function snapshot() {
-      return { backdrop: clone(design.backdrop), floor: clone(design.floor), objects: order.map(id => {
+      return { backdrop: clone(design.backdrop), floor: clone(design.floor), ...(design.floorplan ? { floorplan: clone(design.floorplan) } : {}), objects: order.map(id => {
         const entry = entries.get(id), node = entry.node;
         return { id, name: entry.value.name, type: entry.value.type, color: entry.value.color,
           position: node.position.asArray(), rotation: (node.rotationQuaternion ? node.rotationQuaternion.toEulerAngles() : node.rotation).asArray(), scale: node.scaling.asArray() };
@@ -216,7 +218,8 @@
     }
     function restore(value) {
       if (disposed) throw new Error('This stage controller was disposed.');
-      const next = validateDesign(value === null || value === undefined ? defaults : value);
+      const next = validateDesign(value === null || value === undefined ? defaults : value, options.validateFloorplan);
+      options.floorplanRenderer?.restore(next.floorplan || null);
       legacyFloor = value === null || value === undefined;
       const keep = new Set(next.objects.map(o => o.id));
       for (const id of entries.keys()) if (!keep.has(id)) deleteEntry(id);
@@ -226,7 +229,8 @@
     }
     function setDesign(patch) {
       record(patch, 'Stage patch'); const current = snapshot();
-      return restore({ backdrop: { ...current.backdrop, ...(patch.backdrop || {}) }, floor: { ...current.floor, ...(patch.floor || {}) }, objects: own(patch, 'objects') ? patch.objects : current.objects });
+      return restore({ backdrop: { ...current.backdrop, ...(patch.backdrop || {}) }, floor: { ...current.floor, ...(patch.floor || {}) }, objects: own(patch, 'objects') ? patch.objects : current.objects,
+        ...(own(patch, 'floorplan') ? (patch.floorplan === null ? {} : { floorplan: patch.floorplan }) : current.floorplan ? { floorplan: current.floorplan } : {}) });
     }
     function select(id) { selected = entries.has(id) ? id : null; sync(); return selected; }
     function add(type) {
@@ -259,6 +263,7 @@
       dispose() {
         if (disposed) return; disposed = true; scene.onBeforeRenderObservable.remove(renderObserver); engine.onResizeObservable.remove(resizeObserver);
         for (const id of [...entries.keys()]) deleteEntry(id);
+        options.floorplanRenderer?.dispose();
         clearTexture(); layer?.dispose(); layer = null; floorMaterial?.dispose(); floorMaterial = null;
         floor.material = original.material; floor.position.copyFrom(original.position); floor.scaling.copyFrom(original.scaling);
         floor.setEnabled(original.enabled); floor.receiveShadows = original.receiveShadows; floor.isPickable = original.pickable; scene.clearColor = original.clear.clone();

@@ -12,6 +12,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
     <meta name="robots" content="noindex,nofollow" />
     <title>Director · Nest</title>
     <link rel="stylesheet" href="/director/director.css" />
+    <link rel="stylesheet" href="/director/floorplan-editor.css" />
     <script is:inline src="/director/vendor/babylon.js" defer></script>
     <script is:inline src="/director/vendor/babylonjs.loaders.min.js" defer></script>
     <script is:inline src="/director/animation.js" defer></script>
@@ -36,6 +37,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
       <div class="workbench">
         <section class="stage" aria-label="Character stage">
           <div id="frame-window"><canvas id="room" aria-label="Ouch in the white room. Select a joint and drag its rotation rings to pose." tabindex="0"></canvas></div>
+          <div id="floorplan-canvas-host" hidden></div>
           <div class="stage-top">
             <div class="room-tag"><span class="live-dot"></span> <span id="room-title">THE WHITE ROOM</span> <span id="look-label">OUCH</span></div>
             <div class="stage-controls">
@@ -44,18 +46,19 @@ if (!session) return Astro.redirect('/pspt?next=/director');
               <button id="frame-character" title="Fit the whole character in view">Frame</button>
             </div>
           </div>
-          <nav class="mode-switcher" aria-label="Director mode"><button id="mode-pose" aria-pressed="true">Pose</button><button id="mode-lighting" aria-pressed="false">Lighting</button><button id="mode-stage" aria-pressed="false">Stage</button></nav>
+          <nav class="mode-switcher" aria-label="Director mode"><button id="mode-pose" aria-pressed="true">Pose</button><button id="mode-lighting" aria-pressed="false">Lighting</button><button id="mode-stage" aria-pressed="false">Stage</button><button id="mode-floorplan" aria-pressed="false">Floor plan</button></nav>
           <div class="stage-bottom"><span id="hint">Loading Ouch…</span><button id="handles" aria-pressed="true" disabled>Joint controls on</button></div>
           <div id="loading" class="loading" role="status"><span class="loading-mark">○</span><p>Opening the acting room</p></div>
         </section>
         <aside class="inspector" aria-label="Director controls">
-          <section class="panel tools-panel">
+          <section class="panel tools-panel" data-modes="pose lighting stage">
             <div class="section-title"><h2 id="mode-title">Pose Mode</h2><span>DIRECT</span></div>
             <div class="segmented transform-tools" aria-label="Manipulation tool"><button id="tool-move" aria-pressed="false">Move</button><button id="tool-rotate" aria-pressed="true" class="active">Rotate</button><button id="tool-scale" aria-pressed="false">Scale</button></div>
             <div class="button-row"><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div>
             <p id="history-count" class="small" aria-live="polite" title="Up to 60 edit steps in this session. Saved takes can be reopened separately.">0 back · 0 forward</p>
           </section>
-          <section class="panel character-panel">
+          <section id="floorplan-inspector-host" class="panel floorplan-panel" data-modes="floorplan" hidden></section>
+          <section class="panel character-panel" data-modes="pose lighting stage">
             <div class="section-title"><h2>Character</h2><span>01</span></div>
             <div class="segmented"><button id="ouch" class="active" aria-pressed="true">Ouch</button><button id="trip" aria-pressed="false">Trip</button></div>
             <label data-modes="pose">Start with a gesture<select id="preset" disabled><option>Loading poses…</option></select></label>
@@ -176,7 +179,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
             <div class="transform-fields" data-modes="stage"><span>Scale</span><label>X<input id="scene-scale-x" type="number" min=".01" max="100" step=".05" /></label><label>Y<input id="scene-scale-y" type="number" min=".01" max="100" step=".05" /></label><label>Z<input id="scene-scale-z" type="number" min=".01" max="100" step=".05" /></label></div>
             <p class="small">Select a marker, then hold and drag to move it. Use the gizmo to move, rotate or scale. Frame brings the set controls into view.</p>
           </section>
-          <section class="panel frame-panel">
+          <section class="panel frame-panel" data-modes="pose lighting stage">
             <div class="section-title"><h2>Camera & frame</h2><span>03</span></div>
             <label>Background<select id="background"><option value="white">Room / backdrop</option><option value="green">Green screen</option><option value="transparent">Transparent</option></select></label>
             <label>Frame size<select id="frame-size"><option value="720x720">Square · 720 × 720</option><option value="1280x720">Landscape · 1280 × 720</option><option value="1920x1080">Full HD · 1920 × 1080</option><option value="720x1280">Portrait · 720 × 1280</option><option value="1080x1920">Portrait HD · 1080 × 1920</option><option value="custom">Custom size</option></select></label>

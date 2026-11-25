@@ -1,0 +1,96 @@
+[
+  {
+    "device": "tablet",
+    "check": "No horizontal page overflow",
+    "passed": true,
+    "details": {
+      "viewport": 820,
+      "scroll": 820
+    }
+  },
+  {
+    "device": "tablet",
+    "check": "Touch drag draws room",
+    "passed": true
+  },
+  {
+    "device": "tablet",
+    "check": "Room name edit",
+    "passed": true
+  },
+  {
+    "device": "tablet",
+    "check": "Touch undo",
+    "passed": true
+  },
+  {
+    "device": "tablet",
+    "check": "Touch redo",
+    "passed": true
+  },
+  {
+    "device": "tablet",
+    "check": "Touch preview preserves pose",
+    "passed": true
+  },
+  {
+    "device": "tablet",
+    "check": "Return from preview",
+    "passed": true
+  },
+  {
+    "device": "tablet",
+    "check": "No application runtime errors",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  },
+  {
+    "device": "mobile",
+    "check": "No horizontal page overflow",
+    "passed": true,
+    "details": {
+      "viewport": 390,
+      "scroll": 390
+    }
+  },
+  {
+    "device": "mobile",
+    "check": "Add room by dimensions",
+    "passed": true
+  },
+  {
+    "device": "mobile",
+    "check": "Room name edit",
+    "passed": true
+  },
+  {
+    "device": "mobile",
+    "check": "Touch undo",
+    "passed": true
+  },
+  {
+    "device": "mobile",
+    "check": "Touch redo",
+    "passed": true
+  },
+  {
+    "device": "mobile",
+    "check": "Touch preview preserves pose",
+    "passed": true
+  },
+  {
+    "device": "mobile",
+    "check": "Return from preview",
+    "passed": true
+  },
+  {
+    "device": "mobile",
+    "check": "No application runtime errors",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  }
+]

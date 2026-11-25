@@ -1,0 +1,117 @@
+{
+  "checks": [
+    {
+      "check": "Draw first room by pointer",
+      "passed": true
+    },
+    {
+      "check": "Draw adjacent room by pointer",
+      "passed": true
+    },
+    {
+      "check": "Shared wall door stored once",
+      "passed": true
+    },
+    {
+      "check": "Window placement",
+      "passed": true
+    },
+    {
+      "check": "Numeric vertex edit",
+      "passed": true
+    },
+    {
+      "check": "Undo vertex",
+      "passed": true
+    },
+    {
+      "check": "Redo vertex",
+      "passed": true
+    },
+    {
+      "check": "Keyboard undo",
+      "passed": true
+    },
+    {
+      "check": "Keyboard redo",
+      "passed": true
+    },
+    {
+      "check": "Drag vertex",
+      "passed": true
+    },
+    {
+      "check": "Second level",
+      "passed": true
+    },
+    {
+      "check": "Stair level connection",
+      "passed": true
+    },
+    {
+      "check": "Connection inspector edit",
+      "passed": true
+    },
+    {
+      "check": "Elevator connection",
+      "passed": true
+    },
+    {
+      "check": "Portable package export",
+      "passed": true
+    },
+    {
+      "check": "Package import round trip",
+      "passed": true
+    },
+    {
+      "check": "Invalid import preserves plan",
+      "passed": true
+    },
+    {
+      "check": "3D preview retains plan and character pose",
+      "passed": true
+    },
+    {
+      "check": "Return to overhead",
+      "passed": true
+    },
+    {
+      "check": "Reload draft persistence",
+      "passed": true
+    },
+    {
+      "check": "Reload pose preserved",
+      "passed": true
+    },
+    {
+      "check": "Save take isolated local storage",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "shared": false
+      }
+    },
+    {
+      "check": "Reopen saved take",
+      "passed": true
+    },
+    {
+      "check": "Inspector fields accessible labels",
+      "passed": true,
+      "details": []
+    },
+    {
+      "check": "No application runtime errors",
+      "passed": true,
+      "details": [
+        "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd",
+        "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+      ]
+    }
+  ],
+  "pageErrors": [
+    "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd",
+    "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+  ]
+}

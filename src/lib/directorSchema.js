@@ -1,5 +1,6 @@
 // The editable document is the saved artifact. Asset bytes and rig names are
 // selected by the server registry, never by an arbitrary URL in a browser save.
+import { validatePlan, compilePlan } from '../../public/director/floorplan-model.js';
 export const TAKE_SCHEMA = 'nest-director-take/v1';
 export const TAKE_SCHEMA_V2 = 'nest-director-take/v2';
 export const MAX_BODY_BYTES = 2 * 1024 * 1024;
@@ -120,11 +121,17 @@ function backdropImage(value) {
   return { dataUrl, name: text(value.name, 100, 'stage.design.backdrop.image.name') };
 }
 function stageDesign(value, used) {
-  keys(value, ['backdrop', 'floor', 'objects'], 'stage.design');
+  keys(value, ['backdrop', 'floor', 'objects', 'floorplan'], 'stage.design');
   keys(value.backdrop, ['type', 'color', 'image', 'fit'], 'stage.design.backdrop');
   keys(value.floor, ['enabled', 'color', 'size', 'height'], 'stage.design.floor');
   requireValue(Array.isArray(value.objects) && value.objects.length <= 32, 'stage.design.objects supports at most 32 objects');
+  let floorplan;
+  if (Object.hasOwn(value, 'floorplan')) {
+    try { floorplan = validatePlan(value.floorplan); compilePlan(floorplan); }
+    catch (error) { throw new DirectorError(`stage.design.floorplan: ${error.message}`); }
+  }
   return {
+    ...(floorplan ? { floorplan } : {}),
     backdrop: {
       type: member(value.backdrop.type, ['color', 'image'], 'stage.design.backdrop.type'),
       color: color(value.backdrop.color, 'stage.design.backdrop.color'), image: backdropImage(value.backdrop.image),
@@ -205,8 +212,12 @@ export function validateTake(input, registry) {
   const end = number(input.range.end, start, Math.min(start + 10000, 36000), 'range.end', true);
   keys(input.stage, ['background', ...(isV2 ? ['design'] : [])], 'stage');
   keys(input.camera, ['mode', 'position', 'target', 'fov', 'orthoSize'], 'camera');
-  const cameraPosition = vector(input.camera.position, 3, -1000, 1000, 'camera.position');
-  const cameraTarget = vector(input.camera.target, 3, -1000, 1000, 'camera.target');
+  // Plan extents, narrow output frames and small FOVs can require a distant
+  // camera. Keep the legacy bounds for takes without a floor plan.
+  const hasFloorplan = isV2 && Object.hasOwn(input.stage.design || {}, 'floorplan');
+  const cameraLimit = hasFloorplan ? 1e9 : 1000;
+  const cameraPosition = vector(input.camera.position, 3, -cameraLimit, cameraLimit, 'camera.position');
+  const cameraTarget = vector(input.camera.target, 3, -cameraLimit, cameraLimit, 'camera.target');
   requireValue(Math.hypot(...cameraPosition.map((x, i) => x - cameraTarget[i])) > .001, 'camera position and target must differ');
   requireValue(Array.isArray(input.keyframes) && input.keyframes.length <= 600, 'at most 600 keyframes are supported');
   let lastFrame = start - 1;
@@ -234,7 +245,7 @@ export function validateTake(input, registry) {
       mode: member(input.camera.mode, ['perspective', 'orthographic'], 'camera.mode'),
       position: cameraPosition, target: cameraTarget,
       fov: number(input.camera.fov, .05, 3, 'camera.fov'),
-      orthoSize: number(input.camera.orthoSize, .01, 1000, 'camera.orthoSize'),
+      orthoSize: number(input.camera.orthoSize, .01, hasFloorplan ? 1e8 : 1000, 'camera.orthoSize'),
     },
     pose: pose(input.pose, 'pose'), keyframes,
   };

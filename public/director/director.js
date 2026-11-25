@@ -16,6 +16,7 @@
   let playStart = 0, playFrame = 1, restoring = false, dragBefore = null;
   let cameraBefore = null, cameraWheelTimer = null;
   let appearance, lighting, stageDesign, kinematics, directManipulation, poseControl, backdropUploadToken = 0;
+  let floorplanEditor, emptyFloorplan;
   let gizmoTargetStart = null, gizmoTargetMoved = false;
   const label = name => ({ root: 'Whole character', 'torso.lower': 'Hips', 'torso.upper': 'Torso', head: 'Head', 'upper_arm.L': 'Left shoulder', 'lower_arm.L': 'Left elbow', 'upper_arm.R': 'Right shoulder', 'lower_arm.R': 'Right elbow', 'thigh.L': 'Left hip', 'shin.L': 'Left knee', 'thigh.R': 'Right hip', 'shin.R': 'Right knee' }[name] || name);
   function status(message) { $('status').textContent = ui.draftWriteFailed ? `Browser draft unavailable. Use Save take before closing. ${message}` : message; }
@@ -40,7 +41,10 @@
     $("preset").value = match?.id || "";
   }
   function setCamera(value) {
+    const distance = Math.hypot(...value.position.map((n, i) => n - value.target[i]));
+    camera.upperRadiusLimit = Math.max(camera.upperRadiusLimit || 0, distance * 1.1);
     camera.setTarget(B.Vector3.FromArray(value.target)); camera.setPosition(B.Vector3.FromArray(value.position)); camera.fov = value.fov;
+    camera.maxZ = Math.max(camera.maxZ || 10000, camera.radius * 4);
     camera.mode = value.mode === 'orthographic' ? B.Camera.ORTHOGRAPHIC_CAMERA : B.Camera.PERSPECTIVE_CAMERA;
     const size = value.orthoSize || 1.5; camera.orthoTop = size / 2; camera.orthoBottom = -size / 2; fitOrtho();
     $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA));
@@ -102,6 +106,7 @@
     for (const name of ['save', 'play', 'key-pose', 'handles', 'reset-joint']) $(name).disabled = !ui.ready;
     $('send').disabled = !ui.ready || ui.dirty || !ui.savedId;
     $('undo').disabled = !ui.undo.length; $('redo').disabled = !ui.redo.length;
+    floorplanEditor?.setHistory({ undo: ui.undo.length, redo: ui.redo.length });
     const historyText = `${ui.undo.length} back · ${ui.redo.length} forward`;
     if ($('history-count').textContent !== historyText) $('history-count').textContent = historyText;
     $('remove-key').disabled = !ui.keys.some(key => key.frame === ui.frame);
@@ -160,8 +165,8 @@
     $('room-title').textContent = background === 'white' ? ' THE SET ' : background === 'green' ? ' GREEN SCREEN ' : ' TRANSPARENT STAGE ';
   }
   const activeController = () => ui.mode === 'lighting' ? lighting : ui.mode === 'stage' ? stageDesign : null;
-  const activeNodes = () => activeController()?.nodes() || (ui.stretch ? nodes : { ...nodes, ...kinematics.nodes() });
-  const activeHandles = () => activeController()?.handles() || (ui.stretch ? handles : [...handles, ...kinematics.handles()]);
+  const activeNodes = () => ui.mode === 'floorplan' ? {} : activeController()?.nodes() || (ui.stretch ? nodes : { ...nodes, ...kinematics.nodes() });
+  const activeHandles = () => ui.mode === 'floorplan' ? [] : activeController()?.handles() || (ui.stretch ? handles : [...handles, ...kinematics.handles()]);
   const movableHandles = () => ui.mode !== 'pose' || ui.stretch ? activeHandles() : activeHandles().filter(handle => canMoveControl(handle.metadata?.joint));
   const activeSelected = () => activeController()?.getSelected() || (ui.mode === 'pose' ? poseControl || selected : null);
   const isPoseTarget = () => ui.mode === 'pose' && !ui.stretch && kinematics.isTarget(activeSelected());
@@ -198,9 +203,13 @@
     directManipulation?.cancel(); stop(); ui.mode = mode;
     if (mode === 'lighting' && ui.tool === 'scale') ui.tool = 'move';
     kinematics.setEditing(ui.handles && mode === 'pose' && !ui.stretch);
-    for (const name of ['pose', 'lighting', 'stage']) $('mode-' + name).setAttribute('aria-pressed', String(mode === name));
+    for (const name of ['pose', 'lighting', 'stage', 'floorplan']) $('mode-' + name).setAttribute('aria-pressed', String(mode === name));
     for (const element of document.querySelectorAll('[data-modes]')) element.hidden = !element.dataset.modes.split(' ').includes(mode);
     document.querySelector('.inspector').dataset.mode = mode;
+    $('director').dataset.mode = mode;
+    document.querySelector('.stage').dataset.floorplan = String(mode === 'floorplan');
+    $('floorplan-canvas-host').hidden = mode !== 'floorplan';
+    floorplanEditor?.setActive(mode === 'floorplan');
     $('mode-title').textContent = mode[0].toUpperCase() + mode.slice(1) + ' Mode';
     syncTools();
     handles.forEach(handle => handle.setEnabled(ui.handles && mode === 'pose'));
@@ -236,6 +245,7 @@
     $('backdrop-type').value = design.backdrop.type; $('backdrop-color').value = design.backdrop.color; $('backdrop-fit').value = design.backdrop.fit;
     $('backdrop-image-name').textContent = design.backdrop.image?.name || 'No image selected.'; $('remove-backdrop-image').disabled = !design.backdrop.image;
     $('floor-enabled').checked = design.floor.enabled; $('floor-color').value = design.floor.color; $('floor-size').value = design.floor.size; $('floor-height').value = design.floor.height;
+    floorplanEditor?.setPlan(design.floorplan || emptyFloorplan);
     const node = activeNodes()[activeSelected()];
     $('scene-selection-label').textContent = node ? controlLabel(activeSelected()) : 'Select an item to place it.';
     for (const input of document.querySelectorAll('.scene-transform-panel input')) input.disabled = !node;
@@ -286,6 +296,7 @@
     }
     distance *= 1.05; half *= 1.05;
     camera.upperRadiusLimit = Math.max(camera.upperRadiusLimit || 0,distance * 1.1);
+    camera.maxZ = Math.max(camera.maxZ || 10000, distance * 4);
     if (camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA) { camera.setTarget(center.subtract(right.scale(cx * half * aspect)).subtract(up.scale(cy * half))); camera.orthoTop = half; camera.orthoBottom = -half; }
     else camera.setTarget(center.subtract(right.scale(cx * distance * tanX)).subtract(up.scale(cy * distance * tanY)));
     camera.alpha = alpha; camera.beta = beta; camera.radius = distance; camera.getViewMatrix(true); fitOrtho();
@@ -535,7 +546,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
         apply({ ...(current() || window.DirectorOptics.defaults('glow')), [field]: value });
       }, 'Lens effect updated.');
     };
-    for (const mode of ['pose','lighting','stage']) $('mode-' + mode).onclick = () => { setMode(mode); document.querySelector('.inspector').scrollTop = 0; };
+    for (const mode of ['pose','lighting','stage','floorplan']) $('mode-' + mode).onclick = () => { setMode(mode); document.querySelector('.inspector').scrollTop = 0; };
     for (const tool of ['move','rotate','scale']) $('tool-' + tool).onclick = () => { directManipulation?.cancel(); ui.tool = tool; setMode(ui.mode); };
     edit('outline-enabled', input => { ui.outline.enabled = input.checked; applyAppearance(); }, 'Outline updated.');
     live('outline-tone', input => { ui.outline.tone = numeric(input,0,1); applyAppearance(); }, 'Outline color updated.');
@@ -753,7 +764,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
       catch (error) { status(error.message); } finally { buttons(); }
     };
     $('refresh-takes').onclick = refreshTakes;
-    document.addEventListener('keydown', e => { if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); $(e.shiftKey ? 'redo' : 'undo').click(); } if (e.code === 'Space') { e.preventDefault(); $('play').click(); } });
+    document.addEventListener('keydown', e => { if (ui.mode === 'floorplan' || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); $(e.shiftKey ? 'redo' : 'undo').click(); } if (e.code === 'Space') { e.preventDefault(); $('play').click(); } });
     $('room').addEventListener('pointerdown', () => { if (ui.ready) { finishCameraHistory(); stop(); camera.getViewMatrix(true); cameraBefore = snapshot(); } });
     $('room').addEventListener('pointerup', () => { finishCameraHistory(); if (ui.ready && !Object.values(gizmo.gizmos).some(item => item?.isDragging)) changed('Camera and pose updated.'); });
     $('room').addEventListener('pointercancel', finishCameraHistory);
@@ -768,6 +779,10 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
   async function start() {
     if (!A) throw new Error('The animation tools did not load. Reload to try again.');
     if (!B) throw new Error('The room renderer did not load. Reload to try again; saved takes are kept.');
+    const [planModel, planRendererModule, planEditorModule] = await Promise.all([
+      import('/director/floorplan-model.js'), import('/director/floorplan-renderer.js'), import('/director/floorplan-editor.js'),
+    ]);
+    emptyFloorplan = planModel.createPlan();
     const indexResponse = await fetch('/director/assets/index.json');
     const index = indexResponse.ok ? await indexResponse.json() : null;
     const requestedHash = new URL(location.href).searchParams.get('asset');
@@ -794,7 +809,9 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
       if (manager) for (let i = 0; i < manager.numTargets; i++) { const target = manager.getTarget(i); (morphs[target.name] ||= []).push(target); }
     }
     if (!window.DirectorAppearance || !window.DirectorLighting || !window.DirectorStage || !window.DirectorKinematics) throw new Error('Scene tools did not load. Reload to try again.');
-    stageDesign = window.DirectorStage.create(scene, { floor, onBackdropStatus: value => { if (value?.state === 'error' || value === 'error') status('The background image could not be displayed. Choose another image.'); } });
+    stageDesign = window.DirectorStage.create(scene, { floor, validateFloorplan: planModel.validatePlan,
+      floorplanRenderer: planRendererModule.createFloorplanRenderer(scene),
+      onBackdropStatus: value => { if (value?.state === 'error' || value === 'error') status('The background image could not be displayed. Choose another image.'); } });
     lighting = window.DirectorLighting.create(scene); appearance = window.DirectorAppearance.create(scene); lighting.sync();
     kinematics = window.DirectorKinematics.create(scene, { nodes, neutralPose, manifest });
     gizmo = new B.GizmoManager(scene); gizmo.usePointerToAttachGizmos = false;
@@ -860,9 +877,19 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
         attachControl();
       }
     });
+    floorplanEditor = planEditorModule.createFloorplanEditor({ canvasHost: $('floorplan-canvas-host'), inspectorHost: $('floorplan-inspector-host'),
+      onCommit(next) {
+        const plan = planModel.validatePlan(next), before = snapshot();
+        stageDesign.setDesign({ floorplan: plan, floor: { enabled: false } });
+        remember(before); setBackground('white'); syncSceneEditor(); changed('Floor plan updated. Save take or export the plan to keep a reusable copy.');
+      },
+      onStatus: status,
+      onUndo: () => $('undo').click(), onRedo: () => $('redo').click(),
+      onPreview() { stop(); const before = snapshot(); setMode('stage'); camera.beta = Math.PI / 3; frameSet(); remember(before); changed('Active level shown in 3D. Return to Floor plan to edit rooms or select another level.'); },
+    });
     applyPose(neutralPose); setLook('ouch'); setBackground('white'); setOutput(ui.output); fitOrtho(); selectJoint('upper_arm.L'); bind(); bindSceneEditor(); ui.ready = true; setMode('pose'); syncTimeline(); buttons();
     $('loading').hidden = true; status('Ouch is ready. Pick a gesture or move a joint.');
-    engine.runRenderLoop(() => { if (ui.playing) { const elapsed = playFrame - ui.start + Math.floor((performance.now() - playStart) / 1000 * ui.fps); const count = ui.end - ui.start + 1; const frame = ui.animation.loop ? ui.start + (elapsed % count) : Math.min(ui.end, ui.start + elapsed); if (frame !== ui.frame) scrub(frame, true); if (!ui.animation.loop && elapsed >= count) { stop(); syncJoint(); syncPreset(pose()); } } appearance.setLightTime(colorClock.seconds()); scene.render(); });
+    engine.runRenderLoop(() => { if (ui.mode === 'floorplan') return; if (ui.playing) { const elapsed = playFrame - ui.start + Math.floor((performance.now() - playStart) / 1000 * ui.fps); const count = ui.end - ui.start + 1; const frame = ui.animation.loop ? ui.start + (elapsed % count) : Math.min(ui.end, ui.start + elapsed); if (frame !== ui.frame) scrub(frame, true); if (!ui.animation.loop && elapsed >= count) { stop(); syncJoint(); syncPreset(pose()); } } appearance.setLightTime(colorClock.seconds()); scene.render(); });
     window.addEventListener('resize', resizeStage); new ResizeObserver(resizeStage).observe(document.querySelector('.stage'));
     engine.onContextLostObservable.add(() => status(ui.draftWriteFailed ? 'The graphics context paused. Keep this tab open and use Save take.' : 'The graphics context paused. Your browser draft is kept; reload if the room does not recover.'));
     engine.onContextRestoredObservable.add(() => status('The room renderer recovered.'));
