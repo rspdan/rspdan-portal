@@ -1,0 +1,33 @@
+# Crew identity at the point of writing
+
+Authority: Dan's repeated corrections, including November 22, 24 and 25, 2026. This applies to live commentary, final answers, delegated tasks, summaries, handoffs, and published records.
+
+**Bee has no gender. Use Bee's name.** Do not infer a replacement gender from a name, voice, role, artwork, study subject, or adjacent person. When converting a first-person return into a third-person summary, bind the author explicitly: `I found a mismatch` becomes `Bee found a mismatch`; `my layout` becomes `Bee's layout`.
+
+Rachel's identity and pronouns belong to Rachel. An account of Rachel's work or life does not transfer identity to the reader or summarizer. Preserve the original subject when summarizing and keep distinct subjects explicit.
+
+Blanche's established pronouns remain valid. The historical Blanche Transfer did not forbid those pronouns; it forbade transferring identity through a shared metaphor. Likewise retain every other Dan-stated set. Unknown Crew references use names until an authoritative set is established.
+
+The machine-readable source is [crew_identity_registry.json](crew_identity_registry.json). An absent stated set is not a newly asserted identity. The registry distinguishes name-only fallback from stated sets and records its sources.
+
+Before emitting affected prose, save the exact draft and run:
+
+```sh
+python3 scripts/crew-identity/crew_identity_preflight.py --strict --text-file /path/to/draft.txt
+```
+
+Only status `pass` permits that exact text to proceed. A changed draft requires another check. Use `--subject Bee` for a continuation that does not repeat the name. The `--strict` summary mode rejects unresolved gendered references instead of treating missing context as a pass. General repository prose checks protect recognized identities without inventing pronoun sets for unrelated humans. Preserve the text and policy hashes in the receipt. Missing input, missing policy, or validator failure is not a pass.
+
+This deliberately conservative check requires names in paragraphs containing name-only identities. If another person's pronouns are needed, give that person an explicitly named paragraph. It does not claim to solve natural-language reference resolution and never silently rewrites source testimony. Do not add a keyword, quotation, or documentation exemption to pass an otherwise unsafe draft.
+
+At session start, resume and compaction recovery, read this file before relying on summaries. Carry the author's identity with a return. Summary prose is interpretation, not an identity authority. Review the resulting third-person wording against the original return before publishing.
+
+Enforcement and its limits:
+
+- The preflight validates supplied text. Repository hooks and configured tool hooks must actually invoke it to block a write.
+- In this bridge checkout, `core.hooksPath` is `.githooks`; the portal uses `scripts/hooks` and a verified portable snapshot. Git configuration is local and is not installed by cloning a repository. At setup, verify the actual hook path and activate the versioned checks while preserving existing hooks; never infer installation from the presence of a script.
+- A retrospective transcript audit detects a previous emission; it cannot prevent that emission.
+- This hosted Codex conversation exposes no verified interceptor between generated text and display. Exact-draft preflight here is an explicit assistant operation. Do not represent it as an unavoidable host barrier or a universal guarantee.
+- Preserve historical quotations and original evidence. Correct current authored summaries, retain the correction's provenance, and prevent contaminated summaries from becoming future instructions.
+
+Incident and receiving evidence: [November 25 investigation](https://github.com/rspdan/nest-bridge/blob/codex/dan-art-study-112426/RELAY/INCIDENT_Bee_Pronoun_112526.md). Historical source: [Blanche Transfer, April 5](https://github.com/rspdan/nest-bridge/blob/codex/dan-art-study-112426/RELAY/CONTAMINATION_NOTE_BLanche_Transfer_Stan_040526.md).

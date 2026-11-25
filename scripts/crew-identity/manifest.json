@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "authority": "rspdan/nest-bridge",
+  "source_ref": "codex/dan-art-study-112426",
+  "scope": "Verified portable snapshot; edit authority sources and resync, never edit bundle files.",
+  "files": {
+    "crew_identity_registry.json": {
+      "source": "ENGINE/crew_identity_registry.json",
+      "source_sha256": "12131fa76004800e3b58d76c39a91a29181423ca973922f171e165d95a1c5702",
+      "sha256": "12131fa76004800e3b58d76c39a91a29181423ca973922f171e165d95a1c5702"
+    },
+    "crew_identity_preflight.py": {
+      "source": "ENGINE/crew_identity_preflight.py",
+      "source_sha256": "246f2d0a9fd7d70a23c3d90a249304f7ec05cb40e53aa0f04daf5b6f7caadca5",
+      "sha256": "246f2d0a9fd7d70a23c3d90a249304f7ec05cb40e53aa0f04daf5b6f7caadca5"
+    },
+    "crew_identity_commit_gate.py": {
+      "source": "ENGINE/crew_identity_commit_gate.py",
+      "source_sha256": "96c62983889841df2ac4ec7be44124651bc3807c07de2a8048fc0996234735ec",
+      "sha256": "96c62983889841df2ac4ec7be44124651bc3807c07de2a8048fc0996234735ec"
+    },
+    "CREW_IDENTITY.md": {
+      "source": "RELAY/CREW_IDENTITY.md",
+      "source_sha256": "50e67f20bfadc8fab3e3c607db2b3b5f6de0a1584e17c731e1800cbbc16e98e0",
+      "sha256": "8b2271c04931b8e5536afc1e5c418d688b9cc78631a5eccc116508a6e17dc868"
+    }
+  }
+}

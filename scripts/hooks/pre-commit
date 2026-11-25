@@ -5,7 +5,8 @@
 #            the public face carries no Crew AI-tell em-dashes (Dan-direct 060626)
 # Per RELAY/STANDARD_RULE_UnicodeSafeFileOps_Stan_040426 + the 060626 Fleet-wide em-dash gate.
 # Wire once per clone:  git config core.hooksPath scripts/hooks   (or: npm run prepare)
-# FAIL-OPEN on no-python (exit 0); BLOCK only on a confirmed offender (exit 1).
+# Identity checks fail closed on invalid/missing input (exit 2); confirmed
+# offending prose blocks with exit 1. Existing content gates remain below.
 
 # Find a Python that ACTUALLY runs (Windows 'python3' is a Store stub that fails the
 # import test, so test each candidate; this fires on local Windows Crew, not just cloud).
@@ -13,7 +14,15 @@ PY=""
 for c in python3 python py; do
   if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then PY="$c"; break; fi
 done
-[ -z "$PY" ] && exit 0
+if [ -z "$PY" ]; then
+  echo "Commit checks could not run: Python is unavailable." >&2
+  exit 2
+fi
+
+# Identity policy is bundled so standalone portal clones have no sibling-checkout
+# dependency. Verify both the snapshot and any available authority before use.
+"$PY" scripts/sync_crew_identity.py --check || exit $?
+"$PY" scripts/crew-identity/crew_identity_commit_gate.py --repo . || exit $?
 
 # Gate 2 · mojibake (.astro)
 moji=$(git diff --cached --name-only --diff-filter=ACM | grep '\.astro$')
