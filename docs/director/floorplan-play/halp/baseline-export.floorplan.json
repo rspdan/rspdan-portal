@@ -1,0 +1,891 @@
+{
+  "schema": "nest-floorplan-package/v1",
+  "plan": {
+    "schema": "nest-floorplan/v1",
+    "name": "Halp play · Rain Rooms",
+    "units": "unit",
+    "grid": 0.25,
+    "activeLevelId": "level-ground",
+    "levels": [
+      {
+        "id": "level-ground",
+        "name": "Ground",
+        "elevation": 0,
+        "height": 2.7
+      },
+      {
+        "id": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "name": "Quiet loft",
+        "elevation": 3.2,
+        "height": 2.7
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-81030e0e-b691-4a83-acd9-64c34a500f45",
+        "levelId": "level-ground",
+        "name": "Rain foyer",
+        "points": [
+          [
+            -2.5,
+            -2.5
+          ],
+          [
+            2.25,
+            -2.5
+          ],
+          [
+            2.25,
+            2.75
+          ],
+          [
+            -2.5,
+            2.75
+          ]
+        ],
+        "wallThickness": 0.15,
+        "wallColor": "#61766a",
+        "floorColor": "#ded4bd",
+        "openings": [
+          {
+            "id": "opening-89b71ef9-0936-4ca1-819c-788d6558c41c",
+            "type": "door",
+            "edge": 3,
+            "at": 0.5054945054945055,
+            "width": 0.9,
+            "height": 2.1,
+            "sill": 0
+          },
+          {
+            "id": "opening-2e86bb00-d77b-41d1-a269-7df2a8388dea",
+            "type": "window",
+            "edge": 0,
+            "at": 0.497165991902834,
+            "width": 1,
+            "height": 1.2,
+            "sill": 0.81
+          },
+          {
+            "id": "opening-b6f09d7f-5239-4322-ab66-58d1c94a00bb",
+            "type": "passage",
+            "edge": 1,
+            "at": 0.5238095238095238,
+            "width": 1.2,
+            "height": 2.1,
+            "sill": 0
+          }
+        ]
+      },
+      {
+        "id": "room-3f0a36ec-145e-4074-831a-4007b86e645b",
+        "levelId": "level-ground",
+        "name": "Listening room",
+        "points": [
+          [
+            2.25,
+            -2.5
+          ],
+          [
+            6.25,
+            -2.5
+          ],
+          [
+            6.25,
+            2.75
+          ],
+          [
+            2.25,
+            2.75
+          ]
+        ],
+        "wallThickness": 0.15,
+        "wallColor": "#61766a",
+        "floorColor": "#ded4bd",
+        "openings": []
+      },
+      {
+        "id": "room-25ddbf7b-31bc-48a5-8081-6770d7e46d72",
+        "levelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "name": "Cloud nook",
+        "points": [
+          [
+            2.25,
+            -2.5
+          ],
+          [
+            6.25,
+            -2.5
+          ],
+          [
+            6.25,
+            2.75
+          ],
+          [
+            2.25,
+            2.75
+          ]
+        ],
+        "wallThickness": 0.15,
+        "wallColor": "#61766a",
+        "floorColor": "#ded4bd",
+        "openings": []
+      }
+    ],
+    "connectors": [
+      {
+        "id": "connection-eeb21d5d-3bcd-4be2-808a-62652ce52a3c",
+        "type": "stairs",
+        "name": "Rain stair",
+        "fromLevelId": "level-ground",
+        "toLevelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "position": [
+          4.5,
+          0.75
+        ],
+        "size": [
+          1,
+          1.8
+        ],
+        "rotation": 90
+      },
+      {
+        "id": "connection-3b0f36a3-ee3f-4e07-b9ac-1b9b58092cc9",
+        "type": "elevator",
+        "name": "Small lift",
+        "fromLevelId": "level-ground",
+        "toLevelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "position": [
+          3.25,
+          -1.5
+        ],
+        "size": [
+          1.2,
+          1.2
+        ],
+        "rotation": 0
+      }
+    ]
+  },
+  "geometry": {
+    "schema": "nest-floorplan-geometry/v1",
+    "units": "unit",
+    "walls": [
+      {
+        "id": "wall-level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455-0-0-0",
+        "kind": "wall",
+        "levelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "roomIds": [
+          "room-25ddbf7b-31bc-48a5-8081-6770d7e46d72"
+        ],
+        "position": [
+          2.25,
+          4.550000000000001,
+          0.125
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          5.25,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455-1-0-0",
+        "kind": "wall",
+        "levelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "roomIds": [
+          "room-25ddbf7b-31bc-48a5-8081-6770d7e46d72"
+        ],
+        "position": [
+          6.25,
+          4.550000000000001,
+          0.125
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          5.25,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455-2-0-0",
+        "kind": "wall",
+        "levelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "roomIds": [
+          "room-25ddbf7b-31bc-48a5-8081-6770d7e46d72"
+        ],
+        "position": [
+          4.25,
+          4.550000000000001,
+          -2.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455-3-0-0",
+        "kind": "wall",
+        "levelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "roomIds": [
+          "room-25ddbf7b-31bc-48a5-8081-6770d7e46d72"
+        ],
+        "position": [
+          4.25,
+          4.550000000000001,
+          2.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-4-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-3f0a36ec-145e-4074-831a-4007b86e645b",
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          2.25,
+          1.35,
+          -1.425
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          2.15,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-4-1-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-3f0a36ec-145e-4074-831a-4007b86e645b",
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          2.25,
+          2.4000000000000004,
+          0.25
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1.2,
+          0.6000000000000001,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-4-2-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-3f0a36ec-145e-4074-831a-4007b86e645b",
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          2.25,
+          1.35,
+          1.8
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1.9,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-5-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-3f0a36ec-145e-4074-831a-4007b86e645b"
+        ],
+        "position": [
+          6.25,
+          1.35,
+          0.125
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          5.25,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-6-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -2.5,
+          1.35,
+          -1.426923076923077
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          2.146153846153846,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-6-1-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -2.5,
+          2.4000000000000004,
+          0.09615384615384623
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          0.8999999999999999,
+          0.6000000000000001,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-6-2-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -2.5,
+          1.35,
+          1.648076923076923
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          2.203846153846154,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-7-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -1.5692307692307692,
+          1.35,
+          -2.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          1.8615384615384616,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-7-1-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -0.1384615384615384,
+          0.405,
+          -2.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          1,
+          0.81,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-7-1-1",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -0.1384615384615384,
+          2.355,
+          -2.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          1,
+          0.6900000000000004,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-7-2-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          1.3057692307692308,
+          1.35,
+          -2.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          1.8884615384615384,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-7-3-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-3f0a36ec-145e-4074-831a-4007b86e645b"
+        ],
+        "position": [
+          4.25,
+          1.35,
+          -2.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-8-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-81030e0e-b691-4a83-acd9-64c34a500f45"
+        ],
+        "position": [
+          -0.125,
+          1.35,
+          2.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4.75,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      },
+      {
+        "id": "wall-level-ground-8-1-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-3f0a36ec-145e-4074-831a-4007b86e645b"
+        ],
+        "position": [
+          4.25,
+          1.35,
+          2.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.15
+        ],
+        "color": "#61766a"
+      }
+    ],
+    "floors": [
+      {
+        "id": "floor-room-25ddbf7b-31bc-48a5-8081-6770d7e46d72",
+        "kind": "floor",
+        "roomId": "room-25ddbf7b-31bc-48a5-8081-6770d7e46d72",
+        "levelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "vertices": [
+          2.25,
+          3.2,
+          -2.5,
+          6.25,
+          3.2,
+          -2.5,
+          6.25,
+          3.2,
+          2.75,
+          2.25,
+          3.2,
+          2.75,
+          2.25,
+          3.12,
+          -2.5,
+          6.25,
+          3.12,
+          -2.5,
+          6.25,
+          3.12,
+          2.75,
+          2.25,
+          3.12,
+          2.75
+        ],
+        "indices": [
+          1,
+          0,
+          3,
+          7,
+          4,
+          5,
+          3,
+          2,
+          1,
+          5,
+          6,
+          7,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4,
+          1,
+          2,
+          6,
+          1,
+          6,
+          5,
+          2,
+          3,
+          7,
+          2,
+          7,
+          6,
+          3,
+          0,
+          4,
+          3,
+          4,
+          7
+        ],
+        "color": "#ded4bd"
+      },
+      {
+        "id": "floor-room-3f0a36ec-145e-4074-831a-4007b86e645b",
+        "kind": "floor",
+        "roomId": "room-3f0a36ec-145e-4074-831a-4007b86e645b",
+        "levelId": "level-ground",
+        "vertices": [
+          2.25,
+          0,
+          -2.5,
+          6.25,
+          0,
+          -2.5,
+          6.25,
+          0,
+          2.75,
+          2.25,
+          0,
+          2.75,
+          2.25,
+          -0.08,
+          -2.5,
+          6.25,
+          -0.08,
+          -2.5,
+          6.25,
+          -0.08,
+          2.75,
+          2.25,
+          -0.08,
+          2.75
+        ],
+        "indices": [
+          1,
+          0,
+          3,
+          7,
+          4,
+          5,
+          3,
+          2,
+          1,
+          5,
+          6,
+          7,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4,
+          1,
+          2,
+          6,
+          1,
+          6,
+          5,
+          2,
+          3,
+          7,
+          2,
+          7,
+          6,
+          3,
+          0,
+          4,
+          3,
+          4,
+          7
+        ],
+        "color": "#ded4bd"
+      },
+      {
+        "id": "floor-room-81030e0e-b691-4a83-acd9-64c34a500f45",
+        "kind": "floor",
+        "roomId": "room-81030e0e-b691-4a83-acd9-64c34a500f45",
+        "levelId": "level-ground",
+        "vertices": [
+          -2.5,
+          0,
+          -2.5,
+          2.25,
+          0,
+          -2.5,
+          2.25,
+          0,
+          2.75,
+          -2.5,
+          0,
+          2.75,
+          -2.5,
+          -0.08,
+          -2.5,
+          2.25,
+          -0.08,
+          -2.5,
+          2.25,
+          -0.08,
+          2.75,
+          -2.5,
+          -0.08,
+          2.75
+        ],
+        "indices": [
+          1,
+          0,
+          3,
+          7,
+          4,
+          5,
+          3,
+          2,
+          1,
+          5,
+          6,
+          7,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4,
+          1,
+          2,
+          6,
+          1,
+          6,
+          5,
+          2,
+          3,
+          7,
+          2,
+          7,
+          6,
+          3,
+          0,
+          4,
+          3,
+          4,
+          7
+        ],
+        "color": "#ded4bd"
+      }
+    ],
+    "connectors": [
+      {
+        "id": "connector-connection-3b0f36a3-ee3f-4e07-b9ac-1b9b58092cc9",
+        "kind": "connector",
+        "type": "elevator",
+        "name": "Small lift",
+        "levelId": "level-ground",
+        "fromLevelId": "level-ground",
+        "toLevelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "position": [
+          3.25,
+          0.04,
+          -1.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          1.2,
+          0.08,
+          1.2
+        ],
+        "color": "#639cc4",
+        "toElevation": 3.2
+      },
+      {
+        "id": "connector-connection-eeb21d5d-3bcd-4be2-808a-62652ce52a3c",
+        "kind": "connector",
+        "type": "stairs",
+        "name": "Rain stair",
+        "levelId": "level-ground",
+        "fromLevelId": "level-ground",
+        "toLevelId": "level-dd07cacb-f5eb-4e78-95b1-ff9f4a63a455",
+        "position": [
+          4.5,
+          0.04,
+          0.75
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ],
+        "size": [
+          1,
+          0.08,
+          1.8
+        ],
+        "color": "#d4a54a",
+        "toElevation": 3.2
+      }
+    ],
+    "bounds": {
+      "min": [
+        -2.575,
+        -0.08,
+        -2.575
+      ],
+      "max": [
+        6.325,
+        5.9,
+        2.825
+      ]
+    }
+  }
+}

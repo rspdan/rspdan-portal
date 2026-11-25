@@ -1,0 +1,1228 @@
+[
+  {
+    "device": "android-touch",
+    "check": "Canvas room drawing still works",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: one-level drag does not edit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: one-level setup explained",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: one-level drag does not edit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: one-level setup explained",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "One-level guidance exposes visible Add level action",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Same-elevation connector rejected",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "door: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "door: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: off-wall drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "door: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "window-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "window: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "window: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: off-wall drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "window: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "passage-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: off-wall drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "passage: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "stairs: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "elevator: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "Select: dragging room moves it once",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Select: undo returns exact room",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Pan changes view only",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Polygon: touch/click first point finishes room",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Polygon: one undo removes room",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Draw room remains canvas gesture",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Draw room one undo removes room",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "All five placed items coexist",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Completed play has no text selection or unhandled menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "android-touch",
+    "check": "Preview preserves edited plan and Trip pose",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Save uses isolated local store",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Reload preserves plan and Trip pose",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "Saved take reopens exact plan and pose",
+    "passed": true
+  },
+  {
+    "device": "android-touch",
+    "check": "No application exceptions",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd",
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Canvas room drawing still works",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: one-level drag does not edit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: one-level setup explained",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: one-level drag does not edit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: one-level setup explained",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "One-level guidance exposes visible Add level action",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Same-elevation connector rejected",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: off-wall drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "door: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: off-wall drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "window: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: off-wall drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "passage: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "stairs: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator-drag-preview: valid ghost shown",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator-drag-preview: hover does not commit",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator-drag-preview: no selection introduced",
+    "passed": true,
+    "details": {
+      "before": "",
+      "after": ""
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: toolbar drag places one item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: one drag is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: longpress drag no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: placed item moves",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: one move is one undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: undo move restores exact item",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: undo placement restores exact plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: redo placement exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: tap tool then tap plan",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: tap placement undo exact",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: outside drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: overlay-control drop rejects without undo",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: cancel preserves plan and history",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "elevator: cancellation leaves no selection/menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Select: dragging room moves it once",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Select: undo returns exact room",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Pan changes view only",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Polygon: touch/click first point finishes room",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Polygon: one undo removes room",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Draw room remains canvas gesture",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Draw room one undo removes room",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "All five placed items coexist",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Completed play has no text selection or unhandled menu",
+    "passed": true,
+    "details": {
+      "selection": "",
+      "menus": 0
+    }
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Preview preserves edited plan and Trip pose",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Save uses isolated local store",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Reload preserves plan and Trip pose",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "Saved take reopens exact plan and pose",
+    "passed": true
+  },
+  {
+    "device": "desktop-mouse",
+    "check": "No application exceptions",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd",
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  }
+]

@@ -1,0 +1,139 @@
+{
+  "schema": "nest-floorplan/v1",
+  "name": "Untitled floorplan",
+  "units": "unit",
+  "grid": 0.25,
+  "activeLevelId": "level-30268c10-1c81-4585-aeb6-db3cca7beaff",
+  "levels": [
+    {
+      "id": "level-ground",
+      "name": "Ground",
+      "elevation": 0,
+      "height": 2.7
+    },
+    {
+      "id": "level-30268c10-1c81-4585-aeb6-db3cca7beaff",
+      "name": "Level 2",
+      "elevation": 2.7,
+      "height": 2.7
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-c600b9c1-ca80-4d14-bfc8-57db39ec62bb",
+      "levelId": "level-ground",
+      "name": "Room 1",
+      "points": [
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          3.75,
+          -0.25
+        ],
+        [
+          3.75,
+          2.75
+        ],
+        [
+          0.25,
+          2.75
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": [
+        {
+          "id": "placement-46b0c412-4798-4732-ba2e-cc80d81cf011",
+          "type": "door",
+          "edge": 3,
+          "at": 0.5,
+          "width": 0.9,
+          "height": 2.1,
+          "sill": 0
+        },
+        {
+          "id": "placement-54e3e2f1-1bf0-4e28-8d6d-93e7b1f4434a",
+          "type": "window",
+          "edge": 0,
+          "at": 0.5,
+          "width": 1,
+          "height": 1.2,
+          "sill": 0.81
+        },
+        {
+          "id": "placement-fb95b895-0ea6-4d4f-a3c3-243cbefbc09f",
+          "type": "passage",
+          "edge": 2,
+          "at": 0.5,
+          "width": 1.2,
+          "height": 2.1,
+          "sill": 0
+        }
+      ]
+    },
+    {
+      "id": "room-a6598d16-10a3-44ff-bef8-07b95870c42b",
+      "levelId": "level-30268c10-1c81-4585-aeb6-db3cca7beaff",
+      "name": "Room 2",
+      "points": [
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          3.75,
+          -0.25
+        ],
+        [
+          3.75,
+          2.75
+        ],
+        [
+          0.25,
+          2.75
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": []
+    }
+  ],
+  "connectors": [
+    {
+      "id": "placement-a931c58a-1483-4426-8174-daa0ed22afb5",
+      "type": "stairs",
+      "name": "Stairs",
+      "fromLevelId": "level-30268c10-1c81-4585-aeb6-db3cca7beaff",
+      "toLevelId": "level-ground",
+      "position": [
+        1.25,
+        1
+      ],
+      "size": [
+        1,
+        1.8
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "placement-7917d223-b8c0-4b3a-9f7a-5399ea2838de",
+      "type": "elevator",
+      "name": "Elevator",
+      "fromLevelId": "level-30268c10-1c81-4585-aeb6-db3cca7beaff",
+      "toLevelId": "level-ground",
+      "position": [
+        2.75,
+        1
+      ],
+      "size": [
+        1.2,
+        1.2
+      ],
+      "rotation": 0
+    }
+  ]
+}

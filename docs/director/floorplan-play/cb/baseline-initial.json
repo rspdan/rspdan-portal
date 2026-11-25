@@ -1,0 +1,55 @@
+{
+  "observer": "C.B.",
+  "started_utc": "2026-11-25T07:59:17.701355+00:00",
+  "environment": "Local Chromium touch emulation 390x844, not physical phone",
+  "steps": [
+    {
+      "action": "Draw and name reading nook",
+      "observation": "A rectangle dragged into the plan, then renamed. The naming field required scrolling below the sticky plan."
+    },
+    {
+      "action": "Drag Window from toolbar to north wall",
+      "observation": {
+        "plan_changed": false,
+        "opening_count": 0,
+        "hint": "Plan properties updated.",
+        "selected_text": ""
+      }
+    },
+    {
+      "action": "Tap Window, then north wall",
+      "observation": {
+        "opening_count": 1,
+        "hint": "Select a room, opening or connection. Drag a corner to reshape a room."
+      }
+    },
+    {
+      "action": "Give the nook a west doorway",
+      "observation": {
+        "openings": [
+          "window",
+          "door"
+        ]
+      }
+    },
+    {
+      "action": "Try a stair in a one-level plan",
+      "observation": {
+        "unchanged": true,
+        "hint": "Add another level before placing a stair or elevator connection."
+      }
+    },
+    {
+      "action": "Add a second level",
+      "observation": {
+        "active_level": "level-a722e65c-f691-40d3-949b-6882e446705a",
+        "visible_room_count": 0,
+        "hint": "Plan properties updated."
+      }
+    }
+  ],
+  "editor_sha256": "c85a0f9219e1df8b7a4bae848bcba89c0918b7ded4b73b4da60bbcfcd20209df",
+  "completed": false,
+  "failure": "Locator.tap: Error: strict mode violation: locator(\"[data-tool=stairs]\") resolved to 2 elements:\n    1) <button type=\"button\" data-tool=\"stairs\" aria-pressed=\"true\">Stairs</button> aka get_by_role(\"button\", name=\"Stairs\")\n    2) <div tabindex=\"0\" class=\"fp-surface\" role=\"application\" data-tool=\"stairs\" aria-label=\"Overhead floor plan. Select an item in the inspector, then use arrow keys here to move it. With nothing selected, arrow keys pan. Plus and minus zoom; zero fits the plan.\">\u2026</div> aka get_by_role(\"application\", name=\"Overhead floor plan. Select\")\n\n",
+  "ended_utc": "2026-11-25T07:59:51.750095+00:00"
+}

@@ -1,4 +1,4 @@
-import { createPlan, validatePlan, nearestEdge, createPlanPackage } from './floorplan-model.js';
+import { createPlan, validatePlan, nearestEdge, createPlanPackage, LIMITS } from './floorplan-model.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const clone = value => structuredClone(value);
@@ -8,6 +8,8 @@ const id = prefix => `${prefix}-${globalThis.crypto?.randomUUID?.() || Math.rand
 const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 const numberText = value => Number(value.toFixed(2)).toString();
 const editable = target => target instanceof Element && Boolean(target.closest('input,textarea,select,[contenteditable="true"]'));
+const placementTools = new Set(['door', 'window', 'passage', 'stairs', 'elevator']);
+const toolLabel = type => type[0].toUpperCase() + type.slice(1);
 
 /** A self-contained overhead editor. The host owns saving and undo history. */
 export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onStatus, onPreview, onUndo, onRedo }) {
@@ -16,9 +18,14 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   let selection = null, tool = 'select', snap = true, drag = null, polygon = [], hover = null;
   let view = { x: 2, z: 1.5, zoom: 65 }, fitted = false;
   let history = { undo: 0, redo: 0 };
+  let toolbarDrag = null, suppressedClick = null, polygonClick = null;
   const cleanups = [];
   const listen = (node, event, fn, options) => { node.addEventListener(event, fn, options); cleanups.push(() => node.removeEventListener(event, fn, options)); };
-  const say = message => { if (!disposed) { hint.textContent = message; onStatus?.(message); } };
+  const say = (message, showAddLevel = false) => {
+    if (disposed) return;
+    if (hint.textContent !== message) { hint.textContent = message; onStatus?.(message); }
+    hintAction.hidden = !showAddLevel;
+  };
 
   canvasHost.classList.add('fp-canvas-host');
   inspectorHost.classList.add('fp-inspector');
@@ -51,7 +58,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       </div>
       <div class="fp-scale" aria-hidden="true"></div>
     </div>
-    <div class="fp-hint" role="status" aria-live="polite">Draw rooms and place openings on their edges.</div>`;
+    <div class="fp-hint" role="status" aria-live="polite"><span class="fp-hint-text">Draw rooms and place openings on their edges.</span><button class="fp-hint-action" type="button" data-action="add-level" hidden>+ Level</button></div>`;
   inspectorHost.innerHTML = `
     <section class="fp-section">
       <h2>Floor plan</h2>
@@ -61,7 +68,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     </section>
     <section class="fp-section">
       <div class="fp-heading"><h2>Level</h2><button type="button" data-action="add-level">+ Level</button></div>
-      <label><span class="fp-sr">Active level</span><select data-field="level-select"></select></label>
+      <label><span class="fp-sr">Active level</span><select data-field="level-select" aria-label="Active level"></select></label>
       <label>Level name<input data-field="level-name" maxlength="80" /></label>
       <div class="fp-pair"><label>Elevation<input data-field="level-elevation" type="number" min="-10000" max="10000" step="any" /></label><label>Wall height<input data-field="level-height" type="number" min=".1" max="1000" step="any" /></label></div>
       <button type="button" class="fp-subtle" data-action="delete-level">Delete this level</button>
@@ -85,8 +92,10 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     </section>`;
 
   const svg = canvasHost.querySelector('.fp-svg');
+  const toolbar = canvasHost.querySelector('.fp-toolbar');
   const surface = canvasHost.querySelector('.fp-surface');
-  const hint = canvasHost.querySelector('.fp-hint');
+  const hint = canvasHost.querySelector('.fp-hint-text');
+  const hintAction = canvasHost.querySelector('.fp-hint-action');
   const empty = canvasHost.querySelector('.fp-empty');
   const selectionPanel = inspectorHost.querySelector('.fp-selection');
   const input = name => inspectorHost.querySelector(`[data-field="${name}"]`);
@@ -97,6 +106,11 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   const snapped = point => point.map(value => round(snap ? Math.round(value / plan.grid) * plan.grid : value));
   const units = () => plan.units === 'm' ? 'm' : 'u';
   const selectedOpening = (p = current()) => room(p)?.openings.find(item => item.id === selection?.id);
+  const dragBadge = document.createElement('div');
+  dragBadge.className = 'fp-drag-badge'; dragBadge.hidden = true; dragBadge.setAttribute('aria-hidden', 'true'); document.body.append(dragBadge);
+  for (const button of toolbar.querySelectorAll('button[data-tool]')) if (placementTools.has(button.dataset.tool)) {
+    button.dataset.placeable = 'true'; button.title = `Drag ${button.textContent} onto the plan, or tap to select`;
+  }
 
   function svgNode(tag, attributes, content) {
     const node = document.createElementNS(SVG_NS, tag);
@@ -113,8 +127,9 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     return [view.x + (event.clientX - rect.left - width / 2) / view.zoom, view.z + (event.clientY - rect.top - height / 2) / view.zoom];
   }
   function resetGesture() {
+    clearToolbarDrag();
     const pointerId = drag?.pointerId;
-    draft = null; drag = null; polygon = []; hover = null;
+    draft = null; drag = null; polygon = []; hover = null; polygonClick = null;
     if (pointerId !== undefined && svg.hasPointerCapture(pointerId)) svg.releasePointerCapture(pointerId);
     renderPlan();
   }
@@ -144,8 +159,9 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     resetGesture(); tool = next;
     for (const button of canvasHost.querySelectorAll('button[data-tool]')) button.setAttribute('aria-pressed', String(button.dataset.tool === tool));
     surface.dataset.tool = tool;
-    const messages = { select: 'Select a room, opening or connection. Drag a corner to reshape a room.', rectangle: 'Drag from one corner to the opposite corner to draw a room.', polygon: 'Click each corner. Press Enter or double-click to finish; Escape cancels.', door: 'Click a wall edge to place a door.', window: 'Click a wall edge to place a window.', passage: 'Click a wall edge to make an open passage.', stairs: 'Click to place a stair connection, then choose its other level.', elevator: 'Click to place an elevator connection, then choose its other level.', pan: 'Drag the plan to pan. Use + and − or the mouse wheel to zoom.' };
-    say(messages[tool]);
+    const messages = { select: 'Select a room, opening or connection. Drag a corner to reshape a room.', rectangle: 'Drag from one corner to the opposite corner to draw a room.', polygon: 'Tap each corner, then the first corner to finish. Enter also finishes; Escape cancels.', door: 'Drag Door to a wall, or tap a wall to place it.', window: 'Drag Window to a wall, or tap a wall to place it.', passage: 'Drag Passage to a wall, or tap a wall to place it.', stairs: 'Drag Stairs onto the plan, or tap to place it. Choose its destination in the inspector.', elevator: 'Drag Elevator onto the plan, or tap to place it. Choose its destination in the inspector.', pan: 'Drag the plan to pan. Use + and − or the mouse wheel to zoom.' };
+    const requirement = connectionRequirement(tool);
+    say(requirement?.message || messages[tool], requirement?.addLevel);
   }
   function newRoom(points) {
     return { id: id('room'), levelId: plan.activeLevelId, name: `Room ${plan.rooms.length + 1}`, points, wallThickness: .15, wallColor: '#61766a', floorColor: '#ded4bd', openings: [] };
@@ -157,8 +173,8 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   function finishPolygon() {
     let points = polygon.slice();
     if (points.length > 1 && distance(points[0], points.at(-1)) < .001) points.pop();
-    polygon = []; hover = null;
-    if (points.length < 3) { renderPlan(); say('A room needs at least three different corners.'); return; }
+    if (points.length < 3) { renderPlan(); say('Keep adding corners. A room needs at least three; tap the first corner to finish.'); return; }
+    polygon = []; hover = null; polygonClick = null;
     addRoom(points);
   }
   function nearestWall(point) {
@@ -169,24 +185,76 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     }
     return best && best.distance < Math.max(.2, 16 / view.zoom) ? best : null;
   }
-  function addOpening(point) {
-    const hit = nearestWall(point);
-    if (!hit) { say('Place the opening on a room’s wall edge.'); return; }
-    const length = distance(hit.room.points[hit.edge], hit.room.points[(hit.edge + 1) % hit.room.points.length]);
-    const width = round(Math.min(tool === 'passage' ? 1.2 : tool === 'window' ? 1 : .9, length * .6));
-    const wallHeight = level().height;
-    const sill = tool === 'window' ? Math.min(.9, wallHeight * .3) : 0;
-    const height = tool === 'window' ? Math.min(1.2, wallHeight - sill) : Math.min(2.1, wallHeight);
-    const opening = { id: id('opening'), type: tool, edge: hit.edge, at: clamp(hit.at, width / (2 * length), 1 - width / (2 * length)), width: round(width), height: round(height), sill: round(sill) };
-    selection = { kind: 'opening', id: opening.id, roomId: hit.room.id };
-    if (change(next => next.rooms.find(r => r.id === hit.room.id).openings.push(opening), 'Opening added. Adjust its dimensions in the inspector.')) setTool('select');
+  function otherConnectionLevel() { return plan.levels.find(item => item.id !== plan.activeLevelId && Math.abs(item.elevation - level(plan).elevation) >= 1e-7); }
+  function connectionRequirement(type) {
+    if (!['stairs', 'elevator'].includes(type) || otherConnectionLevel()) return null;
+    return { message: plan.levels.length === 1 ? `Add another level with + Level before placing ${type}.` : `Set a different elevation for another level before placing ${type}.`, addLevel: plan.levels.length === 1 };
   }
-  function addConnector(point) {
-    const other = plan.levels.find(item => item.id !== plan.activeLevelId);
-    if (!other) { say('Add another level before placing a stair or elevator connection.'); return; }
-    const value = { id: id('connection'), type: tool, name: tool === 'stairs' ? 'Stairs' : 'Elevator', fromLevelId: plan.activeLevelId, toLevelId: other.id, position: snapped(point), size: tool === 'stairs' ? [1, 1.8] : [1.2, 1.2], rotation: 0 };
-    selection = { kind: 'connector', id: value.id };
-    if (change(next => next.connectors.push(value), 'Level connection added. Choose its destination in the inspector.')) setTool('select');
+  function placementAt(type, point, itemId = id('placement')) {
+    const requirement = connectionRequirement(type), position = snapped(point);
+    if (requirement) return { valid: false, point: position, ...requirement };
+    if ([...point, ...position].some(n => !Number.isFinite(n) || Math.abs(n) > LIMITS.coordinate)) return { valid: false, point: position, message: 'Move closer to the plan origin before placing this item.' };
+    if (['stairs', 'elevator'].includes(type)) {
+      if (plan.connectors.length >= LIMITS.connectors) return { valid: false, point: position, message: 'This plan has reached its connection limit.' };
+      return { valid: true, kind: 'connector', point: position, message: `Release to place ${toolLabel(type)}.`, value: { id: itemId, type, name: toolLabel(type), fromLevelId: plan.activeLevelId, toLevelId: otherConnectionLevel().id, position, size: type === 'stairs' ? [1, 1.8] : [1.2, 1.2], rotation: 0 } };
+    }
+    const hit = nearestWall(point);
+    if (!hit) return { valid: false, point: position, message: plan.rooms.some(r => r.levelId === plan.activeLevelId) ? `Place ${toolLabel(type)} on a wall edge.` : `Draw a room first, then place ${toolLabel(type)} on a wall.` };
+    const a = hit.room.points[hit.edge], b = hit.room.points[(hit.edge + 1) % hit.room.points.length], length = distance(a, b);
+    const width = round(Math.min(type === 'passage' ? 1.2 : type === 'window' ? 1 : .9, length * .6));
+    if (width < .02) return { valid: false, point: position, message: 'That wall edge is too short for an opening.' };
+    if (hit.room.openings.length >= LIMITS.openingsPerRoom || plan.rooms.reduce((sum, r) => sum + r.openings.length, 0) >= LIMITS.openings) return { valid: false, point: position, message: 'This room or plan has reached its opening limit.' };
+    const wallHeight = level(plan).height, sill = type === 'window' ? Math.min(.9, wallHeight * .3) : 0;
+    const height = type === 'window' ? Math.min(1.2, wallHeight - sill) : Math.min(2.1, wallHeight);
+    const along = snap ? Math.round(hit.at * length / plan.grid) * plan.grid : hit.at * length;
+    const at = clamp(along / length, width / (2 * length), 1 - width / (2 * length));
+    const center = [a[0] + (b[0] - a[0]) * at, a[1] + (b[1] - a[1]) * at];
+    return { valid: true, kind: 'opening', roomId: hit.room.id, point: center, wall: { a, b, thickness: hit.room.wallThickness }, message: `Release to place ${toolLabel(type)}.`, value: { id: itemId, type, edge: hit.edge, at, width, height: round(height), sill: round(sill) } };
+  }
+  function place(candidate) {
+    if (!candidate.valid) { say(candidate.message, candidate.addLevel); return false; }
+    const previousSelection = selection;
+    selection = { kind: candidate.kind, id: candidate.value.id, ...(candidate.roomId ? { roomId: candidate.roomId } : {}) };
+    const changed = change(next => {
+      if (candidate.kind === 'opening') next.rooms.find(r => r.id === candidate.roomId).openings.push(candidate.value);
+      else next.connectors.push(candidate.value);
+    });
+    if (changed) {
+      setTool('select');
+      if (candidate.kind === 'connector') {
+        const from = plan.levels.find(l => l.id === candidate.value.fromLevelId), to = plan.levels.find(l => l.id === candidate.value.toLevelId);
+        say(`${toolLabel(candidate.value.type)}: ${from.name} → ${to.name}. Edit the destination in the inspector.`);
+      } else say(`${toolLabel(candidate.value.type)} added. Adjust it in the inspector.`);
+    }
+    else { selection = previousSelection; validSelection(); renderAll(); }
+    return changed;
+  }
+  function addOpening(point) { return place(placementAt(tool, point)); }
+  function addConnector(point) { return place(placementAt(tool, point)); }
+
+  function clearToolbarDrag() {
+    const previous = toolbarDrag; toolbarDrag = null; dragBadge.hidden = true;
+    if (!previous) return null;
+    suppressedClick = { button: previous.button, until: performance.now() + 800 };
+    previous.button.classList.remove('fp-dragging');
+    if (previous.button.hasPointerCapture(previous.pointerId)) previous.button.releasePointerCapture(previous.pointerId);
+    return previous;
+  }
+  function canvasDropPoint(event) {
+    const { rect } = size(), hit = document.elementFromPoint(event.clientX, event.clientY);
+    return event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom && (hit === surface || hit === svg || svg.contains(hit)) ? world(event) : null;
+  }
+  function updateToolbarDrag(event) {
+    if (!toolbarDrag || toolbarDrag.pointerId !== event.pointerId) return;
+    const gesture = toolbarDrag;
+    if (!gesture.started && Math.hypot(event.clientX - gesture.start[0], event.clientY - gesture.start[1]) < (event.pointerType === 'touch' ? 8 : 6)) return;
+    gesture.started = true; gesture.button.classList.add('fp-dragging');
+    const point = canvasDropPoint(event), requirement = connectionRequirement(gesture.type);
+    gesture.candidate = point ? placementAt(gesture.type, point, gesture.itemId) : { valid: false, point: null, message: requirement?.message || `Drop ${toolLabel(gesture.type)} inside the plan.`, addLevel: requirement?.addLevel };
+    dragBadge.hidden = false; dragBadge.dataset.valid = String(gesture.candidate.valid);
+    dragBadge.textContent = gesture.candidate.valid ? `${toolLabel(gesture.type)} · release to place` : `${toolLabel(gesture.type)} · ${requirement ? (requirement.addLevel ? 'needs another level' : 'needs a different elevation') : 'move to ' + (['stairs', 'elevator'].includes(gesture.type) ? 'the plan' : 'a wall')}`;
+    dragBadge.style.left = `${clamp(event.clientX, 100, Math.max(100, innerWidth - 100))}px`; dragBadge.style.top = `${Math.max(8, event.clientY - 54)}px`;
+    say(gesture.candidate.message, gesture.candidate.addLevel); renderPlan();
   }
   function deleteSelection() {
     if (!selection) return;
@@ -266,7 +334,24 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       svgNode('polyline', { points: points.map(p => p.join(',')).join(' '), fill: 'none', stroke: '#168b66', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'pointer-events': 'none' });
       polygon.forEach(p => svgNode('circle', { cx: p[0], cy: p[1], r: 4 / view.zoom, fill: '#168b66', 'pointer-events': 'none' }));
     }
-    empty.hidden = Boolean(rooms.length || polygon.length || drag);
+    const preview = toolbarDrag?.started && toolbarDrag.candidate;
+    if (preview?.point) {
+      const [x, z] = preview.point, color = preview.valid ? '#087652' : '#ad3b32';
+      const group = svgNode('g', { 'data-placement-ghost': toolbarDrag.type, 'data-valid': String(preview.valid), 'pointer-events': 'none' });
+      const ghost = (tag, attrs) => { const node = svgNode(tag, { ...attrs, 'pointer-events': 'none' }); group.append(node); return node; };
+      if (preview.kind === 'connector') {
+        const [w, d] = preview.value.size;
+        ghost('rect', { x: x - w / 2, y: z - d / 2, width: w, height: d, fill: '#b3edcc', 'fill-opacity': .7, stroke: color, 'stroke-width': 3, 'stroke-dasharray': '6 3', 'vector-effect': 'non-scaling-stroke' });
+      } else if (preview.kind === 'opening') {
+        const { a, b, thickness } = preview.wall, length = distance(a, b), ux = (b[0] - a[0]) / length, uz = (b[1] - a[1]) / length, width = preview.value.width;
+        ghost('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: '#32b180', 'stroke-opacity': .35, 'stroke-width': Math.max(thickness, 12 / view.zoom) });
+        ghost('line', { x1: x - ux * width / 2, y1: z - uz * width / 2, x2: x + ux * width / 2, y2: z + uz * width / 2, stroke: '#f7fff8', 'stroke-width': Math.max(thickness * 1.4, 9 / view.zoom) });
+        ghost('line', { x1: x - ux * width / 2, y1: z - uz * width / 2, x2: x + ux * width / 2, y2: z + uz * width / 2, stroke: color, 'stroke-width': 4, 'vector-effect': 'non-scaling-stroke' });
+      }
+      ghost('circle', { cx: x, cy: z, r: 7 / view.zoom, fill: preview.valid ? '#e5fff1' : '#ffefed', stroke: color, 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' });
+      if (!preview.valid) ghost('path', { d: `M ${x - 3 / view.zoom} ${z - 3 / view.zoom} L ${x + 3 / view.zoom} ${z + 3 / view.zoom} M ${x + 3 / view.zoom} ${z - 3 / view.zoom} L ${x - 3 / view.zoom} ${z + 3 / view.zoom}`, stroke: color, 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' });
+    }
+    empty.hidden = Boolean(rooms.length || polygon.length || drag || toolbarDrag?.started);
     canvasHost.querySelector('.fp-scale').textContent = `${level(p)?.name || ''} · grid ${numberText(p.grid)} ${units()}${snap ? ' · snap' : ''}`;
   }
 
@@ -354,16 +439,50 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   }
   function renderAll() { renderPlan(); renderInspector(); renderHistory(); }
 
+  listen(toolbar, 'pointerdown', event => {
+    const button = event.target.closest('button[data-placeable]');
+    if (!active || !button || event.button !== 0 || event.isPrimary === false || drag || toolbarDrag) return;
+    resetGesture(); suppressedClick = null; button.focus({ preventScroll: true }); event.preventDefault();
+    toolbarDrag = { button, type: button.dataset.tool, pointerId: event.pointerId, itemId: id('placement'), start: [event.clientX, event.clientY], started: false, candidate: null };
+    button.setPointerCapture(event.pointerId);
+    const requirement = connectionRequirement(button.dataset.tool);
+    if (requirement) say(requirement.message, requirement.addLevel);
+  });
+  listen(toolbar, 'pointermove', event => {
+    if (!toolbarDrag || toolbarDrag.pointerId !== event.pointerId) return;
+    event.preventDefault(); updateToolbarDrag(event);
+  });
+  listen(toolbar, 'pointerup', event => {
+    if (!toolbarDrag || toolbarDrag.pointerId !== event.pointerId) return;
+    event.preventDefault(); updateToolbarDrag(event);
+    const completed = clearToolbarDrag(); renderPlan();
+    if (completed.started) { if (place(completed.candidate)) surface.focus({ preventScroll: true }); }
+    else setTool(completed.type);
+  });
+  const cancelToolbar = event => {
+    if (!toolbarDrag || event.pointerId !== undefined && toolbarDrag.pointerId !== event.pointerId) return;
+    clearToolbarDrag(); renderPlan(); say('Placement cancelled.');
+  };
+  listen(toolbar, 'pointercancel', cancelToolbar);
+  listen(toolbar, 'lostpointercapture', cancelToolbar);
+  listen(window, 'blur', cancelToolbar);
+  listen(document, 'visibilitychange', () => { if (document.hidden) cancelToolbar({}); });
+  // Limit native touch selection/callouts to gesture buttons. Inspector text remains selectable.
+  for (const type of ['contextmenu', 'selectstart', 'dragstart']) listen(canvasHost, type, event => {
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    if (target?.closest('.fp-toolbar button,.fp-view-controls button,.fp-hint-action')) event.preventDefault();
+  });
+
   listen(svg, 'pointerdown', event => {
-    if (!active || event.button > 1 || drag || event.isPrimary === false) return;
+    if (!active || event.button > 1 || drag || toolbarDrag || event.isPrimary === false) return;
     const point = world(event), target = event.target.closest('[data-kind]');
     surface.focus({ preventScroll: true });
     if (event.button === 1 || tool === 'pan' || event.altKey) { drag = { kind: 'pan', client: [event.clientX, event.clientY], view: { ...view } }; }
     else if (tool === 'rectangle') { drag = { kind: 'rectangle', start: snapped(point) }; hover = snapped(point); }
     else if (tool === 'polygon') {
-      if (event.detail > 1) return;
       const next = snapped(point);
-      if (polygon.length >= 3 && distance(next, polygon[0]) < 12 / view.zoom) { finishPolygon(); return; }
+      polygonClick = { point: next, repeat: Boolean(polygonClick && distance(next, polygonClick.point) < .001), pointerType: event.pointerType };
+      if (polygon.length >= 3 && distance(next, polygon[0]) < (snap ? .001 : 6 / view.zoom)) { finishPolygon(); return; }
       if (!polygon.length || distance(next, polygon.at(-1)) > .001) polygon.push(next);
       hover = next; renderPlan(); return;
     } else if (['door', 'window', 'passage'].includes(tool)) { addOpening(point); return; }
@@ -417,7 +536,18 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   });
   listen(svg, 'pointercancel', () => { draft = null; drag = null; hover = null; renderAll(); });
   listen(svg, 'lostpointercapture', () => { if (drag) { draft = null; drag = null; hover = null; renderAll(); } });
-  listen(svg, 'dblclick', event => { if (tool === 'polygon') { event.preventDefault(); finishPolygon(); } });
+  listen(svg, 'mousedown', event => {
+    // Repainting SVG children during pointerdown can suppress native dblclick.
+    // Mouse click count remains available here, with the same-corner check intact.
+    if (tool === 'polygon' && event.detail === 2 && polygonClick?.pointerType === 'mouse' && polygonClick.repeat) { event.preventDefault(); finishPolygon(); }
+  });
+  listen(svg, 'dblclick', event => {
+    if (tool !== 'polygon') return;
+    event.preventDefault();
+    // Touch browsers synthesize double-clicks for nearby distinct taps. Finish a
+    // mouse double-click only when both clicks actually addressed the same corner.
+    if (polygonClick?.pointerType === 'mouse' && polygonClick.repeat) finishPolygon();
+  });
   listen(surface, 'contextmenu', event => event.preventDefault());
   listen(surface, 'wheel', event => {
     if (!active) return; event.preventDefault();
@@ -447,7 +577,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     }
     if (name === 'add-level') {
       const l = level(plan), nextLevel = { id: id('level'), name: `Level ${plan.levels.length + 1}`, elevation: round(l.elevation + l.height), height: l.height };
-      selection = null; change(next => { next.levels.push(nextLevel); next.activeLevelId = nextLevel.id; }, 'Level added. Name it and set its elevation.');
+      selection = null; change(next => { next.levels.push(nextLevel); next.activeLevelId = nextLevel.id; }, `${nextLevel.name} added and selected. ${l.name} is still in the level list.`);
     }
     if (name === 'delete-level' && plan.levels.length > 1) {
       const removed = plan.activeLevelId; selection = null;
@@ -464,6 +594,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   }
   for (const host of [canvasHost, inspectorHost]) listen(host, 'click', event => {
     const button = event.target.closest('button'); if (!button || !host.contains(button)) return;
+    if (suppressedClick?.button === button && performance.now() < suppressedClick.until && (event.detail > 0 || event.pointerType)) { event.preventDefault(); event.stopPropagation(); return; }
     if (button.dataset.tool) setTool(button.dataset.tool);
     if (button.dataset.action) action(button.dataset.action);
   });
@@ -561,6 +692,6 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     },
     setActive(value) { active = Boolean(value); canvasHost.hidden = !active; if (!active) resetGesture(); else { renderAll(); if (!fitted && plan.rooms.length) fit(); } },
     setHistory(value) { history = { undo: Number(value?.undo) || 0, redo: Number(value?.redo) || 0 }; renderHistory(); },
-    dispose() { disposed = true; resize.disconnect(); cleanups.forEach(fn => fn()); canvasHost.replaceChildren(); inspectorHost.replaceChildren(); },
+    dispose() { clearToolbarDrag(); disposed = true; resize.disconnect(); cleanups.forEach(fn => fn()); dragBadge.remove(); canvasHost.replaceChildren(); inspectorHost.replaceChildren(); },
   });
 }
