@@ -14,6 +14,8 @@ Placing or selecting an item makes **Selected** ready without scrolling or openi
 
 For stairs and elevators, choose **Compare placement** in the selected item's inspector or the Building connection list. Both endpoint plans use one shared drawing window, so differences in room size and the footprint's placement remain visible. The amber footprint preserves its authored dimensions and rotation. From/To labels identify the levels and elevations; repeated level names include their IDs. An empty endpoint explicitly shows that no rooms have been drawn.
 
+Comparison also shows the doors, windows and passages already authored on each endpoint floor. The legend identifies schematic door leaves, blue window lines and passage gaps. Both drawings include outward door symbols in their shared fit. Door symbols follow the editor's convention; they do not add hinge/swing specifications or certify access and clearance. The diagrams' accessible descriptions identify each opening's type, room, edge and width.
+
 Opening comparison, then using **Back to plan**, **Plan** or Escape preserves the active level, selection, pan/zoom and undo history. **Edit this level** instead opens that endpoint by ID and selects the connection; changing the active level adds the usual undo entry. On a phone, comparison temporarily uses the whole workspace; returning to Plan restores the inspector. Desktop keeps the inspector available beside comparison. Comparison does not create a second footprint or repair geometry. Delete/Backspace shortcuts do not delete a hidden plan selection while viewing Building or comparison. Explicit inspector edits and undo/redo remain available; deleting the compared connection clears its view, and undo restores it.
 
 ## Drawing and editing

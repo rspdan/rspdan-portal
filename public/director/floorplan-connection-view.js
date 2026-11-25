@@ -3,6 +3,7 @@ import { validatePlan } from './floorplan-model.js';
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const numberText = value => String(Object.is(value, -0) ? 0 : value);
 const typeLabel = type => type === 'stairs' ? 'Stairs' : 'Elevator';
+const openingTypeLabel = type => ({ door: 'Door', window: 'Window', passage: 'Passage' })[type];
 
 // The same clockwise-on-screen rotation used by the plan editor and overview.
 function footprint(connection) {
@@ -15,9 +16,23 @@ function footprint(connection) {
   });
 }
 
+// Match the overview's simplified opening symbols, including its schematic
+// door leaf. The plan does not author a hinge or swing direction.
+function openingShape(room, opening) {
+  const a = room.points[opening.edge], b = room.points[(opening.edge + 1) % room.points.length];
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const ux = (b[0] - a[0]) / length, uz = (b[1] - a[1]) / length;
+  const center = [a[0] + (b[0] - a[0]) * opening.at, a[1] + (b[1] - a[1]) * opening.at];
+  const start = [center[0] - ux * opening.width / 2, center[1] - uz * opening.width / 2];
+  const end = [center[0] + ux * opening.width / 2, center[1] + uz * opening.width / 2];
+  return { start, end, leaf: [start[0] - uz * opening.width * .8, start[1] + ux * opening.width * .8] };
+}
+
 function sharedBounds(rooms, corners) {
   let minX = Infinity, minZ = Infinity, maxX = -Infinity, maxZ = -Infinity;
-  for (const points of [...rooms.map(room => room.points), corners]) {
+  const leaves = rooms.flatMap(room => room.openings.filter(opening => opening.type === 'door')
+    .map(opening => openingShape(room, opening).leaf));
+  for (const points of [...rooms.map(room => room.points), corners, leaves]) {
     for (const [x, z] of points) {
       minX = Math.min(minX, x); maxX = Math.max(maxX, x);
       minZ = Math.min(minZ, z); maxZ = Math.max(maxZ, z);
@@ -64,8 +79,12 @@ export function createConnectionView({ host, onEditLevel } = {}) {
   }
 
   function miniPlan(rooms, corners, bounds, levelLabel) {
+    const units = plan.units === 'm' ? 'm' : 'units';
+    const roomLabel = room => rooms.filter(other => other.name === room.name).length > 1 ? `${room.name} (ID ${room.id})` : room.name;
+    const openingLabel = (room, opening) => `${openingTypeLabel(opening.type)} in ${roomLabel(room)}, edge ${opening.edge + 1}, width ${numberText(opening.width)} ${units}`;
+    const openingLabels = rooms.flatMap(room => room.openings.map(opening => openingLabel(room, opening)));
     const svg = svgNode('svg', { viewBox: bounds.join(' '), preserveAspectRatio: 'xMidYMid meet',
-      role: 'img', 'aria-label': `${levelLabel}: ${rooms.length} ${rooms.length === 1 ? 'room' : 'rooms'}. ${selected.name}, highlighted planned footprint. Same coordinates and scale as the other endpoint.` });
+      role: 'img', 'aria-label': `${levelLabel}: ${rooms.length} ${rooms.length === 1 ? 'room' : 'rooms'}. ${openingLabels.length ? `Authored openings: ${openingLabels.join('; ')}.` : 'No openings drawn.'} ${selected.name}, highlighted planned footprint. Same coordinates and scale as the other endpoint.` });
     svg.classList.add('fp-connection-mini');
     svg.append(svgNode('title', {}, `${levelLabel} · ${selected.name}`));
     svg.append(svgNode('desc', {}, 'Read-only overhead comparison. Room outlines and the selected connection retain their plan coordinates. The footprint does not create built stairs, a shaft or openings.'));
@@ -74,6 +93,32 @@ export function createConnectionView({ host, onEditLevel } = {}) {
       const polygon = svgNode('polygon', { points: pointsText(room.points), fill: room.floorColor,
         class: 'fp-connection-room', 'data-connection-room': room.id, 'vector-effect': 'non-scaling-stroke' });
       polygon.append(svgNode('title', {}, room.name)); svg.append(polygon);
+    }
+    // Draw all outlines first, then their openings, so an adjacent room cannot
+    // paint over the authored gap on a shared wall.
+    for (const room of rooms) for (const opening of room.openings) {
+      const { start, end } = openingShape(room, opening);
+      svg.append(svgNode('line', { x1: start[0], y1: start[1], x2: end[0], y2: end[1],
+        class: 'fp-connection-opening-gap', 'data-connection-opening-gap': opening.id,
+        'aria-hidden': 'true', 'vector-effect': 'non-scaling-stroke' }));
+    }
+    // Keep authored opening colors above the translucent footprint fill.
+    // Its boundary and center still draw last for a clear selected outline.
+    svg.append(svgNode('polygon', { points: pointsText(corners),
+      class: 'fp-connection-footprint-fill', 'aria-hidden': 'true' }));
+    // All gaps precede all markers: overlapping authored apertures must not
+    // erase an earlier window line or door leaf.
+    for (const room of rooms) for (const opening of room.openings) {
+      const { start, end, leaf } = openingShape(room, opening);
+      const label = openingLabel(room, opening);
+      const group = svgNode('g', { 'data-connection-opening': opening.id,
+        'data-opening-type': opening.type, role: 'img', 'aria-label': label });
+      group.append(svgNode('title', {}, label));
+      const line = (a, b, className) => svgNode('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1],
+        class: className, 'vector-effect': 'non-scaling-stroke' });
+      if (opening.type === 'window') group.append(line(start, end, 'fp-connection-window'));
+      if (opening.type === 'door') group.append(line(start, leaf, 'fp-connection-door'));
+      svg.append(group);
     }
     const group = svgNode('g', { 'data-connection-footprint': selected.id });
     group.append(svgNode('title', {}, `${selected.name} · ${typeLabel(selected.type)} · planned footprint`));
@@ -107,9 +152,21 @@ export function createConnectionView({ host, onEditLevel } = {}) {
       element('h2', '', selected.name),
       element('p', 'fp-connection-details', `${typeLabel(selected.type)} · vertical difference ${numberText(Math.abs(endpoints[1].elevation - endpoints[0].elevation))} ${units}`));
     const explanation = element('p', 'fp-connection-caption', 'Same coordinates, scale and orientation. Amber marks the planned footprint.');
-    const legend = element('p', 'fp-connection-legend');
+    const legend = element('div', 'fp-connection-legend');
+    legend.setAttribute('role', 'group'); legend.setAttribute('aria-label', 'Plan symbols');
+    const footprintKey = element('span', 'fp-connection-legend-item');
     const swatch = element('span', 'fp-connection-swatch'); swatch.setAttribute('aria-hidden', 'true');
-    legend.append(swatch, doc.createTextNode('Selected connection footprint'));
+    footprintKey.append(swatch, doc.createTextNode('Footprint')); legend.append(footprintKey);
+    const openingTypes = new Set(rooms.flatMap(room => room.openings.map(opening => opening.type)));
+    for (const type of ['door', 'window', 'passage'].filter(type => openingTypes.has(type))) {
+      const key = element('span', 'fp-connection-legend-item');
+      const symbol = svgNode('svg', { viewBox: '0 0 24 16', 'aria-hidden': 'true', focusable: 'false', class: 'fp-connection-opening-symbol' });
+      symbol.append(svgNode('line', { x1: 1, y1: 12, x2: 23, y2: 12, class: 'fp-connection-symbol-wall' }),
+        svgNode('line', { x1: 7, y1: 12, x2: 17, y2: 12, class: 'fp-connection-opening-gap' }));
+      if (type === 'door') symbol.append(svgNode('line', { x1: 7, y1: 12, x2: 7, y2: 4, class: 'fp-connection-door' }));
+      if (type === 'window') symbol.append(svgNode('line', { x1: 7, y1: 12, x2: 17, y2: 12, class: 'fp-connection-window' }));
+      key.append(symbol, doc.createTextNode(openingTypeLabel(type))); legend.append(key);
+    }
     fragment.append(heading, explanation, legend);
 
     const cards = element('div', 'fp-connection-cards');

@@ -12,6 +12,8 @@ The level selector beside the canvas switches the floor under edit. On phone, **
 
 **Preview in 3D** shows the active level as a blockout. The canonical plan stays editable in `stage.design.floorplan` and is saved with its take. Switching levels changes the level shown by the preview; exports retain every level. Stairs and elevators are planning markers connecting levels, not finished stair/elevator assets.
 
+Connection comparison includes existing doors, windows and passages, with a symbol legend. Both drawings share a fit that includes outward door symbols, so doorway context stays visible around the footprint. Those symbols do not create new openings or validate a circulation route.
+
 Working units and metres label the existing dimensions. Changing that label does not convert coordinates or rescale the layout.
 
 ## Export and Blender
