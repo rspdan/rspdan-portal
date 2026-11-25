@@ -8,6 +8,8 @@ The level selector beside the canvas switches the floor under edit. On phone, **
 
 **Building** gives an overview of every authored level, its room footprints, elevation and planned connections. Mini-plans are fitted separately; the elevation overview is schematic, not an architectural section. Empty levels remain visible without invented rooms. Choose a level to return to its editable plan. Merely viewing Building does not change the plan or add an undo step.
 
+**Compare placement** is available for a selected stair/elevator and for each connection in Building. It shows the From and To floor outlines with the same scale, coordinates and orientation, highlighting the planned footprint in amber. This makes an overhanging footprint visible when the destination room is smaller. On a phone, comparison fills the workspace and its drawings scroll vertically; returning to Plan restores the inspector. **Back to plan** retains the current floor, selection and pan/zoom; **Edit this level** opens the chosen endpoint and selects the connection. Comparison is visual and does not diagnose clearance or generate circulation geometry.
+
 **Preview in 3D** shows the active level as a blockout. The canonical plan stays editable in `stage.design.floorplan` and is saved with its take. Switching levels changes the level shown by the preview; exports retain every level. Stairs and elevators are planning markers connecting levels, not finished stair/elevator assets.
 
 Working units and metres label the existing dimensions. Changing that label does not convert coordinates or rescale the layout.

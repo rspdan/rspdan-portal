@@ -17,7 +17,7 @@ const svgNode = (tag, attributes = {}, text) => {
 };
 
 /** A read-only overview. Level selection is passed back to the editor. */
-export function createFloorplanOverview({ host, onSelectLevel }) {
+export function createFloorplanOverview({ host, onSelectLevel, onCompareConnection }) {
   if (!host) throw new Error('The building overview needs a host.');
   let plan = createPlan(), signature = '', disposed = false;
   host.classList.add('fp-building-overview');
@@ -144,7 +144,14 @@ export function createFloorplanOverview({ host, onSelectLevel }) {
       item.append(title, element('span', 'fp-overview-link-type', `${labelForType(connection.type)} · vertical difference ${numberText(Math.abs(to.elevation - from.elevation))} ${units}`));
       const endpoints = element('div', 'fp-overview-endpoints');
       endpoints.append(selectButton(from, `From: ${levelDescription(from)}`, 'fp-overview-endpoint'), element('span', 'fp-overview-arrow', '↕'), selectButton(to, `To: ${levelDescription(to)}`, 'fp-overview-endpoint'));
-      item.append(endpoints); links.append(item);
+      item.append(endpoints);
+      if (onCompareConnection) {
+        const compare = element('button', 'fp-overview-edit', 'Compare placement');
+        compare.type = 'button'; compare.dataset.overviewCompare = connection.id;
+        compare.setAttribute('aria-label', `Compare placement of ${connection.name}`);
+        item.append(compare);
+      }
+      links.append(item);
     });
     linksSection.append(links); upper.append(linksSection); fragment.append(upper);
 
@@ -179,9 +186,10 @@ export function createFloorplanOverview({ host, onSelectLevel }) {
 
   function click(event) {
     const target = event.target instanceof Element ? event.target : event.target?.parentElement;
-    const button = target?.closest('button[data-overview-select]');
+    const button = target?.closest('button[data-overview-select],button[data-overview-compare]');
     if (!button || !host.contains(button) || disposed) return;
-    onSelectLevel?.(button.dataset.overviewSelect);
+    if (button.dataset.overviewCompare) onCompareConnection?.(button.dataset.overviewCompare);
+    else onSelectLevel?.(button.dataset.overviewSelect);
   }
   host.addEventListener('click', click);
   return {

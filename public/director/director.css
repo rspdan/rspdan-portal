@@ -32,3 +32,5 @@
   #director[data-mode=floorplan] .stage{position:relative;top:auto;height:auto;min-height:0}
   #director[data-mode=floorplan] .inspector{min-height:0;overflow:auto;overscroll-behavior:contain;scroll-padding-top:60px}
 }
+/* A phone comparison needs the drawing space; endpoint actions restore editing. */
+@media(max-width:680px){#director[data-mode=floorplan]:has(.fp-canvas-host[data-view=comparison]:not([hidden])) .workbench{grid-template-rows:minmax(0,1fr)}#director[data-mode=floorplan]:has(.fp-canvas-host[data-view=comparison]:not([hidden])) .inspector{display:none}}

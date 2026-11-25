@@ -12,6 +12,10 @@ Placing or selecting an item makes **Selected** ready without scrolling or openi
 
 **Building** shows every level and its connections in a separate overview. Entering it cancels an unfinished drawing or placement without creating geometry. Choose a level in the overview to return to its editable plan and fit that level in the canvas; changing the active level is an undoable plan change. Switching between Plan and Building alone does not add history. The overview does not replace the separate active-level **Preview in 3D**.
 
+For stairs and elevators, choose **Compare placement** in the selected item's inspector or the Building connection list. Both endpoint plans use one shared drawing window, so differences in room size and the footprint's placement remain visible. The amber footprint preserves its authored dimensions and rotation. From/To labels identify the levels and elevations; repeated level names include their IDs. An empty endpoint explicitly shows that no rooms have been drawn.
+
+Opening comparison, then using **Back to plan**, **Plan** or Escape preserves the active level, selection, pan/zoom and undo history. **Edit this level** instead opens that endpoint by ID and selects the connection; changing the active level adds the usual undo entry. On a phone, comparison temporarily uses the whole workspace; returning to Plan restores the inspector. Desktop keeps the inspector available beside comparison. Comparison does not create a second footprint or repair geometry. Delete/Backspace shortcuts do not delete a hidden plan selection while viewing Building or comparison. Explicit inspector edits and undo/redo remain available; deleting the compared connection clears its view, and undo restores it.
+
 ## Drawing and editing
 
 - **Draw room:** drag opposite corners. **Polygon:** tap each corner, then tap the first corner or press Enter to finish. With a mouse, double-clicking the same final corner also finishes. Nearby distinct taps remain separate corners, and trying to finish with fewer than three preserves the draft. Escape cancels the unfinished gesture.
