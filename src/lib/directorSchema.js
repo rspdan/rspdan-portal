@@ -63,6 +63,16 @@ function lensSettings(value, path) {
     rayCount: number(value.rayCount, 4, 16, `${path}.rayCount`, true),
   };
 }
+function lightColor(value) {
+  keys(value, ['mode', 'hue', 'saturation', 'lightness', 'periodSeconds'], 'tripLightColor');
+  return {
+    mode: member(value.mode, ['temperature', 'hsl', 'cycle'], 'tripLightColor.mode'),
+    hue: number(value.hue, 0, 360, 'tripLightColor.hue'),
+    saturation: number(value.saturation, 0, 1, 'tripLightColor.saturation'),
+    lightness: number(value.lightness, 0, 1, 'tripLightColor.lightness'),
+    periodSeconds: number(value.periodSeconds, .5, 3600, 'tripLightColor.periodSeconds'),
+  };
+}
 function lighting(value, used) {
   keys(value, ['ambient', 'lights'], 'lighting');
   keys(value.ambient, ['intensity', 'color'], 'lighting.ambient');
@@ -157,7 +167,7 @@ export function validateOwner(value) {
 
 export function validateTake(input, registry) {
   const isV2 = input?.schema === TAKE_SCHEMA_V2;
-  keys(input, ['schema', 'asset', 'name', 'notes', 'look', 'fps', 'frame', 'range', 'stage', 'camera', 'pose', 'keyframes', ...(isV2 ? ['animation', 'output', 'tripGlow', 'tripFlare', 'tripTemperature', 'tripBodyTemperature', 'tripLens', 'outline', 'lighting'] : [])], 'take');
+  keys(input, ['schema', 'asset', 'name', 'notes', 'look', 'fps', 'frame', 'range', 'stage', 'camera', 'pose', 'keyframes', ...(isV2 ? ['animation', 'output', 'tripGlow', 'tripFlare', 'tripTemperature', 'tripBodyTemperature', 'tripLightColor', 'tripLens', 'outline', 'lighting'] : [])], 'take');
   requireValue(input.schema === TAKE_SCHEMA || isV2, 'unsupported take schema');
   keys(input.asset, ['id', 'sha256'], 'asset');
   requireValue(typeof input.asset.id === 'string' && typeof input.asset.sha256 === 'string' && HASH.test(input.asset.sha256), 'asset id and SHA256 are required');
@@ -249,6 +259,7 @@ export function validateTake(input, registry) {
     if (Object.hasOwn(input, 'tripTemperature')) take.tripTemperature = number(input.tripTemperature, 1800, 10000, 'tripTemperature');
     // Missing body temperature links to the external light temperature at render time.
     if (Object.hasOwn(input, 'tripBodyTemperature')) take.tripBodyTemperature = number(input.tripBodyTemperature, 1800, 10000, 'tripBodyTemperature');
+    if (Object.hasOwn(input, 'tripLightColor')) take.tripLightColor = lightColor(input.tripLightColor);
     if (Object.hasOwn(input, 'tripLens')) take.tripLens = lensSettings(input.tripLens, 'tripLens');
     // Global browser outline for either character. Width is in world units;
     // appearance rendering in other receivers is a separate capability.

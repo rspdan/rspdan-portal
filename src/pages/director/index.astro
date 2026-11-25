@@ -18,6 +18,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
     <script is:inline src="/director/direct-manipulation.js" defer></script>
     <script is:inline src="/director/kinematics.js" defer></script>
     <script is:inline src="/director/optics.js" defer></script>
+    <script is:inline src="/director/light-color.js" defer></script>
     <script is:inline src="/director/appearance.js" defer></script>
     <script is:inline src="/director/lighting.js" defer></script>
     <script is:inline src="/director/stage.js" defer></script>
@@ -65,6 +66,21 @@ if (!session) return Astro.redirect('/pspt?next=/director');
               <div class="range-ends"><span>Black</span><span>Gray</span><span>White</span></div>
               <label>Line weight<input id="outline-width" type="range" min=".0005" max=".01" step=".0005" value=".0025" /></label>
               <label id="trip-glow-control" hidden>Trip glow <output id="trip-glow-label">0%</output><input id="trip-glow" type="range" min="0" max="1" step=".01" value="0" /></label>
+              <div id="trip-color-control" hidden>
+                <label>Light color source<select id="trip-color-source"><option value="temperature">Temperature · incandescent</option><option value="hsl">HSL · static color</option><option value="cycle">HSL · continuous cycle</option></select></label>
+                <div class="button-row"><button id="trip-color-slow">HSL Slow · 60 s</button><button id="trip-color-fast">HSL Fast · 10 s</button></div>
+                <div id="trip-hsl-controls" hidden>
+                  <label><span id="trip-hue-name">Hue</span> <output id="trip-hue-label">0°</output><input id="trip-hue" type="range" min="0" max="360" step="1" value="0" /></label>
+                  <label>Saturation <output id="trip-saturation-label">100%</output><input id="trip-saturation" type="range" min="0" max="1" step=".01" value="1" /></label>
+                  <label>Lightness <output id="trip-lightness-label">50%</output><input id="trip-lightness" type="range" min="0" max="1" step=".01" value=".5" /></label>
+                </div>
+                <div id="trip-color-cycle-controls" hidden>
+                  <label>Seconds per cycle<input id="trip-cycle-seconds" type="number" min=".5" max="3600" step=".5" value="60" /></label>
+                  <div class="button-row"><button id="trip-color-pause" aria-pressed="false">Pause color</button><button id="trip-color-restart">Restart color</button></div>
+                  <p id="trip-color-state" class="small">Color preview running.</p>
+                  <p class="small">Color keeps cycling while you pose. Reopened takes start at the selected hue.</p>
+                </div>
+              </div>
               <label id="trip-flare-control" hidden>Head flare <output id="trip-flare-label">Off</output><input id="trip-flare" type="range" min="0" max="1" step=".01" value="0" /></label>
               <div class="lens-editor" id="trip-lens-control" hidden>
               <label>Lens style<select id="trip-lens-style"><option value="glow">Compact glow</option><option value="starburst">Starburst</option><option value="anamorphic">Glow + streak</option><option value="glass">Multi-Iris</option></select></label>
@@ -78,7 +94,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
               <label>Ray count <output id="trip-lens-ray-count-label">8</output><input id="trip-lens-ray-count" type="range" min="4" max="16" step="1" value="8" /></label>
               </div></details></div>
               <div id="trip-temperature-control" hidden><label>External light temperature <output id="trip-temperature-label">6500 K</output><input id="trip-temperature" type="range" min="1800" max="10000" step="100" value="6500" /></label><div class="button-row"><button id="temperature-warm">Warm</button><button id="temperature-neutral">Neutral</button><button id="temperature-cool">Cool</button></div></div>
-              <div id="trip-body-temperature-control" hidden><label class="check-label"><input id="trip-body-linked" type="checkbox" checked /> Link body to light temperature</label><label>Body temperature <output id="trip-body-temperature-label">6500 K · linked</output><input id="trip-body-temperature" type="range" min="1800" max="10000" step="100" value="6500" disabled /></label><p class="small">6500 K keeps the body white while the surrounding light changes.</p></div>
+              <div id="trip-body-temperature-control" hidden><label class="check-label"><input id="trip-body-linked" type="checkbox" checked /> Link body to light color</label><label>Body temperature <output id="trip-body-temperature-label">6500 K · linked</output><input id="trip-body-temperature" type="range" min="1800" max="10000" step="100" value="6500" disabled /></label><p class="small">6500 K keeps the body white while the surrounding light changes.</p></div>
             </details>
           </section>
           <section class="panel pose-panel" data-modes="pose">

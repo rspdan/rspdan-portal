@@ -219,6 +219,7 @@ test('old v2 takes retain their pre-appearance serialized identity without injec
   assert.equal(Object.hasOwn(normalized, 'tripFlare'), false);
   assert.equal(Object.hasOwn(normalized, 'tripTemperature'), false);
   assert.equal(Object.hasOwn(normalized, 'tripBodyTemperature'), false);
+  assert.equal(Object.hasOwn(normalized, 'tripLightColor'), false);
   assert.equal(Object.hasOwn(normalized, 'tripLens'), false);
   assert.equal(Object.hasOwn(normalized, 'outline'), false);
   assert.equal(Object.hasOwn(normalized, 'lighting'), false);
@@ -414,6 +415,53 @@ test('independent Trip body temperature is optional bounded Kelvin and global on
     const value = animatedTake(); (target === 'key' ? value.keyframes[0] : value[target]).tripBodyTemperature = 6500;
     assert.throws(() => validateTake(value, registry), /unknown fields/);
   }
+});
+
+test('Trip HSL source recipes are optional, complete and bounded without saved preview clock state', () => {
+  const recipe = { mode: 'hsl', hue: 30, saturation: 1, lightness: .5, periodSeconds: 60 };
+  for (const mode of ['temperature', 'hsl', 'cycle']) {
+    for (const config of [{ ...recipe, mode }, { mode, hue: 0, saturation: 0, lightness: 0, periodSeconds: .5 }, { mode, hue: 360, saturation: 1, lightness: 1, periodSeconds: 3600 }]) {
+      const value = sceneTake(); value.tripLightColor = config; value.tripBodyTemperature = 6500;
+      assert.deepEqual(JSON.parse(JSON.stringify(validateTake(value, registry))), value);
+    }
+  }
+  const invalid = [null, undefined, [], true, 'hsl', {}, { ...recipe, mode: 'rainbow' }, { ...recipe, elapsedSeconds: 4 }, { ...recipe, paused: true },
+    ...Object.keys(recipe).map(key => { const partial = { ...recipe }; delete partial[key]; return partial; })];
+  for (const [field, values] of [
+    ['hue', [-.01, 360.01, NaN, Infinity, '30', null]],
+    ['saturation', [-.001, 1.001, NaN, Infinity, '1', null]],
+    ['lightness', [-.001, 1.001, NaN, Infinity, '.5', null]],
+    ['periodSeconds', [.499, 3600.001, NaN, Infinity, '60', null]],
+  ]) for (const value of values) invalid.push({ ...recipe, [field]: value });
+  for (const config of invalid) {
+    const value = sceneTake(); value.tripLightColor = config;
+    assert.throws(() => validateTake(value, registry), errorStatus(400));
+  }
+  const legacy = take(); legacy.tripLightColor = recipe;
+  assert.throws(() => validateTake(legacy, registry), /unknown fields/);
+  for (const target of ['key', 'pose', 'stage']) {
+    const value = animatedTake(); (target === 'key' ? value.keyframes[0] : value[target]).tripLightColor = recipe;
+    assert.throws(() => validateTake(value, registry), /unknown fields/);
+  }
+});
+
+test('Trip cycle recipe survives fresh-process reopen and immutable saves without a runtime phase', async (t) => {
+  const { directory, service } = await fixture(t);
+  const value = sceneTake(); value.tripLightColor = { mode: 'cycle', hue: 120, saturation: .8, lightness: .4, periodSeconds: 60 }; value.tripBodyTemperature = 6500;
+  const requestId = randomUUID(), saved = await service.save({ take: value, requestId }, actor);
+  const childScript = `import {createLocalDirectorStore} from ${JSON.stringify(new URL('./directorLocalStore.js', import.meta.url).href)}; const r=await createLocalDirectorStore(process.argv[1]).get(process.argv[2]); process.stdout.write(JSON.stringify(r));`;
+  const child = spawnSync(process.execPath, ['--input-type=module', '-e', childScript, directory, saved.saved.id], { encoding: 'utf8' });
+  assert.equal(child.status, 0, child.stderr);
+  const reopened = JSON.parse(child.stdout);
+  assert.deepEqual(reopened.take, value); assert.equal(reopened.takeHash, saved.saved.takeHash);
+  assert.deepEqual(await service.save({ take: value, requestId }, actor), saved);
+  for (const [field, next] of [['mode','hsl'],['hue',240],['saturation',.5],['lightness',.6],['periodSeconds',10]]) {
+    const changed = structuredClone(value); changed.tripLightColor[field] = next;
+    await assert.rejects(service.save({ take: changed, requestId }, actor), errorStatus(409));
+    const revised = await service.save({ take: changed, requestId: randomUUID() }, actor);
+    assert.notEqual(revised.saved.takeHash, saved.saved.takeHash, field);
+  }
+  assert.deepEqual((await service.get(saved.saved.id, actor)).take, value);
 });
 
 test('head and per-light lenses validate full independent component settings', () => {

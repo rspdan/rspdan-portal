@@ -123,10 +123,12 @@
       effect.setFloat2('contactWeights', contacts[0]?.weight || 0, contacts[1]?.weight || 0);
     }
     let glow = null, spill = null, optical = null, flareAnchor = null, spillObserver = null, disposed = false, state = null;
-    let excludedMeshCount = -1;
+    let excludedMeshCount = -1, lightTime = 0;
+    const lightTint = B.Color3.White(), bodyTint = B.Color3.White(), surfaceTint = B.Color3.White(), bodyEmission = B.Color3.Black(), haloTint = B.Color3.Black();
+    const white = B.Color3.White();
     function color(material, value) {
-      if ('albedoColor' in material) material.albedoColor = B.Color3.FromArray(value);
-      else if ('diffuseColor' in material) material.diffuseColor = B.Color3.FromArray(value);
+      if ('albedoColor' in material) material.albedoColor.copyFromFloats(...value);
+      else if ('diffuseColor' in material) material.diffuseColor.copyFromFloats(...value);
     }
     function receiveMeshes() {
       for (const mesh of scene.meshes) {
@@ -275,6 +277,38 @@
       optical = globalThis.DirectorOptics.create(scene, flareAnchor, { name: 'Director Trip head optical response' });
     }
 
+    function updateSourceColors() {
+      const selected = globalThis.DirectorLightColor?.resolve(state.tripLightColor, lightTime);
+      const rgb = selected || temperatureRGB(state.tripTemperature);
+      lightTint.copyFromFloats(...rgb);
+      const heat = Math.max(0, Math.min(1, (state.tripGlow - .15) / .5));
+      const linkedColor = selected && !Number.isFinite(state.tripBodyTemperature);
+      const peak = linkedColor ? Math.max(...rgb) : 1;
+      // HSL lightness changes emitted energy, not the underlying white paint.
+      // Linked colored light tints the surface; at zero it returns to unlit
+      // white. An explicit body temperature stays independent of exterior HSL.
+      const bodyRGB = linkedColor ? (peak > 0 ? rgb.map(v => v / peak) : [1, 1, 1]) : temperatureRGB(state.tripBodyTemperature ?? state.tripTemperature);
+      bodyTint.copyFromFloats(...bodyRGB);
+      B.Color3.LerpToRef(white, bodyTint, heat * heat * (3 - 2 * heat) * peak, surfaceTint);
+      const emission = .35 + .1 * state.tripGlow;
+      if (linkedColor) lightTint.scaleToRef(emission, bodyEmission);
+      else surfaceTint.scaleToRef(emission, bodyEmission);
+      const bleed = Math.max(0, Math.min(1, (state.tripGlow - .15) / .5));
+      lightTint.scaleToRef(4 * bleed * bleed * (3 - 2 * bleed), haloTint);
+      for (const [mesh, entry] of entries) {
+        if (mesh.isDisposed()) continue;
+        color(entry.trip, surfaceTint.asArray());
+        entry.trip.emissiveColor.copyFrom(bodyEmission);
+      }
+      if (spill) { spill.diffuse.copyFrom(lightTint); spill.specular.copyFrom(lightTint); }
+      if (optical) optical.apply({ strength: state.look === 'trip' ? state.tripFlare : 0, color: lightTint.asArray(), sourceRadius: .025, lens: state.tripLens });
+    }
+    function setLightTime(seconds) {
+      if (disposed || !Number.isFinite(seconds) || seconds === lightTime) return;
+      lightTime = seconds;
+      if (state?.look === 'trip' && state.tripLightColor?.mode === 'cycle') updateSourceColors();
+    }
+
     function apply(value = {}) {
       if (disposed) throw new Error('Director appearance has been disposed.');
       state = { look: value.look === 'trip' ? 'trip' : 'ouch', tripGlow: clamp(value.tripGlow, 0, 1, 0),
@@ -283,22 +317,14 @@
       // An omitted override keeps existing takes linked to emitted-light
       // temperature. An explicit value controls only the enclosed body.
       if (Number.isFinite(value.tripBodyTemperature)) state.tripBodyTemperature = clamp(value.tripBodyTemperature, 1800, 10000, 6500);
+      if (value.tripLightColor && typeof value.tripLightColor === 'object' && !Array.isArray(value.tripLightColor)) state.tripLightColor = structuredClone(value.tripLightColor);
       if (value.tripLens && typeof value.tripLens === 'object' && !Array.isArray(value.tripLens)) state.tripLens = structuredClone(value.tripLens);
       receiveMeshes();
       if (state.look === 'trip' && (state.tripGlow > 0 || state.tripFlare > 0) && entries.size) ensureGlow();
-      const tint = B.Color3.FromArray(temperatureRGB(state.tripTemperature));
-      const heat = Math.max(0, Math.min(1, (state.tripGlow - .15) / .5));
-      // Trip's underlying material is white. At incandescent intensity the
-      // emitted temperature also colors the surface, like deliberately shifting
-      // white balance; the low LED base and neutral6500 K remain uncolored.
-      const bodyTint = B.Color3.FromArray(temperatureRGB(state.tripBodyTemperature ?? state.tripTemperature));
-      const surfaceTint = B.Color3.Lerp(B.Color3.White(), bodyTint, heat * heat * (3 - 2 * heat));
+      updateSourceColors();
       for (const [mesh, entry] of entries) {
         if (mesh.isDisposed()) continue;
         mesh.material = entry[state.look];
-        const emission = state.look === 'trip' ? .35 + .1 * state.tripGlow : 0;
-        if (state.look === 'trip') color(mesh.material, surfaceTint.asArray());
-        mesh.material.emissiveColor = surfaceTint.scale(emission);
         mesh.renderOutline = state.outline.enabled;
         mesh.outlineWidth = state.outline.width;
         mesh.outlineColor = new B.Color3(state.outline.tone, state.outline.tone, state.outline.tone);
@@ -307,15 +333,15 @@
         const g = state.tripGlow, active = state.look === 'trip' && g > 0;
         glow.isEnabled = active;
         for (const mesh of entries.keys()) if (!mesh.isDisposed()) {
-          const bleed = Math.max(0, Math.min(1, (g - .15) / .5));
-          glow.addMesh(mesh, tint.scale(4 * bleed * bleed * (3 - 2 * bleed)));
+          // Babylon retains this Color3 reference; cycling mutates it in place
+          // without re-registering masks, meshes, materials or observers.
+          glow.addMesh(mesh, haloTint);
         }
         spill.setEnabled(active);
-        spill.diffuse.copyFrom(tint); spill.specular.copyFrom(tint);
         spill.intensity = active ? 16 * g * g : 0;
         if (state.look === 'trip' && state.tripFlare > 0) ensureOptical();
         if (optical) {
-          optical.apply({ strength: state.look === 'trip' ? state.tripFlare : 0, color: tint.asArray(), sourceRadius: .025, lens: state.tripLens });
+          optical.apply({ strength: state.look === 'trip' ? state.tripFlare : 0, color: lightTint.asArray(), sourceRadius: .025, lens: state.tripLens });
         }
         excludedMeshCount = -1; followCharacter();
       }
@@ -332,7 +358,7 @@
       }
       entries.clear(); footCaches.clear(); contacts = [];
     }
-    return Object.freeze({ apply, dispose });
+    return Object.freeze({ apply, setLightTime, dispose });
   }
   globalThis.DirectorAppearance = Object.freeze({ create });
 })();

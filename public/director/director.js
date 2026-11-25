@@ -4,13 +4,14 @@
   const $ = id => document.getElementById(id);
   const B = window.BABYLON;
   const A = window.DirectorAnimation;
+  const colorClock = window.DirectorLightColor.createClock();
   const transitionLabels = { hold: 'Hold · stop motion', linear: 'Linear', 'ease-in': 'Ease in', 'ease-out': 'Ease out', 'ease-in-out': 'Ease in & out' };
   const clone = value => structuredClone(value);
   const draftKey = 'nest.director.draft.v1';
   const currentDraftKey = () => `${draftKey}.${manifest.sha256}`;
   const lensFields = [['glow',0,1],['rays',0,1],['streak',0,1],['ghosts',0,1],['spread',.25,2],['rotation',-180,180],['rayCount',4,16]];
   const lensInputId = (prefix, field) => `${prefix}-${field === 'rayCount' ? 'ray-count' : field}`;
-  const ui = { ready: false, dirty: true, draftWriteFailed: false, savedId: null, playing: false, handles: true, start: 1, frame: 1, end: 72, fps: 24, animation: { transition: 'ease-in-out', loop: true }, output: { width: 720, height: 720 }, keys: [], undo: [], redo: [], look: 'ouch', background: 'white', mode: 'pose', tool: 'rotate', stretch: false, tripGlow: 0, tripFlare: 0, tripTemperature: 6500, tripBodyTemperature: null, tripLens: null, outline: { enabled: true, tone: 0, width: .0025 } };
+  const ui = { ready: false, dirty: true, draftWriteFailed: false, savedId: null, playing: false, handles: true, start: 1, frame: 1, end: 72, fps: 24, animation: { transition: 'ease-in-out', loop: true }, output: { width: 720, height: 720 }, keys: [], undo: [], redo: [], look: 'ouch', background: 'white', mode: 'pose', tool: 'rotate', stretch: false, tripGlow: 0, tripFlare: 0, tripTemperature: 6500, tripBodyTemperature: null, tripLightColor: null, tripLens: null, outline: { enabled: true, tone: 0, width: .0025 } };
   let engine, scene, camera, floor, gizmo, manifest, neutralPose, nodes = {}, morphs = {}, handles = [], selected, savedSnapshot, saveRequest = null, sendRequest = null, savePayload = null;
   let playStart = 0, playFrame = 1, restoring = false, dragBefore = null;
   let cameraBefore = null, cameraWheelTimer = null;
@@ -22,7 +23,7 @@
   function pose() {
     return { bones: Object.fromEntries(Object.entries(nodes).map(([name, node]) => [name, { position: node.position.asArray(), rotation: (node.rotationQuaternion?.clone() || B.Quaternion.FromEulerVector(node.rotation)).normalize().asArray(), scale: node.scaling.asArray() }])), morphs: Object.fromEntries(manifest.morphs.map(name => [name, morphs[name]?.[0]?.influence || 0])) };
   }
-  function snapshot() { return { schema: 'nest-director-take/v2', asset: { id: manifest.id, sha256: manifest.sha256 }, name: $('take-name').value.trim() || 'Untitled take', notes: $('notes').value, look: ui.look, fps: ui.fps, frame: ui.frame, range: { start: ui.start, end: ui.end }, stage: { background: ui.background, design: stageDesign.snapshot() }, tripGlow: ui.tripGlow, tripFlare: ui.tripFlare, tripTemperature: ui.tripTemperature, ...(ui.tripBodyTemperature !== null ? { tripBodyTemperature: ui.tripBodyTemperature } : {}), ...(ui.tripLens ? { tripLens: clone(ui.tripLens) } : {}), outline: clone(ui.outline), lighting: lighting.snapshot(), camera: cameraState(), pose: pose(), keyframes: clone(ui.keys), animation: clone(ui.animation), output: clone(ui.output) }; }
+  function snapshot() { return { schema: 'nest-director-take/v2', asset: { id: manifest.id, sha256: manifest.sha256 }, name: $('take-name').value.trim() || 'Untitled take', notes: $('notes').value, look: ui.look, fps: ui.fps, frame: ui.frame, range: { start: ui.start, end: ui.end }, stage: { background: ui.background, design: stageDesign.snapshot() }, tripGlow: ui.tripGlow, tripFlare: ui.tripFlare, tripTemperature: ui.tripTemperature, ...(ui.tripBodyTemperature !== null ? { tripBodyTemperature: ui.tripBodyTemperature } : {}), ...(ui.tripLightColor ? { tripLightColor: clone(ui.tripLightColor) } : {}), ...(ui.tripLens ? { tripLens: clone(ui.tripLens) } : {}), outline: clone(ui.outline), lighting: lighting.snapshot(), camera: cameraState(), pose: pose(), keyframes: clone(ui.keys), animation: clone(ui.animation), output: clone(ui.output) }; }
   function applyPose(value, refresh = true) {
     scene.animationGroups.forEach(group => group.stop());
     for (const [name, p] of Object.entries(value.bones)) {
@@ -44,7 +45,7 @@
     const size = value.orthoSize || 1.5; camera.orthoTop = size / 2; camera.orthoBottom = -size / 2; fitOrtho();
     $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA));
   }
-  function restore(take) {
+  function restore(take, { restartColor = false } = {}) {
     if (take.asset.id !== manifest.id || take.asset.sha256 !== manifest.sha256) throw new Error('This take uses a different model revision. Its saved pose has been kept; open it with that revision.');
     directManipulation?.cancel(); kinematics?.endBody({cancelled:true}); kinematics?.end({cancelled:true});
     restoring = true;
@@ -58,6 +59,9 @@
       backdropUploadToken++;
       ui.tripGlow = take.tripGlow ?? 0; ui.tripFlare = take.tripFlare ?? 0; ui.tripTemperature = take.tripTemperature ?? 6500;
       ui.tripBodyTemperature = take.tripBodyTemperature ?? null; ui.tripLens = take.tripLens ? clone(take.tripLens) : null;
+      ui.tripLightColor = take.tripLightColor ? clone(take.tripLightColor) : null;
+      colorClock.configure(ui.tripLightColor, { restart: restartColor });
+      if (restartColor) colorClock.resume();
       ui.outline = clone(take.outline || { enabled: false, tone: 0, width: .0025 });
       stageDesign.restore(take.stage.design || null); lighting.restore(take.lighting || null);
       setLook(take.look); setBackground(take.stage.background); setCamera(take.camera); applyPose(take.pose); syncTimeline(); syncSceneEditor(); setMode(ui.mode);
@@ -112,7 +116,9 @@
     }
   }
   function applyAppearance() {
-    appearance.apply({ look: ui.look, tripGlow: ui.tripGlow, tripFlare: ui.tripFlare, tripTemperature: ui.tripTemperature, ...(ui.tripBodyTemperature !== null ? { tripBodyTemperature: ui.tripBodyTemperature } : {}), ...(ui.tripLens ? { tripLens: ui.tripLens } : {}), outline: ui.outline });
+    colorClock.configure(ui.tripLightColor);
+    appearance.apply({ look: ui.look, tripGlow: ui.tripGlow, tripFlare: ui.tripFlare, tripTemperature: ui.tripTemperature, ...(ui.tripBodyTemperature !== null ? { tripBodyTemperature: ui.tripBodyTemperature } : {}), ...(ui.tripLightColor ? { tripLightColor: ui.tripLightColor } : {}), ...(ui.tripLens ? { tripLens: ui.tripLens } : {}), outline: ui.outline });
+    appearance.setLightTime(colorClock.seconds());
     $('outline-enabled').checked = ui.outline.enabled; $('outline-tone').value = ui.outline.tone; $('outline-width').value = ui.outline.width;
     $('outline-tone-label').value = ui.outline.tone === 0 ? 'Black' : ui.outline.tone === 1 ? 'White' : `${Math.round(ui.outline.tone * 100)}%`;
     $('trip-glow').value = ui.tripGlow; $('trip-glow-label').value = `${Math.round(ui.tripGlow * 100)}%`;
@@ -120,10 +126,27 @@
     $('trip-temperature').value = ui.tripTemperature; $('trip-temperature-label').value = `${ui.tripTemperature} K`;
     const linked = ui.tripBodyTemperature === null, bodyTemperature = linked ? ui.tripTemperature : ui.tripBodyTemperature;
     $('trip-body-linked').checked = linked; $('trip-body-temperature').disabled = linked;
-    $('trip-body-temperature').value = bodyTemperature; $('trip-body-temperature-label').value = `${bodyTemperature} K${linked ? ' · linked' : ''}`;
+    const hsl = ui.tripLightColor && ui.tripLightColor.mode !== 'temperature';
+    $('trip-body-temperature').value = bodyTemperature; $('trip-body-temperature-label').value = linked && hsl ? 'Linked to HSL' : `${bodyTemperature} K${linked ? ' · linked' : ''}`;
     syncLensControls('trip-lens', ui.tripLens, ui.look !== 'trip');
-    for (const id of ['trip-glow-control','trip-flare-control','trip-temperature-control','trip-body-temperature-control','trip-lens-control']) $(id).hidden = ui.look !== 'trip';
+    for (const id of ['trip-glow-control','trip-flare-control','trip-temperature-control','trip-body-temperature-control','trip-lens-control','trip-color-control']) $(id).hidden = ui.look !== 'trip';
+    $('trip-temperature-control').hidden = ui.look !== 'trip' || hsl;
+    syncColorControls();
     lighting?.sync();
+  }
+  function colorRecipe() { return clone(ui.tripLightColor || { mode: 'temperature', hue: 0, saturation: 1, lightness: .5, periodSeconds: 60 }); }
+  function syncColorControls() {
+    const recipe = colorRecipe(), cycling = recipe.mode === 'cycle';
+    $('trip-color-source').value = recipe.mode;
+    $('trip-hsl-controls').hidden = recipe.mode === 'temperature';
+    $('trip-color-cycle-controls').hidden = !cycling;
+    $('trip-hue-name').textContent = cycling ? 'Start hue' : 'Hue';
+    $('trip-hue').value = recipe.hue; $('trip-hue-label').value = `${recipe.hue}°`;
+    for (const field of ['saturation', 'lightness']) { $('trip-' + field).value = recipe[field]; $('trip-' + field + '-label').value = `${Math.round(recipe[field] * 100)}%`; }
+    $('trip-cycle-seconds').value = recipe.periodSeconds;
+    $('trip-color-pause').textContent = colorClock.isPaused() ? 'Resume color' : 'Pause color';
+    $('trip-color-pause').setAttribute('aria-pressed', String(colorClock.isPaused()));
+    $('trip-color-state').textContent = colorClock.isPaused() ? 'Color preview paused.' : `Color preview running · ${recipe.periodSeconds} seconds per cycle.`;
   }
   function setLook(look) {
     ui.look = look; applyAppearance();
@@ -475,7 +498,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
   }
   async function loadTake(id, preserveDraft = true) {
     stop();
-    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take); ui.savedId = record.id || id; sendRequest = null; ui.dirty = false; ui.draftWriteFailed = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
+    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take, { restartColor: true }); ui.savedId = record.id || id; sendRequest = null; ui.dirty = false; ui.draftWriteFailed = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
     catch (error) { status(error.message); }
   }
   function bindSceneEditor() {
@@ -520,6 +543,33 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     live('trip-glow', input => { ui.tripGlow = numeric(input,0,1); applyAppearance(); }, 'Trip glow updated.');
     live('trip-flare', input => { ui.tripFlare = numeric(input,0,1); applyAppearance(); }, 'Trip head flare updated.');
     live('trip-temperature', input => { ui.tripTemperature = numeric(input,1800,10000); applyAppearance(); }, 'Trip light temperature updated.');
+    const chooseColor = (patch, startCycle = false) => {
+      const before = snapshot();
+      try {
+        const next = { ...colorRecipe(), ...patch };
+        if (!['temperature','hsl','cycle'].includes(next.mode)) throw new Error('Choose temperature, HSL, or an HSL cycle.');
+        ui.tripLightColor = next;
+        colorClock.configure(next, { restart: startCycle });
+        if (startCycle) colorClock.resume();
+        applyAppearance();
+        if (JSON.stringify(before) !== JSON.stringify(snapshot())) { remember(before); changed('Trip light color updated.'); }
+        else status(startCycle ? 'Color cycle restarted.' : 'Trip light color selected.');
+      } catch (error) { restore(before); status(error.message); }
+    };
+    $('trip-color-source').onchange = event => chooseColor({ mode: event.target.value }, event.target.value === 'cycle');
+    $('trip-color-slow').onclick = () => chooseColor({ mode: 'cycle', periodSeconds: 60 }, true);
+    $('trip-color-fast').onclick = () => chooseColor({ mode: 'cycle', periodSeconds: 10 }, true);
+    for (const [id, field, min, max] of [['trip-hue','hue',0,360],['trip-saturation','saturation',0,1],['trip-lightness','lightness',0,1]]) live(id, input => { ui.tripLightColor = { ...colorRecipe(), [field]: numeric(input,min,max) }; applyAppearance(); }, 'Trip HSL color updated.');
+    edit('trip-cycle-seconds', input => { ui.tripLightColor = { ...colorRecipe(), periodSeconds: numeric(input,.5,3600) }; applyAppearance(); }, 'Color cycle duration updated.');
+    $('trip-color-pause').onclick = () => {
+      if (ui.tripLightColor?.mode !== 'cycle') return;
+      if (colorClock.isPaused()) colorClock.resume(); else colorClock.pause();
+      syncColorControls(); status(colorClock.isPaused() ? 'Color preview paused. Pose playback is unchanged.' : 'Color preview resumed.');
+    };
+    $('trip-color-restart').onclick = () => {
+      if (ui.tripLightColor?.mode !== 'cycle') return;
+      colorClock.restart(); colorClock.resume(); appearance.setLightTime(0); syncColorControls(); status('Color cycle restarted from the selected hue.');
+    };
     edit('trip-body-linked', input => { ui.tripBodyTemperature = input.checked ? null : 6500; applyAppearance(); }, 'Trip body temperature updated.');
     live('trip-body-temperature', input => { ui.tripBodyTemperature = numeric(input,1800,10000); applyAppearance(); }, 'Trip body temperature updated.');
     bindLens('trip-lens', () => ui.tripLens, value => { ui.tripLens = value; applyAppearance(); });
@@ -812,16 +862,16 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     });
     applyPose(neutralPose); setLook('ouch'); setBackground('white'); setOutput(ui.output); fitOrtho(); selectJoint('upper_arm.L'); bind(); bindSceneEditor(); ui.ready = true; setMode('pose'); syncTimeline(); buttons();
     $('loading').hidden = true; status('Ouch is ready. Pick a gesture or move a joint.');
-    engine.runRenderLoop(() => { if (ui.playing) { const elapsed = playFrame - ui.start + Math.floor((performance.now() - playStart) / 1000 * ui.fps); const count = ui.end - ui.start + 1; const frame = ui.animation.loop ? ui.start + (elapsed % count) : Math.min(ui.end, ui.start + elapsed); if (frame !== ui.frame) scrub(frame, true); if (!ui.animation.loop && elapsed >= count) { stop(); syncJoint(); syncPreset(pose()); } } scene.render(); });
+    engine.runRenderLoop(() => { if (ui.playing) { const elapsed = playFrame - ui.start + Math.floor((performance.now() - playStart) / 1000 * ui.fps); const count = ui.end - ui.start + 1; const frame = ui.animation.loop ? ui.start + (elapsed % count) : Math.min(ui.end, ui.start + elapsed); if (frame !== ui.frame) scrub(frame, true); if (!ui.animation.loop && elapsed >= count) { stop(); syncJoint(); syncPreset(pose()); } } appearance.setLightTime(colorClock.seconds()); scene.render(); });
     window.addEventListener('resize', resizeStage); new ResizeObserver(resizeStage).observe(document.querySelector('.stage'));
     engine.onContextLostObservable.add(() => status(ui.draftWriteFailed ? 'The graphics context paused. Keep this tab open and use Save take.' : 'The graphics context paused. Your browser draft is kept; reload if the room does not recover.'));
     engine.onContextRestoredObservable.add(() => status('The room renderer recovered.'));
     const id = new URL(location.href).searchParams.get('take');
     if (id) await loadTake(id, false);
-    else try { const draft = JSON.parse(localStorage.getItem(currentDraftKey()) || localStorage.getItem(draftKey) || 'null'); if (draft) { restore(draft); status('Your browser draft has been reopened.'); } } catch (error) { status('The previous draft uses another model revision. It remains stored; this room opened with the current model.'); }
+    else try { const draft = JSON.parse(localStorage.getItem(currentDraftKey()) || localStorage.getItem(draftKey) || 'null'); if (draft) { restore(draft, { restartColor: true }); status('Your browser draft has been reopened.'); } } catch (error) { status('The previous draft uses another model revision. It remains stored; this room opened with the current model.'); }
     refreshTakes();
     // Readable diagnostics also let Crew receive the exact current state.
-    window.directorStudio = { snapshot, samplePose: (frame) => A.samplePose(ui.keys, frame, ui.animation.transition), get ready() { return ui.ready; }, get scene() { return scene; }, get manifest() { return manifest; } };
+    window.directorStudio = { snapshot, samplePose: (frame) => A.samplePose(ui.keys, frame, ui.animation.transition), get colorPreview() { return { seconds: colorClock.seconds(), paused: colorClock.isPaused() }; }, get ready() { return ui.ready; }, get scene() { return scene; }, get manifest() { return manifest; } };
   }
   start().catch(error => { console.error(error); $('loading').querySelector('p').textContent = error.message; status(error.message); window.directorError = error.message; });
 })();

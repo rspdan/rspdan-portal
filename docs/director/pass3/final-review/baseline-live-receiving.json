@@ -1,0 +1,119 @@
+{
+  "execution_utc": "2026-11-25T05:51:20.259687+00:00",
+  "commit": "41929281b15a25a9192ac6f878d5816ee588b691",
+  "url": "https://rspdan-portal-git-codex-nest-director-white-room-rspdan.vercel.app/director",
+  "checks": [
+    {
+      "name": "authenticated deployed Director loads",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "deployed source matches: director.js",
+      "passed": true,
+      "details": {
+        "sha256": "dd2ff3fbf3884b6c30d5337df8541abea51a7f6e67e86b61e020b151de9e5448"
+      }
+    },
+    {
+      "name": "deployed source matches: director.css",
+      "passed": true,
+      "details": {
+        "sha256": "fef61665da7cfb8bedf1c1ae740972d7984d54e3589370e2cab8f99f3a99346c"
+      }
+    },
+    {
+      "name": "deployed source matches: kinematics.js",
+      "passed": true,
+      "details": {
+        "sha256": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360"
+      }
+    },
+    {
+      "name": "deployed source matches: appearance.js",
+      "passed": true,
+      "details": {
+        "sha256": "88429419f099e6b6fd89bcfba6bb0dc18cea900c83a3440faa90cb7c0638f0e7"
+      }
+    },
+    {
+      "name": "deployed source matches: lighting.js",
+      "passed": true,
+      "details": {
+        "sha256": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0"
+      }
+    },
+    {
+      "name": "deployed source matches: stage.js",
+      "passed": true,
+      "details": {
+        "sha256": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218"
+      }
+    },
+    {
+      "name": "deployed source matches: optics.js",
+      "passed": true,
+      "details": {
+        "sha256": "029b264c263e0a451a407da0b9fdcad6693d36e4fed8f6a45a473ae5c9469643"
+      }
+    },
+    {
+      "name": "hand foot head torso hips shoulder controls",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live Lighting add",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live hand light, beam and independent optics",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live head attachment",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live Stage add",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "shared Undo removes new set piece",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "shared Redo restores set piece",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live Trip appearance state",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live neutral body with separate emitted temperature",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live independent lens preset",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no browser page errors",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "errors": [],
+  "scope": "Actual deployed browser, mobile emulation. No live save or Send to Crew.",
+  "passed": true
+}

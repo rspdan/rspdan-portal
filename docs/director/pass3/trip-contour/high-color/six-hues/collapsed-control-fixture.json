@@ -1,0 +1,689 @@
+{
+  "appearance_sha256": "5a9ff69ef04766dbb0794ee12a37166b501e16571506e6c05cfc499032289fb6",
+  "core_sha256": "9caef46c15cde91f0b352521fdc5226e28b49519c4dd42e119f27e6c5b3aa97f",
+  "scope": "HSL high-color study on approved grounded incandescent baseline, tripGlow1. Six hues use S1/L.5 and independent6500 white body. Additional bounded saturation/lightness endpoints and live cycle/pause checks. No texture, shader falloff or global intensity remap. Real Chromium viewport captures; no Save/Send/deploy.",
+  "checks": [
+    {
+      "name": "Approved intensity, pose, camera, lighting and outline preserved; intentional ground height correction to0",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": 0
+              },
+              "objects": [
+                {
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 1,
+          "tripFlare": 0,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          }
+        },
+        "approved": {
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": 0
+              },
+              "objects": [
+                {
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 1,
+          "tripFlare": 0,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "captures": [],
+  "errors": [],
+  "exception": "Traceback (most recent call last):\n  File \"/workspace/scratch/trip_high_color_study.py\", line 38, in <module>\n    page.select_option('#trip-color-source','hsl');inp(page,'trip-saturation',1);inp(page,'trip-lightness',.5)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py\", line 12285, in select_option\n    self._sync(\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_page.py\", line 1073, in select_option\n    return await self._main_frame.select_option(**params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_frame.py\", line 814, in select_option\n    return await self._channel.send(\"selectOption\", self._timeout, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 76, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 632, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Page.select_option: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#trip-color-source\")\n    - locator resolved to <select id=\"trip-color-source\" data-astro-source-loc=\"70:74\" data-astro-source-file=\"/workspace/rspdan-portal/src/pages/director/index.astro\">\u2026</select>\n  - attempting select option action\n    2 \u00d7 waiting for element to be visible and enabled\n      - element is not visible\n    - retrying select option action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible and enabled\n      - element is not visible\n    - retrying select option action\n      - waiting 100ms\n    58 \u00d7 waiting for element to be visible and enabled\n       - element is not visible\n     - retrying select option action\n       - waiting 500ms\n\n",
+  "passed": false
+}
