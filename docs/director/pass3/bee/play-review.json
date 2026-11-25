@@ -1,0 +1,959 @@
+{
+  "schema": "bee-director-pass3-exploratory-play/v1",
+  "author": "Bee",
+  "recorded_utc": "2026-11-25T03:29:39.153757+00:00",
+  "source_timestamp": {
+    "verbatim": "DPS112426 7:16pm",
+    "attribution": "Dan correction relayed by C.B.",
+    "not_inferred_from_execution_clock": true
+  },
+  "execution": {
+    "started_utc": "2026-11-25T03:21:12Z",
+    "last_action_utc": "2026-11-25T03:26:54Z",
+    "browser": "Local Playwright Chromium, headless desktop1440x1000,DPR1",
+    "base_url": "http://127.0.0.1:5174/director",
+    "baseline_git": "7bd0e7c",
+    "baseline_director_js_sha256": "b6121019a17bdafcf64d8a1ed683009a88ba8b64e41c1c1d2be4f2b089bd37a8",
+    "file_director_js_sha256_at_report": "951dd89f086c273368b82ecc02d8ce35dbd367cbb5db3b2da77180b802a1cb4d",
+    "loaded_version_limit": "A fresh context opened against baseline. Other Crew could edit dev assets during shared-server play; no assertion that a later file hash equals already-executing script bytes. No observed app/history reset in this sequence.",
+    "authentication": "Existing private local test configuration; no credentials or cookie included in evidence.",
+    "scope": "Actual UI mouse/keyboard play and local-only saves. No live Save/Send, no physical ACHE testing."
+  },
+  "scene": {
+    "name": "Oh hi, too much",
+    "authorship": "Bee authored this new sequence through the visible UI. It is not a loaded sample motion.",
+    "original_keys": [
+      {
+        "frame": 1,
+        "gesture": "Relaxed"
+      },
+      {
+        "frame": 20,
+        "gesture": "Raised-arm hello with10-degree headZ adjustment",
+        "outgoing": "hold"
+      },
+      {
+        "frame": 42,
+        "gesture": "Victory start with visible left-elbow dot held450ms and dragged right/up, creating an exaggerated single-arm reach",
+        "outgoing": "ease-out"
+      },
+      {
+        "frame": 72,
+        "gesture": "Embarrassed slump from Defeated"
+      }
+    ],
+    "variants": [
+      "Ouch:3s/24fps,square,white room",
+      "Trip:3s/24fps,portrait,green room",
+      "Trip slower:4.5s/12fps,portrait,green room; keys1/15/32/54 after actual retiming controls"
+    ],
+    "meaning": "Small greeting overcommits into an absurd reach and collapses. Crew play, not canonical character story or Dan-approved choreography."
+  },
+  "actual_actions": [
+    "Selected gesture starts, changed head rotation using keyboard on a visible range control, and keyed four poses.",
+    "Held a visible elbow dot450ms then dragged from679,240 to760,220 using mouse input; hid controls to read the result.",
+    "Used Frame after clipping the elongated arm, then Undo twice to recover camera and pose separately; Redo restored stretch before keying it.",
+    "Edited outgoing20 Hold and42 Ease-out through the key controls.",
+    "Pressed Play, waited, captured an actual moving view, then stopped; inspected exact held41/reach42 views separately.",
+    "Changed Ouch/Trip look, white/green background, side/quarter camera, square/portrait frame size and used Frame motion.",
+    "Changed length from3 to4.5seconds, thenFPS24to12 while Keep seconds was selected.",
+    "Saved three unique local versions; reopened Ouch and slower Trip from their visible saved-take buttons."
+  ],
+  "observations": [
+    {
+      "area": "Direct creative control",
+      "observation": "Visible dot hold-drag made a readable exaggerated reach immediately. Full limb/torso shapes remained understandable in this authored pose; no arbitrary-pose guarantee implied.",
+      "evidence": [
+        "04-overeager-before-stretch.png",
+        "05-overeager-stretch-unframed.png",
+        "06-overeager-stretch-framed.png"
+      ]
+    },
+    {
+      "area": "Audience framing",
+      "observation": "The stretched tip left the camera gate. Frame restored the whole actor; Frame motion provided a fixed composition covering the keyed study.",
+      "evidence": [
+        "05-overeager-stretch-unframed.png",
+        "06-overeager-stretch-framed.png",
+        "11-ouch-keyed-reach.png"
+      ]
+    },
+    {
+      "area": "Recovery",
+      "observation": "Undo first undid framing, then stretch. Redo restored stretch. This worked but action counts and generic Undone/Redone require remembering which type of edit is next.",
+      "suggestion": "Name the next Undo/Redo action.",
+      "evidence": [
+        "07-stretch-recovered.png",
+        "play-events.json"
+      ]
+    },
+    {
+      "area": "Framing discovery",
+      "observation": "Fitting my own motion required Timing\u2192Try a motion\u2192Frame motion, alongside a sample-loader.",
+      "suggestion": "Expose whole-motion framing beside the stage Frame control.",
+      "evidence": [
+        "08-comic-ending.png",
+        "play-events.json"
+      ]
+    },
+    {
+      "area": "Face-free acting",
+      "observation": "Small head rotation contributes little compared with arm/torso silhouette in this plain browser material. It does not substitute for a readable body attitude.",
+      "evidence": [
+        "02-greeting-before-head.png",
+        "03-greeting-head-tilt.png"
+      ]
+    },
+    {
+      "area": "Comic timing",
+      "observation": "Exact frame41 retains the small hello, then42 presents the overreach. The intentional hold creates a sharp pose change; easing handles the subsequent slump. Playback was started/stopped, but no quantitative frame-performance claim follows.",
+      "evidence": [
+        "15-trip-held-hello.png",
+        "16-trip-snap-reach.png",
+        "10-ouch-playback.png"
+      ]
+    },
+    {
+      "area": "Trip contrast",
+      "observation": "White Trip loses edge contrast in white room; green immediately separates the silhouette. Halp independently reported the same from a different scene.",
+      "suggestion": "A neutral gray working backdrop would be useful for both light and dark Characters.",
+      "evidence": [
+        "12-trip-white-room.png",
+        "13-trip-green-room.png"
+      ]
+    },
+    {
+      "area": "Identity wording",
+      "observation": "Actual Trip click emitted Same character, white clay. Sharing construction does not make Ouch and Trip the same Character.",
+      "suggestion": "Use Trip selected or current-look wording.",
+      "evidence": [
+        "play-events.json"
+      ]
+    },
+    {
+      "area": "Camera is performance",
+      "observation": "Side view overlaps raised arms/head and weakens the gesture; quarter view restores their separation. This is a staging choice, not a new geometry defect.",
+      "evidence": [
+        "14-trip-side.png",
+        "16-trip-snap-reach.png"
+      ]
+    },
+    {
+      "area": "Retiming and saved variants",
+      "observation": "Duration and Keep seconds controls retained four distinct keys through4.5s/12fps retiming. UI reopening restored Ouch square/24fps and Trip portrait/12fps versions with their visible look, stage, keys and settings.",
+      "evidence": [
+        "19-trip-slower-timing.png",
+        "21-ouch-reopened.png",
+        "22-trip-reopened.png"
+      ]
+    }
+  ],
+  "peer_comparison": {
+    "Halp_report": "Independent Trip wobble also lost contrast on white and improved on green; direct elbow-ring turn could hide the arm in front view, prompting quarter-camera composition. Halp reported immediate Undo/Redo recovery.",
+    "Bee_scope": "Message received; Bee did not inspect or operate Halp\u2019s scene.",
+    "CB_report": "C.B. found unkeyed pose loss on timeline move; a helper is fixing it. Bee keyed before timeline changes and does not claim independent reproduction or fix verification."
+  },
+  "evidence": {
+    "screenshots": [
+      {
+        "path": "01-open.png",
+        "sha256": "84e75775e449d12914dcc9ee6d7e741eb26c59426f98c1ffabf89de3e05663ce",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "01-open.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "02-greeting-before-head.png",
+        "sha256": "fb1e1befb52a0a93a281c55e1f1a3f32fbfb01ca2d3b2252cfa8117c084667d1",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "02-greeting-before-head.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "03-greeting-head-tilt.png",
+        "sha256": "dd10c8c5e2bdf30fe781ccb0a9efdbfd35011940b4b7108180d2c38d4fa152a8",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "03-greeting-head-tilt.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "04-overeager-before-stretch.png",
+        "sha256": "926fe9223fec8647122da984d9efe57d26fa79c6f708ab599d4535367021b7ce",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "04-overeager-before-stretch.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "05-overeager-stretch-unframed.png",
+        "sha256": "91a3daa66a61fd1f8b9384c22ae9101f58176fddc73ba758c61c6362f3dd9823",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "05-overeager-stretch-unframed.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "06-overeager-stretch-framed.png",
+        "sha256": "f370ad070a6f5973e1823a19dc8253f8c5d9301abcdd0be699edee0143d7519c",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "06-overeager-stretch-framed.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "07-stretch-recovered.png",
+        "sha256": "a1a1249b104f1243dd0caef18d0a4157abe8ae55ce1fbfdd7ff4a4e5f77e40dc",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "07-stretch-recovered.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "08-comic-ending.png",
+        "sha256": "c27e9bd569381bf6831f6eee2a0026b7bc0d0a055b4d0e688c58c297e0b53e94",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "08-comic-ending.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "10-ouch-playback.png",
+        "sha256": "1874d4e952d93f35105ca21a3ca9703ba778c65f28567f91a5f6d858639af41d",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "10-ouch-playback.take.json",
+        "snapshot_is_frame_atomic": false
+      },
+      {
+        "path": "11-ouch-keyed-reach.png",
+        "sha256": "68621732f970a1493097feda0223c27b7767ee325e83268b62981c17585a5856",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "11-ouch-keyed-reach.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "12-trip-white-room.png",
+        "sha256": "5989a18282fe117b4fe43324140726751dc81de3f6a4cec57f7d9cf6c884c8ee",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "12-trip-white-room.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "13-trip-green-room.png",
+        "sha256": "b4147c5cb407fe96cc1766a7b0994909510f832a8887bb5eb43665b13c9a970f",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "13-trip-green-room.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "14-trip-side.png",
+        "sha256": "2914749077eb9216897140b41cedd5d21ca070b5e9ada9e09237a1c7c8e5e8a4",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "14-trip-side.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "15-trip-held-hello.png",
+        "sha256": "4fbdd8799845961d60b07dea6b8009e11f8c2c10b66af5294691344edd9bafaf",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "15-trip-held-hello.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "16-trip-snap-reach.png",
+        "sha256": "6caf269585e31c8ab1fbdb542da1dbda6091b6476218b0fbbf81e5321bc62586",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "16-trip-snap-reach.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "17-trip-portrait.png",
+        "sha256": "80b496d561c7a3b575f10ad817d7f9b35a0ff2d0bbe8af6a2d9a25329af9853c",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "17-trip-portrait.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "19-trip-slower-timing.png",
+        "sha256": "81ee1dc8749f4602017877e2079d445ecedf7c3914ffd77a7b21791ebd35e816",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "19-trip-slower-timing.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "21-ouch-reopened.png",
+        "sha256": "aa6edcced41e0158c5007e2d37e799c4aaa274d269267390f8ce169a4e7abf8c",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "21-ouch-reopened.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      },
+      {
+        "path": "22-trip-reopened.png",
+        "sha256": "bcb09f5eb318a852b0ae5b723aec76a0538975a061773b413ace656d7eef6762",
+        "size": [
+          1440,
+          1000
+        ],
+        "actual_pixels_viewed_by": "Bee",
+        "associated_snapshot": "22-trip-reopened.take.json",
+        "snapshot_is_frame_atomic": "Captured with playback stopped; separate operations, not an atomic GPU/state transaction."
+      }
+    ],
+    "take_snapshots": [
+      {
+        "path": "01-open.take.json",
+        "sha256": "c2b10ab50cfdb9711533e161ee04be9f6798f3e520da19964b9a256ea5803623",
+        "name": "Ouch \u00b7 First take",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 1,
+        "keys": []
+      },
+      {
+        "path": "02-greeting-before-head.take.json",
+        "sha256": "44e2f2ab60475869e0e4c322a8ee7b956f067d1d5f15d9a4d4fb6743354d9828",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 20,
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      },
+      {
+        "path": "03-greeting-head-tilt.take.json",
+        "sha256": "20abf3bf8f6cc9f22a24f81050fd1cbeac13b2525370874945f3963ef4a3b982",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 20,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      },
+      {
+        "path": "04-overeager-before-stretch.take.json",
+        "sha256": "d018d9d01d327324fd018f0c28b374cafc74b94f2de0fa92589ef1f04cae818f",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      },
+      {
+        "path": "05-overeager-stretch-unframed.take.json",
+        "sha256": "a75bc13813cb5978b8672e454c58d49f9d64c150ea0d53aeb6d2ff76fb7da143",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      },
+      {
+        "path": "06-overeager-stretch-framed.take.json",
+        "sha256": "b19bce94a8e2fdf6a9cac0aa552f450b78c8afd77a1d85c5b3864f9e1bc8af2a",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      },
+      {
+        "path": "07-stretch-recovered.take.json",
+        "sha256": "a04b54a3bf94c374749a33f14f453c8773dbd092cb335b81d3bd94d7a9722166",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      },
+      {
+        "path": "08-comic-ending.take.json",
+        "sha256": "0eaa9779149c99ecda576fd1fcdb8f1be9aeba477bb2bc463baedc8e9a180663",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 72,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "10-ouch-playback.take.json",
+        "sha256": "db81227b4fdcf4e7825742e6087467d34e0194c920e5306f0bfa125f0ee50114",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 26,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "11-ouch-keyed-reach.take.json",
+        "sha256": "410c24912b988780d4113c61ba8e1b9e0ce69f54cf763c168d6c1850c009aab1",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "12-trip-white-room.take.json",
+        "sha256": "f7bb537a2849407e5e4ca7d2296565c02a533aaa724ad2d93cc27c2e228e23c3",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+        "look": "trip",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "13-trip-green-room.take.json",
+        "sha256": "3fcd177f2adc3acc8b41df9bd56ae3b6e7472be3181d5d0202604442a03a2472",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+        "look": "trip",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "14-trip-side.take.json",
+        "sha256": "ea66534cd5a7741ca4a94431de44ca2b32150ea21e19fc3eb2122ed2276210d0",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+        "look": "trip",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "15-trip-held-hello.take.json",
+        "sha256": "2a2f26a6631cedae6a87ba65c085f00cde41381a6c65f20b461cf83b2f0b4294",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+        "look": "trip",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 41,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "16-trip-snap-reach.take.json",
+        "sha256": "46ae548541b2c678f4fc021760479d1a4486f751b7f24559331ea39dd297f21b",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+        "look": "trip",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "17-trip-portrait.take.json",
+        "sha256": "07bff7908d703b534b09b57aee426446af77bfa1a379f312f585fe1e2490ed70",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+        "look": "trip",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 1280
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "19-trip-slower-timing.take.json",
+        "sha256": "cd138f79bb126a76abb5ed551fbd36702bdd81fe041b56b976dc17121f746f3b",
+        "name": "Bee Pass3 \u00b7 Trip takes a beat \u00b7 12fps",
+        "look": "trip",
+        "fps": 12,
+        "range": {
+          "start": 1,
+          "end": 54
+        },
+        "output": {
+          "width": 720,
+          "height": 1280
+        },
+        "frame": 32,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      },
+      {
+        "path": "21-ouch-reopened.take.json",
+        "sha256": "5324807a6e51b845eb40eedf93a8ffa51056cf53b58b3e96d1261283297f41d6",
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+        "look": "ouch",
+        "fps": 24,
+        "range": {
+          "start": 1,
+          "end": 72
+        },
+        "output": {
+          "width": 720,
+          "height": 720
+        },
+        "frame": 42,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      },
+      {
+        "path": "22-trip-reopened.take.json",
+        "sha256": "cd138f79bb126a76abb5ed551fbd36702bdd81fe041b56b976dc17121f746f3b",
+        "name": "Bee Pass3 \u00b7 Trip takes a beat \u00b7 12fps",
+        "look": "trip",
+        "fps": 12,
+        "range": {
+          "start": 1,
+          "end": 54
+        },
+        "output": {
+          "width": 720,
+          "height": 1280
+        },
+        "frame": 32,
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    ],
+    "local_save_receipts": [
+      {
+        "path": "09-ouch-comic.save.json",
+        "sha256": "12825b54c1ba4c4411408739a908b1a214db60bd9ba0925da8a96f402e6d78b9",
+        "saved_id": "dir_b9f9c60d-b579-4ddd-8a2a-a66ae1e2a8ea",
+        "storage": "local-workspace",
+        "shared": false,
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch"
+      },
+      {
+        "path": "18-trip-comic.save.json",
+        "sha256": "477248aed79b94763744cefd995fc85bd1e90422b7d7d14c0ffdb6c5fba98789",
+        "saved_id": "dir_7b0770ad-84d7-4a86-a951-891033790376",
+        "storage": "local-workspace",
+        "shared": false,
+        "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip"
+      },
+      {
+        "path": "20-trip-slower.save.json",
+        "sha256": "64b84afccbc5e428ef33191feda0defb63999c453358dc0077f81c3afbca88f9",
+        "saved_id": "dir_48220507-2940-4e54-905f-b7f36d9fc92f",
+        "storage": "local-workspace",
+        "shared": false,
+        "name": "Bee Pass3 \u00b7 Trip takes a beat \u00b7 12fps"
+      }
+    ],
+    "event_log": {
+      "path": "play-events.json",
+      "sha256": "c7e629a8422963be980e9d8699231920b935ac56be8651c707f564fef95c32a3",
+      "event_count": 82,
+      "page_errors": []
+    }
+  },
+  "limitations": [
+    "Desktop mouse/keyboard only; no physical ACHE or mobile touch claim.",
+    "Browser uses the documented simple rough material; native procedural clay was not reviewed in this session.",
+    "No new native geometry or implementation edits by Bee.",
+    "No live saves or Crew messages were made; all3 saves explicitly returned shared:false.",
+    "Playback screenshot10 and its later state snapshot are not frame-atomic: screenshot visibly shows57 while later snapshot is26 during loop. Do not treat them as a pose-state mismatch.",
+    "No continuous visual playback or FPS-performance certification; actual controls operated and captured frames viewed.",
+    "No arbitrary-motion/holding/collision or Director acceptance inferred.",
+    "No confirmation that other Crew\u2019s concurrent fixes are loaded or verified by this play session."
+  ],
+  "subsequent_director_correction": {
+    "recorded_utc": "2026-11-25T03:30:18.834098+00:00",
+    "attribution": "Dan direction relayed by C.B. after this play review",
+    "meaning": "Improve Trip visibility using Dan\u2019s existing Trip art techniques rather than changing the background. Pause ODK implementation for MorningLearn and source study.",
+    "effect": "The neutral-gray/background suggestion is retained only as historical play feedback and is superseded as a solution. Bee will inspect actual Trip art and teach back before proposing contour/shading."
+  }
+}

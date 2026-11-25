@@ -8,17 +8,21 @@
   const clone = value => structuredClone(value);
   const draftKey = 'nest.director.draft.v1';
   const currentDraftKey = () => `${draftKey}.${manifest.sha256}`;
-  const ui = { ready: false, dirty: true, savedId: null, playing: false, handles: true, start: 1, frame: 1, end: 72, fps: 24, animation: { transition: 'ease-in-out', loop: true }, output: { width: 720, height: 720 }, keys: [], undo: [], redo: [], look: 'ouch', background: 'white' };
+  const lensFields = [['glow',0,1],['rays',0,1],['streak',0,1],['ghosts',0,1],['spread',.25,2],['rotation',-180,180],['rayCount',4,16]];
+  const lensInputId = (prefix, field) => `${prefix}-${field === 'rayCount' ? 'ray-count' : field}`;
+  const ui = { ready: false, dirty: true, draftWriteFailed: false, savedId: null, playing: false, handles: true, start: 1, frame: 1, end: 72, fps: 24, animation: { transition: 'ease-in-out', loop: true }, output: { width: 720, height: 720 }, keys: [], undo: [], redo: [], look: 'ouch', background: 'white', mode: 'pose', tool: 'rotate', stretch: false, tripGlow: 0, tripFlare: 0, tripTemperature: 6500, tripBodyTemperature: null, tripLens: null, outline: { enabled: true, tone: 0, width: .0025 } };
   let engine, scene, camera, floor, gizmo, manifest, neutralPose, nodes = {}, morphs = {}, handles = [], selected, savedSnapshot, saveRequest = null, sendRequest = null, savePayload = null;
   let playStart = 0, playFrame = 1, restoring = false, dragBefore = null;
   let cameraBefore = null, cameraWheelTimer = null;
-  const label = name => ({ root: 'Whole character', 'torso.lower': 'Lower body', 'torso.upper': 'Torso', head: 'Head', 'upper_arm.L': 'Left shoulder', 'lower_arm.L': 'Left elbow', 'upper_arm.R': 'Right shoulder', 'lower_arm.R': 'Right elbow', 'thigh.L': 'Left hip', 'shin.L': 'Left knee', 'thigh.R': 'Right hip', 'shin.R': 'Right knee' }[name] || name);
-  function status(message) { $('status').textContent = message; }
+  let appearance, lighting, stageDesign, kinematics, directManipulation, poseControl, backdropUploadToken = 0;
+  let gizmoTargetStart = null, gizmoTargetMoved = false;
+  const label = name => ({ root: 'Whole character', 'torso.lower': 'Hips', 'torso.upper': 'Torso', head: 'Head', 'upper_arm.L': 'Left shoulder', 'lower_arm.L': 'Left elbow', 'upper_arm.R': 'Right shoulder', 'lower_arm.R': 'Right elbow', 'thigh.L': 'Left hip', 'shin.L': 'Left knee', 'thigh.R': 'Right hip', 'shin.R': 'Right knee' }[name] || name);
+  function status(message) { $('status').textContent = ui.draftWriteFailed ? `Browser draft unavailable. Use Save take before closing. ${message}` : message; }
   function cameraState() { return { mode: camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? 'orthographic' : 'perspective', position: camera.position.asArray(), target: camera.target.asArray(), fov: camera.fov, orthoSize: camera.orthoTop ? camera.orthoTop * 2 : 1.5 }; }
   function pose() {
-    return { bones: Object.fromEntries(Object.entries(nodes).map(([name, node]) => [name, { position: node.position.asArray(), rotation: (node.rotationQuaternion || B.Quaternion.FromEulerVector(node.rotation)).normalize().asArray(), scale: node.scaling.asArray() }])), morphs: Object.fromEntries(manifest.morphs.map(name => [name, morphs[name]?.[0]?.influence || 0])) };
+    return { bones: Object.fromEntries(Object.entries(nodes).map(([name, node]) => [name, { position: node.position.asArray(), rotation: (node.rotationQuaternion?.clone() || B.Quaternion.FromEulerVector(node.rotation)).normalize().asArray(), scale: node.scaling.asArray() }])), morphs: Object.fromEntries(manifest.morphs.map(name => [name, morphs[name]?.[0]?.influence || 0])) };
   }
-  function snapshot() { return { schema: 'nest-director-take/v2', asset: { id: manifest.id, sha256: manifest.sha256 }, name: $('take-name').value.trim() || 'Untitled take', notes: $('notes').value, look: ui.look, fps: ui.fps, frame: ui.frame, range: { start: ui.start, end: ui.end }, stage: { background: ui.background }, camera: cameraState(), pose: pose(), keyframes: clone(ui.keys), animation: clone(ui.animation), output: clone(ui.output) }; }
+  function snapshot() { return { schema: 'nest-director-take/v2', asset: { id: manifest.id, sha256: manifest.sha256 }, name: $('take-name').value.trim() || 'Untitled take', notes: $('notes').value, look: ui.look, fps: ui.fps, frame: ui.frame, range: { start: ui.start, end: ui.end }, stage: { background: ui.background, design: stageDesign.snapshot() }, tripGlow: ui.tripGlow, tripFlare: ui.tripFlare, tripTemperature: ui.tripTemperature, ...(ui.tripBodyTemperature !== null ? { tripBodyTemperature: ui.tripBodyTemperature } : {}), ...(ui.tripLens ? { tripLens: clone(ui.tripLens) } : {}), outline: clone(ui.outline), lighting: lighting.snapshot(), camera: cameraState(), pose: pose(), keyframes: clone(ui.keys), animation: clone(ui.animation), output: clone(ui.output) }; }
   function applyPose(value, refresh = true) {
     scene.animationGroups.forEach(group => group.stop());
     for (const [name, p] of Object.entries(value.bones)) {
@@ -26,6 +30,7 @@
       node.position.copyFromFloats(...p.position); node.rotationQuaternion = B.Quaternion.FromArray(p.rotation).normalize(); node.scaling.copyFromFloats(...p.scale);
     }
     for (const name of manifest.morphs) for (const target of morphs[name] || []) target.influence = value.morphs[name] || 0;
+    kinematics?.sync();
     if (refresh) { syncJoint(); syncPreset(value); }
   }
   function syncPreset(value) {
@@ -41,6 +46,7 @@
   }
   function restore(take) {
     if (take.asset.id !== manifest.id || take.asset.sha256 !== manifest.sha256) throw new Error('This take uses a different model revision. Its saved pose has been kept; open it with that revision.');
+    directManipulation?.cancel(); kinematics?.endBody({cancelled:true}); kinematics?.end({cancelled:true});
     restoring = true;
     try {
       $('take-name').value = take.name; $('notes').value = take.notes; ui.start = take.range.start; ui.end = take.range.end; ui.fps = take.fps; ui.frame = take.frame; ui.keys = clone(take.keyframes);
@@ -49,7 +55,12 @@
       const stageRect = document.querySelector('.stage').getBoundingClientRect();
       setOutput(take.output || { width: 720, height: Math.max(64, Math.round(720 * stageRect.height / stageRect.width)) });
       $('transition').value = ui.animation.transition; $('loop').checked = ui.animation.loop;
-      setLook(take.look); setBackground(take.stage.background); setCamera(take.camera); applyPose(take.pose); syncTimeline();
+      backdropUploadToken++;
+      ui.tripGlow = take.tripGlow ?? 0; ui.tripFlare = take.tripFlare ?? 0; ui.tripTemperature = take.tripTemperature ?? 6500;
+      ui.tripBodyTemperature = take.tripBodyTemperature ?? null; ui.tripLens = take.tripLens ? clone(take.tripLens) : null;
+      ui.outline = clone(take.outline || { enabled: false, tone: 0, width: .0025 });
+      stageDesign.restore(take.stage.design || null); lighting.restore(take.lighting || null);
+      setLook(take.look); setBackground(take.stage.background); setCamera(take.camera); applyPose(take.pose); syncTimeline(); syncSceneEditor(); setMode(ui.mode);
     } finally { restoring = false; }
   }
   function pushHistory(value) { ui.undo.push(clone(value)); if (ui.undo.length > 60) ui.undo.shift(); ui.redo.length = 0; buttons(); }
@@ -60,11 +71,28 @@
     if (JSON.stringify(before.camera) !== JSON.stringify(cameraState())) pushHistory(before);
   }
   function remember(value = snapshot()) { finishCameraHistory(); pushHistory(value); }
-  function changed(message = 'Pose changed. Your browser draft is kept here.') {
+  function preserveUnkeyedPose() {
+    const sampled = A.samplePose(ui.keys, ui.frame, ui.animation.transition);
+    // With no keys, navigation keeps the scratch pose; there is nothing to
+    // replace. Compare the full pose so slider, ring, direct-position and soft
+    // shape edits all receive the same reversible boundary.
+    if (!sampled) return false;
+    const current = pose();
+    const near = (a, b, sign = 1) => a.every((value, i) => Math.abs(value - sign * b[i]) <= 1e-7);
+    const matches = manifest.bones.every(name => {
+      const a = current.bones[name], b = sampled.bones[name];
+      return near(a.position, b.position) && near(a.scale, b.scale)
+        && (near(a.rotation, b.rotation) || near(a.rotation, b.rotation, -1));
+    }) && manifest.morphs.every(name => Math.abs(current.morphs[name] - sampled.morphs[name]) <= 1e-7);
+    if (matches) return false;
+    remember();
+    return true;
+  }
+  function changed(message = 'Pose changed.') {
     if (restoring || !ui.ready) return;
     syncPreset(pose()); ui.dirty = true; saveRequest = null; sendRequest = null;
-    try { localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); } catch { status('Browser draft storage is full. Use Save take to keep this work.'); }
-    $('storage-label').textContent = 'BROWSER DRAFT'; buttons(); status(message);
+    try { localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); ui.draftWriteFailed = false; } catch { ui.draftWriteFailed = true; }
+    $('storage-label').textContent = ui.draftWriteFailed ? 'DRAFT NOT SAVED' : 'BROWSER DRAFT'; buttons(); status(message);
   }
   function buttons() {
     for (const name of ['save', 'play', 'key-pose', 'handles', 'reset-joint']) $(name).disabled = !ui.ready;
@@ -74,30 +102,183 @@
     if ($('history-count').textContent !== historyText) $('history-count').textContent = historyText;
     $('remove-key').disabled = !ui.keys.some(key => key.frame === ui.frame);
   }
-  function setLook(look) {
-    ui.look = look;
-    for (const mesh of scene.meshes) if (mesh.metadata?.directorCharacter && mesh.material) {
-      const color = look === 'trip' ? new B.Color3(.78, .78, .74) : new B.Color3(.025, .028, .026);
-      if (mesh.material.albedoColor) mesh.material.albedoColor = color; else mesh.material.diffuseColor = color;
+  function syncLensControls(prefix, value, disabled = false) {
+    const settings = value || window.DirectorOptics.defaults('glow');
+    $(prefix + '-style').value = settings.preset; $(prefix + '-style').disabled = disabled;
+    for (const [field] of lensFields) {
+      const id = lensInputId(prefix, field), number = settings[field];
+      $(id).value = number; $(id).disabled = disabled;
+      $(id + '-label').value = ['glow','rays','streak','ghosts'].includes(field) ? `${Math.round(number * 100)}%` : field === 'rotation' ? `${number}°` : field === 'spread' ? `${Number(number.toFixed(2))}×` : String(number);
     }
+  }
+  function applyAppearance() {
+    appearance.apply({ look: ui.look, tripGlow: ui.tripGlow, tripFlare: ui.tripFlare, tripTemperature: ui.tripTemperature, ...(ui.tripBodyTemperature !== null ? { tripBodyTemperature: ui.tripBodyTemperature } : {}), ...(ui.tripLens ? { tripLens: ui.tripLens } : {}), outline: ui.outline });
+    $('outline-enabled').checked = ui.outline.enabled; $('outline-tone').value = ui.outline.tone; $('outline-width').value = ui.outline.width;
+    $('outline-tone-label').value = ui.outline.tone === 0 ? 'Black' : ui.outline.tone === 1 ? 'White' : `${Math.round(ui.outline.tone * 100)}%`;
+    $('trip-glow').value = ui.tripGlow; $('trip-glow-label').value = `${Math.round(ui.tripGlow * 100)}%`;
+    $('trip-flare').value = ui.tripFlare; $('trip-flare-label').value = ui.tripFlare === 0 ? 'Off' : `${Math.round(ui.tripFlare * 100)}%`;
+    $('trip-temperature').value = ui.tripTemperature; $('trip-temperature-label').value = `${ui.tripTemperature} K`;
+    const linked = ui.tripBodyTemperature === null, bodyTemperature = linked ? ui.tripTemperature : ui.tripBodyTemperature;
+    $('trip-body-linked').checked = linked; $('trip-body-temperature').disabled = linked;
+    $('trip-body-temperature').value = bodyTemperature; $('trip-body-temperature-label').value = `${bodyTemperature} K${linked ? ' · linked' : ''}`;
+    syncLensControls('trip-lens', ui.tripLens, ui.look !== 'trip');
+    for (const id of ['trip-glow-control','trip-flare-control','trip-temperature-control','trip-body-temperature-control','trip-lens-control']) $(id).hidden = ui.look !== 'trip';
+    lighting?.sync();
+  }
+  function setLook(look) {
+    ui.look = look; applyAppearance();
     for (const name of ['ouch', 'trip']) { $(name).classList.toggle('active', name === look); $(name).setAttribute('aria-pressed', String(name === look)); }
     $('look-label').textContent = look.toUpperCase();
   }
   function setBackground(background) {
     ui.background = background; $('background').value = background;
-    scene.clearColor = background === 'green' ? new B.Color4(0, .9, .08, 1) : new B.Color4(.953, .957, .941, background === 'transparent' ? 0 : 1);
-    floor.setEnabled(background === 'white');
+    stageDesign.applyBackground(background);
     $('room').style.background = background === 'transparent' ? 'repeating-conic-gradient(#d8dcd7 0% 25%, #eef0eb 0% 50%) 50% / 24px 24px' : 'transparent';
-    $('room-title').textContent = background === 'white' ? ' THE WHITE ROOM ' : background === 'green' ? ' GREEN SCREEN ' : ' TRANSPARENT STAGE ';
+    $('room-title').textContent = background === 'white' ? ' THE SET ' : background === 'green' ? ' GREEN SCREEN ' : ' TRANSPARENT STAGE ';
+  }
+  const activeController = () => ui.mode === 'lighting' ? lighting : ui.mode === 'stage' ? stageDesign : null;
+  const activeNodes = () => activeController()?.nodes() || (ui.stretch ? nodes : { ...nodes, ...kinematics.nodes() });
+  const activeHandles = () => activeController()?.handles() || (ui.stretch ? handles : [...handles, ...kinematics.handles()]);
+  const movableHandles = () => ui.mode !== 'pose' || ui.stretch ? activeHandles() : activeHandles().filter(handle => canMoveControl(handle.metadata?.joint));
+  const activeSelected = () => activeController()?.getSelected() || (ui.mode === 'pose' ? poseControl || selected : null);
+  const isPoseTarget = () => ui.mode === 'pose' && !ui.stretch && kinematics.isTarget(activeSelected());
+  const isHipControl = () => ui.mode === 'pose' && !ui.stretch && activeSelected() === 'torso.lower';
+  const canMoveControl = id => ui.mode !== 'pose' || ui.stretch || kinematics.isTarget(id) || ['root','torso.lower'].includes(id);
+  const canScaleControl = () => ui.mode === 'stage' || (ui.mode === 'pose' && ui.stretch);
+  function syncTools() {
+    const target = isPoseTarget();
+    if (target) ui.tool = 'move';
+    else if ((ui.tool === 'move' && !canMoveControl(activeSelected())) || (ui.tool === 'scale' && !canScaleControl())) ui.tool = 'rotate';
+    $('tool-move').disabled = !canMoveControl(activeSelected()); $('tool-rotate').disabled = target; $('tool-scale').disabled = !canScaleControl();
+    for (const tool of ['move','rotate','scale']) { $('tool-' + tool).setAttribute('aria-pressed', String(ui.tool === tool)); $('tool-' + tool).classList.toggle('active', ui.tool === tool); }
+  }
+  function controlLabel(id) {
+    if (ui.mode === 'pose') return kinematics.labels()[id] || label(id);
+    const data = ui.mode === 'lighting' ? lighting.snapshot().lights : stageDesign.snapshot().objects;
+    return data.find(item => item.id === id)?.name || 'Set control';
+  }
+  function attachControl() {
+    if (!gizmo) return;
+    gizmo.positionGizmoEnabled = ui.tool === 'move'; gizmo.rotationGizmoEnabled = ui.tool === 'rotate'; gizmo.scaleGizmoEnabled = ui.tool === 'scale' && ui.mode !== 'lighting';
+    gizmo.attachToNode(ui.handles ? activeNodes()[activeSelected()] || null : null);
+    $('hint').textContent = ui.handles && activeSelected() ? (canMoveControl(activeSelected()) ? `${controlLabel(activeSelected())} · hold a marker to move; drag the ${ui.tool} gizmo` : (kinematics.available ? `${controlLabel(activeSelected())} · rotate here; move a hand or foot to bend the limb` : `${controlLabel(activeSelected())} · rotate here; Stretch allows free movement`)) : ui.handles ? 'Choose a control or add a set piece.' : 'Controls hidden · drag the room to orbit the camera';
+  }
+  function selectControl(id) {
+    if (!activeNodes()[id]) return;
+    if (ui.mode === 'pose') {
+      if (kinematics.isTarget(id) && !ui.stretch) { poseControl = id; $('joint').value = id; kinematics.sync(); syncTools(); syncJoint(); attachControl(); }
+      else selectJoint(id);
+    }
+    else { activeController().select(id); syncSceneEditor(); attachControl(); }
+  }
+  function setMode(mode) {
+    directManipulation?.cancel(); stop(); ui.mode = mode;
+    if (mode === 'lighting' && ui.tool === 'scale') ui.tool = 'move';
+    kinematics.setEditing(ui.handles && mode === 'pose' && !ui.stretch);
+    for (const name of ['pose', 'lighting', 'stage']) $('mode-' + name).setAttribute('aria-pressed', String(mode === name));
+    for (const element of document.querySelectorAll('[data-modes]')) element.hidden = !element.dataset.modes.split(' ').includes(mode);
+    document.querySelector('.inspector').dataset.mode = mode;
+    $('mode-title').textContent = mode[0].toUpperCase() + mode.slice(1) + ' Mode';
+    syncTools();
+    handles.forEach(handle => handle.setEnabled(ui.handles && mode === 'pose'));
+    lighting.setEditing(ui.handles && mode === 'lighting'); stageDesign.setEditing(ui.handles && mode === 'stage');
+    $('handles').textContent = 'Controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles));
+    syncSceneEditor(); attachControl();
+  }
+  function syncSceneEditor() {
+    if (!lighting || !stageDesign) return;
+    const lights = lighting.snapshot(), design = stageDesign.snapshot();
+    $('light-select').replaceChildren(...lights.lights.map(item => new Option(item.name, item.id)));
+    $('light-select').value = lighting.getSelected() || '';
+    $('stage-select').replaceChildren(...design.objects.map(item => new Option(item.name, item.id)));
+    if (!design.objects.length) $('stage-select').add(new Option('No set pieces yet', ''));
+    $('stage-select').value = stageDesign.getSelected() || '';
+    for (const id of ['add-light','add-left-hand-light','add-right-hand-light','add-head-light']) $(id).disabled = lights.lights.length >= 8;
+    $('add-stage-object').disabled = design.objects.length >= 32;
+    const light = lights.lights.find(item => item.id === lighting.getSelected());
+    for (const id of ['light-enabled','light-selected-type','light-name','light-color','light-intensity','light-angle','light-range','light-attachment','light-flare','light-effect-shape','light-effect-radius','light-effect-length','light-effect-strength','remove-light']) $(id).disabled = !light;
+    if (light) { $('light-enabled').checked = light.enabled; $('light-selected-type').value = light.type; $('light-name').value = light.name; $('light-color').value = light.color; $('light-intensity').value = light.intensity; $('light-intensity-label').value = light.intensity.toFixed(2); $('light-angle').value = Math.round(light.angle * 180 / Math.PI); $('light-range').value = light.range; $('light-angle').disabled = light.type !== 'spot'; $('light-range').disabled = light.type === 'directional'; }
+    const attachment = light?.attachment || 'world', effect = light?.effect || { shape: 'none', radius: .06, length: 1, strength: .5 };
+    $('light-attachment').value = attachment;
+    const flare = light?.flare || 0;
+    $('light-flare').value = flare; $('light-flare-label').value = flare === 0 ? 'Off' : `${Math.round(flare * 100)}%`;
+    syncLensControls('light-lens', light?.lens, !light);
+    $('light-attachment-description').textContent = attachment === 'world' ? 'Position and rotation are relative to the stage.' : 'Follows the selected body part. Position and rotation adjust its local offset.';
+    $('light-effect-shape').value = effect.shape; $('light-effect-radius').value = effect.radius; $('light-effect-length').value = effect.length; $('light-effect-strength').value = effect.strength; $('light-effect-strength-label').value = `${Math.round(effect.strength * 100)}%`;
+    $('light-effect-radius').disabled = !light || effect.shape === 'none'; $('light-effect-length').disabled = !light || effect.shape !== 'beam'; $('light-effect-strength').disabled = !light || effect.shape === 'none';
+    $('ambient-color').value = lights.ambient.color; $('ambient-intensity').value = lights.ambient.intensity;
+    const object = design.objects.find(item => item.id === stageDesign.getSelected());
+    for (const id of ['stage-name','stage-color','remove-stage-object']) $(id).disabled = !object;
+    if (object) { $('stage-name').value = object.name; $('stage-color').value = object.color; }
+    $('backdrop-type').value = design.backdrop.type; $('backdrop-color').value = design.backdrop.color; $('backdrop-fit').value = design.backdrop.fit;
+    $('backdrop-image-name').textContent = design.backdrop.image?.name || 'No image selected.'; $('remove-backdrop-image').disabled = !design.backdrop.image;
+    $('floor-enabled').checked = design.floor.enabled; $('floor-color').value = design.floor.color; $('floor-size').value = design.floor.size; $('floor-height').value = design.floor.height;
+    const node = activeNodes()[activeSelected()];
+    $('scene-selection-label').textContent = node ? controlLabel(activeSelected()) : 'Select an item to place it.';
+    for (const input of document.querySelectorAll('.scene-transform-panel input')) input.disabled = !node;
+    if (node && ui.mode !== 'pose') {
+      const rotation = node.rotationQuaternion?.toEulerAngles() || node.rotation;
+      for (const axis of ['x','y','z']) { $('scene-pos-' + axis).value = Number(node.position[axis].toFixed(4)); $('scene-rot-' + axis).value = Number((rotation[axis] * 180 / Math.PI).toFixed(2)); $('scene-scale-' + axis).value = Number(node.scaling[axis].toFixed(4)); }
+    }
+  }
+  function syncActive() { if (ui.mode === 'pose') { kinematics.sync(); syncJoint(); } else { lighting.sync(); stageDesign.sync(); syncSceneEditor(); } }
+  function constrainActive() {
+    const node = activeNodes()[activeSelected()]; if (!node) return false;
+    const limit = ui.mode === 'pose' ? 1000 : 100, scaleMax = ui.mode === 'pose' ? 20 : 100;
+    let bounded = false;
+    for (const axis of ['x','y','z']) {
+      const position = Math.max(-limit, Math.min(limit, Number.isFinite(node.position[axis]) ? node.position[axis] : 0));
+      const scale = Math.max(.01, Math.min(scaleMax, Number.isFinite(node.scaling[axis]) ? node.scaling[axis] : 1));
+      bounded ||= position !== node.position[axis] || scale !== node.scaling[axis];
+      node.position[axis] = position; node.scaling[axis] = scale;
+    }
+    node.rotationQuaternion?.normalize(); node.computeWorldMatrix(true); return bounded;
+  }
+  function frameSet() {
+    scene.render();
+    const points = Object.values(activeNodes()).map(node => node.getAbsolutePosition().clone());
+    for (const mesh of scene.meshes) {
+      if (!mesh.isEnabled() || !mesh.getTotalVertices()) continue;
+      if (mesh.metadata?.directorCharacter) {
+        mesh.skeleton?.prepare(true); const data = mesh.getPositionData(true,true), world = mesh.computeWorldMatrix(true);
+        if (data) for (let i = 0; i < data.length; i += 3) points.push(B.Vector3.TransformCoordinates(new B.Vector3(data[i],data[i+1],data[i+2]),world));
+      } else if (mesh.metadata?.directorStageId) {
+        mesh.computeWorldMatrix(true); points.push(...mesh.getBoundingInfo().boundingBox.vectorsWorld.map(point => point.clone()));
+      }
+    }
+    if (!points.length) return;
+    const min = points.reduce((a,b) => B.Vector3.Minimize(a,b)), max = points.reduce((a,b) => B.Vector3.Maximize(a,b));
+    const center = min.add(max).scale(.5), rect = $('room').getBoundingClientRect(), alpha = camera.alpha, beta = camera.beta;
+    const aspect = rect.width / Math.max(1,rect.height), forward = camera.getForwardRay().direction.normalize();
+    const right = B.Vector3.Cross(forward,camera.upVector).normalize(), up = B.Vector3.Cross(right,forward).normalize();
+    const top = Math.min(rect.height * .45, Math.max(45,document.querySelector('.mode-switcher').getBoundingClientRect().bottom - rect.top + 35));
+    const bottom = Math.min(45,rect.height * .2), side = Math.min(30,rect.width * .12);
+    const cx = 0, cy = (bottom - top) / rect.height, sx = Math.max(.2,1 - 2 * side / rect.width), sy = Math.max(.2,1 - (top + bottom) / rect.height);
+    const tangent = Math.tan(camera.fov / 2), tanY = camera.fovMode === B.Camera.FOVMODE_HORIZONTAL_FIXED ? tangent / aspect : tangent, tanX = tanY * aspect;
+    let distance = .6, half = .3;
+    for (const point of points) {
+      const delta = point.subtract(center), x = B.Vector3.Dot(delta,right), y = B.Vector3.Dot(delta,up), z = B.Vector3.Dot(delta,forward);
+      distance = Math.max(distance,Math.abs(x - cx * tanX * z) / (sx * tanX) - z,Math.abs(y - cy * tanY * z) / (sy * tanY) - z,camera.minZ + .1 - z);
+      half = Math.max(half,Math.abs(x) / (sx * aspect),Math.abs(y) / sy);
+    }
+    distance *= 1.05; half *= 1.05;
+    camera.upperRadiusLimit = Math.max(camera.upperRadiusLimit || 0,distance * 1.1);
+    if (camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA) { camera.setTarget(center.subtract(right.scale(cx * half * aspect)).subtract(up.scale(cy * half))); camera.orthoTop = half; camera.orthoBottom = -half; }
+    else camera.setTarget(center.subtract(right.scale(cx * distance * tanX)).subtract(up.scale(cy * distance * tanY)));
+    camera.alpha = alpha; camera.beta = beta; camera.radius = distance; camera.getViewMatrix(true); fitOrtho();
   }
   function selectJoint(name) {
-    selected = name; $('joint').value = name;
-    gizmo.attachToNode(ui.handles ? nodes[name] : null);
+    selected = name; poseControl = name; $('joint').value = name; syncTools();
+    if (ui.mode === 'pose') attachControl();
     for (const handle of handles) handle.scaling.setAll(handle.metadata.joint === name ? 1.4 : 1);
-    syncJoint(); $('hint').textContent = `${label(name)} · hold a dot to move; drag a ring to rotate`;
+    syncJoint(); if (ui.mode === 'pose') attachControl();
   }
   function syncJoint() {
     if (!selected || !nodes[selected]) return;
+    const target = kinematics?.isTarget(poseControl) && !ui.stretch;
+    $('rotation-controls').hidden = Boolean(target);
+    $('reset-joint').textContent = target ? 'Reset limb' : 'Reset joint';
+    $('pose-control-description').textContent = target ? 'Move this hand or foot. The connected limb bends toward it.' : ui.stretch ? 'Free movement and scaling can stretch the body.' : kinematics.available ? 'Rotate this joint. Move a hand or foot to bend its connected limb.' : 'This model revision uses joint rotation. Stretch allows free movement.';
     const rest = B.Quaternion.FromArray(neutralPose.bones[selected].rotation);
     const q = nodes[selected].rotationQuaternion || B.Quaternion.Identity();
     const angles = rest.conjugate().multiply(q).toEulerAngles();
@@ -155,9 +336,10 @@
     $('key-description').textContent = next ? `This transition runs from frame ${key.frame} to ${next.frame}.` : key ? 'This is the final key. Its pose holds to the end.' : 'Key two poses to make a motion.';
   }
   function scrub(frame, playing = false) {
+    const preserved = !playing && preserveUnkeyedPose();
     ui.frame = Math.max(ui.start, Math.min(ui.end, Math.round(frame)));
     const sampled = A.samplePose(ui.keys, ui.frame, ui.animation.transition); if (sampled) applyPose(sampled, !playing);
-    syncTimeline(!playing); if (!playing) changed(`Frame ${ui.frame}. Key the pose when it is ready.`);
+    syncTimeline(!playing); if (!playing) changed(preserved ? `Unkeyed pose kept in Undo. Frame ${ui.frame}.` : `Frame ${ui.frame}. Key the pose when it is ready.`);
   }
   function changeTiming(end, fps, scaleKeys) {
     stop();
@@ -200,7 +382,8 @@
     changed('Four editable poses loaded. Press Play, or change a pose and key it. Undo restores your previous take.');
   }
 
-/* Manual Frame action: fit the visible, evaluated character; preserve view direction.
+/* Manual Frame action: fit the evaluated character and attached light effects;
+   preserve view direction. World lights and set pieces belong to Frame Set.
    Call frameDirectorCharacter(scene, camera, canvas), then fitOrtho()/changed().
    No default camera, resize handler, pose or saved take is changed automatically. */
 function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
@@ -220,11 +403,13 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
   const point = new B.Vector3();
   let count = 0;
   const originalPose = pose();
+  const attachedEffects = new Set(lighting.snapshot().lights.filter(light => light.enabled && light.attachment && light.attachment !== 'world').map(light => light.id));
   try {
   for (const sample of samplePoses.length ? samplePoses : [null]) {
     if (sample) { applyPose(sample, false); scene.render(); }
   for (const mesh of scene.meshes) {
-    if (!mesh.metadata?.directorCharacter || !mesh.isEnabled() || !mesh.getTotalVertices()) continue;
+    const included = mesh.metadata?.directorCharacter || (mesh.metadata?.directorLightEffect && attachedEffects.has(mesh.metadata.directorLightId));
+    if (!included || !mesh.isEnabled() || !mesh.isVisible || mesh.visibility <= 0 || !mesh.getTotalVertices()) continue;
     mesh.skeleton?.prepare(true); // refresh linked bone transforms even within the same render frame
     const positions = mesh.getPositionData(true, true); // skeleton and morphs, not the construction-rest bounds
     if (!positions) continue;
@@ -273,7 +458,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
   function stop() { ui.playing = false; $('play').textContent = '▶'; $('play').setAttribute('aria-label', 'Play take'); }
   async function api(url = '', options = {}) {
     const response = await fetch('/api/director' + url, { credentials: 'same-origin', ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
-    let value; try { value = await response.json(); } catch { throw new Error(response.status === 401 ? 'Sign in again to save this take. Your browser draft is still here.' : 'The save service did not return a usable response. Your draft is still here.'); }
+    let value; try { value = await response.json(); } catch { throw new Error(response.status === 401 ? 'Sign in again to save this take. Your work remains in this tab.' : 'The save service did not return a usable response. Your work remains in this tab.'); }
     if (!response.ok) throw new Error(value.error || 'The request could not be completed.'); return value;
   }
   async function refreshTakes() {
@@ -290,15 +475,146 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
   }
   async function loadTake(id, preserveDraft = true) {
     stop();
-    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take); ui.savedId = record.id || id; sendRequest = null; ui.dirty = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
+    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take); ui.savedId = record.id || id; sendRequest = null; ui.dirty = false; ui.draftWriteFailed = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
     catch (error) { status(error.message); }
   }
+  function bindSceneEditor() {
+    const refresh = () => { lighting.sync(); stageDesign.sync(); syncSceneEditor(); attachControl(); };
+    function edit(id, apply, message = 'Scene updated.') {
+      $(id).addEventListener('change', () => {
+        stop(); const before = snapshot();
+        try { apply($(id)); refresh(); if (JSON.stringify(before) !== JSON.stringify(snapshot())) { remember(before); changed(message); } }
+        catch (error) { restore(before); status(error.message); }
+      });
+    }
+    function live(id, apply, message = 'Scene updated.') {
+      const input = $(id); let before = null;
+      const begin = () => { if (!before) { stop(); before = snapshot(); } };
+      const finish = () => { if (before && JSON.stringify(before) !== JSON.stringify(snapshot())) remember(before); before = null; };
+      input.addEventListener('pointerdown', begin); input.addEventListener('focus', begin); input.addEventListener('keydown', begin);
+      input.addEventListener('input', () => {
+        begin();
+        try { apply(input); refresh(); changed(message); }
+        catch (error) { const previous = before; before = null; if (previous) restore(previous); status(error.message); }
+      });
+      input.addEventListener('change', finish); input.addEventListener('blur', finish);
+      input.addEventListener('pointercancel', finish);
+    }
+    function action(id, apply, message) {
+      $(id).onclick = () => { stop(); const before = snapshot(); try { apply(); refresh(); if (JSON.stringify(before) !== JSON.stringify(snapshot())) { remember(before); changed(message); } } catch(error) { restore(before); status(error.message); } };
+    }
+    const numeric = (input, min, max) => { const value = Number(input.value); if (input.value === '' || !Number.isFinite(value) || value < min || value > max) throw new Error(`Use a value from ${min} to ${max}.`); return value; };
+    const bindLens = (prefix, current, apply) => {
+      edit(prefix + '-style', input => apply(window.DirectorOptics.defaults(input.value)), 'Lens style updated.');
+      for (const [field, min, max] of lensFields) live(lensInputId(prefix, field), input => {
+        const value = numeric(input, min, max);
+        if (field === 'rayCount' && !Number.isInteger(value)) throw new Error('Use a whole number of rays.');
+        apply({ ...(current() || window.DirectorOptics.defaults('glow')), [field]: value });
+      }, 'Lens effect updated.');
+    };
+    for (const mode of ['pose','lighting','stage']) $('mode-' + mode).onclick = () => { setMode(mode); document.querySelector('.inspector').scrollTop = 0; };
+    for (const tool of ['move','rotate','scale']) $('tool-' + tool).onclick = () => { directManipulation?.cancel(); ui.tool = tool; setMode(ui.mode); };
+    edit('outline-enabled', input => { ui.outline.enabled = input.checked; applyAppearance(); }, 'Outline updated.');
+    live('outline-tone', input => { ui.outline.tone = numeric(input,0,1); applyAppearance(); }, 'Outline color updated.');
+    live('outline-width', input => { ui.outline.width = numeric(input,.0005,.01); applyAppearance(); }, 'Line weight updated.');
+    live('trip-glow', input => { ui.tripGlow = numeric(input,0,1); applyAppearance(); }, 'Trip glow updated.');
+    live('trip-flare', input => { ui.tripFlare = numeric(input,0,1); applyAppearance(); }, 'Trip head flare updated.');
+    live('trip-temperature', input => { ui.tripTemperature = numeric(input,1800,10000); applyAppearance(); }, 'Trip light temperature updated.');
+    edit('trip-body-linked', input => { ui.tripBodyTemperature = input.checked ? null : 6500; applyAppearance(); }, 'Trip body temperature updated.');
+    live('trip-body-temperature', input => { ui.tripBodyTemperature = numeric(input,1800,10000); applyAppearance(); }, 'Trip body temperature updated.');
+    bindLens('trip-lens', () => ui.tripLens, value => { ui.tripLens = value; applyAppearance(); });
+    for (const [id, kelvin] of [['temperature-warm',2700],['temperature-neutral',6500],['temperature-cool',10000]]) action(id, () => { ui.tripTemperature = kelvin; applyAppearance(); }, 'Trip light temperature updated.');
+    $('light-select').onchange = () => selectControl($('light-select').value);
+    $('stage-select').onchange = () => selectControl($('stage-select').value);
+    action('add-light', () => lighting.add($('light-type').value), 'Light added. Use Frame to see its marker.');
+    for (const [side, name] of [['L','left'],['R','right']]) action(`add-${name}-hand-light`, () => lighting.add('point', { name: `${name === 'left' ? 'Left' : 'Right'} hand light`, attachment: `hand.${side}`, color: '#ffffff', intensity: 2, effect: { shape: 'ball', radius: .06, length: 1, strength: .5 } }), 'Hand light added. It follows the hand as you pose.');
+    action('add-head-light', () => lighting.add('point', { name: 'Head light', attachment: 'head', color: '#ffffff', intensity: 2, effect: { shape: 'ball', radius: .06, length: 1, strength: .5 } }), 'Head light added. It follows the head as you pose.');
+    action('remove-light', () => lighting.remove(lighting.getSelected()), 'Light removed. Undo restores it.');
+    action('add-stage-object', () => stageDesign.add($('stage-type').value), 'Set piece added.');
+    action('remove-stage-object', () => stageDesign.remove(stageDesign.getSelected()), 'Set piece removed. Undo restores it.');
+    const lightPatch = patch => { if (lighting.getSelected()) lighting.update(lighting.getSelected(), patch); };
+    edit('light-enabled', input => lightPatch({ enabled: input.checked }), 'Light switched.');
+    edit('light-selected-type', input => lightPatch({ type: input.value }), 'Light type updated.');
+    live('light-name', input => lightPatch({ name: input.value }), 'Light name updated.');
+    live('light-color', input => lightPatch({ color: input.value }), 'Light color updated.');
+    live('light-intensity', input => lightPatch({ intensity: numeric(input,0,20) }), 'Light brightness updated.');
+    edit('light-angle', input => lightPatch({ angle: numeric(input,6,179) * Math.PI / 180 }), 'Light beam updated.');
+    edit('light-range', input => lightPatch({ range: numeric(input,.1,100) }), 'Light range updated.');
+    edit('light-attachment', input => lightPatch({ attachment: input.value }), 'Light attachment updated.');
+    live('light-flare', input => lightPatch({ flare: numeric(input,0,1) }), 'Glass flare updated.');
+    bindLens('light-lens', () => lighting.snapshot().lights.find(item => item.id === lighting.getSelected())?.lens, value => lightPatch({ lens: value }));
+    const effectPatch = patch => {
+      const light = lighting.snapshot().lights.find(item => item.id === lighting.getSelected());
+      if (light) lightPatch({ effect: { ...(light.effect || { shape: 'none', radius: .06, length: 1, strength: .5 }), ...patch } });
+    };
+    edit('light-effect-shape', input => effectPatch({ shape: input.value }), 'Light effect updated.');
+    edit('light-effect-radius', input => effectPatch({ radius: numeric(input,.005,1) }), 'Light effect radius updated.');
+    edit('light-effect-length', input => effectPatch({ length: numeric(input,.05,10) }), 'Light effect length updated.');
+    live('light-effect-strength', input => effectPatch({ strength: numeric(input,0,1) }), 'Light effect strength updated.');
+    live('ambient-color', input => lighting.updateAmbient({color: input.value}), 'Ambient color updated.');
+    live('ambient-intensity', input => lighting.updateAmbient({intensity: numeric(input,0,3)}), 'Ambient brightness updated.');
+    const objectPatch = patch => { if (stageDesign.getSelected()) stageDesign.update(stageDesign.getSelected(),patch); };
+    live('stage-name', input => objectPatch({name: input.value}), 'Set piece name updated.');
+    live('stage-color', input => objectPatch({color: input.value}), 'Set piece color updated.');
+    const designPatch = patch => { stageDesign.setDesign(patch); setBackground('white'); };
+    edit('backdrop-type', input => designPatch({backdrop:{type:input.value}}), 'Backdrop updated.');
+    live('backdrop-color', input => designPatch({backdrop:{color:input.value}}), 'Backdrop color updated.');
+    edit('backdrop-fit', input => designPatch({backdrop:{fit:input.value}}), 'Image framing updated.');
+    edit('floor-enabled', input => stageDesign.setDesign({floor:{enabled:input.checked}}), 'Floor visibility updated.');
+    live('floor-color', input => stageDesign.setDesign({floor:{color:input.value}}), 'Floor color updated.');
+    edit('floor-size', input => stageDesign.setDesign({floor:{size:numeric(input,1,200)}}), 'Floor size updated.');
+    edit('floor-height', input => stageDesign.setDesign({floor:{height:numeric(input,-10,10)}}), 'Floor height updated.');
+    action('remove-backdrop-image', () => { backdropUploadToken++; designPatch({backdrop:{type:'color',image:null}}); }, 'Background image removed. Undo restores it.');
+    for (const axis of ['x','y','z']) for (const field of ['pos','rot','scale']) edit(`scene-${field}-${axis}`, input => {
+      const node = activeNodes()[activeSelected()]; if (!node) return;
+      const index = ['x','y','z'].indexOf(axis), data = ui.mode === 'lighting' ? lighting.snapshot().lights : stageDesign.snapshot().objects;
+      const current = data.find(item => item.id === activeSelected()); if (!current) return;
+      const key = field === 'pos' ? 'position' : field === 'rot' ? 'rotation' : 'scale';
+      const values = [...current[key]];
+      values[index] = field === 'rot' ? numeric(input,-5729,5729) * Math.PI / 180 : numeric(input,field === 'scale' ? .01 : -100,100);
+      activeController().update(activeSelected(),{[key]:values});
+    }, 'Placement updated.');
+    $('backdrop-file').onchange = async () => {
+      const file = $('backdrop-file').files?.[0]; if (!file) return;
+      const token = ++backdropUploadToken; $('backdrop-file').disabled = true; status('Preparing the background image…');
+      try {
+        const image = await normalizeBackdrop(file);
+        if (token !== backdropUploadToken) return;
+        stop(); const before = snapshot(); designPatch({backdrop:{type:'image',image},floor:{enabled:false}}); refresh(); remember(before); changed('Background image added. Save take keeps it with the scene.');
+      } catch (error) { if (token === backdropUploadToken) status(error.message); }
+      finally { $('backdrop-file').disabled = false; $('backdrop-file').value = ''; }
+    };
+  }
+  async function normalizeBackdrop(file) {
+    if (!['image/png','image/jpeg','image/webp'].includes(file.type)) throw new Error('Choose a PNG, JPEG or WebP image.');
+    if (file.size > 24 * 1024 * 1024) throw new Error('Choose an image smaller than 24 MB.');
+    const url = URL.createObjectURL(file), source = new Image();
+    try {
+      source.src = url; await source.decode();
+      if (!source.naturalWidth || !source.naturalHeight || source.naturalWidth * source.naturalHeight > 40000000) throw new Error('Choose an image up to 40 megapixels.');
+      const canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('This browser could not prepare the image.');
+      let scale = Math.min(1,1600 / Math.max(source.naturalWidth,source.naturalHeight));
+      for (let attempt = 0; attempt < 7; attempt++, scale *= .75) {
+        canvas.width = Math.max(1,Math.round(source.naturalWidth * scale)); canvas.height = Math.max(1,Math.round(source.naturalHeight * scale)); ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(source,0,0,canvas.width,canvas.height);
+        for (const quality of [.9,.75,.55]) { const dataUrl = canvas.toDataURL('image/webp',quality); if (/^data:image\/(webp|png|jpeg);base64,/.test(dataUrl) && dataUrl.length <= 400000) return {dataUrl,name:file.name.slice(0,100)}; }
+      }
+      throw new Error('This image is too detailed to save. Try a smaller version.');
+    } catch (error) { if (error.name === 'EncodingError') throw new Error('This image could not be read. Choose another PNG, JPEG or WebP.'); throw error; }
+    finally { URL.revokeObjectURL(url); }
+  }
+
   function bind() {
-    $('joint').onchange = () => selectJoint($('joint').value);
-    $('preset').onchange = () => { stop(); remember(); const preset = manifest.presets.find(p => p.id === $('preset').value); if (!preset?.pose) return; applyPose(preset.pose); changed(`${preset.label} start. Pose it your way, then key a frame.`); };
+    $('joint').onchange = () => selectControl($('joint').value);
+    $('pose-stretch').onchange = () => { directManipulation?.cancel(); ui.stretch = $('pose-stretch').checked;
+      if (ui.stretch && kinematics.isTarget(poseControl)) { const side = poseControl.split('.')[1]; selectJoint((poseControl.startsWith('hand') ? 'lower_arm.' : 'shin.') + side); }
+      for (const option of $('joint').options) if (kinematics.isTarget(option.value)) option.disabled = ui.stretch;
+      kinematics.sync(); syncJoint(); setMode(ui.mode); status(ui.stretch ? 'Stretch enabled: joints can move and scale freely.' : 'Connected posing: move hands and feet; rotate other joints.');
+    };
+    $('preset').onchange = () => { directManipulation?.cancel(); kinematics.endBody({cancelled:true}); kinematics.end({cancelled:true}); stop(); remember(); const preset = manifest.presets.find(p => p.id === $('preset').value); if (!preset?.pose) return; applyPose(preset.pose); changed(`${preset.label} start. Pose it your way, then key a frame.`); };
     for (const input of document.querySelectorAll('#rotation-controls input,#position-controls input')) {
-      input.addEventListener('pointerdown', () => { stop(); syncJoint(); dragBefore = snapshot(); });
-      input.addEventListener('keydown', e => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(e.key) && !dragBefore) { stop(); syncJoint(); dragBefore = snapshot(); } });
+      input.addEventListener('pointerdown', () => { stop(); syncJoint(); dragBefore = snapshot(); if (input.id.startsWith('rot') && isHipControl()) kinematics.beginBody('torso.lower'); });
+      input.addEventListener('keydown', e => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(e.key) && !dragBefore) { stop(); syncJoint(); dragBefore = snapshot(); if (input.id.startsWith('rot') && isHipControl()) kinematics.beginBody('torso.lower'); } });
       input.addEventListener('input', () => {
         stop();
         if (input.id.startsWith('rot')) {
@@ -307,13 +623,18 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
           angles[input.id.slice(-1)] = Number(input.value) * Math.PI / 180;
           nodes[selected].rotationQuaternion = rest.multiply(B.Quaternion.FromEulerVector(angles)).normalize();
         } else nodes.root.position[input.id.slice(-1)] = Number(input.value);
-        syncJoint(); changed();
+        if (input.id.startsWith('rot') && isHipControl()) kinematics.solveBody();
+        kinematics.sync(); syncJoint(); changed();
       });
-      input.addEventListener('change', () => { if (dragBefore) remember(dragBefore); dragBefore = null; });
+      input.addEventListener('change', () => { if (input.id.startsWith('rot') && isHipControl()) kinematics.endBody(); if (dragBefore) remember(dragBefore); dragBefore = null; });
     }
-    $('reset-joint').onclick = () => { stop(); remember(); const p = pose(); p.bones[selected] = clone(neutralPose.bones[selected]); applyPose(p); changed('Selected joint reset.'); };
-    $('handles').onclick = () => { ui.handles = !ui.handles; handles.forEach(handle => handle.setEnabled(ui.handles)); gizmo.attachToNode(ui.handles ? nodes[selected] : null); $('handles').textContent = 'Joint controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles)); $('hint').textContent = ui.handles ? label(selected) + ' · drag a colored ring to rotate' : 'Controls hidden · drag the room to orbit the camera'; };
-    for (const look of ['ouch', 'trip']) $(look).onclick = () => { remember(); setLook(look); changed(`Same character, ${look === 'trip' ? 'white' : 'black'} clay.`); };
+    $('reset-joint').onclick = () => { stop(); remember(); const p = pose();
+      const targets = isPoseTarget() ? (poseControl.startsWith('hand') ? ['upper_arm.','lower_arm.'] : ['thigh.','shin.']).map(prefix => prefix + poseControl.split('.')[1]) : [selected];
+      for (const name of targets) p.bones[name] = clone(neutralPose.bones[name]);
+      applyPose(p); changed(isPoseTarget() ? 'Selected limb reset.' : 'Selected joint reset.');
+    };
+    $('handles').onclick = () => { ui.handles = !ui.handles; setMode(ui.mode); };
+    for (const look of ['ouch', 'trip']) $(look).onclick = () => { remember(); setLook(look); changed(look === 'trip' ? 'Trip selected.' : 'Ouch selected.'); };
     $('background').onchange = () => { remember(); setBackground($('background').value); changed('Stage background changed.'); };
     for (const id of ['take-name', 'notes']) {
       let before = null;
@@ -338,7 +659,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
       stop(); remember(); key.frame = frame; ui.keys.sort((a,b) => a.frame-b.frame); ui.frame = frame; applyPose(key.pose); syncTimeline(); changed('Key moved.');
     };
     $('load-example').onclick = loadExample; $('frame-motion').onclick = frameMotion;
-    $('motion-settings').onclick = () => { document.querySelector('.animation-panel').scrollIntoView({behavior: 'smooth', block: 'start'}); $('transition').focus({preventScroll: true}); };
+    $('motion-settings').onclick = () => { setMode('pose'); document.querySelector('.animation-panel').scrollIntoView({behavior: 'smooth', block: 'start'}); $('transition').focus({preventScroll: true}); };
     const outputChanged = () => {
       const width = Number($('output-width').value), height = Number($('output-height').value);
       if (![width,height].every(v => Number.isInteger(v) && v >= 64 && v <= 4096) || width*height > 4096*2160) { setOutput(ui.output); status('Use whole-pixel dimensions from 64 to 4096, up to 8.8 million pixels.'); return; }
@@ -346,14 +667,34 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     };
     $('output-width').onchange = outputChanged; $('output-height').onchange = outputChanged;
     $('frame-size').onchange = () => { if ($('frame-size').value === 'custom') { $('output-width').focus(); return; } const [width,height] = $('frame-size').value.split('x'); $('output-width').value = width; $('output-height').value = height; outputChanged(); };
-    $('play').onclick = () => { if (ui.playing) { stop(); syncJoint(); syncPreset(pose()); } else if (!ui.keys.length) status('Key at least one pose to play a take.'); else { if (ui.frame >= ui.end) scrub(ui.start); ui.playing = true; playStart = performance.now(); playFrame = ui.frame; $('play').textContent = 'Ⅱ'; $('play').setAttribute('aria-label', 'Pause take'); } };
+    $('play').onclick = () => {
+      if (ui.playing) { stop(); syncJoint(); syncPreset(pose()); }
+      else if (!ui.keys.length) status('Key at least one pose to play a take.');
+      else {
+        const preserved = preserveUnkeyedPose();
+        scrub(ui.frame >= ui.end ? ui.start : ui.frame, true);
+        ui.playing = true; playStart = performance.now(); playFrame = ui.frame;
+        $('play').textContent = 'Ⅱ'; $('play').setAttribute('aria-label', 'Pause take');
+        if (preserved) status('Unkeyed pose kept in Undo. Playing the keyed motion.');
+      }
+    };
     for (const direction of ['undo', 'redo']) $(direction).onclick = () => { finishCameraHistory(); const from = ui[direction], to = ui[direction === 'undo' ? 'redo' : 'undo']; if (!from.length) return; stop(); to.push(snapshot()); restore(from.pop()); changed(direction === 'undo' ? 'Undone.' : 'Redone.'); };
     for (const [id, alpha] of [['front', Math.PI / 2], ['side', 0], ['quarter', Math.PI / 2 - .35]]) $(id).onclick = () => { remember(); camera.alpha = alpha; camera.beta = Math.PI / 2 - .11; changed('Camera view updated.'); };
-    $('frame-character').onclick = () => { stop(); remember(); if (frameDirectorCharacter(scene, camera, $('room'))) { fitOrtho(); changed('Whole character framed. Your pose is unchanged.'); } };
+    $('frame-character').onclick = () => { stop(); remember(); if (ui.mode !== 'pose') { frameSet(); changed('Set controls framed. The scene is unchanged.'); } else if (frameDirectorCharacter(scene, camera, $('room'))) { fitOrtho(); changed('Whole character framed. Your pose is unchanged.'); } };
     $('camera-mode').onclick = () => { remember(); camera.mode = camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? B.Camera.PERSPECTIVE_CAMERA : B.Camera.ORTHOGRAPHIC_CAMERA; fitOrtho(); $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA)); changed('Camera projection updated.'); };
     $('save').onclick = async () => {
       stop(); $('save').disabled = true; const take = snapshot(), serialized = JSON.stringify(take); if (savePayload !== serialized) saveRequest = null; savePayload = serialized; saveRequest ||= crypto.randomUUID();
-      try { const result = await api('', { method: 'POST', body: JSON.stringify({ take, requestId: saveRequest }) }); const record = result.saved || result.record || result; ui.savedId = record.id || result.id; ui.dirty = JSON.stringify(snapshot()) !== serialized; savedSnapshot = serialized; $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; status(result.shared === false ? 'Take saved in this development workspace. Shared Nest storage is not connected here.' : 'Take saved in Nest. Crew can receive this exact version.'); await refreshTakes(); }
+      try {
+        const result = await api('', { method: 'POST', body: JSON.stringify({ take, requestId: saveRequest }) });
+        const record = result.saved || result.record || result; ui.savedId = record.id || result.id;
+        ui.dirty = JSON.stringify(snapshot()) !== serialized; savedSnapshot = serialized;
+        // A completed save protects only the version sent. Edits made while it
+        // was in flight still need their own healthy draft or durable save.
+        if (!ui.dirty) ui.draftWriteFailed = false;
+        $('storage-label').textContent = ui.dirty ? (ui.draftWriteFailed ? 'DRAFT NOT SAVED' : 'BROWSER DRAFT') : result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST';
+        status(ui.dirty ? 'The submitted take was saved. Newer edits still need Save take.' : result.shared === false ? 'Take saved in this development workspace. Shared Nest storage is not connected here.' : 'Take saved in Nest. Crew can receive this exact version.');
+        await refreshTakes();
+      }
       catch (error) { status(error.message); } finally { buttons(); }
     };
     $('send').onclick = async () => {
@@ -364,15 +705,15 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     $('refresh-takes').onclick = refreshTakes;
     document.addEventListener('keydown', e => { if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); $(e.shiftKey ? 'redo' : 'undo').click(); } if (e.code === 'Space') { e.preventDefault(); $('play').click(); } });
     $('room').addEventListener('pointerdown', () => { if (ui.ready) { finishCameraHistory(); stop(); camera.getViewMatrix(true); cameraBefore = snapshot(); } });
-    $('room').addEventListener('pointerup', () => { finishCameraHistory(); if (ui.ready && !gizmo.gizmos.rotationGizmo.isDragging) changed('Camera and pose kept in your browser draft.'); });
+    $('room').addEventListener('pointerup', () => { finishCameraHistory(); if (ui.ready && !Object.values(gizmo.gizmos).some(item => item?.isDragging)) changed('Camera and pose updated.'); });
     $('room').addEventListener('pointercancel', finishCameraHistory);
     $('room').addEventListener('wheel', () => {
       if (!ui.ready) return;
       if (!cameraBefore) { stop(); camera.getViewMatrix(true); cameraBefore = snapshot(); }
       clearTimeout(cameraWheelTimer);
-      cameraWheelTimer = setTimeout(() => { finishCameraHistory(); changed('Camera zoom kept in your browser draft.'); }, 180);
+      cameraWheelTimer = setTimeout(() => { finishCameraHistory(); changed('Camera zoom updated.'); }, 180);
     }, {passive:true});
-    window.addEventListener('beforeunload', event => { if (ui.ready && ui.dirty && ui.keys.length) { event.preventDefault(); event.returnValue = ''; } });
+    window.addEventListener('beforeunload', event => { if (ui.ready && ui.dirty && (ui.keys.length || ui.draftWriteFailed)) { event.preventDefault(); event.returnValue = ''; } });
   }
   async function start() {
     if (!A) throw new Error('The animation tools did not load. Reload to try again.');
@@ -390,72 +731,90 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     engine.setHardwareScalingLevel(1 / Math.min(devicePixelRatio || 1, 2));
     scene = new B.Scene(engine); scene.useRightHandedSystem = true;
     camera = new B.ArcRotateCamera('Director camera', Math.PI / 2 - .35, Math.PI / 2 - .11, 2.1, new B.Vector3(0, .56, 0), scene);
-    camera.attachControl($('room'), true); camera.inertia = 0; camera.lowerRadiusLimit = .4; camera.upperRadiusLimit = 7; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
-    const fill = new B.HemisphericLight('Room fill', new B.Vector3(0, 1, 0), scene); fill.intensity = .8; fill.groundColor = new B.Color3(.55, .58, .54);
-    const key = new B.DirectionalLight('Window light', new B.Vector3(.4, -1, -.5), scene); key.position = new B.Vector3(-2, 4, 3); key.intensity = 1.3; key.shadowFrustumSize = 3; key.shadowMinZ = .1; key.shadowMaxZ = 10;
-    const shadows = new B.ShadowGenerator(1024, key); shadows.usePercentageCloserFiltering = true; shadows.filteringQuality = B.ShadowGenerator.QUALITY_HIGH; shadows.setDarkness(.25); shadows.bias = .001;
-    floor = B.MeshBuilder.CreateGround('White room floor', { width: 200, height: 200 }, scene); floor.position.y = -.005; floor.isPickable = false; floor.receiveShadows = true;
+    camera.attachControl($('room'), true); camera.inertia = 0; camera.lowerRadiusLimit = .4; camera.upperRadiusLimit = 400; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
+    floor = B.MeshBuilder.CreateGround('White room floor', { width: 200, height: 200 }, scene); floor.position.y = 0; floor.isPickable = false; floor.receiveShadows = true;
     const floorMat = new B.StandardMaterial('White plaster', scene); floorMat.diffuseColor = new B.Color3(.95, .955, .94); floorMat.specularColor = B.Color3.Black(); floor.material = floorMat;
     const result = await B.SceneLoader.ImportMeshAsync('', '/director/assets/', manifest.file, scene);
     result.animationGroups.forEach(group => group.stop());
     for (const name of manifest.bones) { const node = scene.getTransformNodeByName(name) || result.skeletons.flatMap(skeleton => skeleton.bones).find(bone => bone.name === name)?.getTransformNode(); if (!node) throw new Error(`The model is missing its ${name} control.`); nodes[name] = node; }
     for (const mesh of result.meshes) {
       if (!mesh.getTotalVertices()) continue;
-      mesh.metadata = { ...mesh.metadata, directorCharacter: true }; shadows.addShadowCaster(mesh); mesh.receiveShadows = false; mesh.isPickable = false;
+      mesh.metadata = { ...mesh.metadata, directorCharacter: true }; mesh.receiveShadows = false; mesh.isPickable = false;
       const manager = mesh.morphTargetManager;
       if (manager) for (let i = 0; i < manager.numTargets; i++) { const target = manager.getTarget(i); (morphs[target.name] ||= []).push(target); }
     }
-    gizmo = new B.GizmoManager(scene); gizmo.usePointerToAttachGizmos = false; gizmo.rotationGizmoEnabled = true; gizmo.gizmos.rotationGizmo.scaleRatio = .65;
-    gizmo.gizmos.rotationGizmo.onDragStartObservable.add(() => { stop(); dragBefore = snapshot(); });
-    gizmo.gizmos.rotationGizmo.onDragEndObservable.add(() => { if (dragBefore) remember(dragBefore); dragBefore = null; syncJoint(); changed(); });
+    if (!window.DirectorAppearance || !window.DirectorLighting || !window.DirectorStage || !window.DirectorKinematics) throw new Error('Scene tools did not load. Reload to try again.');
+    stageDesign = window.DirectorStage.create(scene, { floor, onBackdropStatus: value => { if (value?.state === 'error' || value === 'error') status('The background image could not be displayed. Choose another image.'); } });
+    lighting = window.DirectorLighting.create(scene); appearance = window.DirectorAppearance.create(scene); lighting.sync();
+    kinematics = window.DirectorKinematics.create(scene, { nodes, neutralPose, manifest });
+    gizmo = new B.GizmoManager(scene); gizmo.usePointerToAttachGizmos = false;
+    gizmo.positionGizmoEnabled = true; gizmo.rotationGizmoEnabled = true; gizmo.scaleGizmoEnabled = true;
+    for (const control of [gizmo.gizmos.positionGizmo, gizmo.gizmos.rotationGizmo, gizmo.gizmos.scaleGizmo]) {
+      control.scaleRatio = .65;
+      control.onDragStartObservable.add(() => { stop(); dragBefore = snapshot(); gizmoTargetStart = null; gizmoTargetMoved = false; if (isPoseTarget()) { gizmoTargetStart = activeNodes()[activeSelected()].position.clone(); kinematics.begin(activeSelected()); } else if (isHipControl()) kinematics.beginBody('torso.lower'); });
+      const liveDrag = () => {
+        constrainActive();
+        if (isPoseTarget() && gizmoTargetStart && (gizmoTargetMoved || B.Vector3.DistanceSquared(activeNodes()[activeSelected()].position,gizmoTargetStart) > 1e-14)) { kinematics.solve(activeSelected()); gizmoTargetMoved = true; }
+        else if (isHipControl()) kinematics.solveBody();
+        syncActive();
+      };
+      if (control.onDragObservable) control.onDragObservable.add(liveDrag);
+      else for (const axis of ['xGizmo','yGizmo','zGizmo','xPlaneGizmo','yPlaneGizmo','zPlaneGizmo','uniformScaleGizmo']) control[axis]?.dragBehavior?.onDragObservable.add(liveDrag);
+      control.onDragEndObservable.add(() => { const bounded = constrainActive();
+        if (isPoseTarget()) { if (gizmoTargetStart && (gizmoTargetMoved || B.Vector3.DistanceSquared(activeNodes()[activeSelected()].position,gizmoTargetStart) > 1e-14)) kinematics.solve(activeSelected()); kinematics.end(); } else if (isHipControl()) kinematics.endBody();
+        gizmoTargetStart = null; gizmoTargetMoved = false;
+        if (dragBefore) remember(dragBefore); dragBefore = null; syncActive(); changed(bounded ? 'Placement kept within the editable range.' : 'Placement updated.');
+      });
+    }
     for (const name of manifest.bones) {
       const handle = B.MeshBuilder.CreateSphere('Joint handle ' + name, { diameter: .022, segments: 8 }, scene); handle.parent = nodes[name]; handle.metadata = { joint: name }; handle.renderingGroupId = 2;
       const material = new B.StandardMaterial('Control ' + name, scene); material.disableLighting = true; material.emissiveColor = name.endsWith('.L') ? B.Color3.FromHexString('#709bc2') : name.endsWith('.R') ? B.Color3.FromHexString('#8bb99c') : B.Color3.FromHexString('#c4a06f'); handle.material = material; handles.push(handle);
     }
     scene.onPointerObservable.add(info => {
-      if (info.type === B.PointerEventTypes.POINTERPICK && info.pickInfo?.pickedMesh?.metadata?.joint) selectJoint(info.pickInfo.pickedMesh.metadata.joint);
+      if (info.type === B.PointerEventTypes.POINTERPICK) { const meta = info.pickInfo?.pickedMesh?.metadata; const id = meta?.joint || meta?.directorStageId; if (id) selectControl(id); }
       if (info.type !== B.PointerEventTypes.POINTERTAP || info.event.pointerType !== 'touch' || !ui.handles) return;
       // A fingertip needs a stable screen-sized target, even when the joint dot
       // is small. The utility layer handles ring drags before this scene tap.
       const rect = $('room').getBoundingClientRect();
       const viewport = new B.Viewport(0, 0, rect.width, rect.height);
       let nearest = null, distance = 22;
-      for (const handle of handles) {
+      for (const handle of activeHandles()) {
         if (!handle.isEnabled()) continue;
         const screen = B.Vector3.Project(handle.getAbsolutePosition(), B.Matrix.Identity(), scene.getTransformMatrix(), viewport);
         if (screen.z < 0 || screen.z > 1) continue;
         const d = Math.hypot(screen.x - (info.event.clientX - rect.left), screen.y - (info.event.clientY - rect.top));
         if (d < distance) { distance = d; nearest = handle.metadata.joint; }
       }
-      if (nearest) selectJoint(nearest);
+      if (nearest) selectControl(nearest);
     });
-    $('joint').replaceChildren(...manifest.bones.map(name => new Option(label(name), name))); $('joint').disabled = false;
+    $('joint').replaceChildren(...Object.entries(kinematics.labels()).map(([id, name]) => new Option(name, id)), ...manifest.bones.map(name => new Option(label(name), name))); $('joint').disabled = false;
     $('preset').replaceChildren(new Option('Custom pose', ''), ...manifest.presets.map(preset => new Option(preset.label, preset.id))); $('preset').disabled = false; $('preset').value = 'neutral';
     for (const name of manifest.morphs.filter(name => !/overhead|shoulder/i.test(name))) {
       const wrap = document.createElement('label'); wrap.textContent = name.replace(/^Ouch \| /, ''); const input = document.createElement('input'); input.type = 'range'; input.min = 0; input.max = 1; input.step = .01; input.value = 0; input.dataset.morph = name; input.setAttribute('aria-label', wrap.textContent); input.onpointerdown = () => { stop(); syncJoint(); dragBefore = snapshot(); }; input.onkeydown = e => { if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(e.key) && !dragBefore) { stop(); syncJoint(); dragBefore = snapshot(); } }; input.oninput = () => { stop(); for (const target of morphs[name] || []) target.influence = Number(input.value); changed(); }; input.onchange = () => { if (dragBefore) remember(dragBefore); dragBefore = null; }; wrap.append(input); $('morph-controls').append(wrap);
     }
     let directBefore = null;
     if (!window.DirectorDirectManipulation) throw new Error('Direct joint controls did not load. Reload to try again.');
-    window.DirectorDirectManipulation.install({
-      canvas: $('room'), scene, camera, getHandles: () => handles, getNodes: () => nodes,
+    directManipulation = window.DirectorDirectManipulation.install({
+      canvas: $('room'), scene, camera, getHandles: movableHandles, getNodes: activeNodes,
       isEnabled: () => ui.ready && ui.handles,
-      onSelect: name => selectJoint(name),
-      onPending: ({name}) => { $('hint').textContent = `Hold ${label(name).toLowerCase()} to reposition`; },
-      onStart: ({name}) => { stop(); directBefore = snapshot(); gizmo.attachToNode(null); $('hint').textContent = `Drag ${label(name).toLowerCase()} · release to place`; },
-      onMove: () => syncJoint(),
+      onSelect: selectControl,
+      onPending: ({name}) => { $('hint').textContent = `Hold ${controlLabel(name)} to reposition`; },
+      onStart: ({name}) => { stop(); directBefore = snapshot(); if (isPoseTarget()) kinematics.begin(name); else if (isHipControl()) kinematics.beginBody('torso.lower'); gizmo.attachToNode(null); $('hint').textContent = `Drag ${controlLabel(name)} · release to place`; },
+      onMove: ({name}) => { constrainActive(); if (isPoseTarget()) kinematics.solve(name); else if (isHipControl()) kinematics.solveBody(); syncActive(); },
       onEnd: ({started,moved,cancelled}) => {
-        syncJoint(); gizmo.attachToNode(ui.handles ? nodes[selected] : null);
-        if (started && moved && !cancelled && directBefore) { remember(directBefore); changed('Joint repositioned. Key this pose to put it in the motion.'); }
+        if (started && isPoseTarget()) kinematics.end({cancelled}); else if (started && isHipControl()) kinematics.endBody({cancelled});
+        syncActive(); attachControl();
+        if (started && moved && !cancelled && directBefore) { remember(directBefore); changed(ui.mode === 'pose' ? 'Joint repositioned. Key this pose to put it in the motion.' : 'Set control repositioned.'); }
         else if (cancelled) status('Repositioning cancelled. The joint is back where it started.');
         directBefore = null;
-        $('hint').textContent = `${label(selected)} · hold a dot to move; drag a ring to rotate`;
+        attachControl();
       }
     });
-    applyPose(neutralPose); setLook('ouch'); setBackground('white'); setOutput(ui.output); fitOrtho(); selectJoint('upper_arm.L'); bind(); ui.ready = true; syncTimeline(); buttons();
+    applyPose(neutralPose); setLook('ouch'); setBackground('white'); setOutput(ui.output); fitOrtho(); selectJoint('upper_arm.L'); bind(); bindSceneEditor(); ui.ready = true; setMode('pose'); syncTimeline(); buttons();
     $('loading').hidden = true; status('Ouch is ready. Pick a gesture or move a joint.');
     engine.runRenderLoop(() => { if (ui.playing) { const elapsed = playFrame - ui.start + Math.floor((performance.now() - playStart) / 1000 * ui.fps); const count = ui.end - ui.start + 1; const frame = ui.animation.loop ? ui.start + (elapsed % count) : Math.min(ui.end, ui.start + elapsed); if (frame !== ui.frame) scrub(frame, true); if (!ui.animation.loop && elapsed >= count) { stop(); syncJoint(); syncPreset(pose()); } } scene.render(); });
     window.addEventListener('resize', resizeStage); new ResizeObserver(resizeStage).observe(document.querySelector('.stage'));
-    engine.onContextLostObservable.add(() => status('The graphics context paused. Your draft is kept; reload if the room does not recover.'));
+    engine.onContextLostObservable.add(() => status(ui.draftWriteFailed ? 'The graphics context paused. Keep this tab open and use Save take.' : 'The graphics context paused. Your browser draft is kept; reload if the room does not recover.'));
     engine.onContextRestoredObservable.add(() => status('The room renderer recovered.'));
     const id = new URL(location.href).searchParams.get('take');
     if (id) await loadTake(id, false);

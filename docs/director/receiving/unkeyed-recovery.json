@@ -1,0 +1,74 @@
+{
+  "scope": "Actual local browser UI. Desktop keyboard/control events and emulated Android CDP touch; no external save or send.",
+  "source_sha256": "951dd89f086c273368b82ecc02d8ce35dbd367cbb5db3b2da77180b802a1cb4d",
+  "checks": {
+    "desktop_no_key_scratch_pose_survives_navigation_and_play": true,
+    "desktop_no_key_navigation_does_not_fill_history": true,
+    "desktop_scrub_checkpoints_unkeyed_pose_once": true,
+    "desktop_scrub_displays_recovery_message": true,
+    "desktop_undo_restores_frame48_authored_34deg": true,
+    "desktop_redo_restores_sampled_frame49": true,
+    "desktop_navigation_does_not_autokey": true,
+    "desktop_sampled_scrub_ticks_do_not_add_history": true,
+    "desktop_exact_key_checkpoint_once": true,
+    "desktop_exact_key_undo_recovers_pose_and_frame": true,
+    "desktop_exact_key_redo_recovers_navigation": true,
+    "desktop_exact_key_keys_unchanged": true,
+    "desktop_inbetween_checkpoint_once": true,
+    "desktop_inbetween_undo_recovers_pose_and_frame": true,
+    "desktop_inbetween_redo_recovers_navigation": true,
+    "desktop_inbetween_keys_unchanged": true,
+    "desktop_opposite_quaternion_sign_does_not_checkpoint": true,
+    "desktop_normalization_roundoff_does_not_checkpoint": true,
+    "desktop_play_inbetween_recovery_message": true,
+    "desktop_play_inbetween_one_checkpoint_for_all_ticks": true,
+    "desktop_play_inbetween_undo_restores_authored_pose": true,
+    "desktop_play_inbetween_redo_restores_played_pose": true,
+    "desktop_play_inbetween_keys_unchanged": true,
+    "desktop_play_from_end_recovery_message": true,
+    "desktop_play_from_end_one_checkpoint_for_all_ticks": true,
+    "desktop_play_from_end_undo_restores_authored_pose": true,
+    "desktop_play_from_end_redo_restores_played_pose": true,
+    "desktop_play_from_end_keys_unchanged": true,
+    "desktop_timing_edit_keeps_single_existing_history_boundary": true,
+    "desktop_timing_undo_recovers_unkeyed_pose": true,
+    "desktop_timing_redo_restores_new_range": true,
+    "desktop_key_edit_keeps_single_existing_history_boundary": true,
+    "desktop_key_undo_recovers_scratch_without_invented_key": true,
+    "desktop_key_redo_restores_authored_key": true,
+    "zero_page_errors": true,
+    "source_unchanged_during_test": true,
+    "mobile_scrub_checkpoints_unkeyed_pose_once": true,
+    "mobile_scrub_displays_recovery_message": true,
+    "mobile_undo_restores_frame48_authored_34deg": true,
+    "mobile_redo_restores_sampled_frame49": true,
+    "mobile_navigation_does_not_autokey": true
+  },
+  "metrics": {
+    "desktop_parent_reproduction": {
+      "authored_frame": 48,
+      "authored_torso_rotation": [
+        0.29237170472273677,
+        0,
+        0,
+        0.9563047559630354
+      ],
+      "after_frame": 49,
+      "undo_depth_before": 6
+    },
+    "mobile_parent_reproduction": {
+      "authored_frame": 48,
+      "authored_torso_rotation": [
+        0.9563047559630354,
+        4.065417430247837e-17,
+        4.065417430247837e-17,
+        0.29237170472273677
+      ],
+      "after_frame": 49,
+      "undo_depth_before": 5
+    }
+  },
+  "page_errors": [],
+  "passed": true,
+  "mobile_fixture_note": "An initial 8 px range drag did not exceed Chromium touch slop and never authored a change. Final mobile reproduction used a deliberate 40 px touch drag, then returned to 34 degrees before release; input/change events confirmed the authored pose. No app change was needed for this fixture calibration."
+}

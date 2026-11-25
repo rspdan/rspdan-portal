@@ -1,0 +1,11 @@
+[11/25/26 03:33:48] INFO     MCP watchdog: watching             _watchdog.py:122
+                             python(73134), codex(437)
+                    INFO     repowise MCP: initialising database… _server.py:377
+                    INFO     repowise MCP: ready (vector stores   _server.py:791
+                             loading in background)
+                    INFO     Processing request of type            server.py:733
+                             ListToolsRequest
+                    INFO     Processing request of type            server.py:733
+                             CallToolRequest
+                    INFO     Processing request of type            server.py:733
+                             CallToolRequest

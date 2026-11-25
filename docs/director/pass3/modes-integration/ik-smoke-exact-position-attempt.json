@@ -1,0 +1,34 @@
+{
+  "errors": [],
+  "checks": [
+    {
+      "name": "startup",
+      "passed": true
+    },
+    {
+      "name": "named targets",
+      "passed": true
+    },
+    {
+      "name": "head cannot detach normally",
+      "passed": true
+    },
+    {
+      "name": "stretch permits intentional movement",
+      "passed": true
+    },
+    {
+      "name": "hand is position target",
+      "passed": true
+    },
+    {
+      "name": "hand drag bends",
+      "passed": true
+    },
+    {
+      "name": "arm connection preserved",
+      "passed": false
+    }
+  ],
+  "core_sha256": "6d0e1664bb41799e2fa4c7955730c99356691f771d6915c273d310244f1d1b69"
+}

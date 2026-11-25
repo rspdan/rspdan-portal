@@ -1,0 +1,84 @@
+{
+  "checks": [
+    {
+      "name": "startup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "failed write does not pretend persisted draft",
+      "passed": true,
+      "detail": "DRAFT NOT SAVED"
+    },
+    {
+      "name": "quota warning remains visible",
+      "passed": true,
+      "detail": "Browser draft unavailable. Use Save take before closing. Set piece added."
+    },
+    {
+      "name": "unkeyed unsaved scene receives unload guard",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "successful local save clears unload obligation",
+      "passed": true,
+      "detail": "Take saved in this development workspace. Shared Nest storage is not connected here."
+    },
+    {
+      "name": "new unsaved change restores quota guard",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "healthy draft recovers complete scene",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "healthy zero-key draft clears failure guard",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "page_errors": [],
+  "scope": "Targeted draft-quota warning/unload and recovery receiving; one local-only Save take, no Crew routing.",
+  "failed": {
+    "status": "Browser draft unavailable. Use Save take before closing. Set piece added.",
+    "label": "DRAFT NOT SAVED",
+    "objects": 1,
+    "keys": 0,
+    "guard": true
+  },
+  "save_response": {
+    "status": 200,
+    "shared": false,
+    "error": null,
+    "saved": {
+      "id": "dir_59822b09-1b59-4670-a382-c429b38e0d7d",
+      "version": 1,
+      "owner": "dan",
+      "name": "Draft recovery regression",
+      "createdAt": "2026-11-25T04:48:45.950Z",
+      "takeHash": "953fbee1be0c508ba2ee59be613cf6f8c813153b20eb7ebf17d10c7c0eb60430",
+      "asset": {
+        "id": "ouch-director-pass2",
+        "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+      },
+      "keyframes": 0,
+      "look": "ouch",
+      "href": "/director?take=dir_59822b09-1b59-4670-a382-c429b38e0d7d"
+    }
+  },
+  "snapshot_differences": [],
+  "saved_label": "LOCAL WORKSPACE",
+  "recovered": {
+    "status": "Set piece added.",
+    "label": "BROWSER DRAFT",
+    "objects": 3,
+    "keys": 0,
+    "guard": false
+  },
+  "source_sha256": "798a8ae15b000278a456649ed0fe96cddde73b21f0f9804d389aaace49359d26",
+  "passed": true
+}

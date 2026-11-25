@@ -1,0 +1,46 @@
+{
+  "errors": [],
+  "checks": [
+    {
+      "name": "startup",
+      "passed": true
+    },
+    {
+      "name": "named targets",
+      "passed": true
+    },
+    {
+      "name": "head cannot detach normally",
+      "passed": true
+    },
+    {
+      "name": "stretch permits intentional movement",
+      "passed": true
+    },
+    {
+      "name": "hand is position target",
+      "passed": true
+    },
+    {
+      "name": "hand drag bends",
+      "passed": true
+    },
+    {
+      "name": "arm connection preserved",
+      "passed": true
+    },
+    {
+      "name": "only saved rig bones",
+      "passed": true
+    },
+    {
+      "name": "IK undo",
+      "passed": true
+    },
+    {
+      "name": "IK redo",
+      "passed": false
+    }
+  ],
+  "core_sha256": "8882419971277e249011c10409c5150df4a9bd3de6c87f76afd671daaea40084"
+}

@@ -1,0 +1,426 @@
+{
+  "response": {
+    "ok": true,
+    "saved": {
+      "id": "dir_d0a3e75f-5880-492a-9cd3-2c1726f815a8",
+      "version": 1,
+      "owner": "dan",
+      "name": "Halp next-update touch 77e392",
+      "createdAt": "2026-11-25T04:12:06.361Z",
+      "takeHash": "964dc126f8c6af6cebd787801f414fc08c8140d7e9d384aa9e79d279c23b6b6d",
+      "asset": {
+        "id": "ouch-director-pass2",
+        "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+      },
+      "keyframes": 0,
+      "look": "trip",
+      "href": "/director?take=dir_d0a3e75f-5880-492a-9cd3-2c1726f815a8"
+    },
+    "storage": "local-workspace",
+    "shared": false
+  },
+  "take": {
+    "schema": "nest-director-take/v2",
+    "asset": {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+    },
+    "name": "Halp next-update touch 77e392",
+    "notes": "",
+    "look": "trip",
+    "fps": 24,
+    "frame": 59,
+    "range": {
+      "start": 1,
+      "end": 72
+    },
+    "stage": {
+      "background": "white",
+      "design": {
+        "backdrop": {
+          "type": "image",
+          "color": "#f3f4f0",
+          "image": {
+            "dataUrl": "data:image/webp;base64,UklGRpoDAABXRUJQVlA4WAoAAAAgAAAAPwEAxwAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggrAEAAPAbAJ0BKkAByAA+MRiKQ6IhoRMUACADBLK3cLpQf0AD8M9MB+Jv4k1gH//2gP5B+EuOA/gH8A/sH8A9/+7QGKAUoACgsN+ahq8AE/3E/aFFlQAXsGrwAT/cT9oUmoGpIa7xTj2l+rIeEQC0LUMaf3Be4L3Be4KsvJaFt9wXuC9v4xF+fcF7gvcF7TrRC2+4L3Be4Lxi5aFt9wXuC9wVZeS0Lb7gvcF7fxiL8+4L3Be4L2nWiFt9wXuC9wXjFy0Lb7SXlrSSpE2hRjhCx+yzn1P4CENXgAn+4n7QpMPCIBaHDG/5qG3+9wAA/v/Ye85G/MvH+389Lmk3mS7sdn+BGQ1oRZT1pUqVKlSpM6Py5NfUS/OV+40R2h0CwRWXw7rrDDHJnRtgYE69El8bYGBOvRJfG2BgTr0r6ZGjgEALIoAANdnARsAYuYB5mYI8CAvswDzMwR4EBfZhE//0Ps0f/8Xgvx2nUVxP+N06iuGOdEPSGTfCnE8Sb6ABLWB8EnyMjZh+8p2YbcjRLokX+1Nx4LS/9qbkA6xNSHBaSx0foj9J/cogIo6pgeIAAAAA",
+            "name": "backdrop-fixture.png"
+          },
+          "fit": "cover"
+        },
+        "floor": {
+          "enabled": false,
+          "color": "#f2f4f0",
+          "size": 200,
+          "height": -0.005
+        },
+        "objects": [
+          {
+            "id": "stage-488870d6-1cf4-444d-bab6-3da5d5339c31",
+            "name": "Halp little plinth",
+            "type": "box",
+            "color": "#aebbb1",
+            "position": [
+              0.65,
+              0.18,
+              0.1
+            ],
+            "rotation": [
+              0,
+              0.4363323129985824,
+              0
+            ],
+            "scale": [
+              0.35,
+              0.35,
+              0.35
+            ]
+          },
+          {
+            "id": "stage-828680c0-d09f-4641-8581-a8d77c17844b",
+            "name": "Sphere 2",
+            "type": "sphere",
+            "color": "#aebbb1",
+            "position": [
+              -0.35,
+              0.35,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              0.18,
+              0.18,
+              0.35
+            ]
+          }
+        ]
+      }
+    },
+    "tripGlow": 0.42,
+    "tripTemperature": 2700,
+    "outline": {
+      "enabled": true,
+      "tone": 0.1,
+      "width": 0.003
+    },
+    "lighting": {
+      "ambient": {
+        "intensity": 0.65,
+        "color": "#ffffff"
+      },
+      "lights": [
+        {
+          "id": "light-key",
+          "name": "Key light",
+          "type": "directional",
+          "enabled": true,
+          "color": "#ffffff",
+          "intensity": 2.3,
+          "position": [
+            -3,
+            4,
+            3
+          ],
+          "rotation": [
+            -0.772607487030514,
+            -0.8198672643969563,
+            0
+          ],
+          "angle": 1.0471975511965976,
+          "range": 20
+        },
+        {
+          "id": "light-rim",
+          "name": "Rim light",
+          "type": "directional",
+          "enabled": true,
+          "color": "#ffffff",
+          "intensity": 2,
+          "position": [
+            3,
+            1.2,
+            -4
+          ],
+          "rotation": [
+            -0.1698462880836737,
+            2.601173153319209,
+            0
+          ],
+          "angle": 1.0471975511965976,
+          "range": 20
+        },
+        {
+          "id": "light-c6b8e922-6c36-4389-b454-a3307ac12ff3",
+          "name": "Halp warm side light",
+          "type": "spot",
+          "enabled": true,
+          "color": "#ffffff",
+          "intensity": 5.2,
+          "position": [
+            1.35,
+            1.4,
+            2.1
+          ],
+          "rotation": [
+            -0.5667523258378888,
+            0.6108652381980153,
+            -0.20943951023931953
+          ],
+          "angle": 1.0471975511965976,
+          "range": 10
+        }
+      ]
+    },
+    "camera": {
+      "mode": "perspective",
+      "position": [
+        0.7157332700622875,
+        0.7905344317580675,
+        1.9607599959964326
+      ],
+      "target": [
+        0,
+        0.56,
+        0
+      ],
+      "fov": 0.62,
+      "orthoSize": 1.48
+    },
+    "pose": {
+      "bones": {
+        "root": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "torso.lower": {
+          "position": [
+            0,
+            0.5409277677536011,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "thigh.L": {
+          "position": [
+            0.03893342614173889,
+            0.04492294415831566,
+            1.8943593360631894e-09
+          ],
+          "rotation": [
+            -0.9944078708534664,
+            -0.07467535722681758,
+            -0.07467509645650229,
+            0.00045538657763058085
+          ],
+          "scale": [
+            1.0000040531158447,
+            1,
+            1.0000001192092896
+          ]
+        },
+        "shin.L": {
+          "position": [
+            1.0153343055208097e-08,
+            0.1948436051607132,
+            7.039712701661927e-10
+          ],
+          "rotation": [
+            -0.0030531940925564104,
+            -0.06543742008422258,
+            0.06503831484020854,
+            0.9957302042527888
+          ],
+          "scale": [
+            0.9999998807907104,
+            0.9999999403953552,
+            1
+          ]
+        },
+        "thigh.R": {
+          "position": [
+            -0.03893338143825531,
+            0.04492319002747536,
+            -2.4622079930480822e-09
+          ],
+          "rotation": [
+            -0.9944647327615769,
+            0.07391401214579268,
+            0.07391401959637312,
+            0.010645741358131752
+          ],
+          "scale": [
+            1.0000042915344238,
+            1.0000003576278687,
+            1.0000001192092896
+          ]
+        },
+        "shin.R": {
+          "position": [
+            -1.4633658729223953e-09,
+            0.19484366476535797,
+            1.3118881536655636e-09
+          ],
+          "rotation": [
+            -0.01861580809658477,
+            0.06511740302065488,
+            -0.06372922576299406,
+            0.9956664909980681
+          ],
+          "scale": [
+            0.9999997019767761,
+            1,
+            1
+          ]
+        },
+        "torso.upper": {
+          "position": [
+            0,
+            0.14974379539489746,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "head": {
+          "position": [
+            0,
+            0.1597267985343933,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "upper_arm.L": {
+          "position": [
+            0.056902673095464706,
+            0.12578491866588593,
+            5.185133389318253e-08
+          ],
+          "rotation": [
+            -0.8958910558747477,
+            -0.30540182692539514,
+            -0.30540182692539514,
+            0.10410890559837693
+          ],
+          "scale": [
+            1.0000003576278687,
+            1.000000238418579,
+            0.9999999403953552
+          ]
+        },
+        "lower_arm.L": {
+          "position": [
+            4.379295859280319e-08,
+            0.17651444673538208,
+            2.8947404473456118e-08
+          ],
+          "rotation": [
+            -0.12333660505300578,
+            -0.2879950686436706,
+            0.2685847565740967,
+            0.9108837197068348
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0000001192092896,
+            0.9999998807907104
+          ]
+        },
+        "upper_arm.R": {
+          "position": [
+            -0.05690266564488411,
+            0.12278998643159866,
+            6.6183347691151084e-09
+          ],
+          "rotation": [
+            -0.9331555715767068,
+            0.2508398228108213,
+            0.2508399420201077,
+            0.05813248674308095
+          ],
+          "scale": [
+            1,
+            0.9999998807907104,
+            1
+          ]
+        },
+        "lower_arm.R": {
+          "position": [
+            -8.756201097526173e-09,
+            0.17263539135456085,
+            1.3437346790823312e-09
+          ],
+          "rotation": [
+            -0.07599958800276338,
+            0.19301985262249685,
+            -0.1750933533210513,
+            0.9624498515454141
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0000001192092896,
+            1.0000001192092896
+          ]
+        }
+      },
+      "morphs": {
+        "Ouch | soft tube curl": 0,
+        "Ouch | soft perch": 0,
+        "Ouch | receiver wrap": 0
+      }
+    },
+    "keyframes": [],
+    "animation": {
+      "transition": "ease-in-out",
+      "loop": true
+    },
+    "output": {
+      "width": 720,
+      "height": 720
+    }
+  }
+}

@@ -16,6 +16,11 @@ if (!session) return Astro.redirect('/pspt?next=/director');
     <script is:inline src="/director/vendor/babylonjs.loaders.min.js" defer></script>
     <script is:inline src="/director/animation.js" defer></script>
     <script is:inline src="/director/direct-manipulation.js" defer></script>
+    <script is:inline src="/director/kinematics.js" defer></script>
+    <script is:inline src="/director/optics.js" defer></script>
+    <script is:inline src="/director/appearance.js" defer></script>
+    <script is:inline src="/director/lighting.js" defer></script>
+    <script is:inline src="/director/stage.js" defer></script>
     <script is:inline src="/director/director.js" defer></script>
   </head>
   <body>
@@ -38,26 +43,55 @@ if (!session) return Astro.redirect('/pspt?next=/director');
               <button id="frame-character" title="Fit the whole character in view">Frame</button>
             </div>
           </div>
+          <nav class="mode-switcher" aria-label="Director mode"><button id="mode-pose" aria-pressed="true">Pose</button><button id="mode-lighting" aria-pressed="false">Lighting</button><button id="mode-stage" aria-pressed="false">Stage</button></nav>
           <div class="stage-bottom"><span id="hint">Loading Ouch…</span><button id="handles" aria-pressed="true" disabled>Joint controls on</button></div>
           <div id="loading" class="loading" role="status"><span class="loading-mark">○</span><p>Opening the acting room</p></div>
         </section>
         <aside class="inspector" aria-label="Director controls">
-          <section class="panel">
+          <section class="panel tools-panel">
+            <div class="section-title"><h2 id="mode-title">Pose Mode</h2><span>DIRECT</span></div>
+            <div class="segmented transform-tools" aria-label="Manipulation tool"><button id="tool-move" aria-pressed="false">Move</button><button id="tool-rotate" aria-pressed="true" class="active">Rotate</button><button id="tool-scale" aria-pressed="false">Scale</button></div>
+            <div class="button-row"><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div>
+            <p id="history-count" class="small" aria-live="polite" title="Up to 60 edit steps in this session. Saved takes can be reopened separately.">0 back · 0 forward</p>
+          </section>
+          <section class="panel character-panel">
             <div class="section-title"><h2>Character</h2><span>01</span></div>
             <div class="segmented"><button id="ouch" class="active" aria-pressed="true">Ouch</button><button id="trip" aria-pressed="false">Trip</button></div>
-            <label>Start with a gesture<select id="preset" disabled><option>Loading poses…</option></select></label>
-            <p class="small">Starts to play with. Make the performance yours.</p>
+            <label data-modes="pose">Start with a gesture<select id="preset" disabled><option>Loading poses…</option></select></label>
+            <p class="small" data-modes="pose">Starts to play with. Make the performance yours.</p>
+            <details><summary>Character appearance</summary>
+              <label class="check-label"><input id="outline-enabled" type="checkbox" checked /> Outline</label>
+              <label>Line color <output id="outline-tone-label">Black</output><input id="outline-tone" type="range" min="0" max="1" step=".01" value="0" aria-label="Outline black to white" /></label>
+              <div class="range-ends"><span>Black</span><span>Gray</span><span>White</span></div>
+              <label>Line weight<input id="outline-width" type="range" min=".0005" max=".01" step=".0005" value=".0025" /></label>
+              <label id="trip-glow-control" hidden>Trip glow <output id="trip-glow-label">0%</output><input id="trip-glow" type="range" min="0" max="1" step=".01" value="0" /></label>
+              <label id="trip-flare-control" hidden>Head flare <output id="trip-flare-label">Off</output><input id="trip-flare" type="range" min="0" max="1" step=".01" value="0" /></label>
+              <div class="lens-editor" id="trip-lens-control" hidden>
+              <label>Lens style<select id="trip-lens-style"><option value="glow">Compact glow</option><option value="starburst">Starburst</option><option value="anamorphic">Glow + streak</option><option value="glass">Multi-Iris</option></select></label>
+              <details><summary>Lens components</summary><div class="lens-components">
+              <label>Glow <output id="trip-lens-glow-label">100%</output><input id="trip-lens-glow" type="range" min="0" max="1" step="0.01" value="1" /></label>
+              <label>Rays <output id="trip-lens-rays-label">0%</output><input id="trip-lens-rays" type="range" min="0" max="1" step="0.01" value="0" /></label>
+              <label>Streak <output id="trip-lens-streak-label">0%</output><input id="trip-lens-streak" type="range" min="0" max="1" step="0.01" value="0" /></label>
+              <label>Iris reflections <output id="trip-lens-ghosts-label">0%</output><input id="trip-lens-ghosts" type="range" min="0" max="1" step="0.01" value="0" /></label>
+              <label>Spread <output id="trip-lens-spread-label">1×</output><input id="trip-lens-spread" type="range" min="0.25" max="2" step="0.05" value="1" /></label>
+              <label>Rotation <output id="trip-lens-rotation-label">0°</output><input id="trip-lens-rotation" type="range" min="-180" max="180" step="1" value="0" /></label>
+              <label>Ray count <output id="trip-lens-ray-count-label">8</output><input id="trip-lens-ray-count" type="range" min="4" max="16" step="1" value="8" /></label>
+              </div></details></div>
+              <div id="trip-temperature-control" hidden><label>External light temperature <output id="trip-temperature-label">6500 K</output><input id="trip-temperature" type="range" min="1800" max="10000" step="100" value="6500" /></label><div class="button-row"><button id="temperature-warm">Warm</button><button id="temperature-neutral">Neutral</button><button id="temperature-cool">Cool</button></div></div>
+              <div id="trip-body-temperature-control" hidden><label class="check-label"><input id="trip-body-linked" type="checkbox" checked /> Link body to light temperature</label><label>Body temperature <output id="trip-body-temperature-label">6500 K · linked</output><input id="trip-body-temperature" type="range" min="1800" max="10000" step="100" value="6500" disabled /></label><p class="small">6500 K keeps the body white while the surrounding light changes.</p></div>
+            </details>
           </section>
-          <section class="panel">
+          <section class="panel pose-panel" data-modes="pose">
             <div class="section-title"><h2>Pose</h2><span>02</span></div>
-            <label>Selected joint<select id="joint" disabled><option>Loading joints…</option></select></label>
+            <label>Body control<select id="joint" disabled><option>Loading joints…</option></select></label>
+            <p id="pose-control-description" class="small">Rotate a joint, or move a hand or foot.</p>
+            <label class="check-label"><input id="pose-stretch" type="checkbox" /> Stretch · freeform joints</label>
             <div class="joint-axes" id="rotation-controls">
               <label><span class="axis x">X</span><input id="rot-x" type="range" min="-180" max="180" step="1" value="0" /><output id="value-x">0°</output></label>
               <label><span class="axis y">Y</span><input id="rot-y" type="range" min="-180" max="180" step="1" value="0" /><output id="value-y">0°</output></label>
               <label><span class="axis z">Z</span><input id="rot-z" type="range" min="-180" max="180" step="1" value="0" /><output id="value-z">0°</output></label>
             </div>
-            <div class="button-row"><button id="reset-joint" disabled>Reset joint</button><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div>
-            <p id="history-count" class="small" aria-live="polite" title="Up to 60 edit steps in this session. Saved takes can be reopened separately.">0 back · 0 forward</p>
+            <div class="button-row"><button id="reset-joint" disabled>Reset joint</button></div>
             <details><summary>Move the whole character</summary><div id="position-controls" class="joint-axes">
               <label><span>↔</span><input id="pos-x" type="range" min="-2" max="2" step=".01" value="0" aria-label="Character across" /><output id="pos-value-x">0</output></label>
               <label><span>↕</span><input id="pos-y" type="range" min="-1" max="3" step=".01" value="0" aria-label="Character height" /><output id="pos-value-y">0</output></label>
@@ -65,15 +99,76 @@ if (!session) return Astro.redirect('/pspt?next=/director');
             </div></details>
             <details><summary>Soft tube ends</summary><div id="morph-controls"></div></details>
           </section>
-          <section class="panel">
-            <div class="section-title"><h2>Stage</h2><span>03</span></div>
-            <label>Background<select id="background"><option value="white">White room</option><option value="green">Green screen</option><option value="transparent">Transparent</option></select></label>
+          <section class="panel lighting-panel" data-modes="lighting" hidden>
+            <div class="section-title"><h2>Lights</h2><span>SET</span></div>
+            <label>Selected light<select id="light-select"></select></label>
+            <div class="paired-fields"><label>New light<select id="light-type"><option value="point">Point</option><option value="spot">Spot</option><option value="directional">Directional</option></select></label><button id="add-light">Add</button></div>
+            <div class="button-row"><button id="add-left-hand-light">Add left hand light</button><button id="add-right-hand-light">Add right hand light</button></div>
+            <button id="add-head-light">Add head light</button>
+            <label class="check-label"><input id="light-enabled" type="checkbox" /> Light on</label>
+            <label>Light type<select id="light-selected-type"><option value="point">Point</option><option value="spot">Spotlight</option><option value="directional">Directional</option></select></label>
+            <label>Light name<input id="light-name" maxlength="60" /></label>
+            <label>Color<input id="light-color" type="color" value="#ffffff" /></label>
+            <label>Brightness <output id="light-intensity-label"></output><input id="light-intensity" type="range" min="0" max="20" step=".05" value="1" /></label>
+            <div class="paired-fields"><label>Beam (degrees)<input id="light-angle" type="number" min="6" max="179" step="1" value="45" /></label><label>Range<input id="light-range" type="number" min=".1" max="100" step=".1" value="10" /></label></div>
+            <label>Attach to<select id="light-attachment"><option value="world">Stage</option><option value="head">Head</option><option value="hand.L">Left hand tip</option><option value="hand.R">Right hand tip</option></select></label>
+            <p id="light-attachment-description" class="small">Position and rotation are relative to the stage.</p>
+            <label>Glass flare <output id="light-flare-label">Off</output><input id="light-flare" type="range" min="0" max="1" step=".01" value="0" /></label>
+            <div class="lens-editor">
+              <label>Lens style<select id="light-lens-style"><option value="glow">Compact glow</option><option value="starburst">Starburst</option><option value="anamorphic">Glow + streak</option><option value="glass">Multi-Iris</option></select></label>
+              <details><summary>Lens components</summary><div class="lens-components">
+              <label>Glow <output id="light-lens-glow-label">100%</output><input id="light-lens-glow" type="range" min="0" max="1" step="0.01" value="1" /></label>
+              <label>Rays <output id="light-lens-rays-label">0%</output><input id="light-lens-rays" type="range" min="0" max="1" step="0.01" value="0" /></label>
+              <label>Streak <output id="light-lens-streak-label">0%</output><input id="light-lens-streak" type="range" min="0" max="1" step="0.01" value="0" /></label>
+              <label>Iris reflections <output id="light-lens-ghosts-label">0%</output><input id="light-lens-ghosts" type="range" min="0" max="1" step="0.01" value="0" /></label>
+              <label>Spread <output id="light-lens-spread-label">1×</output><input id="light-lens-spread" type="range" min="0.25" max="2" step="0.05" value="1" /></label>
+              <label>Rotation <output id="light-lens-rotation-label">0°</output><input id="light-lens-rotation" type="range" min="-180" max="180" step="1" value="0" /></label>
+              <label>Ray count <output id="light-lens-ray-count-label">8</output><input id="light-lens-ray-count" type="range" min="4" max="16" step="1" value="8" /></label>
+              </div></details></div>
+            <details><summary>Visible light effect</summary>
+              <label>Shape<select id="light-effect-shape"><option value="none">None · light only</option><option value="ball">Ball</option><option value="beam">Beam</option></select></label>
+              <div class="paired-fields"><label>Radius<input id="light-effect-radius" type="number" min=".005" max="1" step=".005" value=".06" /></label><label>Length<input id="light-effect-length" type="number" min=".05" max="10" step=".05" value="1" /></label></div>
+              <label>Effect strength <output id="light-effect-strength-label">50%</output><input id="light-effect-strength" type="range" min="0" max="1" step=".01" value=".5" /></label>
+            </details>
+            <button id="remove-light" class="remove-control">Remove light</button>
+            <details><summary>Ambient fill</summary><label>Color<input id="ambient-color" type="color" value="#ffffff" /></label><label>Brightness<input id="ambient-intensity" type="range" min="0" max="3" step=".05" value=".65" /></label></details>
+          </section>
+          <section class="panel stage-design-panel" data-modes="stage" hidden>
+            <div class="section-title"><h2>Stage design</h2><span>SET</span></div>
+            <label>Backdrop<select id="backdrop-type"><option value="color">Color</option><option value="image">Image</option></select></label>
+            <label>Backdrop color<input id="backdrop-color" type="color" value="#f3f4f0" /></label>
+            <label class="file-label">Choose background image<input id="backdrop-file" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+            <p id="backdrop-image-name" class="small">No image selected.</p>
+            <div class="paired-fields"><label>Image fit<select id="backdrop-fit"><option value="cover">Fill frame</option><option value="contain">Show whole image</option></select></label><button id="remove-backdrop-image">Remove image</button></div>
+            <details><summary>Floor</summary>
+              <label class="check-label"><input id="floor-enabled" type="checkbox" checked /> Show floor</label>
+              <label>Floor color<input id="floor-color" type="color" value="#f2f4f0" /></label>
+              <div class="paired-fields"><label>Size<input id="floor-size" type="number" min="1" max="200" step="1" value="200" /></label><label>Height<input id="floor-height" type="number" min="-10" max="10" step=".01" value="-.005" /></label></div>
+            </details>
+            <details open><summary>Set pieces</summary>
+              <label>Selected piece<select id="stage-select"></select></label>
+              <div class="paired-fields"><label>New piece<select id="stage-type"><option value="box">Box</option><option value="sphere">Sphere</option><option value="plane">Panel</option></select></label><button id="add-stage-object">Add</button></div>
+              <label>Name<input id="stage-name" maxlength="60" /></label><label>Color<input id="stage-color" type="color" value="#b7c4ba" /></label>
+              <button id="remove-stage-object" class="remove-control">Remove piece</button>
+            </details>
+          </section>
+          <section class="panel scene-transform-panel" data-modes="lighting stage" hidden>
+            <div class="section-title"><h2>Placement</h2><span>XYZ</span></div>
+            <p id="scene-selection-label" class="small">Select an item to place it.</p>
+            <div class="transform-fields"><span>Position</span><label>X<input id="scene-pos-x" type="number" min="-100" max="100" step=".05" /></label><label>Y<input id="scene-pos-y" type="number" min="-100" max="100" step=".05" /></label><label>Z<input id="scene-pos-z" type="number" min="-100" max="100" step=".05" /></label></div>
+            <div class="transform-fields"><span>Rotation °</span><label>X<input id="scene-rot-x" type="number" min="-5729" max="5729" step="1" /></label><label>Y<input id="scene-rot-y" type="number" min="-5729" max="5729" step="1" /></label><label>Z<input id="scene-rot-z" type="number" min="-5729" max="5729" step="1" /></label></div>
+            <div class="transform-fields" data-modes="stage"><span>Scale</span><label>X<input id="scene-scale-x" type="number" min=".01" max="100" step=".05" /></label><label>Y<input id="scene-scale-y" type="number" min=".01" max="100" step=".05" /></label><label>Z<input id="scene-scale-z" type="number" min=".01" max="100" step=".05" /></label></div>
+            <p class="small">Select a marker, then hold and drag to move it. Use the gizmo to move, rotate or scale. Frame brings the set controls into view.</p>
+          </section>
+          <section class="panel frame-panel">
+            <div class="section-title"><h2>Camera & frame</h2><span>03</span></div>
+            <label>Background<select id="background"><option value="white">Room / backdrop</option><option value="green">Green screen</option><option value="transparent">Transparent</option></select></label>
             <label>Frame size<select id="frame-size"><option value="720x720">Square · 720 × 720</option><option value="1280x720">Landscape · 1280 × 720</option><option value="1920x1080">Full HD · 1920 × 1080</option><option value="720x1280">Portrait · 720 × 1280</option><option value="1080x1920">Portrait HD · 1080 × 1920</option><option value="custom">Custom size</option></select></label>
             <div class="paired-fields"><label>Width<input id="output-width" type="number" min="64" max="4096" value="720" /></label><span>×</span><label>Height<input id="output-height" type="number" min="64" max="4096" value="720" /></label></div>
             <p class="small">The image area matches these proportions. Frame size is saved with your take.</p>
             <label>Direction notes<textarea id="notes" rows="2" maxlength="4000" placeholder="A little more swagger. Hold the pause…"></textarea></label>
           </section>
-          <section class="panel animation-panel">
+          <section class="panel animation-panel" data-modes="pose">
             <div class="section-title"><h2>Motion & timing</h2><span>04</span></div>
             <label>Between poses<select id="transition"><option value="ease-in-out">Ease in & out</option><option value="linear">Linear · steady speed</option><option value="ease-in">Ease in · slow start</option><option value="ease-out">Ease out · slow finish</option><option value="hold">Hold · stop motion</option></select></label>
             <div class="paired-fields"><label>Length (seconds)<input id="duration" type="number" min="0.017" max="10000" step="0.1" value="3" /></label><label>FPS change<select id="fps-behavior"><option value="seconds">Keep seconds</option><option value="frames">Keep frame numbers</option></select></label></div>

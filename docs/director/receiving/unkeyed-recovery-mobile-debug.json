@@ -1,0 +1,28 @@
+{
+  "scope": "Actual local browser UI. Desktop keyboard/control events and emulated Android CDP touch; no external save or send.",
+  "source_sha256": "951dd89f086c273368b82ecc02d8ce35dbd367cbb5db3b2da77180b802a1cb4d",
+  "checks": {
+    "mobile_scrub_checkpoints_unkeyed_pose_once": true,
+    "mobile_scrub_displays_recovery_message": true,
+    "mobile_undo_restores_frame48_authored_34deg": true,
+    "mobile_redo_restores_sampled_frame49": true,
+    "mobile_navigation_does_not_autokey": true,
+    "zero_page_errors": true,
+    "source_unchanged_during_test": true
+  },
+  "metrics": {
+    "mobile_parent_reproduction": {
+      "authored_frame": 48,
+      "authored_torso_rotation": [
+        0.9563047559630354,
+        4.065417430247837e-17,
+        4.065417430247837e-17,
+        0.29237170472273677
+      ],
+      "after_frame": 49,
+      "undo_depth_before": 5
+    }
+  },
+  "page_errors": [],
+  "passed": true
+}

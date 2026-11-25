@@ -1,0 +1,286 @@
+{
+  "reader": "Bee",
+  "reviewed_utc": "2026-11-25T03:46:07.945544+00:00",
+  "mode": "Independent actual screenshot review. Bee did not execute the runtime renderer or manipulate this comparison browser. Separate earlier UI play exists.",
+  "scope": "19 personally opened screenshots; not every image in the folder.",
+  "Director_quote": "I use lines where needed for separation and I let the scene dictate how to render Trip's defined outlines vs implied boundaries.",
+  "source_study": "nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/ShellGame.Development/ODK.Pass2/Bee/Trip-visibility-source-study/source-study.md",
+  "art_displays_previously_actually_opened_in_this_study": [
+    "Part1/287 owner-named forest Trip",
+    "Part1/243 recognized night Trip",
+    "Part2/149 clean filled storyboard export"
+  ],
+  "source_art_is_authority": true,
+  "images": [
+    {
+      "file": "desktop-neutral-baseline.png",
+      "sha256": "9cb2ee8b45b33fe45d26fe97869fbcdfcc3bd21f1117196e975e2c6db6ac31aa",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-neutral-thin.png",
+      "sha256": "2d607389d0030b7d4af3102479eeb428803d9f14c944ecae484d4bf76b7ddf2e",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-neutral-medium.png",
+      "sha256": "af0613a0747784d5a323a22e94d5256d2a3ce2288d31de9ecafe79618bf44208",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-baseline.png",
+      "sha256": "63405cf77fb0c7bde4e0b8aa9eed1c1398154e22581497a0c511fec4b465a82c",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-thin.png",
+      "sha256": "e4a349f5fad9c22ad999c733333652a20da51aeca250c5685275ee7351a46aa8",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-medium.png",
+      "sha256": "1aaa4e0f3eec304c78f21f9926f9bbf9f76ace7a1691a1101c04b84481c7ddf4",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-holding-phone-baseline.png",
+      "sha256": "6bc3f8279b87cfca658ec5bceb286707bc93f4866b779e52b22e54480933cdf9",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-holding-phone-thin.png",
+      "sha256": "d9d421319020c8e4c4b736f7e8f4c29c13786c412d6c146f83b20611d660228f",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-holding-phone-medium.png",
+      "sha256": "9a5faf2c230e5789b8b34321d88150701a7f9bb89223207b883b38275fd63788",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-light-study-lighting-only.png",
+      "sha256": "d53019f545802c21132f3e0d05e09aef019600ee94c90647ded9139b38ef9974",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-light-study-lighting-and-contour.png",
+      "sha256": "b6d36589aa3eaffe49032467fd66e8b1a31253b5276bec2277698312e588ffb5",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-light-rebalance-lighting-only.png",
+      "sha256": "a10ad9d4517c86166df1edaf222b5f6a715ac6f799ecf79f6c6d0c386e1b30e4",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-raised-arm-light-rebalance-lighting-and-contour.png",
+      "sha256": "33deb12d69431d55ca8df6872acfbacafb3b14d916618b53e7c04e389715255c",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-neutral-baseline.png",
+      "sha256": "25fab26a833cc44752b07300e6c0f54c63f19c728d5ea3e52b0623a5193ac3cf",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-neutral-thin.png",
+      "sha256": "0daebc27058de17e464870e35606bf6352b1e8ae113f3f6cbb4ca577230b3183",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-neutral-medium.png",
+      "sha256": "c08e05eeb25250c45ebd0c0938ad0e04fe48ca0e537b187c1a028743040c0daa",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-holding-phone-thin.png",
+      "sha256": "22a02a03d455022728dca8906baf253576f0738f9c1d3694277ab6872536352f",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-raised-arm-light-rebalance-lighting-only.png",
+      "sha256": "a80a628f3dc9f63aca77705da5770f8fca4389caa6f6aa8447dd8f6433d1c3c1",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-raised-arm-light-rebalance-lighting-and-contour.png",
+      "sha256": "8a4dd3eb4fe3befba2fd93837e87c56dfde3e945a9be1282b21262343a0f6d6d",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "receipts": [
+    {
+      "file": "trial.json",
+      "sha256": "722343a5915119ea65cea04311327fc3e979ce534d9dc3ae37d5757b983fab71",
+      "authored_by": "director_browser_asset",
+      "read_by": "Bee",
+      "receipt_pass_is_not_Director_approval": true
+    },
+    {
+      "file": "lighting-trial.json",
+      "sha256": "7826e88f8d6318bc48f0a764cf7b627252d497e592df84bb064eac86cf5ce3ac",
+      "authored_by": "director_browser_asset",
+      "read_by": "Bee",
+      "receipt_pass_is_not_Director_approval": true
+    },
+    {
+      "file": "lighting-rebalance.json",
+      "sha256": "1788202cb6ceeca46928756e2a418f61186fd59f589b0a6f885849f4a15c580b",
+      "authored_by": "director_browser_asset",
+      "read_by": "Bee",
+      "receipt_pass_is_not_Director_approval": true
+    }
+  ],
+  "findings": [
+    {
+      "claim": "Thin outer contour improves silhouette separation against unchanged white room while preserving shaded roundness.",
+      "images": [
+        "desktop-neutral-baseline.png",
+        "desktop-neutral-thin.png",
+        "mobile-neutral-baseline.png",
+        "mobile-neutral-thin.png"
+      ]
+    },
+    {
+      "claim": "Medium contour is more emphatic, but adds a continuous outer border rather than solving scene-selective boundaries. On desktop it reads more graphically enclosed; mobile stronger border remains useful evidence, not automatic final choice.",
+      "images": [
+        "desktop-neutral-medium.png",
+        "desktop-raised-arm-medium.png",
+        "mobile-neutral-medium.png"
+      ]
+    },
+    {
+      "claim": "Forearm tip crossing the head remains soft/unmarked with both widths; emphasizing the outside contour does not resolve this inside overlap. No phone is rendered, so this is not a grip-recognition result.",
+      "images": [
+        "desktop-holding-phone-baseline.png",
+        "desktop-holding-phone-thin.png",
+        "desktop-holding-phone-medium.png",
+        "mobile-holding-phone-thin.png"
+      ]
+    },
+    {
+      "claim": "First lighting pair makes broad body surfaces too gray for this Trip comparison. Its long ground shadow adds a different visible grounding cue.",
+      "images": [
+        "desktop-raised-arm-light-study-lighting-only.png",
+        "desktop-raised-arm-light-study-lighting-and-contour.png"
+      ]
+    },
+    {
+      "claim": "Brighter rebalance restores white highlights with stronger rounded form. Lighting alone still lets some lit outer edges soften into the pale room. Thin contour plus brighter rebalance gives the strongest provisional balance of white identity, volume and readable silhouette among the reviewed samples.",
+      "images": [
+        "desktop-raised-arm-light-rebalance-lighting-only.png",
+        "desktop-raised-arm-light-rebalance-lighting-and-contour.png",
+        "mobile-raised-arm-light-rebalance-lighting-only.png",
+        "mobile-raised-arm-light-rebalance-lighting-and-contour.png"
+      ]
+    },
+    {
+      "claim": "The long cast shadow seen in the first lighting pair is not visible in the brighter pair. This review records that difference without attributing its implementation cause.",
+      "images": [
+        "desktop-raised-arm-light-study-lighting-only.png",
+        "desktop-raised-arm-light-rebalance-lighting-only.png"
+      ]
+    }
+  ],
+  "bounded_recommendation": "Retain the brighter+thin result as a candidate for Director comparison, not a universal outline policy. Next rendering work should address where a crossing form needs selective boundary/light separation, with white material/accepted geometry held. Do not solve the overlap by merely thickening the entire outer line.",
+  "IBM_lighting_evidence": {
+    "Bee_viewed": false,
+    "source": "Dan lighting direction and C.B. actual inline review of five stills",
+    "reported_observation": "Key-lit face and lit hair/shoulder edges separate a presenter against black. Exact rig unestablished.",
+    "not_inferred": "No claim of direct Bee viewing, exact fixture placement or numerical lighting values from the episode."
+  },
+  "limits": [
+    "Runtime trials and fixed comparison captures, not production implementation.",
+    "Mobile viewport screenshots, not physical ACHE testing.",
+    "These are stills; temporal contour stability not tested.",
+    "No contour/lighting trial in crossed-arm-to-torso pose separate from the held-forearm/head overlap was viewed.",
+    "Browser PBR volume reviewed, not full native clay/fingerprint parity.",
+    "No new Dan appearance approval.",
+    "Recipe numeric values belong to runtime experiments, not measurements recovered from Dan artwork."
+  ],
+  "superseded_by_Director": {
+    "recorded_utc": "2026-11-25T03:49:27.399583+00:00",
+    "direction": "Current candidate still gray; Trip WHITE and made of LIGHT; shared flexibility does not require gray clay surface.",
+    "prior_white_identity_judgment": "historical provisional finding, no longer current target",
+    "new_source_direction": "nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/ShellGame.Development/ODK.Pass2/Bee/Trip-visibility-source-study/light-direction.json",
+    "new_appearance_approved": false,
+    "full_quote": "Make sure Trip does not degrade into gray, Trip is white. And I can't tell if the clay material is here but maybe we make a modified one that looks more like the Trip in my art. There are no 3D models to compare with but Trip is made of light, so I wonder if we can make him more like a lightbulb? Basically what I want is the flexibility of Ouch's clay-ness while giving Trip his Story ability to glow. /waywood-lore",
+    "attached_image_scope": "Neutral uniformly outlined gray candidate per C.B.; no claim Dan independently judged all19 review screenshots."
+  }
+}

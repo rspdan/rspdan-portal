@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "saved": {
+    "id": "dir_b9f9c60d-b579-4ddd-8a2a-a66ae1e2a8ea",
+    "version": 1,
+    "owner": "dan",
+    "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch",
+    "createdAt": "2026-11-25T03:24:07.832Z",
+    "takeHash": "b92058df74b65479a37258f52c3528c67d6c125e8f354def0e24529aa301d4c8",
+    "asset": {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+    },
+    "keyframes": 4,
+    "look": "ouch",
+    "href": "/director?take=dir_b9f9c60d-b579-4ddd-8a2a-a66ae1e2a8ea"
+  },
+  "storage": "local-workspace",
+  "shared": false
+}

@@ -1,0 +1,200 @@
+{
+  "repo": "/workspace/nest-bridge",
+  "mapping_valid": true,
+  "mapping": {
+    "repository_id": "efbbd59426c242bf852453a38f53b1b4",
+    "repository_name": "nest-bridge",
+    "indexed_root": "/workspace/nest-bridge",
+    "indexed_files": 7160,
+    "working_tree_files": 7057,
+    "mapping_valid": true,
+    "reason": null
+  },
+  "indexed": true,
+  "incomplete": null,
+  "stuck_update_lock": null,
+  "state": {
+    "last_sync_commit": "5463c84c14fd77a76497e9eb3980b0d8efb2e9bb",
+    "total_pages": 689,
+    "provider": null,
+    "model": null,
+    "total_tokens": 0,
+    "storage_bytes": 262307697
+  },
+  "database_found": true,
+  "pages_by_type": {
+    "file_page": 431,
+    "flow_page": 2,
+    "module_page": 22,
+    "onboarding": 3,
+    "repo_overview": 1,
+    "symbol_spotlight": 205
+  },
+  "page_total": 664,
+  "page_tokens": 0,
+  "stale_pages": 2,
+  "health": {
+    "file_count": 484,
+    "unanalysed_file_count": 5,
+    "analysed_share": 0.9898,
+    "average_health": 4.7,
+    "worst_performer_path": "ENGINE/turn_audit_hook.py",
+    "worst_performer_score": 1.0,
+    "worst_test_path": "PHOTOMIGRATION/TESTS/test_dbf_roundtrip.py",
+    "worst_test_score": 8.97,
+    "open_findings": 1802,
+    "maintainability_average": 6.01,
+    "performance_average": 9.98,
+    "structure_average": 5.22,
+    "history_average": 0.08,
+    "maintainability_findings": 536,
+    "performance_causes": {
+      "now": 0,
+      "production": 244,
+      "all": 276,
+      "per_10k_loc": 21.89
+    },
+    "performance_coverage_pct": 98.7,
+    "performance_covered_files": 462,
+    "performance_analyzed_files": 484,
+    "performance_skipped_files": 22,
+    "performance_unsupported_languages": [
+      [
+        "shell",
+        22
+      ]
+    ],
+    "worst_performance_path": "ENGINE/mcm_verify.py",
+    "worst_performance_score": 9.4,
+    "hotspot_health": 5.88
+  },
+  "next_actions": {
+    "anchor": "2026-11-25T03:15:04",
+    "week": {
+      "total": 6,
+      "by_tier": {
+        "act_now": 1,
+        "plan": 4,
+        "improve_signal": 1
+      }
+    },
+    "quarter": {
+      "total": 40,
+      "by_tier": {
+        "act_now": 1,
+        "plan": 38,
+        "improve_signal": 1
+      }
+    },
+    "unavailable": [],
+    "setup": {
+      "open": 1,
+      "offer": "finish_setup",
+      "dismissed": false,
+      "completed": false,
+      "agent_calls": 26,
+      "claude_code_calls": 0,
+      "first_call_at": "2026-11-24T13:41:34.253010Z",
+      "synced_commits": 12,
+      "unlocks": {
+        "always_load": false,
+        "distill": false,
+        "suggested_settings": true
+      }
+    }
+  },
+  "evidence_freshness": {
+    "reference_commit": "5463c84c14fd77a76497e9eb3980b0d8efb2e9bb",
+    "coverage": {
+      "present": false,
+      "commit_sha": null,
+      "ingested_at": null,
+      "age_days": null,
+      "freshness": "unknown"
+    },
+    "runtime": {
+      "present": false,
+      "commit_sha": null,
+      "ingested_at": null,
+      "age_days": null,
+      "freshness": "unknown",
+      "runs": 0
+    }
+  },
+  "index_scope": {
+    "version": 1,
+    "run_mode": "standard",
+    "content_provenance": "template",
+    "git_tier": "full",
+    "git_commit_cap": 5000,
+    "git_history_coverage": {
+      "eligible_files": 379,
+      "files_with_history": 490,
+      "unavailable_files": 0,
+      "retained_commits": 915,
+      "per_file_limit": 5000,
+      "global_commits": 5000,
+      "deep_commits": 1620,
+      "recent_files": 332,
+      "deep_files": 85,
+      "fallback_files": 0,
+      "complete_through_depth": 6620,
+      "workers": 5
+    },
+    "dropped_files": {
+      "generated": {
+        "count": 1,
+        "paths": [
+          "STATUS/data_burn_state.js"
+        ],
+        "truncated": false
+      }
+    },
+    "test_run": false,
+    "file_pages": {
+      "configured_cap": null,
+      "effective_cap": null,
+      "eligible": 431,
+      "generated": 431,
+      "omitted": 0
+    },
+    "analysis": {
+      "unavailable": [],
+      "skipped": []
+    },
+    "upgrade": {
+      "status": "complete",
+      "retryable": false,
+      "completed_stages": [
+        "git_backfill",
+        "generation",
+        "search",
+        "health",
+        "finalize"
+      ],
+      "next_stage": null
+    },
+    "provider": {
+      "name": null,
+      "model": null,
+      "embedder": "mock",
+      "reused": false,
+      "model_cost_possible": false
+    },
+    "search": {
+      "full_text": "available",
+      "semantic": "unavailable",
+      "next_command": "repowise reindex --embedder ollama"
+    }
+  },
+  "upgrade_command": null,
+  "model_command": "repowise generate",
+  "upgrade_line": "For answers and docs, run `repowise generate` (no re-index) with a provider key or a local model, then restart the MCP server.",
+  "decision_lanes_pending": [
+    "pr",
+    "git_archaeology",
+    "comment"
+  ],
+  "rescore_pending": [],
+  "suggestions": []
+}

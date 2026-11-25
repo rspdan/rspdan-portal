@@ -1,0 +1,41 @@
+{
+  "glb_sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14",
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Ouch | browser clay",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.01600000075995922,
+          0.017000000923871994,
+          0.01600000075995922,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7400000095367432
+      }
+    }
+  ],
+  "images": [],
+  "textures": [],
+  "mesh_attributes": {
+    "POSITION": 0,
+    "NORMAL": 1,
+    "JOINTS_0": 2,
+    "JOINTS_1": 3,
+    "WEIGHTS_0": 4,
+    "WEIGHTS_1": 5
+  },
+  "morph_attributes": [
+    [
+      "POSITION"
+    ],
+    [
+      "POSITION"
+    ],
+    [
+      "POSITION"
+    ]
+  ],
+  "conclusion": "No images, surface textures, UVs or normal maps. Geometric vertex normals and POSITION-only morphs remain; native procedural clay/fingerprint texture is not present in this browser GLB."
+}

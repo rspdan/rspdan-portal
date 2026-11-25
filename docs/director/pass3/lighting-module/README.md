@@ -1,0 +1,19 @@
+# Editable light module receiving
+
+`public/director/lighting.js` provides saved ambient fill and up to eight point, spot or directional lights. Stable transform proxies drive the actual lights; local negative Z is their aim direction. Their handles use the existing press-and-hold manipulation contract. A single 1024 shadow map follows the first enabled nonzero directional/spot light. Character and stage-object meshes are included as casters; editor helpers are excluded.
+
+The module reserves ten material light slots: eight editable lights, ambient fill and the appearance controller's optional derived Trip light. It does not serialize or dispose that derived light. Ambient color/intensity has no movable proxy. Point lights do not acquire additional shadow maps in this version.
+
+[Receiving](receiving.json) records **18 passing Chromium checks**, no page errors and no console errors. These include actual 430ms hold-and-drag on a light handle, quaternion-driven direction on the actual Babylon light, stable proxy identity on restore, exact snapshot roundtrip, ambient editing, the eight-light cap, the compiled ninth-light shader define, character shadow casting, and cleanup. [The actual viewport](editable-light-markers.png) shows the orange spot marker and its light on the floor.
+
+This was a module receiving harness: the committed core/HTML were frozen while the new module was injected, because the main three-mode integration was being edited concurrently. It is not a claim of completed whole-app or physical ACHE receiving. The successful first run had 17 checks; subsequent final receiving adds actual shader compilation and console-error inspection. An intermediate fixture launch intersected unfinished main integration, then a fixture string escape failed before its final evaluation; neither result is counted as module success.
+
+The private reproducible harness is `/workspace/scratch/director-next-update/lighting_probe.py`. It retains authentication outside this document and receipt. No live takes or external messages were sent.
+
+## Helper visibility correction
+
+The earlier Frame-all view made white light markers difficult to see on a white set. The helper-only correction adds a charcoal boundary to each light sphere and uses a contrasting gray aim arrow. Child helper scales maintain a nominal minimum 8 CSS-pixel dot and 20-pixel arrow length before directional foreshortening; selected dots are larger. The light's own color, proxy transform and saved shot do not change as the camera moves. The original 18-check receipt above belongs to the pre-correction module and is not relabeled.
+
+[Focused receiving](helper-visibility.json) pins the corrected source and records **15 passing checks**, with no page errors, console errors or failed resources. Actual mobile-emulation captures show the helpers on [white](mobile-white-helper-contrast.png) and [dark](mobile-dark-helper-contrast.png) stages. C.B.'s lighting helper agent opened both images. Measured projected sphere widths were 8.1 CSS pixels unselected and 11.4 selected. The checks also verify unchanged saved lighting during camera zoom, unchanged emitted white light, correct aim, actual raw-touch hold/drag, and exact Undo recovery. Helpers remain excluded from cast shadows and Trip's glow.
+
+The final focused run freezes the current UI/module responses while the main editor is being developed. An explicit render barrier is used after camera framing; reading before the next render had measured stale child scales. An earlier development-page run completed the feature assertions but reported an unattributed resource 404, and another collided with concurrent UI work; neither is counted as final receiving. The final frozen run has no failed resources. A separate observation was sent to the integration owner: the old Frame-all target can put the key-light marker behind the mode toolbar. This module does not move the light to conceal that framing issue.

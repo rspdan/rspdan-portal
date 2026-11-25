@@ -1,0 +1,380 @@
+{
+  "defaults": {
+    "ambient": {
+      "intensity": 0.65,
+      "color": "#ffffff"
+    },
+    "lights": [
+      {
+        "id": "light-key",
+        "name": "Key light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2.3,
+        "position": [
+          -3,
+          4,
+          3
+        ],
+        "rotation": [
+          -0.772607487030514,
+          -0.8198672643969563,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-rim",
+        "name": "Rim light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2,
+        "position": [
+          3,
+          1.2,
+          -4
+        ],
+        "rotation": [
+          -0.1698462880836737,
+          2.601173153319209,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      }
+    ]
+  },
+  "initial": {
+    "ambient": {
+      "intensity": 0.65,
+      "color": "#ffffff"
+    },
+    "lights": [
+      {
+        "id": "light-key",
+        "name": "Key light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2.3,
+        "position": [
+          -2.7,
+          4,
+          3
+        ],
+        "rotation": [
+          0.25,
+          -0.4,
+          0.09999999999999999
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-rim",
+        "name": "Rim light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2,
+        "position": [
+          3,
+          1.2,
+          -4
+        ],
+        "rotation": [
+          -0.1698462880836737,
+          2.601173153319209,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-31763948-688d-44dd-9dbf-045bb7e25309",
+        "name": "Spot light",
+        "type": "spot",
+        "enabled": true,
+        "color": "#ff8844",
+        "intensity": 2,
+        "position": [
+          -0.35,
+          0.9,
+          0.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "angle": 0.7,
+        "range": 4
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "default three-light rig",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "fill not part of selectable proxies",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "restore keeps same proxy node",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "quaternion gizmo rotation snapshots as Euler",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "proxy rotation aims actual light",
+      "ok": true,
+      "detail": {
+        "actual": [
+          0.3773122696896257,
+          0.2474039623692789,
+          -0.8924274371318062
+        ],
+        "expected": [
+          0.3773122696896257,
+          0.2474039623692789,
+          -0.8924274371318062
+        ]
+      }
+    },
+    {
+      "name": "spot properties reach renderer",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "only editable handles visible",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot roundtrip lossless",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "hold-drag commits light movement",
+      "ok": true,
+      "detail": {
+        "moves": 8,
+        "ended": {
+          "name": "light-31763948-688d-44dd-9dbf-045bb7e25309",
+          "started": true,
+          "moved": true,
+          "cancelled": false
+        }
+      }
+    },
+    {
+      "name": "eight lights plus fill render",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "body shader compiles all nine lights",
+      "ok": true,
+      "detail": {
+        "lastLightDefine": true
+      }
+    },
+    {
+      "name": "ninth editable light refused",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "markers hidden outside editing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "empty lighting leaves ambient only",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "restored light count",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "ambient control applied",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "character remains shadow caster",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "dispose clears owned lights and helpers",
+      "ok": true,
+      "detail": null
+    }
+  ],
+  "drag": {
+    "moves": 8,
+    "ended": {
+      "name": "light-31763948-688d-44dd-9dbf-045bb7e25309",
+      "started": true,
+      "moved": true,
+      "cancelled": false
+    }
+  },
+  "afterDrag": {
+    "ambient": {
+      "intensity": 0.65,
+      "color": "#ffffff"
+    },
+    "lights": [
+      {
+        "id": "light-key",
+        "name": "Key light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2.3,
+        "position": [
+          -2.7,
+          4,
+          3
+        ],
+        "rotation": [
+          0.25,
+          -0.4,
+          0.09999999999999999
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-rim",
+        "name": "Rim light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2,
+        "position": [
+          3,
+          1.2,
+          -4
+        ],
+        "rotation": [
+          -0.1698462880836737,
+          2.601173153319209,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-31763948-688d-44dd-9dbf-045bb7e25309",
+        "name": "Spot light",
+        "type": "spot",
+        "enabled": true,
+        "color": "#ff8844",
+        "intensity": 2,
+        "position": [
+          -0.26835300072468327,
+          0.9490878981611057,
+          0.16442505975857813
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "angle": 0.7,
+        "range": 4
+      }
+    ]
+  },
+  "final": {
+    "ambient": {
+      "intensity": 0.2,
+      "color": "#aabbcc"
+    },
+    "lights": [
+      {
+        "id": "light-key",
+        "name": "Key light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2.3,
+        "position": [
+          -2.7,
+          4,
+          3
+        ],
+        "rotation": [
+          0.25,
+          -0.4,
+          0.09999999999999999
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-rim",
+        "name": "Rim light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 2,
+        "position": [
+          3,
+          1.2,
+          -4
+        ],
+        "rotation": [
+          -0.1698462880836737,
+          2.601173153319209,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-31763948-688d-44dd-9dbf-045bb7e25309",
+        "name": "Spot light",
+        "type": "spot",
+        "enabled": true,
+        "color": "#ff8844",
+        "intensity": 2,
+        "position": [
+          -0.26835300072468327,
+          0.9490878981611057,
+          0.16442505975857813
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "angle": 0.7,
+        "range": 4
+      }
+    ]
+  },
+  "pageErrors": [],
+  "consoleErrors": [],
+  "sourceSha256": "96af4ae58a23133e89205ba2ed245c7a80195303b12bd1b175638c98500b5932",
+  "passed": true
+}

@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "saved": {
+    "id": "dir_7b0770ad-84d7-4a86-a951-891033790376",
+    "version": 1,
+    "owner": "dan",
+    "name": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip",
+    "createdAt": "2026-11-25T03:26:00.318Z",
+    "takeHash": "301dd48b1855e2f9e96afb57e8a50d02c50312bf821faa6517b570d825d04c40",
+    "asset": {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+    },
+    "keyframes": 4,
+    "look": "trip",
+    "href": "/director?take=dir_7b0770ad-84d7-4a86-a951-891033790376"
+  },
+  "storage": "local-workspace",
+  "shared": false
+}

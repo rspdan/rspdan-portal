@@ -1,0 +1,1359 @@
+{
+  "author": "Independent frame-synchronized current-source receiving agent",
+  "execution_utc": "2026-11-25T05:40:39.333636+00:00",
+  "scope": "Actual local Director DOM interactions and live Babylon scene. Desktop and Chromium touch emulation; input-event checks are labeled separately from physical pointer interactions. Local save shared:false only. No physical ACHE, native rendering, or artistic approval claimed.",
+  "hashes": {
+    "director.js": "dd2ff3fbf3884b6c30d5337df8541abea51a7f6e67e86b61e020b151de9e5448",
+    "appearance.js": "88429419f099e6b6fd89bcfba6bb0dc18cea900c83a3440faa90cb7c0638f0e7",
+    "lighting.js": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb",
+    "optics.js": "029b264c263e0a451a407da0b9fdcad6693d36e4fed8f6a45a473ae5c9469643"
+  },
+  "checks": [
+    {
+      "name": "old explicit floor height remains minus .005",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-desktop fresh stage floor is zero",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-desktop #temperature-warm sets expected temperature and preserves body",
+      "passed": true,
+      "detail": {
+        "temperature": 2700,
+        "body": 6500
+      }
+    },
+    {
+      "name": "current-desktop #temperature-neutral sets expected temperature and preserves body",
+      "passed": true,
+      "detail": {
+        "temperature": 6500,
+        "body": 6500
+      }
+    },
+    {
+      "name": "current-desktop #temperature-cool sets expected temperature and preserves body",
+      "passed": true,
+      "detail": {
+        "temperature": 10000,
+        "body": 6500
+      }
+    },
+    {
+      "name": "current-desktop high body glow still leaves head flare off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-desktop-glow completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "glow",
+          "glow": 1,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.0216230881641337,
+        "source": [
+          394.33121585011224,
+          128.77884936575174
+        ],
+        "offAxis": 0.6790594095311725,
+        "transmission": 0.8063288936974137,
+        "streakSize": 1.8615150229079804,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2712280452247456,
+        "glowColor": [
+          1.0981493994376788,
+          1.0981493994376788,
+          1.0981493994376788
+        ],
+        "raysSize": 1.002620910629792,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.32444613874312217,
+            "size": 0.09524008592916366,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              398.8363387324576,
+              312.67889879250833
+            ]
+          },
+          {
+            "position": -0.4325948516574963,
+            "size": 0.16508281561055038,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              403.88488169005655,
+              518.7614682766556
+            ]
+          },
+          {
+            "position": -0.9192640597721795,
+            "size": 0.2793709187255468,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              407.1303735913702,
+              651.2431200878931
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-desktop-starburst completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "starburst",
+          "glow": 0.5,
+          "rays": 1,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.0216230881641337,
+        "source": [
+          394.33121585011224,
+          128.77884936575174
+        ],
+        "offAxis": 0.6790594095311725,
+        "transmission": 0.8063288936974137,
+        "streakSize": 1.8615150229079804,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2712280452247456,
+        "glowColor": [
+          0.5490746997188394,
+          0.5490746997188394,
+          0.5490746997188394
+        ],
+        "raysSize": 1.002620910629792,
+        "raysColor": [
+          1.590423268151121,
+          1.590423268151121,
+          1.590423268151121
+        ],
+        "ghosts": [
+          {
+            "position": 0.32444613874312217,
+            "size": 0.09524008592916366,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              398.8363387324576,
+              312.67889879250833
+            ]
+          },
+          {
+            "position": -0.4325948516574963,
+            "size": 0.16508281561055038,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              403.88488169005655,
+              518.7614682766556
+            ]
+          },
+          {
+            "position": -0.9192640597721795,
+            "size": 0.2793709187255468,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              407.1303735913702,
+              651.2431200878931
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-desktop-anamorphic completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "anamorphic",
+          "glow": 0.35,
+          "rays": 0,
+          "streak": 1,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.0216230881641337,
+        "source": [
+          394.33121585011224,
+          128.77884936575174
+        ],
+        "offAxis": 0.6790594095311725,
+        "transmission": 0.8063288936974137,
+        "streakSize": 1.8615150229079804,
+        "streakColor": [
+          1.3035827843698842,
+          1.3035827843698842,
+          1.3035827843698842
+        ],
+        "glowSize": 0.2712280452247456,
+        "glowColor": [
+          0.38435228980318753,
+          0.38435228980318753,
+          0.38435228980318753
+        ],
+        "raysSize": 1.002620910629792,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.32444613874312217,
+            "size": 0.09524008592916366,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              398.8363387324576,
+              312.67889879250833
+            ]
+          },
+          {
+            "position": -0.4325948516574963,
+            "size": 0.16508281561055038,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              403.88488169005655,
+              518.7614682766556
+            ]
+          },
+          {
+            "position": -0.9192640597721795,
+            "size": 0.2793709187255468,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              407.1303735913702,
+              651.2431200878931
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-desktop-glass completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.0216230881641337,
+        "source": [
+          394.33121585011224,
+          128.77884936575174
+        ],
+        "offAxis": 0.6790594095311725,
+        "transmission": 0.8063288936974137,
+        "streakSize": 1.8615150229079804,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2712280452247456,
+        "glowColor": [
+          0.7687045796063751,
+          0.7687045796063751,
+          0.7687045796063751
+        ],
+        "raysSize": 1.002620910629792,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.32444613874312217,
+            "size": 0.09524008592916366,
+            "color": [
+              0.41805411619972316,
+              0.7315947033495156,
+              0.8709460754160899
+            ],
+            "pixel": [
+              398.8363387324576,
+              312.67889879250833
+            ]
+          },
+          {
+            "position": -0.4325948516574963,
+            "size": 0.16508281561055038,
+            "color": [
+              0.8709460754160899,
+              0.6061784684895986,
+              0.38321627318307955
+            ],
+            "pixel": [
+              403.88488169005655,
+              518.7614682766556
+            ]
+          },
+          {
+            "position": -0.9192640597721795,
+            "size": 0.2793709187255468,
+            "color": [
+              0.6270811742995848,
+              0.4877298022330104,
+              0.8709460754160899
+            ],
+            "pixel": [
+              407.1303735913702,
+              651.2431200878931
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-desktop Multi-Iris default has zero rays",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.0216230881641337,
+        "source": [
+          394.33121585011224,
+          128.77884936575174
+        ],
+        "offAxis": 0.6790594095311725,
+        "transmission": 0.8063288936974137,
+        "streakSize": 1.8615150229079804,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2712280452247456,
+        "glowColor": [
+          0.7687045796063751,
+          0.7687045796063751,
+          0.7687045796063751
+        ],
+        "raysSize": 1.002620910629792,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.32444613874312217,
+            "size": 0.09524008592916366,
+            "color": [
+              0.41805411619972316,
+              0.7315947033495156,
+              0.8709460754160899
+            ],
+            "pixel": [
+              398.8363387324576,
+              312.67889879250833
+            ]
+          },
+          {
+            "position": -0.4325948516574963,
+            "size": 0.16508281561055038,
+            "color": [
+              0.8709460754160899,
+              0.6061784684895986,
+              0.38321627318307955
+            ],
+            "pixel": [
+              403.88488169005655,
+              518.7614682766556
+            ]
+          },
+          {
+            "position": -0.9192640597721795,
+            "size": 0.2793709187255468,
+            "color": [
+              0.6270811742995848,
+              0.4877298022330104,
+              0.8709460754160899
+            ],
+            "pixel": [
+              407.1303735913702,
+              651.2431200878931
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-desktop all four completed renders have distinct pixels",
+      "passed": true,
+      "detail": {
+        "glow vs starburst": 0.3809879913682129,
+        "glow vs anamorphic": 0.41440196267436147,
+        "glow vs glass": 0.11488112636115447,
+        "starburst vs anamorphic": 0.6161248997207729,
+        "starburst vs glass": 0.4939070652545693,
+        "anamorphic vs glass": 0.5241276484598977
+      }
+    },
+    {
+      "name": "current-desktop both grounded feet have local support masks",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "L",
+            "center": [
+              0.07479662670288889,
+              0.003698579449035396
+            ],
+            "radii": [
+              0.05181090250405307,
+              0.06666748871815514
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 5.748933806289644e-05,
+            "surface": "White room floor",
+            "samples": 1072
+          },
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 4.507664866738165e-05,
+            "surface": "White room floor",
+            "samples": 850
+          }
+        ],
+        "recomputations": 1,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "current-desktop lifting root releases both contact masks",
+      "passed": true,
+      "detail": {
+        "contacts": [],
+        "recomputations": 2,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "current-desktop hidden floor releases contact masks",
+      "passed": true,
+      "detail": {
+        "contacts": [],
+        "recomputations": 3,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "current-desktop neutral body stays white with controls",
+      "passed": true,
+      "detail": {
+        "pixel": [
+          356.4006888059824,
+          572.8237306580495
+        ],
+        "median_RGB": [
+          255,
+          255,
+          255
+        ],
+        "appearance": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.41,
+            0.41,
+            0.41
+          ],
+          "spill": [
+            1,
+            1,
+            1
+          ],
+          "outline": true,
+          "look": "trip"
+        }
+      }
+    },
+    {
+      "name": "current-mobile fresh stage floor is zero",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-mobile #temperature-warm sets expected temperature and preserves body",
+      "passed": true,
+      "detail": {
+        "temperature": 2700,
+        "body": 6500
+      }
+    },
+    {
+      "name": "current-mobile #temperature-neutral sets expected temperature and preserves body",
+      "passed": true,
+      "detail": {
+        "temperature": 6500,
+        "body": 6500
+      }
+    },
+    {
+      "name": "current-mobile #temperature-cool sets expected temperature and preserves body",
+      "passed": true,
+      "detail": {
+        "temperature": 10000,
+        "body": 6500
+      }
+    },
+    {
+      "name": "current-mobile high body glow still leaves head flare off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-mobile-glow completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "glow",
+          "glow": 1,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5000018758037323,
+        "source": [
+          349.27786367452194,
+          161.24150557707702
+        ],
+        "offAxis": 0.5446788882621524,
+        "transmission": 0.8753964616462324,
+        "streakSize": 1.6490054915850136,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.24390152800855622,
+        "glowColor": [
+          1.1922133835717743,
+          1.1922133835717743,
+          1.1922133835717743
+        ],
+        "raysSize": 0.8902603707253972,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.3196084399774375,
+            "size": 0.08261910352134265,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              352.49076537565315,
+              292.39275830509
+            ]
+          },
+          {
+            "position": -0.4261445866365834,
+            "size": 0.14320644610366062,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              356.01231283246244,
+              436.14298892654665
+            ]
+          },
+          {
+            "position": -0.9055572466027396,
+            "size": 0.24234937032927178,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              358.2761647689827,
+              528.5538514689117
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-mobile-starburst completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "starburst",
+          "glow": 0.5,
+          "rays": 1,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5000018758037323,
+        "source": [
+          349.27786367452194,
+          161.24150557707702
+        ],
+        "offAxis": 0.5446788882621524,
+        "transmission": 0.8753964616462324,
+        "streakSize": 1.6490054915850136,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.24390152800855622,
+        "glowColor": [
+          0.5961066917858872,
+          0.5961066917858872,
+          0.5961066917858872
+        ],
+        "raysSize": 0.8902603707253972,
+        "raysColor": [
+          1.7266538658625699,
+          1.7266538658625699,
+          1.7266538658625699
+        ],
+        "ghosts": [
+          {
+            "position": 0.3196084399774375,
+            "size": 0.08261910352134265,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              352.49076537565315,
+              292.39275830509
+            ]
+          },
+          {
+            "position": -0.4261445866365834,
+            "size": 0.14320644610366062,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              356.01231283246244,
+              436.14298892654665
+            ]
+          },
+          {
+            "position": -0.9055572466027396,
+            "size": 0.24234937032927178,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              358.2761647689827,
+              528.5538514689117
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-mobile-anamorphic completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "anamorphic",
+          "glow": 0.35,
+          "rays": 0,
+          "streak": 1,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5000018758037323,
+        "source": [
+          349.27786367452194,
+          161.24150557707702
+        ],
+        "offAxis": 0.5446788882621524,
+        "transmission": 0.8753964616462324,
+        "streakSize": 1.6490054915850136,
+        "streakColor": [
+          1.2726562303525755,
+          1.2726562303525755,
+          1.2726562303525755
+        ],
+        "glowSize": 0.24390152800855622,
+        "glowColor": [
+          0.417274684250121,
+          0.417274684250121,
+          0.417274684250121
+        ],
+        "raysSize": 0.8902603707253972,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.3196084399774375,
+            "size": 0.08261910352134265,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              352.49076537565315,
+              292.39275830509
+            ]
+          },
+          {
+            "position": -0.4261445866365834,
+            "size": 0.14320644610366062,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              356.01231283246244,
+              436.14298892654665
+            ]
+          },
+          {
+            "position": -0.9055572466027396,
+            "size": 0.24234937032927178,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              358.2761647689827,
+              528.5538514689117
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-mobile-glass completed renderer has selected lens",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5000018758037323,
+        "source": [
+          349.27786367452194,
+          161.24150557707702
+        ],
+        "offAxis": 0.5446788882621524,
+        "transmission": 0.8753964616462324,
+        "streakSize": 1.6490054915850136,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.24390152800855622,
+        "glowColor": [
+          0.834549368500242,
+          0.834549368500242,
+          0.834549368500242
+        ],
+        "raysSize": 0.8902603707253972,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.3196084399774375,
+            "size": 0.08261910352134265,
+            "color": [
+              0.4538633018838754,
+              0.7942607782967821,
+              0.9455485455914071
+            ],
+            "pixel": [
+              352.49076537565315,
+              292.39275830509
+            ]
+          },
+          {
+            "position": -0.4261445866365834,
+            "size": 0.14320644610366062,
+            "color": [
+              0.9455485455914071,
+              0.6581017877316193,
+              0.4160413600602191
+            ],
+            "pixel": [
+              356.01231283246244,
+              436.14298892654665
+            ]
+          },
+          {
+            "position": -0.9055572466027396,
+            "size": 0.24234937032927178,
+            "color": [
+              0.680794952825813,
+              0.529507185531188,
+              0.9455485455914071
+            ],
+            "pixel": [
+              358.2761647689827,
+              528.5538514689117
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-mobile Multi-Iris default has zero rays",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.85,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5000018758037323,
+        "source": [
+          349.27786367452194,
+          161.24150557707702
+        ],
+        "offAxis": 0.5446788882621524,
+        "transmission": 0.8753964616462324,
+        "streakSize": 1.6490054915850136,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.24390152800855622,
+        "glowColor": [
+          0.834549368500242,
+          0.834549368500242,
+          0.834549368500242
+        ],
+        "raysSize": 0.8902603707253972,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.3196084399774375,
+            "size": 0.08261910352134265,
+            "color": [
+              0.4538633018838754,
+              0.7942607782967821,
+              0.9455485455914071
+            ],
+            "pixel": [
+              352.49076537565315,
+              292.39275830509
+            ]
+          },
+          {
+            "position": -0.4261445866365834,
+            "size": 0.14320644610366062,
+            "color": [
+              0.9455485455914071,
+              0.6581017877316193,
+              0.4160413600602191
+            ],
+            "pixel": [
+              356.01231283246244,
+              436.14298892654665
+            ]
+          },
+          {
+            "position": -0.9055572466027396,
+            "size": 0.24234937032927178,
+            "color": [
+              0.680794952825813,
+              0.529507185531188,
+              0.9455485455914071
+            ],
+            "pixel": [
+              358.2761647689827,
+              528.5538514689117
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "current-mobile all four completed renders have distinct pixels",
+      "passed": true,
+      "detail": {
+        "glow vs starburst": 0.32789508123463884,
+        "glow vs anamorphic": 0.32859531105365636,
+        "glow vs glass": 0.033365651632672605,
+        "starburst vs anamorphic": 0.4959163235341058,
+        "starburst vs glass": 0.35960491876536116,
+        "anamorphic vs glass": 0.35728877397938014
+      }
+    },
+    {
+      "name": "current-mobile both grounded feet have local support masks",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "L",
+            "center": [
+              0.07479662670288889,
+              0.003698579449035396
+            ],
+            "radii": [
+              0.05181090250405307,
+              0.06666748871815514
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 5.748933806289644e-05,
+            "surface": "White room floor",
+            "samples": 1072
+          },
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 4.507664866738165e-05,
+            "surface": "White room floor",
+            "samples": 850
+          }
+        ],
+        "recomputations": 1,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "current-mobile lifting root releases both contact masks",
+      "passed": true,
+      "detail": {
+        "contacts": [],
+        "recomputations": 2,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "current-mobile hidden floor releases contact masks",
+      "passed": true,
+      "detail": {
+        "contacts": [],
+        "recomputations": 3,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "current-mobile neutral body stays white with controls",
+      "passed": true,
+      "detail": {
+        "pixel": [
+          322.11204124428673,
+          476.85187315084903
+        ],
+        "median_RGB": [
+          255,
+          255,
+          255
+        ],
+        "appearance": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.41,
+            0.41,
+            0.41
+          ],
+          "spill": [
+            1,
+            1,
+            1
+          ],
+          "outline": true,
+          "look": "trip"
+        }
+      }
+    },
+    {
+      "name": "current-source run has no JavaScript page errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "name": "current-desktop-glow.png",
+      "png_sha256": "39b56b9c6adf8557c821451618c46e2222903592f2e32733d840b784d518b860",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-starburst.png",
+      "png_sha256": "60d1d09548b374a02f6d9d76a035331c9ce5925ea45501860b34db2ab7820c30",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-anamorphic.png",
+      "png_sha256": "dea12b1012181c944c319217f05f324522efc631afb54aba2d74cdcbd4624249",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-glass.png",
+      "png_sha256": "84bcc6130dc9b1472f8b1c01ad55458efa6a3908f78fcbcc165095f2f8a7cece",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-ground-contact.png",
+      "png_sha256": "b1e270183ffc9a4bf4bba4472d1c8b5aa609ee2c5ab574689f4a3cae1aed90af",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-lifted.png",
+      "png_sha256": "9277cf9eb303518513f8237f67f14edcc228daa25b1697a735dc8e662cc4698d",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-floor-hidden.png",
+      "png_sha256": "39e6e978a8c0205db0f1e1e5ed058523dadbb008e100545cf8b4ef50c7feb7d9",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-desktop-controls.png",
+      "png_sha256": "05633000a6d3649a6865226ce447df9646655602082965178c6b8461b12a31eb",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "current-mobile-glow.png",
+      "png_sha256": "74b1f0dc11bba8546d1d56888b4b1a18178d95bd20e8cb25343971464757973d",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-starburst.png",
+      "png_sha256": "34beb143af634ccbce5bcf2e2f0d9a2bd1192698ed2d6d484303114b0201985e",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-anamorphic.png",
+      "png_sha256": "34234ac9a42aa47b14a3d3ac040dcbffa565be5365dcf960506b750ed6b3a1cd",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-glass.png",
+      "png_sha256": "99c4696073ffb690a459912cf0d0c53afea44633802169796828ce7c8d537907",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-ground-contact.png",
+      "png_sha256": "77183d9f9608d24203f77dfa154217e6cc4a709d5eba163ea4f0623126b3056c",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-lifted.png",
+      "png_sha256": "b0a26892caa77d534b54dfef51abc33884c3bb2749614aa2275eeeebad76a946",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-floor-hidden.png",
+      "png_sha256": "71c9c131cd7497eb21f3a7b0e8e6024797d5ef39764e6669e71d198518c68eba",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "current-mobile-controls.png",
+      "png_sha256": "33d4c15f018dc3a81d3b610c60a9a57152799105b74952e02d9db2c1deef75aa",
+      "size": [
+        708,
+        708
+      ]
+    }
+  ],
+  "events": [],
+  "passed": true,
+  "visual_review": {
+    "reviewer": "Independent receiving agent",
+    "personally_viewed": [
+      "current-desktop-glow.png",
+      "current-desktop-starburst.png",
+      "current-desktop-anamorphic.png",
+      "current-desktop-glass.png",
+      "current-mobile-glow.png",
+      "current-mobile-starburst.png",
+      "current-mobile-anamorphic.png",
+      "current-mobile-glass.png",
+      "current-desktop-ground-contact.png",
+      "current-desktop-lifted.png",
+      "current-mobile-ground-contact.png",
+      "current-mobile-lifted.png",
+      "current-mobile-controls.png"
+    ],
+    "observations": [
+      "Completed-frame captures now show the selected preset on both desktop and mobile, resolving the earlier stale-image fixture issue.",
+      "Compact glow and long streak are visibly separate; starburst displays eight radial rays; Multi-Iris has no rays and faint optical disc reflections.",
+      "Ground contact retains the lower dark contour, with side halo and floor illumination preserved. Lifting the character restores halo below the foot caps.",
+      "Neutral Trip stays white with editor handles and gizmos visible."
+    ],
+    "limits": "Technical receiving only; no new artistic approval or physical ACHE/device claim. Testing wraps DirectorOptics.create only to retain its read-only inspect() diagnostics; application files are not modified."
+  }
+}

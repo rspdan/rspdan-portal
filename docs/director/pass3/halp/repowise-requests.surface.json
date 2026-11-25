@@ -1,0 +1,265 @@
+{
+  "reader": "Halp",
+  "recorded_utc": "2026-11-25T03:33:48.346185+00:00",
+  "repo_head": "5463c84c14fd77a76497e9eb3980b0d8efb2e9bb",
+  "initialize": {
+    "meta": null,
+    "protocolVersion": "2025-11-25",
+    "capabilities": {
+      "experimental": {},
+      "logging": null,
+      "prompts": {
+        "listChanged": false
+      },
+      "resources": {
+        "subscribe": false,
+        "listChanged": false
+      },
+      "tools": {
+        "listChanged": false
+      },
+      "completions": null,
+      "tasks": null
+    },
+    "serverInfo": {
+      "name": "repowise",
+      "title": null,
+      "version": "0.62.0",
+      "websiteUrl": null,
+      "icons": null
+    },
+    "instructions": "Call repowise first for where/how/why questions about this repo's code.\n- search_codebase(query) finds an identifier or literal: `lines` are read from live files; `complete: true` means every match.\n- get_context(targets=[symbol], include=[\"references\"]) before a rename: a `complete` list is the whole edit set. include=[\"files\"] on a directory lists its files and tests.\n- get_answer(question): one how/where/why question per call.\n- get_why before changing an established pattern.\n- No decisions recorded yet: get_why reads git history and code comments.\nAgent note, not for answers: setup unfinished. If the user is still chatting, offer `repowise next --prompt setup` once; declined: `repowise next --dismiss setup`."
+  },
+  "tools": {
+    "meta": null,
+    "nextCursor": null,
+    "tools": [
+      {
+        "name": "get_answer",
+        "title": null,
+        "description": "Answer a how, where, or why question in one evidence-grounded call.\n\nHigh confidence may be used directly; medium and low lead with the\nevidence to verify. `candidate_files` ranks files worth opening that\nthe citations do not name.",
+        "inputSchema": {
+          "properties": {
+            "question": {
+              "type": "string",
+              "description": "One question about one subject; split a multi-part task."
+            },
+            "scope": {
+              "type": "string",
+              "description": "Repository-relative path prefix; several, comma-separated, search their union."
+            },
+            "repo": {
+              "type": "string",
+              "description": "Usually omitted."
+            },
+            "include": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "description": "[\"evidence\"] expands evidence; [\"diagnostics\"] adds retrieval_quality."
+            }
+          },
+          "required": [
+            "question"
+          ],
+          "type": "object"
+        },
+        "outputSchema": null,
+        "icons": null,
+        "annotations": {
+          "title": null,
+          "readOnlyHint": true,
+          "destructiveHint": null,
+          "idempotentHint": null,
+          "openWorldHint": false
+        },
+        "meta": null,
+        "execution": null
+      },
+      {
+        "name": "get_context",
+        "title": null,
+        "description": "Triage card for files, modules or symbols: relationships, not source bytes.\n\nReturns summary, signatures with lines, hotspot, fix_history and\ndecision titles; either risk cue means get_risk. Batch targets in one\ncall. Whole file, body-elided and line-verified: include=[\"skeleton\"]\nin ONE call, or Read it; do not call get_symbol per signature. Rename:\ninclude=[\"references\"] is the whole edit set when `complete`. Which\nfiles in a directory lack tests: include=[\"files\"] on it.",
+        "inputSchema": {
+          "properties": {
+            "targets": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "description": "Paths, \"path::Symbol\", \"component:<name>\", \"change:<pr-123 or sha>\", \"package:<name>\"."
+            },
+            "include": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "description": "callers | callees | references | skeleton | files | symbols | decisions | full_doc | ownership | last_change | health | doc_drift | changes | suspects (pass symptom=)."
+            },
+            "repo": {
+              "type": "string",
+              "description": "Usually omitted."
+            },
+            "symptom": {
+              "type": "string",
+              "description": "Issue text or stack trace."
+            }
+          },
+          "required": [
+            "targets"
+          ],
+          "type": "object"
+        },
+        "outputSchema": null,
+        "icons": null,
+        "annotations": {
+          "title": null,
+          "readOnlyHint": true,
+          "destructiveHint": null,
+          "idempotentHint": null,
+          "openWorldHint": false
+        },
+        "meta": null,
+        "execution": null
+      },
+      {
+        "name": "get_symbol",
+        "title": null,
+        "description": "Follow-up read of one symbol whose id another response already gave you.\n\n**Not an entry point.** `get_answer` ships `symbol_bodies`; for a\nwhole file `get_context(include=[\"skeleton\"])` or a Read is one call.\nNever walk a file symbol by symbol. Returns verified, line-numbered\nsource; a truncated result carries the `continuation` to pass back as\nsymbol_id.",
+        "inputSchema": {
+          "properties": {
+            "symbol_id": {
+              "type": "string",
+              "description": "\"path/to/file.py::Name\", \"path/to/file.py:140-180\" for a live range, or an omission ref."
+            },
+            "repo": {
+              "type": "string",
+              "description": "Usually omitted."
+            },
+            "query": {
+              "type": "string",
+              "description": "Regex or substring filter on an omission ref's lines."
+            },
+            "id": {
+              "type": "string",
+              "description": "Alias for symbol_id."
+            },
+            "depth": {
+              "default": 1,
+              "type": "integer",
+              "description": "1 is this symbol alone; 2-3 also return the bodies it calls, transitively, in `callee_bodies`."
+            }
+          },
+          "type": "object"
+        },
+        "outputSchema": null,
+        "icons": null,
+        "annotations": {
+          "title": null,
+          "readOnlyHint": true,
+          "destructiveHint": null,
+          "idempotentHint": null,
+          "openWorldHint": false
+        },
+        "meta": null,
+        "execution": null
+      },
+      {
+        "name": "get_why",
+        "title": null,
+        "description": "Why this code is shaped this way: decision records and evidence commits.\n\nCall before a refactor or pattern divergence. A path gets the rules in\nforce first, then labelled background records. `authority: accepted`\nmeans somebody signed the decision; `answer_basis` names the strongest\nevidence lane, and only `decision` is a ruling.",
+        "inputSchema": {
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "A question, a file or module path, or omit for the decision dashboard."
+            },
+            "targets": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "description": "File paths to anchor a question."
+            },
+            "repo": {
+              "type": "string",
+              "description": "Usually omitted."
+            },
+            "id": {
+              "type": "string",
+              "description": "Decision or `ev_...` evidence id from any tool."
+            },
+            "include": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "description": "[\"history\"]: a path's origin story, commits, episodes."
+            }
+          },
+          "type": "object"
+        },
+        "outputSchema": null,
+        "icons": null,
+        "annotations": {
+          "title": null,
+          "readOnlyHint": true,
+          "destructiveHint": null,
+          "idempotentHint": null,
+          "openWorldHint": false
+        },
+        "meta": null,
+        "execution": null
+      },
+      {
+        "name": "search_codebase",
+        "title": null,
+        "description": "Find code by concept, symbol, or path: hybrid codebase search.\n\nFor a how/where/why question call get_answer. Use this to enumerate\nmatches, resolve an identifier to a symbol_id, or find files for\nget_context. Identifier, literal, `a|b|c` or regex queries return\n`lines` (path, line, kind, text; definitions first, one group per\nalternative; `in` names the enclosing symbol until it changes) read\nfrom live files; when `complete` is true they are every match, so no\ngrep is needed. `candidates` lists distinct files to Read, best first.",
+        "inputSchema": {
+          "properties": {
+            "query": {
+              "default": "",
+              "type": "string",
+              "description": "Identifier, `a|b` alternation, regex, path, or natural language."
+            },
+            "limit": {
+              "default": 5,
+              "type": "integer",
+              "description": "Max results, up to 20."
+            },
+            "kind": {
+              "type": "string",
+              "description": "implementation | test | config | doc."
+            },
+            "repo": {
+              "type": "string",
+              "description": "Usually omitted."
+            },
+            "mode": {
+              "default": "auto",
+              "type": "string",
+              "description": "auto | symbol | path | concept | hybrid."
+            },
+            "symbol_kind": {
+              "type": "string",
+              "description": "function | class | method | ..."
+            }
+          },
+          "type": "object"
+        },
+        "outputSchema": null,
+        "icons": null,
+        "annotations": {
+          "title": null,
+          "readOnlyHint": true,
+          "destructiveHint": null,
+          "idempotentHint": null,
+          "openWorldHint": false
+        },
+        "meta": null,
+        "execution": null
+      }
+    ]
+  }
+}

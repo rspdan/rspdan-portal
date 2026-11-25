@@ -1,0 +1,11 @@
+# Rejected optical trial: camera-relative streak and reflections
+
+**Director rejected this visual approach.** The source-centered streak plus added aperture shapes did not provide the different flare types requested. Do not promote the captures as accepted art or use passing functional checks as approval. Dan directs the next study toward Video Copilot Optical Flares and distinct optical components/presets.
+
+The retained trial introduces an independent controller attached to an existing source. Camera/source movement changes the source-centered streak's size/brightness and moves three reflected aperture forms along the source/optical-center axis. A fixed camera/source does not pulse. Nine bounded rays estimate partial occlusion; sources outside the camera or fully blocked by a set piece disappear. This is a stylized response, not a ray-traced glass model.
+
+The [13-check receipt](receiving.json) passes with zero page errors on the exact source hashes it records. It covers fixed-state stability, camera pan/approach, source movement, complete and partial occlusion, behind-camera/offscreen suppression, Off and resource disposal. The first route fixture never rendered; its closure error is separately noted. The first partial-occluder fixture pointed its offset plane at the camera rather than keeping it parallel to the camera plane; it consequently blocked none of the source. The corrected plane produced partial visibility. Those are retained fixture corrections, not hidden runtime fixes.
+
+Root personally viewed the first captures and found the hollow aperture rims too similar to editor symbols. A texture-only revision reduced the rim and added a faint disc fill (source SHA aab14efe013295acc084ddffc0091426c2db3a74d13f1c093c09d0acbba6cef3). That revision was then paused when Dan rejected the underlying approach. The current folder's screenshots are the preceding hollow-rim trial, not evidence that the softened revision was accepted or visually received.
+
+No app publication, commit, live save or Crew message was made by this agent. All captures use Chromium/software WebGL; no physical ACHE performance claim is made. The source code is held pending the next agreed optical contract.

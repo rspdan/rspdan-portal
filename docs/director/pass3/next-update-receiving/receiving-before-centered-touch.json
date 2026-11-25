@@ -1,0 +1,334 @@
+{
+  "author": "Halp",
+  "execution_started_utc": "2026-11-25T04:07:56.488636+00:00",
+  "source_stamp_raw": "DPS112426 7:16pm",
+  "scope": "Independent actual local desktop and emulated touch UI; sandbox saves only; no Crew send; no native parity or physical-device claim.",
+  "checks": {
+    "desktop_mode_tabs_present": true,
+    "desktop_temperature_undo": true,
+    "desktop_temperature_redo": true,
+    "desktop_ouch_preserves_trip_controls": true,
+    "desktop_trip_restores_controls": true,
+    "desktop_light_ui_transform": true,
+    "desktop_shared_undo_from_stage_restores_light": true,
+    "desktop_shared_redo_from_stage_restores_light": true,
+    "desktop_stage_delete": true,
+    "desktop_stage_delete_undo": true,
+    "desktop_stage_delete_redo": true,
+    "desktop_uploaded_image_in_raw_canvas": true,
+    "desktop_upload_bounded_local_data": true,
+    "desktop_fields_survive_reopen": true,
+    "desktop_pose_survives_reopen": true,
+    "desktop_reopened_image_in_raw_canvas": true,
+    "mobile_cross_context_fields_survive_reopen": true,
+    "mobile_cross_context_pose_survives_reopen": true,
+    "mobile_touch_shared_undo_light": true,
+    "mobile_touch_shared_redo_light": true,
+    "mobile_touch_stage_delete": false,
+    "mobile_touch_stage_delete_undo": false,
+    "mobile_touch_glow_undo": true,
+    "mobile_touch_glow_redo": true,
+    "mobile_ouch_switch_preserves_appearance": true,
+    "mobile_trip_switch_preserves_appearance": true,
+    "mobile_fields_survive_reopen": true,
+    "mobile_pose_survives_reopen": true,
+    "mobile_reopened_image_in_raw_canvas": true
+  },
+  "metrics": {
+    "desktop_light_ui_transform": {
+      "id": "light-c6b8e922-6c36-4389-b454-a3307ac12ff3",
+      "name": "Halp warm side light",
+      "type": "spot",
+      "enabled": true,
+      "color": "#ffffff",
+      "intensity": 3.5,
+      "position": [
+        1.35,
+        1.4,
+        2.1
+      ],
+      "rotation": [
+        -0.5667523258378888,
+        0.6108652381980153,
+        -0.20943951023931953
+      ],
+      "angle": 1.0471975511965976,
+      "range": 10
+    },
+    "desktop_uploaded_image_in_raw_canvas": {
+      "magenta": 241300,
+      "cyan": 207304,
+      "pixels": 643204
+    },
+    "desktop_upload_bounded_local_data": {
+      "characters": 1263,
+      "name": "backdrop-fixture.png"
+    },
+    "desktop_fields_survive_reopen": {
+      "asset": 0,
+      "name": 0,
+      "notes": 0,
+      "look": 0,
+      "fps": 0,
+      "frame": 0,
+      "range": 0,
+      "keyframes": 0,
+      "animation": 0,
+      "output": 0,
+      "tripGlow": 0.0,
+      "tripTemperature": 0,
+      "outline": 0,
+      "lighting": 0.0,
+      "stage": 0
+    },
+    "desktop_pose_survives_reopen": 2.220446049250313e-16,
+    "desktop_reopened_image_in_raw_canvas": {
+      "magenta": 241220,
+      "cyan": 206520,
+      "pixels": 643204
+    },
+    "mobile_cross_context_fields_survive_reopen": {
+      "asset": 0,
+      "name": 0,
+      "notes": 0,
+      "look": 0,
+      "fps": 0,
+      "frame": 0,
+      "range": 0,
+      "keyframes": 0,
+      "animation": 0,
+      "output": 0,
+      "tripGlow": 0.0,
+      "tripTemperature": 0,
+      "outline": 0,
+      "lighting": 0.0,
+      "stage": 0
+    },
+    "mobile_cross_context_pose_survives_reopen": 0,
+    "mobile_fields_survive_reopen": {
+      "asset": 0,
+      "name": 0,
+      "notes": 0,
+      "look": 0,
+      "fps": 0,
+      "frame": 0,
+      "range": 0,
+      "keyframes": 0,
+      "animation": 0,
+      "output": 0,
+      "tripGlow": 0.0,
+      "tripTemperature": 0,
+      "outline": 0,
+      "lighting": 0.0,
+      "stage": 0
+    },
+    "mobile_pose_survives_reopen": 2.220446049250313e-16,
+    "mobile_reopened_image_in_raw_canvas": {
+      "magenta": 180319,
+      "cyan": 161353,
+      "pixels": 501264
+    }
+  },
+  "errors": [],
+  "events": [
+    {
+      "execution_utc": "2026-11-25T04:08:07.790259+00:00",
+      "action": "Opened independent desktop context",
+      "detail": {
+        "take_id": null,
+        "source_hashes": {
+          "public/director/director.js": "849659805ab8300884769dee0217229eaf7710bdef8943613a372ce6d1db08ec",
+          "public/director/appearance.js": "5ed71a75fec9e279075344e4874a4946ae0f68b91a7c58a4589a55871ad83426",
+          "public/director/lighting.js": "96af4ae58a23133e89205ba2ed245c7a80195303b12bd1b175638c98500b5932",
+          "public/director/stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+          "public/director/animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb"
+        }
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:12.323410+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "01-desktop-arrival"
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:25.845781+00:00",
+      "action": "Actual mouse range drag",
+      "detail": {
+        "selector": "#trip-glow",
+        "before": 0.0,
+        "requested": 0.42,
+        "actual": "0.42"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:30.160008+00:00",
+      "action": "Actual mouse range drag",
+      "detail": {
+        "selector": "#trip-temperature",
+        "before": 6500.0,
+        "requested": 2700,
+        "actual": "2700"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:34.735153+00:00",
+      "action": "Actual mouse range drag",
+      "detail": {
+        "selector": "#outline-tone",
+        "before": 0.0,
+        "requested": 0.55,
+        "actual": "0.55"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:38.788143+00:00",
+      "action": "Actual mouse range drag",
+      "detail": {
+        "selector": "#outline-width",
+        "before": 0.0025,
+        "requested": 0.0045,
+        "actual": "0.0045"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:43.958204+00:00",
+      "action": "Actual mouse range drag",
+      "detail": {
+        "selector": "#trip-temperature",
+        "before": 2700.0,
+        "requested": 8000,
+        "actual": "8000"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:08:53.156518+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "02-desktop-ouch-preserved"
+    },
+    {
+      "execution_utc": "2026-11-25T04:09:08.806984+00:00",
+      "action": "Actual mouse range drag",
+      "detail": {
+        "selector": "#light-intensity",
+        "before": 1.0,
+        "requested": 3.5,
+        "actual": "3.5"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:09:14.823170+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "03-desktop-light-edited"
+    },
+    {
+      "execution_utc": "2026-11-25T04:09:39.448758+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "04-desktop-stage-edited"
+    },
+    {
+      "execution_utc": "2026-11-25T04:09:54.416729+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "05-desktop-upload-canvas"
+    },
+    {
+      "execution_utc": "2026-11-25T04:09:56.532082+00:00",
+      "action": "Saved through UI to local sandbox only",
+      "detail": {
+        "id": "dir_db002eb2-e648-403b-8a97-06183a39304e",
+        "shared": false
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:10:03.519963+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "06-desktop-reopened"
+    },
+    {
+      "execution_utc": "2026-11-25T04:10:25.918703+00:00",
+      "action": "Opened independent mobile context",
+      "detail": {
+        "take_id": "dir_db002eb2-e648-403b-8a97-06183a39304e",
+        "source_hashes": {
+          "public/director/director.js": "849659805ab8300884769dee0217229eaf7710bdef8943613a372ce6d1db08ec",
+          "public/director/appearance.js": "5ed71a75fec9e279075344e4874a4946ae0f68b91a7c58a4589a55871ad83426",
+          "public/director/lighting.js": "96af4ae58a23133e89205ba2ed245c7a80195303b12bd1b175638c98500b5932",
+          "public/director/stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+          "public/director/animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb"
+        }
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:10:32.271055+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "07-mobile-opened-desktop-take"
+    },
+    {
+      "execution_utc": "2026-11-25T04:10:45.759940+00:00",
+      "action": "Actual touch range drag",
+      "detail": {
+        "selector": "#light-intensity",
+        "before": 3.5,
+        "requested": 5.2,
+        "actual": "5.2"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:11:14.129467+00:00",
+      "action": "Actual touch range drag",
+      "detail": {
+        "selector": "#trip-glow",
+        "before": 0.42,
+        "requested": 0.75,
+        "actual": "0.42"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:11:28.818230+00:00",
+      "action": "Actual touch range drag",
+      "detail": {
+        "selector": "#trip-temperature",
+        "before": 2700.0,
+        "requested": 8500,
+        "actual": "2700"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:11:38.749906+00:00",
+      "action": "Actual touch range drag",
+      "detail": {
+        "selector": "#outline-tone",
+        "before": 0.55,
+        "requested": 0.1,
+        "actual": "0.1"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:11:49.296162+00:00",
+      "action": "Actual touch range drag",
+      "detail": {
+        "selector": "#outline-width",
+        "before": 0.0045,
+        "requested": 0.003,
+        "actual": "0.003"
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:12:04.151335+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "08-mobile-appearance-scene"
+    },
+    {
+      "execution_utc": "2026-11-25T04:12:06.491099+00:00",
+      "action": "Saved through UI to local sandbox only",
+      "detail": {
+        "id": "dir_d0a3e75f-5880-492a-9cd3-2c1726f815a8",
+        "shared": false
+      }
+    },
+    {
+      "execution_utc": "2026-11-25T04:12:13.992751+00:00",
+      "action": "Actual UI and canvas capture",
+      "detail": "09-mobile-reopened"
+    }
+  ]
+}

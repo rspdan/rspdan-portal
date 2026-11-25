@@ -1,0 +1,141 @@
+{
+  "reader": "Halp",
+  "started_utc": "2026-11-25T03:33:48.531267+00:00",
+  "completed_utc": "2026-11-25T03:33:48.700870+00:00",
+  "repo_head_at_start": "5463c84c14fd77a76497e9eb3980b0d8efb2e9bb",
+  "tool": "get_context",
+  "arguments": {
+    "targets": [
+      "ENGINE/photo_migration/art_families.py::Locations.resolve"
+    ],
+    "include": [
+      "skeleton",
+      "callers"
+    ]
+  },
+  "result": {
+    "meta": null,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"targets\":{\"ENGINE/photo_migration/art_families.py::Locations.resolve\":{\"type\":\"symbol\",\"docs\":{\"name\":\"resolve\",\"kind\":\"method\",\"file_path\":\"ENGINE/photo_migration/art_families.py\",\"qualified_name\":\"ENGINE.photo_migration.art_families.Locations.resolve\",\"signature\":\"def resolve(self, value)\",\"file_summary\":\"Render an existing received art catalogue with attributed reads and family links.\",\"used_by\":[\"ENGINE/photo_migration/tests/test_art_families_portable.py\",\"ENGINE/photo_migration/tests/test_read_editions_contract.py\"]},\"hotspot\":false,\"callers\":[{\"symbol_id\":\"ENGINE/photo_migration/art_families.py::Locations::__init__\",\"name\":\"__init__\",\"kind\":\"method\",\"file\":\"ENGINE/photo_migration/art_families.py\",\"line\":28,\"confidence\":0.95,\"edge_type\":\"calls\",\"via\":\"same_file\",\"call_line\":29,\"text\":\"self.path = Path(path).resolve()\"},{\"symbol_id\":\"ENGINE/photo_migration/art_families.py::Locations::projected_links\",\"name\":\"projected_links\",\"kind\":\"method\",\"file\":\"ENGINE/photo_migration/art_families.py\",\"line\":86,\"confidence\":0.95,\"edge_type\":\"calls\",\"via\":\"self_scope\",\"call_line\":96,\"text\":\"path = self.resolve(recorded)\"},{\"symbol_id\":\"ENGINE/photo_migration/art_families.py::build\",\"name\":\"build\",\"kind\":\"function\",\"file\":\"ENGINE/photo_migration/art_families.py\",\"line\":111,\"confidence\":0.95,\"edge_type\":\"calls\",\"via\":\"same_file\",\"call_line\":112,\"text\":\"root, family_path = Path(root).resolve(), Path(family_path).resolve()\"},{\"symbol_id\":\"ENGINE/photo_migration/tests/test_art_families_portable.py::PortableFamiliesTest::test_mapping_boundaries_exact_override_and_no_old_path_fallback\",\"name\":\"test_mapping_boundaries_exact_override_and_no_old_path_fallback\",\"kind\":\"method\",\"file\":\"ENGINE/photo_migration/tests/test_art_families_portable.py\",\"line\":123,\"confidence\":0.88,\"edge_type\":\"calls\",\"via\":\"receiver_typed_import\",\"call_line\":125,\"text\":\"self.assertEqual(locator.resolve('/historical-tmp/exact.jpg'), self.base / 'retained-reference.jpg')\"},{\"symbol_id\":\"ENGINE/photo_migration/tests/test_read_editions_contract.py::REPO\",\"name\":\"REPO\",\"kind\":\"constant\",\"file\":\"ENGINE/photo_migration/tests/test_read_editions_contract.py\",\"line\":12,\"confidence\":0.85,\"edge_type\":\"calls\",\"via\":\"import_merged\",\"call_line\":12,\"text\":\"REPO = Path(__file__).resolve().parents[3]\"},{\"symbol_id\":\"ENGINE/photo_migration/tests/test_read_editions_contract.py::ReadEditionsContractTest::exercise_destinations\",\"name\":\"exercise_destinations\",\"kind\":\"method\",\"file\":\"ENGINE/photo_migration/tests/test_read_editions_contract.py\",\"line\":51,\"confidence\":0.85,\"edge_type\":\"calls\",\"via\":\"import_merged\",\"call_line\":85,\"text\":\"self.assertEqual((self.root / row['edition']).parent.joinpath(row['destination']).resolve(), note_target)\"}],\"skeleton\":{\"mode\":\"smart\",\"tokens\":496,\"full_tokens\":3706,\"pct_of_full\":13.4,\"bodies_kept\":[\"resolve\"],\"text\":\"#!/usr/bin/env python3\\n\\\"\\\"\\\"Render an existing received art catalogue with attributed reads and family links.\\n\\nConsumes received member/sheet manifests and photo_migration SQLite catalogues;\\ndoes not scan, rewrite, or import source images. Family assertions are a separate\\neditable layer. Hash identity is not an artwork/edition identity.\\n\\\"\\\"\\\"\\nimport argparse\\nimport html\\nimport json\\nimport os\\nimport re\\nimport sqlite3\\nfrom pathlib import Path\\nfrom copy import deepcopy\\ntry:\\n    from .art_study import project as study_project\\nexcept ImportError:\\n    from art_study import project as study_project\\n\\n\\nclass Locations:\\n    \\\"\\\"\\\"Resolve retained locators without editing the evidence that recorded them.\\\"\\\"\\\"\\n... 4 lines (24-27)\\n    def __init__(self, path, receiving_root):\\n        ... 23 lines (29-51)\\n\\n    def resolve(self, value):\\n        # A :line suffix is a recorded locator, not part of a filesystem name.\\n        bare = re.sub(r':\\\\d+$', '', value.split('#', 1)[0])\\n        exact = self.data.get('paths', {})\\n        if bare in exact:\\n            return (self.base / exact[bare]).resolve()\\n        for prefix, target in sorted(self.data.get('prefixes', {}).items(),\\n                                     key=lambda item: len(item[0]), reverse=True):\\n            prefix = prefix.rstrip('/')\\n            if bare == prefix or bare.startswith(prefix + '/'):\\n                return (self.base / target / bare[len(prefix):].lstrip('/')).resolve()\\n        path = Path(bare)\\n        if path.is_absolute():\\n            raise ValueError(f'No relocation mapping for recorded absolute path: {bare}')\\n        return (self.root / path).resolve()\\n\\n    def href(self, path):\\n        ... 9 lines (70-78)\\n\\n    @staticmethod\\n    def is_path(value):\\n        ... 3 lines (82-84)\\n\\n    def projected_links(self, value):\\n        \\\"\\\"\\\"Relocate only presentation fields; retain original locators alongside.\\\"\\\"\\\"\\n        ... 21 lines (88-108)\\n\\n\\ndef build(root, family_path, locations=None):\\n    ... 135 lines (112-246)\\n\",\"verified\":true,\"of_file\":\"ENGINE/photo_migration/art_families.py\",\"symbol_hint\":\"Skeleton of the file defining 'Locations.resolve': its full body, every other symbol as its signature.\",\"fold_hint\":\"get_symbol('ENGINE/photo_migration/art_families.py:24-27') returns the '(24-27)' fold; every fold reads the same way.\"}}},\"_meta\":{\"semantic_search\":false}}",
+        "annotations": null,
+        "meta": null
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "targets": {
+          "ENGINE/photo_migration/art_families.py::Locations.resolve": {
+            "type": "symbol",
+            "docs": {
+              "name": "resolve",
+              "kind": "method",
+              "file_path": "ENGINE/photo_migration/art_families.py",
+              "qualified_name": "ENGINE.photo_migration.art_families.Locations.resolve",
+              "signature": "def resolve(self, value)",
+              "file_summary": "Render an existing received art catalogue with attributed reads and family links.",
+              "used_by": [
+                "ENGINE/photo_migration/tests/test_art_families_portable.py",
+                "ENGINE/photo_migration/tests/test_read_editions_contract.py"
+              ]
+            },
+            "hotspot": false,
+            "callers": [
+              {
+                "symbol_id": "ENGINE/photo_migration/art_families.py::Locations::__init__",
+                "name": "__init__",
+                "kind": "method",
+                "file": "ENGINE/photo_migration/art_families.py",
+                "line": 28,
+                "confidence": 0.95,
+                "edge_type": "calls",
+                "via": "same_file",
+                "call_line": 29,
+                "text": "self.path = Path(path).resolve()"
+              },
+              {
+                "symbol_id": "ENGINE/photo_migration/art_families.py::Locations::projected_links",
+                "name": "projected_links",
+                "kind": "method",
+                "file": "ENGINE/photo_migration/art_families.py",
+                "line": 86,
+                "confidence": 0.95,
+                "edge_type": "calls",
+                "via": "self_scope",
+                "call_line": 96,
+                "text": "path = self.resolve(recorded)"
+              },
+              {
+                "symbol_id": "ENGINE/photo_migration/art_families.py::build",
+                "name": "build",
+                "kind": "function",
+                "file": "ENGINE/photo_migration/art_families.py",
+                "line": 111,
+                "confidence": 0.95,
+                "edge_type": "calls",
+                "via": "same_file",
+                "call_line": 112,
+                "text": "root, family_path = Path(root).resolve(), Path(family_path).resolve()"
+              },
+              {
+                "symbol_id": "ENGINE/photo_migration/tests/test_art_families_portable.py::PortableFamiliesTest::test_mapping_boundaries_exact_override_and_no_old_path_fallback",
+                "name": "test_mapping_boundaries_exact_override_and_no_old_path_fallback",
+                "kind": "method",
+                "file": "ENGINE/photo_migration/tests/test_art_families_portable.py",
+                "line": 123,
+                "confidence": 0.88,
+                "edge_type": "calls",
+                "via": "receiver_typed_import",
+                "call_line": 125,
+                "text": "self.assertEqual(locator.resolve('/historical-tmp/exact.jpg'), self.base / 'retained-reference.jpg')"
+              },
+              {
+                "symbol_id": "ENGINE/photo_migration/tests/test_read_editions_contract.py::REPO",
+                "name": "REPO",
+                "kind": "constant",
+                "file": "ENGINE/photo_migration/tests/test_read_editions_contract.py",
+                "line": 12,
+                "confidence": 0.85,
+                "edge_type": "calls",
+                "via": "import_merged",
+                "call_line": 12,
+                "text": "REPO = Path(__file__).resolve().parents[3]"
+              },
+              {
+                "symbol_id": "ENGINE/photo_migration/tests/test_read_editions_contract.py::ReadEditionsContractTest::exercise_destinations",
+                "name": "exercise_destinations",
+                "kind": "method",
+                "file": "ENGINE/photo_migration/tests/test_read_editions_contract.py",
+                "line": 51,
+                "confidence": 0.85,
+                "edge_type": "calls",
+                "via": "import_merged",
+                "call_line": 85,
+                "text": "self.assertEqual((self.root / row['edition']).parent.joinpath(row['destination']).resolve(), note_target)"
+              }
+            ],
+            "skeleton": {
+              "mode": "smart",
+              "tokens": 496,
+              "full_tokens": 3706,
+              "pct_of_full": 13.4,
+              "bodies_kept": [
+                "resolve"
+              ],
+              "text": "#!/usr/bin/env python3\n\"\"\"Render an existing received art catalogue with attributed reads and family links.\n\nConsumes received member/sheet manifests and photo_migration SQLite catalogues;\ndoes not scan, rewrite, or import source images. Family assertions are a separate\neditable layer. Hash identity is not an artwork/edition identity.\n\"\"\"\nimport argparse\nimport html\nimport json\nimport os\nimport re\nimport sqlite3\nfrom pathlib import Path\nfrom copy import deepcopy\ntry:\n    from .art_study import project as study_project\nexcept ImportError:\n    from art_study import project as study_project\n\n\nclass Locations:\n    \"\"\"Resolve retained locators without editing the evidence that recorded them.\"\"\"\n... 4 lines (24-27)\n    def __init__(self, path, receiving_root):\n        ... 23 lines (29-51)\n\n    def resolve(self, value):\n        # A :line suffix is a recorded locator, not part of a filesystem name.\n        bare = re.sub(r':\\d+$', '', value.split('#', 1)[0])\n        exact = self.data.get('paths', {})\n        if bare in exact:\n            return (self.base / exact[bare]).resolve()\n        for prefix, target in sorted(self.data.get('prefixes', {}).items(),\n                                     key=lambda item: len(item[0]), reverse=True):\n            prefix = prefix.rstrip('/')\n            if bare == prefix or bare.startswith(prefix + '/'):\n                return (self.base / target / bare[len(prefix):].lstrip('/')).resolve()\n        path = Path(bare)\n        if path.is_absolute():\n            raise ValueError(f'No relocation mapping for recorded absolute path: {bare}')\n        return (self.root / path).resolve()\n\n    def href(self, path):\n        ... 9 lines (70-78)\n\n    @staticmethod\n    def is_path(value):\n        ... 3 lines (82-84)\n\n    def projected_links(self, value):\n        \"\"\"Relocate only presentation fields; retain original locators alongside.\"\"\"\n        ... 21 lines (88-108)\n\n\ndef build(root, family_path, locations=None):\n    ... 135 lines (112-246)\n",
+              "verified": true,
+              "of_file": "ENGINE/photo_migration/art_families.py",
+              "symbol_hint": "Skeleton of the file defining 'Locations.resolve': its full body, every other symbol as its signature.",
+              "fold_hint": "get_symbol('ENGINE/photo_migration/art_families.py:24-27') returns the '(24-27)' fold; every fold reads the same way."
+            }
+          }
+        },
+        "_meta": {
+          "semantic_search": false
+        }
+      }
+    },
+    "isError": false
+  }
+}

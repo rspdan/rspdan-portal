@@ -1,0 +1,389 @@
+{
+  "appearance_sha256": "88429419f099e6b6fd89bcfba6bb0dc18cea900c83a3440faa90cb7c0638f0e7",
+  "passed": true,
+  "checks": [
+    {
+      "name": "two sole contacts on floor",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "L",
+            "center": [
+              0.07479662670288889,
+              0.003698579449035396
+            ],
+            "radii": [
+              0.05181090250405307,
+              0.06666748871815514
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 5.748933806289644e-05,
+            "surface": "White room floor",
+            "samples": 1072
+          },
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 4.507664866738165e-05,
+            "surface": "White room floor",
+            "samples": 850
+          }
+        ],
+        "recomputations": 1,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "stationary frames reuse posed sole cache",
+      "passed": true,
+      "detail": {
+        "before": 1,
+        "after": 1,
+        "vertices": 23134,
+        "samples": 1922
+      }
+    },
+    {
+      "name": "lifted sole releases only its contact",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.0
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 4.507664866738165e-05,
+            "surface": "White room floor",
+            "samples": 850
+          }
+        ],
+        "recomputations": 2,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "hidden floor releases both contacts",
+      "passed": true,
+      "detail": {
+        "contacts": [],
+        "recomputations": 3,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "contacts follow raised floor without snapping pose",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "L",
+            "center": [
+              0.07479662670288889,
+              0.003698579449035396
+            ],
+            "radii": [
+              0.05181090250405307,
+              0.06666748871815514
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.10000000149011612
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 5.751184315223867e-05,
+            "surface": "White room floor",
+            "samples": 1072
+          },
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.10000000149011612
+            ],
+            "bounds": [
+              -100,
+              100,
+              -100,
+              100
+            ],
+            "weight": 1,
+            "gap": 4.5102636071603364e-05,
+            "surface": "White room floor",
+            "samples": 850
+          }
+        ],
+        "recomputations": 4,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "actual stage platform supports both soles",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "L",
+            "center": [
+              0.07479662670288889,
+              0.003698579449035396
+            ],
+            "radii": [
+              0.05181090250405307,
+              0.06666748871815514
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.07999999821186066
+            ],
+            "bounds": [
+              -0.20000000298023224,
+              0.20000000298023224,
+              -0.15000000596046448,
+              0.15000000596046448
+            ],
+            "weight": 1,
+            "gap": 5.7474590249254054e-05,
+            "surface": "Stage box stage-6a690871-61f9-44df-87ab-2e8fa8aa4d97",
+            "samples": 1072
+          },
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.07999999821186066
+            ],
+            "bounds": [
+              -0.20000000298023224,
+              0.20000000298023224,
+              -0.15000000596046448,
+              0.15000000596046448
+            ],
+            "weight": 1,
+            "gap": 4.5065383168618744e-05,
+            "surface": "Stage box stage-6a690871-61f9-44df-87ab-2e8fa8aa4d97",
+            "samples": 850
+          }
+        ],
+        "recomputations": 5,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "lifting clear of platform releases mask",
+      "passed": true,
+      "detail": {
+        "contacts": [],
+        "recomputations": 6,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "reactivated glow restores cached contacts",
+      "passed": true,
+      "detail": {
+        "contacts": [
+          {
+            "side": "L",
+            "center": [
+              0.07479662670288889,
+              0.003698579449035396
+            ],
+            "radii": [
+              0.05181090250405307,
+              0.06666748871815514
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.07999999821186066
+            ],
+            "bounds": [
+              -0.20000000298023224,
+              0.20000000298023224,
+              -0.15000000596046448,
+              0.15000000596046448
+            ],
+            "weight": 1,
+            "gap": 5.7474590249254054e-05,
+            "surface": "Stage box stage-6a690871-61f9-44df-87ab-2e8fa8aa4d97",
+            "samples": 1072
+          },
+          {
+            "side": "R",
+            "center": [
+              -0.07512900038517924,
+              0.0035924991992944723
+            ],
+            "radii": [
+              0.0545879277981574,
+              0.06337713057699285
+            ],
+            "plane": [
+              0,
+              1,
+              0,
+              -0.07999999821186066
+            ],
+            "bounds": [
+              -0.20000000298023224,
+              0.20000000298023224,
+              -0.15000000596046448,
+              0.15000000596046448
+            ],
+            "weight": 1,
+            "gap": 4.5065383168618744e-05,
+            "surface": "Stage box stage-6a690871-61f9-44df-87ab-2e8fa8aa4d97",
+            "samples": 850
+          }
+        ],
+        "recomputations": 7,
+        "cachedSamples": 1922
+      }
+    },
+    {
+      "name": "Ouch disables glow mask effect",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance changes do not move pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "contact controller disposal releases resources",
+      "passed": true,
+      "detail": {
+        "immediate": [
+          {
+            "removed": false,
+            "callback": "function sync() {\n      if (disposed) return;\n      for (const [id, entry] of entries) {\n        ent"
+          },
+          {
+            "removed": false,
+            "callback": "function sync() {\n      if (disposed) return;\n      fill.intensity = ambient.intensity;\n      if (am"
+          },
+          {
+            "removed": false,
+            "callback": "function followCharacter() {\n      if (!spill) return;\n      // Effect texture pixels follow the sho"
+          },
+          {
+            "removed": true,
+            "callback": "function followCharacter() {\n      if (!spill) return;\n      // Effect texture pixels follow the sho"
+          }
+        ],
+        "counts": [
+          27,
+          4,
+          1,
+          3
+        ],
+        "after": [
+          27,
+          4,
+          1,
+          3
+        ],
+        "restored": true
+      }
+    }
+  ],
+  "errors": [],
+  "source_receipts": [
+    "receiving/receiving.json",
+    "disposal-check/receiving.json"
+  ],
+  "diagnostic_correction": "The original immediate-count disposal check is retained as failed in its receipt. Babylon Observable.remove marks callbacks inactive immediately and physically removes them on a zero-delay timer. The narrow follow-up checks settled counts after that task and a rendered frame; all resource counts restore. No app code changed between runs.",
+  "visual_receiving": [
+    "standing.png",
+    "low-angle-contact.png",
+    "left-foot-lifted.png",
+    "floor-hidden.png",
+    "stage-platform-contact.png"
+  ],
+  "unused_visual": "side-contact.png is obstructed by the receiving block, so is not evidence of side-view contact.",
+  "scope": "Floor, raised floor, Stage box platform, lift release, disabled floor, Ouch switch, pose preservation, cached posed-sole work, settled resource disposal. Local planar support approximation, not a collision or full volumetric-light solver."
+}

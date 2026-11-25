@@ -1,0 +1,140 @@
+{
+  "lighting_sha256": "5ccb2baee1557e98f9b93390e7babc937bf75f6e961f01a78f230ecd5c0a9c07",
+  "core_sha256": "35e67b9ea89ff2372a32689619900255c1d87e88199308e52b2f9d6a67a7b9e6",
+  "checks": [
+    {
+      "name": "legacy optional fields omitted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "UI creates left attached ball",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "left endpoint exact",
+      "passed": true,
+      "detail": {
+        "expected": [
+          0.15373346386021414,
+          0.9280131814792689,
+          0.011095237162016103
+        ],
+        "actual": [
+          0.15373346209526062,
+          0.9280132055282593,
+          0.011095236986875534
+        ]
+      }
+    },
+    {
+      "name": "whole root carries attached light",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "root motion does not drift saved offset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "arm rotation carries exact endpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pose changes leave local snapshot stable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "attached offsets roundtrip exactly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real light shares attachment position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "detach keeps world position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "detach produces world parent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reattach resets local offsets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "right effect independent from left",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "effects survive hiding editor handles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "effects neither picked nor shadow casters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "repeated restore has stable resource counts",
+      "passed": true,
+      "detail": {
+        "before": [
+          31,
+          32,
+          5,
+          24
+        ],
+        "after": [
+          31,
+          32,
+          5,
+          24
+        ]
+      }
+    },
+    {
+      "name": "remove disposes effect meshes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "restore returns effect meshes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "head attachment uses head parent",
+      "passed": true,
+      "detail": {
+        "localCenter": [
+          -0.004188962280750275,
+          0.07947930693626404,
+          -2.93925404548645e-06
+        ]
+      }
+    },
+    {
+      "name": "playback-like transforms preserve local offset",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "scope": "Actual imported rig, lighting module and current UI; controller exposed only by test wrapper. No save/send. Chromium software WebGL.",
+  "exception": "Traceback (most recent call last):\n  File \"/workspace/scratch/director_hand_effects_probe.py\", line 18, in <module>\n    page.locator('#mode-stage').click()\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py\", line 17876, in click\n    self._sync(\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_locator.py\", line 165, in click\n    return await self._frame._click(self._selector, strict=True, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_frame.py\", line 593, in _click\n    await self._channel.send(\"click\", self._timeout, locals_to_params(locals()))\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 76, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 632, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#mode-stage\")\n    - locator resolved to <button id=\"mode-stage\" aria-pressed=\"false\" data-astro-source-loc=\"45:231\" data-astro-source-file=\"/workspace/rspdan-portal/src/pages/director/index.astro\">Stage</button>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n\n",
+  "passed": false
+}

@@ -1,0 +1,81 @@
+{
+  "lighting_sha256": "5ccb2baee1557e98f9b93390e7babc937bf75f6e961f01a78f230ecd5c0a9c07",
+  "core_sha256": "22b18871fe3878bedd47f3c93583fce82db77e16fd81b535bc588ec2d7e9cb87",
+  "checks": [
+    {
+      "name": "legacy optional fields omitted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "UI creates left attached ball",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "left endpoint exact",
+      "passed": true,
+      "detail": {
+        "expected": [
+          0.15373346386021414,
+          0.9280131814792689,
+          0.011095237162016103
+        ],
+        "actual": [
+          0.15373346209526062,
+          0.9280132055282593,
+          0.011095236986875534
+        ]
+      }
+    },
+    {
+      "name": "whole root carries attached light",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "root motion does not drift saved offset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "arm rotation carries exact endpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pose changes leave local snapshot stable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "attached offsets roundtrip exactly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real light shares attachment position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "detach keeps world position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "detach produces world parent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reattach resets local offsets",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "scope": "Actual imported rig, lighting module and current UI; controller exposed only by test wrapper. No save/send. Chromium software WebGL.",
+  "exception": "Traceback (most recent call last):\n  File \"/workspace/scratch/director_hand_effects_probe.py\", line 16, in <module>\n    page.locator('#add-right-hand-light').click();page.locator('#light-effect-shape').select_option('beam');page.evaluate('''()=>{window.rightId=testLights.getSelected();const B=BABYLON,s=directorStudio.scene;const a=testLights.snapshot().lights.find(l=>l.id===rightId);ck('right effect independent from left',a.attachment==='hand.R'&&a.effect.shape==='beam'&&testLights.snapshot().lights.find(l=>l.id===leftId).effect.shape==='ball');testLights.update(rightId,{type:'spot',color:'#70bbff',effect:{radius:.08,length:.48,strength:.6}});testLights.update(leftId,{color:'#fff1c1',effect:{radius:.065,strength:.85}});testLights.setEditing(false);s.render();const effects=s.meshes.filter(m=>m.metadata?.directorLightEffect);ck('effects survive hiding editor handles',effects.length===4&&effects.every(m=>m.isEnabled())&&testLights.handles().every(m=>!m.isEnabled()));ck('effects neither picked nor shadow casters',effects.every(m=>!m.isPickable&&!m.receiveShadows)&&!s.lights.find(l=>l.getShadowGenerator?.())?.getShadowGenerator().getShadowMap().renderList.some(m=>m.metadata?.directorLightEffect));window.withEffects=testLights.snapshot();const counts=()=>[s.meshes.length,s.materials.length,s.lights.length,s.transformNodes.length];window.counts=counts;const before=counts();for(let i=0;i<5;i++)testLights.restore(withEffects);ck('repeated restore has stable resource counts',JSON.stringify(before)===JSON.stringify(counts()),{before,after:counts()});testLights.remove(rightId);ck('remove disposes effect meshes',!s.meshes.some(m=>m.metadata?.directorLightEffect&&m.metadata.directorLightId===rightId));testLights.restore(withEffects);ck('restore returns effect meshes',s.meshes.filter(m=>m.metadata?.directorLightEffect&&m.metadata.directorLightId===rightId).length===2);testLights.update(leftId,{attachment:'head'});const h=testLights.nodes()[leftId],head=s.getTransformNodeByName('head');ck('head attachment uses head parent',h.parent.parent===head&&h.parent.position.length()>.01,{localCenter:h.parent.position.asArray()});testLights.restore(withEffects);for(let i=0;i<60;i++){rootNode.position.x=Math.sin(i/10)*.03;s.render();}rootNode.position.copyFrom(rootOriginal);ck('playback-like transforms preserve local offset',JSON.stringify(testLights.snapshot())===JSON.stringify(withEffects));}''')\n                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py\", line 20069, in select_option\n    self._sync(\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_locator.py\", line 633, in select_option\n    return await self._frame.select_option(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_frame.py\", line 814, in select_option\n    return await self._channel.send(\"selectOption\", self._timeout, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 76, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 632, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#light-effect-shape\")\n    - locator resolved to <select id=\"light-effect-shape\" data-astro-source-loc=\"102:60\" data-astro-source-file=\"/workspace/rspdan-portal/src/pages/director/index.astro\">\u2026</select>\n  - attempting select option action\n    2 \u00d7 waiting for element to be visible and enabled\n      - element is not visible\n    - retrying select option action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible and enabled\n      - element is not visible\n    - retrying select option action\n      - waiting 100ms\n    59 \u00d7 waiting for element to be visible and enabled\n       - element is not visible\n     - retrying select option action\n       - waiting 500ms\n\n",
+  "passed": false
+}

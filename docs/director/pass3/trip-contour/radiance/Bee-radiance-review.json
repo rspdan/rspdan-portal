@@ -1,0 +1,94 @@
+{
+  "reader": "Bee",
+  "reviewed_utc": "2026-11-25T04:29:48.863215+00:00",
+  "mode": "Independent actual screenshot review; renderer execution belongs to director_browser_asset.",
+  "status": "Historical actual-image review; desired-style interpretation superseded by Dan’s sharper-falloff/material-light correction. No Director acceptance.",
+  "images": [
+    {
+      "file": "desktop-base.png",
+      "sha256": "3618a8f71896aefb157fb8e7592b281bf3346ea95cf2605dda5396b7635403a8",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-radiance.png",
+      "sha256": "8355806201489cbb4dfefd16d398d997c65994cf93f60d8d42aa252418900f92",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-base.png",
+      "sha256": "18f60e353cb142b6c4a945eaa043657d053daff12e142eb2b3936fce0439acab",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-radiance.png",
+      "sha256": "b803d87a978e128add5d14e1dae8c042c1c5616c4ba6be7f7e2e9d65a99b6129",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "source_comparison": {
+    "previously_actually_viewed_by_Bee": [
+      "Part2/115 forest light, subsequently identified as Trip by Dan",
+      "Part1/277 inner white/violet rim progression",
+      "Part2/148 luminous curved bands",
+      "Part1/251 bright head/environment edge hierarchy"
+    ],
+    "author_update": "Dan identifies the forest-light artwork as Trip and as based directly on his own photographs. No autobiographical details or new dates included.",
+    "relationship": "Candidate now expresses a substantial surrounding field rather than just a narrow outer edge; the bright body remains separate from the surrounding light. This follows a relationship visible in115/277 without copying their whole image or requiring a glare streak."
+  },
+  "findings": [
+    {
+      "scope": "desktop and mobile base→radiance",
+      "observed": "Radiance clearly extends beyond the former narrow border. A soft outer field becomes visible around head, raised arm, hanging arm and lower legs. The difference remains obvious at the small viewport."
+    },
+    {
+      "scope": "body",
+      "observed": "Broad body remains white. Pale rounded shading in head, torso and limbs survives; no whole-body flat clipping is apparent. Close contour/detail softens, especially at mobile scale."
+    },
+    {
+      "scope": "negative space",
+      "observed": "The head/raised-arm, hanging-arm/torso and between-leg gaps remain distinct. Halo lifts the dark values in those spaces but does not merge the forms in these views."
+    },
+    {
+      "scope": "scene",
+      "observed": "Floor around/below Trip and receiving block top brighten. Block front/side remain comparatively dark, preserving scene contrast. This is a visible response, not proof of new shadow occlusion."
+    }
+  ],
+  "receipt": {
+    "file": "trial.json",
+    "sha256": "f2f0291bbdb4df23650d94abea2e80370b7261fced61cd3e041835eb5cf54e24",
+    "readme_sha256": "4cf3a3f9ed60f67892f64dca972cfb022d9a975bb4415da9f81bd146f6e5ce5b",
+    "recorded_scope": "Runtime-only one candidate with same body/pose/camera/room/block; actual appearance module unchanged by renderer.",
+    "independent_Bee_code_execution_claim": false
+  },
+  "limits": [
+    "Four stills of one raised-arm pose; no motion/temporal stability, forearm/head-crossing or different camera test.",
+    "Emulated mobile viewport, not physical ACHE testing.",
+    "Dark-room comparison only; no same-candidate white-room result reviewed.",
+    "Renderer README states point-light change has no new shadow map; darker receiver faces show orientation response, not new proof of shadow occlusion.",
+    "Renderer README states transparent-cutout export does not yet preserve the additive field; Bee did not test export.",
+    "No new lore rule, numerical art prescription or Director acceptance inferred."
+  ],
+  "Director_supersession": {
+    "recorded_utc": "2026-11-25T04:35:16.992890+00:00",
+    "quote": "my glows have sharper falloff on the edges and more contrast like the material itself is glowing, not a fog around it",
+    "received_through": "C.B.",
+    "source_rereading": "nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/ShellGame.Development/ODK.Pass2/Bee/Glow-art-pass/edge-contrast-rereading.json",
+    "accepted_base_preserved": true
+  }
+}

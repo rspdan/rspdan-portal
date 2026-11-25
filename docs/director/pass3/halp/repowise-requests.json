@@ -1,0 +1,24 @@
+[
+  {
+    "receipt": "repowise-art-navigation.json",
+    "tool": "search_codebase",
+    "arguments": {
+      "query": "art_families.py",
+      "mode": "path",
+      "limit": 5
+    }
+  },
+  {
+    "receipt": "repowise-locations.json",
+    "tool": "get_context",
+    "arguments": {
+      "targets": [
+        "ENGINE/photo_migration/art_families.py::Locations.resolve"
+      ],
+      "include": [
+        "skeleton",
+        "callers"
+      ]
+    }
+  }
+]

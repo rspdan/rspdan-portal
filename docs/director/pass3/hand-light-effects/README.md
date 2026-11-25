@@ -1,0 +1,23 @@
+# Attached light effects
+
+The light editor now supports independent lights attached to the head or either hand tip. Attached lights inherit the character's pose and whole-body movement, with separately editable local position and rotation. Changing the attachment snaps to that anchor; detaching to the stage keeps the world position and rotation. Point, spot and directional lights retain their existing controls.
+
+Optional visible effects are separate from the actual receiver light: a ball or finite tapered beam, with radius, length and strength. Each light also has an independent optional optical flare, off by default, driven by its attached source through the shared optical controller. Optional lens settings choose compact glow, starburst, anamorphic streak or glass reflections, with independently adjustable components; the lighting controller preserves and forwards that configuration. Turning off editor handles does not hide the effect. Turning off the light hides both the light and its effect. Older lights retain omitted attachment/effect fields and behave as stage lights without an effect.
+
+## Style scope
+
+These are editable effect primitives. Dan's later direction welcomes the tight falloff and comic-simplified patches of light on the head and body; those qualities are intentional, without requiring a physically realistic simulation. Dan identifies Part 1/287 as Trip holding a **staticky ball of light**. The current smooth ball does not yet reproduce that source's irregular pointed/static edges. Its short fringe, pale core and thin contour provide a base for further art direction. The beam is an explicit stylized mesh, not simulated atmospheric scattering or a ray-traced beam. Its visible length is independently controlled and does not automatically stop at receiving geometry.
+
+The [desktop capture](hand-ball-beam-desktop.png) shows the functional ball and beam on the imported rig in a dark test room, before a narrow correction to the ball's center/edge shading. The [corrected white core](white-core-ball-0-5.png) keeps the center bright at medium effect strength. These are receiving images, not approved final character or effect appearances.
+
+## Receiving
+
+[Module receiving](module-receiving.json) passes 24 focused checks with zero page errors in Chromium software WebGL. The actual imported character and current UI were used; the controller was exposed by a test-only wrapper. Checks cover creation from both hand buttons, exact endpoints, arm/root pose changes, stable saved local offsets, world detach/reattach, actual light placement, head-center binding, repeated restore, removal/restoration, hiding editor handles, effect-none/off behavior, and disposal of owned effects and attachment nodes. A 60-frame transform loop checks that following a moving character does not drift the saved offsets; it is not a claim of continuous constrained IK animation.
+
+Two earlier fixture stops are retained: an attempt to select the shape inside a closed details element, and a later mode-tab click timeout after synthetic module mutations. The final module harness opens the details and uses DOM clicks for visual scene staging; it does not claim those staging actions as physical pointer interaction. Independent integrated receiving covers the actual editing flow, Undo and saved take reopening.
+
+[Final material and per-light optics receiving](final-material-optics-receiving.json) adds 18 passing checks with zero page errors against the final lighting source. It covers three effect strengths, the actual white-center material convention, ball-to-beam rendering, independent optional flare, exact emitter attachment, bounded allocation across repeated edits, light on/off, remove/restore, zero-flare preservation of the receiver light and ball, and disposal. The shader inspection established that Babylon's Fresnel term uses the face-on dot product, so its right color is the center. Earlier numerical material assertions and debug images are retained as superseded diagnostics; they did not establish the intended visual result.
+
+[Lens followthrough receiving](lens-followthrough.json) adds 17 passing checks with zero page errors after the distinct optical looks were added. The real optical controller receives all four presets and a custom component mix. Configuration survives snapshot/remove/restore, remains independent of the ball and receiver intensity, keeps old fields omitted, and does not allocate more textures or systems on repeated look changes. These checks retain actual controllers for inspection; no optical calls were mocked.
+
+No live save, Send to Crew, native asset change, or physical ACHE performance claim is part of these module receipts.

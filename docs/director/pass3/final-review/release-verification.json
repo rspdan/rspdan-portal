@@ -1,0 +1,36 @@
+{
+  "execution_utc": "2026-11-25T05:46:14.948204+00:00",
+  "scope": "Validated baseline before the separate high-light HSL study. Browser renderer using the unchanged Blender-made asset.",
+  "source_sha256": {
+    "director.js": "dd2ff3fbf3884b6c30d5337df8541abea51a7f6e67e86b61e020b151de9e5448",
+    "director.css": "fef61665da7cfb8bedf1c1ae740972d7984d54e3589370e2cab8f99f3a99346c",
+    "appearance.js": "88429419f099e6b6fd89bcfba6bb0dc18cea900c83a3440faa90cb7c0638f0e7",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "lighting.js": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0",
+    "optics.js": "029b264c263e0a451a407da0b9fdcad6693d36e4fed8f6a45a473ae5c9469643",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218"
+  },
+  "node_tests": {
+    "passed": 45,
+    "failed": 0,
+    "suites": [
+      "directorAnimation.test.mjs",
+      "director.test.mjs",
+      "director.http.test.mjs",
+      "pspt.test.mjs"
+    ]
+  },
+  "production_build": "passed including Node24 runtime postbuild patch",
+  "receipts": {
+    "current_browser": "../lens-controls-receiving/current-source-receiving.json",
+    "ground_contact": "../trip-contour/ground-contact/final-receiving.json",
+    "grounded_temperatures": "../trip-contour/incandescent-five-temperatures/neutral-body-colored-light/grounded/receiving.json",
+    "optical_types": "../dynamic-optics-types/receiving.json"
+  },
+  "limitations": [
+    "Touch and mobile DPR emulation, not physical ACHE hardware.",
+    "Browser scene/material effects have no native Blender rendering parity yet.",
+    "Transparent output does not retain the glow halo."
+  ],
+  "publication": "This source receipt precedes preview publication; see later deployed receiving for exact commit."
+}

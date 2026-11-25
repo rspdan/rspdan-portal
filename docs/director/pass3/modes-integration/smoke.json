@@ -1,0 +1,133 @@
+{
+  "checks": [
+    {
+      "name": "desktop startup",
+      "passed": true
+    },
+    {
+      "name": "desktop saved scene fields",
+      "passed": true
+    },
+    {
+      "name": "desktop lighting mode visible",
+      "passed": true
+    },
+    {
+      "name": "desktop light added",
+      "passed": true
+    },
+    {
+      "name": "desktop light placement",
+      "passed": true
+    },
+    {
+      "name": "desktop light placement undo",
+      "passed": true
+    },
+    {
+      "name": "desktop light placement redo",
+      "passed": true
+    },
+    {
+      "name": "desktop stage add",
+      "passed": true
+    },
+    {
+      "name": "desktop stage position",
+      "passed": true
+    },
+    {
+      "name": "desktop delete",
+      "passed": true
+    },
+    {
+      "name": "desktop delete undo",
+      "passed": true
+    },
+    {
+      "name": "desktop backdrop color",
+      "passed": true
+    },
+    {
+      "name": "desktop trip lighting",
+      "passed": true
+    },
+    {
+      "name": "desktop trip lighting survives look switch",
+      "passed": true
+    },
+    {
+      "name": "desktop pose mode restored",
+      "passed": true
+    },
+    {
+      "name": "mobile startup",
+      "passed": true
+    },
+    {
+      "name": "mobile saved scene fields",
+      "passed": true
+    },
+    {
+      "name": "mobile lighting mode visible",
+      "passed": true
+    },
+    {
+      "name": "mobile light added",
+      "passed": true
+    },
+    {
+      "name": "mobile light placement",
+      "passed": true
+    },
+    {
+      "name": "mobile light placement undo",
+      "passed": true
+    },
+    {
+      "name": "mobile light placement redo",
+      "passed": true
+    },
+    {
+      "name": "mobile stage add",
+      "passed": true
+    },
+    {
+      "name": "mobile stage position",
+      "passed": true
+    },
+    {
+      "name": "mobile delete",
+      "passed": true
+    },
+    {
+      "name": "mobile delete undo",
+      "passed": true
+    },
+    {
+      "name": "mobile backdrop color",
+      "passed": true
+    },
+    {
+      "name": "mobile trip lighting",
+      "passed": true
+    },
+    {
+      "name": "mobile trip lighting survives look switch",
+      "passed": true
+    },
+    {
+      "name": "mobile pose mode restored",
+      "passed": true
+    }
+  ],
+  "page_errors": [],
+  "captures": [
+    "desktop-lighting.png",
+    "desktop-pose.png",
+    "mobile-lighting.png",
+    "mobile-pose.png"
+  ],
+  "source_sha256": "849659805ab8300884769dee0217229eaf7710bdef8943613a372ce6d1db08ec",
+  "passed": true
+}

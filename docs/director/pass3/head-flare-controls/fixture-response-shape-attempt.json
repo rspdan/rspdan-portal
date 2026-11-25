@@ -1,0 +1,73 @@
+{
+  "scope": "Actual integrated local Director UI, browser draft, undo/redo and local durable save/reopen. Desktop and mobile viewport emulation; no physical ACHE, no live Crew sends. Rendering judged separately.",
+  "checks": [
+    {
+      "name": "page startup /director",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop head flare starts off and visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop full glow does not enable flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop flare independent of unchanged glow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop undo restores only flare edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop redo restores flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop turning glow off preserves directed flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop Ouch hides control without discarding Trip choice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop Trip restores flare control value",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop draft includes independent flare and glow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual save accepted",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "local_save": {
+    "status": 200,
+    "shared": false,
+    "id": "dir_b91b832c-7ef7-4529-aff0-341bb6b3420b"
+  },
+  "exception": "Traceback (most recent call last):\n  File \"/workspace/scratch/director-head-flare-controls.py\", line 45, in <module>\n    savedId=result['saved']['id'];saved=result['saved']['take'];r['saved_appearance']={k:saved[k] for k in ['look','tripGlow','tripFlare','tripTemperature','outline']}\n                                        ~~~~~~~~~~~~~~~^^^^^^^^\nKeyError: 'take'\n",
+  "source_sha256": {
+    "public/director/director.js": "798a8ae15b000278a456649ed0fe96cddde73b21f0f9804d389aaace49359d26",
+    "src/pages/director/index.astro": "b4b5c79f7e914859f9ec063b548904edde6194bbcc46f9a50a909f9a4f219dc3",
+    "src/lib/directorSchema.js": "3838b2ded1469d526adb9c5f2212164d6648bf39039cb643e75ae8873c93075c"
+  },
+  "passed": false
+}

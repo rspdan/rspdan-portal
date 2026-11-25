@@ -1,0 +1,72 @@
+{
+  "recorded_at_utc": "2026-11-25T03:46:32.695274+00:00",
+  "runtime_only": true,
+  "production_files_changed_by_trial": false,
+  "saved_take_lighting_persistence": false,
+  "approval": "Provisional shot comparison only; no new Director approval or permanent outline rule.",
+  "receipts": {
+    "trial.json": {
+      "sha256": "722343a5915119ea65cea04311327fc3e979ce534d9dc3ae37d5757b983fab71",
+      "passed": true,
+      "captures": 18
+    },
+    "lighting-trial.json": {
+      "sha256": "7826e88f8d6318bc48f0a764cf7b627252d497e592df84bb064eac86cf5ce3ac",
+      "passed": true,
+      "captures": 8
+    },
+    "lighting-rebalance.json": {
+      "sha256": "1788202cb6ceeca46928756e2a418f61186fd59f589b0a6f885849f4a15c580b",
+      "passed": true,
+      "captures": 4
+    },
+    "ouch-lighting-trial.json": {
+      "sha256": "31b6ebf87313aef2ba4453b4f3842baae55b8fc764ee35c60a8f4a69b8360c9f",
+      "passed": true,
+      "captures": 2
+    }
+  },
+  "images": {
+    "desktop-neutral-baseline.png": "9cb2ee8b45b33fe45d26fe97869fbcdfcc3bd21f1117196e975e2c6db6ac31aa",
+    "desktop-neutral-thin.png": "2d607389d0030b7d4af3102479eeb428803d9f14c944ecae484d4bf76b7ddf2e",
+    "desktop-neutral-medium.png": "af0613a0747784d5a323a22e94d5256d2a3ce2288d31de9ecafe79618bf44208",
+    "desktop-raised-arm-baseline.png": "63405cf77fb0c7bde4e0b8aa9eed1c1398154e22581497a0c511fec4b465a82c",
+    "desktop-raised-arm-thin.png": "e4a349f5fad9c22ad999c733333652a20da51aeca250c5685275ee7351a46aa8",
+    "desktop-raised-arm-medium.png": "1aaa4e0f3eec304c78f21f9926f9bbf9f76ace7a1691a1101c04b84481c7ddf4",
+    "desktop-holding-phone-baseline.png": "6bc3f8279b87cfca658ec5bceb286707bc93f4866b779e52b22e54480933cdf9",
+    "desktop-holding-phone-thin.png": "d9d421319020c8e4c4b736f7e8f4c29c13786c412d6c146f83b20611d660228f",
+    "desktop-holding-phone-medium.png": "9a5faf2c230e5789b8b34321d88150701a7f9bb89223207b883b38275fd63788",
+    "mobile-neutral-baseline.png": "25fab26a833cc44752b07300e6c0f54c63f19c728d5ea3e52b0623a5193ac3cf",
+    "mobile-neutral-thin.png": "0daebc27058de17e464870e35606bf6352b1e8ae113f3f6cbb4ca577230b3183",
+    "mobile-neutral-medium.png": "c08e05eeb25250c45ebd0c0938ad0e04fe48ca0e537b187c1a028743040c0daa",
+    "mobile-raised-arm-baseline.png": "d5e5ed7521a6a93e18883840f40d52912f6f0f19e26af3f8c60a7cf2e1e7859c",
+    "mobile-raised-arm-thin.png": "996812bb8d8af9e9d09c0dff046073bc41fa91c7ed7b48be0cb98a754eb1af6b",
+    "mobile-raised-arm-medium.png": "f552cca8be1209a46ab7ee7fb055787fc3ee3059c269a8cfef09d74aeb2675ff",
+    "mobile-holding-phone-baseline.png": "66fe049ffdacf76b34ef4656496e3895f9c0d0a6be8f11a7f6ebf074c6a907b9",
+    "mobile-holding-phone-thin.png": "22a02a03d455022728dca8906baf253576f0738f9c1d3694277ab6872536352f",
+    "mobile-holding-phone-medium.png": "67bdaf7f413af815042bcecc9a675496f780444d88b52acb880e8297fd87904e",
+    "desktop-raised-arm-light-study-baseline.png": "7d20df383e194c05914841c4bbcedc36365845fecf79db102c53457d76ffeaae",
+    "desktop-raised-arm-light-study-contour-only.png": "6632e06c31d831a694f158bbc8307f477f448130ae4137b96b60913df73b7b61",
+    "desktop-raised-arm-light-study-lighting-only.png": "d53019f545802c21132f3e0d05e09aef019600ee94c90647ded9139b38ef9974",
+    "desktop-raised-arm-light-study-lighting-and-contour.png": "b6d36589aa3eaffe49032467fd66e8b1a31253b5276bec2277698312e588ffb5",
+    "mobile-raised-arm-light-study-baseline.png": "9d4c03fec3c29f04e06e5fa25164d8e238fe9b46c77a1c4eceaa46545b14ba16",
+    "mobile-raised-arm-light-study-contour-only.png": "e9bc4b34457bce3501d07db3def3abf6f18db1efc12e1484c877809b857ffaeb",
+    "mobile-raised-arm-light-study-lighting-only.png": "61cac783a014cb4a4d28dede0e9b56dbdf3cc7bd175107993c7af7001e3b6147",
+    "mobile-raised-arm-light-study-lighting-and-contour.png": "453b9cc1831a4df6804de9d19c3a85531f41101f19c47c5780db187a40e2875c",
+    "desktop-raised-arm-light-rebalance-lighting-only.png": "a10ad9d4517c86166df1edaf222b5f6a715ac6f799ecf79f6c6d0c386e1b30e4",
+    "desktop-raised-arm-light-rebalance-lighting-and-contour.png": "33deb12d69431d55ca8df6872acfbacafb3b14d916618b53e7c04e389715255c",
+    "mobile-raised-arm-light-rebalance-lighting-only.png": "a80a628f3dc9f63aca77705da5770f8fca4389caa6f6aa8447dd8f6433d1c3c1",
+    "mobile-raised-arm-light-rebalance-lighting-and-contour.png": "8a4dd3eb4fe3befba2fd93837e87c56dfde3e945a9be1282b21262343a0f6d6d",
+    "ouch-desktop-raised-arm-light-study-baseline.png": "193aee18ce32ca50be2005dea34c6ee4bfeb4b351585eb23e59f96f21a0e70a8",
+    "ouch-desktop-raised-arm-light-study-lighting-only.png": "c445bc3b0e1494714149179d43c4c4f07a48d8f4653e823a0f875caac74a04e2"
+  },
+  "finding": "For this white-room raised-arm shot, brighter lighting plus thin contour gives the clearest tested white-body/volume/outer-boundary combination; arm/head internal overlap remains unresolved.",
+  "ouch_finding": "Same brighter lighting reveals more head/torso/arm volume while Ouch stays black, with outlines off.",
+  "limitations": [
+    "Still comparisons do not establish temporal line stability.",
+    "Generic silhouette rendering does not implement deliberate selected interior overlap marks.",
+    "Receiver-wrap preset contains no phone prop.",
+    "First lighting recipe made broad Trip areas too gray; brighter recipe retains more white.",
+    "Visible floor shadow differs between first and brighter lighting recipes; no isolated cause asserted."
+  ]
+}

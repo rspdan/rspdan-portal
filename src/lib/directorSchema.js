@@ -39,6 +39,103 @@ function member(value, choices, path) {
   requireValue(choices.includes(value), `${path} is unsupported`);
   return value;
 }
+function boolean(value, path) {
+  requireValue(typeof value === 'boolean', `${path} must be a boolean`);
+  return value;
+}
+function color(value, path) {
+  requireValue(typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value), `${path} must be a six-digit hex color`);
+  return value;
+}
+function sceneId(value, used, path) {
+  requireValue(typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$/.test(value), `${path} must be a simple token of at most 64 characters`);
+  requireValue(!used.has(value), `${path} duplicates a scene or rig ID`);
+  used.add(value);
+  return value;
+}
+function lensSettings(value, path) {
+  keys(value, ['preset', 'glow', 'rays', 'streak', 'ghosts', 'spread', 'rotation', 'rayCount'], path);
+  return {
+    preset: member(value.preset, ['glow', 'starburst', 'anamorphic', 'glass'], `${path}.preset`),
+    glow: number(value.glow, 0, 1, `${path}.glow`), rays: number(value.rays, 0, 1, `${path}.rays`),
+    streak: number(value.streak, 0, 1, `${path}.streak`), ghosts: number(value.ghosts, 0, 1, `${path}.ghosts`),
+    spread: number(value.spread, .25, 2, `${path}.spread`), rotation: number(value.rotation, -180, 180, `${path}.rotation`),
+    rayCount: number(value.rayCount, 4, 16, `${path}.rayCount`, true),
+  };
+}
+function lighting(value, used) {
+  keys(value, ['ambient', 'lights'], 'lighting');
+  keys(value.ambient, ['intensity', 'color'], 'lighting.ambient');
+  requireValue(Array.isArray(value.lights) && value.lights.length <= 8, 'lighting.lights supports at most 8 lights');
+  return {
+    ambient: { intensity: number(value.ambient.intensity, 0, 3, 'lighting.ambient.intensity'), color: color(value.ambient.color, 'lighting.ambient.color') },
+    lights: value.lights.map((light, i) => {
+      const path = `lighting.lights[${i}]`;
+      keys(light, ['id', 'name', 'type', 'enabled', 'color', 'intensity', 'position', 'rotation', 'angle', 'range', 'attachment', 'effect', 'flare', 'lens'], path);
+      const normalized = {
+        id: sceneId(light.id, used, `${path}.id`), name: text(light.name, 60, `${path}.name`),
+        type: member(light.type, ['point', 'spot', 'directional'], `${path}.type`),
+        enabled: boolean(light.enabled, `${path}.enabled`), color: color(light.color, `${path}.color`),
+        intensity: number(light.intensity, 0, 20, `${path}.intensity`),
+        position: vector(light.position, 3, -100, 100, `${path}.position`),
+        rotation: vector(light.rotation, 3, -100, 100, `${path}.rotation`),
+        angle: number(light.angle, .1, 3.14, `${path}.angle`), range: number(light.range, .1, 100, `${path}.range`),
+      };
+      // Omission retains the identity of already saved scene lights.
+      if (Object.hasOwn(light, 'attachment')) normalized.attachment = member(light.attachment, ['world', 'head', 'hand.L', 'hand.R'], `${path}.attachment`);
+      if (Object.hasOwn(light, 'flare')) normalized.flare = number(light.flare, 0, 1, `${path}.flare`);
+      if (Object.hasOwn(light, 'lens')) normalized.lens = lensSettings(light.lens, `${path}.lens`);
+      if (Object.hasOwn(light, 'effect')) {
+        keys(light.effect, ['shape', 'radius', 'length', 'strength'], `${path}.effect`);
+        normalized.effect = {
+          shape: member(light.effect.shape, ['none', 'ball', 'beam'], `${path}.effect.shape`),
+          radius: number(light.effect.radius, .005, 1, `${path}.effect.radius`),
+          length: number(light.effect.length, .05, 10, `${path}.effect.length`),
+          strength: number(light.effect.strength, 0, 1, `${path}.effect.strength`),
+        };
+      }
+      return normalized;
+    }),
+  };
+}
+function backdropImage(value) {
+  if (value === null) return null;
+  keys(value, ['dataUrl', 'name'], 'stage.design.backdrop.image');
+  const dataUrl = text(value.dataUrl, 400000, 'stage.design.backdrop.image.dataUrl');
+  const prefix = /^data:image\/(png|jpeg|webp);base64,/.exec(dataUrl);
+  const encoded = prefix ? dataUrl.slice(prefix[0].length) : '';
+  requireValue(prefix && encoded.length > 0 && encoded.length % 4 === 0 && /^[A-Za-z0-9+/]+={0,2}$/.test(encoded), 'backdrop image must be a base64 PNG, JPEG or WebP data URL');
+  // This is a bounded serialized raster input, not a decoded-image guarantee.
+  // Browser import resizes local images; rendering must handle decode failure.
+  return { dataUrl, name: text(value.name, 100, 'stage.design.backdrop.image.name') };
+}
+function stageDesign(value, used) {
+  keys(value, ['backdrop', 'floor', 'objects'], 'stage.design');
+  keys(value.backdrop, ['type', 'color', 'image', 'fit'], 'stage.design.backdrop');
+  keys(value.floor, ['enabled', 'color', 'size', 'height'], 'stage.design.floor');
+  requireValue(Array.isArray(value.objects) && value.objects.length <= 32, 'stage.design.objects supports at most 32 objects');
+  return {
+    backdrop: {
+      type: member(value.backdrop.type, ['color', 'image'], 'stage.design.backdrop.type'),
+      color: color(value.backdrop.color, 'stage.design.backdrop.color'), image: backdropImage(value.backdrop.image),
+      fit: member(value.backdrop.fit, ['cover', 'contain'], 'stage.design.backdrop.fit'),
+    },
+    floor: {
+      enabled: boolean(value.floor.enabled, 'stage.design.floor.enabled'), color: color(value.floor.color, 'stage.design.floor.color'),
+      size: number(value.floor.size, 1, 200, 'stage.design.floor.size'), height: number(value.floor.height, -10, 10, 'stage.design.floor.height'),
+    },
+    objects: value.objects.map((item, i) => {
+      const path = `stage.design.objects[${i}]`;
+      keys(item, ['id', 'name', 'type', 'color', 'position', 'rotation', 'scale'], path);
+      return {
+        id: sceneId(item.id, used, `${path}.id`), name: text(item.name, 60, `${path}.name`),
+        type: member(item.type, ['box', 'sphere', 'plane'], `${path}.type`), color: color(item.color, `${path}.color`),
+        position: vector(item.position, 3, -100, 100, `${path}.position`), rotation: vector(item.rotation, 3, -100, 100, `${path}.rotation`),
+        scale: vector(item.scale, 3, .01, 100, `${path}.scale`),
+      };
+    }),
+  };
+}
 function registryNames(values, path) {
   if (!Array.isArray(values) || values.length > 96 || values.some((v) => typeof v !== 'string' || !NAME.test(v)) || new Set(values).size !== values.length) {
     throw new DirectorError(`Director ${path} registry is unavailable`, 503);
@@ -60,7 +157,7 @@ export function validateOwner(value) {
 
 export function validateTake(input, registry) {
   const isV2 = input?.schema === TAKE_SCHEMA_V2;
-  keys(input, ['schema', 'asset', 'name', 'notes', 'look', 'fps', 'frame', 'range', 'stage', 'camera', 'pose', 'keyframes', ...(isV2 ? ['animation', 'output'] : [])], 'take');
+  keys(input, ['schema', 'asset', 'name', 'notes', 'look', 'fps', 'frame', 'range', 'stage', 'camera', 'pose', 'keyframes', ...(isV2 ? ['animation', 'output', 'tripGlow', 'tripFlare', 'tripTemperature', 'tripBodyTemperature', 'tripLens', 'outline', 'lighting'] : [])], 'take');
   requireValue(input.schema === TAKE_SCHEMA || isV2, 'unsupported take schema');
   keys(input.asset, ['id', 'sha256'], 'asset');
   requireValue(typeof input.asset.id === 'string' && typeof input.asset.sha256 === 'string' && HASH.test(input.asset.sha256), 'asset id and SHA256 are required');
@@ -96,7 +193,7 @@ export function validateTake(input, registry) {
   keys(input.range, ['start', 'end'], 'range');
   const start = number(input.range.start, 1, 36000, 'range.start', true);
   const end = number(input.range.end, start, Math.min(start + 10000, 36000), 'range.end', true);
-  keys(input.stage, ['background'], 'stage');
+  keys(input.stage, ['background', ...(isV2 ? ['design'] : [])], 'stage');
   keys(input.camera, ['mode', 'position', 'target', 'fov', 'orthoSize'], 'camera');
   const cameraPosition = vector(input.camera.position, 3, -1000, 1000, 'camera.position');
   const cameraTarget = vector(input.camera.target, 3, -1000, 1000, 'camera.target');
@@ -142,6 +239,31 @@ export function validateTake(input, registry) {
     requireValue(width * height <= 4096 * 2160, 'output pixel area is outside its supported range');
     take.animation = { transition: member(input.animation.transition, TRANSITIONS, 'animation.transition'), loop: input.animation.loop };
     take.output = { width, height };
+    // Global Trip appearance, not an animated pose channel. Missing means zero
+    // at display time; retain omission here to preserve existing take hashes.
+    if (Object.hasOwn(input, 'tripGlow')) take.tripGlow = number(input.tripGlow, 0, 1, 'tripGlow');
+    // Optional head flare is independent of body glow and defaults off in the UI.
+    if (Object.hasOwn(input, 'tripFlare')) take.tripFlare = number(input.tripFlare, 0, 1, 'tripFlare');
+    // Kelvin for Trip's global light treatment. UI defaults stay out of older
+    // serialized takes, just as for glow and the other optional controls.
+    if (Object.hasOwn(input, 'tripTemperature')) take.tripTemperature = number(input.tripTemperature, 1800, 10000, 'tripTemperature');
+    // Missing body temperature links to the external light temperature at render time.
+    if (Object.hasOwn(input, 'tripBodyTemperature')) take.tripBodyTemperature = number(input.tripBodyTemperature, 1800, 10000, 'tripBodyTemperature');
+    if (Object.hasOwn(input, 'tripLens')) take.tripLens = lensSettings(input.tripLens, 'tripLens');
+    // Global browser outline for either character. Width is in world units;
+    // appearance rendering in other receivers is a separate capability.
+    if (Object.hasOwn(input, 'outline')) {
+      keys(input.outline, ['enabled', 'tone', 'width'], 'outline');
+      requireValue(typeof input.outline.enabled === 'boolean', 'outline.enabled must be a boolean');
+      take.outline = {
+        enabled: input.outline.enabled,
+        tone: number(input.outline.tone, 0, 1, 'outline.tone'),
+        width: number(input.outline.width, .0005, .01, 'outline.width'),
+      };
+    }
+    const sceneIds = new Set([...boneNames, '__proto__', 'constructor', 'prototype']);
+    if (Object.hasOwn(input, 'lighting')) take.lighting = lighting(input.lighting, sceneIds);
+    if (Object.hasOwn(input.stage, 'design')) take.stage.design = stageDesign(input.stage.design, sceneIds);
   }
   requireValue(new TextEncoder().encode(JSON.stringify(take)).length <= MAX_BODY_BYTES - 1024, 'take is too large');
   return take;
