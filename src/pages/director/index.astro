@@ -1,0 +1,83 @@
+---
+export const prerender = false;
+import { verifySession } from '../../lib/pspt.js';
+const session = import.meta.env.PSPT_SECRET ? verifySession(Astro.request.headers.get('cookie')) : null;
+if (!session) return Astro.redirect('/pspt?next=/director');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Director · Nest</title>
+    <link rel="stylesheet" href="/director/director.css" />
+    <script is:inline src="/director/vendor/babylon.js" defer></script>
+    <script is:inline src="/director/vendor/babylonjs.loaders.min.js" defer></script>
+    <script is:inline src="/director/director.js" defer></script>
+  </head>
+  <body>
+    <main id="director" aria-label="Nest Director workbench">
+      <header class="topbar">
+        <a class="nest" href="/drw" aria-label="Return to Nest drawing room">NEST <span>/</span></a>
+        <div class="identity"><h1>Director</h1><span>WAYWOOD · ACTING ROOM</span></div>
+        <label class="take-name"><span class="sr-only">Take name</span><input id="take-name" value="Ouch · First take" maxlength="100" /></label>
+        <button id="save" class="primary" disabled>Save take</button>
+        <button id="send" disabled>Send to Crew</button>
+      </header>
+      <div class="workbench">
+        <section class="stage" aria-label="Character stage">
+          <canvas id="room" aria-label="Ouch in the white room. Select a joint and drag its rotation rings to pose." tabindex="0"></canvas>
+          <div class="stage-top">
+            <div class="room-tag"><span class="live-dot"></span> <span id="room-title">THE WHITE ROOM</span> <span id="look-label">OUCH</span></div>
+            <div class="stage-controls">
+              <button id="front" title="Front camera">Front</button><button id="side" title="Side camera">Side</button><button id="quarter" title="Three quarter camera">¾</button>
+              <button id="camera-mode" aria-pressed="false">Ortho</button>
+            </div>
+          </div>
+          <div class="stage-bottom"><span id="hint">Loading Ouch…</span><button id="handles" aria-pressed="true" disabled>Joint controls on</button></div>
+          <div id="loading" class="loading" role="status"><span class="loading-mark">○</span><p>Opening the acting room</p></div>
+        </section>
+        <aside class="inspector" aria-label="Director controls">
+          <section class="panel">
+            <div class="section-title"><h2>Character</h2><span>01</span></div>
+            <div class="segmented"><button id="ouch" class="active" aria-pressed="true">Ouch</button><button id="trip" aria-pressed="false">Trip</button></div>
+            <label>Start with a gesture<select id="preset" disabled><option>Loading poses…</option></select></label>
+            <p class="small">Starts to play with. Make the performance yours.</p>
+          </section>
+          <section class="panel">
+            <div class="section-title"><h2>Pose</h2><span>02</span></div>
+            <label>Selected joint<select id="joint" disabled><option>Loading joints…</option></select></label>
+            <div class="joint-axes" id="rotation-controls">
+              <label><span class="axis x">X</span><input id="rot-x" type="range" min="-180" max="180" step="1" value="0" /><output id="value-x">0°</output></label>
+              <label><span class="axis y">Y</span><input id="rot-y" type="range" min="-180" max="180" step="1" value="0" /><output id="value-y">0°</output></label>
+              <label><span class="axis z">Z</span><input id="rot-z" type="range" min="-180" max="180" step="1" value="0" /><output id="value-z">0°</output></label>
+            </div>
+            <div class="button-row"><button id="reset-joint" disabled>Reset joint</button><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div>
+            <details><summary>Move the whole character</summary><div id="position-controls" class="joint-axes">
+              <label><span>↔</span><input id="pos-x" type="range" min="-2" max="2" step=".01" value="0" aria-label="Character across" /><output id="pos-value-x">0</output></label>
+              <label><span>↕</span><input id="pos-y" type="range" min="-1" max="3" step=".01" value="0" aria-label="Character height" /><output id="pos-value-y">0</output></label>
+              <label><span>↗</span><input id="pos-z" type="range" min="-2" max="2" step=".01" value="0" aria-label="Character depth" /><output id="pos-value-z">0</output></label>
+            </div></details>
+            <details><summary>Soft tube ends</summary><div id="morph-controls"></div></details>
+          </section>
+          <section class="panel">
+            <div class="section-title"><h2>Stage</h2><span>03</span></div>
+            <label>Background<select id="background"><option value="white">White room</option><option value="green">Green screen</option><option value="transparent">Transparent</option></select></label>
+            <label>Direction notes<textarea id="notes" rows="2" maxlength="4000" placeholder="A little more swagger. Hold the pause…"></textarea></label>
+          </section>
+          <section class="panel takes-panel">
+            <div class="section-title"><h2>Saved takes</h2><button id="refresh-takes" class="text-button">Refresh</button></div>
+            <div id="saved-takes"><p class="small">Your takes will appear here.</p></div>
+          </section>
+        </aside>
+      </div>
+      <section class="timeline" aria-label="Stop motion timeline">
+        <div class="transport"><button id="play" aria-label="Play take" disabled>▶</button><label>Frame <input id="frame" type="number" min="1" max="120" value="1" /></label><span class="timeline-divider">/</span><label><span class="sr-only">End frame</span><input id="end-frame" type="number" min="1" max="720" value="120" /></label><label class="fps"><input id="fps" type="number" min="1" max="60" value="12" /> fps</label><span class="timing">STOP MOTION</span></div>
+        <div class="timeline-track"><input id="scrub" aria-label="Scrub frames" type="range" min="1" max="120" step="1" value="1" /><div id="keys" aria-label="Keyed poses"></div></div>
+        <div class="key-actions"><button id="key-pose" class="primary" disabled>+ Key pose</button><button id="remove-key" disabled>Remove key</button></div>
+      </section>
+      <footer><span id="status" role="status" aria-live="polite">Preparing the model.</span><span id="storage-label">BROWSER DRAFT</span></footer>
+    </main>
+  </body>
+</html>
