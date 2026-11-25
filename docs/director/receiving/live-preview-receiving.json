@@ -1,0 +1,14 @@
+{
+  "deployment": "https://rspdan-portal-k2um8g78f-rspdan.vercel.app/director",
+  "actual_login": true,
+  "renderer_ready": true,
+  "page_errors": [],
+  "shared_save_status": "Take saved in Nest. Crew can receive this exact version.",
+  "saved_take_reopened_exact": true,
+  "live_crew_message_sent": false,
+  "asset": {
+    "id": "ouch-director-pass1",
+    "sha256": "d45d446deb32eaad8709fbef83f941f975e7eda96595dcf4e13f6bfd87e169b6"
+  },
+  "keyframes": 1
+}

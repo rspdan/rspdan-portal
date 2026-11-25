@@ -23,6 +23,29 @@
         "Ouch | soft perch",
         "Ouch | receiver wrap"
       ]
+    },
+    {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14",
+      "bones": [
+        "root",
+        "torso.lower",
+        "thigh.L",
+        "shin.L",
+        "thigh.R",
+        "shin.R",
+        "torso.upper",
+        "head",
+        "upper_arm.L",
+        "lower_arm.L",
+        "upper_arm.R",
+        "lower_arm.R"
+      ],
+      "morphs": [
+        "Ouch | soft tube curl",
+        "Ouch | soft perch",
+        "Ouch | receiver wrap"
+      ]
     }
   ]
 }

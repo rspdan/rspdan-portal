@@ -1,0 +1,24 @@
+{
+  "asset": {
+    "id": "ouch-director-pass2",
+    "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+  },
+  "checks": {
+    "asset_is_pass2": true,
+    "default_is_neutral": true,
+    "ready_pose_max_delta": 2.5351151289321194e-08,
+    "save_is_local_only": true,
+    "saved_reopened_max_delta": 0,
+    "stepped_hold_max_delta": 0,
+    "second_key_max_delta": 0.0,
+    "mobile_stage_stays_visible": true,
+    "mobile_has_no_horizontal_overflow": true,
+    "old_saved_take_exact_revision": true,
+    "old_saved_take_max_delta": 3.1655454035828257e-08,
+    "new_draft_preserved_across_old_take_redirect": true,
+    "current_draft_restored_max_delta": 0
+  },
+  "page_errors": [],
+  "local_only": true,
+  "live_crew_message_sent": false
+}

@@ -54,7 +54,13 @@ node --test src/lib/pspt.test.mjs src/lib/director.test.mjs src/lib/director.htt
 
 The HTTP test starts actual Astro on loopback port 4327 using randomized test-only credentials and a disposable local store, logs in, saves, restarts the server, and compares the reopened take and hash. It also checks unauthenticated, cross-origin, malformed and oversized requests, and verifies that explicit local sending remains local. The test stops its own server and removes its temporary store.
 
-Other checks cover owner boundaries, concurrent immutable-save conflicts, idempotent save/send retries, missing configuration, expired/invalid cookies, stable pagination and storage failure. The Redis adapter test verifies script/argument construction; **live Upstash persistence and Crew relay receiving have not been exercised by these local tests**. No deployment or production message was performed.
+Other checks cover owner boundaries, concurrent immutable-save conflicts, idempotent save/send retries, missing configuration, expired/invalid cookies, stable pagination and storage failure. The Redis adapter test verifies script/argument construction. These local tests do not exercise live Upstash or Crew relay receiving.
+
+Separate actual preview receiving in `docs/director/receiving/live-preview-receiving.json` records form login, one shared save and exact reopening of that editable take. `live-preview-login-receiving.json` records a second login check using the user-selected branch credential without repeating that shared write. Credentials and temporary access links are excluded from these records. No live Crew message was sent.
+
+The Director preview branch is `codex/nest-director-white-room`, with entrance `https://rspdan-portal-git-codex-nest-director-white-room-rspdan.vercel.app/director`. Vercel deployment access and the portal login are separate gates. The preview's branch-scoped credential does not change production users.
+
+The current browser asset is the clean Pass 2c edition, `ouch-director-pass2-ad640bbaf1fd.glb`, derived from native SHA256 `85f6d78d9548da19b97d800425d236c58d08bca3e8654b784cb319ecb62eff28`. The original Pass 1 asset remains immutable and registered so saved takes can reopen against their original rig. Browser drafts are kept separately per asset hash. The browser uses a rough PBR approximation of the native clay material; it does not reproduce the native procedural surface exactly.
 
 ## Reused source entrances
 

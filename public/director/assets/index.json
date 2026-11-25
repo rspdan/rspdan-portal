@@ -4,7 +4,12 @@
       "id": "ouch-director-pass1",
       "sha256": "d45d446deb32eaad8709fbef83f941f975e7eda96595dcf4e13f6bfd87e169b6",
       "manifest": "ouch-director-pass1-d45d446deb32.json"
+    },
+    {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14",
+      "manifest": "ouch-director-pass2-ad640bbaf1fd.json"
     }
   ],
-  "current": "ouch-director-pass1-d45d446deb32.json"
+  "current": "ouch-director-pass2-ad640bbaf1fd.json"
 }

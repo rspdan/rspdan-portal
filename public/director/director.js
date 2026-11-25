@@ -5,6 +5,7 @@
   const B = window.BABYLON;
   const clone = value => structuredClone(value);
   const draftKey = 'nest.director.draft.v1';
+  const currentDraftKey = () => `${draftKey}.${manifest.sha256}`;
   const ui = { ready: false, dirty: true, savedId: null, playing: false, handles: true, frame: 1, end: 120, fps: 12, keys: [], undo: [], redo: [], look: 'ouch', background: 'white' };
   let engine, scene, camera, floor, gizmo, manifest, neutralPose, nodes = {}, morphs = {}, handles = [], selected, savedSnapshot, saveRequest = null, sendRequest = null, savePayload = null;
   let playStart = 0, playFrame = 1, restoring = false, dragBefore = null;
@@ -48,7 +49,7 @@
   function changed(message = 'Pose changed. Your browser draft is kept here.') {
     if (restoring || !ui.ready) return;
     syncPreset(pose()); ui.dirty = true; saveRequest = null; sendRequest = null;
-    try { localStorage.setItem(draftKey, JSON.stringify(snapshot())); } catch { status('Browser draft storage is full. Use Save take to keep this work.'); }
+    try { localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); } catch { status('Browser draft storage is full. Use Save take to keep this work.'); }
     $('storage-label').textContent = 'BROWSER DRAFT'; buttons(); status(message);
   }
   function buttons() {
@@ -121,8 +122,9 @@
       }
     } catch (error) { $('saved-takes').textContent = error.message; }
   }
-  async function loadTake(id) {
-    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { localStorage.setItem(draftKey, JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take); ui.savedId = record.id || id; ui.dirty = false; savedSnapshot = JSON.stringify(snapshot()); $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
+  async function loadTake(id, preserveDraft = true) {
+    stop();
+    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take); ui.savedId = record.id || id; sendRequest = null; ui.dirty = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
     catch (error) { status(error.message); }
   }
   function bind() {
@@ -141,7 +143,7 @@
       });
       input.addEventListener('change', () => { if (dragBefore) remember(dragBefore); dragBefore = null; });
     }
-    $('reset-joint').onclick = () => { remember(); const p = pose(); p.bones[selected] = clone(neutralPose.bones[selected]); applyPose(p); changed('Selected joint reset.'); };
+    $('reset-joint').onclick = () => { stop(); remember(); const p = pose(); p.bones[selected] = clone(neutralPose.bones[selected]); applyPose(p); changed('Selected joint reset.'); };
     $('handles').onclick = () => { ui.handles = !ui.handles; handles.forEach(handle => handle.setEnabled(ui.handles)); gizmo.attachToNode(ui.handles ? nodes[selected] : null); $('handles').textContent = 'Joint controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles)); $('hint').textContent = ui.handles ? label(selected) + ' · drag a colored ring to rotate' : 'Controls hidden · drag the room to orbit the camera'; };
     for (const look of ['ouch', 'trip']) $(look).onclick = () => { remember(); setLook(look); changed(`Same character, ${look === 'trip' ? 'white' : 'black'} clay.`); };
     $('background').onchange = () => { remember(); setBackground($('background').value); changed('Stage background changed.'); };
@@ -209,7 +211,7 @@
     $('joint').replaceChildren(...manifest.bones.map(name => new Option(label(name), name))); $('joint').disabled = false;
     $('preset').replaceChildren(new Option('Custom pose', ''), ...manifest.presets.map(preset => new Option(preset.label, preset.id))); $('preset').disabled = false; $('preset').value = 'neutral';
     for (const name of manifest.morphs.filter(name => !/overhead|shoulder/i.test(name))) {
-      const wrap = document.createElement('label'); wrap.textContent = name.replace(/^Ouch \| /, ''); const input = document.createElement('input'); input.type = 'range'; input.min = 0; input.max = 1; input.step = .01; input.value = 0; input.dataset.morph = name; input.setAttribute('aria-label', wrap.textContent); input.onpointerdown = () => { dragBefore = snapshot(); }; input.oninput = () => { for (const target of morphs[name] || []) target.influence = Number(input.value); changed(); }; input.onchange = () => { if (dragBefore) remember(dragBefore); dragBefore = null; }; wrap.append(input); $('morph-controls').append(wrap);
+      const wrap = document.createElement('label'); wrap.textContent = name.replace(/^Ouch \| /, ''); const input = document.createElement('input'); input.type = 'range'; input.min = 0; input.max = 1; input.step = .01; input.value = 0; input.dataset.morph = name; input.setAttribute('aria-label', wrap.textContent); input.onpointerdown = () => { dragBefore = snapshot(); }; input.oninput = () => { stop(); for (const target of morphs[name] || []) target.influence = Number(input.value); changed(); }; input.onchange = () => { if (dragBefore) remember(dragBefore); dragBefore = null; }; wrap.append(input); $('morph-controls').append(wrap);
     }
     applyPose(neutralPose); setLook('ouch'); setBackground('white'); fitOrtho(); selectJoint('upper_arm.L'); bind(); ui.ready = true; buttons();
     $('loading').hidden = true; status('Ouch is ready. Pick a gesture or move a joint.');
@@ -218,8 +220,8 @@
     engine.onContextLostObservable.add(() => status('The graphics context paused. Your draft is kept; reload if the room does not recover.'));
     engine.onContextRestoredObservable.add(() => status('The room renderer recovered.'));
     const id = new URL(location.href).searchParams.get('take');
-    if (id) await loadTake(id);
-    else try { const draft = JSON.parse(localStorage.getItem(draftKey) || 'null'); if (draft) { restore(draft); status('Your browser draft has been reopened.'); } } catch (error) { status('The previous draft uses another model revision. It remains stored; this room opened with the current model.'); }
+    if (id) await loadTake(id, false);
+    else try { const draft = JSON.parse(localStorage.getItem(currentDraftKey()) || localStorage.getItem(draftKey) || 'null'); if (draft) { restore(draft); status('Your browser draft has been reopened.'); } } catch (error) { status('The previous draft uses another model revision. It remains stored; this room opened with the current model.'); }
     refreshTakes();
     // Readable diagnostics also let Crew receive the exact current state.
     window.directorStudio = { snapshot, get ready() { return ui.ready; }, get scene() { return scene; }, get manifest() { return manifest; } };
