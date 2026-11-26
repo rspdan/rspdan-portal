@@ -4,7 +4,7 @@
 This checks paragraph-level identity ambiguity. It does not solve anaphora or
 rewrite anybody's pronouns. A paragraph containing an identity whose policy is
 name-only must use names throughout if it would otherwise contain a gendered
-pronoun. Separate a human subject into a clearly named paragraph when needed.
+pronoun. Separate another subject into a clearly named paragraph when needed.
 """
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ def _registry(path: str | Path | None):
             raise PreflightInputError("Each identity requires a nonempty canonical name")
         if name.casefold() in by_name:
             raise PreflightInputError(f"Duplicate identity: {name}")
-        if entry.get("kind") not in {"crew", "human"} or policy not in {"name-only", "stated"}:
+        if entry.get("kind") not in {"crew", "human", "engine"} or policy not in {"name-only", "stated"}:
             raise PreflightInputError(f"Invalid identity kind or policy: {name}")
         if (not isinstance(pronouns, list)
                 or any(not isinstance(p, str) or p not in GENDERED for p in pronouns)):
@@ -66,14 +66,28 @@ def _registry(path: str | Path | None):
         if (not isinstance(aliases, list) or not aliases
                 or any(not isinstance(a, str) or not a.strip() or a != a.strip() for a in aliases)):
             raise PreflightInputError(f"Invalid aliases: {name}")
+        excluded = entry.get("excluded_references", [])
+        if (not isinstance(excluded, list)
+                or any(not isinstance(a, str) or not a.strip() or a != a.strip() for a in excluded)
+                or (excluded and entry["kind"] != "engine")):
+            raise PreflightInputError(f"Invalid engine reference exclusions: {name}")
         by_name[name.casefold()] = entry
         for alias in dict.fromkeys([name, *aliases]):
             key = alias.casefold()
             if key in by_alias and by_alias[key]["name"] != name:
                 raise PreflightInputError(f"Conflicting identity alias: {alias}")
             by_alias[key] = entry
+    for entry in entities:
+        if any(reference.casefold() in by_alias for reference in entry.get("excluded_references", [])):
+            raise PreflightInputError("Engine reference exclusions cannot override a registered identity")
     aliases = sorted(by_alias, key=len, reverse=True)
-    pattern = re.compile(r"(?<!\w)(?:" + "|".join(re.escape(a) for a in aliases) + r")(?!\w)", re.I)
+    # Engine identity permission must not extend to model identifiers such as
+    # Qwen-VL merely because their product names contain the engine's name.
+    patterns = []
+    for alias in aliases:
+        boundary = r"[\w-]" if by_alias[alias]["kind"] == "engine" else r"\w"
+        patterns.append(r"(?<!" + boundary + ")" + re.escape(alias) + r"(?!" + boundary + ")")
+    pattern = re.compile("|".join(patterns), re.I)
     return by_alias, pattern, _sha256(raw)
 
 
@@ -96,6 +110,21 @@ def _named_at_start(paragraph: str, match: re.Match) -> bool:
     # mention must not silently reset an unresolved preceding identity.
     prefix = paragraph[:match.start()]
     return bool(re.fullmatch(r"[\s#>*+_`\[\](\)\"'“‘-]*(?:\d+[.)]\s*)?", prefix))
+
+
+def _outside_engine_scope(paragraph, entries):
+    """Explicit exclusions clear engine context without assigning another identity."""
+    for entry in entries:
+        if entry["kind"] != "engine" or entry["policy"] != "stated":
+            continue
+        excluded = [r"(?<!\w)" + re.escape(name) + r"(?!\w)"
+                    for name in entry.get("excluded_references", [])]
+        # Product/version suffixes are not aliases for the engine identity.
+        excluded.extend(r"(?<!\w)" + re.escape(alias) + r"(?:[-_][\w.-]+|\d[\w.-]*)(?!\w)"
+                        for alias in entry["aliases"])
+        if excluded and re.search("|".join(excluded), paragraph, re.I):
+            return True
+    return False
 
 
 def validate_text(text: str, registry_path: str | Path | None = None,
@@ -134,16 +163,23 @@ def validate_text(text: str, registry_path: str | Path | None = None,
             effective = context
         else:
             effective = entries
+        outside_engine_scope = _outside_engine_scope(paragraph, effective)
         # Keep the complete previous effective subject across blank lines and
         # long text. There is no 200-character expiry or quote/keyword bypass.
-        if effective:
+        if outside_engine_scope:
+            context = []
+        elif effective:
             context = effective
         protected_effective = [e for e in effective if e["policy"] == "name-only"]
         for pronoun_match in PRONOUN_RE.finditer(paragraph):
             pronoun = pronoun_match.group(0)
             if not effective and not strict:
                 continue
-            if not effective:
+            if outside_engine_scope:
+                reason = ("An explicitly excluded reference or model identifier cannot inherit engine "
+                          "pronoun authorization. Name the intended subject in a separate paragraph.")
+                implicated = effective
+            elif not effective:
                 reason = ("A gendered pronoun has no explicit subject in this draft. "
                           "Name the subject or supply --subject; missing context is not a pass.")
                 implicated = []

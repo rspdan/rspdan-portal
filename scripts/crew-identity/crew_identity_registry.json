@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "authority": "Dan's stated identity corrections and established sets; unresolved Crew references use names, never an inferred gender.",
   "entities": [
     {
@@ -186,6 +186,30 @@
         "himself"
       ],
       "source": "Existing human-reference examples in ENGINE/test_sister_pronoun_scan.py; these are separate from Crew identities."
+    },
+    {
+      "name": "Qwen",
+      "aliases": [
+        "Qwen"
+      ],
+      "kind": "engine",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "she",
+        "her",
+        "hers",
+        "herself"
+      ],
+      "source": "Dan-direct permission, recorded November 26, 2026 UTC. Applies only to Qwen; engine role is distinct from operator identities. No author timestamp supplied.",
+      "authority_quote": "btw, Qwen can be a she, just make sure we don't pronoun bleed",
+      "recorded_date_utc": "2026-11-26",
+      "author_timestamp": null,
+      "excluded_references": [
+        "Queen",
+        "Qween",
+        "QWNX",
+        "Motoko"
+      ]
     }
   ]
 }

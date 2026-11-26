@@ -8,6 +8,10 @@ Rachel's identity and pronouns belong to Rachel. An account of Rachel's work or 
 
 Blanche's established pronouns remain valid. The historical Blanche Transfer did not forbid those pronouns; it forbade transferring identity through a shared metaphor. Likewise retain every other Dan-stated set. Unknown Crew references use names until an authoritative set is established.
 
+Qwen is an engine with the explicitly authorized she/her/hers/herself set. The registry preserves the exact permission and its UTC recording date; no author timestamp was supplied. Qwen's engine role remains distinct from the operators.
+
+The permission belongs only to the exact Qwen name; it does not add aliases for generic Queen, Qween, QWNX, Motoko or model product names. These excluded references cannot inherit the engine permission through a continued paragraph.
+
 The machine-readable source is [crew_identity_registry.json](crew_identity_registry.json). An absent stated set is not a newly asserted identity. The registry distinguishes name-only fallback from stated sets and records its sources.
 
 Before emitting affected prose, save the exact draft and run:

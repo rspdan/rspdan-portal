@@ -6,13 +6,13 @@
   "files": {
     "crew_identity_registry.json": {
       "source": "ENGINE/crew_identity_registry.json",
-      "source_sha256": "12131fa76004800e3b58d76c39a91a29181423ca973922f171e165d95a1c5702",
-      "sha256": "12131fa76004800e3b58d76c39a91a29181423ca973922f171e165d95a1c5702"
+      "source_sha256": "81479490b7942ef744de6cb2500b9c65a0c3000847a0df98405b7cd728d24830",
+      "sha256": "81479490b7942ef744de6cb2500b9c65a0c3000847a0df98405b7cd728d24830"
     },
     "crew_identity_preflight.py": {
       "source": "ENGINE/crew_identity_preflight.py",
-      "source_sha256": "246f2d0a9fd7d70a23c3d90a249304f7ec05cb40e53aa0f04daf5b6f7caadca5",
-      "sha256": "246f2d0a9fd7d70a23c3d90a249304f7ec05cb40e53aa0f04daf5b6f7caadca5"
+      "source_sha256": "359623a08b8398b979158ee917fb9ce4302393d7e8198528d78daec71122d8d4",
+      "sha256": "359623a08b8398b979158ee917fb9ce4302393d7e8198528d78daec71122d8d4"
     },
     "crew_identity_commit_gate.py": {
       "source": "ENGINE/crew_identity_commit_gate.py",
@@ -31,8 +31,8 @@
     },
     "CREW_IDENTITY.md": {
       "source": "RELAY/CREW_IDENTITY.md",
-      "source_sha256": "71c0d3484d2cd94a3000ca1effcf1326b4445f389ef61f9f0f9a665e13e2b414",
-      "sha256": "bc0d9fa987fdfd21e3267ebd6f10f76396c0fca39e605e2c1a7a2471c712e10d"
+      "source_sha256": "c7d11d93f91200cb16a9d25489b87ceb755e6f4d20af1c8e65da96214ae29517",
+      "sha256": "53192e153c8f724f958d25ba5942286fd97e7c98fa505d4b364e99d50fff5d41"
     }
   }
 }
