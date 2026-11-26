@@ -7,13 +7,15 @@ The navigation strip is available in Pose, Lighting, Stage and Camera:
 - **Edit** uses the current object/joint controls; dragging empty space orbits.
 - **Orbit** drags around the look-at point.
 - **Pan** moves the camera and look-at point together.
-- **Zoom** lets you click or touch, hold and drag up to move closer, or down to move farther away.
+- **Zoom** lets you click or touch, hold and drag up to zoom in, or down to zoom out.
 
 Pinch with two fingers to zoom and move both fingers together to pan in every 3D mode. Adding the second finger cancels an unfinished object edit before camera navigation begins. Lift both fingers before starting another edit. Camera mode exposes no pose handles.
 
 With a mouse, the wheel zooms. Middle drag orbits, Shift + middle drag pans, and Ctrl/Meta + middle drag zooms. Right drag pans; Alt + primary drag offers the same orbit and modifier gestures. Perspective zoom changes distance while retaining the lens's field of view; orthographic zoom changes the visible height.
 
 A completed camera gesture is one Undo step. Escape, cancellation or lost capture restores the unfinished gesture. Camera controls use the existing take camera record, so position, target, projection, field of view and orthographic height survive Save take and reopening. Navigation does not create a new pose or alter set objects.
+
+Direct position and look-at edits must keep a slight horizontal offset: this orbit camera has a small margin around the straight-up and straight-down directions. Unsupported edits are rejected without changing the view. A legacy take inside that margin opens at a supported angle with an explicit warning and an unsaved draft; the original saved record is unchanged.
 
 ## Floor plan
 

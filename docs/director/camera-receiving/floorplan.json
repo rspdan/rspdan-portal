@@ -1,7 +1,7 @@
 {
-  "started_at": "2026-11-26T04:00:36.171254+00:00",
+  "started_at": "2026-11-26T04:32:27.682105+00:00",
   "source_before": {
-    "/workspace/rspdan-portal/public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "/workspace/rspdan-portal/public/director/floorplan-editor.js": "4c4bce2281407417bcbb704f32ec81cc587beaf6edabfa819462f87d67a204b3",
     "/workspace/rspdan-portal/public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
   },
   "scope": "Standalone component in Chromium; trusted CDP touch and mouse, with explicit lifecycle operations noted. No physical handset.",
@@ -70,11 +70,38 @@
       "lifecycle_event": "blur explicitly dispatched; editing pointer events were native CDP"
     },
     {
-      "check": "Native touch swipe scrolls the inspector without changing plan view",
+      "check": "First native inspector Plan tap immediately after Zoom drag works, then inspector scrolls",
       "pass": true,
       "scroll_before": 0,
       "scroll_after": 155,
-      "isolation": "fresh navigation before inspector swipe; no preceding CDP gesture sequence"
+      "first_tap_trace": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "prevented": false
+        },
+        {
+          "type": "touchstart",
+          "trusted": true,
+          "prevented": false
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "prevented": false
+        },
+        {
+          "type": "touchend",
+          "trusted": true,
+          "prevented": false
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "prevented": false
+        }
+      ],
+      "no_intervening_reset_or_reload": true
     },
     {
       "check": "Existing door drag still edits its position after pinch navigation",
@@ -111,72 +138,37 @@
   "errors": [],
   "assets": [
     {
-      "url": "http://127.0.0.1:38631/director/floorplan-editor.css",
-      "status": 200,
-      "sha256": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-overview.css",
+      "url": "http://127.0.0.1:41831/director/floorplan-overview.css",
       "status": 200,
       "sha256": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
     },
     {
-      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.css",
-      "status": 200,
-      "sha256": "9277075f8ba0e9c59bed3ead08b47ccb13a09f19818e0111cea0c874c98db24a"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-model.js",
-      "status": 200,
-      "sha256": "909eaee790e1b49e87f5ffdaa37ad0f1a7093ddbd8c3f36d920c63abccd3a180"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-editor.js",
-      "status": 200,
-      "sha256": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-overview.js",
-      "status": 200,
-      "sha256": "7f6ffa81b7050667c6aa2227a1108ae7d6746b4f17a8480eb2d92a2087625d9a"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.js",
-      "status": 200,
-      "sha256": "53c60e3fb1a7bbdec88a212b44034015b4542aa964301455655d3b105bc0a02a"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-editor.css",
+      "url": "http://127.0.0.1:41831/director/floorplan-editor.css",
       "status": 200,
       "sha256": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
     },
     {
-      "url": "http://127.0.0.1:38631/director/floorplan-overview.css",
-      "status": 200,
-      "sha256": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.css",
+      "url": "http://127.0.0.1:41831/director/floorplan-connection-view.css",
       "status": 200,
       "sha256": "9277075f8ba0e9c59bed3ead08b47ccb13a09f19818e0111cea0c874c98db24a"
     },
     {
-      "url": "http://127.0.0.1:38631/director/floorplan-editor.js",
-      "status": 200,
-      "sha256": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e"
-    },
-    {
-      "url": "http://127.0.0.1:38631/director/floorplan-model.js",
+      "url": "http://127.0.0.1:41831/director/floorplan-model.js",
       "status": 200,
       "sha256": "909eaee790e1b49e87f5ffdaa37ad0f1a7093ddbd8c3f36d920c63abccd3a180"
     },
     {
-      "url": "http://127.0.0.1:38631/director/floorplan-overview.js",
+      "url": "http://127.0.0.1:41831/director/floorplan-editor.js",
+      "status": 200,
+      "sha256": "4c4bce2281407417bcbb704f32ec81cc587beaf6edabfa819462f87d67a204b3"
+    },
+    {
+      "url": "http://127.0.0.1:41831/director/floorplan-overview.js",
       "status": 200,
       "sha256": "7f6ffa81b7050667c6aa2227a1108ae7d6746b4f17a8480eb2d92a2087625d9a"
     },
     {
-      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.js",
+      "url": "http://127.0.0.1:41831/director/floorplan-connection-view.js",
       "status": 200,
       "sha256": "53c60e3fb1a7bbdec88a212b44034015b4542aa964301455655d3b105bc0a02a"
     }
@@ -187,10 +179,10 @@
     "zoom": {
       "x": 156.125,
       "y": 135,
-      "width": 45.171875,
+      "width": 46,
       "height": 34,
       "top": 135,
-      "right": 201.296875,
+      "right": 202.125,
       "bottom": 169,
       "left": 156.125
     },
@@ -198,19 +190,19 @@
       "x": 0,
       "y": 178,
       "width": 390,
-      "height": 352,
+      "height": 343,
       "top": 178,
       "right": 390,
-      "bottom": 530,
+      "bottom": 521,
       "left": 0
     }
   },
   "source_after": {
-    "/workspace/rspdan-portal/public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "/workspace/rspdan-portal/public/director/floorplan-editor.js": "4c4bce2281407417bcbb704f32ec81cc587beaf6edabfa819462f87d67a204b3",
     "/workspace/rspdan-portal/public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
   },
   "sources_frozen": true,
-  "finished_at": "2026-11-26T04:00:51.752748+00:00",
+  "finished_at": "2026-11-26T04:32:38.516240+00:00",
   "passed": 18,
   "failed": 0
 }

@@ -18,6 +18,10 @@
   let appearance, lighting, stageDesign, kinematics, directManipulation, poseControl, backdropUploadToken = 0;
   let floorplanEditor, emptyFloorplan;
   let gizmoTargetStart = null, gizmoTargetMoved = false;
+  // ArcRotateCamera cannot represent an exact vertical view without moving its
+  // position. Keep that native pole margin explicit at every direct-edit boundary.
+  const cameraPoleMargin = .01;
+  const cameraElevationLimit = Number((90 - cameraPoleMargin * 180 / Math.PI).toFixed(5));
   const label = name => ({ root: 'Whole character', 'torso.lower': 'Hips', 'torso.upper': 'Torso', head: 'Head', 'upper_arm.L': 'Left shoulder', 'lower_arm.L': 'Left elbow', 'upper_arm.R': 'Right shoulder', 'lower_arm.R': 'Right elbow', 'thigh.L': 'Left hip', 'shin.L': 'Left knee', 'thigh.R': 'Right hip', 'shin.R': 'Right knee' }[name] || name);
   function status(message) { $('status').textContent = ui.draftWriteFailed ? `Browser draft unavailable. Use Save take before closing. ${message}` : message; }
   function cameraState() { camera.getViewMatrix(true); return { mode: camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? 'orthographic' : 'perspective', position: camera.position.asArray(), target: camera.target.asArray(), fov: camera.fov, orthoSize: camera.orthoTop ? camera.orthoTop * 2 : 1.5 }; }
@@ -40,19 +44,28 @@
     const match = manifest.presets.find(p => p.pose && manifest.bones.every(n => ["position", "rotation", "scale"].every(k => near(value.bones[n][k], p.pose.bones[n][k]))) && manifest.morphs.every(n => Math.abs((value.morphs[n] || 0) - (p.pose.morphs[n] || 0)) < 0.0001));
     $("preset").value = match?.id || "";
   }
-  function setCamera(value) {
+  function setCamera(value, { adjustPole = false } = {}) {
     const distance = Math.hypot(...value.position.map((n, i) => n - value.target[i]));
     camera.upperRadiusLimit = Math.max(camera.upperRadiusLimit || 0, distance * 1.1);
     camera.setTarget(B.Vector3.FromArray(value.target)); camera.setPosition(B.Vector3.FromArray(value.position)); camera.fov = value.fov;
     camera.maxZ = Math.max(camera.maxZ || 10000, camera.radius * 4);
     camera.mode = value.mode === 'orthographic' ? B.Camera.ORTHOGRAPHIC_CAMERA : B.Camera.PERSPECTIVE_CAMERA;
     const size = value.orthoSize || 1.5; camera.orthoTop = size / 2; camera.orthoBottom = -size / 2; fitOrtho();
+    if (adjustPole) {
+      camera.getViewMatrix(true);
+      const position = camera.position.clone(), bound = cameraLimits().coordinate;
+      // At a coordinate boundary, point the small legacy pole offset inward.
+      // The adjusted draft must remain within the same limits as saved takes.
+      for (const axis of ['x','z']) if (Math.abs(position[axis]) > bound) position[axis] = camera.target[axis] - (position[axis] - camera.target[axis]);
+      camera.setPosition(position);
+    }
     $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA));
     syncCameraEditor();
   }
   function restore(take, { restartColor = false } = {}) {
     if (take.asset.id !== manifest.id || take.asset.sha256 !== manifest.sha256) throw new Error('This take uses a different model revision. Its saved pose has been kept; open it with that revision.');
     cameraNavigation?.cancel(); directManipulation?.cancel(); kinematics?.endBody({cancelled:true}); kinematics?.end({cancelled:true});
+    const cameraAdjusted = cameraNeedsPoleAdjustment(take.camera);
     restoring = true;
     try {
       $('take-name').value = take.name; $('notes').value = take.notes; ui.start = take.range.start; ui.end = take.range.end; ui.fps = take.fps; ui.frame = take.frame; ui.keys = clone(take.keyframes);
@@ -69,8 +82,9 @@
       if (restartColor) colorClock.resume();
       ui.outline = clone(take.outline || { enabled: false, tone: 0, width: .0025 });
       stageDesign.restore(take.stage.design || null); lighting.restore(take.lighting || null);
-      setLook(take.look); setBackground(take.stage.background); setCamera(take.camera); applyPose(take.pose); syncTimeline(); syncSceneEditor(); setMode(ui.mode);
+      setLook(take.look); setBackground(take.stage.background); setCamera(take.camera, { adjustPole: cameraAdjusted }); applyPose(take.pose); syncTimeline(); syncSceneEditor(); setMode(ui.mode);
     } finally { restoring = false; }
+    return cameraAdjusted;
   }
   function pushHistory(value) { ui.undo.push(clone(value)); if (ui.undo.length > 60) ui.undo.shift(); ui.redo.length = 0; buttons(); }
   function finishCameraHistory() { cameraNavigation?.finish(); }
@@ -216,10 +230,16 @@
     syncSceneEditor(); syncCameraEditor(); setNavigationTool(ui.navigation);
   }
   function cameraLimits() { const plan = !!stageDesign?.snapshot().floorplan; return { coordinate: plan ? 1e9 : 1000, ortho: plan ? 1e8 : 1000 }; }
+  function cameraNeedsPoleAdjustment(value) {
+    const delta = value.position.map((n,i)=>n-value.target[i]), distance = Math.hypot(...delta);
+    const beta = Math.acos(Math.max(-1,Math.min(1,delta[1]/distance)));
+    return beta < cameraPoleMargin - 1e-10 || beta > Math.PI - cameraPoleMargin + 1e-10;
+  }
   function validCamera(value) {
     const limits = cameraLimits();
     if (![...value.position,...value.target].every(n=>Number.isFinite(n)&&Math.abs(n)<=limits.coordinate)) throw new Error(`Camera coordinates must be within ±${limits.coordinate}.`);
     if (Math.hypot(...value.position.map((n,i)=>n-value.target[i]))<=.001) throw new Error('Camera position and look-at point must differ.');
+    if (cameraNeedsPoleAdjustment(value)) throw new Error('Keep a slight horizontal offset between the camera and its look-at point. An exact vertical view is outside this camera\'s range.');
     if (!Number.isFinite(value.fov)||value.fov<.05||value.fov>3||!Number.isFinite(value.orthoSize)||value.orthoSize<.01||value.orthoSize>limits.ortho) throw new Error('Use a valid field of view and orthographic height.');
     return value;
   }
@@ -230,7 +250,8 @@
     for(const [kind,values] of [['pos',value.position],['target',value.target]])for(const [i,axis] of ['x','y','z'].entries()){const input=$(`camera-${kind}-${axis}`);input.min=-limits.coordinate;input.max=limits.coordinate;update(input.id,values[i]);}
     update('camera-projection',value.mode);update('camera-fov',value.fov*180/Math.PI);update('camera-size',value.orthoSize);
     update('camera-azimuth',((camera.alpha*180/Math.PI)%360+540)%360-180);update('camera-elevation',90-camera.beta*180/Math.PI);update('camera-distance',camera.radius);
-    $('camera-size').max=limits.ortho;$('camera-distance').max=Math.sqrt(12)*limits.coordinate;
+    $('camera-elevation').min=-cameraElevationLimit;$('camera-elevation').max=cameraElevationLimit;$('camera-elevation').step='any';
+    $('camera-size').max=limits.ortho;$('camera-distance').min=.001;$('camera-distance').max=Math.sqrt(12)*limits.coordinate;
     $('camera-fov-field').hidden=value.mode==='orthographic';$('camera-size-field').hidden=value.mode!=='orthographic';
     $('camera-mode').setAttribute('aria-pressed',String(value.mode==='orthographic'));
   }
@@ -260,8 +281,8 @@
     $('camera-fov').onchange=event=>cameraEdit(()=>{camera.fov=number(event.target,.05*180/Math.PI,3*180/Math.PI)*Math.PI/180;},'Camera field of view updated.');
     $('camera-size').onchange=event=>cameraEdit(()=>{const half=number(event.target,.01,cameraLimits().ortho)/2;camera.orthoTop=half;camera.orthoBottom=-half;fitOrtho();},'Orthographic height updated.');
     $('camera-azimuth').onchange=event=>cameraEdit(()=>{camera.alpha=number(event.target,-360,360)*Math.PI/180;});
-    $('camera-elevation').onchange=event=>cameraEdit(()=>{camera.beta=(90-number(event.target,-89,89))*Math.PI/180;});
-    $('camera-distance').onchange=event=>cameraEdit(()=>{const distance=number(event.target,.01,Math.sqrt(12)*cameraLimits().coordinate),value=cameraState();value.position=camera.target.add(camera.position.subtract(camera.target).normalize().scale(distance)).asArray();setCamera(validCamera(value));},'Camera distance updated.');
+    $('camera-elevation').onchange=event=>cameraEdit(()=>{camera.beta=(90-number(event.target,-cameraElevationLimit,cameraElevationLimit))*Math.PI/180;});
+    $('camera-distance').onchange=event=>cameraEdit(()=>{const distance=number(event.target,.001,Math.sqrt(12)*cameraLimits().coordinate),value=cameraState();value.position=camera.target.add(camera.position.subtract(camera.target).normalize().scale(distance)).asArray();setCamera(validCamera(value));},'Camera distance updated.');
     $('camera-frame-character').onclick=()=>cameraEdit(()=>{frameDirectorCharacter(scene,camera,$('room'));fitOrtho();},'Whole character framed.');
     $('camera-frame-set').onclick=()=>cameraEdit(()=>frameSet(),'Set framed.');
     $('camera-top').onclick=()=>cameraEdit(()=>{camera.beta=Math.PI/180;},'Top camera view.');
@@ -577,7 +598,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
   }
   async function loadTake(id, preserveDraft = true) {
     stop();
-    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); restore(take, { restartColor: true }); ui.savedId = record.id || id; sendRequest = null; ui.dirty = false; ui.draftWriteFailed = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status('Saved take reopened. The pose, stage and frames are editable.'); }
+    try { const result = await api('?id=' + encodeURIComponent(id)); const record = result.saved || result.record || result; const take = record.take || result.take; if (take.asset.sha256 !== manifest.sha256) { if (preserveDraft) localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); location.assign('/director?take=' + encodeURIComponent(id) + '&asset=' + encodeURIComponent(take.asset.sha256)); return; } remember(); const cameraAdjusted = restore(take, { restartColor: true }); ui.savedId = record.id || id; sendRequest = null; ui.dirty = cameraAdjusted; ui.draftWriteFailed = false; savedSnapshot = JSON.stringify(snapshot()); try { localStorage.setItem(currentDraftKey(), savedSnapshot); } catch {} $('storage-label').textContent = cameraAdjusted ? 'BROWSER DRAFT' : result.shared === false ? 'LOCAL WORKSPACE' : 'SAVED IN NEST'; buttons(); status(cameraAdjusted ? 'Saved take reopened with its near-vertical camera adjusted to the supported angle. The original saved take is unchanged; use Save take to keep this displayed view.' : 'Saved take reopened. The pose, stage and frames are editable.'); }
     catch (error) { status(error.message); }
   }
   function bindSceneEditor() {
@@ -855,7 +876,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     engine.setHardwareScalingLevel(1 / Math.min(devicePixelRatio || 1, 2));
     scene = new B.Scene(engine); scene.useRightHandedSystem = true;
     camera = new B.ArcRotateCamera('Director camera', Math.PI / 2 - .35, Math.PI / 2 - .11, 2.1, new B.Vector3(0, .56, 0), scene);
-    camera.inertia = 0; camera.lowerRadiusLimit = .0011; camera.upperRadiusLimit = 400; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
+    camera.inertia = 0; camera.lowerRadiusLimit = .001; camera.lowerBetaLimit = cameraPoleMargin; camera.upperBetaLimit = Math.PI - cameraPoleMargin; camera.upperRadiusLimit = 400; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
     floor = B.MeshBuilder.CreateGround('White room floor', { width: 200, height: 200 }, scene); floor.position.y = 0; floor.isPickable = false; floor.receiveShadows = true;
     const floorMat = new B.StandardMaterial('White plaster', scene); floorMat.diffuseColor = new B.Color3(.95, .955, .94); floorMat.specularColor = B.Color3.Black(); floor.material = floorMat;
     const result = await B.SceneLoader.ImportMeshAsync('', '/director/assets/', manifest.file, scene);
@@ -962,7 +983,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     engine.onContextRestoredObservable.add(() => status('The room renderer recovered.'));
     const id = new URL(location.href).searchParams.get('take');
     if (id) await loadTake(id, false);
-    else try { const draft = JSON.parse(localStorage.getItem(currentDraftKey()) || localStorage.getItem(draftKey) || 'null'); if (draft) { restore(draft, { restartColor: true }); status('Your browser draft has been reopened.'); } } catch (error) { status('The previous draft uses another model revision. It remains stored; this room opened with the current model.'); }
+    else try { const draft = JSON.parse(localStorage.getItem(currentDraftKey()) || localStorage.getItem(draftKey) || 'null'); if (draft) { const cameraAdjusted = restore(draft, { restartColor: true }); status(cameraAdjusted ? 'Browser draft reopened with its near-vertical camera adjusted to the supported angle. Use Save take to keep this displayed view.' : 'Your browser draft has been reopened.'); } } catch (error) { status('The previous draft uses another model revision. It remains stored; this room opened with the current model.'); }
     refreshTakes();
     // Readable diagnostics also let Crew receive the exact current state.
     window.directorStudio = { snapshot, samplePose: (frame) => A.samplePose(ui.keys, frame, ui.animation.transition), get colorPreview() { return { seconds: colorClock.seconds(), paused: colorClock.isPaused() }; }, get ready() { return ui.ready; }, get scene() { return scene; }, get manifest() { return manifest; } };

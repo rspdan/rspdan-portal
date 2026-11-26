@@ -24,6 +24,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   let editorView = 'plan', inspectorTab = 'selected', lastSelectionKey = '', committing = false;
   let comparisonId = null;
   const touchPointers = new Map();
+  const preventNativeTouch = event => event.preventDefault();
   let navigation = null, touchSelection;
   const instanceId = id('floorplan-editor');
   const cleanups = [];
@@ -233,6 +234,10 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     const inPlan = event.target === svg || svg.contains(event.target);
     const placeable = event.target instanceof Element && event.target.closest('.fp-toolbar button[data-placeable]');
     if (!inPlan && !(placeable && toolbar.contains(placeable))) return;
+    // Cancel the native touch gesture too: pointer handling alone can leave the
+    // next control tap without a click. Bind to the original target because a
+    // drawing render may detach it before touchstart reaches the SVG ancestor.
+    event.target.addEventListener('touchstart', preventNativeTouch, { once: true, passive: false });
     if (!touchPointers.size) touchSelection = clone(selection);
     touchPointers.set(event.pointerId, { clientX: event.clientX, clientY: event.clientY });
     if (touchPointers.size >= 2) { startPinch(); ownNavigation(event); }

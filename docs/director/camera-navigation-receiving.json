@@ -1,12 +1,12 @@
 {
-  "recorded_at_utc": "2026-11-26T04:16:28.477884+00:00",
-  "status": "local implementation received; preview deployment pending",
+  "recorded_at_utc": "2026-11-26T04:45:38.427789+00:00",
+  "status": "local implementation received, including reproduced first-tap fix; preview delivery recorded separately",
   "source_sha256": {
-    "public/director/director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "public/director/director.js": "bd726f48d9c8e73962d0855523912d6f1b49383020ac1439d2d24b4a7879a161",
     "public/director/director.css": "8fb42f1acf5c97ee2166fa150d233675e4b844518b2f30cb228520f238fa3a5d",
     "public/director/direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890",
     "public/director/camera-navigation.js": "36cd0157429ff3fba9f0bbaac29a951896754c9bc3f9946841328db1b86be5bd",
-    "public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "public/director/floorplan-editor.js": "4c4bce2281407417bcbb704f32ec81cc587beaf6edabfa819462f87d67a204b3",
     "public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f",
     "src/pages/director/index.astro": "a3d3379cc252f7d35a4ec3689ae2187f60e1e5ba87a065d6fde6f2f1af2505c9"
   },
@@ -19,8 +19,8 @@
     },
     "build": {
       "exit_code": 0,
-      "log": "/workspace/scratch/director-camera-112626/root/build-release.log",
-      "scope": "Final source; production build and existing Node runtime patch completed."
+      "log": "/workspace/scratch/director-camera-112626/root/build-final-boundaries.log",
+      "scope": "Final source after touch and coordinate boundary fixes; production build and Node runtime patch."
     },
     "root_integrated_touch": {
       "checks": 12,
@@ -37,7 +37,8 @@
     "floorplan_component": {
       "checks": 18,
       "passed": true,
-      "receipt": "camera-receiving/floorplan.json"
+      "receipt": "camera-receiving/floorplan.json",
+      "scope": "Final independent component suite includes immediate first inspector tap, ordinary mouse drawing, cancellation and native inspector scrolling."
     },
     "independent_camera": {
       "scope": "Actual mouse/CDP touch, numeric fields, perspective/ortho, modifiers, outside release, cancellation, edit takeover, final capture-loss restoration and local save/reopen. Individual receipts retain exact editions and earlier failures.",
@@ -51,6 +52,25 @@
       ],
       "consolidated": "camera-receiving/camera-independent.md",
       "unresolved_product_findings": []
+    },
+    "first_native_inspector_tap": {
+      "passed": true,
+      "receipt": "camera-receiving/root-first-tap-fixed.json",
+      "scope": "Actual integrated phone touch: one Zoom drag immediately followed by the first Plan tab tap; other inspector tabs and native inspector scrolling retain body/take state. No inserted delay or retry before the first tap."
+    },
+    "floorplan_touch_contracts": {
+      "pass": 19,
+      "fail": 0,
+      "log": "/workspace/scratch/director-camera-112626/root/floorplan-touch-contracts.log"
+    },
+    "coordinate_boundaries": {
+      "passed": true,
+      "browser_checks": 5,
+      "receipts": [
+        "camera-receiving/camera-coordinate-validation.json",
+        "camera-receiving/camera-coordinate-browser.json"
+      ],
+      "scope": "Direct .00105 distance Save/reopen; rejected pole edit preserves view/history; supported elevation endpoint fields; legacy pole/corner reopen warning and draft without changing saved original; adjusted view saved separately, all on isolated local storage."
     }
   },
   "findings_resolved": [
@@ -58,19 +78,20 @@
     "Orthographic zoom changes view size.",
     "Mouse polygon double-click finishing was restored after the new touch placement path initially suppressed it.",
     "Unexpected object pointer-capture loss restores the unfinished edit.",
-    "Final Top/orbit elevation aligns with the inspector\u2019s \u00b189 degree range."
+    "An immediate native inspector tap following floor-plan Zoom could receive pointer events without a click. Owned drawing and toolbar touches now cancel native touchstart on the original target, including detached drawing targets. Inspector/page touches remain outside this handler.",
+    "Direct coordinate validation now matches the native radius boundary and rejects the unsupported pole margin before mutation. Legacy pole views warn when adjusted and remain unsaved until deliberately saved.",
+    "Orbit and Top retain a one-degree pole margin; numeric elevation fields match the native supported margin of .01 radians."
   ],
   "receiving_limits": [
     "Physical handset behavior is not established by Chromium touch emulation.",
     "Initial fixed-delay gizmo and wheel assertions were unreliable under contended software rendering; native event/condition-based rechecks are retained separately.",
-    "An intermittent standalone inspector-tab tap was not explained; final fresh-page and integrated ordinary-navigation receiving passed.",
     "Local save/reopen used isolated filesystem storage with shared:false; no remote Save or message was sent."
   ],
   "report_copy_sha256": {
     "root-integration.json": "a27820bd4ecc70d114e94c2b232ebec8befabd888402529741c5d8282f5a4070",
     "root-inspector.json": "205ab29f74faf261cd317a94db67fa153ba19abf75f2bfc6f2e1ea4817223ec8",
-    "floorplan.json": "91160cebbebdbcda152ec53cc754fa7b1f80e1409b3af446038c704f9cb61f30",
-    "floorplan-source-hashes.json": "5e8833210fddc5a81cb7954578504f7073c6d13b37c170ba36eb68e3e844d062",
+    "floorplan.json": "a0362e1c5038c2758e2c7d38e0b82d241443fdfc6dea34172e03292f3a68e939",
+    "floorplan-source-hashes.json": "c795637de9baf917df749baa1183bf54fddf23e081dd95d438f9255597701bf2",
     "camera-primary.json": "638ba420d113466b0498da4de6096384ef1a7000e76d070c7fd5c098becaaad2",
     "camera-remaining-initial.json": "d060375b66e50a0aa27e98cb378b7534180e8be1ccf24c8da440a3849beb8139",
     "camera-wheel-capture.json": "b8b3ad5a347b51eaa8651d7fb7dbab1e8940e588886318e20e85a18893568396",
@@ -78,7 +99,17 @@
     "camera-gizmo-capture.json": "9b884b4d2d6778a326e1ed7413ba7eb7b894e67fb8d713f75484d8f5d30a6f62",
     "camera-gizmo-blur.json": "7698ba5f919f800bb302ef428d6938ac33761fc5cc748a7fc827a8d9d6d6a236",
     "camera-independent.md": "dfdef7820d267a9055c478975e609921dffa7df321ce4d9251f3ff3b62b52dd7",
-    "camera-independent.json": "a2841f37f9de89606be24a1f298b52c12bffcece2c9e4b3666c745da1d9b27af"
+    "camera-independent.json": "a2841f37f9de89606be24a1f298b52c12bffcece2c9e4b3666c745da1d9b27af",
+    "root-first-tap-fixed.json": "ce7e992f90af4513b2bf94bffe62137ab5152eedf2f5c41d2a8b37a70791dabc",
+    "camera-local-before-touch-fix.json": "b9d21b8c81cbd7ed71c30bd928f36aca1e0fbc54f25abc8044d60cf40ba9aee0",
+    "floorplan-before-first-tap-fix.json": "91160cebbebdbcda152ec53cc754fa7b1f80e1409b3af446038c704f9cb61f30",
+    "floorplan-first-tap-traces.json": "f411914aad83ce997167f4a0f873dbc64e30d8a919eedde93b3a9c0397aa854e",
+    "camera-coordinate-validation.json": "939f2df61c78e644cbf5c871b8da1ee14247f308464561c4870e95ea2762a014",
+    "camera-coordinate-browser.json": "7f7bd54efc821212c0d2e1629ba6aa1fdc17524b84888ae7f48d92f0e08e96b3"
   },
-  "deployment": null
+  "deployment": {
+    "record": "https://github.com/rspdan/nest-bridge/blob/codex/dan-art-study-112426/HYPERCAMPUS/ART/DPS-ART_112326/ShellGame.Development/Director-camera-receiving.json",
+    "scope": "Final deployed byte and interaction checks are kept in the ODK delivery record; this file records local implementation receiving."
+  },
+  "prior_local_receipt": "camera-receiving/camera-local-before-touch-fix.json"
 }
