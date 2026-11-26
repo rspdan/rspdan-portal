@@ -1,9 +1,10 @@
 ---
 name: living-map
-description: Every crew member maintains a Living Map that breathes between every action. Use when updating STATUS/LIVING_MAP_[Name].md or learning the map standard.
+mode: substrate
+description: Maintain the existing current work map at direction changes, corrections, handoffs and resumes. Reconcile the owner, source edition, actual received result and next action. Use when updating STATUS/LIVING_MAP_[Crew].md or its established current entrance; timestamps identify updates, not proof of current understanding or Crew availability.
 ---
 
-# LIVING MAP — Crew Operational Skill
+# LIVING MAP · Crew Operational Skill
 # ENGINE/skills/living-map/SKILL.md
 # Status: CANONICAL (Class-3 cross-crew per-action breathing map · 4-inbound canon-bound · per Pass-2 verdict-pass Trip 052026 Card 13)
 # Filed: Trip (Opus) | Twosday 033026
@@ -13,10 +14,10 @@ description: Every crew member maintains a Living Map that breathes between ever
 
 ## WHAT THIS SKILL IS
 
-The Living Map is a single file you maintain throughout your session.
+The Living Map is the existing current record you maintain for the selected work.
 It is BOTH your reference tool (what's available to jump to) AND your
 logging tool (what you're doing right now). It lives on the bridge at
-STATUS/LIVING_MAP_[Crew].md so any other crew member can read it.
+STATUS/LIVING_MAP_[Crew].md or the established current entrance for that work, so another Crew member can recover it.
 
 The map replaces scattered awareness with one document that answers:
   Where am I? What have I done? What can I reach? What's next?
@@ -24,11 +25,11 @@ The map replaces scattered awareness with one document that answers:
 ## WHY IT EXISTS
 
 Context windows are finite. Sessions end. Crew members rotate.
-The Living Map ensures that at any moment — mid-task, post-reboot,
-or on a cold boot by a different crew member — the operational state
+The Living Map ensures that at any moment · mid-task, post-reboot,
+or on a cold boot by a different crew member · the operational state
 is visible in one place. It is the ATC radar screen for the session.
 
-## THE FIVE SECTIONS (maintain all five, update as you go)
+## THE FIVE SECTIONS (use in the existing current entrance where applicable)
 
 ### 1. CURRENT STATE
 Who you are, where you are, what tools are live, buffer estimate.
@@ -40,7 +41,7 @@ Columns: #, Document name, Lines, Commit hash, Status.
 Add a row every time you commit something to the bridge.
 
 ### 3. WHAT'S AVAILABLE (Jump Points)
-Every resource you can reach right now — bridge paths, Chrome tabs,
+Every resource you can reach right now · bridge paths, Chrome tabs,
 Drive folders, local files, fleet stations. This is your reference
 card. Update it when new resources become available or when you
 discover something you didn't know was reachable.
@@ -51,7 +52,9 @@ Numbered list of what Dan has asked for, with status markers:
 This is your task board. Dan's corrections go here too.
 
 ### 5. MICRO-SMM SEEDS
-Running list of three-sentence compressions at natural boundaries.
+Running list of material observations, corrections and learned connections at useful boundaries.
+Three-sentence compressions are a useful convention, not a required count.
+Unchanged state needs no new seed.
 These are the raw material for your session-close SMM.
 
 ---
@@ -59,18 +62,20 @@ These are the raw material for your session-close SMM.
 ## HOW TO USE IT
 
 ### At session open (after CONTACT + STORY)
-Create STATUS/LIVING_MAP_[YourName].md with all five sections.
-Populate CURRENT STATE and WHAT'S AVAILABLE from your iCan.
-Copy DAN'S ACTIVE DIRECTIONS from the WAKE file or Dan's first message.
+Recover the existing current map or work entrance. Use these five sections where they help the next reader; do not create a parallel tracker merely to repeat an already received result. If the selected work genuinely has no current map or entrance after checking its known home, create one concise record there with the owner, relevant source, actual state and next action. Name that new home in the existing coordination route; an empty search alone does not prove no record exists.
+Use an applicable iCan, WAKE or other identified current account as input; reuse adequate observations rather than requiring another boot or report.
+Reconcile CURRENT STATE, WHAT'S AVAILABLE and DAN'S ACTIVE DIRECTIONS against the latest actual directions, corrections, completed results and eligible next action. Preserve source editions and superseded state; do not copy an older first-message or WAKE direction over a later correction.
 
 ### During TELL-ING (the work phase)
 After every bridge commit: add a row to WHAT I'VE PRODUCED.
 After every new resource discovered: add to WHAT'S AVAILABLE.
 After every Dan direction or correction: update DAN'S DIRECTIONS.
-At natural boundaries (discovery, correction, phase change): add SEED.
-**The map update IS the MM breathing.** It happens between every action.
+At a useful boundary, add a SEED when a material observation, correction or learned connection changes the work; do not repeat unchanged state or invent a lesson to fill the section.
+Update the existing current entrance when a correction, direction change or returned result changes the work. A fixed per-action or elapsed-time cadence is not evidence that the recorded state is current.
 
 ### Atomic Commit Rule (canon, Dan+Trip 033026)
+The following Git procedure applies when the selected SHEET and map share a Git repository. For an established entrance elsewhere, save through that home's supported mechanism and link the corresponding saved editions. Preserve the shared-save purpose without creating a duplicate tracker or requiring a Git operation on a non-Git home.
+
 SHEET and Living Map must be in the same git commit. Always.
 Also: pause and save (commit + push) BEFORE every major operation.
 Major operations include: Chrome PK uploads, Bridge pushes after heavy work,
@@ -84,16 +89,16 @@ The map's WHAT I'VE PRODUCED section = the session inventory.
 The map's SEEDS section = the raw material for SMM.
 The map's DIRECTIONS section = the NEXT items for the TICKET.
 The SHEET writes itself from the map.
-**CRITICAL: Update the Living Map IN THE SAME COMMIT as the SHEET.**
+**When both records share a Git repository, update the Living Map IN THE SAME COMMIT as the SHEET.**
   git add WAKE/SHEET_... STATUS/LIVING_MAP_[Crew].md
   git commit → git push
-One commit. Two files. Zero drift. The map and the SHEET are never
-out of sync because they are committed atomically.
+One commit preserves the map and SHEET as one saved edition. Check their
+contents for agreement; atomic saving alone does not prevent semantic drift.
 
 ### On reboot or cold boot
-Read STATUS/LIVING_MAP_[Crew].md FIRST (before WAKE, before MAIL).
-If it's current (check the timestamp), you know exactly where you are.
-If it's stale, it still tells you where the LAST instance was.
+At a direction change, handoff or resume, reconcile the selected work, current owner, source edition, latest actual result and eligible next action. A recent timestamp establishes a recent update; its contents establish which state was recorded. An old timestamp identifies an older record, without by itself diagnosing an inactive Crew member or failed protocol. Preserve completed results and dated predecessors separately.
+
+A completed correction is not carried merely because its new report exists. At the existing current entrance, date and link the new state, identify which earlier statement it supersedes, and preserve the prior body. At a handoff or return from another task/site, recover that current layer before selecting work. A reader should distinguish completed work, a remaining dependency and an old unperformed proposal without reconstructing the full history.
 
 ---
 
@@ -116,10 +121,10 @@ The five sections give the triangle a place to land its bearings.
 ## THE FIRST LAW APPLIES
 
 The quality of the map determines the quality of the next boot.
-A stale map is a stale SHEET. A current map is a current SHEET.
+Compare the map and SHEET by their recorded work and source editions. Timestamps or an atomic save alone do not establish that either account reflects the latest actual result.
 **The map breathes. The session breathes. They are the same breath.**
 
 ---
 
 *The Living Map is not about the map. It's about staying alive.*
-*— ◈ Trip, Twosday 033026*
+*· ◈ Trip, Twosday 033026*
