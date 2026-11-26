@@ -11,16 +11,16 @@
   const currentDraftKey = () => `${draftKey}.${manifest.sha256}`;
   const lensFields = [['glow',0,1],['rays',0,1],['streak',0,1],['ghosts',0,1],['spread',.25,2],['rotation',-180,180],['rayCount',4,16]];
   const lensInputId = (prefix, field) => `${prefix}-${field === 'rayCount' ? 'ray-count' : field}`;
-  const ui = { ready: false, dirty: true, draftWriteFailed: false, savedId: null, playing: false, handles: true, start: 1, frame: 1, end: 72, fps: 24, animation: { transition: 'ease-in-out', loop: true }, output: { width: 720, height: 720 }, keys: [], undo: [], redo: [], look: 'ouch', background: 'white', mode: 'pose', tool: 'rotate', stretch: false, tripGlow: 0, tripFlare: 0, tripTemperature: 6500, tripBodyTemperature: null, tripLightColor: null, tripLens: null, outline: { enabled: true, tone: 0, width: .0025 } };
+  const ui = { ready: false, dirty: true, draftWriteFailed: false, savedId: null, playing: false, handles: true, start: 1, frame: 1, end: 72, fps: 24, animation: { transition: 'ease-in-out', loop: true }, output: { width: 720, height: 720 }, keys: [], undo: [], redo: [], look: 'ouch', background: 'white', mode: 'pose', navigation: 'edit', tool: 'rotate', stretch: false, tripGlow: 0, tripFlare: 0, tripTemperature: 6500, tripBodyTemperature: null, tripLightColor: null, tripLens: null, outline: { enabled: true, tone: 0, width: .0025 } };
   let engine, scene, camera, floor, gizmo, manifest, neutralPose, nodes = {}, morphs = {}, handles = [], selected, savedSnapshot, saveRequest = null, sendRequest = null, savePayload = null;
   let playStart = 0, playFrame = 1, restoring = false, dragBefore = null;
-  let cameraBefore = null, cameraWheelTimer = null;
+  let cameraNavigation, cameraTakingOver = false;
   let appearance, lighting, stageDesign, kinematics, directManipulation, poseControl, backdropUploadToken = 0;
   let floorplanEditor, emptyFloorplan;
   let gizmoTargetStart = null, gizmoTargetMoved = false;
   const label = name => ({ root: 'Whole character', 'torso.lower': 'Hips', 'torso.upper': 'Torso', head: 'Head', 'upper_arm.L': 'Left shoulder', 'lower_arm.L': 'Left elbow', 'upper_arm.R': 'Right shoulder', 'lower_arm.R': 'Right elbow', 'thigh.L': 'Left hip', 'shin.L': 'Left knee', 'thigh.R': 'Right hip', 'shin.R': 'Right knee' }[name] || name);
   function status(message) { $('status').textContent = ui.draftWriteFailed ? `Browser draft unavailable. Use Save take before closing. ${message}` : message; }
-  function cameraState() { return { mode: camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? 'orthographic' : 'perspective', position: camera.position.asArray(), target: camera.target.asArray(), fov: camera.fov, orthoSize: camera.orthoTop ? camera.orthoTop * 2 : 1.5 }; }
+  function cameraState() { camera.getViewMatrix(true); return { mode: camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? 'orthographic' : 'perspective', position: camera.position.asArray(), target: camera.target.asArray(), fov: camera.fov, orthoSize: camera.orthoTop ? camera.orthoTop * 2 : 1.5 }; }
   function pose() {
     return { bones: Object.fromEntries(Object.entries(nodes).map(([name, node]) => [name, { position: node.position.asArray(), rotation: (node.rotationQuaternion?.clone() || B.Quaternion.FromEulerVector(node.rotation)).normalize().asArray(), scale: node.scaling.asArray() }])), morphs: Object.fromEntries(manifest.morphs.map(name => [name, morphs[name]?.[0]?.influence || 0])) };
   }
@@ -48,10 +48,11 @@
     camera.mode = value.mode === 'orthographic' ? B.Camera.ORTHOGRAPHIC_CAMERA : B.Camera.PERSPECTIVE_CAMERA;
     const size = value.orthoSize || 1.5; camera.orthoTop = size / 2; camera.orthoBottom = -size / 2; fitOrtho();
     $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA));
+    syncCameraEditor();
   }
   function restore(take, { restartColor = false } = {}) {
     if (take.asset.id !== manifest.id || take.asset.sha256 !== manifest.sha256) throw new Error('This take uses a different model revision. Its saved pose has been kept; open it with that revision.');
-    directManipulation?.cancel(); kinematics?.endBody({cancelled:true}); kinematics?.end({cancelled:true});
+    cameraNavigation?.cancel(); directManipulation?.cancel(); kinematics?.endBody({cancelled:true}); kinematics?.end({cancelled:true});
     restoring = true;
     try {
       $('take-name').value = take.name; $('notes').value = take.notes; ui.start = take.range.start; ui.end = take.range.end; ui.fps = take.fps; ui.frame = take.frame; ui.keys = clone(take.keyframes);
@@ -72,12 +73,7 @@
     } finally { restoring = false; }
   }
   function pushHistory(value) { ui.undo.push(clone(value)); if (ui.undo.length > 60) ui.undo.shift(); ui.redo.length = 0; buttons(); }
-  function finishCameraHistory() {
-    const before = cameraBefore; cameraBefore = null; clearTimeout(cameraWheelTimer);
-    if (!before || !camera) return;
-    camera.getViewMatrix(true);
-    if (JSON.stringify(before.camera) !== JSON.stringify(cameraState())) pushHistory(before);
-  }
+  function finishCameraHistory() { cameraNavigation?.finish(); }
   function remember(value = snapshot()) { finishCameraHistory(); pushHistory(value); }
   function preserveUnkeyedPose() {
     const sampled = A.samplePose(ui.keys, ui.frame, ui.animation.transition);
@@ -98,7 +94,7 @@
   }
   function changed(message = 'Pose changed.') {
     if (restoring || !ui.ready) return;
-    syncPreset(pose()); ui.dirty = true; saveRequest = null; sendRequest = null;
+    syncCameraEditor(); syncPreset(pose()); ui.dirty = true; saveRequest = null; sendRequest = null;
     try { localStorage.setItem(currentDraftKey(), JSON.stringify(snapshot())); ui.draftWriteFailed = false; } catch { ui.draftWriteFailed = true; }
     $('storage-label').textContent = ui.draftWriteFailed ? 'DRAFT NOT SAVED' : 'BROWSER DRAFT'; buttons(); status(message);
   }
@@ -165,8 +161,8 @@
     $('room-title').textContent = background === 'white' ? ' THE SET ' : background === 'green' ? ' GREEN SCREEN ' : ' TRANSPARENT STAGE ';
   }
   const activeController = () => ui.mode === 'lighting' ? lighting : ui.mode === 'stage' ? stageDesign : null;
-  const activeNodes = () => ui.mode === 'floorplan' ? {} : activeController()?.nodes() || (ui.stretch ? nodes : { ...nodes, ...kinematics.nodes() });
-  const activeHandles = () => ui.mode === 'floorplan' ? [] : activeController()?.handles() || (ui.stretch ? handles : [...handles, ...kinematics.handles()]);
+  const activeNodes = () => ['floorplan','camera'].includes(ui.mode) ? {} : activeController()?.nodes() || (ui.stretch ? nodes : { ...nodes, ...kinematics.nodes() });
+  const activeHandles = () => ['floorplan','camera'].includes(ui.mode) ? [] : activeController()?.handles() || (ui.stretch ? handles : [...handles, ...kinematics.handles()]);
   const movableHandles = () => ui.mode !== 'pose' || ui.stretch ? activeHandles() : activeHandles().filter(handle => canMoveControl(handle.metadata?.joint));
   const activeSelected = () => activeController()?.getSelected() || (ui.mode === 'pose' ? poseControl || selected : null);
   const isPoseTarget = () => ui.mode === 'pose' && !ui.stretch && kinematics.isTarget(activeSelected());
@@ -188,7 +184,8 @@
   function attachControl() {
     if (!gizmo) return;
     gizmo.positionGizmoEnabled = ui.tool === 'move'; gizmo.rotationGizmoEnabled = ui.tool === 'rotate'; gizmo.scaleGizmoEnabled = ui.tool === 'scale' && ui.mode !== 'lighting';
-    gizmo.attachToNode(ui.handles ? activeNodes()[activeSelected()] || null : null);
+    gizmo.attachToNode(ui.handles && ui.navigation === 'edit' && !cameraNavigation?.active ? activeNodes()[activeSelected()] || null : null);
+    if(ui.navigation !== 'edit' || ui.mode === 'camera'){ $('hint').textContent = ui.navigation === 'zoom' ? 'Drag up to zoom in, down to zoom out · pinch works in every mode' : ui.navigation === 'pan' ? 'Drag to pan · pinch to zoom' : 'Drag to orbit · two fingers pan and pinch'; return; }
     $('hint').textContent = ui.handles && activeSelected() ? (canMoveControl(activeSelected()) ? `${controlLabel(activeSelected())} · hold a marker to move; drag the ${ui.tool} gizmo` : (kinematics.available ? `${controlLabel(activeSelected())} · rotate here; move a hand or foot to bend the limb` : `${controlLabel(activeSelected())} · rotate here; Stretch allows free movement`)) : ui.handles ? 'Choose a control or add a set piece.' : 'Controls hidden · drag the room to orbit the camera';
   }
   function selectControl(id) {
@@ -200,10 +197,11 @@
     else { activeController().select(id); syncSceneEditor(); attachControl(); }
   }
   function setMode(mode) {
-    directManipulation?.cancel(); stop(); ui.mode = mode;
+    cameraNavigation?.cancel(); directManipulation?.cancel(); stop(); const modeChanged=ui.mode!==mode;ui.mode = mode;
+    if(modeChanged)ui.navigation=mode==='camera'?'orbit':'edit';
     if (mode === 'lighting' && ui.tool === 'scale') ui.tool = 'move';
     kinematics.setEditing(ui.handles && mode === 'pose' && !ui.stretch);
-    for (const name of ['pose', 'lighting', 'stage', 'floorplan']) $('mode-' + name).setAttribute('aria-pressed', String(mode === name));
+    for (const name of ['pose', 'lighting', 'stage', 'camera', 'floorplan']) $('mode-' + name).setAttribute('aria-pressed', String(mode === name));
     for (const element of document.querySelectorAll('[data-modes]')) element.hidden = !element.dataset.modes.split(' ').includes(mode);
     document.querySelector('.inspector').dataset.mode = mode;
     $('director').dataset.mode = mode;
@@ -215,7 +213,77 @@
     handles.forEach(handle => handle.setEnabled(ui.handles && mode === 'pose'));
     lighting.setEditing(ui.handles && mode === 'lighting'); stageDesign.setEditing(ui.handles && mode === 'stage');
     $('handles').textContent = 'Controls ' + (ui.handles ? 'on' : 'off'); $('handles').setAttribute('aria-pressed', String(ui.handles));
-    syncSceneEditor(); attachControl();
+    syncSceneEditor(); syncCameraEditor(); setNavigationTool(ui.navigation);
+  }
+  function cameraLimits() { const plan = !!stageDesign?.snapshot().floorplan; return { coordinate: plan ? 1e9 : 1000, ortho: plan ? 1e8 : 1000 }; }
+  function validCamera(value) {
+    const limits = cameraLimits();
+    if (![...value.position,...value.target].every(n=>Number.isFinite(n)&&Math.abs(n)<=limits.coordinate)) throw new Error(`Camera coordinates must be within ±${limits.coordinate}.`);
+    if (Math.hypot(...value.position.map((n,i)=>n-value.target[i]))<=.001) throw new Error('Camera position and look-at point must differ.');
+    if (!Number.isFinite(value.fov)||value.fov<.05||value.fov>3||!Number.isFinite(value.orthoSize)||value.orthoSize<.01||value.orthoSize>limits.ortho) throw new Error('Use a valid field of view and orthographic height.');
+    return value;
+  }
+  function syncCameraEditor(force=false) {
+    if (!camera) return;
+    camera.getViewMatrix(true);const value=cameraState(),limits=cameraLimits();
+    const update=(id,v)=>{const input=$(id);if(input && (force||document.activeElement!==input))input.value=Number.isFinite(v)?Number(v.toFixed(5)):v;};
+    for(const [kind,values] of [['pos',value.position],['target',value.target]])for(const [i,axis] of ['x','y','z'].entries()){const input=$(`camera-${kind}-${axis}`);input.min=-limits.coordinate;input.max=limits.coordinate;update(input.id,values[i]);}
+    update('camera-projection',value.mode);update('camera-fov',value.fov*180/Math.PI);update('camera-size',value.orthoSize);
+    update('camera-azimuth',((camera.alpha*180/Math.PI)%360+540)%360-180);update('camera-elevation',90-camera.beta*180/Math.PI);update('camera-distance',camera.radius);
+    $('camera-size').max=limits.ortho;$('camera-distance').max=Math.sqrt(12)*limits.coordinate;
+    $('camera-fov-field').hidden=value.mode==='orthographic';$('camera-size-field').hidden=value.mode!=='orthographic';
+    $('camera-mode').setAttribute('aria-pressed',String(value.mode==='orthographic'));
+  }
+  function setNavigationTool(tool) {
+    cameraNavigation?.cancel();directManipulation?.cancel();
+    ui.navigation=ui.mode==='camera'&&tool==='edit'?'orbit':tool;
+    for(const name of ['edit','orbit','pan','zoom'])$('nav-'+name).setAttribute('aria-pressed',String(name===ui.navigation));
+    $('nav-edit').disabled=ui.mode==='camera';attachControl();
+  }
+  function cameraProjection(mode) {
+    const value=cameraState();if(value.mode===mode)return;
+    if(mode==='orthographic')value.orthoSize=Math.max(.01,Math.min(cameraLimits().ortho,2*camera.radius*Math.tan(camera.fov/2)));
+    else {const radius=value.orthoSize/(2*Math.tan(value.fov/2)),outward=camera.position.subtract(camera.target).normalize();value.position=camera.target.add(outward.scale(radius)).asArray();}
+    value.mode=mode;setCamera(validCamera(value));
+  }
+  function cameraEdit(apply,message='Camera updated.') {
+    cameraNavigation?.finish();stop();const before=snapshot();
+    try {apply();camera.getViewMatrix(true);validCamera(cameraState());if(JSON.stringify(before.camera)!==JSON.stringify(cameraState())){remember(before);changed(message);}}
+    catch(error){setCamera(before.camera);status(error.message);}
+    syncCameraEditor(true);
+  }
+  function bindCameraEditor() {
+    const number=(input,min,max)=>{const n=Number(input.value);if(input.value===''||!Number.isFinite(n)||n<min||n>max)throw new Error(`Use a value from ${min} to ${max}.`);return n;};
+    for(const name of ['edit','orbit','pan','zoom'])$('nav-'+name).onclick=()=>setNavigationTool(name);
+    $('camera-projection').onchange=()=>cameraEdit(()=>cameraProjection($('camera-projection').value),'Camera projection updated.');
+    for(const [kind,key] of [['pos','position'],['target','target']])for(const [i,axis] of ['x','y','z'].entries())$(`camera-${kind}-${axis}`).onchange=event=>cameraEdit(()=>{const value=cameraState();value[key][i]=number(event.target,-cameraLimits().coordinate,cameraLimits().coordinate);setCamera(validCamera(value));});
+    $('camera-fov').onchange=event=>cameraEdit(()=>{camera.fov=number(event.target,.05*180/Math.PI,3*180/Math.PI)*Math.PI/180;},'Camera field of view updated.');
+    $('camera-size').onchange=event=>cameraEdit(()=>{const half=number(event.target,.01,cameraLimits().ortho)/2;camera.orthoTop=half;camera.orthoBottom=-half;fitOrtho();},'Orthographic height updated.');
+    $('camera-azimuth').onchange=event=>cameraEdit(()=>{camera.alpha=number(event.target,-360,360)*Math.PI/180;});
+    $('camera-elevation').onchange=event=>cameraEdit(()=>{camera.beta=(90-number(event.target,-89,89))*Math.PI/180;});
+    $('camera-distance').onchange=event=>cameraEdit(()=>{const distance=number(event.target,.01,Math.sqrt(12)*cameraLimits().coordinate),value=cameraState();value.position=camera.target.add(camera.position.subtract(camera.target).normalize().scale(distance)).asArray();setCamera(validCamera(value));},'Camera distance updated.');
+    $('camera-frame-character').onclick=()=>cameraEdit(()=>{frameDirectorCharacter(scene,camera,$('room'));fitOrtho();},'Whole character framed.');
+    $('camera-frame-set').onclick=()=>cameraEdit(()=>frameSet(),'Set framed.');
+    $('camera-top').onclick=()=>cameraEdit(()=>{camera.beta=Math.PI/180;},'Top camera view.');
+  }
+  function cameraEditingHit(event) {
+    if(ui.navigation!=='edit'||ui.mode==='camera'||!ui.handles)return false;
+    const rect=$('room').getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
+    camera.getViewMatrix(true);scene.updateTransformMatrix();
+    if(B.UtilityLayerRenderer.DefaultUtilityLayer.utilityLayerScene?.pick(x,y)?.hit)return true;
+    if(scene.pick(x,y,mesh=>!!activeNodes()[mesh.metadata?.joint||mesh.metadata?.directorStageId])?.hit)return true;
+    const viewport=camera.viewport.toGlobal(rect.width,rect.height),radius=event.pointerType==='touch'?22:10;
+    return activeHandles().some(handle=>{if(!handle.isEnabled())return false;handle.computeWorldMatrix(true);const p=B.Vector3.Project(handle.getAbsolutePosition(),B.Matrix.Identity(),scene.getTransformMatrix(),viewport);return p.z>=0&&p.z<=1&&Math.hypot(p.x-x,p.y-y)<radius;});
+  }
+  function cancelEditForCamera(before) {
+    cameraTakingOver=true;
+    try {
+      directManipulation?.cancel();
+      kinematics?.endBody({cancelled:true});kinematics?.end({cancelled:true});
+      for(const control of Object.values(gizmo.gizmos))control?.releaseDrag?.();
+      gizmo.attachToNode(null);dragBefore=null;gizmoTargetStart=null;gizmoTargetMoved=false;
+      if(before){lighting.restore(before.lighting);stageDesign.restore(before.stage.design);applyPose(before.pose);lighting.sync();stageDesign.sync();syncSceneEditor();}
+    } finally {cameraTakingOver=false;}
   }
   function syncSceneEditor() {
     if (!lighting || !stageDesign) return;
@@ -546,7 +614,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
         apply({ ...(current() || window.DirectorOptics.defaults('glow')), [field]: value });
       }, 'Lens effect updated.');
     };
-    for (const mode of ['pose','lighting','stage','floorplan']) $('mode-' + mode).onclick = () => { setMode(mode); document.querySelector('.inspector').scrollTop = 0; };
+    for (const mode of ['pose','lighting','stage','camera','floorplan']) $('mode-' + mode).onclick = () => { setMode(mode); document.querySelector('.inspector').scrollTop = 0; };
     for (const tool of ['move','rotate','scale']) $('tool-' + tool).onclick = () => { directManipulation?.cancel(); ui.tool = tool; setMode(ui.mode); };
     edit('outline-enabled', input => { ui.outline.enabled = input.checked; applyAppearance(); }, 'Outline updated.');
     live('outline-tone', input => { ui.outline.tone = numeric(input,0,1); applyAppearance(); }, 'Outline color updated.');
@@ -742,7 +810,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     for (const direction of ['undo', 'redo']) $(direction).onclick = () => { finishCameraHistory(); const from = ui[direction], to = ui[direction === 'undo' ? 'redo' : 'undo']; if (!from.length) return; stop(); to.push(snapshot()); restore(from.pop()); changed(direction === 'undo' ? 'Undone.' : 'Redone.'); };
     for (const [id, alpha] of [['front', Math.PI / 2], ['side', 0], ['quarter', Math.PI / 2 - .35]]) $(id).onclick = () => { remember(); camera.alpha = alpha; camera.beta = Math.PI / 2 - .11; changed('Camera view updated.'); };
     $('frame-character').onclick = () => { stop(); remember(); if (ui.mode !== 'pose') { frameSet(); changed('Set controls framed. The scene is unchanged.'); } else if (frameDirectorCharacter(scene, camera, $('room'))) { fitOrtho(); changed('Whole character framed. Your pose is unchanged.'); } };
-    $('camera-mode').onclick = () => { remember(); camera.mode = camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA ? B.Camera.PERSPECTIVE_CAMERA : B.Camera.ORTHOGRAPHIC_CAMERA; fitOrtho(); $('camera-mode').setAttribute('aria-pressed', String(camera.mode === B.Camera.ORTHOGRAPHIC_CAMERA)); changed('Camera projection updated.'); };
+    $('camera-mode').onclick = () => cameraEdit(()=>cameraProjection(camera.mode===B.Camera.ORTHOGRAPHIC_CAMERA?'perspective':'orthographic'),'Camera projection updated.');
     $('save').onclick = async () => {
       stop(); $('save').disabled = true; const take = snapshot(), serialized = JSON.stringify(take); if (savePayload !== serialized) saveRequest = null; savePayload = serialized; saveRequest ||= crypto.randomUUID();
       try {
@@ -765,15 +833,6 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     };
     $('refresh-takes').onclick = refreshTakes;
     document.addEventListener('keydown', e => { if (ui.mode === 'floorplan' || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); $(e.shiftKey ? 'redo' : 'undo').click(); } if (e.code === 'Space') { e.preventDefault(); $('play').click(); } });
-    $('room').addEventListener('pointerdown', () => { if (ui.ready) { finishCameraHistory(); stop(); camera.getViewMatrix(true); cameraBefore = snapshot(); } });
-    $('room').addEventListener('pointerup', () => { finishCameraHistory(); if (ui.ready && !Object.values(gizmo.gizmos).some(item => item?.isDragging)) changed('Camera and pose updated.'); });
-    $('room').addEventListener('pointercancel', finishCameraHistory);
-    $('room').addEventListener('wheel', () => {
-      if (!ui.ready) return;
-      if (!cameraBefore) { stop(); camera.getViewMatrix(true); cameraBefore = snapshot(); }
-      clearTimeout(cameraWheelTimer);
-      cameraWheelTimer = setTimeout(() => { finishCameraHistory(); changed('Camera zoom updated.'); }, 180);
-    }, {passive:true});
     window.addEventListener('beforeunload', event => { if (ui.ready && ui.dirty && (ui.keys.length || ui.draftWriteFailed)) { event.preventDefault(); event.returnValue = ''; } });
   }
   async function start() {
@@ -796,7 +855,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     engine.setHardwareScalingLevel(1 / Math.min(devicePixelRatio || 1, 2));
     scene = new B.Scene(engine); scene.useRightHandedSystem = true;
     camera = new B.ArcRotateCamera('Director camera', Math.PI / 2 - .35, Math.PI / 2 - .11, 2.1, new B.Vector3(0, .56, 0), scene);
-    camera.attachControl($('room'), true); camera.inertia = 0; camera.lowerRadiusLimit = .4; camera.upperRadiusLimit = 400; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
+    camera.inertia = 0; camera.lowerRadiusLimit = .0011; camera.upperRadiusLimit = 400; camera.wheelDeltaPercentage = .025; camera.panningSensibility = 900; camera.minZ = .01; camera.fov = .62; camera.orthoTop = .74; camera.orthoBottom = -.74;
     floor = B.MeshBuilder.CreateGround('White room floor', { width: 200, height: 200 }, scene); floor.position.y = 0; floor.isPickable = false; floor.receiveShadows = true;
     const floorMat = new B.StandardMaterial('White plaster', scene); floorMat.diffuseColor = new B.Color3(.95, .955, .94); floorMat.specularColor = B.Color3.Black(); floor.material = floorMat;
     const result = await B.SceneLoader.ImportMeshAsync('', '/director/assets/', manifest.file, scene);
@@ -818,16 +877,16 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     gizmo.positionGizmoEnabled = true; gizmo.rotationGizmoEnabled = true; gizmo.scaleGizmoEnabled = true;
     for (const control of [gizmo.gizmos.positionGizmo, gizmo.gizmos.rotationGizmo, gizmo.gizmos.scaleGizmo]) {
       control.scaleRatio = .65;
-      control.onDragStartObservable.add(() => { stop(); dragBefore = snapshot(); gizmoTargetStart = null; gizmoTargetMoved = false; if (isPoseTarget()) { gizmoTargetStart = activeNodes()[activeSelected()].position.clone(); kinematics.begin(activeSelected()); } else if (isHipControl()) kinematics.beginBody('torso.lower'); });
+      control.onDragStartObservable.add(() => { if(cameraTakingOver)return;stop(); dragBefore = snapshot(); gizmoTargetStart = null; gizmoTargetMoved = false; if (isPoseTarget()) { gizmoTargetStart = activeNodes()[activeSelected()].position.clone(); kinematics.begin(activeSelected()); } else if (isHipControl()) kinematics.beginBody('torso.lower'); });
       const liveDrag = () => {
-        constrainActive();
+        if(cameraTakingOver)return;constrainActive();
         if (isPoseTarget() && gizmoTargetStart && (gizmoTargetMoved || B.Vector3.DistanceSquared(activeNodes()[activeSelected()].position,gizmoTargetStart) > 1e-14)) { kinematics.solve(activeSelected()); gizmoTargetMoved = true; }
         else if (isHipControl()) kinematics.solveBody();
         syncActive();
       };
       if (control.onDragObservable) control.onDragObservable.add(liveDrag);
       else for (const axis of ['xGizmo','yGizmo','zGizmo','xPlaneGizmo','yPlaneGizmo','zPlaneGizmo','uniformScaleGizmo']) control[axis]?.dragBehavior?.onDragObservable.add(liveDrag);
-      control.onDragEndObservable.add(() => { const bounded = constrainActive();
+      control.onDragEndObservable.add(() => { if(cameraTakingOver){dragBefore=null;return;}const bounded = constrainActive();
         if (isPoseTarget()) { if (gizmoTargetStart && (gizmoTargetMoved || B.Vector3.DistanceSquared(activeNodes()[activeSelected()].position,gizmoTargetStart) > 1e-14)) kinematics.solve(activeSelected()); kinematics.end(); } else if (isHipControl()) kinematics.endBody();
         gizmoTargetStart = null; gizmoTargetMoved = false;
         if (dragBefore) remember(dragBefore); dragBefore = null; syncActive(); changed(bounded ? 'Placement kept within the editable range.' : 'Placement updated.');
@@ -838,6 +897,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
       const material = new B.StandardMaterial('Control ' + name, scene); material.disableLighting = true; material.emissiveColor = name.endsWith('.L') ? B.Color3.FromHexString('#709bc2') : name.endsWith('.R') ? B.Color3.FromHexString('#8bb99c') : B.Color3.FromHexString('#c4a06f'); handle.material = material; handles.push(handle);
     }
     scene.onPointerObservable.add(info => {
+      if(ui.navigation!=='edit'||ui.mode==='camera'||cameraNavigation?.active)return;
       if (info.type === B.PointerEventTypes.POINTERPICK) { const meta = info.pickInfo?.pickedMesh?.metadata; const id = meta?.joint || meta?.directorStageId; if (id) selectControl(id); }
       if (info.type !== B.PointerEventTypes.POINTERTAP || info.event.pointerType !== 'touch' || !ui.handles) return;
       // A fingertip needs a stable screen-sized target, even when the joint dot
@@ -861,9 +921,16 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
     }
     let directBefore = null;
     if (!window.DirectorDirectManipulation) throw new Error('Direct joint controls did not load. Reload to try again.');
+    if (!window.DirectorCameraNavigation) throw new Error('Camera navigation did not load. Reload to try again.');
+    cameraNavigation = window.DirectorCameraNavigation.install({canvas:$('room'),camera,fitOrtho,limits:cameraLimits,
+      isEnabled:()=>ui.ready&&ui.mode!=='floorplan',getTool:()=>ui.navigation,isEditingHit:cameraEditingHit,
+      captureEdit:()=>snapshot(),onTakeover:cancelEditForCamera,
+      onBegin(){stop();return snapshot();},onChange:syncCameraEditor,
+      onEnd(before,cancelled){if(cancelled){setCamera(before.camera);status('Camera gesture cancelled.');}else if(JSON.stringify(before.camera)!==JSON.stringify(cameraState())){pushHistory(before);changed('Camera view updated.');}syncCameraEditor();attachControl();}
+    });
     directManipulation = window.DirectorDirectManipulation.install({
       canvas: $('room'), scene, camera, getHandles: movableHandles, getNodes: activeNodes,
-      isEnabled: () => ui.ready && ui.handles,
+      isEnabled: () => ui.ready && ui.handles && ui.navigation === 'edit' && !['camera','floorplan'].includes(ui.mode) && !cameraNavigation?.active,
       onSelect: selectControl,
       onPending: ({name}) => { $('hint').textContent = `Hold ${controlLabel(name)} to reposition`; },
       onStart: ({name}) => { stop(); directBefore = snapshot(); if (isPoseTarget()) kinematics.begin(name); else if (isHipControl()) kinematics.beginBody('torso.lower'); gizmo.attachToNode(null); $('hint').textContent = `Drag ${controlLabel(name)} · release to place`; },
@@ -871,7 +938,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
       onEnd: ({started,moved,cancelled}) => {
         if (started && isPoseTarget()) kinematics.end({cancelled}); else if (started && isHipControl()) kinematics.endBody({cancelled});
         syncActive(); attachControl();
-        if (started && moved && !cancelled && directBefore) { remember(directBefore); changed(ui.mode === 'pose' ? 'Joint repositioned. Key this pose to put it in the motion.' : 'Set control repositioned.'); }
+        if (!cameraTakingOver && started && moved && !cancelled && directBefore) { remember(directBefore); changed(ui.mode === 'pose' ? 'Joint repositioned. Key this pose to put it in the motion.' : 'Set control repositioned.'); }
         else if (cancelled) status('Repositioning cancelled. The joint is back where it started.');
         directBefore = null;
         attachControl();
@@ -887,7 +954,7 @@ function frameDirectorCharacter(scene, camera, canvas, samplePoses = []) {
       onUndo: () => $('undo').click(), onRedo: () => $('redo').click(),
       onPreview() { stop(); const before = snapshot(); setMode('stage'); camera.beta = Math.PI / 3; frameSet(); remember(before); changed('Active level shown in 3D. Return to Floor plan to edit rooms or select another level.'); },
     });
-    applyPose(neutralPose); setLook('ouch'); setBackground('white'); setOutput(ui.output); fitOrtho(); selectJoint('upper_arm.L'); bind(); bindSceneEditor(); ui.ready = true; setMode('pose'); syncTimeline(); buttons();
+    applyPose(neutralPose); setLook('ouch'); setBackground('white'); setOutput(ui.output); fitOrtho(); selectJoint('upper_arm.L'); bind(); bindSceneEditor(); bindCameraEditor(); ui.ready = true; setMode('pose'); syncTimeline(); buttons();
     $('loading').hidden = true; status('Ouch is ready. Pick a gesture or move a joint.');
     engine.runRenderLoop(() => { if (ui.mode === 'floorplan') return; if (ui.playing) { const elapsed = playFrame - ui.start + Math.floor((performance.now() - playStart) / 1000 * ui.fps); const count = ui.end - ui.start + 1; const frame = ui.animation.loop ? ui.start + (elapsed % count) : Math.min(ui.end, ui.start + elapsed); if (frame !== ui.frame) scrub(frame, true); if (!ui.animation.loop && elapsed >= count) { stop(); syncJoint(); syncPreset(pose()); } } appearance.setLightTime(colorClock.seconds()); scene.render(); });
     window.addEventListener('resize', resizeStage); new ResizeObserver(resizeStage).observe(document.querySelector('.stage'));

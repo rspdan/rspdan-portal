@@ -1,0 +1,28 @@
+{
+  "source_before": {
+    "director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "camera-navigation.js": "108fb25f8d0a5711d2ce8089adbb06ff66f1d8cbbf34ed5757a2760a1dc17254"
+  },
+  "top": {
+    "elevation": 89,
+    "valid": true,
+    "beta": 0.017453292519943295
+  },
+  "distances": [
+    {
+      "requested": 0.1,
+      "actual_after_render": 0.10000000000000005
+    },
+    {
+      "requested": 0.01,
+      "actual_after_render": 0.009999999999999948
+    }
+  ],
+  "errors": [],
+  "source_after": {
+    "director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "camera-navigation.js": "108fb25f8d0a5711d2ce8089adbb06ff66f1d8cbbf34ed5757a2760a1dc17254"
+  },
+  "source_stable": true,
+  "pass": true
+}

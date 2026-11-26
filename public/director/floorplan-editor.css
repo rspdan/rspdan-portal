@@ -7,3 +7,6 @@
 .fp-scale-level:after{content:' · '}.fp-scale-grid{white-space:nowrap}@media(max-width:680px){.fp-scale-level{display:none}}
 /* Comparison is a view of the existing plan, inside the same scroll boundary. */
 .fp-connection-host{grid-row:3;grid-column:1;min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;background:#edf2ee}.fp-connection-host[hidden]{display:none}.fp-connection-navigation{position:sticky;top:0;z-index:1;padding:10px 18px;background:#edf2eef5;border-bottom:1px solid #c7d4cb}.fp-connection-navigation button{min-height:40px;padding:7px 12px;background:#e0f1e5;color:#235f3d;border:1px solid #93bca2;border-radius:5px;font-size:12px;touch-action:manipulation}.fp-connection-navigation button:focus-visible{outline:3px solid #24885f;outline-offset:2px}.fp-overview-link>.fp-overview-edit{margin-top:8px}
+
+/* Navigation tools override object cursors while preserving inspector scrolling. */
+.fp-surface[data-tool=zoom],.fp-surface[data-tool=zoom] .fp-svg [data-kind]{cursor:zoom-in}.fp-surface[data-tool=zoom]:active,.fp-surface[data-tool=zoom]:active .fp-svg [data-kind]{cursor:ns-resize}.fp-surface[data-tool=pan] .fp-svg [data-kind]{cursor:grab}.fp-surface[data-tool=pan]:active .fp-svg [data-kind]{cursor:grabbing}

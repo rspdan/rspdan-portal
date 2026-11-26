@@ -3,6 +3,7 @@ export const prerender = false;
 import { verifySession } from '../../lib/pspt.js';
 const session = import.meta.env.PSPT_SECRET ? verifySession(Astro.request.headers.get('cookie')) : null;
 if (!session) return Astro.redirect('/pspt?next=/director');
+const studyEnabled = import.meta.env.DEV && Boolean(import.meta.env.DIRECTOR_STUDY_STORE_DIR || process.env.DIRECTOR_STUDY_STORE_DIR);
 ---
 <!doctype html>
 <html lang="en">
@@ -15,10 +16,13 @@ if (!session) return Astro.redirect('/pspt?next=/director');
     <link rel="stylesheet" href="/director/floorplan-editor.css" />
     <link rel="stylesheet" href="/director/floorplan-overview.css" />
     <link rel="stylesheet" href="/director/floorplan-connection-view.css" />
+    {studyEnabled && <link rel="stylesheet" href="/director/production-study.css" />}
+    {studyEnabled && <script is:inline src="/director/production-study.js" defer></script>}
     <script is:inline src="/director/vendor/babylon.js" defer></script>
     <script is:inline src="/director/vendor/babylonjs.loaders.min.js" defer></script>
     <script is:inline src="/director/animation.js" defer></script>
     <script is:inline src="/director/direct-manipulation.js" defer></script>
+    <script is:inline src="/director/camera-navigation.js" defer></script>
     <script is:inline src="/director/kinematics.js" defer></script>
     <script is:inline src="/director/optics.js" defer></script>
     <script is:inline src="/director/light-color.js" defer></script>
@@ -48,16 +52,29 @@ if (!session) return Astro.redirect('/pspt?next=/director');
               <button id="frame-character" title="Fit the whole character in view">Frame</button>
             </div>
           </div>
-          <nav class="mode-switcher" aria-label="Director mode"><button id="mode-pose" aria-pressed="true">Pose</button><button id="mode-lighting" aria-pressed="false">Lighting</button><button id="mode-stage" aria-pressed="false">Stage</button><button id="mode-floorplan" aria-pressed="false">Floor plan</button></nav>
-          <div class="stage-bottom"><span id="hint">Loading Ouch…</span><button id="handles" aria-pressed="true" disabled>Joint controls on</button></div>
+          <nav class="mode-switcher" aria-label="Director mode"><button id="mode-pose" aria-pressed="true">Pose</button><button id="mode-lighting" aria-pressed="false">Lighting</button><button id="mode-stage" aria-pressed="false">Stage</button><button id="mode-camera" aria-pressed="false">Camera</button><button id="mode-floorplan" aria-pressed="false">Floor plan</button></nav>
+          <div class="stage-bottom"><span id="hint">Loading Ouch…</span><div class="stage-navigation-controls"><nav class="camera-navigation" aria-label="View navigation"><button id="nav-edit" aria-pressed="true" title="Edit objects; drag empty space to orbit">Edit</button><button id="nav-orbit" aria-pressed="false" title="Drag to orbit">Orbit</button><button id="nav-pan" aria-pressed="false" title="Drag to pan">Pan</button><button id="nav-zoom" aria-pressed="false" title="Drag up to zoom in, down to zoom out">Zoom</button></nav><button id="handles" aria-pressed="true" disabled>Joint controls on</button></div></div>
           <div id="loading" class="loading" role="status"><span class="loading-mark">○</span><p>Opening the acting room</p></div>
         </section>
         <aside class="inspector" aria-label="Director controls">
-          <section class="panel tools-panel" data-modes="pose lighting stage">
+          <section class="panel tools-panel" data-modes="pose lighting stage camera">
             <div class="section-title"><h2 id="mode-title">Pose Mode</h2><span>DIRECT</span></div>
-            <div class="segmented transform-tools" aria-label="Manipulation tool"><button id="tool-move" aria-pressed="false">Move</button><button id="tool-rotate" aria-pressed="true" class="active">Rotate</button><button id="tool-scale" aria-pressed="false">Scale</button></div>
+            <div class="segmented transform-tools" data-modes="pose lighting stage" aria-label="Manipulation tool"><button id="tool-move" aria-pressed="false">Move</button><button id="tool-rotate" aria-pressed="true" class="active">Rotate</button><button id="tool-scale" aria-pressed="false">Scale</button></div>
             <div class="button-row"><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div>
             <p id="history-count" class="small" aria-live="polite" title="Up to 60 edit steps in this session. Saved takes can be reopened separately.">0 back · 0 forward</p>
+          </section>
+          <section class="panel camera-panel" data-modes="camera" hidden>
+            <div class="section-title"><h2>Camera</h2><span>VIEW</span></div>
+            <p class="small">Orbit, pan or zoom with a drag. Pinch to zoom and move two fingers to pan in any 3D mode.</p>
+            <label>Projection<select id="camera-projection"><option value="perspective">Perspective</option><option value="orthographic">Orthographic</option></select></label>
+            <label id="camera-fov-field">Field of view °<input id="camera-fov" type="number" min="2.864789" max="171.887339" step="1" value="35.52" /></label>
+            <label id="camera-size-field" hidden>Orthographic height<input id="camera-size" type="number" min=".01" max="1000" step=".1" value="1.48" /></label>
+            <div class="transform-fields"><span>Position · Y is up</span><label>X<input id="camera-pos-x" type="number" min="-1000" max="1000" step=".05" /></label><label>Y<input id="camera-pos-y" type="number" min="-1000" max="1000" step=".05" /></label><label>Z<input id="camera-pos-z" type="number" min="-1000" max="1000" step=".05" /></label></div>
+            <div class="transform-fields"><span>Look at</span><label>X<input id="camera-target-x" type="number" min="-1000" max="1000" step=".05" /></label><label>Y<input id="camera-target-y" type="number" min="-1000" max="1000" step=".05" /></label><label>Z<input id="camera-target-z" type="number" min="-1000" max="1000" step=".05" /></label></div>
+            <div class="paired-fields"><label>Orbit angle °<input id="camera-azimuth" type="number" min="-360" max="360" step="1" /></label><label>Elevation °<input id="camera-elevation" type="number" min="-89" max="89" step="1" /></label></div>
+            <label>Distance to target<input id="camera-distance" type="number" min=".01" max="1000" step=".05" /></label>
+            <div class="button-row"><button id="camera-frame-character">Frame character</button><button id="camera-frame-set">Frame set</button><button id="camera-top">Top</button></div>
+            <p class="small">Middle drag: orbit. Shift + middle drag: pan. Ctrl + middle drag: zoom. Camera changes use Undo and are saved with the take.</p>
           </section>
           <section id="floorplan-inspector-host" class="panel floorplan-panel" data-modes="floorplan" hidden></section>
           <section class="panel character-panel" data-modes="pose lighting stage">
@@ -181,7 +198,7 @@ if (!session) return Astro.redirect('/pspt?next=/director');
             <div class="transform-fields" data-modes="stage"><span>Scale</span><label>X<input id="scene-scale-x" type="number" min=".01" max="100" step=".05" /></label><label>Y<input id="scene-scale-y" type="number" min=".01" max="100" step=".05" /></label><label>Z<input id="scene-scale-z" type="number" min=".01" max="100" step=".05" /></label></div>
             <p class="small">Select a marker, then hold and drag to move it. Use the gizmo to move, rotate or scale. Frame brings the set controls into view.</p>
           </section>
-          <section class="panel frame-panel" data-modes="pose lighting stage">
+          <section class="panel frame-panel" data-modes="pose lighting stage camera">
             <div class="section-title"><h2>Camera & frame</h2><span>03</span></div>
             <label>Background<select id="background"><option value="white">Room / backdrop</option><option value="green">Green screen</option><option value="transparent">Transparent</option></select></label>
             <label>Frame size<select id="frame-size"><option value="720x720">Square · 720 × 720</option><option value="1280x720">Landscape · 1280 × 720</option><option value="1920x1080">Full HD · 1920 × 1080</option><option value="720x1280">Portrait · 720 × 1280</option><option value="1080x1920">Portrait HD · 1080 × 1920</option><option value="custom">Custom size</option></select></label>
@@ -211,6 +228,11 @@ if (!session) return Astro.redirect('/pspt?next=/director');
             <div class="section-title"><h2>Saved takes</h2><button id="refresh-takes" class="text-button">Refresh</button></div>
             <div id="saved-takes"><p class="small">Your takes will appear here.</p></div>
           </section>
+          {studyEnabled && <section class="panel production-study-entry">
+            <div class="section-title"><h2>MTR0 · Production study</h2><span>LOCAL</span></div>
+            <button id="open-production-study" type="button">Open study</button>
+            <p class="small">Keep sources, cards and corrections together. Independent of the current take.</p>
+          </section>}
         </aside>
       </div>
       <section class="timeline" aria-label="Animation timeline">
@@ -220,5 +242,6 @@ if (!session) return Astro.redirect('/pspt?next=/director');
       </section>
       <footer><span id="status" role="status" aria-live="polite">Preparing the model.</span><span id="storage-label">BROWSER DRAFT</span></footer>
     </main>
+    {studyEnabled && <div id="production-study-host"></div>}
   </body>
 </html>

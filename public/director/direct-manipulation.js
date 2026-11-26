@@ -116,7 +116,7 @@
     function up(event) { if (press && event.pointerId === press.id) { own(event); finish(false); } }
     function cancel(event) { if (press && (!event || event.pointerId === press.id)) { if (event) own(event); finish(true); } }
     listen(canvas, 'pointerdown', down);
-    listen(window, 'pointerdown', event => { if (press && event.pointerId !== press.id && (event.target === canvas || canvas.contains(event.target))) own(event); });
+    listen(window, 'pointerdown', event => { if (press && event.pointerId !== press.id && (event.target === canvas || canvas.contains(event.target))) finish(true); });
     listen(window, 'pointermove', move);
     listen(window, 'pointerup', up);
     listen(window, 'pointercancel', cancel);

@@ -23,6 +23,8 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   let toolbarDrag = null, suppressedClick = null, polygonClick = null;
   let editorView = 'plan', inspectorTab = 'selected', lastSelectionKey = '', committing = false;
   let comparisonId = null;
+  const touchPointers = new Map();
+  let navigation = null, touchSelection;
   const instanceId = id('floorplan-editor');
   const cleanups = [];
   const listen = (node, event, fn, options) => { node.addEventListener(event, fn, options); cleanups.push(() => node.removeEventListener(event, fn, options)); };
@@ -55,10 +57,11 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
         <button type="button" data-tool="stairs" aria-pressed="false">Stairs</button>
         <button type="button" data-tool="elevator" aria-pressed="false">Elevator</button>
         <button type="button" data-tool="pan" aria-pressed="false">Pan</button>
+        <button type="button" data-tool="zoom" aria-pressed="false" title="Drag up to zoom in, down to zoom out">Zoom</button>
         <button type="button" data-action="preview" class="fp-preview">Preview in 3D</button>
       </div>
     </div>
-    <div class="fp-surface" tabindex="0" role="application" aria-label="Overhead floor plan. Select an item in the inspector, then use arrow keys here to move it. With nothing selected, arrow keys pan. Plus and minus zoom; zero fits the plan.">
+    <div class="fp-surface" tabindex="0" role="application" aria-label="Overhead floor plan. Select an item in the inspector, then use arrow keys here to move it. With nothing selected, arrow keys pan. Pinch with two fingers to zoom and pan. Zoom tool: drag up to zoom in, down to zoom out. Plus and minus zoom; zero fits the plan.">
       <svg class="fp-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Editable floor plan"><title>Overhead floor plan</title></svg>
       <div class="fp-empty"><strong>Start with a room</strong><span>Drag with Draw room, or enter dimensions in the inspector.</span></div>
       <div class="fp-view-controls" role="toolbar" aria-label="Plan view controls">
@@ -175,13 +178,80 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     const { width, height, rect } = size();
     return [view.x + (event.clientX - rect.left - width / 2) / view.zoom, view.z + (event.clientY - rect.top - height / 2) / view.zoom];
   }
-  function resetGesture() {
+  function releasePointer(pointerId) {
+    try { if (svg.hasPointerCapture(pointerId)) svg.releasePointerCapture(pointerId); } catch {}
+  }
+  function resetGesture({ keepPointers = false } = {}) {
     clearToolbarDrag();
     const pointerId = drag?.pointerId;
     draft = null; drag = null; polygon = []; hover = null; polygonClick = null;
-    if (pointerId !== undefined && svg.hasPointerCapture(pointerId)) svg.releasePointerCapture(pointerId);
+    if (!keepPointers) {
+      const ids = [...touchPointers.keys()]; touchPointers.clear(); navigation = null; touchSelection = undefined;
+      for (const id of ids) releasePointer(id);
+      if (pointerId !== undefined) releasePointer(pointerId);
+    }
     renderPlan();
   }
+  function zoomAt(zoom, client, anchor = world({ clientX: client[0], clientY: client[1] })) {
+    const { width, height, rect } = size();
+    view.zoom = clamp(zoom, 6, 240);
+    view.x = anchor[0] - (client[0] - rect.left - width / 2) / view.zoom;
+    view.z = anchor[1] - (client[1] - rect.top - height / 2) / view.zoom;
+  }
+  function pinchPair() { return [...touchPointers.values()].slice(0, 2); }
+  function startPinch() {
+    const savedSelection = touchSelection === undefined ? clone(selection) : touchSelection;
+    resetGesture({ keepPointers: true }); selection = clone(savedSelection);
+    const [a, b] = pinchPair(), middle = [(a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2];
+    navigation = { kind: 'pinch', zoom: view.zoom, distance: Math.max(1, Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY)), anchor: world({ clientX: middle[0], clientY: middle[1] }) };
+    for (const id of touchPointers.keys()) try { svg.setPointerCapture(id); } catch {}
+    surface.focus({ preventScroll: true }); renderAll();
+    say('Two fingers · pinch to zoom and move together to pan.');
+  }
+  function ownNavigation(event) { event.preventDefault(); event.stopImmediatePropagation(); }
+  function endTouch(event, cancelled = false) {
+    if (!touchPointers.has(event.pointerId)) return;
+    const wasNavigating = Boolean(navigation);
+    touchPointers.delete(event.pointerId);
+    if (wasNavigating) {
+      releasePointer(event.pointerId);
+      if (!cancelled && touchPointers.size >= 2) startPinch();
+      else if (touchPointers.size) navigation = { kind: 'drain' };
+      else { navigation = null; touchSelection = undefined; say('Plan view updated. The plan itself is unchanged.'); }
+      ownNavigation(event); return;
+    }
+    if (cancelled) {
+      if (touchSelection !== undefined) selection = clone(touchSelection);
+      resetGesture(); renderAll(); ownNavigation(event);
+    } else if (!touchPointers.size) touchSelection = undefined;
+  }
+  // Capture a second touch before any drawing/placement handler can consume it.
+  // Track only touches starting on the plan or a placeable toolbar item; scrolling
+  // the inspector and other page controls remains the browser's responsibility.
+  listen(window, 'pointerdown', event => {
+    if (!active || editorView !== 'plan' || event.pointerType !== 'touch') return;
+    const inPlan = event.target === svg || svg.contains(event.target);
+    const placeable = event.target instanceof Element && event.target.closest('.fp-toolbar button[data-placeable]');
+    if (!inPlan && !(placeable && toolbar.contains(placeable))) return;
+    if (!touchPointers.size) touchSelection = clone(selection);
+    touchPointers.set(event.pointerId, { clientX: event.clientX, clientY: event.clientY });
+    if (touchPointers.size >= 2) { startPinch(); ownNavigation(event); }
+    else if (navigation) ownNavigation(event);
+  }, { capture: true, passive: false });
+  listen(window, 'pointermove', event => {
+    if (!touchPointers.has(event.pointerId)) return;
+    touchPointers.set(event.pointerId, { clientX: event.clientX, clientY: event.clientY });
+    if (!navigation) return;
+    ownNavigation(event);
+    if (navigation.kind !== 'pinch' || touchPointers.size < 2) return;
+    const [a, b] = pinchPair(), middle = [(a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2];
+    zoomAt(navigation.zoom * Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) / navigation.distance, middle, navigation.anchor);
+    renderPlan();
+  }, { capture: true, passive: false });
+  listen(window, 'pointerup', event => endTouch(event), { capture: true, passive: false });
+  listen(window, 'pointercancel', event => endTouch(event, true), { capture: true, passive: false });
+  listen(window, 'blur', () => { if (touchSelection !== undefined) selection = clone(touchSelection); resetGesture(); renderAll(); });
+  listen(document, 'visibilitychange', () => { if (document.hidden) { if (touchSelection !== undefined) selection = clone(touchSelection); resetGesture(); renderAll(); } });
   function setInspectorTab(name, focus = false, scroll = false) {
     if (!['selected', 'level', 'plan'].includes(name)) return;
     inspectorTab = name; inspectorHost.dataset.tab = name;
@@ -248,7 +318,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
     resetGesture(); tool = next;
     for (const button of canvasHost.querySelectorAll('button[data-tool]')) button.setAttribute('aria-pressed', String(button.dataset.tool === tool));
     surface.dataset.tool = tool;
-    const messages = { select: 'Select a room, opening or connection. Drag a corner to reshape a room.', rectangle: 'Drag from one corner to the opposite corner to draw a room.', polygon: 'Tap each corner, then the first corner to finish. Enter also finishes; Escape cancels.', door: 'Drag Door to a wall, or tap a wall to place it.', window: 'Drag Window to a wall, or tap a wall to place it.', passage: 'Drag Passage to a wall, or tap a wall to place it.', stairs: 'Drag Stairs onto the plan, or tap to place it. Choose its destination in the inspector.', elevator: 'Drag Elevator onto the plan, or tap to place it. Choose its destination in the inspector.', pan: 'Drag the plan to pan. Use + and − or the mouse wheel to zoom.' };
+    const messages = { select: 'Select a room, opening or connection. Drag a corner to reshape a room.', rectangle: 'Drag from one corner to the opposite corner to draw a room.', polygon: 'Tap each corner, then the first corner to finish. Enter also finishes; Escape cancels.', door: 'Drag Door to a wall, or tap a wall to place it.', window: 'Drag Window to a wall, or tap a wall to place it.', passage: 'Drag Passage to a wall, or tap a wall to place it.', stairs: 'Drag Stairs onto the plan, or tap to place it. Choose its destination in the inspector.', elevator: 'Drag Elevator onto the plan, or tap to place it. Choose its destination in the inspector.', pan: 'Drag the plan to pan. Pinch with two fingers to zoom and pan.', zoom: 'Drag up to zoom in, down to zoom out. Pinch with two fingers in any drawing tool.' };
     const requirement = connectionRequirement(tool);
     say(requirement?.message || messages[tool], requirement?.addLevel);
   }
@@ -558,7 +628,7 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   listen(toolbar, 'pointerdown', event => {
     const button = event.target.closest('button[data-placeable]');
     if (!active || editorView !== 'plan' || !button || event.button !== 0 || event.isPrimary === false || drag || toolbarDrag) return;
-    resetGesture(); suppressedClick = null; button.focus({ preventScroll: true }); event.preventDefault();
+    resetGesture({ keepPointers: event.pointerType === 'touch' }); suppressedClick = null; button.focus({ preventScroll: true }); event.preventDefault();
     toolbarDrag = { button, type: button.dataset.tool, pointerId: event.pointerId, itemId: id('placement'), start: [event.clientX, event.clientY], started: false, candidate: null };
     button.setPointerCapture(event.pointerId);
     const requirement = connectionRequirement(button.dataset.tool);
@@ -590,20 +660,20 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   });
 
   listen(svg, 'pointerdown', event => {
-    if (!active || editorView !== 'plan' || event.button > 1 || drag || toolbarDrag || event.isPrimary === false) return;
+    if (!active || editorView !== 'plan' || event.button > 1 || drag || toolbarDrag || navigation || event.isPrimary === false) return;
     const point = world(event), target = event.target.closest('[data-kind]');
     surface.focus({ preventScroll: true });
-    if (event.button === 1 || tool === 'pan' || event.altKey) { drag = { kind: 'pan', client: [event.clientX, event.clientY], view: { ...view } }; }
+    if (tool === 'zoom' || event.button === 1 && (event.ctrlKey || event.metaKey)) { drag = { kind: 'zoom', client: [event.clientX, event.clientY], view: { ...view }, anchor: point }; }
+    else if (event.button === 1 || tool === 'pan' || event.altKey) { drag = { kind: 'pan', client: [event.clientX, event.clientY], view: { ...view } }; }
     else if (tool === 'rectangle') { drag = { kind: 'rectangle', start: snapped(point) }; hover = snapped(point); }
     else if (tool === 'polygon') {
       const next = snapped(point);
       polygonClick = { point: next, repeat: Boolean(polygonClick && distance(next, polygonClick.point) < .001), pointerType: event.pointerType };
-      if (polygon.length >= 3 && distance(next, polygon[0]) < (snap ? .001 : 6 / view.zoom)) { finishPolygon(); return; }
-      if (!polygon.length || distance(next, polygon.at(-1)) > .001) polygon.push(next);
-      hover = next; renderPlan(); return;
-    } else if (['door', 'window', 'passage'].includes(tool)) { addOpening(point); return; }
-    else if (['stairs', 'elevator'].includes(tool)) { addConnector(point); return; }
-    else if (target?.dataset.kind === 'vertex') {
+      drag = { kind: 'polygon-tap', start: next, client: [event.clientX, event.clientY], tap: polygonClick }; hover = next;
+    } else if (placementTools.has(tool)) {
+      // Commit tap placement on release, so another finger can safely turn it into navigation.
+      drag = { kind: 'placement', type: tool, start: point, client: [event.clientX, event.clientY] };
+    } else if (target?.dataset.kind === 'vertex') {
       selection = { kind: 'room', id: target.dataset.room };
       drag = { kind: 'vertex', roomId: target.dataset.room, index: Number(target.dataset.index), before: clone(plan), start: point };
     } else if (target?.dataset.kind === 'opening') {
@@ -617,14 +687,21 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       drag = { kind: 'room', before: clone(plan), start: point };
     } else { selection = null; drag = { kind: 'pan', client: [event.clientX, event.clientY], view: { ...view } }; }
     drag.pointerId = event.pointerId;
-    svg.setPointerCapture(event.pointerId); event.preventDefault(); renderAll();
+    svg.setPointerCapture(event.pointerId);
+    // Mouse polygon completion uses the native click count in the mousedown
+    // fallback below. Cancelling this pointerdown would suppress that event.
+    if (drag.kind !== 'polygon-tap' || event.pointerType !== 'mouse') event.preventDefault();
+    renderAll();
   });
   listen(svg, 'pointermove', event => {
-    if (!active) return;
+    if (!active || navigation) return;
     const point = world(event);
     if (!drag) { if (polygon.length) { hover = snapped(point); renderPlan(); } return; }
-    if (drag.kind === 'pan') { view.x = drag.view.x - (event.clientX - drag.client[0]) / view.zoom; view.z = drag.view.z - (event.clientY - drag.client[1]) / view.zoom; }
-    else if (drag.kind === 'rectangle') hover = snapped(point);
+    if (drag.pointerId !== event.pointerId) return;
+    if (drag.kind === 'zoom') zoomAt(drag.view.zoom * Math.exp((drag.client[1] - event.clientY) * .01), drag.client, drag.anchor);
+    else if (drag.kind === 'pan') { view.x = drag.view.x - (event.clientX - drag.client[0]) / drag.view.zoom; view.z = drag.view.z - (event.clientY - drag.client[1]) / drag.view.zoom; }
+    else if (drag.kind === 'rectangle' || drag.kind === 'polygon-tap') hover = snapped(point);
+    else if (drag.kind === 'placement') { /* Tap placement remains uncommitted until release. */ }
     else {
       draft = clone(drag.before);
       if (drag.kind === 'vertex') draft.rooms.find(r => r.id === drag.roomId).points[drag.index] = snapped(point);
@@ -637,21 +714,35 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
         o.at = clamp(along / len, o.width / (2 * len), 1 - o.width / (2 * len));
       }
     }
-    renderPlan();
+    event.preventDefault(); renderPlan();
   });
   listen(svg, 'pointerup', event => {
-    if (!drag) return;
+    if (!drag || navigation || drag.pointerId !== event.pointerId) return;
     const completed = drag, next = draft; drag = null;
-    if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId);
-    if (completed.kind === 'rectangle') {
+    releasePointer(event.pointerId);
+    if (completed.kind === 'placement') {
+      if (Math.hypot(event.clientX - completed.client[0], event.clientY - completed.client[1]) <= 10) place(placementAt(completed.type, world(event)));
+      else { renderAll(); say('Tap a location to place this item, or drag it from the toolbar.'); }
+    } else if (completed.kind === 'polygon-tap') {
+      if (Math.hypot(event.clientX - completed.client[0], event.clientY - completed.client[1]) > 10) { hover = null; renderPlan(); return; }
+      const point = completed.start;
+      if (polygon.length >= 3 && distance(point, polygon[0]) < (snap ? .001 : 6 / view.zoom)) { finishPolygon(); return; }
+      if (!polygon.length || distance(point, polygon.at(-1)) > .001) polygon.push(point);
+      polygonClick = completed.tap; hover = point; renderPlan();
+    } else if (completed.kind === 'rectangle') {
       const a = completed.start, b = hover || snapped(world(event)); hover = null;
       if (Math.abs(a[0] - b[0]) < .1 || Math.abs(a[1] - b[1]) < .1) { renderPlan(); say('Drag a little farther to give the room width and depth.'); return; }
       addRoom([[Math.min(a[0], b[0]), Math.min(a[1], b[1])], [Math.max(a[0], b[0]), Math.min(a[1], b[1])], [Math.max(a[0], b[0]), Math.max(a[1], b[1])], [Math.min(a[0], b[0]), Math.max(a[1], b[1])]]);
     } else if (next) commit(next, 'Plan updated.');
     else renderAll();
   });
-  listen(svg, 'pointercancel', () => { draft = null; drag = null; hover = null; renderAll(); });
-  listen(svg, 'lostpointercapture', () => { if (drag) { draft = null; drag = null; hover = null; renderAll(); } });
+  listen(svg, 'pointercancel', event => { if (drag?.pointerId === event.pointerId) { resetGesture(); renderAll(); } });
+  listen(svg, 'lostpointercapture', event => {
+    if (touchPointers.has(event.pointerId)) {
+      if (touchSelection !== undefined) selection = clone(touchSelection);
+      resetGesture({ keepPointers: true }); navigation = { kind: 'drain' }; renderAll();
+    } else if (drag?.pointerId === event.pointerId) { resetGesture(); renderAll(); }
+  });
   listen(svg, 'mousedown', event => {
     // Repainting SVG children during pointerdown can suppress native dblclick.
     // Mouse click count remains available here, with the same-corner check intact.
@@ -666,11 +757,10 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
   });
   listen(surface, 'contextmenu', event => event.preventDefault());
   listen(surface, 'wheel', event => {
-    if (!active) return; event.preventDefault();
-    const before = world(event), { width, height, rect } = size();
-    view.zoom = clamp(view.zoom * Math.exp(-event.deltaY * .0015), 6, 240);
-    view.x = before[0] - (event.clientX - rect.left - width / 2) / view.zoom;
-    view.z = before[1] - (event.clientY - rect.top - height / 2) / view.zoom; renderPlan();
+    if (!active || editorView !== 'plan') return; event.preventDefault();
+    if (navigation) return;
+    if (drag || toolbarDrag) resetGesture();
+    zoomAt(view.zoom * Math.exp(-event.deltaY * .0015), [event.clientX, event.clientY]); renderPlan();
   }, { passive: false });
 
   function action(name) {
@@ -829,6 +919,6 @@ export function createFloorplanEditor({ canvasHost, inspectorHost, onCommit, onS
       if (history.undo < previous.undo && history.redo > previous.redo) say(`Undid the last change. Showing ${levelLabel(level(plan))}.`);
       else if (history.redo < previous.redo && history.undo > previous.undo) say(`Redid the last change. Showing ${levelLabel(level(plan))}.`);
     },
-    dispose() { clearToolbarDrag(); disposed = true; overview.dispose(); connectionView.dispose(); resize.disconnect(); cleanups.forEach(fn => fn()); dragBadge.remove(); canvasHost.replaceChildren(); inspectorHost.replaceChildren(); },
+    dispose() { resetGesture(); disposed = true; overview.dispose(); connectionView.dispose(); resize.disconnect(); cleanups.forEach(fn => fn()); dragBadge.remove(); canvasHost.replaceChildren(); inspectorHost.replaceChildren(); },
   });
 }

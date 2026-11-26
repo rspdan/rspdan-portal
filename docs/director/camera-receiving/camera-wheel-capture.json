@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "name": "wheel_one_undo_per_delivered_burst",
+      "pass": true,
+      "detail": {
+        "arrival_ms": [
+          9725.699999999255,
+          9731.10000000149,
+          10039.60000000149
+        ],
+        "gap_ms": [
+          5.400000002235174,
+          308.5
+        ],
+        "history_before": 0,
+        "history_after": 1
+      }
+    },
+    {
+      "name": "camera_lost_pointer_capture_cancel",
+      "pass": true,
+      "detail": {
+        "actual_capture_lost": true,
+        "camera_restored": true,
+        "no_cancelled_undo": true,
+        "fresh_drag_works": true
+      }
+    }
+  ],
+  "source_before": {
+    "director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "camera-navigation.js": "36cd0157429ff3fba9f0bbaac29a951896754c9bc3f9946841328db1b86be5bd"
+  },
+  "wheel_observation": {
+    "arrival_ms": [
+      9725.699999999255,
+      9731.10000000149,
+      10039.60000000149
+    ],
+    "gap_ms": [
+      5.400000002235174,
+      308.5
+    ],
+    "history_before": 0,
+    "history_after": 1
+  },
+  "errors": [],
+  "source_after": {
+    "director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "camera-navigation.js": "36cd0157429ff3fba9f0bbaac29a951896754c9bc3f9946841328db1b86be5bd"
+  },
+  "source_stable": true
+}

@@ -4,6 +4,8 @@ Choose **Floor plan** in the Director to build an overhead layout for a set. The
 
 Drag Door, Window or Passage from the toolbar onto a wall, or select the tool and tap the wall. Stairs and Elevator need two levels at different elevations. The placement preview shows the target before release, and each completed drop is one undo step.
 
+**Pan and Zoom** sit beside the drawing tools. Zoom supports hold-drag up/down, and two fingers pinch and pan in every editing tool. A second finger cancels an unfinished edit before navigating; lift both fingers before editing again. View movement does not alter the plan or add Undo history. [All camera and navigation controls](camera-navigation.md).
+
 The level selector beside the canvas switches the floor under edit. On phone, **Selected / Level / Plan** keeps the inspector focused on the current task; **Return to plan** returns to the drawing without resetting its view. Named connections retain their type and destination context on the plan.
 
 **Building** gives an overview of every authored level, its room footprints, elevation and planned connections. Mini-plans are fitted separately; the elevation overview is schematic, not an architectural section. Empty levels remain visible without invented rooms. Choose a level to return to its editable plan. Merely viewing Building does not change the plan or add an undo step.

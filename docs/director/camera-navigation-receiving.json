@@ -1,0 +1,84 @@
+{
+  "recorded_at_utc": "2026-11-26T04:16:28.477884+00:00",
+  "status": "local implementation received; preview deployment pending",
+  "source_sha256": {
+    "public/director/director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "public/director/director.css": "8fb42f1acf5c97ee2166fa150d233675e4b844518b2f30cb228520f238fa3a5d",
+    "public/director/direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890",
+    "public/director/camera-navigation.js": "36cd0157429ff3fba9f0bbaac29a951896754c9bc3f9946841328db1b86be5bd",
+    "public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f",
+    "src/pages/director/index.astro": "a3d3379cc252f7d35a4ec3689ae2187f60e1e5ba87a065d6fde6f2f1af2505c9"
+  },
+  "verification": {
+    "unit_contracts": {
+      "pass": 104,
+      "fail": 0,
+      "log": "/workspace/scratch/director-camera-112626/root/contracts.log",
+      "scope": "Director, animation, floorplan, study, MTR0 adapter and operation service/store contracts; unchanged model code across final camera gesture refinements."
+    },
+    "build": {
+      "exit_code": 0,
+      "log": "/workspace/scratch/director-camera-112626/root/build-release.log",
+      "scope": "Final source; production build and existing Node runtime patch completed."
+    },
+    "root_integrated_touch": {
+      "checks": 12,
+      "passed": true,
+      "receipt": "camera-receiving/root-integration.json",
+      "scope": "Earlier pinned gesture edition: all four 3D modes in both projections, camera-only edits/undo, floorplan return, full-renderer MTR0 interface and phone overflow/errors."
+    },
+    "root_inspector": {
+      "checks": 2,
+      "passed": true,
+      "receipt": "camera-receiving/root-inspector.json",
+      "scope": "Ordinary 3D zoom and floorplan pinch followed by native inspector tab taps and swipe; body scroll and take preserved."
+    },
+    "floorplan_component": {
+      "checks": 18,
+      "passed": true,
+      "receipt": "camera-receiving/floorplan.json"
+    },
+    "independent_camera": {
+      "scope": "Actual mouse/CDP touch, numeric fields, perspective/ortho, modifiers, outside release, cancellation, edit takeover, final capture-loss restoration and local save/reopen. Individual receipts retain exact editions and earlier failures.",
+      "receipts": [
+        "camera-primary.json",
+        "camera-remaining-initial.json",
+        "camera-wheel-capture.json",
+        "camera-final-controls.json",
+        "camera-gizmo-capture.json",
+        "camera-gizmo-blur.json"
+      ],
+      "consolidated": "camera-receiving/camera-independent.md",
+      "unresolved_product_findings": []
+    }
+  },
+  "findings_resolved": [
+    "Second touch was consumed by the previous direct-manipulation handler. Navigation now owns multi-touch and rolls back the unfinished object edit.",
+    "Orthographic zoom changes view size.",
+    "Mouse polygon double-click finishing was restored after the new touch placement path initially suppressed it.",
+    "Unexpected object pointer-capture loss restores the unfinished edit.",
+    "Final Top/orbit elevation aligns with the inspector\u2019s \u00b189 degree range."
+  ],
+  "receiving_limits": [
+    "Physical handset behavior is not established by Chromium touch emulation.",
+    "Initial fixed-delay gizmo and wheel assertions were unreliable under contended software rendering; native event/condition-based rechecks are retained separately.",
+    "An intermittent standalone inspector-tab tap was not explained; final fresh-page and integrated ordinary-navigation receiving passed.",
+    "Local save/reopen used isolated filesystem storage with shared:false; no remote Save or message was sent."
+  ],
+  "report_copy_sha256": {
+    "root-integration.json": "a27820bd4ecc70d114e94c2b232ebec8befabd888402529741c5d8282f5a4070",
+    "root-inspector.json": "205ab29f74faf261cd317a94db67fa153ba19abf75f2bfc6f2e1ea4817223ec8",
+    "floorplan.json": "91160cebbebdbcda152ec53cc754fa7b1f80e1409b3af446038c704f9cb61f30",
+    "floorplan-source-hashes.json": "5e8833210fddc5a81cb7954578504f7073c6d13b37c170ba36eb68e3e844d062",
+    "camera-primary.json": "638ba420d113466b0498da4de6096384ef1a7000e76d070c7fd5c098becaaad2",
+    "camera-remaining-initial.json": "d060375b66e50a0aa27e98cb378b7534180e8be1ccf24c8da440a3849beb8139",
+    "camera-wheel-capture.json": "b8b3ad5a347b51eaa8651d7fb7dbab1e8940e588886318e20e85a18893568396",
+    "camera-final-controls.json": "3248e017981a198fef934fe5c098fc859ada81d163d4780b614da65ae949656b",
+    "camera-gizmo-capture.json": "9b884b4d2d6778a326e1ed7413ba7eb7b894e67fb8d713f75484d8f5d30a6f62",
+    "camera-gizmo-blur.json": "7698ba5f919f800bb302ef428d6938ac33761fc5cc748a7fc827a8d9d6d6a236",
+    "camera-independent.md": "dfdef7820d267a9055c478975e609921dffa7df321ce4d9251f3ff3b62b52dd7",
+    "camera-independent.json": "a2841f37f9de89606be24a1f298b52c12bffcece2c9e4b3666c745da1d9b27af"
+  },
+  "deployment": null
+}

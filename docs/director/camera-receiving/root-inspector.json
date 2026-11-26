@@ -1,0 +1,11 @@
+{
+  "pass": true,
+  "recorded_at_utc": "2026-11-26T04:12:52.876708+00:00",
+  "checks": [
+    "native tab taps after ordinary 3D zoom and floor-plan pinch",
+    "native inspector swipe scrolls inspector while body and take remain unchanged"
+  ],
+  "page_errors": [],
+  "before_scroll": 0,
+  "after_scroll": 179
+}

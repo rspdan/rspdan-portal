@@ -1,0 +1,216 @@
+{
+  "started_at": "2026-11-26T04:00:36.171254+00:00",
+  "source_before": {
+    "/workspace/rspdan-portal/public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "/workspace/rspdan-portal/public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
+  },
+  "scope": "Standalone component in Chromium; trusted CDP touch and mouse, with explicit lifecycle operations noted. No physical handset.",
+  "checks": [
+    {
+      "check": "Zoom tool supports native one-finger drag both directions without a plan commit",
+      "pass": true,
+      "before_zoom": 36.25000144044564,
+      "in_zoom": 66.05180745601348,
+      "out_zoom": 36.25000144044564
+    },
+    {
+      "check": "Pinch in/out and two-finger pan preserve midpoint and original selection; last finger drains",
+      "pass": true,
+      "anchor_before": [
+        2.0,
+        1.5
+      ],
+      "anchor_after": [
+        2.000000033623128,
+        1.500000075652041
+      ],
+      "selection": "room-second",
+      "native_pointer_events": 9
+    },
+    {
+      "check": "Second finger rolls back draft room move; normal room drag still commits afterward",
+      "pass": true
+    },
+    {
+      "check": "Second finger cancels a draft corner edit without history or geometry changes",
+      "pass": true
+    },
+    {
+      "check": "Pinch cancels an unfinished Draw room rectangle",
+      "pass": true
+    },
+    {
+      "check": "Touch door placement waits for release, cancels for pinch, then works as a normal tap",
+      "pass": true,
+      "normal_tap_commit": 1
+    },
+    {
+      "check": "Pinch at the closing polygon point cannot commit the unfinished polygon",
+      "pass": true
+    },
+    {
+      "check": "Touch polygon closes on first-corner release with one commit",
+      "pass": true
+    },
+    {
+      "check": "Second finger takes over an in-progress toolbar window drag without placing it",
+      "pass": true
+    },
+    {
+      "check": "Native pointer cancellation and deactivation leave no draft commit or stuck touch",
+      "pass": true
+    },
+    {
+      "check": "Releasing an actual captured pointer cancels the edit without a plan commit",
+      "pass": true
+    },
+    {
+      "check": "Window blur cancels a draft edit",
+      "pass": true,
+      "lifecycle_event": "blur explicitly dispatched; editing pointer events were native CDP"
+    },
+    {
+      "check": "Native touch swipe scrolls the inspector without changing plan view",
+      "pass": true,
+      "scroll_before": 0,
+      "scroll_after": 155,
+      "isolation": "fresh navigation before inspector swipe; no preceding CDP gesture sequence"
+    },
+    {
+      "check": "Existing door drag still edits its position after pinch navigation",
+      "pass": true,
+      "opening_at_before": 0.5,
+      "opening_at_after": 0.75
+    },
+    {
+      "check": "Desktop Ctrl-middle drag and primary Zoom tool change view only",
+      "pass": true,
+      "zoom_before": 101.74999485091543,
+      "zoom_after_ctrl_middle": 238.05907620312055,
+      "zoom_after_primary_drag": 87.57704023122423
+    },
+    {
+      "check": "Actual mouse double-click completes a polygon once",
+      "pass": true
+    },
+    {
+      "check": "Mouse zoom capture finishes outside surface and next gesture works",
+      "pass": true,
+      "outside_release_zoom": 7.538466882291496,
+      "subsequent_gesture_zoom": 13.735981851964175
+    },
+    {
+      "check": "Large native wheel deltas stay finite at both bounds and +/- work",
+      "pass": true,
+      "min": 6.000000200334218,
+      "max": 239.99999599331585,
+      "plus": 7.7999998697827655,
+      "minus": 6.000000200334218
+    }
+  ],
+  "errors": [],
+  "assets": [
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-editor.css",
+      "status": 200,
+      "sha256": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-overview.css",
+      "status": 200,
+      "sha256": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.css",
+      "status": 200,
+      "sha256": "9277075f8ba0e9c59bed3ead08b47ccb13a09f19818e0111cea0c874c98db24a"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-model.js",
+      "status": 200,
+      "sha256": "909eaee790e1b49e87f5ffdaa37ad0f1a7093ddbd8c3f36d920c63abccd3a180"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-editor.js",
+      "status": 200,
+      "sha256": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-overview.js",
+      "status": 200,
+      "sha256": "7f6ffa81b7050667c6aa2227a1108ae7d6746b4f17a8480eb2d92a2087625d9a"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.js",
+      "status": 200,
+      "sha256": "53c60e3fb1a7bbdec88a212b44034015b4542aa964301455655d3b105bc0a02a"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-editor.css",
+      "status": 200,
+      "sha256": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-overview.css",
+      "status": 200,
+      "sha256": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.css",
+      "status": 200,
+      "sha256": "9277075f8ba0e9c59bed3ead08b47ccb13a09f19818e0111cea0c874c98db24a"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-editor.js",
+      "status": 200,
+      "sha256": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-model.js",
+      "status": 200,
+      "sha256": "909eaee790e1b49e87f5ffdaa37ad0f1a7093ddbd8c3f36d920c63abccd3a180"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-overview.js",
+      "status": 200,
+      "sha256": "7f6ffa81b7050667c6aa2227a1108ae7d6746b4f17a8480eb2d92a2087625d9a"
+    },
+    {
+      "url": "http://127.0.0.1:38631/director/floorplan-connection-view.js",
+      "status": 200,
+      "sha256": "53c60e3fb1a7bbdec88a212b44034015b4542aa964301455655d3b105bc0a02a"
+    }
+  ],
+  "phone_layout": {
+    "viewport": 390,
+    "body": 390,
+    "zoom": {
+      "x": 156.125,
+      "y": 135,
+      "width": 45.171875,
+      "height": 34,
+      "top": 135,
+      "right": 201.296875,
+      "bottom": 169,
+      "left": 156.125
+    },
+    "surface": {
+      "x": 0,
+      "y": 178,
+      "width": 390,
+      "height": 352,
+      "top": 178,
+      "right": 390,
+      "bottom": 530,
+      "left": 0
+    }
+  },
+  "source_after": {
+    "/workspace/rspdan-portal/public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "/workspace/rspdan-portal/public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f"
+  },
+  "sources_frozen": true,
+  "finished_at": "2026-11-26T04:00:51.752748+00:00",
+  "passed": 18,
+  "failed": 0
+}

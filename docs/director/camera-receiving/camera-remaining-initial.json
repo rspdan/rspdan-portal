@@ -1,0 +1,75 @@
+{
+  "scope": "Independent browser receiving; local private fixture; mobile emulation is not physical-device testing",
+  "started": 1795666214.2582476,
+  "cases": [
+    {
+      "name": "desktop_outside_release",
+      "pass": true,
+      "detail": "Outside release commits exactly once and undo restores"
+    },
+    {
+      "name": "desktop_escape_cancels",
+      "pass": true,
+      "detail": "Escape restores without history, next drag works"
+    },
+    {
+      "name": "desktop_wheel_grouping",
+      "pass": false,
+      "error": "",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/director-camera-112626/core/input-review/receive-remaining.py\", line 18, in case\n    detail=await fn();r={'name':name,'pass':True,'detail':detail}\n           ^^^^^^^^^^\n  File \"/workspace/scratch/director-camera-112626/core/input-review/receive-remaining.py\", line 84, in wheel\n    await p.wait_for_timeout(300);after=await snap(p);assert radius(after['camera'])<radius(before['camera']);assert unchanged(before,after);assert await count(p)==n+1;await undo(p);assert near((await snap(p))['camera'],before['camera']);return 'Four wheel events form one reversible edit'\n                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "name": "camera_fields_and_isolation",
+      "pass": true,
+      "detail": {
+        "camera": {
+          "mode": "perspective",
+          "position": [
+            1.9771375339842474,
+            2.1023784375702386,
+            2.0745955973308985
+          ],
+          "target": [
+            -0.07360288859427619,
+            0.75,
+            0.023855174752375093
+          ],
+          "fov": 0.8726646259971648,
+          "orthoSize": 1.48
+        },
+        "active_pose_handles": 0,
+        "invalid_edit_rejected": true
+      }
+    },
+    {
+      "name": "camera_saved_and_reopened_locally",
+      "pass": true,
+      "detail": {
+        "storage": "local-workspace",
+        "shared": false,
+        "camera": {
+          "mode": "orthographic",
+          "position": [
+            1.9771375339842474,
+            2.1023784375702386,
+            2.074595597330898
+          ],
+          "target": [
+            -0.07360288859427619,
+            0.75,
+            0.023855174752375093
+          ],
+          "fov": 0.8726646259971648,
+          "orthoSize": 2.75
+        }
+      }
+    }
+  ],
+  "source_before": {
+    "public/director/director.js": "ded31f91d2196ed6d1c080f2443300efcc0d4a65178fee4405383ee376aeef91",
+    "public/director/direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890",
+    "public/director/camera-navigation.js": "34754a6c2e7a196537e8d5c9b1e367145495fcde0634e867399e559e63d96c95",
+    "public/director/director.css": "8fb42f1acf5c97ee2166fa150d233675e4b844518b2f30cb228520f238fa3a5d",
+    "src/pages/director/index.astro": "a3d3379cc252f7d35a4ec3689ae2187f60e1e5ba87a065d6fde6f2f1af2505c9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "scope": "Independent actual CDP touch against Babylon utility-layer gizmos and joint markers, 390px emulation",
+  "cases": [
+    {
+      "name": "active_rotation_gizmo_blur_cancel",
+      "pass": true,
+      "detail": {
+        "pick": {
+          "x": 231,
+          "y": 162.234375,
+          "localX": 213,
+          "mesh": "ignore"
+        },
+        "actual_pose_changed": true,
+        "blur_restored": true
+      }
+    }
+  ],
+  "hashes": {
+    "director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "camera-navigation.js": "108fb25f8d0a5711d2ce8089adbb06ff66f1d8cbbf34ed5757a2760a1dc17254",
+    "direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890"
+  },
+  "errors": [],
+  "hashes_after": {
+    "director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "camera-navigation.js": "108fb25f8d0a5711d2ce8089adbb06ff66f1d8cbbf34ed5757a2760a1dc17254",
+    "direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890"
+  },
+  "source_stable": true
+}
