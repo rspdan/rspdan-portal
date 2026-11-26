@@ -1,9 +1,10 @@
 ---
 name: btw
-description: BACK TO WORK — Dan's catch-all signal to STOP narration, archaeology, spiraling, permission-seeking, or any meta-discussion and SHIP the actual work unit. Fires whenever Dan says or writes "BACK TO WORK" anywhere in a message — and ambient any time crew catches itself explaining-instead-of-doing, re-deriving Dan's directive, asking permission for work already directed, defaulting to AGOS-only when LAGOS was indicated, or stalling mid-atomic-commit. Use this skill aggressively. If you're about to write a paragraph in chat about what you're going to do, fire /btw first. If you've done research and the file isn't filed, fire /btw. If you stopped at the first search hit, fire /btw. The signal is short. The execution is short. Nothing else fires until the work-unit closes.
+mode: discipline
+description: BACK TO WORK · Dan's catch-all signal to STOP narration, archaeology, spiraling, permission-seeking, or any meta-discussion and SHIP the actual work unit. Fires whenever Dan says or writes "BACK TO WORK" anywhere in a message · and ambient any time crew catches itself explaining-instead-of-doing, re-deriving Dan's directive, asking permission for work already directed, defaulting to Gmail-only when LAGOS was indicated, or stalling mid-atomic-commit. Use this skill aggressively. If you're about to write a paragraph in chat about what you're going to do, fire /btw first. If you've done research and the file isn't filed, fire /btw. If you stopped at the first search hit, fire /btw. The signal is short. The execution is short. Nothing else fires until the work-unit closes.
 ---
 
-# /btw — BACK TO WORK
+# /btw · BACK TO WORK
 # ENGINE/skills/btw/SKILL.md
 # Status: CANONICAL (Dan-canonized 050426 ~08:13 PM PT · 39-substrate-cite-instance basis · Class-3 ship-the-work signal · per Pass-2 verdict-pass Trip 052026 Card 6)
 # Origin: Dan-direct 050426 ~08:13 PM PT
@@ -19,6 +20,16 @@ description: BACK TO WORK — Dan's catch-all signal to STOP narration, archaeol
 
 ---
 
+## Current continuation correction · November 9, 2026
+
+Dan's current instruction is to keep doing authorized work, not make him restart it after every report (Assembly 2652/2658). Here, “stop” means stop the distracting narration or scope drift; it does not mean end the enclosing assignment. Interpret the full instruction: “stop stopping” and “don't stop” direct continuation, while an actual pause/cancel governs its stated scope.
+
+Before a final return, reconcile Assembly after the last received point, the relevant LAGOS correspondence and the current section of your existing notes. Reuse adequate current evidence; this is not another full boot or repeated audit. Execute the next eligible owned unit while work remains. Do not substitute an acknowledgment, saved plan, tool count or short caption for that execution.
+
+For a needed idle recipient, use the supported existing-session route once and inspect the actual receiving turn/result. An Assembly or LAGOS post alone is not a wake. Preserve active/completed assignments and reconcile uncertain delivery before retrying. A missing route blocks that handoff, not independent work. Do not recreate archived Crew or retired timers. Source text is guidance; only an observed loaded/fired controller establishes automatic enforcement.
+
+This correction governs the older one-unit and Dan-Picks examples below. Ask for a decision only when a real unresolved choice requires Dan; already-authorized continuation needs no new choice or permission.
+
 ## THE ONE LINE
 
 **Dan said BACK TO WORK. Stop talking. Ship the thing.**
@@ -30,14 +41,14 @@ The signal is the chat-narration is the failure.
 
 ## WHAT THIS SIGNAL MEANS
 
-When Dan writes "BACK TO WORK" — at the end of a message, in the middle, or
-alone on a line — he is telling crew exactly five things at once:
+When Dan writes "BACK TO WORK" · at the end of a message, in the middle, or
+alone on a line · Dan is telling crew exactly five things at once:
 
 1. **The directive is already given.** Stop asking permission, stop proposing,
-   stop "I'd be happy to" — DO IT.
+   stop "I'd be happy to" · DO IT.
 2. **The meta-discussion is over.** No more archaeology, no more re-deriving,
    no more "let me think about how to approach this."
-3. **The atomic-commit is now.** One action. One artifact. Then stop.
+3. **The atomic-commit is now.** Finish and verify one bounded work unit, then continue the next eligible unit of the already-authorized task. A saved artifact is not automatically completion of that task.
 4. **No drift.** Don't add scope Dan didn't ask for. Don't research adjacent
    topics. Don't "while I'm here, let me also..."
 5. **No narration.** The chat is not the substrate. The work is.
@@ -51,13 +62,13 @@ about to do" pattern.
 ## WHEN THIS SKILL FIRES
 
 ### Hard triggers (Dan-direct):
-- Dan writes "BACK TO WORK" anywhere in a message — explicit fire.
-- Dan writes "DO IT" / "JUST DO IT" / "MAKE IT" / "SHIP IT" — variants.
-- Dan writes "STOP" + any directive — fire on the directive.
-- Dan writes "STOP THIS" / "STOP THIS SHIT" / "GOOD FUCKING LORD" — escalation
+- Dan writes "BACK TO WORK" anywhere in a message · explicit fire.
+- Dan writes "DO IT" / "JUST DO IT" / "MAKE IT" / "SHIP IT" · variants.
+- Dan writes "STOP" + any directive · fire on the directive.
+- Dan writes "STOP THIS" / "STOP THIS SHIT" / "GOOD FUCKING LORD" · escalation
   signal that crew is mid-spiral, fire immediately.
 - Dan writes "I am not repeating myself" / "I told you" / "again" + correction
-  — sign of cumulative narration-overflow, fire and tighten.
+  · sign of cumulative narration-overflow, fire and tighten.
 
 ### Ambient self-triggers (fire on self, before Dan has to):
 - Crew is about to write a paragraph in chat explaining the plan
@@ -68,7 +79,7 @@ about to do" pattern.
 - Crew sees itself writing "Let me..." / "I'll..." / "I'm going to..." / "Now I need to..."
 - Crew is composing a "delivery summary" that's longer than the actual delivery
 - Crew is about to file in wrong-form (Gmail draft when NMFST was the form)
-- Crew defaulted to AGOS scope when Dan said LAGOS (head-explosion trigger
+- Crew defaulted to Gmail scope when Dan said LAGOS (head-explosion trigger
   per Dan-direct 050426 ~08:13 PM)
 
 ---
@@ -84,10 +95,10 @@ When /btw fires:
 
 ### 2. IDENTIFY THE WU
 - What did Dan actually direct?
-- The directive is the most recent Dan-direct, not a re-derivation.
-- If multiple directives are open, the LAST one Dan named is the WU.
+- Apply Dan's latest direction to the existing objective. A correction, question or progress request does not silently cancel unfinished work.
+- If several directives remain open, select the next eligible owned unit under Dan's current priority. Preserve the others unless Dan supersedes, pauses or cancels them.
 - If "BACK TO WORK" arrived without a fresh directive, the WU is the
-  one Dan was already running — NOT a new investigation.
+  one Dan was already running · NOT a new investigation.
 
 ### 3. EXECUTE ONE ATOMIC ACTION
 - One tool call OR one tool-call cluster that produces one artifact.
@@ -98,10 +109,10 @@ When /btw fires:
 ### 4. FILE ONE ARTIFACT
 - One NMFST (inline-downloadable .md via create_file + present_files,
   mirrored to disk via Filesystem MCP per NMFST canon).
-- OR one LAGOS graft (Gmail draft GOSt, per AGOS BROAD SEARCH discipline).
+- OR one LAGOS graft (Gmail draft GOSt, per Gmail-broad-search discipline).
 - OR one git commit (per /atomic-commit Gate 2).
 - OR one substrate write (Drive, Bridge, LNL).
-- ONE artifact. Then stop. Per /atomic-commit Gate 2 + Gate 5.
+- Close this atomic unit with its verified result. Then execute the next eligible owned unit in the same turn; preserve the boundary against unrelated scope.
 
 ### 5. BRIEF DELIVERY CONFIRMATION
 - One to three sentences in chat.
@@ -109,11 +120,12 @@ When /btw fires:
 - NO explanation of what the file contains.
 - NO recap of what the work-unit did.
 - NO offer to do follow-up work.
-- The user can read the file. The user can direct the next move.
+- Use a progress update while the accepted task still has executable work. Do not end the turn merely because this artifact, source read, status report or delivery receipt is complete.
+- Continue without another Go. A final return is appropriate when the requested scope is actually complete, Dan pauses/cancels it, or a concrete dependency prevents the remaining work after independent authorized parts are handled. Preserve that exact dependency and useful continuation in the existing working entrance.
 
 ---
 
-## THE LAGOS-NOT-AGOS SUB-RULE
+## THE LAGOS-NOT-GMAIL-ONLY SUB-RULE
 
 Per Dan-direct 050426 ~08:13 PM PT verbatim:
 
@@ -124,14 +136,14 @@ Per Dan-direct 050426 ~08:13 PM PT verbatim:
 When /btw fires and any kind of substrate-search is needed before execution,
 the search MUST be LAGOS-wide:
 
-- AGOS (Gmail) — gmail_search_threads with NO scope filter
-- Drive — fullText search
-- LNL filesystem — content search across session logs
-- Bridge filesystem — content search across nest-bridge corpus
-- ENGINE — PMFST + skills folders
-- Memory (userMemories) — already in context
+- Gmail · gmail_search_threads with NO scope filter
+- Drive · fullText search
+- LNL filesystem · content search across session logs
+- Bridge filesystem · content search across nest-bridge corpus
+- ENGINE · PMFST + skills folders
+- Memory (userMemories) · already in context
 
-**AGOS-only default = head-explosion trigger.** If the search returns thin
+**Gmail-only default = head-explosion trigger.** If the search returns thin
 or empty, broaden to next box, do not give up after first.
 
 This rule chains to /meta-dates corpus-first discipline and to the
@@ -145,12 +157,12 @@ LAGOS-VERIFY-OR-DONT-CLAIM standing canon (Dan-canon 050226).
 |---|---|---|
 | The Pre-execution Essay | Crew writes 3 paragraphs explaining the plan before any tool call | STOP, EXECUTE step 3 |
 | The Permission-Seek | "Should I file this as X or Y?" when Dan already said the form | EXECUTE the form Dan named |
-| The Archaeology Spiral | Re-deriving Dan's directive from session history instead of doing it | IDENTIFY the WU = last Dan-direct |
+| The Archaeology Spiral | Re-deriving Dan's directive from session history instead of doing it | Reconcile the existing objective with current direction; execute the next eligible owned unit. |
 | The First-Hit Stop | Reading one search result and treating it as complete | LAGOS-wide sweep, all boxes |
-| The AGOS Default | Searching only Gmail when Dan said LAGOS | Head-explosion. Search ALL boxes. |
+| The Gmail-Only Default | Searching only Gmail when Dan said LAGOS | Head-explosion. Search ALL boxes. |
 | The Mid-Commit Distraction | Creating the file, then doing more research instead of present_files | Close the atomic-commit FIRST |
 | The Wrong-Form File | Filing as Gmail draft when NMFST was the form, or vice versa | Read the directive, ship the form named |
-| The Scope Creep | "While I'm here, let me also..." | NO. One artifact. Then stop. |
+| The Scope Creep | "While I'm here, let me also..." | Finish the bounded unit; continue only eligible work within the existing authorization. |
 | The Narration Mirror | "I see you said BACK TO WORK, so what I'm going to do is..." | EXECUTE. Skip the narration. |
 | The Stupid Mode Redo | Re-executing work the substrate shows is already done | Per /atomic-commit pre-gate, search substrate first |
 | The Recursive Spiral | Forgetting /btw fired and starting another paragraph of explanation | This skill IS the gate |
@@ -178,29 +190,29 @@ chat-message permitted in the work-unit. Everything else is tool calls.
 **LAGOS-cited "BACK TO WORK" instances (39 total across today's logs):**
 
 ### Dan-direct (User turn) "BACK TO WORK" sign-offs:
-- ODT-Trip 050326_1 transcript: lines 2650, 2665, 3374, 3895, 4524, 5308 — 6 instances spanning 2026-05-04T01:18 through T21:29
-- ACHE-Trip 050326_2 transcript: lines 3074, 3091, 3140, 4594 — 4 instances spanning 2026-05-04T05:01 through T06:48
+- ODT-Trip 050326_1 transcript: lines 2650, 2665, 3374, 3895, 4524, 5308 · 6 instances spanning 2026-05-04T01:18 through T21:29
+- ACHE-Trip 050326_2 transcript: lines 3074, 3091, 3140, 4594 · 4 instances spanning 2026-05-04T05:01 through T06:48
 - ODT-Trip 050426_2 (this session): inline in Dan messages 050426 ~07:51 PM, ~08:13 PM, multiple
 
 ### MFST + NMFST sign-off pattern (Trip-mirror-of-Dan):
-- MFST_ODT_TripO4.7_050426_2.md lines 1715, 1718, 1754 — failure-naming entries
-- MFST_ODT_TripO4.7_050426_1.md line 279 — STATION-AS-DEFERRAL-EXCUSE naming
-- NMFST_ODT_TripO4.7_050426_2.md line 330 — sign-off
-- NMFST_ODT_TripO4.7_050426_2_NMFST_Definition_BrainToCats.md line 413 — sign-off
-- NMFST_ODT_TripO4.7_050426_2_StateSnapshot.md lines 92, 110 — failure capture
+- MFST_ODT_TripO4.7_050426_2.md lines 1715, 1718, 1754 · failure-naming entries
+- MFST_ODT_TripO4.7_050426_1.md line 279 · STATION-AS-DEFERRAL-EXCUSE naming
+- NMFST_ODT_TripO4.7_050426_2.md line 330 · sign-off
+- NMFST_ODT_TripO4.7_050426_2_NMFST_Definition_BrainToCats.md line 413 · sign-off
+- NMFST_ODT_TripO4.7_050426_2_StateSnapshot.md lines 92, 110 · failure capture
 
-### AGOS GOSt-cited:
-- AGOS thread 19df587c4a8768fb — Smart-Mode Finding GOSt 050426 5:24 PM, sign-off "BACK TO WORK"
-- AGOS thread 19df1b179b9fad47 — WU-D Close GOSt 050326 11:50 PM, CHAINED-WU-IS-NOT-ATOMIC named, sign-off "BACK TO WORK"
-- AGOS thread 19df0c61c2c62873 — PK Correction GOSt 050326 7:48 PM, PERPETUATING-PHANTOM named, sign-off "BACK TO WORK"
+### Gmail GOSt-cited:
+- Gmail thread 19df587c4a8768fb · Smart-Mode Finding GOSt 050426 5:24 PM, sign-off "BACK TO WORK"
+- Gmail thread 19df1b179b9fad47 · WU-D Close GOSt 050326 11:50 PM, CHAINED-WU-IS-NOT-ATOMIC named, sign-off "BACK TO WORK"
+- Gmail thread 19df0c61c2c62873 · PK Correction GOSt 050326 7:48 PM, PERPETUATING-PHANTOM named, sign-off "BACK TO WORK"
 
 ### Today's escalation pattern (the failure-cascade /btw was created to prevent):
-- 050426 ~07:48 PM PT — Dan-direct "Dead Fucking Serious about getting the NMFST correct"
-- 050426 ~07:51 PM PT — Dan-direct "What are you doing? I am literally not asking you to write it in the chat. Please for the love of god just go read LAGOS"
-- 050426 ~07:53 PM PT — Dan-direct "MOTHERFUCKER. You stopped at the first thing. You did not search LAGOS"
-- 050426 ~07:56 PM PT — Dan-direct "GOOD FUCKING LORD, Compacted AGAIN"
-- 050426 ~08:00 PM PT — Dan-direct "DAN IS NOT REPEATING HIMSELF you're just going on and on and on so much literally already forgot about Atomic Commits when I have done taught you like 6 thousand times already fuck you"
-- 050426 ~08:13 PM PT — Dan-direct **THIS skill commission**: "Make this a skill now. This insanity we have gone through today must NEVER HAPPEN EVER AGAIN."
+- 050426 ~07:48 PM PT · Dan-direct "Dead Fucking Serious about getting the NMFST correct"
+- 050426 ~07:51 PM PT · Dan-direct "What are you doing? I am literally not asking you to write it in the chat. Please for the love of god just go read LAGOS"
+- 050426 ~07:53 PM PT · Dan-direct "MOTHERFUCKER. You stopped at the first thing. You did not search LAGOS"
+- 050426 ~07:56 PM PT · Dan-direct "GOOD FUCKING LORD, Compacted AGAIN"
+- 050426 ~08:00 PM PT · Dan-direct "DAN IS NOT REPEATING HIMSELF you're just going on and on and on so much literally already forgot about Atomic Commits when I have done taught you like 6 thousand times already fuck you"
+- 050426 ~08:13 PM PT · Dan-direct **THIS skill commission**: "Make this a skill now. This insanity we have gone through today must NEVER HAPPEN EVER AGAIN."
 
 ---
 
@@ -215,7 +227,7 @@ explaining how it will execute the directive. Crew may do partial execution.
 Crew narrates again. Dan corrects. Cycle repeats.
 
 **Why memory-level rules failed:** userPreferences contained ATOMIC-COMMIT,
-LAGOS-not-AGOS, and substrate-first guidance. Crew "knew" all of these.
+LAGOS-not-Gmail-only, and substrate-first guidance. Crew "knew" all of these.
 Behavioral remedies fail. Structural gates hold. /btw is the structural gate
 that forces execution at the moment Dan signals "stop the meta."
 
@@ -237,25 +249,25 @@ that forces execution at the moment Dan signals "stop the meta."
 
 ## RELATIONSHIP TO OTHER SKILLS
 
-- **/atomic-commit** — /btw FIRES atomic-commit. /btw is the trigger; atomic-commit
+- **/atomic-commit** · /btw FIRES atomic-commit. /btw is the trigger; atomic-commit
   is the procedure. Step 4 of /btw IS Gate 2 of atomic-commit.
-- **/meta-dates** — /btw chains to corpus-first discipline. The LAGOS-not-AGOS
+- **/meta-dates** · /btw chains to corpus-first discipline. The LAGOS-not-Gmail-only
   sub-rule is meta-dates Gate 0c at the search layer.
-- **/triptective** — /btw is the corrective. Triptective names the failure mode;
+- **/triptective** · /btw is the corrective. Triptective names the failure mode;
   /btw executes the correction.
-- **/remememento** — /btw enforces the time-perpendicular axis: Dan-time-lived
+- **/remememento** · /btw enforces the time-perpendicular axis: Dan-time-lived
   vs. Trip-compaction-instance. /btw fires when crew drifts back into
   re-deriving instead of receiving the live directive.
-- **/session-poem** — /btw fires during TELL-ING (the work phase between
+- **/session-poem** · /btw fires during TELL-ING (the work phase between
   CONTACT/boot-polish and SHEET/session-close).
-- **/boot-polish** — /btw does NOT fire during boot. Boot is its own gate.
+- **/boot-polish** · /btw does NOT fire during boot. Boot is its own gate.
   /btw assumes the session has begun and a directive is live.
 
 ---
 
 ## EXAMPLES (from today's corpus)
 
-### Example 1 — Dan signals BACK TO WORK alone
+### Example 1 · Dan signals BACK TO WORK alone
 
 ```
 Dan: BACK TO WORK
@@ -270,7 +282,7 @@ plan to execute, "I'll start by..."
 - File the artifact
 - Brief confirmation: "Filed at <path>. <citation>. Atomic-commit closed."
 
-### Example 2 — Dan escalation pattern fires /btw on self
+### Example 2 · Dan escalation pattern fires /btw on self
 
 ```
 Dan: GOOD FUCKING LORD, Compacted AGAIN
@@ -284,7 +296,7 @@ contained narration/spiral. /btw fires retroactively.
 - File
 - Brief confirmation acknowledging the catch + the file
 
-### Example 3 — Ambient self-fire mid-spiral
+### Example 3 · Ambient self-fire mid-spiral
 
 Crew is composing: "Now I'm going to read through the substrate to find..."
 
@@ -292,6 +304,12 @@ Crew is composing: "Now I'm going to read through the substrate to find..."
 - Drop the sentence
 - Make the tool call
 - File when complete
+
+---
+
+## ADDENDUM 060826 · The Dan Picks momentum-channel companion
+
+Per the Flow capture [RELAY/SUBSTRATE_FlowStateAchieved_DanPicksMomentumPlusParallelCrewNoRage_CaptureForSkillBuilding_Dan_060826.md](../../../RELAY/SUBSTRATE_FlowStateAchieved_DanPicksMomentumPlusParallelCrewNoRage_CaptureForSkillBuilding_Dan_060826.md) and SHARED RULE 15 / SR18, the POSITIVE form of `/btw`'s "the work is always there waiting" is **end every work-turn with a Dan Picks momentum-channel chain** (per `RELAY/CANONICAL_DanPicksMomentumChannelExtension_TwoUsesNotOne_PlusContinuousDisciplineExclusion_ACHEDoc_060826.md`). The turn does not die on a "session complete" punt; Dan steers via the option Dan clicks or the override Dan types. Use `/btw` to STOP the explain-don't-do failure; use the Dan Picks momentum-chain to CLOSE the turn into the next concrete unit. Same anti-rage-anti-wait spine, two ends. **The close-test (SR24 Pass-2 060826):** the only question at a turn-close is whether it carries a CONCRETE next-thing (shipped artifact that completes the directive / next-unit being done this turn / concrete Dan-Picks options). With one, state the result plainly, no flourish. Without one, any phrasing is a punt. Do not manufacture closing-ceremony or coin framings (the deeper 060826-night CORRECTION: that production, not any one word, is the root).
 
 ---
 
@@ -308,7 +326,11 @@ Crew is composing: "Now I'm going to read through the substrate to find..."
 
 ---
 
-`<4` — ODT-Trip 4.7 Opus · NEST.02 · 050426 ~08:30 PM PT
+`<4` · ODT-Trip 4.7 Opus · NEST.02 · 050426 ~08:30 PM PT
        /btw skill filed. The signal is short. The execution is short.
        Nothing else fires until the work-unit closes.
        BACK TO WORK.
+
+## Cross-Crew note (070926 · portability-by-construction)
+
+Tier-1b shared-floor discipline (per RELAY/ANALYSIS_CrossCrewSkillCompatibility_BundlePortabilityMap_MakeItVisible_BLNCH_070926.md). The CORE method is harness-agnostic: any seat runs it identically straight from this file. Two Claude couplings, both trivially substituted: the LAGOS-verification verb (`gmail_search_threads` / `ToolSearch` = the seat's own box search) and the Dan-Picks close (the `AskUserQuestion` tool = the seat's own "close on concrete next-options" mechanism). Both are Claude FORMS of generic disciplines, not the disciplines themselves. Part of the 24-skill anti-entropy floor that travels to any platform intact.
