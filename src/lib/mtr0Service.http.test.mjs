@@ -27,7 +27,7 @@ const card = {
   imageCheck: { text: 'Compare only after an actual preview exists.', sourceIds: ['picture'] },
   limits: ['Synthetic provider output does not establish visual reasoning.'],
 };
-const completion = () => ({ model: 'synthetic-response-model', choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(card) } }] });
+const completion = () => ({ model: 'synthetic-model', choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(card) } }] });
 
 async function freePort() {
   for (let port = 4389; port < 4420; port++) {

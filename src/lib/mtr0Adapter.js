@@ -32,6 +32,8 @@ function failure(request, code, { delivery = 'not-sent', httpStatus = null, resp
     'response-too-large': 'The provider response exceeded the byte bound.',
     truncated: 'The provider reported a length-truncated generation.',
     'invalid-output': 'The provider response did not satisfy the bounded proposal contract.',
+    'provider-model-missing': 'The provider response omitted its model identity; the proposal was not accepted.',
+    'provider-model-mismatch': 'The provider-reported model differs from the exact configured model; the proposal was not accepted.',
     'already-invoked': 'This prepared handle was already consumed; no second request was sent.',
   };
   return deepFreeze({ request, outcome: { status: 'failed', code, message: messages[code] || messages['invalid-input'], delivery, uncertain: delivery !== 'not-sent' && ['cancelled', 'timeout', 'transport'].includes(code), httpStatus, responseSha256, retry: 'manual-only' } });
@@ -148,17 +150,19 @@ export function createMtr0Adapter({ studyService, endpoint, serviceId, model, ap
       let raw;
       try { raw = JSON.parse(choice.message.content); } catch { fail('invalid-output', 'Proposal JSON is malformed.'); }
       const card = validateCard(raw, state.sourceIds, state.allowedDomains, apiKey);
-      let reportedModel = null;
-      if (envelope.model != null) {
-        try { reportedModel = identity(envelope.model, apiKey, true); }
-        catch { fail('invalid-output', 'Invalid reported model identifier.'); }
-      }
+      if (envelope.model == null) fail('provider-model-missing', 'Missing reported model identifier.');
+      let reportedModel;
+      try { reportedModel = identity(envelope.model, apiKey, true); }
+      catch { fail('invalid-output', 'Invalid reported model identifier.'); }
+      // The explicit configured identity is authoritative. A provider alias or
+      // version suffix is not permission to substitute another model.
+      if (reportedModel !== prepared.provider.model) fail('provider-model-mismatch', 'Reported model differs from configuration.');
       const usage = {};
       for (const [key, target] of [['prompt_tokens', 'promptTokens'], ['completion_tokens', 'completionTokens'], ['total_tokens', 'totalTokens']]) {
         const count = envelope.usage?.[key];
         if (Number.isSafeInteger(count) && count >= 0 && count <= 1000000000) usage[target] = count;
       }
-      return deepFreeze({ request: prepared, outcome: { status: 'completed', code: 'completed', validation: 'structural-only', card, delivery, httpStatus, responseSha256, providerReportedModel: reportedModel, usage } });
+      return deepFreeze({ request: prepared, outcome: { status: 'completed', code: 'completed', validation: 'structural-and-model-identity', card, delivery, httpStatus, responseSha256, providerReportedModel: reportedModel, usage } });
     } catch (error) {
       const code = timedOut ? 'timeout' : signal?.aborted ? 'cancelled' : error instanceof Mtr0Error ? error.code : 'transport';
       return failure(prepared, code, { delivery, httpStatus, responseSha256 });

@@ -42,7 +42,7 @@ function completion(label) {
     imageCheck: { text: 'Compare only after an actual preview exists.', sourceIds: ['picture'] },
     limits: ['A synthetic fixture response does not establish visual reasoning.'],
   };
-  return { model: `synthetic-response-model-${label}`, choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(card) } }] };
+  return { model: `synthetic-model-${label}`, choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(card) } }] };
 }
 
 async function freePort() {

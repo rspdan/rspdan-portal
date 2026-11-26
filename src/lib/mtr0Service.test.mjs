@@ -11,6 +11,7 @@ import { randomUUID, createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { createMtr0Service } from './mtr0Service.js';
 import { createMtr0OperationStore } from './mtr0OperationStore.js';
+import { operationHash, validateResult } from './mtr0OperationSchema.js';
 import { createProductionStudyService } from './productionStudyService.js';
 import { createProductionStudyStore } from './productionStudyStore.js';
 
@@ -26,7 +27,7 @@ function generatedCard() {
     limits: ['Invented provider output does not prove visual usefulness.'] };
 }
 function completion() {
-  return { model: 'synthetic-reported-model', choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(generatedCard()) } }] };
+  return { model: 'synthetic-model', choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(generatedCard()) } }] };
 }
 function send(res, value = completion(), code = 200) { res.writeHead(code, { 'content-type': 'application/json' }); res.end(JSON.stringify(value)); }
 function deferred() { let resolve; const promise = new Promise((done) => { resolve = done; }); return { promise, resolve }; }
@@ -134,6 +135,57 @@ test('claim exists before provider send; completed receipt preserves exact wire 
   for (const excluded of ['UNSELECTED_SOURCE_CANARY', 'EXCLUDED_IMAGE_LOCATOR', 'UNSELECTED_TARGET_NAME', 'NEXT_ACTION_CANARY']) assert.equal(p.calls[0].bytes.includes(Buffer.from(excluded)), false);
   assert.deepEqual(await f.studyService.get(f.input.studyId, actor), f.saved);
   const stored = await f.service().get(f.input.operationId, actor); assert.deepEqual(stored, result);
+});
+
+test('model identity rejections remain durable under the original operation and never resend', async (t) => {
+  for (const [model, code] of [[null, 'provider-model-missing'], ['another-model', 'provider-model-mismatch']]) {
+    const f = await fixture(t); const response = { ...completion(), model };
+    const p = await provider(t, ({ res }) => send(res, response));
+    const service = f.service(f.config(p.endpoint));
+    const result = await service.generate(f.input, actor), operation = result.operation;
+    assert.equal(operation.status, 'failed'); assert.equal(operation.outcome.code, code);
+    assert.equal(operation.id, f.input.operationId); assert.equal(operation.request.provider.model, 'synthetic-model');
+    assert.equal(operation.outcome.responseSha256, hash(JSON.stringify(response)));
+    assert.equal(Object.hasOwn(operation.outcome, 'card'), false);
+    assert.deepEqual(await f.service().get(f.input.operationId, actor), result);
+    assert.deepEqual(await f.service({ ...f.config(p.endpoint), model: 'changed-configured-model' }).generate(f.input, actor), result);
+    assert.equal(p.calls.length, 1);
+    assert.deepEqual(await f.studyService.get(f.input.studyId, actor), f.saved);
+
+    const row = await createMtr0OperationStore(f.directory).get(actor.user, f.input.operationId);
+    for (const patch of [{ responseSha256: null }, { delivery: 'not-sent' }, { uncertain: true }, { httpStatus: null }]) {
+      const changed = structuredClone(row.result); Object.assign(changed.outcome, patch);
+      assert.throws(() => validateResult(changed, row.claim, row.claimHash), /response evidence/);
+    }
+  }
+});
+
+test('stored new completions require exact model identity while historical structural-only receipts stay readable', async (t) => {
+  const f = await fixture(t); const p = await provider(t);
+  await f.service(f.config(p.endpoint)).generate(f.input, actor);
+  const row = await createMtr0OperationStore(f.directory).get(actor.user, f.input.operationId);
+  assert.equal(row.result.outcome.validation, 'structural-and-model-identity');
+  assert.equal(validateResult(row.result, row.claim, row.claimHash), row.result);
+  for (const model of [null, '', 42, 'another-model']) {
+    const changed = structuredClone(row.result); changed.outcome.providerReportedModel = model;
+    assert.throws(() => validateResult(changed, row.claim, row.claimHash), /model identity/);
+  }
+  const absent = structuredClone(row.result); delete absent.outcome.providerReportedModel;
+  assert.throws(() => validateResult(absent, row.claim, row.claimHash));
+  const changedClaim = structuredClone(row.claim); changedClaim.request.provider.model = 'another-configured-model';
+  assert.throws(() => validateResult(row.result, changedClaim, row.claimHash), /model identity/);
+
+  const stored = (await jsonFiles(join(f.directory, 'mtr0'))).find(item => item.value.payload?.schema === 'mtr0-operation-result/v1');
+  assert.ok(stored);
+  for (const model of [null, 'historical-reported-model']) {
+    const historical = structuredClone(row.result);
+    historical.outcome.validation = 'structural-only'; historical.outcome.providerReportedModel = model;
+    await writeFile(stored.path, JSON.stringify({ sha256: operationHash(historical), payload: historical }));
+    const reopened = await f.service().get(f.input.operationId, actor);
+    assert.deepEqual(reopened.operation.outcome, historical.outcome, 'historical validation is not upgraded');
+    assert.deepEqual(await f.service(f.config(p.endpoint)).generate(f.input, actor), reopened);
+  }
+  assert.equal(p.calls.length, 1, 'reading a historical receipt cannot trigger inference');
 });
 
 test('identical pending/completed retries never resend; changed payload conflicts', async (t) => {

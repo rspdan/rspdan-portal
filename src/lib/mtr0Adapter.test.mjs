@@ -27,7 +27,7 @@ function card(refs = ['image-b', 'text-a']) {
     limits: ['This fixture does not establish visual usefulness.'] };
 }
 function completion(value = card()) {
-  return { model: 'fixture-reported-model', choices: [{ index: 0, finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(value) } }],
+  return { model: 'fixture-configured-model', choices: [{ index: 0, finish_reason: 'stop', message: { role: 'assistant', content: JSON.stringify(value) } }],
     usage: { prompt_tokens: 12, completion_tokens: 7, total_tokens: 19 } };
 }
 function sendJson(res, value, status = 200) {
@@ -178,7 +178,7 @@ test('one frozen receipt binds exact selected wire bytes and excludes manual con
   f.input.instruction = 'Caller mutation after preparation'; f.input.sourceIds.reverse(); f.input.allowedDomains.push('camera');
   const result = await adapter.invoke(prepared);
   assert.equal(result.outcome.status, 'completed'); assert.deepEqual(result.outcome.card, card());
-  assert.equal(result.outcome.validation, 'structural-only'); assert.equal(result.outcome.providerReportedModel, 'fixture-reported-model');
+  assert.equal(result.outcome.validation, 'structural-and-model-identity'); assert.equal(result.outcome.providerReportedModel, 'fixture-configured-model');
   assert.deepEqual(result.request, prepared); deeplyFrozen(result);
   assert.equal(p.calls.length, 1); const sent = p.calls[0];
   assert.equal(sent.method, 'POST'); assert.equal(sent.headers.authorization, `Bearer ${secret}`);
@@ -205,6 +205,35 @@ test('one frozen receipt binds exact selected wire bytes and excludes manual con
   }
   assert.equal(JSON.stringify(prepared).includes('data:image/'), false);
   assert.deepEqual(await f.studyService.get(f.saved.saved.id, actor), f.saved, 'a generated proposal must not become operator-authored saved work');
+});
+
+test('absent or different reported model fails with exact response evidence and no retry or substitution', async (t) => {
+  const f = await fixture(t); let response;
+  const p = await provider(t, ({ res }) => sendJson(res, response));
+  const adapter = createMtr0Adapter(f.configuration(p.endpoint));
+  const missing = completion(); delete missing.model;
+  const cases = [
+    [missing, 'provider-model-missing'],
+    [{ ...completion(), model: null }, 'provider-model-missing'],
+    [{ ...completion(), model: 'fixture-reported-model' }, 'provider-model-mismatch'],
+    [{ ...completion(), model: 'Fixture-configured-model' }, 'provider-model-mismatch'],
+    [{ ...completion(), model: 'fixture-configured-model-version' }, 'provider-model-mismatch'],
+  ];
+  for (const [value, code] of cases) {
+    response = value;
+    const prepared = await adapter.prepare(f.input), before = p.calls.length;
+    const result = await adapter.invoke(prepared);
+    failed(result, code); deeplyFrozen(result);
+    assert.equal(result.request, prepared, 'original request identity survives rejection');
+    assert.equal(result.outcome.responseSha256, hash(JSON.stringify(value)));
+    assert.equal(result.outcome.delivery, 'responded'); assert.equal(result.outcome.httpStatus, 200);
+    assert.equal(result.outcome.uncertain, false); assert.equal(result.outcome.retry, 'manual-only');
+    assert.match(result.outcome.message, /model/);
+    failed(await adapter.invoke(prepared), 'already-invoked');
+    assert.equal(p.calls.length, before + 1, 'identity rejection cannot resend the consumed handle');
+    assert.equal(p.calls.at(-1).body.model, 'fixture-configured-model', 'no substitute model was requested');
+  }
+  assert.deepEqual(await f.studyService.get(f.saved.saved.id, actor), f.saved);
 });
 
 test('exact revision selection remains pinned when newer evidence is saved', async (t) => {

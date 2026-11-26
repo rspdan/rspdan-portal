@@ -45,14 +45,23 @@ export function validateResult(value, claim, claimHash) {
   const outcome = value.outcome;
   if (outcome?.status === 'completed') {
     exact(outcome, ['status', 'code', 'validation', 'card', 'delivery', 'httpStatus', 'responseSha256', 'providerReportedModel', 'usage'], 'completed outcome');
-    if (outcome.code !== 'completed' || outcome.validation !== 'structural-only' || outcome.delivery !== 'responded') throw new Error('Invalid completed outcome');
+    if (outcome.code !== 'completed' || !['structural-only', 'structural-and-model-identity'].includes(outcome.validation) || outcome.delivery !== 'responded') throw new Error('Invalid completed outcome');
+    // Historical structural-only receipts remain readable as originally
+    // recorded, without retroactively asserting a model-identity check.
+    // Every new adapter completion uses the stronger marker below.
+    if (outcome.validation === 'structural-and-model-identity') {
+      const model = outcome.providerReportedModel;
+      if (typeof model !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,159}$/.test(model) || /^[a-z][a-z0-9+.-]*:\/\//i.test(model) || model !== claim.request.provider?.model) throw new Error('Completed model identity differs from configured model');
+      safeText(model, 160);
+    }
     validateHash(outcome.responseSha256);
     validateCard(outcome.card, claim.input.sourceIds, claim.input.allowedDomains);
   } else {
     exact(outcome, ['status', 'code', 'message', 'delivery', 'uncertain', 'httpStatus', 'responseSha256', 'retry'], 'failed outcome');
-    if (outcome.status !== 'failed' || !['invalid-input', 'source-unavailable', 'image-unsupported', 'cancelled', 'timeout', 'transport', 'provider-http', 'redirect', 'response-too-large', 'truncated', 'invalid-output', 'already-invoked'].includes(outcome.code) || typeof outcome.uncertain !== 'boolean' || outcome.retry !== 'manual-only') throw new Error('Invalid failed outcome');
+    if (outcome.status !== 'failed' || !['invalid-input', 'source-unavailable', 'image-unsupported', 'cancelled', 'timeout', 'transport', 'provider-http', 'redirect', 'response-too-large', 'truncated', 'invalid-output', 'provider-model-missing', 'provider-model-mismatch', 'already-invoked'].includes(outcome.code) || typeof outcome.uncertain !== 'boolean' || outcome.retry !== 'manual-only') throw new Error('Invalid failed outcome');
     safeText(outcome.message, 1000);
     if (outcome.responseSha256 !== null) validateHash(outcome.responseSha256);
+    if (['provider-model-missing', 'provider-model-mismatch'].includes(outcome.code) && (outcome.delivery !== 'responded' || outcome.responseSha256 === null || outcome.uncertain || !Number.isInteger(outcome.httpStatus) || outcome.httpStatus < 200 || outcome.httpStatus > 299)) throw new Error('Model identity failure requires confirmed response evidence');
   }
   if (!['not-sent', 'attempted', 'responded'].includes(outcome.delivery) || (outcome.httpStatus !== null && (!Number.isInteger(outcome.httpStatus) || outcome.httpStatus < 100 || outcome.httpStatus > 599))) throw new Error('Invalid outcome transport state');
   return value;
