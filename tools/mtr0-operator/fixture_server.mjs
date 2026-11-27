@@ -142,7 +142,7 @@ async function startAstro(label) {
     .filter((name) => process.env[name] !== undefined).map((name) => [name, process.env[name]]));
   Object.assign(env, {
     PSPT_SECRET: signingSecret, PSPT_CREDS: JSON.stringify({ fixture: password, other: otherPassword }),
-    NEST_API_KEY: serviceKey, DIRECTOR_STUDY_STORE_DIR: workspace,
+    NEST_API_KEY: serviceKey, DIRECTOR_STUDY_STORE_DIR: workspace, DIRECTOR_DEV_STORE_DIR: join(workspace, 'director-scene'),
     MTR0_ENDPOINT: endpoint, MTR0_SERVICE_ID: `synthetic-service-${label}`, MTR0_MODEL: `synthetic-model-${label}`,
     MTR0_API_KEY: providerKeys[label], MTR0_IMAGE_INPUT: 'true', MTR0_ALLOW_LOOPBACK_HTTP: 'true',
     UPSTASH_REDIS_REST_URL: '', UPSTASH_REDIS_REST_TOKEN: '', BLOB_READ_WRITE_TOKEN: '',

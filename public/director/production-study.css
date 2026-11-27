@@ -52,6 +52,11 @@
 #production-study .ps-engine-card ul{padding-left:20px}
 #production-study .ps-engine-card code{font-size:10px;overflow-wrap:anywhere;white-space:pre-wrap}
 #production-study .ps-engine-historical{border-left:3px solid #e8bc71;padding-left:10px;color:#e8c995}
+#production-study [hidden]{display:none!important}
+#production-study #ps-step-detail{overflow-wrap:anywhere}
+#production-study #ps-step-detail h4{font-size:13px;margin:14px 0 6px}
+#production-study .ps-step-instruction,#production-study .ps-step-proposal{font-size:13px;line-height:1.5;white-space:pre-wrap}
+#production-study #ps-step-detail code{font-size:10px;white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:680px){
  #production-study{width:100vw;height:100dvh;margin:0;border-radius:0;border:0}
  #production-study .ps-head{padding:12px;gap:8px;flex-wrap:wrap}

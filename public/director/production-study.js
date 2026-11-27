@@ -28,8 +28,21 @@
             <label>Study one aspect<select id="ps-engine-domain"><option value="lighting">Lighting</option><option value="camera">Camera</option><option value="composition">Composition</option></select></label>
             <label>Instruction<textarea id="ps-engine-instruction" rows="3" maxlength="3000" placeholder="Propose one lighting change. Hold the camera and materials fixed."></textarea></label>
             <p id="ps-engine-ready" class="ps-note"></p>
-            <button id="ps-engine-send" class="primary" type="button" disabled>Request proposal</button>
+            <div class="ps-row"><button id="ps-engine-send" class="primary" type="button" disabled>Request proposal</button><button id="ps-step-select" type="button" hidden disabled>Save as step</button></div>
           </details>
+          <section id="ps-continuation" class="ps-section" aria-labelledby="ps-step-heading" hidden>
+            <h4 id="ps-step-heading">Saved steps</h4>
+            <p id="ps-step-status" class="ps-note" role="status" aria-live="polite"></p>
+            <div id="ps-step-detail"></div>
+            <div class="ps-row"><button id="ps-step-check" type="button">Check saved step</button><button id="ps-step-resume" type="button" disabled>Run saved step</button><button id="ps-step-use" type="button" disabled>Use result in next instruction</button><button id="ps-step-retry" type="button" hidden>Retry same selection</button></div>
+            <p class="ps-note">Saving a step keeps its exact inputs without calling the engine. Running it is a separate action. Manual cards and scene acceptance remain separate.</p>
+          </section>
+          <section id="ps-step-recovery" class="ps-section" aria-label="Requested study recovery" hidden>
+            <h4>Requested study recovery</h4>
+            <p id="ps-recovery-status" class="ps-note" role="status"></p>
+            <div id="ps-recovery-result"></div>
+            <div class="ps-row"><button id="ps-recovery-check" type="button">Check recovery</button><button id="ps-recovery-close" type="button">Close recovery view</button></div>
+          </section>
           <div class="ps-row"><label>Engine request history<select id="ps-engine-history"><option value="">No requests yet</option></select></label><button id="ps-engine-refresh" type="button">Check requests</button></div>
           <p id="ps-engine-status" class="ps-note" role="status" aria-live="polite">Opening a study does not make a model request.</p>
           <div id="ps-engine-result" aria-label="Engine proposal"></div>
@@ -97,6 +110,226 @@
   let engineHistory = [], engineSelected = '', engineDetail = null, engineDetailTurn = 0, engineSending = false, engineReading = false;
   let engineUnconfirmed = null;
   let engineRoles = new Map(), engineSelection = new Set(), engineDraftDirty = false, engineDraftVersion = 0;
+  let stepSupported = false, stepState = 'unread', stepView = null, stepReceipt = null;
+  let stepWorking = false, stepReading = false, stepTurn = 0, stepContext = 0, stepMessage = '', stepDraftFrom = null;
+  let stepIntent = null, stepJournalError = '';
+  let recovery = null, recoveryTurn = 0;
+  const stepOwner = host.dataset.owner;
+  const stepKey = () => `nest-mtr0-selection/v1:${encodeURIComponent(stepOwner || '')}:${studyId}`;
+  // Only the pending selection is journaled in this tab. The server owns the
+  // retained program. Load it only after an owned study has been opened.
+  function loadStepIntent() {
+    stepIntent = null; stepJournalError = '';
+    try {
+      if (!stepOwner) throw new Error('The signed-in owner is unavailable.');
+      const raw = sessionStorage.getItem(stepKey());
+      if (!raw) return;
+      const item = JSON.parse(raw);
+      if (raw.length > 40000 || item.owner !== stepOwner || item.selection?.action !== 'select' ||
+          item.selection.input?.studyId !== studyId || !/^op_[a-f0-9-]{36}$/.test(item.selection.input.operationId || '')) {
+        throw new Error('The pending selection cannot be verified.');
+      }
+      stepIntent = item;
+    } catch {
+      stepJournalError = 'This tab cannot read its pending selection. New selection is unavailable; check the saved step without sending again.';
+    }
+  }
+  function keepStepIntent(item) {
+    sessionStorage.setItem(stepKey(), JSON.stringify(item));
+    stepIntent = item;
+  }
+  function clearStepIntent() {
+    stepIntent = null; stepJournalError = '';
+    try { sessionStorage.removeItem(stepKey()); } catch {
+      // The durable receipt remains authoritative even if local cleanup fails.
+      stepJournalError = 'Selection is confirmed, but this tab could not clear its local retry record. Checking again is safe.';
+    }
+  }
+  function checkStepView(value, id, expectedSelection = null) {
+    const input = value?.continuation?.selection?.input;
+    if (!value.ok || input?.studyId !== id ||
+        (value.operation && (value.operation.id !== input.operationId || value.operation.studyId !== id || value.operation.revisionId !== input.revisionId)) ||
+        (expectedSelection && canonical(value.continuation.selection) !== canonical(expectedSelection))) {
+      throw new Error('The saved-step receipt differs from the selected work. Check the original selection.');
+    }
+    return value;
+  }
+  function stepInputReason() {
+    if (!baseRevisionId || dirty || saving || pending || loading || busy) return 'Save and confirm the current study first.';
+    if (!engineSelection.size || engineSelection.size > 8) return 'Select one to eight evidence sources.';
+    if ([...engineSelection].some(id => !engineRoles.get(id))) return 'Choose a role for each selected source.';
+    if (!$('ps-engine-instruction').value.trim()) return 'Write the instruction for this step.';
+    return '';
+  }
+  function renderRecovery() {
+    $('ps-step-recovery').hidden = !recovery;
+    if (!recovery) return;
+    $('ps-recovery-status').textContent = `Full study load failed: ${recovery.failure} The editable work remains "${study.title}". This separate, read-only recovery belongs to requested study ${recovery.id}.`;
+    const container = $('ps-recovery-result'); container.replaceChildren();
+    if (recovery.reading) addNode(container, 'p', 'Reading its retained step without dispatching.', 'ps-note');
+    if (recovery.error) addNode(container, 'p', recovery.error, 'ps-error');
+    if (recovery.view) {
+      const step = recovery.view.continuation, outcome = recovery.view.operation?.outcome;
+      addNode(container, 'p', `Retained step · ${step.status} · current study observation ${recovery.view.studyHead?.status || 'unavailable'}`, 'ps-note');
+      addNode(container, 'code', `Requested study: ${recovery.id}\nSelected: ${step.selection.input.operationId}\nCurrent head: ${step.currentOperationId}`);
+      addNode(container, 'p', step.selection.input.instruction, 'ps-step-instruction');
+      if (outcome?.status === 'completed') addNode(container, 'p', outcome.card.proposal.text, 'ps-step-proposal');
+      else if (outcome) addNode(container, 'p', outcome.message, 'ps-note');
+      addNode(container, 'p', 'This recovered result does not load the study, replace the editable work or authorize a new request.', 'ps-note');
+    }
+    $('ps-recovery-check').disabled = recovery.reading;
+  }
+  async function recoverStudy(id, failure) {
+    const turn = ++recoveryTurn;
+    recovery = { id, failure, view: recovery?.id === id ? recovery.view : null, reading: true, error: '' };
+    renderRecovery();
+    try {
+      const status = await engineApi();
+      if (status.continuationCapability !== 'mtr0-continuation/v1') throw new Error('The connected server does not offer saved-step recovery.');
+      const result = checkStepView(await engineApi(`?continuationStudyId=${encodeURIComponent(id)}`), id);
+      if (turn !== recoveryTurn) return;
+      recovery.view = result;
+    } catch (error) { if (turn === recoveryTurn) recovery.error = error.message; }
+    finally { if (turn === recoveryTurn) { recovery.reading = false; renderRecovery(); } }
+  }
+  function renderStep() {
+    $('ps-continuation').hidden = !stepSupported;
+    $('ps-step-select').hidden = !stepSupported;
+    if (!stepSupported) return;
+    const current = stepView?.continuation;
+    const isHead = current && current.selection.input.operationId === current.currentOperationId;
+    const head = stepView?.studyHead;
+    let message = stepMessage;
+    if (stepWorking) message = 'Confirming the original saved-step action…';
+    else if (stepReading) message = 'Reading the retained step. No engine call is being made.';
+    else if (stepJournalError) message = stepJournalError;
+    else if (stepIntent) message = 'Selection delivery is unconfirmed. Check the saved step or retry the exact original selection; a new identity will not be created.';
+    else if (stepMessage) message = stepMessage;
+    else if (stepState === 'absent') message = 'No step has been selected for this study. Prepare an instruction and save it as a step.';
+    else if (stepState !== 'known') message = 'The current saved step is not confirmed. Check it before selecting or running work.';
+    else if (!isHead) message = 'This is an earlier selection receipt. Check the current saved step before continuing.';
+    else if (current.next === 'dispatch') message = head?.selectedRevisionCurrent === false
+      ? 'The unrun step belongs to an older saved revision. It cannot run. This version has no abandon or rebase action.'
+      : head?.status !== 'available' ? 'The saved inputs are retained, but current source availability is unknown. Check again before running.'
+      : 'Selected and retained. Run this saved step when ready.';
+    else if (current.next === 'select-next') message = 'Completed result retained. Use its proposal in your next instruction, then save the next step.';
+    else if (current.next === 'inspect-failure') message = 'This step has a retained failure. Inspect it; a dependent next step is unavailable.';
+    else message = 'The outcome is unresolved. Checking preserves the original identity and does not send another request.';
+    $('ps-step-status').textContent = message;
+    const container = $('ps-step-detail'); container.replaceChildren();
+    if (current) {
+      addNode(container, 'p', `Saved step · ${current.status}`, 'ps-note');
+      if (head?.status !== 'available') addNode(container, 'p', 'Current study observation unavailable. This does not change the retained result.', 'ps-note ps-engine-historical');
+      else if (!head.selectedRevisionCurrent) addNode(container, 'p', 'The saved study has changed since this step was selected.', 'ps-note ps-engine-historical');
+      const details = addNode(container, 'details');
+      addNode(details, 'summary', 'Selected instruction and identity');
+      addNode(details, 'p', current.selection.input.instruction, 'ps-step-instruction');
+      addNode(details, 'code', `Selected: ${current.selection.input.operationId}\nCurrent head: ${current.currentOperationId}`);
+      if (stepReceipt && stepReceipt.continuation.selection.input.operationId !== current.currentOperationId) {
+        addNode(container, 'p', 'An earlier selection was confirmed. The current head shown here is a different step.', 'ps-note');
+      }
+      const outcome = stepView.operation?.outcome;
+      if (outcome?.status === 'completed') {
+        addNode(container, 'h4', 'Retained proposal');
+        addNode(container, 'p', outcome.card.proposal.text, 'ps-step-proposal');
+        addNode(container, 'p', 'Engine contribution · no manual card or scene change has been accepted.', 'ps-note');
+      } else if (outcome) addNode(container, 'p', `${outcome.message}${outcome.uncertain ? ' Provider completion remains uncertain.' : ''}`, 'ps-error');
+    }
+    if (stepDraftFrom) addNode(container, 'p', 'The next instruction was prepared from this retained proposal. You can edit it before saving the next step.', 'ps-note');
+    const waiting = stepWorking || stepReading || !stepSupported || Boolean(stepJournalError);
+    const observed = stepState === 'known' && isHead;
+    const successor = observed && current.next === 'select-next' &&
+      head?.status === 'available' && head.revisionId === baseRevisionId &&
+      stepDraftFrom?.operationId === current.currentOperationId && stepDraftFrom.resultHash === current.resultHash;
+    $('ps-step-select').disabled = waiting || Boolean(stepIntent) || Boolean(stepInputReason()) ||
+      !(stepState === 'absent' || successor);
+    $('ps-step-select').textContent = current ? 'Save next step' : 'Save as first step';
+    $('ps-step-check').disabled = stepWorking || stepReading || !baseRevisionId;
+    $('ps-step-resume').disabled = waiting || Boolean(stepIntent) || !observed || current.next !== 'dispatch' ||
+      head?.status !== 'available' || head.selectedRevisionCurrent !== true || !engineConfig?.configured ||
+      dirty || saving || Boolean(pending) || loading || busy > 0;
+    $('ps-step-use').disabled = waiting || Boolean(stepIntent) || !observed || current.next !== 'select-next' || stepView.operation?.outcome?.status !== 'completed';
+    $('ps-step-retry').hidden = !stepIntent;
+    $('ps-step-retry').disabled = stepWorking || stepReading || Boolean(stepJournalError);
+  }
+  async function readStep() {
+    if (!stepSupported || !baseRevisionId) return;
+    const id = studyId, turn = ++stepTurn;
+    stepReading = true; renderStep();
+    try {
+      const result = checkStepView(await engineApi(`?continuationStudyId=${encodeURIComponent(id)}`), id);
+      if (id !== studyId || turn !== stepTurn) return;
+      stepView = result; stepState = 'known'; stepMessage = '';
+      if (stepIntent && canonical(result.continuation.selection) === canonical(stepIntent.selection)) clearStepIntent();
+    } catch (error) {
+      if (id !== studyId || turn !== stepTurn) return;
+      if (error.status === 404) { stepView = null; stepState = 'absent'; stepMessage = ''; }
+      else { stepState = 'unavailable'; stepMessage = `${error.message} The last observed result, if any, is retained below.`; }
+    } finally { if (id === studyId && turn === stepTurn) { stepReading = false; renderStep(); } }
+  }
+  async function selectStep(retry = false) {
+    renderStep();
+    if (retry ? $('ps-step-retry').disabled || !stepIntent : $('ps-step-select').disabled) return;
+    const id = studyId, context = stepContext, version = engineDraftVersion;
+    const sourceIds = study.evidence.filter(source => engineSelection.has(source.id)).map(source => source.id);
+    const selection = retry ? clone(stepIntent.selection) : {
+      action: 'select',
+      input: { action: 'generate', operationId: uid('op'), studyId: id, revisionId: baseRevisionId,
+        sourceIds, instruction: `Source roles:\n${sourceIds.map(sourceId => `${sourceId}: ${engineRoles.get(sourceId)}`).join('\n')}\n\nOperator instruction:\n${$('ps-engine-instruction').value.trim()}`,
+        allowedDomains: [$('ps-engine-domain').value] },
+      previousOperationId: stepView?.continuation.currentOperationId || null,
+      previousResultHash: stepView?.continuation.resultHash || null,
+    };
+    if (selection.input.instruction.length > 4096) { stepMessage = 'Shorten the instruction and source roles before saving the step.'; renderStep(); return; }
+    const earlierUncertainty = retry && stepIntent.uncertain;
+    try {
+      if (!retry) keepStepIntent({ owner: stepOwner, selection, uncertain: true });
+    } catch { stepJournalError = 'This tab cannot retain an original selection for recovery. Nothing was sent.'; renderStep(); return; }
+    stepWorking = true; renderStep();
+    try {
+      const result = checkStepView(await engineApi('', selection), id, selection);
+      if (studyId !== id || context !== stepContext) return;
+      stepReceipt = result; stepView = result; stepState = 'known'; stepMessage = '';
+      clearStepIntent(); stepDraftFrom = null;
+      // A retry confirms an older selection, not the newer composer draft.
+      if (!retry && engineDraftVersion === version) engineDraftDirty = false;
+      await readStep(); // A recovered old receipt is not substituted for the current head.
+    } catch (error) {
+      if (studyId !== id || context !== stepContext) return;
+      if (error.status && error.status < 500 && !earlierUncertainty) clearStepIntent();
+      else if (stepIntent) {
+        stepIntent.uncertain = true;
+        try { keepStepIntent(stepIntent); } catch { /* The original initial journal is retained. */ }
+      }
+      stepMessage = error.message; stepState = 'unavailable';
+    } finally { stepWorking = false; renderStep(); }
+  }
+  async function resumeStep() {
+    renderStep(); if ($('ps-step-resume').disabled) return;
+    const id = studyId, context = stepContext, operationId = stepView.continuation.currentOperationId;
+    stepWorking = true; renderStep();
+    try {
+      const result = checkStepView(await engineApi('', { action: 'resume', studyId: id, operationId }), id);
+      if (result.continuation.selection.input.operationId !== operationId) throw new Error('Resume returned a different step.');
+      if (studyId !== id || context !== stepContext) return;
+      stepView = result; stepState = 'known'; stepMessage = '';
+      // Keep this durable result visible independently of later history reads.
+      engineSelected = operationId; engineDetail = result.operation; renderEngineResult();
+    } catch (error) {
+      if (studyId !== id || context !== stepContext) return;
+      stepState = 'unavailable'; stepMessage = `${error.message} Check the saved step under its original identity. No replacement request was made.`;
+    } finally { stepWorking = false; renderStep(); }
+  }
+  function useStepResult() {
+    renderStep(); if ($('ps-step-use').disabled) return;
+    const current = stepView.continuation, input = $('ps-engine-instruction');
+    const prepared = `Retained proposal from ${current.currentOperationId}:\n${stepView.operation.outcome.card.proposal.text}\n\nNext direction:\n${input.value}`;
+    if (prepared.length > input.maxLength) { stepMessage = 'Make room in the instruction before including the retained proposal. Your text is unchanged.'; $('ps-step-status').textContent = stepMessage; return; }
+    input.value = prepared;
+    stepDraftFrom = { operationId: current.currentOperationId, resultHash: current.resultHash };
+    engineDraftDirty = true; engineDraftVersion++;
+    $('ps-engine-compose').open = true; input.focus(); engineControls();
+  }
   function engineStatus(message, error = false) {
     $('ps-engine-status').textContent = message; $('ps-engine-status').dataset.error = String(error);
   }
@@ -127,6 +360,8 @@
     $('ps-engine-send').textContent = engineSending ? 'Requesting…' : engineUnconfirmed?.studyId === studyId ? 'Retry same request' : 'Request proposal';
     $('ps-engine-refresh').disabled = engineReading || !baseRevisionId;
     renderEngineResult();
+    renderStep();
+    renderRecovery();
   }
   function renderEngineSources() {
     const container = $('ps-engine-sources'); container.replaceChildren();
@@ -206,6 +441,10 @@
       const config = await engineApi();
       if (turn !== engineTurn || id !== studyId) return;
       engineConfig = config.configuration; engineConfigError = '';
+      stepSupported = config.continuationCapability === 'mtr0-continuation/v1';
+      renderStep();
+      if (stepSupported && revision) await readStep();
+      if (turn !== engineTurn || id !== studyId) return;
       if (revision) {
         const result = await engineApi(`?studyId=${encodeURIComponent(id)}`);
         if (turn !== engineTurn || id !== studyId) return;
@@ -228,6 +467,8 @@
     if (engineStudyId !== studyId) {
       engineStudyId = studyId; engineTurn++; engineReading = false; engineDetailTurn++; engineHistory = []; engineSelected = ''; engineDetail = null;
       engineSelection = new Set(); engineRoles = new Map(); engineDraftDirty = false;
+      stepContext++; stepTurn++; stepReading = false; stepState = 'unread'; stepView = null; stepReceipt = null; stepMessage = ''; stepDraftFrom = null;
+      loadStepIntent();
       $('ps-engine-instruction').value = ''; $('ps-engine-domain').value = 'lighting';
       renderEngineHistory();
     }
@@ -345,14 +586,19 @@
     busy++; loading = true; controls();
     try {
       const result = await api(`?id=${encodeURIComponent(id)}${revision ? `&revision=${encodeURIComponent(revision)}` : ''}`);
+      recoveryTurn++; recovery = null;
       study = result.study; studyId = result.saved.id; baseRevisionId = result.saved.revisionId; viewCardId = study.selectedCardId || study.cards.at(-1)?.id || null; frozen = new Set(study.cards.map(card => card.id)); pending = null; dirty = false; targetTurn++;
       draftBaseline = canonical(study); $('ps-source-text').value = ''; $('ps-correction').value = ''; $('ps-preview-settings').value = ''; render(); updateLink(); status('Study reopened from the local store. No model request was made.'); refreshEngine();
-    } catch (error) { status(error.message, true); }
+    } catch (error) {
+      status(error.message, true);
+      if (id === studyId) { stepState = 'unavailable'; stepMessage = 'The full study could not be reopened. Fresh work is unavailable until its sources can be confirmed.'; }
+      await recoverStudy(id, error.message);
+    }
     finally { busy--; loading = false; controls(); }
   }
   async function save(copy = false) {
     if (saving || busy) return;
-    if (copy) { studyId = uid('study'); baseRevisionId = null; pending = null; dirty = true; }
+    if (copy) { studyId = uid('study'); baseRevisionId = null; pending = null; dirty = true; engineStudyChanged(); }
     if (!pending) {
       pending = { action: 'save', requestId: crypto.randomUUID(), studyId, baseRevisionId, study: clone(study) };
       for (const card of pending.study.cards) frozen.add(card.id);
@@ -434,6 +680,13 @@
   $('ps-refresh').addEventListener('click', () => refresh()); $('ps-open').addEventListener('click', () => openStudy($('ps-studies').value));
   $('ps-new').addEventListener('click', () => { if (!mayReplace()) return; study = newStudy(); draftBaseline = canonical(study); studyId = uid('study'); baseRevisionId = null; viewCardId = study.selectedCardId; pending = null; frozen = new Set(); targetTurn++; dirty = true; $('ps-source-text').value = ''; $('ps-correction').value = ''; $('ps-preview-settings').value = ''; render(); status('New local draft. No evidence or preview is assumed.'); });
   $('ps-engine-send').addEventListener('click', requestEngine);
+  $('ps-step-select').addEventListener('click', () => selectStep());
+  $('ps-step-retry').addEventListener('click', () => selectStep(true));
+  $('ps-step-check').addEventListener('click', readStep);
+  $('ps-step-resume').addEventListener('click', resumeStep);
+  $('ps-step-use').addEventListener('click', useStepResult);
+  $('ps-recovery-check').addEventListener('click', () => recovery && recoverStudy(recovery.id, recovery.failure));
+  $('ps-recovery-close').addEventListener('click', () => { recoveryTurn++; recovery = null; renderRecovery(); });
   $('ps-engine-refresh').addEventListener('click', refreshEngine);
   $('ps-engine-history').addEventListener('change', event => selectEngineOperation(event.target.value));
   for (const id of ['ps-engine-instruction', 'ps-engine-domain']) $(id).addEventListener('input', () => { engineDraftDirty = true; engineDraftVersion++; engineControls(); });
