@@ -70,5 +70,14 @@
     "alt": "Open sketchbook: interlocking bands and circles on the left; a forest and small standing figure on the right."
   },
   "effectAttribution": "C.B. summaries of the attributed explanations retained in the source responses.",
-  "readerPrompt": "Keep the opening and write your own ending. Add one sentence about what changes when you read the whole passage again."
+  "readerPrompt": "Keep the opening and write your own ending. Add one sentence about what changes when you read the whole passage again.",
+  "continuation": {
+    "endingId": "trip",
+    "author": "Qwen",
+    "paragraph": "The limb ran out from the trunk at a slant, so keeping the tree on my left meant walking the narrowing gap between the wood and the bark. I turned my shoulder to fit and felt the broad side of the trunk pass close enough to touch. Behind me the narrow path I had trusted was a thin line on the far side of the limb, no longer something my edges could follow. I kept the tree on my left and let the gap set my steps, one hand hovering near the bark, not knowing whether this carried me toward anything or only around it.",
+    "readerQuestion": "Does the new paragraph free the narrator from following edges, or replace the path's edges with another guide? Point to the words that make you read it that way.",
+    "questionAuthor": "Trip",
+    "literalSha256": "47fbb3a5d80a6a5bf03cc1408310d5dc49e3554d7cf59b4c340dd7184b163c6b",
+    "literalSource": "/epictome/sources/native-continuation.txt"
+  }
 }
