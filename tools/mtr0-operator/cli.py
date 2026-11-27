@@ -39,6 +39,12 @@ def parser():
     resume = commands.add_parser("continuation-resume")
     resume.add_argument("--study-id", required=True)
     resume.add_argument("--operation-id", required=True)
+    context = commands.add_parser("program-context")
+    context.add_argument("--study-id", required=True)
+    context.add_argument("--journal", required=True)
+    choice = commands.add_parser("program-choice")
+    choice.add_argument("--journal", required=True)
+    choice.add_argument("--input", required=True)
     return p
 
 
@@ -63,12 +69,23 @@ async def dispatch(args):
             case "continuation-read": return await c.continuation_read(args.study_id)
             case "continuation-select": return await c.continuation_select(read_input(args.input))
             case "continuation-resume": return await c.continuation_resume(args.study_id, args.operation_id)
+            case "program-context":
+                from program import NativeProgram
+                return await NativeProgram(c, args.journal).context(args.study_id)
+            case "program-choice":
+                from program import MAX_REPLY, NativeProgram
+                try:
+                    with open(args.input, "rb") as stream:
+                        raw = stream.read(MAX_REPLY + 1)
+                except OSError:
+                    raise BridgeError("choice-input", "Could not read the operator-retained literal reply.") from None
+                return await NativeProgram(c, args.journal).choose(raw)
 
 
 def main():
     args = parser().parse_args()
     try:
-        result = asyncio.run(dispatch(args)); code = 0
+        result = asyncio.run(dispatch(args)); code = 0 if result.get("ok") else 1
     except BridgeError as error:
         result, code = error.as_dict(), 1
     except KeyboardInterrupt:
