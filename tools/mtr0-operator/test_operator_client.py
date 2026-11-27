@@ -3,6 +3,7 @@ import asyncio
 import base64
 import hashlib
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -113,7 +114,7 @@ class BridgeTests(unittest.IsolatedAsyncioTestCase):
     async def test_mcp_discovery_has_complete_envelopes_without_credentials(self):
         server = create_server(OperatorConfig(ORIGIN, COOKIE))
         tools = {x.name: x for x in await server.list_tools()}
-        self.assertEqual(len(tools), 9)
+        self.assertEqual(len(tools), 12)
         invoke = tools["mtr0_invoke"].inputSchema
         # The SDK can inline or retain a definition; find the actual request shape.
         shapes = list(invoke.get("$defs", {}).values()) + [invoke["properties"]["request"]]
@@ -124,6 +125,28 @@ class BridgeTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn(COOKIE, json.dumps(invoke))
 
 
+    async def test_continuation_commands_preserve_envelope_and_do_not_retry(self):
+        seen = []
+        def handler(req):
+            seen.append(req)
+            if req.method == "POST" and json.loads(req.content)["action"] == "resume":
+                raise httpx.ReadError("unconfirmed", request=req)
+            return httpx.Response(200, json={"ok": True, "continuation": {"next": "dispatch"}})
+        selection = {"action": "select", "input": REQUEST, "previousOperationId": None, "previousResultHash": None}
+        async with OperatorClient(OperatorConfig(ORIGIN, COOKIE), transport=httpx.MockTransport(handler)) as c:
+            await c.continuation_select(selection)
+            await c.continuation_read(REQUEST["studyId"])
+            with self.assertRaises(BridgeError) as caught:
+                await c.continuation_resume(REQUEST["studyId"], REQUEST["operationId"])
+        self.assertTrue(caught.exception.uncertain)
+        self.assertFalse(caught.exception.as_dict()["error"]["automaticRetry"])
+        self.assertEqual(len(seen), 3)
+        self.assertEqual(json.loads(seen[0].content), selection)
+        self.assertEqual(seen[1].url.params["continuationStudyId"], REQUEST["studyId"])
+        self.assertEqual(json.loads(seen[2].content), {"action": "resume",
+            "studyId": REQUEST["studyId"], "operationId": REQUEST["operationId"]})
+
+
 class ConfigTests(unittest.TestCase):
     def test_private_config_and_explicit_origin(self):
         with tempfile.TemporaryDirectory() as root:
@@ -132,8 +155,9 @@ class ConfigTests(unittest.TestCase):
             file.chmod(0o600)
             self.assertEqual(OperatorConfig.load(file).origin, ORIGIN)
             file.chmod(0o644)
-            with self.assertRaises(BridgeError):
-                OperatorConfig.load(file)
+            if os.name == "posix":
+                with self.assertRaises(BridgeError):
+                    OperatorConfig.load(file)
         for origin in (None, "http://remote.invalid", "https://user:secret@example.invalid", ORIGIN + "/api", ORIGIN + "?key=x", ORIGIN + "\n"):
             with self.assertRaises(BridgeError):
                 OperatorConfig(origin, COOKIE)

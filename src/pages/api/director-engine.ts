@@ -6,6 +6,7 @@ import { ProductionStudyError } from '../../lib/productionStudySchema.js';
 import { createProductionStudyService } from '../../lib/productionStudyService.js';
 import { createProductionStudyStore } from '../../lib/productionStudyStore.js';
 import { createMtr0OperationStore } from '../../lib/mtr0OperationStore.js';
+import { createMtr0ContinuationService } from '../../lib/mtr0ContinuationService.js';
 import { createMtr0Service } from '../../lib/mtr0Service.js';
 import { MAX_ENGINE_BODY_BYTES } from '../../lib/mtr0OperationSchema.js';
 
@@ -18,7 +19,7 @@ function actor(request: Request) {
   if (!session || typeof session.user !== 'string' || !Number.isFinite(session.exp) || session.exp <= Date.now()) throw new ProductionStudyError('session expired; sign in to use MTR0', 401);
   return { kind: 'operator', user: session.user };
 }
-let cached: { key: string; service: ReturnType<typeof createMtr0Service> } | null = null;
+let cached: { key: string; engine: ReturnType<typeof createMtr0Service>; continuation: ReturnType<typeof createMtr0ContinuationService>; studyService: ReturnType<typeof createProductionStudyService> } | null = null;
 function service() {
   const env = (name: string) => import.meta.env[name] || process.env[name] || '';
   const directory = env('DIRECTOR_STUDY_STORE_DIR');
@@ -29,9 +30,25 @@ function service() {
   const key = createHash('sha256').update(JSON.stringify({ directory, provider })).digest('hex');
   if (!cached || cached.key !== key) {
     const studyService = createProductionStudyService({ store: createProductionStudyStore(directory) });
-    cached = { key, service: createMtr0Service({ store: createMtr0OperationStore(directory), studyService, provider }) };
+    const store = createMtr0OperationStore(directory);
+    const engine = createMtr0Service({ store, studyService, provider });
+    cached = { key, engine, studyService, continuation: createMtr0ContinuationService({ store, studyService, engine }) };
   }
-  return cached.service;
+  return cached;
+}
+async function continuationView(result: any, runtime: ReturnType<typeof service>, who: ReturnType<typeof actor>) {
+  const input = result.continuation.selection.input;
+  // Enrichment follows an authoritative durable response, possibly an effect.
+  // Its failure must not erase that response or become a pre-effect rejection.
+  // Actual selection/dispatch still validates the study and its attachments.
+  try {
+    const current = await runtime.studyService.get(input.studyId, who);
+    return { ...result, studyHead: { status: 'available', revisionId: current.saved.revisionId,
+      selectedRevisionCurrent: input.revisionId === current.saved.revisionId } };
+  } catch {
+    return { ...result, studyHead: { status: 'unavailable', revisionId: null,
+      selectedRevisionCurrent: null } };
+  }
 }
 async function body(request: Request) {
   if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') throw new ProductionStudyError('JSON content type required', 415);
@@ -52,10 +69,12 @@ function failure(error: any) {
 }
 export const GET: APIRoute = async ({ request, url }) => {
   try {
-    const who = actor(request), engine = service(), keys = [...url.searchParams.keys()];
-    if (keys.some(key => !['studyId', 'operationId'].includes(key)) || new Set(keys).size !== keys.length || keys.length > 1) throw new ProductionStudyError('invalid engine query');
+    const who = actor(request), runtime = service(), keys = [...url.searchParams.keys()];
+    if (keys.some(key => !['studyId', 'operationId', 'continuationStudyId'].includes(key)) || new Set(keys).size !== keys.length || keys.length > 1) throw new ProductionStudyError('invalid engine query');
+    const continuationStudyId = url.searchParams.get('continuationStudyId');
+    if (continuationStudyId !== null) return json(await continuationView(await runtime.continuation.get(continuationStudyId, who), runtime, who));
     const operationId = url.searchParams.get('operationId');
-    return json(operationId !== null ? await engine.get(operationId, who) : await engine.status(who, url.searchParams.get('studyId')));
+    return json(operationId !== null ? await runtime.engine.get(operationId, who) : { ...await runtime.engine.status(who, url.searchParams.get('studyId')), continuationCapability: 'mtr0-continuation/v1' });
   } catch (error) { return failure(error); }
 };
 export const POST: APIRoute = async ({ request, url }) => {
@@ -63,7 +82,13 @@ export const POST: APIRoute = async ({ request, url }) => {
     const who = actor(request);
     if (request.headers.get('origin') !== url.origin) throw new ProductionStudyError('same-origin request required', 403);
     if (url.search) throw new ProductionStudyError('engine writes do not accept query parameters');
-    const engine = service(), result = await engine.generate(await body(request), who);
+    const runtime = service(), value = await body(request);
+    if (value?.action === 'select') return json(await continuationView(await runtime.continuation.select(value, who), runtime, who));
+    if (value?.action === 'resume') {
+      const { action, ...resume } = value; // Service rejects every extra resume field.
+      return json(await continuationView(await runtime.continuation.resume(resume, who), runtime, who));
+    }
+    const result = await runtime.engine.generate(value, who);
     return json(result, result.operation.status === 'pending' ? 202 : 200);
   } catch (error) { return failure(error); }
 };

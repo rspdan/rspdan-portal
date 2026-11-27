@@ -31,6 +31,7 @@ TOOLS = {
     "mtr0_status", "mtr0_studies_list", "mtr0_study_read", "mtr0_study_save",
     "mtr0_asset_upload", "mtr0_asset_read", "mtr0_invoke",
     "mtr0_operation_read", "mtr0_history",
+    "mtr0_continuation_select", "mtr0_continuation_read", "mtr0_continuation_resume",
 }
 
 
@@ -50,7 +51,7 @@ class Fixture:
         except (ValueError, UnicodeError) as error:
             raise RuntimeError("Invalid isolated fixture protocol response") from error
         if not response.get("ok"):
-            raise RuntimeError("Isolated fixture did not confirm the requested action")
+            raise RuntimeError("Isolated fixture did not confirm the requested action; stage=" + str(response.get("stage", "command")))
         return response
 
     async def __aenter__(self):

@@ -215,6 +215,22 @@ class OperatorClient:
                 "instruction": "1–4096 characters, including each selected source's intended role",
                 "allowedDomains": ["camera", "lighting", "composition"],
             },
+            "continuation": {
+                "available": result.get("continuationCapability") == "mtr0-continuation/v1",
+                "selection": {"action": "select", "input": "exact invokeFields envelope",
+                    "previousOperationId": "null for root; otherwise current selected operationId",
+                    "previousResultHash": "null for root; otherwise continuation.resultHash of retained completed result"},
+                "read": {"continuationStudyId": "owned saved study ID"},
+                "resume": {"action": "resume", "studyId": "owned saved study ID",
+                    "operationId": "original selected ID; never silently replace after uncertain delivery"},
+                "returned": ["continuation.selection", "continuation.currentOperationId",
+                    "continuation.next", "continuation.resultHash", "operation", "studyHead"],
+                "nextInput": "Caller chooses from the retained result and binds its exact ID/hash; no automatic choice.",
+                "headObservation": "studyHead.status=unavailable retains the authoritative result; null revision comparison is unknown, not current or stale.",
+                "staleSelection": "studyHead.selectedRevisionCurrent=false: unclaimed resume conflicts; no abandon/rebase.",
+                "dispatch": "No claim permits original-ID dispatch subject to server validation; existing claims are only read.",
+                "limits": "All store writers must use input arbitration; at most 512 reserved IDs per owner.",
+            },
             "studySaveFields": {"action": "save", "requestId": "caller-supplied lowercase UUID",
                 "studyId": "study_<caller-supplied lowercase UUID>",
                 "baseRevisionId": "current saved rev_<UUID>, or null for a new study",
@@ -267,3 +283,14 @@ class OperatorClient:
 
     async def history(self, study_id: str):
         return await self._request(ENGINE_ROUTE, params={"studyId": _identifier(study_id)})
+
+    async def continuation_read(self, study_id: str):
+        return await self._request(ENGINE_ROUTE, params={"continuationStudyId": _identifier(study_id)})
+
+    async def continuation_select(self, request: dict):
+        return await self._request(ENGINE_ROUTE, payload=_payload(request,
+            {"action", "input", "previousOperationId", "previousResultHash"}, "select"))
+
+    async def continuation_resume(self, study_id: str, operation_id: str):
+        return await self._request(ENGINE_ROUTE, payload={"action": "resume",
+            "studyId": _identifier(study_id), "operationId": _identifier(operation_id)})

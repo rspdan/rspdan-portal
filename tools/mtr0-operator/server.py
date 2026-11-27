@@ -26,6 +26,15 @@ class InvokeRequest(BaseModel):
     allowedDomains: list[Literal["camera", "lighting", "composition"]] = Field(min_length=1, max_length=3)
 
 
+class SelectContinuationRequest(BaseModel):
+    """Persist the exact caller choice and its retained completed predecessor."""
+    model_config = ConfigDict(extra="forbid")
+    action: Literal["select"]
+    input: InvokeRequest
+    previousOperationId: str | None = Field(description="Null at root, otherwise current selected operationId.")
+    previousResultHash: str | None = Field(description="Null at root, otherwise exact continuation.resultHash from the retained completed result.")
+
+
 class SaveStudyRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     action: Literal["save"]
@@ -99,6 +108,21 @@ def create_server(config: OperatorConfig) -> FastMCP:
     async def mtr0_history(study_id: str) -> dict[str, Any]:
         """Read the saved operation history for a study, preserving each original provider identity."""
         return await call("history", study_id)
+
+    @mcp.tool(annotations=read)
+    async def mtr0_continuation_read(study_id: str) -> dict[str, Any]:
+        """Reopen selection, currentOperationId, next, resultHash and operation; studyHead reports stale revision. Never invokes."""
+        return await call("continuation_read", study_id)
+
+    @mcp.tool(annotations=save)
+    async def mtr0_continuation_select(request: SelectContinuationRequest) -> dict[str, Any]:
+        """Persist the caller's chosen input. Successor consumes the retained completed predecessor by exact ID/hash, without adopting a card or invoking."""
+        return await call("continuation_select", request.model_dump(mode="json"))
+
+    @mcp.tool(annotations=invoke)
+    async def mtr0_continuation_resume(study_id: str, operation_id: str) -> dict[str, Any]:
+        """Reconcile the original selected ID. Only an unclaimed current revision can invoke. Existing claims are read; never replace an uncertain ID."""
+        return await call("continuation_resume", study_id, operation_id)
 
     return mcp
 

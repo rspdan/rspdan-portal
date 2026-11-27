@@ -30,11 +30,15 @@ def parser():
     for name in ("status", "studies-list"):
         commands.add_parser(name)
     get = commands.add_parser("study-get"); get.add_argument("--id", required=True); get.add_argument("--revision")
-    for name in ("study-save", "asset-upload", "invoke"):
+    for name in ("study-save", "asset-upload", "invoke", "continuation-select"):
         commands.add_parser(name).add_argument("--input", default="-")
     commands.add_parser("asset-read").add_argument("--sha256", required=True)
     commands.add_parser("operation-get").add_argument("--id", required=True)
     commands.add_parser("operation-history").add_argument("--study-id", required=True)
+    commands.add_parser("continuation-read").add_argument("--study-id", required=True)
+    resume = commands.add_parser("continuation-resume")
+    resume.add_argument("--study-id", required=True)
+    resume.add_argument("--operation-id", required=True)
     return p
 
 
@@ -56,6 +60,9 @@ async def dispatch(args):
             case "invoke": return await c.invoke(read_input(args.input))
             case "operation-get": return await c.get_operation(args.id)
             case "operation-history": return await c.history(args.study_id)
+            case "continuation-read": return await c.continuation_read(args.study_id)
+            case "continuation-select": return await c.continuation_select(read_input(args.input))
+            case "continuation-resume": return await c.continuation_resume(args.study_id, args.operation_id)
 
 
 def main():
@@ -68,7 +75,8 @@ def main():
         result, code = BridgeError("interrupted", "Local process interrupted; read the supplied operation ID before any further invocation.", uncertain=True).as_dict(), 130
     except Exception:
         result, code = BridgeError("bridge", "The bridge did not produce a confirmed receipt; read saved history before retrying a write.", uncertain=True).as_dict(), 1
-    print(json.dumps(result, ensure_ascii=False))
+    # JSON protocol is UTF-8 even when the Windows console code page differs.
+    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False) + "\n").encode("utf-8"))
     return code
 
 

@@ -7,7 +7,7 @@ import { mkdtemp, open, rm } from 'node:fs/promises';
 import { createServer as createHttpServer } from 'node:http';
 import { createServer as createProbe } from 'node:net';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve, dirname, basename } from 'node:path';
 import { createInterface } from 'node:readline';
 import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +23,7 @@ const providerKeys = { A: secret(), B: secret() };
 const serviceKey = secret();
 const calls = { A: [], B: [] };
 const providers = {};
+const responseDelay = { A: 0, B: 0 };
 let workspace;
 let origin;
 let port;
@@ -32,6 +33,7 @@ let configuration = 'A';
 let closing = false;
 let starting = true;
 let cleanupPromise;
+let startupStage = 'workspace';
 
 function completion(label) {
   const card = {
@@ -94,6 +96,8 @@ async function startProvider(label) {
         });
       // No headers, credentials or session tokens are retained in diagnostics.
       calls[label].push({ model: body.model, requestSha256: digest(bytes), requestBytes: bytes.length, body, images });
+      const pause = responseDelay[label]; responseDelay[label] = 0;
+      if (pause) await delay(pause);
       response.writeHead(200, { 'content-type': 'application/json' });
       response.end(JSON.stringify(completion(label)));
     } catch {
@@ -112,6 +116,14 @@ async function stopAstro() {
   child = null;
   if (!running || !running.pid || running.exitCode !== null || running.signalCode !== null) return;
   const exited = new Promise((resolve) => running.once('exit', resolve));
+  if (process.platform === 'win32') {
+    // Only this fixture's known child and descendants; no detached helper remains.
+    const killer = spawn('taskkill.exe', ['/PID', String(running.pid), '/T', '/F'],
+      { stdio: 'ignore', windowsHide: true });
+    await new Promise((resolve, reject) => { killer.once('error', reject); killer.once('exit', resolve); });
+    await exited;
+    return;
+  }
   const killer = setTimeout(() => {
     try { process.kill(-running.pid, 'SIGKILL'); } catch {}
   }, 5000);
@@ -126,7 +138,7 @@ async function startAstro(label) {
   const provider = providers[label];
   const endpoint = `http://127.0.0.1:${provider.address().port}/v1/chat/completions`;
   // Only runtime basics and disposable fixture settings enter the child.
-  const env = Object.fromEntries(['PATH', 'HOME', 'TMPDIR', 'LANG', 'LC_ALL', 'SYSTEMROOT']
+  const env = Object.fromEntries(['PATH', 'HOME', 'TMPDIR', 'TEMP', 'TMP', 'USERPROFILE', 'LANG', 'LC_ALL', 'SYSTEMROOT']
     .filter((name) => process.env[name] !== undefined).map((name) => [name, process.env[name]]));
   Object.assign(env, {
     PSPT_SECRET: signingSecret, PSPT_CREDS: JSON.stringify({ fixture: password, other: otherPassword }),
@@ -137,7 +149,7 @@ async function startAstro(label) {
     ASTRO_TELEMETRY_DISABLED: '1',
   });
   const running = spawn(process.execPath, ['./node_modules/astro/astro.js', 'dev', '--host', '127.0.0.1', '--port', String(port)],
-    { cwd: repo, env, stdio: ['ignore', 'ignore', 'ignore'], detached: true });
+    { cwd: repo, env, stdio: ['ignore', 'ignore', 'ignore'], detached: true, windowsHide: true });
   child = running;
   let spawnFailed = false;
   running.once('error', () => { spawnFailed = true; });
@@ -174,7 +186,11 @@ function cleanup() {
       provider.closeAllConnections();
       await new Promise((resolve) => provider.close(resolve));
     }
-    if (workspace) await rm(workspace, { recursive: true, force: true });
+    if (workspace) {
+      const target = resolve(workspace), parent = resolve(tmpdir());
+      if (dirname(target) !== parent || !basename(target).startsWith('mtr0-operator-fixture-')) throw new Error('Unexpected fixture cleanup target');
+      await rm(target, { recursive: true, force: true });
+    }
     if (portLock) await rm(portLock, { force: true });
   })();
   return cleanupPromise;
@@ -203,12 +219,14 @@ try {
   origin = `http://127.0.0.1:${port}`;
   await startProvider('A');
   await startProvider('B');
+  startupStage = 'astro';
   await startAstro('A');
+  startupStage = 'login';
   const cookie = await login('fixture', password);
   const otherCookie = await login('other', otherPassword);
   if (closing) throw new Error('Fixture is closing');
   starting = false;
-  send({ ok: true, origin, cookie, otherCookie, configuration });
+  send({ ok: true, origin, cookie, otherCookie, configuration, workspace });
   for await (const line of input) {
     if (!line.trim()) continue;
     let request;
@@ -220,6 +238,10 @@ try {
         await stopAstro();
         await startAstro(request.configuration);
         send({ id, ok: true, origin, configuration });
+      } else if (request.command === 'delay-next' && ['A', 'B'].includes(request.configuration) &&
+          Number.isInteger(request.milliseconds) && request.milliseconds >= 100 && request.milliseconds <= 3000) {
+        responseDelay[request.configuration] = request.milliseconds;
+        send({ id, ok: true });
       } else if (request.command === 'stop') {
         await cleanup();
         send({ id, ok: true });
@@ -234,7 +256,7 @@ try {
 } catch {
   starting = false;
   // Never emit raw process diagnostics, request bodies or environment values.
-  send({ ok: false, error: 'Fixture startup failed' });
+  send({ ok: false, error: 'Fixture startup failed', stage: startupStage });
   await cleanup();
   process.exitCode = 1;
 }
