@@ -30,6 +30,8 @@ Use the existing development environment and PSPT operator session. Set `DIRECTO
 
 ## Recovery behavior
 
+An explicit `/director?study=study_<uuid>&revision=rev_<uuid>` address stays tied to that saved revision after opening and reloading. A successful save from that view advances the address to the newly confirmed revision; unsaved edits or a rejected save do not. An ordinary study address without `revision`, the saved-study **Open** action, and a newly saved study or copy keep their current-head behavior. These local links still require the owning operator session and the same configured store.
+
 Changes made while a save is in flight remain an unsaved draft after the submitted snapshot is confirmed. A lost receipt keeps the same request for **Retry save**, even if newer edits exist. A stale revision reports a conflict and leaves the draft intact; **Save a copy** gives that draft a separate study. Loading another saved study temporarily prevents editing the body, so the response cannot replace freshly typed work unnoticed.
 
 Saved sources, cards and corrections retain their identities. Unsaved changes live in page memory; closing the dialog preserves them, but reloading requires an explicit save. The browser warns when leaving unsaved work. A preview's absence is distinct from a referenced image whose bytes are missing or damaged: the latter fails receiving instead of being reported as successfully reopened media.
@@ -43,3 +45,5 @@ The [backend contract](production-study-backend.md) documents validation, immuta
 The current implementation has been exercised in the Cloud Linux workspace with Chromium, including 390px touch emulation and an unavailable scene asset. That is not a Windows or physical-phone result. The storage filesystem must support atomic same-directory hard links; Windows installation, actual filesystem behavior and Engine Room transfer still need receiving on the target machine. No inference or new production render is established by these persistence checks.
 
 The connected request interface is received with synthetic loopback providers, including exact source selection, pending/newer work, lost receipts, history reload and rejected output. The integration contract records the API and persistence receiving boundaries; real-model usefulness and HYV0 receiving require separate observation.
+
+The focused address regression is `node tools/mtr0-operator/test_study_revision_links.mjs`, using an installed Playwright/Chromium runtime. `PLAYWRIGHT_MODULE` and `BROWSER_PATH` can select existing installations. It starts its own disposable study fixture, checks a historical address after a later save, ordinary head opening, confirmed and rejected saves, and copying. It uses synthetic sessions and asserts zero provider calls. It does not use the working study or its credentials.

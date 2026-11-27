@@ -84,6 +84,7 @@
   }
   let study = newStudy(), studyId = uid('study'), baseRevisionId = null, viewCardId = study.selectedCardId;
   let dirty = true, saving = false, busy = 0, pending = null, targetTurn = 0, loading = false;
+  let pinRevision = false;
   let draftBaseline = canonical(study);
   let frozen = new Set(), listTurn = 0;
   const assetUrl = (asset) => `/api/director-study?asset=${encodeURIComponent(asset.sha256)}`;
@@ -592,7 +593,13 @@
       if (!silent) status(`${result.studies.length} local studies available.`);
     } catch (error) { if (!silent) status(error.message, true); }
   }
-  function updateLink() { const url = new URL(location.href); url.searchParams.set('study', studyId); url.searchParams.delete('revision'); history.replaceState(null, '', url); }
+  function updateLink() {
+    const url = new URL(location.href);
+    url.searchParams.set('study', studyId);
+    if (pinRevision && baseRevisionId) url.searchParams.set('revision', baseRevisionId);
+    else url.searchParams.delete('revision');
+    history.replaceState(null, '', url);
+  }
   function hasUnsavedWork() { return Boolean(engineDraftDirty || pending || (dirty && canonical(study) !== draftBaseline) || ['ps-source-text', 'ps-correction', 'ps-preview-settings'].some(id => $(id).value.trim())); }
   function mayReplace() { return !hasUnsavedWork() || confirm('Leave the current unsaved study changes? Saved revisions remain available.'); }
   async function openStudy(id, revision) {
@@ -602,6 +609,7 @@
       const result = await api(`?id=${encodeURIComponent(id)}${revision ? `&revision=${encodeURIComponent(revision)}` : ''}`);
       recoveryTurn++; recovery = null;
       study = result.study; studyId = result.saved.id; baseRevisionId = result.saved.revisionId; viewCardId = study.selectedCardId || study.cards.at(-1)?.id || null; frozen = new Set(study.cards.map(card => card.id)); pending = null; dirty = false; targetTurn++;
+      pinRevision = Boolean(revision);
       draftBaseline = canonical(study); $('ps-source-text').value = ''; $('ps-correction').value = ''; $('ps-preview-settings').value = ''; render(); updateLink(); status('Study reopened from the local store. No model request was made.'); refreshEngine();
     } catch (error) {
       status(error.message, true);
@@ -612,7 +620,7 @@
   }
   async function save(copy = false) {
     if (saving || busy) return;
-    if (copy) { studyId = uid('study'); baseRevisionId = null; pending = null; dirty = true; engineStudyChanged(true); }
+    if (copy) { studyId = uid('study'); baseRevisionId = null; pinRevision = false; pending = null; dirty = true; engineStudyChanged(true); }
     if (!pending) {
       pending = { action: 'save', requestId: crypto.randomUUID(), studyId, baseRevisionId, study: clone(study) };
       for (const card of pending.study.cards) frozen.add(card.id);
@@ -692,7 +700,7 @@
   });
   $('ps-save').addEventListener('click', () => save()); $('ps-copy').addEventListener('click', () => save(true));
   $('ps-refresh').addEventListener('click', () => refresh()); $('ps-open').addEventListener('click', () => openStudy($('ps-studies').value));
-  $('ps-new').addEventListener('click', () => { if (!mayReplace()) return; study = newStudy(); draftBaseline = canonical(study); studyId = uid('study'); baseRevisionId = null; viewCardId = study.selectedCardId; pending = null; frozen = new Set(); targetTurn++; dirty = true; $('ps-source-text').value = ''; $('ps-correction').value = ''; $('ps-preview-settings').value = ''; render(); status('New local draft. No evidence or preview is assumed.'); });
+  $('ps-new').addEventListener('click', () => { if (!mayReplace()) return; study = newStudy(); draftBaseline = canonical(study); studyId = uid('study'); baseRevisionId = null; pinRevision = false; viewCardId = study.selectedCardId; pending = null; frozen = new Set(); targetTurn++; dirty = true; $('ps-source-text').value = ''; $('ps-correction').value = ''; $('ps-preview-settings').value = ''; render(); status('New local draft. No evidence or preview is assumed.'); });
   $('ps-engine-send').addEventListener('click', requestEngine);
   $('ps-step-select').addEventListener('click', () => selectStep());
   $('ps-step-retry').addEventListener('click', () => selectStep(true));
