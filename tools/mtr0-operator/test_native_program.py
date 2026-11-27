@@ -130,14 +130,16 @@ class ProgramTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["hostReceipt"], self.current)
         self.assertEqual(len(self.posts), 1)
 
-    async def test_non_string_names_retain_known_rejection_without_delivery(self):
+    async def test_malformed_names_and_unicode_retain_known_rejection_without_delivery(self):
         await self.program.context(STUDY)
         config = self.path.parent / "operator.json"
         config.write_text(json.dumps({"origin": ORIGIN, "cookie": COOKIE}), encoding="utf-8")
         config.chmod(0o600)
         reply = self.path.parent / "reply.txt"
-        for name in ([], {}, None, True, 42):
-            raw = choice(name) + b"\r\n"
+        replies = [choice(name) for name in ([], {}, None, True, 42)]
+        replies.append(choice(READ, study_id="study_\ud800"))
+        for reply_bytes in replies:
+            raw = reply_bytes + b"\r\n"
             result = await self.program.choose(raw)
             self.assertEqual(result["error"]["code"], "choice-input")
             self.assertFalse(result["error"]["deliveryUnconfirmed"])
@@ -156,7 +158,7 @@ class ProgramTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(turn["nativeReply"]["utf8"].encode("utf-8"), raw)
                 self.assertEqual(turn["inability"]["error"]["code"], "choice-input")
         self.assertEqual(self.posts, [])
-        self.assertEqual(len(state["turns"]), 10)
+        self.assertEqual(len(state["turns"]), 12)
 
     async def test_uncertain_identity_survives_reopen_and_absent_read(self):
         await self.program.context(STUDY)

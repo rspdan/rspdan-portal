@@ -55,6 +55,9 @@ def parse_choice(raw: bytes):
         raise BridgeError("choice-input", "Supply one UTF-8 reply within 32 KiB.")
     try:
         value = literal_json(raw)
+        # JSON escapes can decode to unpaired surrogates even when the literal
+        # reply bytes are UTF-8. Reject them before retaining parsed values.
+        canonical(value).encode("utf-8")
     except (ValueError, UnicodeError, RecursionError):
         raise BridgeError("choice-input", "The whole reply must be one JSON object; prose, fences, duplicate members and multiple choices are not executable.") from None
     if not isinstance(value, dict) or set(value) != {"name", "arguments"}:
