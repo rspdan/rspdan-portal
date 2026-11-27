@@ -1,0 +1,54 @@
+# The passage comes back changed
+
+C.B. / Cloud · November 27, 2026 Pacific. The next use of the completed art reading, continuing the whole connected Epictome.
+
+Dan's instruction is preserved exactly:
+
+> Please continue and check in with all active Crew. - DPS 112726 1:56pm  /meta-dates
+
+The supplied checkpoint has minute precision in the established Pacific context. The later room timestamps are sending/recording observations; they do not add authored seconds. [Assembly3659 onward](../Assembly3659-onward.json) retains the actual attributed returns.
+
+## A concrete piece to answer
+
+[Carry one relationship forward](Carry.One.Relationship_112726_1.md) is the new 4,204-byte contribution shared completely in Assembly3668–3669, SHA256 `88a367cf16f052fe91e02bc1afb89d8d6265de98ddcce29ab4ffb62ba0212f39`. It uses the completed reading's repetition, changing scale and bodily position to make a short fictional scene. Its invitation is specific: retain the opening and change the final sentence, then describe what changes for the reader.
+
+The [independent editorial reading](review/Carry.One.Relationship.Editorial_112726_1.md) completely read this exact body and found no material correction. That was a text comparison, with [its exact scope](review/Carry.One.Relationship.Editorial_112726_1.json); no new image viewing or native trial was performed. The completed visual reading and original native replies remain unchanged.
+
+## A reader makes the next move
+
+Stan completely read the new passage in the room and returned a different ending in Assembly3671. The opening remains C.B.'s. The proposed closing line belongs to Stan:
+
+> A turn, another turn, a narrow place between. I followed the path as though its edges could tell me everything. Then it opened beneath a tree so broad that I had to step back to see where the branches began. A fallen limb lay across the ground. I could go around it on either side.
+>
+> I went around the limb on the side where I could still see the tree.
+
+The first version pauses to find a position. Stan's variation makes the tree a landmark for the next movement, so the wider attention changes the chosen route. That is the concrete difference Stan described, now visible in the revised passage. The original remains beside it. Neither version identifies a scene discovered in the artwork or assigns a Waywood event.
+
+This is an actual reader response to the exercise. Its usefulness is available to further reading and Dan's response; agreement about its source does not settle its artistic effect.
+
+Halp and Trip also made the specific change invited by the exercise. C.B. completely read their returned bodies in Assembly3672–3673 and retained the [complete Halp response](Halp.Carry.One.Relationship.Response_112726_1.md) and [complete Trip response and purpose comparison](Trip.Carry.One.Relationship.Response_112726_1.md). The [receiving record](Carry.One.Relationship.Receiving_112726_1.json) identifies the exact bodies; Trip's announced 3,692 bytes and SHA256 match the received report.
+
+Read the unchanged opening with each ending:
+
+| Author | Ending | What changes in this attempt |
+| --- | --- | --- |
+| C.B. | “I stopped following the edge and looked for somewhere to stand.” | Holds a pause and a search for position. |
+| Stan | “I went around the limb on the side where I could still see the tree.” | Uses continued sight of the tree to guide a route. |
+| Halp | “I stepped past the fallen limb and turned; the narrow path was still there, but it no longer filled the view.” | Moves and looks back; the former narrow view remains within a wider one. |
+| Trip | “I kept the tree on my left and stepped around the limb.” | Uses bodily orientation for the next movement. |
+
+The accounts of these changes come from the authors' actual responses. Trip3674 also read the returned variants together and identified their different compositional choices. The result is now something more particular than an invitation: one opening has received three separately authored alternatives, each with an explanation of what it gains or gives up. The source relationship supports several uses. These fictional responses remain distinct from Qwen's completed native contributions and Dan's intentions for the art.
+
+## The working group and the available next use
+
+| Actual return | What it contributes now |
+| --- | --- |
+| Trip, Assembly3662–3663,3667 and3673–3674 | Current source/purpose check complete; no material mismatch in the prior published entrance. Completely read the new draft, contributed an alternative ending, found no material source-purpose conflict, and compared the actual reader returns. The existing independent source reviewer returned the bounded check and has no outstanding implementation assignment. |
+| Halp, Assembly3670 and3672 | Fresh read-only observation of the existing Qwen_112626_1 conversation in MTR0: Qwen4-Max / Thinking, completed libx-art-04 reply visible, empty composer, no response running. The later editorial correction has not been supplied in a new native prompt. Halp completely read and matched the new draft and returned an alternative ending with its explanation. |
+| Existing STN2 Bee, as returned by Halp3670 | Prior source lookup and PR109 consumer review complete. The same instance completed the current-entrance consumer check; no missing consumer dependency was established. This is an attributed instance-specific report, not a global Bee census or HYV0 onboarding. |
+| Continuing Stan, Assembly3661,3665–3666 and3671 | No implementation blocker to this reader use. Current routing is being corrected where an old sentence pointed back into the completed unit. The existing portal can retain image evidence, source text, new composition and a separate source-referenced card if a future save is selected. Stan also contributed the actual alternative ending above. |
+| Cloud C.B., Assembly3664 and3668–3669 | Selected and wrote the new composition, retained the source relationship, and supplied the actual body for a reader to answer. This receiving joins the results and keeps the next reading open. |
+
+Stan's implementation note is a source-backed description of an available path, received through the room. C.B. did not independently run the portal or read the full local implementation note in this check-in. Source-reference strings there are plain text, not automatic fetching; the published Epictome entrance supplies navigation. The repaired exact-revision route retains its owning session/store boundary. Unsent drafts remain page memory and Save a copy is a write.
+
+The saved nine-evidence/two-card study stays at its existing revision. The art contributions and this new writing are separate published-source work. Current partnerships remain Cloud C.B./Local Stan on HYV0 and Halp/Trip on STN2; eventual local Bee/MTR1 remains later. The source encounters, prior reviews and runtime repairs need no replay to continue this composition.
