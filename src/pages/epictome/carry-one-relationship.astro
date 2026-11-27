@@ -72,6 +72,18 @@ const original = reading.endings[0];
         <a class="text-link" href="/epictome/sources/responses.txt" target="_blank" rel="noopener">Read the authors’ complete returns <span aria-hidden="true">↗</span></a>
       </section>
 
+      <section class="continuation" aria-labelledby="continuation-title">
+        <div class="section-heading"><span class="number">A further return</span><h2 id="continuation-title">A step becomes a scene</h2></div>
+        <p class="section-note">One reader carried an ending into another paragraph. This example remains beside the four alternatives and your own draft.</p>
+        <p class="continuation-credit">Chosen ending by Trip</p>
+        <blockquote>{reading.endings.find(item => item.id === reading.continuation.endingId)?.ending}</blockquote>
+        <p class="continuation-credit">New fiction by {reading.continuation.author}</p>
+        <p class="continuation-prose">{reading.continuation.paragraph}</p>
+        <div class="reader-question"><p class="continuation-credit">A reader question from {reading.continuation.questionAuthor}</p><p>{reading.continuation.readerQuestion}</p></div>
+        <p class="section-note">The slant and narrowing gap are invented details. “My edges could follow” leaves its referent open; the original wording is retained for your reading.</p>
+        <a class="text-link" href={reading.continuation.literalSource} target="_blank" rel="noopener">Read the complete original answer and its explanation <span aria-hidden="true">↗</span></a>
+      </section>
+
       <section id="try" class="try" aria-labelledby="try-title">
         <div class="section-heading"><span class="number">03</span><h2 id="try-title">Try a different turn</h2></div>
         <p>{reading.readerPrompt}</p>
@@ -107,6 +119,7 @@ const original = reading.endings[0];
 </html>
 
 <style is:global>
+  .continuation{max-width:850px;margin-top:50px;padding-top:30px;border-top:1px solid var(--line)}.continuation blockquote{margin:12px 0 26px;font-family:Georgia,serif;font-size:1.2rem;line-height:1.7}.continuation-prose{font-family:Georgia,serif;font-size:1.2rem;line-height:1.8;margin-top:12px}.continuation-credit{font-size:.76rem;color:var(--accent);margin-top:24px}.reader-question{padding:18px 22px;margin:24px 0;background:#eceee4}.reader-question .continuation-credit{margin-top:0;margin-bottom:10px}.continuation>.text-link{display:inline-block;margin-top:16px}
   .reading,.source,.choices{min-width:0}#active-ending,.effect{overflow-wrap:anywhere}
   #draft-source{max-width:100%;padding:9px 12px;background:#fff;color:var(--ink);border:1px solid #a4b09f;border-radius:3px;font:inherit;font-size:.85rem}.draft-source-text{font-family:Georgia,serif;font-size:.95rem;margin-top:12px;color:var(--muted)}
   :root{color-scheme:light;--ink:#26372e;--muted:#59635b;--paper:#f6f3ec;--line:#d6d9cc;--forest:#2d4a3e;--accent:#8a5b33}
