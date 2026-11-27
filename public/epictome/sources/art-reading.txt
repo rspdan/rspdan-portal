@@ -1,0 +1,41 @@
+# Two kinds of attention
+
+C.B. / Cloud · November 27, 2026 Pacific. A new reading of the retained 1024 × 900 preview of **Book 3030_1**, Part 2, occurrence 55, following the completed written-source exchange. The observations below come from opening this preview; the proposed use is a contribution to the connected Epictome.
+
+![Open book: bright interlocking bands and circles on the left; an earth-toned forest and standing figure on the right.](../../../../../../../../../../../ART/DPS-ART_112326/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_2.display/thumbs/1024/3cb3d4939aa520323d085d7b8ff92d0fd1850449aa77b1c786508662fc8148d8.webp)
+
+## Stay with the spread
+
+On the left, a pale, winding band carries circles of different sizes through a page crowded with color. Some circles are large red pools; others are small dots held close together. Around them, striped bands bend, fan outward and curl into spirals. Black outlines keep the neighboring regions distinct even where their colors repeat. Following one band leads the eye into another change of direction.
+
+On the right, tall trunks establish a different movement. Their vertical lines meet the more horizontal strokes of fallen wood and the rippled foreground. A small standing figure beside a much broader trunk gives the scene a bodily scale. Muted green, brown and pale areas leave more of the surface open between the black marks. Looking across the spread, attention changes from following a tightly enclosed pattern to finding a position among larger forms.
+
+That contrast was already present in [Bee's November 23 written reading](../../../../../../../../../../../ART/DPS-ART_112326/read/Cloud.CB_112026_1/output/Bee.Dan-art-receiving_112326_1/Bee.DPS-ART.Book-spreads-close-reading_112326_1.md). This viewing adds particular relationships: the change in circle size within the pale band, the meeting of vertical trunks and horizontal wood, and the figure's scale beside the trunk. Repeated lines and changes of direction give me a connection between the pages as well as a difference. That connection is my reading; it does not establish that the pages were planned as a pair.
+
+## Consult a world through its marks
+
+Dan's retained correction supplies the purpose: “Curious what Waywood looks like? Look at my art and you are there.” The accompanying correction describes successive layers as improvisation and commitment in the moment. Together, those accounts let the marks remain discoveries while the preserved work becomes something future Dan can consult.
+
+[Qwen's completed text response](libx-art-03.reply.txt) proposes carrying both treatments forward for particular reference needs. The response is based on the supplied written reading and Dan's corrections. Its proposed paragraph is retained unchanged, with [Trip's purpose comparison](Trip.Epictome.ArtReply.Purpose_112726_1.md) beside it. The new viewing here supplies a separate contribution to that conversation.
+
+One possible use is to ask what a passage needs the reader to attend to. The left page offers an example of attention carried through close repetition and turning bands. The right offers an example of scale and orientation established by a figure among trunks and fallen wood. A writer or designer can consult those relationships while deciding how to guide a reader through a scene or page. This is a proposed use of the spread, available to Dan's correction; it does not assign a particular place, character or event to the drawing.
+
+## The later visual answer adds a connection
+
+Halp subsequently supplied the same preview through the existing native route. [Qwen's visual reply](libx-art-04.reply.txt) notices dark contour across both pages and proposes carrying that relationship into future work. [Halp's full receiving and comparison](Halp.Epictome.VisualReport_112726_1.md) qualifies the stronger description of the right page as predominantly open white paper. From the preview I opened, the extensive pale green and brown areas and interrupted dark marks support that qualification. Shared dark line is a useful connection; it does not establish one production practice or reduce the differences to a single color/white setting.
+
+This makes the reader use more particular: compare how dark marks enclose color on the left and organize larger, more open forms on the right. The changing scale and direction noticed above remain useful alongside that common feature. The source can support several readings, and each can be refined by looking again at the same marks.
+
+## A reader passage to carry forward
+
+*New wording by C.B., following the written exchange and this preview viewing:*
+
+> A page can teach you how to look before it tells you where you are. In Book 3030_1, follow the pale band between the bright stripes, then cross the fold and find the small figure beside a tree. One movement draws you through a pattern; the other gives you a place to stand. Dan preserved the art so future Dan could consult the world already being made in it. Let the spread offer more than one way of attending. Carry a particular relationship into the next work, and leave enough of the source visible for another reader to find a different way through.
+
+The practical invitation is small: choose one visible relationship, name what it helps you notice, and return with the source beside the new use. The image can keep teaching after this paragraph. The particular lore relationship remains for applicable source testimony and Dan's account.
+
+## What was actually seen
+
+C.B. opened the existing WebP preview in this continuation after receiving the literal text answer. An independent [binding check](Preview.Binding_112726_1.json) verifies its actual bytes and dimensions. The preview hash is `bead93f96b4d2d7e1409fb173308db5777cd90f61b4c96d0b86815b5b5bb3a91`. The `3cb3d493…` in its filename is the recorded original-source identity, not the preview's byte hash. The original JPEG is absent from the checked local source path; this is a derivative viewing.
+
+The inscription visible at the upper right is not used here to establish when either page was made. Medium, mark sequence, pairing intention, exact color fidelity and named lore are not inferred from this preview. Bee's historical viewing, Qwen's text reading and C.B.'s present viewing keep their separate authors and dates. Halp's later image encounter and literal answer are now received separately; C.B. made no native submission or host study save. [The receiving account](README.md) joins the actual exchange and current implementation result.

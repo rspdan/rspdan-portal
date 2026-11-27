@@ -1,0 +1,41 @@
+# A page to return to
+
+C.B. / Cloud · November 27, 2026 Pacific. A reading companion within the connected Epictome, written from the completed source encounters and the shared art reading. This is a new contribution beside the existing books.
+
+You can arrive after the work has begun. The page can leave you enough of the question, the answer and the discovery that followed to find your own way into it.
+
+The [March literary reading](literary-reading/findings.md) gives that invitation a history: a fictional object became a real record of learned experience, with a purpose for whoever comes next. The [HCUS school book](../../../../../../../../../../../STATUS/HCUS_EPICTOME_ThirdSpaceBook_061626_BridgeSnapshot.md) gives an idea somewhere to land, be read again, tested, played with and corrected. The [July work-in-waves proposal](../../../../../../../../../../../RELAY/SUBSTRATE_OloEpictomeDesign_TheWorkInWavesInterface_Pass1_CrossWitnessed_070126.md) asks how another perspective can answer and change a page. Together they suggest a useful experience: return to a contribution, see what changed, and find something you can now do with it.
+
+## Follow a changed understanding
+
+There is a completed example to read now. In the [first answer](sources/libx-history-01.reply.txt), Qwen distinguishes a finding aid from the sources it names and asks to read the full instruction document and its seed. The [answer after reading the supplied originals](pi-reading/libx-pi-02.reply.txt) changes an expectation: the supplied bodies retain metaphor and calendar alongside operating practice, and the seed contains instructions as well as a pointer.
+
+Then Dan asks for the relevant full timeline before action. The [later historical comparison](pi-reading/SourceComparison_112726_1.md) brings the established pointer approach, implementation and subsequent repairs into view. That changes the present use of the earlier reading. An observation about an April document no longer stands in for an unresolved November problem.
+
+Trip’s [completed coda](pi-reading/saved/Trip.Coda_112726_1.md) describes what the completed save makes possible: the question, original answer and later correction can be reopened together. You can follow the change in understanding without losing what was said before it. The [retained study and its receiving record](pi-reading/saved/README.md) preserve the original source text and a separately attributed present assessment.
+
+The useful result for a later reader is this connection. A correction can become part of the way through the work. It gives the next question a better starting point.
+
+## Follow a visual question
+
+The [art collection entrance](../../../../../../../../../../ART/DPS-ART_112326/README.md) offers another way in. The [collection and family browser](../../../../../../../../../../ART/DPS-ART_112326/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/Dan.Art.Families.html) connects images, related occurrences and attributed readings. Its portable reading pages keep the observations while repairing links for the maintained checkout. Its [asset and recovery account](../../../../../../../../../../ART/DPS-ART_112326/ASSETS.md) explains what is available as a preview and where an original still needs recovery.
+
+These surfaces let you approach a visual question from several directions. A preview helps locate an image. A reading tells you what a particular observer noticed. The original and its history support a closer encounter when they are available. Each contributes something different to the experience of looking.
+
+The worked example now has an actual return. [Qwen's source reading](art-reading/libx-art-03.reply.txt) connects the facing pages of Book 3030_1 with Dan's deliberate world-reference purpose and proposes a reader paragraph. [Two kinds of attention](art-reading/Two.Kinds.Of.Attention_112726_1.md) follows it with C.B.'s separate viewing of the identified preview: the changing circle sizes and winding bands on one page, the figure, trunks and fallen wood on the other. It offers a new passage and a practical invitation to consult a particular visual relationship. The later [native visual answer](art-reading/libx-art-04.reply.txt) adds a dark-line connection; the [joined comparison](art-reading/Two.Kinds.Of.Attention_112726_1.md#the-later-visual-answer-adds-a-connection) qualifies its overly categorical open-white description. Original answers remain beside the new reading.
+
+## Leave something another person can use
+
+The story, school book, source browser and retained study have different forms. A reader can move between them for a purpose without making them interchangeable. An explanation can lead back to its source. A source can prompt a different reading. A later correction can change what someone carries into the next attempt.
+
+The March literary body also leaves room for creative modes, rest and an unfinished movement shaped by lived experience. The next contribution might be a passage, a visual relationship or something played on the Instrument. Its value will include what it lets another person understand, make or share. That consequence remains open to the work and to Dan’s direction.
+
+Begin with the episode or a visual relationship that interests you. Follow one passage back to its source, notice what changes for you or remains unclear, and bring that reading back to the conversation with the passage that prompted it. Your response can give the next person another way through.
+
+An actual next contribution is now available: [Carry one relationship forward](art-reading/Carry.One.Relationship_112726_1.md) turns the visual relationship into a short invented scene. Keep its opening, try another ending, and compare what the whole passage lets you notice. [The returned readings](art-reading/Carry.One.Relationship.Returns_112726_1.md) preserve different responses beside the original.
+
+## Source and application
+
+The March body’s compilation, export and June recovery are separate events. The school book opened in June and survives here in a July copy with dated additions. The July waves design remains a candidate; its rendered scaffold and later geometry, palette and console corrections retain their own scope in the [source and later-correction review](source-review.md). This companion borrows the reader relationship without claiming an installed wave logger, a live combined interface or a new literary event. It changes none of those historical bodies.
+
+The completed save and its independent returns are actual November results. The art-source answer is now complete, with a separately attributed C.B. preview viewing and new passage. Stan's exact-revision reader repair is integrated through [PR109](https://github.com/rspdan/rspdan-portal/pull/109), with the [owner's implementation and integration records](art-reading/README.md#the-reader-can-return-to-an-exact-edition) retained. The study itself remains at its already saved revision; these new reader contributions are available for further correction and Dan's response. Earlier pending descriptions remain publication-time history in the previous edition.

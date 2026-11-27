@@ -1,0 +1,74 @@
+{
+  "title": "Carry one relationship forward",
+  "reviewDate": "November 27, 2026",
+  "openingAuthor": "C.B.",
+  "opening": "A turn, another turn, a narrow place between. I followed the path as though its edges could tell me everything. Then it opened beneath a tree so broad that I had to step back to see where the branches began. A fallen limb lay across the ground. I could go around it on either side.",
+  "endings": [
+    {
+      "id": "original",
+      "author": "C.B.",
+      "label": "Pause",
+      "ending": "I stopped following the edge and looked for somewhere to stand.",
+      "effect": "The ending pauses to look for a position, leaving the next movement open.",
+      "assembly_source": [
+        3668,
+        3669
+      ]
+    },
+    {
+      "id": "stan",
+      "author": "Stan",
+      "label": "Keep a landmark",
+      "ending": "I went around the limb on the side where I could still see the tree.",
+      "effect": "Keeping the tree in view guides the chosen route. The pause becomes a specific action.",
+      "assembly_source": [
+        3671
+      ]
+    },
+    {
+      "id": "halp",
+      "author": "Halp",
+      "label": "Look back",
+      "ending": "I stepped past the fallen limb and turned; the narrow path was still there, but it no longer filled the view.",
+      "effect": "A move and a look back place the earlier narrow path within a wider view.",
+      "assembly_source": [
+        3672
+      ]
+    },
+    {
+      "id": "trip",
+      "author": "Trip",
+      "label": "Orient and move",
+      "ending": "I kept the tree on my left and stepped around the limb.",
+      "effect": "The tree gives a direction for movement. The departure gives up some of the original stillness.",
+      "assembly_source": [
+        3673
+      ]
+    }
+  ],
+  "sources": {
+    "commit": "0ad01c30d7e3761bd6621cfba0f4df65dcc45411",
+    "original": {
+      "url": "https://github.com/rspdan/nest-bridge/blob/0ad01c30d7e3761bd6621cfba0f4df65dcc45411/HYPERCAMPUS/112626/BOXX/CGRX/source-guidance/current-review/stan-wake/build-loop/caller/content-next-112726/epictome-112726/art-reading/Carry.One.Relationship_112726_1.md",
+      "gitBlob": "da0b4125946e435ecd054855b03f8b9f6b0eaedb"
+    },
+    "returns": {
+      "url": "https://github.com/rspdan/nest-bridge/blob/0ad01c30d7e3761bd6621cfba0f4df65dcc45411/HYPERCAMPUS/112626/BOXX/CGRX/source-guidance/current-review/stan-wake/build-loop/caller/content-next-112726/epictome-112726/art-reading/Carry.One.Relationship.Returns_112726_1.md",
+      "gitBlob": "aaa7ba75612238715e504198e1904c84be15b7ed"
+    },
+    "reading": "https://github.com/rspdan/nest-bridge/blob/0ad01c30d7e3761bd6621cfba0f4df65dcc45411/HYPERCAMPUS/112626/BOXX/CGRX/source-guidance/current-review/stan-wake/build-loop/caller/content-next-112726/epictome-112726/art-reading/Two.Kinds.Of.Attention_112726_1.md",
+    "companion": "https://github.com/rspdan/nest-bridge/blob/0ad01c30d7e3761bd6621cfba0f4df65dcc45411/HYPERCAMPUS/112626/BOXX/CGRX/source-guidance/current-review/stan-wake/build-loop/caller/content-next-112726/epictome-112726/art-reading/../A.Page.To.Return.To_112726_1.md",
+    "readingText": "https://raw.githubusercontent.com/rspdan/nest-bridge/0ad01c30d7e3761bd6621cfba0f4df65dcc45411/HYPERCAMPUS/112626/BOXX/CGRX/source-guidance/current-review/stan-wake/build-loop/caller/content-next-112726/epictome-112726/art-reading/Two.Kinds.Of.Attention_112726_1.md"
+  },
+  "image": {
+    "path": "/epictome/book-3030-1.webp",
+    "width": 1024,
+    "height": 900,
+    "sha256": "bead93f96b4d2d7e1409fb173308db5777cd90f61b4c96d0b86815b5b5bb3a91",
+    "originalSourceHash": "3cb3d4939aa520323d085d7b8ff92d0fd1850449aa77b1c786508662fc8148d8",
+    "label": "Book 3030_1 · Part 2, occurrence 55",
+    "alt": "Open sketchbook: interlocking bands and circles on the left; a forest and small standing figure on the right."
+  },
+  "effectAttribution": "C.B. summaries of the attributed explanations retained in the source responses.",
+  "readerPrompt": "Keep the opening and write your own ending. Add one sentence about what changes when you read the whole passage again."
+}
