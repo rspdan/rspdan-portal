@@ -6,7 +6,7 @@ The available operation is **production-card v1**, with camera, lighting and com
 
 ## Configuration and entry points
 
-Python **>=3.11** is required because the client uses `asyncio.timeout`. Python 3.12, official `mcp` 1.29.0, `httpx` 0.28.1 and `pydantic` 2.13.4 were already installed in the receiving environment. Exact received dependency editions and runtime limits are retained in `tools/mtr0-operator/requirements.txt` and `runtime.json`; no dependency installation was performed for this slice. The portal must be running in development mode with explicitly configured `DIRECTOR_STUDY_STORE_DIR`; new model calls additionally require the existing server-side MTR0 configuration described in [mtr0-integration.md](mtr0-integration.md). These routes are disabled in production, so a hosted production portal is not an equivalent endpoint. An HTTPS origin accepted by the client does not enable those server routes.
+Python **>=3.11** is required because the client uses `asyncio.timeout`. At the original Linux receiving, Python 3.12, official `mcp` 1.29.0, `httpx` 0.28.1 and `pydantic` 2.13.4 were already installed in the receiving environment. Exact received dependency editions and runtime limits are retained in `tools/mtr0-operator/requirements.txt` and `runtime.json`; no dependency installation was performed for that earlier slice. The portal must be running in development mode with explicitly configured `DIRECTOR_STUDY_STORE_DIR`; new model calls additionally require the existing server-side MTR0 configuration described in [mtr0-integration.md](mtr0-integration.md). These routes are disabled in production, so a hosted production portal is not an equivalent endpoint. An HTTPS origin accepted by the client does not enable those server routes.
 
 Create a private JSON configuration outside the repository. This example contains placeholders, not usable credentials:
 
@@ -99,8 +99,34 @@ Run the focused suite from the portal root:
 python3 -m unittest discover -s tools/mtr0-operator -p 'test_operator*.py' -v
 ```
 
-The final suite passed **10 tests**: nine unit cases and one multi-step integration case. The integration starts disposable Astro and two synthetic loopback providers, creates synthetic accounts/evidence, exercises all nine CLI commands and all nine official SDK stdio tools, and uses the callable client. It checks exact images, manual-study preservation, owner isolation, conflicting IDs, selected provider inputs, restart against the same store, old-result preservation and fresh-ID routing to the second configuration. Provider counts are exactly A=1 and B=1. The fixture removes its temporary workspace/processes on normal completion; do not run it manually expecting its private startup protocol to be safe console output.
+The original Linux suite passed **10 tests**: nine unit cases and one multi-step integration case. The integration starts disposable Astro and two synthetic loopback providers, creates synthetic accounts/evidence, exercises all nine CLI commands and all nine official SDK stdio tools, and uses the callable client. It checks exact images, manual-study preservation, owner isolation, conflicting IDs, selected provider inputs, restart against the same store, old-result preservation and fresh-ID routing to the second configuration. Provider counts are exactly A=1 and B=1. The fixture removes its temporary workspace/processes on normal completion; do not run it manually expecting its private startup protocol to be safe console output.
 
 Separate receiving recorded 11 negative/result transport cases and 12 MCP discovery/validation checks, followed by 13 actual Astro/MCP/Director UI checks including a deliberately discarded completed POST response and recovery without a duplicate provider call. These are separately attributed in the private receipts; they are not additional unit test counts. The installed SDK emitted a Pydantic forward-reference warning during discovery without failing the checks.
 
 Evidence: `/workspace/scratch/mtr0-direct-access/halp/integration/receiving-typed.json`, `halp/final-tests.log`, `bee/negative-probe-corrected.json`, `bee/schema-probe.json`, and `root/ui-recovery-receiving.json`. No real Qwen inference, model vision, remote station, HYV0/Windows operation, hosted MCP registration, production build or deployment is established by this receiving.
+
+## Retained continuation through this caller
+
+The added commands use the same engine route, authenticated owner and store. Status reports capabilityDescriptor.continuation.available from the connected server's explicit continuation marker. A client package or discoverable tool alone does not establish server installation.
+
+| CLI command | MCP tool | Python method |
+|---|---|---|
+| continuation-select --input FILE | mtr0_continuation_select | continuation_select(request) |
+| continuation-read --study-id ID | mtr0_continuation_read | continuation_read(study_id) |
+| continuation-resume --study-id ID --operation-id ID | mtr0_continuation_resume | continuation_resume(study_id, operation_id) |
+
+A selection contains action:"select", input (the complete existing generate envelope), previousOperationId and previousResultHash. Both predecessor fields are null at the root. For a successor, use the completed predecessor's original ID and exact continuation.resultHash, and form the actual next instruction from the retained contribution. MCP exposes a typed nested generate envelope and requires both nullable predecessor fields.
+
+Read returns the saved choice, currentOperationId, next, resultHash, the original operation/result and studyHead. After an uncertain write receipt, read the same study and original operation identity; no command silently selects a replacement ID. An exact deliberate selection retry recovers the original record, while resume of an old noncurrent step conflicts. Completed, unknown and failed claims are only read; an authoritative absence permits dispatch under the original ID subject to normal validation.
+
+A false studyHead.selectedRevisionCurrent exposes a study edit after selection. An unclaimed stale selection cannot dispatch, and this slice has no abandonment/rebase. A completed result still retains its original revision. The dispatch next label alone does not promise current revision or configured provider readiness. Other studies remain independently usable. All writers sharing the store must use the updated ID arbitration, and the 512-ID owner capacity includes interrupted unused reservations.
+
+CLI JSON output is explicitly UTF-8, including on Windows. The test fixture now owns and stops its known Windows child process tree and verifies its temporary cleanup path. These fixture changes do not install a service.
+
+Run the caller checks with:
+
+    python3 -m unittest discover -s tools/mtr0-operator -p 'test_*.py' -v
+
+The new actual-route flow and limits are described in [mtr0-continuation.md](mtr0-continuation.md). The original Linux evidence above remains historical and separately attributed.
+
+The optional studyHead observation has an explicit status. When status is unavailable, revisionId and selectedRevisionCurrent are null; the original continuation/operation receipt remains usable. Do not interpret that null as a fresh revision or as proof of staleness. A later observation can succeed after source availability is restored. Actual selection and dispatch still require their existing source validation, so this does not make an unavailable attachment eligible for a new effect.

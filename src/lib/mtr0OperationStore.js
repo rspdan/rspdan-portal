@@ -3,8 +3,10 @@
 import { mkdir, open, link, unlink } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
-import { ProductionStudyError, validateOwner } from './productionStudySchema.js';
-import { operationHash, validateOperationId, validateClaim, validateResult, MAX_OPERATION_BYTES, MAX_OPERATIONS } from './mtr0OperationSchema.js';
+import { ProductionStudyError, exact, validateOwner, validateStudyId } from './productionStudySchema.js';
+import { operationHash, validateOperationId, validateOperationInput, validateClaim, validateResult, MAX_OPERATION_BYTES, MAX_OPERATIONS } from './mtr0OperationSchema.js';
+
+import { validateContinuationStep, sameSelection } from './mtr0ContinuationSchema.js';
 
 export function createMtr0OperationStore(directory) {
   if (typeof directory !== 'string' || !directory.trim()) throw new Error('Local operation directory required');
@@ -40,6 +42,43 @@ export function createMtr0OperationStore(directory) {
       return true;
     } finally { await file?.close(); if (created) await unlink(temporary).catch(error => { if (error.code !== 'ENOENT') throw error; }); }
   }
+  // Selected inputs and direct generation share the same owner-wide identity
+  // arbitration. This binds input only: it is not a provider claim or effect.
+  async function bindings(owner) {
+    const rows = [], seen = new Set(); let previous = null;
+    while (true) {
+      const stored = await read(join(home(owner), 'inputs', `next_${previous || 'root'}.json`));
+      if (!stored) return rows;
+      const value = stored.payload;
+      exact(value, ['schema', 'previousOperationId', 'input'], 'operation input binding');
+      const input = validateOperationInput(value.input);
+      if (value.schema !== 'mtr0-operation-input/v1' || value.previousOperationId !== previous ||
+          rows.length >= MAX_OPERATIONS || seen.has(input.operationId)) throw new Error('Invalid operation input binding chain');
+      rows.push(input); seen.add(input.operationId); previous = input.operationId;
+    }
+  }
+  async function bindInput(owner, value) {
+    const input = validateOperationInput(value), hash = operationHash(input);
+    for (let attempt = 0; attempt < 16; attempt++) {
+      // Preserve old claims that predate input reservations.
+      const legacy = (await claims(owner)).find(row => row.claim.id === input.operationId);
+      if (legacy && legacy.claim.inputHash !== hash) throw new ProductionStudyError('operationId already belongs to a different request', 409);
+      const rows = await bindings(owner), earlier = rows.find(row => row.operationId === input.operationId);
+      if (earlier) {
+        if (operationHash(earlier) !== hash) throw new ProductionStudyError('operationId already belongs to a different selected input', 409);
+        return;
+      }
+      if (rows.length >= MAX_OPERATIONS) throw new ProductionStudyError('local operation input capacity reached; preserve this workspace', 409);
+      const previousOperationId = rows.at(-1)?.operationId || null;
+      if (await install(join(home(owner), 'inputs'), `next_${previousOperationId || 'root'}.json`,
+          { schema: 'mtr0-operation-input/v1', previousOperationId, input })) {
+        const saved = (await bindings(owner)).find(row => row.operationId === input.operationId);
+        if (!saved || operationHash(saved) !== hash) throw new Error('Operation input binding did not read back');
+        return;
+      }
+    }
+    throw new Error('Operation input store is busy');
+  }
   async function claims(owner) {
     const rows = [], seen = new Set(); let previous = null;
     while (true) {
@@ -63,6 +102,49 @@ export function createMtr0OperationStore(directory) {
   }
   return {
     storage: 'local-workspace',
+    async continuations(owner, studyId) {
+      validateStudyId(studyId);
+      const rows = [], seen = new Set(); let previous = null;
+      while (true) {
+        const stored = await read(join(home(owner), 'continuations', studyId, `next_${previous || 'root'}.json`));
+        if (!stored) return rows;
+        const step = validateContinuationStep(stored.payload), selection = step.selection;
+        const id = selection.input.operationId;
+        if (rows.length >= MAX_OPERATIONS || selection.input.studyId !== studyId ||
+            selection.previousOperationId !== previous || seen.has(id)) throw new Error('Invalid continuation chain');
+        if (previous !== null) {
+          const predecessor = await this.get(owner, previous);
+          if (predecessor?.result?.outcome.status !== 'completed' || operationHash(predecessor.result) !== selection.previousResultHash) {
+            throw new Error('Continuation predecessor result differs');
+          }
+        }
+        const reserved = (await bindings(owner)).find(input => input.operationId === id);
+        if (!reserved || operationHash(reserved) !== operationHash(selection.input)) throw new Error('Continuation input reservation differs');
+        const operation = await this.get(owner, id);
+        if (operation && operation.claim.inputHash !== operationHash(selection.input)) throw new Error('Continuation operation input differs');
+        rows.push(step); seen.add(id); previous = id;
+      }
+    },
+    async appendContinuation(owner, value) {
+      const step = validateContinuationStep(value), selection = step.selection;
+      const rows = await this.continuations(owner, selection.input.studyId);
+      const earlier = rows.find(row => row.selection.input.operationId === selection.input.operationId);
+      if (earlier) {
+        if (sameSelection(earlier.selection, selection)) return false;
+        throw new ProductionStudyError('operationId already belongs to another continuation step', 409);
+      }
+      if ((rows.at(-1)?.selection.input.operationId || null) !== selection.previousOperationId) return false;
+      if (rows.length >= MAX_OPERATIONS) throw new ProductionStudyError('local continuation capacity reached; preserve this workspace', 409);
+      if (selection.previousOperationId !== null) {
+        const previous = await this.get(owner, selection.previousOperationId);
+        if (previous?.result?.outcome.status !== 'completed' || operationHash(previous.result) !== selection.previousResultHash) {
+          throw new ProductionStudyError('continuation requires its retained completed predecessor result', 409);
+        }
+      }
+      await bindInput(owner, selection.input);
+      return install(join(home(owner), 'continuations', selection.input.studyId),
+        `next_${selection.previousOperationId || 'root'}.json`, step);
+    },
     async get(owner, id) {
       validateOperationId(id);
       const row = (await claims(owner)).find(row => row.claim.id === id);
@@ -75,6 +157,8 @@ export function createMtr0OperationStore(directory) {
       return result;
     },
     async claim(owner, value) {
+      const candidate = validateClaim({ ...value, previousOperationId: null });
+      await bindInput(owner, candidate.input);
       for (let attempt = 0; attempt < 16; attempt++) {
         const rows = await claims(owner);
         if (rows.some(row => row.claim.id === value.id)) return false;

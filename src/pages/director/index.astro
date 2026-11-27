@@ -242,6 +242,6 @@ const studyEnabled = import.meta.env.DEV && Boolean(import.meta.env.DIRECTOR_STU
       </section>
       <footer><span id="status" role="status" aria-live="polite">Preparing the model.</span><span id="storage-label">BROWSER DRAFT</span></footer>
     </main>
-    {studyEnabled && <div id="production-study-host"></div>}
+    {studyEnabled && <div id="production-study-host" data-owner={session.user}></div>}
   </body>
 </html>
