@@ -14,6 +14,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import shutil
 import stat
 import subprocess
 import sys
@@ -204,7 +205,10 @@ def run_hook(root, hook, args):
             nested = common / "hooks/pre-commit" if previous == root / ".githooks" else legacy
             same_roster = nested.is_file() and nested.read_bytes() == roster.read_bytes()
             if not same_roster:
-                result = subprocess.run(["bash", str(roster), *args], cwd=root, env=env)
+                bash = shutil.which("bash")
+                if not bash:
+                    raise InstallError("Legacy hook could not run: Bash is unavailable.")
+                result = subprocess.run([bash, str(roster), *args], cwd=root, env=env)
                 if result.returncode:
                     return result.returncode
         else:
