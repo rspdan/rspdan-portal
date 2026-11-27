@@ -112,14 +112,14 @@
   let engineRoles = new Map(), engineSelection = new Set(), engineDraftDirty = false, engineDraftVersion = 0;
   let stepSupported = false, stepState = 'unread', stepView = null, stepReceipt = null;
   let stepWorking = false, stepReading = false, stepTurn = 0, stepContext = 0, stepMessage = '', stepDraftFrom = null;
-  let stepIntent = null, stepJournalError = '';
+  let stepIntent = null, stepJournalError = '', stepCleanupReady = false;
   let recovery = null, recoveryTurn = 0;
   const stepOwner = host.dataset.owner;
   const stepKey = () => `nest-mtr0-selection/v1:${encodeURIComponent(stepOwner || '')}:${studyId}`;
   // Only the pending selection is journaled in this tab. The server owns the
   // retained program. Load it only after an owned study has been opened.
   function loadStepIntent() {
-    stepIntent = null; stepJournalError = '';
+    stepIntent = null; stepJournalError = ''; stepCleanupReady = false;
     try {
       if (!stepOwner) throw new Error('The signed-in owner is unavailable.');
       const raw = sessionStorage.getItem(stepKey());
@@ -136,13 +136,17 @@
   }
   function keepStepIntent(item) {
     sessionStorage.setItem(stepKey(), JSON.stringify(item));
-    stepIntent = item;
+    stepIntent = item; stepCleanupReady = false;
   }
   function clearStepIntent() {
-    stepIntent = null; stepJournalError = '';
-    try { sessionStorage.removeItem(stepKey()); } catch {
-      // The durable receipt remains authoritative even if local cleanup fails.
-      stepJournalError = 'Selection is confirmed, but this tab could not clear its local retry record. Checking again is safe.';
+    // Only a matching authoritative receipt or a definite rejection permits
+    // cleanup. Keep that handled intent until storage actually removes it.
+    stepCleanupReady = true;
+    try {
+      sessionStorage.removeItem(stepKey());
+      stepIntent = null; stepJournalError = ''; stepCleanupReady = false;
+    } catch {
+      stepJournalError = 'This tab could not clear its local retry record after receiving the selection response. Checking again is safe.';
     }
   }
   function checkStepView(value, id, expectedSelection = null) {
@@ -254,6 +258,9 @@
   }
   async function readStep() {
     if (!stepSupported || !baseRevisionId) return;
+    // A previously checked response remains sufficient for local cleanup even
+    // if another caller has since advanced the server's current step.
+    if (stepCleanupReady && stepIntent) clearStepIntent();
     const id = studyId, turn = ++stepTurn;
     stepReading = true; renderStep();
     try {
@@ -463,13 +470,20 @@
     } catch (error) { if (turn === engineTurn && id === studyId) { engineConfigError = error.message; engineStatus(error.message, true); } }
     finally { if (turn === engineTurn) { engineReading = false; engineControls(); } }
   }
-  function engineStudyChanged() {
+  function engineStudyChanged(preserveComposer = false) {
     if (engineStudyId !== studyId) {
       engineStudyId = studyId; engineTurn++; engineReading = false; engineDetailTurn++; engineHistory = []; engineSelected = ''; engineDetail = null;
-      engineSelection = new Set(); engineRoles = new Map(); engineDraftDirty = false;
+      if (!preserveComposer) {
+        engineSelection = new Set(); engineRoles = new Map(); engineDraftDirty = false;
+        $('ps-engine-instruction').value = ''; $('ps-engine-domain').value = 'lighting';
+      } else {
+        // Copying the manual study does not save its prepared engine input.
+        // Keep that editable draft while fencing the original program identity.
+        engineDraftDirty = engineDraftDirty || Boolean($('ps-engine-instruction').value.trim()) || engineSelection.size > 0;
+        engineDraftVersion++;
+      }
       stepContext++; stepTurn++; stepReading = false; stepState = 'unread'; stepView = null; stepReceipt = null; stepMessage = ''; stepDraftFrom = null;
       loadStepIntent();
-      $('ps-engine-instruction').value = ''; $('ps-engine-domain').value = 'lighting';
       renderEngineHistory();
     }
     renderEngineSources(); engineControls();
@@ -598,7 +612,7 @@
   }
   async function save(copy = false) {
     if (saving || busy) return;
-    if (copy) { studyId = uid('study'); baseRevisionId = null; pending = null; dirty = true; engineStudyChanged(); }
+    if (copy) { studyId = uid('study'); baseRevisionId = null; pending = null; dirty = true; engineStudyChanged(true); }
     if (!pending) {
       pending = { action: 'save', requestId: crypto.randomUUID(), studyId, baseRevisionId, study: clone(study) };
       for (const card of pending.study.cards) frozen.add(card.id);
