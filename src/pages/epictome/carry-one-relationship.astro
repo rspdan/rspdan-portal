@@ -1,0 +1,130 @@
+---
+import reading from '../../data/epictome/carry-one-relationship.json';
+export const prerender = true;
+const original = reading.endings[0];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Read one scene with four different endings, then try a turn of your own. A small exercise in the connected Epictome." />
+    <title>{reading.title} · Epictome</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <a class="skip" href="#reading">Skip to the passage</a>
+    <header class="masthead wrap">
+      <a href="/epictome/sources/companion.txt" class="wordmark" target="_blank" rel="noopener">EPICTOME</a>
+      <span>A reader’s work</span>
+      <a href="#try">Try a different turn <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="wrap">
+      <header class="intro">
+        <p class="eyebrow">From looking to making</p>
+        <h1>Carry one relationship forward</h1>
+        <p class="deck">One opening. Four ways to continue. Read the whole scene with each ending, then make a small change of your own.</p>
+      </header>
+
+      <div class="reader-grid">
+        <section id="reading" class="reading" aria-labelledby="reading-title">
+          <div class="section-heading"><span class="number">01</span><h2 id="reading-title">Stay with the passage</h2></div>
+          <p class="attribution">Opening by {reading.openingAuthor} · New fiction for this exercise</p>
+          <fieldset class="choices" data-interactive hidden>
+            <legend>Read with an ending by</legend>
+            <div class="choice-row">
+              {reading.endings.map((ending, index) => <label><input type="radio" name="ending" value={ending.id} checked={index === 0} /><span>{ending.author}{index === 0 ? ' · original' : ''}</span></label>)}
+              <label><input id="choice-draft" type="radio" name="ending" value="draft" disabled /><span>Your draft</span></label>
+            </div>
+          </fieldset>
+          <div class="passage">
+            <p id="opening">{reading.opening}</p>
+            <div class="ending-region" aria-live="polite" aria-atomic="true">
+              <p id="active-ending">{original.ending}</p>
+              <p id="ending-by" class="ending-by">Ending by {original.author} · Original</p>
+              <p id="active-effect" class="effect">{original.effect}</p>
+            </div>
+          </div>
+          <p class="scope">The path, narrator and events are invented. These passages do not identify a place or intended story in the artwork.</p>
+        </section>
+
+        <aside class="source" aria-labelledby="source-title">
+          <div class="section-heading"><span class="number">Source</span><h2 id="source-title">Keep the spread beside it</h2></div>
+          <a href="/epictome/sources/art-reading.txt" target="_blank" rel="noopener" aria-label="Read the retained text of Two kinds of attention (opens in a new tab)">
+            <img src={reading.image.path} width={reading.image.width} height={reading.image.height} alt={reading.image.alt} fetchpriority="high" />
+          </a>
+          <p class="caption">{reading.image.label}<br />Retained preview of Dan’s artwork</p>
+          <p>Close boundaries, changing scale, a body among larger forms: the written exercise borrows a relationship from the reading and makes a new choice with it.</p>
+          <a class="text-link" href="/epictome/sources/art-reading.txt" target="_blank" rel="noopener">Read “Two kinds of attention” <span aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+
+      <section class="compare" aria-labelledby="compare-title">
+        <div class="section-heading"><span class="number">02</span><h2 id="compare-title">Keep the alternatives in view</h2></div>
+        <p class="section-note">The opening stays the same. Each author changes the final movement; none replaces the others. Effect notes are C.B.’s summaries of the authors’ explanations; your reading may differ.</p>
+        <div class="endings-grid">
+          {reading.endings.map((ending, index) => <article class="ending-card" data-ending-card={ending.id}>
+            <h3>{ending.author}<span>{index === 0 ? 'Original' : 'Reader response'}</span></h3>
+            <blockquote data-ending-text={ending.id}>{ending.ending}</blockquote>
+            <p data-ending-effect={ending.id}>{ending.effect}</p>
+          </article>)}
+        </div>
+        <a class="text-link" href="/epictome/sources/responses.txt" target="_blank" rel="noopener">Read the authors’ complete returns <span aria-hidden="true">↗</span></a>
+      </section>
+
+      <section class="continuation" aria-labelledby="continuation-title">
+        <div class="section-heading"><span class="number">A further return</span><h2 id="continuation-title">A step becomes a scene</h2></div>
+        <p class="section-note">One reader carried an ending into another paragraph. This example remains beside the four alternatives and your own draft.</p>
+        <p class="continuation-credit">Chosen ending by Trip</p>
+        <blockquote>{reading.endings.find(item => item.id === reading.continuation.endingId)?.ending}</blockquote>
+        <p class="continuation-credit">New fiction by {reading.continuation.author}</p>
+        <p class="continuation-prose">{reading.continuation.paragraph}</p>
+        <div class="reader-question"><p class="continuation-credit">A reader question from {reading.continuation.questionAuthor}</p><p>{reading.continuation.readerQuestion}</p></div>
+        <p class="section-note">The slant and narrowing gap are invented details. “My edges could follow” leaves its referent open; the original wording is retained for your reading.</p>
+        <a class="text-link" href={reading.continuation.literalSource} target="_blank" rel="noopener">Read the complete original answer and its explanation <span aria-hidden="true">↗</span></a>
+      </section>
+
+      <section id="try" class="try" aria-labelledby="try-title">
+        <div class="section-heading"><span class="number">03</span><h2 id="try-title">Try a different turn</h2></div>
+        <p>{reading.readerPrompt}</p>
+        <noscript><p class="notice">Write an ending beside the passage above. JavaScript enables the in-page reading and download controls.</p></noscript>
+        <div data-interactive hidden>
+          <label class="field-label" for="draft-source">Your draft’s starting point <span>Optional</span></label>
+          <select id="draft-source"><option value="">A new ending — no source ending chosen</option>{reading.endings.map((item, index) => <option value={item.id}>{item.author}{index === 0 ? ' · original' : ' · reader response'}</option>)}</select>
+          <p id="draft-source-text" class="draft-source-text">Choose only if your draft starts from an existing ending. Browsing above does not change this choice.</p>
+          <label class="field-label" for="draft-ending">Your ending</label>
+          <textarea id="draft-ending" rows="3" maxlength="4000" placeholder="What happens after the narrator can go around the limb on either side?" aria-describedby="draft-note"></textarea>
+          <label class="field-label" for="draft-reflection">What changes for the reader? <span>Optional</span></label>
+          <textarea id="draft-reflection" rows="2" maxlength="2000" placeholder="One sentence about what your change makes possible."></textarea>
+          <p id="draft-note" class="draft-note">Your draft stays in this tab. Download it before reloading or leaving. It is not sent or published.</p>
+          <div class="draft-actions">
+            <button id="read-draft" type="button" disabled>Read my ending in the passage <span aria-hidden="true">↑</span></button>
+            <button id="download-draft" class="secondary" type="button" disabled>Download my draft</button>
+          </div>
+          <p id="draft-status" class="status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="provenance" aria-labelledby="provenance-title">
+        <h2 id="provenance-title">A source, a new piece, another return</h2>
+        <p>The exercise and opening are by C.B. The retained alternatives are by Stan, Halp and Trip. Your draft is a further contribution beside them. The artwork, its interpretations and these fictional responses keep their own authorship.</p>
+        <div class="source-links"><a href="/epictome/sources/original.txt" target="_blank" rel="noopener">Original exercise · retained text</a><a href="/epictome/sources/responses.txt" target="_blank" rel="noopener">Published responses · retained text</a><a href="/epictome/sources/companion.txt" target="_blank" rel="noopener">A page to return to · retained text</a><a href="/epictome/sources/art-reading.txt" target="_blank" rel="noopener">Art reading · retained text</a><a href={reading.sources.original.url}>Original publication</a><a href={reading.sources.returns.url}>Responses publication</a></div>
+        <p>The retained source texts open in a separate tab. Their words and historical links are unchanged; the publication links identify their source edition.</p>
+        <details><summary>Edition and image details</summary><p>This reader uses the November 27, 2026 publication. The displayed image is a 1024 × 900 derivative, not the original scan. Its source reading preserves the artwork’s provenance and the limits of the visual interpretation.</p><p class="identifier">Source edition: {reading.sources.commit}<br />Preview SHA256: {reading.image.sha256}</p></details>
+      </section>
+    </main>
+    <footer class="wrap">Connected Epictome · Content reviewed {reading.reviewDate}</footer>
+    <script is:inline src="/epictome/reader.js" defer></script>
+  </body>
+</html>
+
+<style is:global>
+  .continuation{max-width:850px;margin-top:50px;padding-top:30px;border-top:1px solid var(--line)}.continuation blockquote{margin:12px 0 26px;font-family:Georgia,serif;font-size:1.2rem;line-height:1.7}.continuation-prose{font-family:Georgia,serif;font-size:1.2rem;line-height:1.8;margin-top:12px}.continuation-credit{font-size:.76rem;color:var(--accent);margin-top:24px}.reader-question{padding:18px 22px;margin:24px 0;background:#eceee4}.reader-question .continuation-credit{margin-top:0;margin-bottom:10px}.continuation>.text-link{display:inline-block;margin-top:16px}
+  .reading,.source,.choices{min-width:0}#active-ending,.effect{overflow-wrap:anywhere}
+  #draft-source{max-width:100%;padding:9px 12px;background:#fff;color:var(--ink);border:1px solid #a4b09f;border-radius:3px;font:inherit;font-size:.85rem}.draft-source-text{font-family:Georgia,serif;font-size:.95rem;margin-top:12px;color:var(--muted)}
+  :root{color-scheme:light;--ink:#26372e;--muted:#59635b;--paper:#f6f3ec;--line:#d6d9cc;--forest:#2d4a3e;--accent:#8a5b33}
+  *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:1rem}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65}a{color:inherit;text-underline-offset:.25em}button,input,textarea{font:inherit}button,a,input,textarea,summary{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #98713a;outline-offset:4px}[hidden]{display:none!important}.wrap{max-width:1200px;margin:auto;padding-inline:32px}.skip{position:absolute;left:16px;top:-80px;z-index:5;padding:10px;background:white}.skip:focus{top:10px}.masthead{display:flex;align-items:center;gap:24px;padding-top:24px;padding-bottom:24px;border-bottom:1px solid var(--line);font-size:.85rem}.masthead>a:last-child{margin-left:auto}.masthead>span{color:var(--muted)}.wordmark{font-weight:750;letter-spacing:.2em;text-decoration:none;font-size:.82rem}.intro{padding:58px 0 44px;max-width:900px}.eyebrow,.number{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:650;color:var(--accent)}h1,h2,h3,p{margin:0}h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:400}h1{font-size:clamp(2.5rem,5vw,4.5rem);line-height:1.06;letter-spacing:-.045em;margin:14px 0 22px;max-width:760px}.deck{font-size:1.1rem;max-width:680px;color:var(--muted)}.reader-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:52px;align-items:start}.section-heading{display:flex;align-items:baseline;gap:16px;margin-bottom:12px}.section-heading h2{font-size:1.65rem;line-height:1.25}.attribution,.caption,.scope,.section-note{color:var(--muted);font-size:.85rem}.attribution{margin-bottom:24px}.choices{border:0;margin:0 0 26px;padding:0}.choices legend{font-size:.75rem;color:var(--muted);margin-bottom:10px}.choice-row{display:flex;flex-wrap:wrap;gap:7px}.choice-row label{position:relative}.choice-row input{position:absolute;opacity:0;width:1px;height:1px}.choice-row span{display:block;border:1px solid #aeb8a9;border-radius:3px;padding:8px 11px;font-size:.78rem;cursor:pointer}.choice-row input:checked+span{background:var(--forest);color:white;border-color:var(--forest)}.choice-row input:focus-visible+span{outline:3px solid #98713a;outline-offset:3px}.choice-row input:disabled+span{opacity:.45;cursor:default}.passage{border-top:2px solid var(--ink);padding-top:26px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.2rem,2vw,1.45rem);line-height:1.75}.ending-region{margin-top:22px}#active-ending{white-space:pre-wrap;font-weight:600}.ending-by{font-family:system-ui,sans-serif;font-size:.73rem;color:var(--accent);margin-top:14px}.effect{font-family:system-ui,sans-serif;font-size:.88rem;line-height:1.6;margin-top:7px;color:var(--muted)}.scope{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:.78rem}.source{background:#eceee4;padding:23px}.source .section-heading{display:block}.source .number{display:block;margin-bottom:6px}.source h2{font-size:1.35rem}.source img{display:block;width:100%;height:auto;margin-top:20px}.source .caption{font-size:.73rem;margin-top:10px}.source>p:not(.caption){font-size:.88rem;margin:20px 0 12px}.text-link{font-size:.84rem;font-weight:600}.compare{margin-top:64px;border-top:1px solid var(--line);padding-top:32px}.section-note{max-width:650px}.endings-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:24px 0;gap:20px}.ending-card{border-top:2px solid #899b85;padding-top:16px}.ending-card h3{font-size:.9rem}.ending-card h3 span{display:block;font-weight:400;font-size:.7rem;color:var(--muted)}.ending-card blockquote{font-family:Georgia,serif;font-size:1.06rem;line-height:1.6;margin:16px 0}.ending-card>p{font-size:.78rem;line-height:1.6;color:var(--muted)}.try{margin-top:58px;padding:32px;background:#fffdf7;border:1px solid var(--line);max-width:850px}.try>p{font-size:.94rem;max-width:680px}.field-label{display:block;font-size:.85rem;font-weight:650;margin:24px 0 8px}.field-label span{font-weight:400;font-size:.75rem;margin-left:8px;color:var(--muted)}textarea{display:block;width:100%;max-width:100%;border:1px solid #a4b09f;border-radius:3px;padding:12px;background:#fff;resize:vertical;line-height:1.6;color:var(--ink)}.draft-note{font-size:.78rem;color:var(--muted);margin-top:12px}.draft-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}button{border:1px solid var(--forest);border-radius:3px;background:var(--forest);color:#fff;padding:10px 14px;font-size:.84rem;font-weight:600;cursor:pointer}button.secondary{color:var(--forest);background:transparent}button:disabled{opacity:.45;cursor:default}button:not(:disabled):hover{filter:brightness(.92)}.status{min-height:1.5em;font-size:.78rem;margin-top:14px}.notice{margin-top:20px}.provenance{margin-top:50px;padding-top:28px;border-top:1px solid var(--line);max-width:850px}.provenance h2{font-size:1.4rem;margin-bottom:14px}.provenance p{font-size:.84rem;color:var(--muted)}.source-links{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:.8rem;margin:18px 0}details{font-size:.8rem;margin-top:24px}summary{cursor:pointer}details p{margin-top:12px}.identifier{overflow-wrap:anywhere;font-size:.7rem!important}footer{font-size:.73rem;color:var(--muted);margin-top:48px!important;padding-top:22px;padding-bottom:30px;border-top:1px solid var(--line)}
+  @media(max-width:850px){.reader-grid{gap:28px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}.endings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:620px){.wrap{padding-inline:20px}.masthead{gap:12px;font-size:.75rem}.masthead>span{display:none}.intro{padding:38px 0 30px}.deck{font-size:.96rem}.reader-grid{grid-template-columns:1fr;gap:32px}.source{max-width:450px}.source img{max-height:340px;object-fit:contain}.section-heading{gap:12px}.section-heading h2{font-size:1.4rem}.endings-grid{gap:22px}.try{padding:22px 18px}.draft-actions{flex-direction:column;align-items:stretch}.compare{margin-top:40px}.choice-row span{padding:9px 10px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
