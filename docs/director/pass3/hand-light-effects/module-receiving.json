@@ -1,0 +1,261 @@
+{
+  "lighting_sha256": "5ccb2baee1557e98f9b93390e7babc937bf75f6e961f01a78f230ecd5c0a9c07",
+  "core_sha256": "35e67b9ea89ff2372a32689619900255c1d87e88199308e52b2f9d6a67a7b9e6",
+  "checks": [
+    {
+      "name": "legacy optional fields omitted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "UI creates left attached ball",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "left endpoint exact",
+      "passed": true,
+      "detail": {
+        "expected": [
+          0.15373346386021414,
+          0.9280131814792689,
+          0.011095237162016103
+        ],
+        "actual": [
+          0.15373346209526062,
+          0.9280132055282593,
+          0.011095236986875534
+        ]
+      }
+    },
+    {
+      "name": "whole root carries attached light",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "root motion does not drift saved offset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "arm rotation carries exact endpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pose changes leave local snapshot stable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "attached offsets roundtrip exactly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real light shares attachment position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "detach keeps world position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "detach produces world parent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reattach resets local offsets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "right effect independent from left",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "effects survive hiding editor handles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "effects neither picked nor shadow casters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "repeated restore has stable resource counts",
+      "passed": true,
+      "detail": {
+        "before": [
+          31,
+          32,
+          5,
+          24
+        ],
+        "after": [
+          31,
+          32,
+          5,
+          24
+        ]
+      }
+    },
+    {
+      "name": "remove disposes effect meshes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "restore returns effect meshes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "head attachment uses head parent",
+      "passed": true,
+      "detail": {
+        "localCenter": [
+          -0.004188962280750275,
+          0.07947930693626404,
+          -2.93925404548645e-06
+        ]
+      }
+    },
+    {
+      "name": "playback-like transforms preserve local offset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "none disposes ball only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "none restore returns exact resource count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "light off hides its visible effect",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dispose removes owned effects and anchors",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "scope": "Actual imported rig, lighting module and current UI; controller exposed only by test wrapper. No save/send. Chromium software WebGL.",
+  "snapshot": {
+    "ambient": {
+      "intensity": 0.2,
+      "color": "#ffffff"
+    },
+    "lights": [
+      {
+        "id": "light-key",
+        "name": "Key light",
+        "type": "directional",
+        "enabled": true,
+        "color": "#ffffff",
+        "intensity": 0.75,
+        "position": [
+          -3,
+          4,
+          3
+        ],
+        "rotation": [
+          -0.772607487030514,
+          -0.8198672643969563,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-rim",
+        "name": "Rim light",
+        "type": "directional",
+        "enabled": false,
+        "color": "#ffffff",
+        "intensity": 2,
+        "position": [
+          3,
+          1.2,
+          -4
+        ],
+        "rotation": [
+          -0.1698462880836737,
+          2.601173153319209,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 20
+      },
+      {
+        "id": "light-d288cf05-7bf0-46a6-96ce-fe0872b1b4a7",
+        "name": "Left hand light",
+        "type": "point",
+        "enabled": true,
+        "color": "#fff1c1",
+        "intensity": 2,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 10,
+        "attachment": "hand.L",
+        "effect": {
+          "shape": "ball",
+          "radius": 0.065,
+          "length": 1,
+          "strength": 0.85
+        }
+      },
+      {
+        "id": "light-88dc7b62-83c1-4778-a00b-3e960ab7514e",
+        "name": "Right hand light",
+        "type": "spot",
+        "enabled": true,
+        "color": "#70bbff",
+        "intensity": 2,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "angle": 1.0471975511965976,
+        "range": 10,
+        "attachment": "hand.R",
+        "effect": {
+          "shape": "beam",
+          "radius": 0.08,
+          "length": 0.48,
+          "strength": 0.6
+        }
+      }
+    ]
+  },
+  "passed": true
+}

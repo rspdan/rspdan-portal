@@ -1,0 +1,227 @@
+{
+  "author": "Bee",
+  "recorded_utc": "2026-11-25T08:14:50.109381+00:00",
+  "purpose": "Actual play with floor-plan toolbar, levels and connections; invented pocket studio, not Lighthouse canon",
+  "surface": {
+    "origin": "http://127.0.0.1:4341/director",
+    "browser": "Chromium151.0.7922.173",
+    "desktop": [
+      1440,
+      1000
+    ],
+    "touch_emulated": [
+      390,
+      844
+    ],
+    "physical_phone_test": false,
+    "separate_contexts": true
+  },
+  "baseline_head": "9d88680e978502bac7366ea040c16629c72665b1",
+  "candidate_disk_snapshot_at_080706": {
+    "floorplan-editor.js": "faf7fdec0e74943226a43cf0bcbbabeb0f5f81cc907dd546d63ba0e67bcb6ff0",
+    "floorplan-editor.css": "9a10b8ffca0df2dbd8d20e1a5ef5c31ee7b59ec3d1350ba8760f619744b61ca0"
+  },
+  "candidate_served_after_play": {
+    "at": "2026-11-25T08:12:33.120067+00:00",
+    "scope": "Served bytes fetched after completed candidate play; not a claim of frozen deployment or exact earlier in-memory module identity.",
+    "assets": {
+      "floorplan-editor.js": {
+        "status": 200,
+        "sha256": "4de944f5e7a8c8270eb87e3913c3161f98b69893d2a8862480074ee3aad22a9d"
+      },
+      "floorplan-editor.css": {
+        "status": 200,
+        "sha256": "9a10b8ffca0df2dbd8d20e1a5ef5c31ee7b59ec3d1350ba8760f619744b61ca0"
+      }
+    },
+    "browser": "151.0.7922.173"
+  },
+  "artifact_identity_limit": "Candidate was in progress; after-play served hashes do not certify every earlier in-memory module or final deployment.",
+  "baseline_observations": [
+    "Mouse and touch drawing created rooms.",
+    "Toolbar Door drag ending on a wall placed nothing on both surfaces.",
+    "Tap/click Door or Window then wall successfully placed openings on both surfaces.",
+    "Added upper level, set3.2 elevation, drew upper room, placed stairs/elevator and changed active level through UI.",
+    "Active level and destination labels helped explain linked floors.",
+    "Desktop and touch3D images showed active ground room and actual apertures."
+  ],
+  "candidate_observations": [
+    "All five toolbar drags Door/Window/Passage/Stairs/Elevator placed on desktop and touch.",
+    "Actual touch Window ghost read release to place.",
+    "Explicitly cleared selection stayed empty after candidate gestures.",
+    "Touch two Undo taps removed two new connectors.",
+    "Desktop invalid Door wall-away drop preserved openings and gave wall-edge instruction.",
+    "Desktop two Undo then two Redo restored connector counts2→4.",
+    "Local Export plan produced nest-floorplan-package/v1."
+  ],
+  "practical_lessons": [
+    "Ghost plus release/status feedback makes selected-tool-to-place connection clear.",
+    "Endpoint hint with active-level and marker destination labels resolves immediate route context.",
+    "Small-canvas connection labels and room name can collide; follow-up observation only.",
+    "Inspector/canvas round trips require vertical scrolling on touch.",
+    "Initial full-height front wall hides floor/character in3D; later directing should choose camera/cutaway deliberately."
+  ],
+  "scope_corrections": [
+    "Selected2.7 text was not isolated to a particular baseline drag; no exact physical-phone selection reproduction claim.",
+    "Baseline Window drag target was room interior; exclude its non-placement from valid-wall defect claims.",
+    "Touch preview driver timeout followed by actual successful Stage pixels; not treated as app failure.",
+    "No final polygon/Text-node path approval; independent QA owns it."
+  ],
+  "export": {
+    "file": "Bee-pocket-studio.export.floorplan.json",
+    "sha256": "ae2ddbb2d3abaae6cf1846f0ec9eb9e87097e84b06c71942d6f59e787b087fd6",
+    "schema": "nest-floorplan-package/v1",
+    "levels": 2,
+    "rooms": 2,
+    "openings": 5,
+    "connectors": 4,
+    "extra_connectors_are_deliberate_undo_play": true
+  },
+  "images": [
+    {
+      "file": "desktop-baseline-preview.png",
+      "sha256": "398aef66bc5a27cceb1704bdde27c2360aaf62701bbd02625c25f0f8b2263154",
+      "personally_opened": true
+    },
+    {
+      "file": "desktop-candidate-all-tools.png",
+      "sha256": "1a208478f9b1df55dd67c5c09fabdba955a93cdabecfae036c3328acd1db2d15",
+      "personally_opened": true
+    },
+    {
+      "file": "desktop-candidate-invalid-wall-drop.png",
+      "sha256": "d33909a5948a1d9dcbc14ebe73445d89fae0633f2d6f08c5eb4f4cb21ce5ca61",
+      "personally_opened": true
+    },
+    {
+      "file": "desktop-door-drag-baseline.png",
+      "sha256": "902b83401e5039dcf7641369f3225e7334822b9a49c5e3bd0ca936258af1db9f",
+      "personally_opened": false
+    },
+    {
+      "file": "desktop-ground-connected.png",
+      "sha256": "b17f34549753cda9cdeef88e15247ea8e680cea5630f75d1275c3415ba379b73",
+      "personally_opened": false
+    },
+    {
+      "file": "desktop-room.png",
+      "sha256": "902b83401e5039dcf7641369f3225e7334822b9a49c5e3bd0ca936258af1db9f",
+      "personally_opened": false
+    },
+    {
+      "file": "desktop-stairs-upper.png",
+      "sha256": "6dea67cd43612cde1632142eb43378aeb8e9ac7ed71c802dbb68f982eb485402",
+      "personally_opened": false
+    },
+    {
+      "file": "desktop-start.png",
+      "sha256": "fed8f5c24a1c3d94170ac553e303aa316fed765e878cddeec7817c07ba768678",
+      "personally_opened": false
+    },
+    {
+      "file": "desktop-tap-openings.png",
+      "sha256": "41da40c8028a5a5a6017e97a49a5e16a0cc57f4b541920ae36967645e3e3d767",
+      "personally_opened": false
+    },
+    {
+      "file": "desktop-two-level-connections.png",
+      "sha256": "abb20cb514e6c8440a901599f86ddaaea34827c80d67fa6d9aa0a8439a661730",
+      "personally_opened": false
+    },
+    {
+      "file": "touch-baseline-preview-after-timeout.png",
+      "sha256": "79efe8c229e32c0179e575a267b61636318516c50cd01af3561e7f5d63670509",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-candidate-all-tools.png",
+      "sha256": "161ed30a78c3279ee246864a7da746bad49102286896c444418c384ce24b54c5",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-candidate-door-window-placed.png",
+      "sha256": "873ae492ededae442957aabd5c4cea64d518b9e687899cfbaace08fcf1cc7b77",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-candidate-start.png",
+      "sha256": "9691e17668281782f493b6d0f6606693616d34a0ae29efec0c7a351452b8f6cd",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-candidate-window-ghost.png",
+      "sha256": "6a9e267953858bee5139dd912923f2cd22bc1fcfea0774dc516c733642037e8b",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-door-drag-baseline.png",
+      "sha256": "a9e81c5ff316d34f2e0a5629df1409ddf5c68ca1160866edf4d55c9eb0900a00",
+      "personally_opened": false
+    },
+    {
+      "file": "touch-ground-connected.png",
+      "sha256": "2f68a74d97b78f80bda923ceac1e1d36deb4450636676d5b98bde0f663f33700",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-isolated-elevator-drag.png",
+      "sha256": "3216e3a7cc27833978666a373b39e27f5090343167aa736cf98348920bbd9423",
+      "personally_opened": false
+    },
+    {
+      "file": "touch-room.png",
+      "sha256": "a9e81c5ff316d34f2e0a5629df1409ddf5c68ca1160866edf4d55c9eb0900a00",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-stairs-upper.png",
+      "sha256": "8a867053f877518ac837d2d3ed5d839e4240d996300e1a28f9a01b4caf594042",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-start.png",
+      "sha256": "9439e71f3db9a6832b73fe065aa2ddda627c11576b04a2263b592c548185daaa",
+      "personally_opened": true
+    },
+    {
+      "file": "touch-tap-openings.png",
+      "sha256": "f1bef91330ede97d0b8f9e4f5099d94976280d93e77f433b7f60edda4470badb",
+      "personally_opened": false
+    },
+    {
+      "file": "touch-two-level-connections.png",
+      "sha256": "e63ddee351c04a62a0f0d94cd8c08419b15cead90f115f2c76dcd80d4500be51",
+      "personally_opened": false
+    }
+  ],
+  "page_errors": [
+    {
+      "surface": "desktop",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    },
+    {
+      "surface": "touch",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    },
+    {
+      "surface": "touch",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    },
+    {
+      "surface": "desktop",
+      "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    }
+  ],
+  "actions": {
+    "actual_UI_gestures": true,
+    "plan_injected_for_creation": false,
+    "read_only_state_inspection": true,
+    "browser_selection_explicitly_cleared_before_candidate": true,
+    "save_take_clicked": false,
+    "send_to_crew_clicked": false,
+    "production_save": false,
+    "native_model_edit": false,
+    "product_code_edit": false
+  },
+  "writes_scope": "docs/director/floorplan-play/bee only"
+}

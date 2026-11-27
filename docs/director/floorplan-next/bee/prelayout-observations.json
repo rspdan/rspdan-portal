@@ -1,0 +1,15 @@
+{
+  "author": "Bee",
+  "execution_utc": "2026-11-25T08:56:19.713936+00:00",
+  "status": "Pre-layout observations only; phone workspace correction pending",
+  "actual_observations": [
+    "Selecting top door did not move document scroll or focus an input.",
+    "Width0.9\u21921.1 applied through visible inspector.",
+    "Return to plan retained exact selected opening and relative room bounds within subpixel noise.",
+    "Inspector tabs were out of view in edit/return screenshots; reliable navigation recovery not established.",
+    "Four-level test set authored through UI: lower room, two existing rooms and empty upper level."
+  ],
+  "parent_relay": "C.B. actual pixel review found sticky canvas can obscure inspector navigation after deeper scroll; UI owner preparing viewport workspace and independently scrolling inspector.",
+  "harness_limit": "Stopped at selection dropdown while Level inspector tab remained active. Hidden control timeout is a test-sequence mistake, not product failure.",
+  "new_model_or_canon": false
+}

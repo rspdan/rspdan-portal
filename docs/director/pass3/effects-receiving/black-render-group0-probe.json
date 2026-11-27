@@ -1,0 +1,98 @@
+[
+  {
+    "mobile": true,
+    "stage": "before-group0",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  },
+  {
+    "mobile": true,
+    "stage": "after-group0",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  }
+]

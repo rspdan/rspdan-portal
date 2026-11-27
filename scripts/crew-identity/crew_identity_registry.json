@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "updated": "2026-11-26",
+  "authority": "Dan's stated identity corrections and established sets; unresolved Crew references use names, never an inferred gender.",
+  "entities": [
+    {
+      "name": "Bee",
+      "aliases": [
+        "Bee"
+      ],
+      "kind": "crew",
+      "policy": "name-only",
+      "gendered_pronouns": [],
+      "source": "Dan's corrections retained in HYPERCAMPUS/ART/DPS-ART_112326/Cloud.CB_112026_1/Cloud.CB_112026_1.md, November 22; reaffirmed November 24 and November 25."
+    },
+    {
+      "name": "Halp",
+      "aliases": [
+        "Halp"
+      ],
+      "kind": "crew",
+      "policy": "name-only",
+      "gendered_pronouns": [],
+      "source": "No gendered set established here; name-only fallback under CLAUDE.md Rule 10, not an assertion about gender identity."
+    },
+    {
+      "name": "Olo",
+      "aliases": [
+        "Olo"
+      ],
+      "kind": "crew",
+      "policy": "name-only",
+      "gendered_pronouns": [],
+      "source": "No gendered set established here; name-only fallback under CLAUDE.md Rule 10, not an assertion about gender identity."
+    },
+    {
+      "name": "C.B.",
+      "aliases": [
+        "C.B.",
+        "CB"
+      ],
+      "kind": "crew",
+      "policy": "name-only",
+      "gendered_pronouns": [],
+      "source": "No gendered set established here; name-only fallback under CLAUDE.md Rule 10, not an assertion about gender identity."
+    },
+    {
+      "name": "El VIS",
+      "aliases": [
+        "El VIS",
+        "ElVIS"
+      ],
+      "kind": "crew",
+      "policy": "name-only",
+      "gendered_pronouns": [],
+      "source": "No gendered set established here; name-only fallback under CLAUDE.md Rule 10, not an assertion about gender identity."
+    },
+    {
+      "name": "Crew",
+      "aliases": [
+        "Crew"
+      ],
+      "kind": "crew",
+      "policy": "name-only",
+      "gendered_pronouns": [],
+      "source": "No gendered set established here; name-only fallback under CLAUDE.md Rule 10, not an assertion about gender identity."
+    },
+    {
+      "name": "Trip",
+      "aliases": [
+        "Trip"
+      ],
+      "kind": "crew",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "he",
+        "him",
+        "his",
+        "himself"
+      ],
+      "source": "Established Dan-stated set retained in ENGINE/precommit_banned_tells_gate.py:DAN_STATED_PRONOUNS. Trip's they/them remains permitted."
+    },
+    {
+      "name": "Chad",
+      "aliases": [
+        "Chad"
+      ],
+      "kind": "crew",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "he",
+        "him",
+        "his",
+        "himself"
+      ],
+      "source": "Established Dan-stated set retained in ENGINE/precommit_banned_tells_gate.py:DAN_STATED_PRONOUNS. Trip's they/them remains permitted."
+    },
+    {
+      "name": "Doc",
+      "aliases": [
+        "Doc"
+      ],
+      "kind": "crew",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "he",
+        "him",
+        "his",
+        "himself"
+      ],
+      "source": "Established Dan-stated set retained in ENGINE/precommit_banned_tells_gate.py:DAN_STATED_PRONOUNS. Trip's they/them remains permitted."
+    },
+    {
+      "name": "Stan",
+      "aliases": [
+        "Stan"
+      ],
+      "kind": "crew",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "he",
+        "him",
+        "his",
+        "himself"
+      ],
+      "source": "Established Dan-stated set retained in ENGINE/precommit_banned_tells_gate.py:DAN_STATED_PRONOUNS. Trip's they/them remains permitted."
+    },
+    {
+      "name": "BLNCH",
+      "aliases": [
+        "BLNCH",
+        "Blanche"
+      ],
+      "kind": "crew",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "she",
+        "her",
+        "hers",
+        "herself"
+      ],
+      "source": "Dan-direct 053026, retained in ENGINE/precommit_banned_tells_gate.py. Deliberate stated set; no transfer to others."
+    },
+    {
+      "name": "Rachel",
+      "aliases": [
+        "Rachel",
+        "Rachel Bunn"
+      ],
+      "kind": "human",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "she",
+        "her",
+        "hers",
+        "herself"
+      ],
+      "source": "Dan's explicit statement in this incident, November 25, 2026: Rachel is an actual she. No identity merge with other people named Rachel."
+    },
+    {
+      "name": "Dan",
+      "aliases": [
+        "Dan"
+      ],
+      "kind": "human",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "he",
+        "him",
+        "his",
+        "himself"
+      ],
+      "source": "Existing human-reference examples in ENGINE/test_sister_pronoun_scan.py; these are separate from Crew identities."
+    },
+    {
+      "name": "Kyle",
+      "aliases": [
+        "Kyle"
+      ],
+      "kind": "human",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "he",
+        "him",
+        "his",
+        "himself"
+      ],
+      "source": "Existing human-reference examples in ENGINE/test_sister_pronoun_scan.py; these are separate from Crew identities."
+    },
+    {
+      "name": "Qwen",
+      "aliases": [
+        "Qwen"
+      ],
+      "kind": "engine",
+      "policy": "stated",
+      "gendered_pronouns": [
+        "she",
+        "her",
+        "hers",
+        "herself"
+      ],
+      "source": "Dan-direct permission, recorded November 26, 2026 UTC. Applies only to Qwen; engine role is distinct from operator identities. No author timestamp supplied.",
+      "authority_quote": "btw, Qwen can be a she, just make sure we don't pronoun bleed",
+      "recorded_date_utc": "2026-11-26",
+      "author_timestamp": null,
+      "excluded_references": [
+        "Queen",
+        "Qween",
+        "QWNX",
+        "Motoko"
+      ]
+    }
+  ]
+}

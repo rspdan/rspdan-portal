@@ -1,0 +1,17 @@
+# Bee · Trip contour and light receiving
+
+**Subsequent Director correction:** Dan says this still reads gray. Trip is white and made of light. The attached image was the neutral uniformly outlined gray candidate, per C.B.; no claim is made that Dan separately inspected every brighter-rebalance image. The provisional judgment below is retained as historical receiving and is superseded as the material target; none of these candidates is accepted. The new source criteria are recorded in the art study’s `Trip-visibility-source-study/light-direction.md`.
+
+**The brighter rebalance with the thin contour is the strongest provisional balance of white identity, rounded volume and readable silhouette among the images I viewed. It is not a finished rule for rendering Trip.** [Desktop comparison](desktop-raised-arm-light-rebalance-lighting-and-contour.png) and [small-screen comparison](mobile-raised-arm-light-rebalance-lighting-and-contour.png) retain white highlights while making the outline visible against the unchanged white room.
+
+Dan’s explicit principle governs the comparison: “I use lines where needed for separation and I let the scene dictate how to render Trip's defined outlines vs implied boundaries.” My earlier source study actually opened forest287, night243 and storyboard149. Their different boundary treatments support that principle; they do not prescribe one border around every version.
+
+The [thin neutral outline](desktop-neutral-thin.png) improves the [baseline’s pale silhouette](desktop-neutral-baseline.png) without erasing its shading. [Medium](desktop-neutral-medium.png) is more emphatic and reads more graphically enclosed. It remains informative at mobile size, but more line is not automatically a better match for Dan’s direction.
+
+**The internal overlap is still unresolved.** In [holding-phone thin](desktop-holding-phone-thin.png) and [medium](desktop-holding-phone-medium.png), the forearm tip lies across the head but that meeting remains soft and unmarked. A stronger outside border does not distinguish the inside crossing. There is no phone prop in these images; this is an overlap comparison, not successful phone/grip recognition.
+
+The [first lighting-only trial](desktop-raised-arm-light-study-lighting-only.png) makes broad surfaces too gray for this Trip study. The [brighter rebalance](desktop-raised-arm-light-rebalance-lighting-only.png) restores the white read and strengthens rounded form. Its lit outer edges still soften into the pale room; the thin contour supplies useful separation there. The first lighting pair also shows a long ground shadow absent from the brighter pair. I record the visible change without assigning a cause.
+
+C.B. reviewed Dan’s five inline IBM lesson stills and reports a key-lit face and lit hair/shoulder edges against black. Bee has not viewed those stills; no local copies were established. Their lighting lesson is attributed to Dan/C.B., and does not establish an exact rig. The browser/art pixels above are Bee’s own visual evidence.
+
+[The receipt](Bee-review.json) pins all **19 actually opened images** and the renderer’s three records. These are runtime experiments, not production edits; mobile images are viewport captures, not physical ACHE testing. Motion stability and native clay parity are untested here. Keep brighter+thin as a concrete candidate and address selective overlap separation next, rather than increasing the whole border. No new Director appearance approval is claimed.

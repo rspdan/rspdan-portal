@@ -1,0 +1,2763 @@
+{
+  "author": "Bee",
+  "scope": "Actual local Chromium UI exploratory play, no live Save/Send, no physical ACHE claim.",
+  "source_timestamp": "DPS112426 7:16pm",
+  "execution_started_utc": "2026-11-25T03:21:12Z",
+  "baseline": "7bd0e7c",
+  "events": [
+    {
+      "utc": "2026-11-25T03:21:27Z",
+      "command": {
+        "action": "shot",
+        "name": "01-open"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/01-open.png"
+      },
+      "state": {
+        "frame": "1",
+        "preset": "neutral",
+        "joint": "upper_arm.L",
+        "rotation": [
+          "0",
+          "0",
+          "0"
+        ],
+        "status": "Ouch is ready. Pick a gesture or move a joint.",
+        "history": "0 back \u00b7 0 forward",
+        "hint": "Left shoulder \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": []
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:41Z",
+      "command": {
+        "action": "fill",
+        "selector": "#take-name",
+        "value": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch"
+      },
+      "result": {},
+      "state": {
+        "frame": "1",
+        "preset": "neutral",
+        "joint": "upper_arm.L",
+        "rotation": [
+          "0",
+          "0",
+          "0"
+        ],
+        "status": "Take details updated.",
+        "history": "1 back \u00b7 0 forward",
+        "hint": "Left shoulder \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": []
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:41Z",
+      "command": {
+        "action": "select",
+        "selector": "#preset",
+        "value": "acting-relaxed"
+      },
+      "result": {},
+      "state": {
+        "frame": "1",
+        "preset": "acting-relaxed",
+        "joint": "upper_arm.L",
+        "rotation": [
+          "-20",
+          "-6",
+          "34"
+        ],
+        "status": "Relaxed start. Pose it your way, then key a frame.",
+        "history": "2 back \u00b7 0 forward",
+        "hint": "Left shoulder \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": []
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:42Z",
+      "command": {
+        "action": "click",
+        "selector": "#key-pose"
+      },
+      "result": {},
+      "state": {
+        "frame": "1",
+        "preset": "acting-relaxed",
+        "joint": "upper_arm.L",
+        "rotation": [
+          "-20",
+          "-6",
+          "34"
+        ],
+        "status": "Pose keyed at frame 1.",
+        "history": "3 back \u00b7 0 forward",
+        "hint": "Left shoulder \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:43Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 20
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "acting-relaxed",
+        "joint": "upper_arm.L",
+        "rotation": [
+          "-20",
+          "-6",
+          "34"
+        ],
+        "status": "Frame 20. Key the pose when it is ready.",
+        "history": "3 back \u00b7 0 forward",
+        "hint": "Left shoulder \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:43Z",
+      "command": {
+        "action": "select",
+        "selector": "#preset",
+        "value": "raised-arm"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "raised-arm",
+        "joint": "upper_arm.L",
+        "rotation": [
+          "9",
+          "-1",
+          "-12"
+        ],
+        "status": "Raised Arm start. Pose it your way, then key a frame.",
+        "history": "4 back \u00b7 0 forward",
+        "hint": "Left shoulder \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:43Z",
+      "command": {
+        "action": "select",
+        "selector": "#joint",
+        "value": "head"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "raised-arm",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "0"
+        ],
+        "status": "Raised Arm start. Pose it your way, then key a frame.",
+        "history": "4 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:21:46Z",
+      "command": {
+        "action": "shot",
+        "name": "02-greeting-before-head"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/02-greeting-before-head.png"
+      },
+      "state": {
+        "frame": "20",
+        "preset": "raised-arm",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "0"
+        ],
+        "status": "Raised Arm start. Pose it your way, then key a frame.",
+        "history": "4 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:04Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "1"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "5 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:04Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "2"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "6 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:04Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "3"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "7 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:05Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "4"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "8 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:05Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "5"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "9 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:05Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "6"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "10 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:05Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "7"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "11 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:06Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "8"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "12 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:06Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "9"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "13 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:06Z",
+      "command": {
+        "action": "key",
+        "selector": "#rot-z",
+        "key": "ArrowRight"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "10"
+        ],
+        "status": "Pose changed. Your browser draft is kept here.",
+        "history": "14 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:08Z",
+      "command": {
+        "action": "click",
+        "selector": "#key-pose"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "10"
+        ],
+        "status": "Pose keyed at frame 20.",
+        "history": "15 back \u00b7 0 forward",
+        "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:09Z",
+      "command": {
+        "action": "click",
+        "selector": "#handles"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "10"
+        ],
+        "status": "Pose keyed at frame 20.",
+        "history": "15 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:12Z",
+      "command": {
+        "action": "shot",
+        "name": "03-greeting-head-tilt"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/03-greeting-head-tilt.png"
+      },
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "10"
+        ],
+        "status": "Pose keyed at frame 20.",
+        "history": "15 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:23Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 42
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "head",
+        "rotation": [
+          "0",
+          "0",
+          "10"
+        ],
+        "status": "Frame 42. Key the pose when it is ready.",
+        "history": "15 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:23Z",
+      "command": {
+        "action": "select",
+        "selector": "#preset",
+        "value": "acting-victorious"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "acting-victorious",
+        "joint": "head",
+        "rotation": [
+          "-2",
+          "0",
+          "-2"
+        ],
+        "status": "Victorious start. Pose it your way, then key a frame.",
+        "history": "16 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:24Z",
+      "command": {
+        "action": "click",
+        "selector": "#handles"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "acting-victorious",
+        "joint": "head",
+        "rotation": [
+          "-2",
+          "0",
+          "-2"
+        ],
+        "status": "Victorious start. Pose it your way, then key a frame.",
+        "history": "16 back \u00b7 0 forward",
+        "hint": "Head \u00b7 drag a colored ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:25Z",
+      "command": {
+        "action": "select",
+        "selector": "#joint",
+        "value": "lower_arm.L"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "acting-victorious",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Victorious start. Pose it your way, then key a frame.",
+        "history": "16 back \u00b7 0 forward",
+        "hint": "Left elbow \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:28Z",
+      "command": {
+        "action": "shot",
+        "name": "04-overeager-before-stretch"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/04-overeager-before-stretch.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "acting-victorious",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Victorious start. Pose it your way, then key a frame.",
+        "history": "16 back \u00b7 0 forward",
+        "hint": "Left elbow \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:22:59Z",
+      "command": {
+        "action": "mouse",
+        "from": [
+          679,
+          240
+        ],
+        "to": [
+          760,
+          220
+        ],
+        "hold_ms": 450,
+        "steps": 18
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Joint repositioned. Key this pose to put it in the motion.",
+        "history": "17 back \u00b7 0 forward",
+        "hint": "Left elbow \u00b7 hold a dot to move; drag a ring to rotate",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:02Z",
+      "command": {
+        "action": "click",
+        "selector": "#handles"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Joint repositioned. Key this pose to put it in the motion.",
+        "history": "17 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:05Z",
+      "command": {
+        "action": "shot",
+        "name": "05-overeager-stretch-unframed"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/05-overeager-stretch-unframed.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Joint repositioned. Key this pose to put it in the motion.",
+        "history": "17 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:06Z",
+      "command": {
+        "action": "click",
+        "selector": "#frame-character"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Whole character framed. Your pose is unchanged.",
+        "history": "18 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:09Z",
+      "command": {
+        "action": "shot",
+        "name": "06-overeager-stretch-framed"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/06-overeager-stretch-framed.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Whole character framed. Your pose is unchanged.",
+        "history": "18 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:26Z",
+      "command": {
+        "action": "click",
+        "selector": "#undo"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Undone.",
+        "history": "17 back \u00b7 1 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:28Z",
+      "command": {
+        "action": "click",
+        "selector": "#undo"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "acting-victorious",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Undone.",
+        "history": "16 back \u00b7 2 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:30Z",
+      "command": {
+        "action": "shot",
+        "name": "07-stretch-recovered"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/07-stretch-recovered.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "acting-victorious",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Undone.",
+        "history": "16 back \u00b7 2 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:31Z",
+      "command": {
+        "action": "click",
+        "selector": "#redo"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Redone.",
+        "history": "17 back \u00b7 1 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:32Z",
+      "command": {
+        "action": "click",
+        "selector": "#key-pose"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Pose keyed at frame 42.",
+        "history": "18 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:32Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 72
+      },
+      "result": {},
+      "state": {
+        "frame": "72",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame 72. Key the pose when it is ready.",
+        "history": "18 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:32Z",
+      "command": {
+        "action": "select",
+        "selector": "#preset",
+        "value": "acting-defeated"
+      },
+      "result": {},
+      "state": {
+        "frame": "72",
+        "preset": "acting-defeated",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-9",
+          "2",
+          "-26"
+        ],
+        "status": "Defeated start. Pose it your way, then key a frame.",
+        "history": "19 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:33Z",
+      "command": {
+        "action": "click",
+        "selector": "#key-pose"
+      },
+      "result": {},
+      "state": {
+        "frame": "72",
+        "preset": "acting-defeated",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-9",
+          "2",
+          "-26"
+        ],
+        "status": "Pose keyed at frame 72.",
+        "history": "20 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:34Z",
+      "command": {
+        "action": "click",
+        "selector": "#motion-settings"
+      },
+      "result": {},
+      "state": {
+        "frame": "72",
+        "preset": "acting-defeated",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-9",
+          "2",
+          "-26"
+        ],
+        "status": "Pose keyed at frame 72.",
+        "history": "20 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:35Z",
+      "command": {
+        "action": "click",
+        "selector": "details:has(#motion-example)>summary"
+      },
+      "result": {},
+      "state": {
+        "frame": "72",
+        "preset": "acting-defeated",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-9",
+          "2",
+          "-26"
+        ],
+        "status": "Pose keyed at frame 72.",
+        "history": "20 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:37Z",
+      "command": {
+        "action": "click",
+        "selector": "#frame-motion"
+      },
+      "result": {},
+      "state": {
+        "frame": "72",
+        "preset": "acting-defeated",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-9",
+          "2",
+          "-26"
+        ],
+        "status": "Motion framed with one fixed camera.",
+        "history": "21 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:23:48Z",
+      "command": {
+        "action": "shot",
+        "name": "08-comic-ending"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/08-comic-ending.png"
+      },
+      "state": {
+        "frame": "72",
+        "preset": "acting-defeated",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-9",
+          "2",
+          "-26"
+        ],
+        "status": "Motion framed with one fixed camera.",
+        "history": "21 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:05Z",
+      "command": {
+        "action": "select",
+        "selector": "#key-select",
+        "value": "20"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "66",
+          "-172"
+        ],
+        "status": "Frame 20. Key the pose when it is ready.",
+        "history": "21 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:06Z",
+      "command": {
+        "action": "select",
+        "selector": "#key-transition",
+        "value": "hold"
+      },
+      "result": {},
+      "state": {
+        "frame": "20",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "66",
+          "-172"
+        ],
+        "status": "Motion leaving frame 20 updated.",
+        "history": "22 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:06Z",
+      "command": {
+        "action": "select",
+        "selector": "#key-select",
+        "value": "42"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame 42. Key the pose when it is ready.",
+        "history": "22 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:06Z",
+      "command": {
+        "action": "select",
+        "selector": "#key-transition",
+        "value": "ease-out"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Motion leaving frame 42 updated.",
+        "history": "23 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:06Z",
+      "command": {
+        "action": "fill",
+        "selector": "#notes",
+        "value": "Bee Pass3 toy study: small hello, one arm gets carried away, then embarrassed collapse. Hold greeting until the big reach; ease out into the slump. Local exploratory performance, not canonical Story."
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take details updated.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:08Z",
+      "command": {
+        "action": "save",
+        "name": "09-ouch-comic"
+      },
+      "result": {
+        "saved_id": "dir_b9f9c60d-b579-4ddd-8a2a-a66ae1e2a8ea",
+        "storage": "local-workspace",
+        "shared": false
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take saved in this development workspace. Shared Nest storage is not connected here.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:08Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 1
+      },
+      "result": {},
+      "state": {
+        "frame": "1",
+        "preset": "acting-relaxed",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-2",
+          "0",
+          "-31"
+        ],
+        "status": "Frame 1. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:10Z",
+      "command": {
+        "action": "click",
+        "selector": "#play"
+      },
+      "result": {},
+      "state": {
+        "frame": "1",
+        "preset": "acting-relaxed",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-2",
+          "0",
+          "-31"
+        ],
+        "status": "Frame 1. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:11Z",
+      "command": {
+        "action": "wait",
+        "ms": 700
+      },
+      "result": {},
+      "state": {
+        "frame": "16",
+        "preset": "acting-relaxed",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-2",
+          "0",
+          "-31"
+        ],
+        "status": "Frame 1. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:14Z",
+      "command": {
+        "action": "shot",
+        "name": "10-ouch-playback"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/10-ouch-playback.png"
+      },
+      "state": {
+        "frame": "26",
+        "preset": "acting-relaxed",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-2",
+          "0",
+          "-31"
+        ],
+        "status": "Frame 1. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:15Z",
+      "command": {
+        "action": "click",
+        "selector": "#play"
+      },
+      "result": {},
+      "state": {
+        "frame": "50",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-7",
+          "3",
+          "-40"
+        ],
+        "status": "Frame 1. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:31Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 42
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame 42. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:33Z",
+      "command": {
+        "action": "shot",
+        "name": "11-ouch-keyed-reach"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/11-ouch-keyed-reach.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame 42. Key the pose when it is ready.",
+        "history": "24 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:34Z",
+      "command": {
+        "action": "click",
+        "selector": "#trip"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Same character, white clay.",
+        "history": "25 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:35Z",
+      "command": {
+        "action": "fill",
+        "selector": "#take-name",
+        "value": "Bee Pass3 \u00b7 oh hi, too much \u00b7 Trip"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take details updated.",
+        "history": "26 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:37Z",
+      "command": {
+        "action": "shot",
+        "name": "12-trip-white-room"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/12-trip-white-room.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take details updated.",
+        "history": "26 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:37Z",
+      "command": {
+        "action": "select",
+        "selector": "#background",
+        "value": "green"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Stage background changed.",
+        "history": "27 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:39Z",
+      "command": {
+        "action": "shot",
+        "name": "13-trip-green-room"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/13-trip-green-room.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Stage background changed.",
+        "history": "27 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:39Z",
+      "command": {
+        "action": "click",
+        "selector": "#side"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Camera view updated.",
+        "history": "28 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:24:41Z",
+      "command": {
+        "action": "shot",
+        "name": "14-trip-side"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/14-trip-side.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Camera view updated.",
+        "history": "28 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:36Z",
+      "command": {
+        "action": "click",
+        "selector": "#quarter"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Camera view updated.",
+        "history": "29 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:36Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 41
+      },
+      "result": {},
+      "state": {
+        "frame": "41",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "66",
+          "-172"
+        ],
+        "status": "Frame 41. Key the pose when it is ready.",
+        "history": "29 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:38Z",
+      "command": {
+        "action": "shot",
+        "name": "15-trip-held-hello"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/15-trip-held-hello.png"
+      },
+      "state": {
+        "frame": "41",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "66",
+          "-172"
+        ],
+        "status": "Frame 41. Key the pose when it is ready.",
+        "history": "29 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:38Z",
+      "command": {
+        "action": "fill",
+        "selector": "#frame",
+        "value": 42
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame 42. Key the pose when it is ready.",
+        "history": "29 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:39Z",
+      "command": {
+        "action": "shot",
+        "name": "16-trip-snap-reach"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/16-trip-snap-reach.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame 42. Key the pose when it is ready.",
+        "history": "29 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:40Z",
+      "command": {
+        "action": "select",
+        "selector": "#frame-size",
+        "value": "720x1280"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame size: 720 \u00d7 1280. Use Frame to fit the pose if needed.",
+        "history": "30 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:42Z",
+      "command": {
+        "action": "click",
+        "selector": "#motion-settings"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Frame size: 720 \u00d7 1280. Use Frame to fit the pose if needed.",
+        "history": "30 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:44Z",
+      "command": {
+        "action": "click",
+        "selector": "#frame-motion"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Motion framed with one fixed camera.",
+        "history": "31 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:25:59Z",
+      "command": {
+        "action": "shot",
+        "name": "17-trip-portrait"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/17-trip-portrait.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Motion framed with one fixed camera.",
+        "history": "31 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:00Z",
+      "command": {
+        "action": "save",
+        "name": "18-trip-comic"
+      },
+      "result": {
+        "saved_id": "dir_7b0770ad-84d7-4a86-a951-891033790376",
+        "storage": "local-workspace",
+        "shared": false
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take saved in this development workspace. Shared Nest storage is not connected here.",
+        "history": "31 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:12Z",
+      "command": {
+        "action": "fill",
+        "selector": "#duration",
+        "value": 4.5
+      },
+      "result": {},
+      "state": {
+        "frame": "63",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Timing updated: 4.50 seconds at 24 fps.",
+        "history": "32 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 30,
+            "transition": "hold"
+          },
+          {
+            "frame": 63,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 108
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:12Z",
+      "command": {
+        "action": "fill",
+        "selector": "#fps",
+        "value": 12
+      },
+      "result": {},
+      "state": {
+        "frame": "32",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Timing updated: 4.50 seconds at 12 fps.",
+        "history": "33 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:12Z",
+      "command": {
+        "action": "fill",
+        "selector": "#take-name",
+        "value": "Bee Pass3 \u00b7 Trip takes a beat \u00b7 12fps"
+      },
+      "result": {},
+      "state": {
+        "frame": "32",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take details updated.",
+        "history": "34 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:15Z",
+      "command": {
+        "action": "shot",
+        "name": "19-trip-slower-timing"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/19-trip-slower-timing.png"
+      },
+      "state": {
+        "frame": "32",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take details updated.",
+        "history": "34 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:16Z",
+      "command": {
+        "action": "save",
+        "name": "20-trip-slower"
+      },
+      "result": {
+        "saved_id": "dir_48220507-2940-4e54-905f-b7f36d9fc92f",
+        "storage": "local-workspace",
+        "shared": false
+      },
+      "state": {
+        "frame": "32",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Take saved in this development workspace. Shared Nest storage is not connected here.",
+        "history": "34 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:46Z",
+      "command": {
+        "action": "click",
+        "selector": "#saved-takes button:has-text(\"Bee Pass3 \u00b7 oh hi, too much \u00b7 Ouch\")"
+      },
+      "result": {},
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Saved take reopened. The pose, stage and frames are editable.",
+        "history": "35 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:49Z",
+      "command": {
+        "action": "shot",
+        "name": "21-ouch-reopened"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/21-ouch-reopened.png"
+      },
+      "state": {
+        "frame": "42",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Saved take reopened. The pose, stage and frames are editable.",
+        "history": "35 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 20,
+            "transition": "hold"
+          },
+          {
+            "frame": 42,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 72
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:50Z",
+      "command": {
+        "action": "click",
+        "selector": "#saved-takes button:has-text(\"Bee Pass3 \u00b7 Trip takes a beat \u00b7 12fps\")"
+      },
+      "result": {},
+      "state": {
+        "frame": "32",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Saved take reopened. The pose, stage and frames are editable.",
+        "history": "36 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T03:26:54Z",
+      "command": {
+        "action": "shot",
+        "name": "22-trip-reopened"
+      },
+      "result": {
+        "screenshot": "/workspace/rspdan-portal/docs/director/pass3/bee/22-trip-reopened.png"
+      },
+      "state": {
+        "frame": "32",
+        "preset": "",
+        "joint": "lower_arm.L",
+        "rotation": [
+          "-5",
+          "3",
+          "-62"
+        ],
+        "status": "Saved take reopened. The pose, stage and frames are editable.",
+        "history": "36 back \u00b7 0 forward",
+        "hint": "Controls hidden \u00b7 drag the room to orbit the camera",
+        "keys": [
+          {
+            "frame": 1
+          },
+          {
+            "frame": 15,
+            "transition": "hold"
+          },
+          {
+            "frame": 32,
+            "transition": "ease-out"
+          },
+          {
+            "frame": 54
+          }
+        ]
+      }
+    }
+  ],
+  "page_errors": []
+}

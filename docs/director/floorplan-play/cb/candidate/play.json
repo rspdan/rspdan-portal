@@ -1,0 +1,97 @@
+{
+  "observer": "C.B.",
+  "started_utc": "2026-11-25T08:04:45.989185+00:00",
+  "environment": "Local Chromium touch emulation 390x844, not physical phone",
+  "steps": [
+    {
+      "action": "Draw and name reading nook",
+      "observation": "A rectangle dragged into the plan, then renamed. The naming field required scrolling below the sticky plan."
+    },
+    {
+      "action": "Drag Window from toolbar to north wall",
+      "observation": {
+        "plan_changed": true,
+        "opening_count": 1,
+        "hint": "Window added. Adjust it in the inspector.",
+        "selected_text": ""
+      }
+    },
+    {
+      "action": "Tap Window, then east wall",
+      "observation": {
+        "opening_count": 2,
+        "hint": "Window added. Adjust it in the inspector."
+      }
+    },
+    {
+      "action": "Give the nook a west doorway",
+      "observation": {
+        "openings": [
+          "window",
+          "window",
+          "door"
+        ]
+      }
+    },
+    {
+      "action": "Try a stair in a one-level plan",
+      "observation": {
+        "unchanged": true,
+        "hint": "Add another level with + Level before placing stairs.\n+ Level"
+      }
+    },
+    {
+      "action": "Add a second level",
+      "observation": {
+        "active_level": "level-5ed718c1-5ef4-41c9-8a86-22015af180e4",
+        "visible_room_count": 0,
+        "hint": "Plan properties updated."
+      }
+    },
+    {
+      "action": "Add a small landing on the upper level",
+      "observation": {
+        "rooms": [
+          "Reading nook",
+          "Lookout landing"
+        ]
+      }
+    },
+    {
+      "action": "Return to first level and place stair",
+      "observation": {
+        "connections": 1,
+        "levels": [
+          "Ground",
+          "Lookout"
+        ]
+      }
+    },
+    {
+      "action": "Slide stair within the room",
+      "observation": {
+        "before": [
+          3,
+          1.5
+        ],
+        "after": [
+          2.5,
+          1.5
+        ]
+      }
+    },
+    {
+      "action": "Preview in 3D",
+      "observation": {
+        "pose_unchanged": true
+      }
+    },
+    {
+      "action": "Export and return to drawing",
+      "observation": "Portable package retained as invented test geometry; no shared Save or Crew message."
+    }
+  ],
+  "editor_sha256": "305b882bc538493face36451d1348b8728e38658ccc21a96f4ebdbbab7707990",
+  "completed": true,
+  "ended_utc": "2026-11-25T08:05:52.820782+00:00"
+}

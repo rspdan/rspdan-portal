@@ -1,0 +1,30 @@
+[
+  {
+    "check": "Trip look active",
+    "passed": true
+  },
+  {
+    "check": "Generic Stage prop edits keep canonical plan",
+    "passed": true
+  },
+  {
+    "check": "Generic Stage prop exists",
+    "passed": true
+  },
+  {
+    "check": "Trip pose unchanged after plan and prop work",
+    "passed": true
+  },
+  {
+    "check": "Floor plan edits keep generic Stage props",
+    "passed": true
+  },
+  {
+    "check": "Trip pose unchanged after return",
+    "passed": true
+  },
+  {
+    "check": "3D rendering resumes after overhead",
+    "passed": true
+  }
+]

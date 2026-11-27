@@ -1,0 +1,394 @@
+{
+  "lighting_sha256": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0",
+  "optics_sha256": "15a45175e9263c6e4a292ab6fc06fbd5a334c1b98979b8e759310b6b6f09f6e4",
+  "core_sha256": "47f6c3b68621026a4c8a66644bdfc23a6be7a6ab17004b2dd8489ff59f69daa5",
+  "checks": [
+    {
+      "name": "new light omits optional lens until edited",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "preset reaches real optical controller",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 0.6,
+        "lens": {
+          "preset": "starburst",
+          "glow": 0.5,
+          "rays": 1,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.0337002800320203,
+        "source": [
+          489.1490164015946,
+          176.02805510969574
+        ],
+        "offAxis": 0.6025560295087096,
+        "transmission": 0.8475090171471337,
+        "streakSize": 1.8402246316994255,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.27042149795725584,
+        "glowColor": [
+          0.39815973625572343,
+          0.39815973625572343,
+          0.39815973625572343
+        ],
+        "raysSize": 0.9924781443492048,
+        "raysColor": [
+          1.1532902705338197,
+          1.1532902705338197,
+          1.1532902705338197
+        ],
+        "ghosts": [
+          {
+            "position": 0.3216920170623135,
+            "size": 0.09304719555870887,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              429.35683488828795,
+              328.6283212658064
+            ]
+          },
+          {
+            "position": -0.42892268941641803,
+            "size": 0.1612818056350954,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              363.19088681561607,
+              497.4955716455915
+            ]
+          },
+          {
+            "position": -0.9114607150098882,
+            "size": 0.27293844030554604,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              320.6556344831842,
+              606.0530897468818
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "lens stays independent from receiver and ball",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "caller mutation cannot rewrite saved lens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "component edits merge and reach renderer",
+      "passed": true,
+      "detail": {
+        "preset": "starburst",
+        "glow": 0.5,
+        "rays": 1,
+        "streak": 0,
+        "ghosts": 0.35,
+        "spread": 1.3,
+        "rotation": 37,
+        "rayCount": 7
+      }
+    },
+    {
+      "name": "snapshot restore retains exact lens and offsets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "glow reaches actual renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "starburst reaches actual renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "anamorphic reaches actual renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "glass reaches actual renderer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "changing lens type does not allocate more resources",
+      "passed": true,
+      "detail": {
+        "before": [
+          10,
+          1,
+          27
+        ],
+        "after": [
+          10,
+          1,
+          27
+        ]
+      }
+    },
+    {
+      "name": "remove disposes configured optical system",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "restore after removal reconstructs lens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lens edits preserve character pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lens configuration survives independent flare off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "legacy omission restored without injecting lens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "controller disposal clears optical resources",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "scope": "Focused optional lens configuration through real lighting and optical controllers. Actual imported rig; no save/send. Test wrappers only retain the actual controllers for inspection.",
+  "result": {
+    "checks": [
+      {
+        "name": "new light omits optional lens until edited",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "preset reaches real optical controller",
+        "passed": true,
+        "detail": {
+          "visible": true,
+          "visibility": 1,
+          "strength": 0.6,
+          "lens": {
+            "preset": "starburst",
+            "glow": 0.5,
+            "rays": 1,
+            "streak": 0,
+            "ghosts": 0,
+            "spread": 1,
+            "rotation": 0,
+            "rayCount": 8
+          },
+          "distance": 2.0337002800320203,
+          "source": [
+            489.1490164015946,
+            176.02805510969574
+          ],
+          "offAxis": 0.6025560295087096,
+          "transmission": 0.8475090171471337,
+          "streakSize": 1.8402246316994255,
+          "streakColor": [
+            0,
+            0,
+            0
+          ],
+          "glowSize": 0.27042149795725584,
+          "glowColor": [
+            0.39815973625572343,
+            0.39815973625572343,
+            0.39815973625572343
+          ],
+          "raysSize": 0.9924781443492048,
+          "raysColor": [
+            1.1532902705338197,
+            1.1532902705338197,
+            1.1532902705338197
+          ],
+          "ghosts": [
+            {
+              "position": 0.3216920170623135,
+              "size": 0.09304719555870887,
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "pixel": [
+                429.35683488828795,
+                328.6283212658064
+              ]
+            },
+            {
+              "position": -0.42892268941641803,
+              "size": 0.1612818056350954,
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "pixel": [
+                363.19088681561607,
+                497.4955716455915
+              ]
+            },
+            {
+              "position": -0.9114607150098882,
+              "size": 0.27293844030554604,
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "pixel": [
+                320.6556344831842,
+                606.0530897468818
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "lens stays independent from receiver and ball",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "caller mutation cannot rewrite saved lens",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "component edits merge and reach renderer",
+        "passed": true,
+        "detail": {
+          "preset": "starburst",
+          "glow": 0.5,
+          "rays": 1,
+          "streak": 0,
+          "ghosts": 0.35,
+          "spread": 1.3,
+          "rotation": 37,
+          "rayCount": 7
+        }
+      },
+      {
+        "name": "snapshot restore retains exact lens and offsets",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "glow reaches actual renderer",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "starburst reaches actual renderer",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "anamorphic reaches actual renderer",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "glass reaches actual renderer",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "changing lens type does not allocate more resources",
+        "passed": true,
+        "detail": {
+          "before": [
+            10,
+            1,
+            27
+          ],
+          "after": [
+            10,
+            1,
+            27
+          ]
+        }
+      },
+      {
+        "name": "remove disposes configured optical system",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "restore after removal reconstructs lens",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "lens edits preserve character pose",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "lens configuration survives independent flare off",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "legacy omission restored without injecting lens",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "controller disposal clears optical resources",
+        "passed": true,
+        "detail": null
+      }
+    ],
+    "savedLens": {
+      "preset": "starburst",
+      "glow": 0.5,
+      "rays": 1,
+      "streak": 0,
+      "ghosts": 0.35,
+      "spread": 1.3,
+      "rotation": 37,
+      "rayCount": 7
+    }
+  },
+  "passed": true
+}

@@ -1,0 +1,677 @@
+{
+  "author": "Independent effects receiving agent",
+  "execution_utc": "2026-11-25T04:57:20.120376+00:00",
+  "scope": "Actual local Director DOM interactions and live Babylon scene. Desktop and Chromium touch emulation; input-event checks are labeled separately from physical pointer interactions. Local save shared:false only. No physical ACHE, native rendering, or artistic approval claimed.",
+  "hashes": {
+    "director.js": "35e67b9ea89ff2372a32689619900255c1d87e88199308e52b2f9d6a67a7b9e6",
+    "appearance.js": "a983c8c2554ebe84f88adc4842b1438b47cf7b443d38cede1b6434dd4c9fe7a6",
+    "lighting.js": "5ccb2baee1557e98f9b93390e7babc937bf75f6e961f01a78f230ecd5c0a9c07",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb"
+  },
+  "checks": [
+    {
+      "name": "high body glow leaves head flare off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "head flare independently enabled and parented to head",
+      "passed": true,
+      "detail": [
+        {
+          "enabled": true,
+          "position": [
+            -0.004188962280750275,
+            0.9298776388168335,
+            -2.93925404548645e-06
+          ],
+          "parent": "head",
+          "local": [
+            -0.004188962280750275,
+            0.07947930693626404,
+            -2.93925404548645e-06
+          ],
+          "parentPosition": [
+            0,
+            0.1597267985343933,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "flare follows actual head rotation",
+      "passed": true,
+      "detail": {
+        "before": [
+          -0.004188962280750275,
+          0.9298776388168335,
+          -2.93925404548645e-06
+        ],
+        "after": [
+          -0.004188962280750275,
+          0.9155057072639465,
+          0.04558505117893219
+        ],
+        "observation": [
+          {
+            "enabled": true,
+            "position": [
+              -0.004188962280750275,
+              0.9155057072639465,
+              0.04558505117893219
+            ],
+            "parent": "head",
+            "local": [
+              -0.004188962280750275,
+              0.07947930693626404,
+              -2.93925404548645e-06
+            ],
+            "parentPosition": [
+              0,
+              0.1597267985343933,
+              0
+            ]
+          }
+        ],
+        "headPose": {
+          "position": [
+            0,
+            0.1597267985343933,
+            0
+          ],
+          "rotation": [
+            0.3007057995042731,
+            0,
+            0,
+            0.9537169507482269
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "two independent hand presets attach to exact tips",
+      "passed": true,
+      "detail": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "attachment": "hand.L",
+          "position": [
+            0.17769619822502136,
+            0.45507457852363586,
+            0.00998301338404417
+          ],
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "parent": "Director light attachment hand.L",
+          "tip": [
+            0.17769619680076065,
+            0.4550745692201623,
+            0.009983013503941152
+          ],
+          "light": {
+            "type": "PointLight",
+            "enabled": true,
+            "intensity": 2,
+            "color": [
+              1,
+              1,
+              1
+            ]
+          },
+          "effects": [
+            {
+              "name": "Director light effect light-2fd4c847-115a-43d4-831b-e822238cc396",
+              "enabled": true,
+              "world": [
+                0.17769619822502136,
+                0.45507457852363586,
+                0.00998301338404417
+              ],
+              "pickable": false
+            },
+            {
+              "name": "Director light effect light-2fd4c847-115a-43d4-831b-e822238cc396 fringe",
+              "enabled": true,
+              "world": [
+                0.17769619822502136,
+                0.45507457852363586,
+                0.00998301338404417
+              ],
+              "pickable": false
+            }
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "attachment": "hand.R",
+          "position": [
+            -0.17370280623435974,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "parent": "Director light attachment hand.R",
+          "tip": [
+            -0.1737028131581031,
+            0.44010007960753583,
+            0.013976117221143225
+          ],
+          "light": {
+            "type": "PointLight",
+            "enabled": true,
+            "intensity": 2,
+            "color": [
+              1,
+              1,
+              1
+            ]
+          },
+          "effects": [
+            {
+              "name": "Director light effect light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+              "enabled": true,
+              "world": [
+                -0.17370280623435974,
+                0.4401000738143921,
+                0.013976117596030235
+              ],
+              "pickable": false
+            },
+            {
+              "name": "Director light effect light-6119be11-6b62-4521-9d8d-69a73fae0c91 fringe",
+              "enabled": true,
+              "world": [
+                -0.17370280623435974,
+                0.4401000738143921,
+                0.013976117596030235
+              ],
+              "pickable": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "left/right actual lights retain independent color and intensity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "left off hides its effect without disabling right",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo recovers effect state 2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo recovers effect state 1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo recovers effect state 0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo recovers effect state 1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo recovers effect state 2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo recovers effect state 3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "posed right beam remains at exact hand tip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "whole root carries both sources with offsets retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual playback samples several between-key frames",
+      "passed": true,
+      "detail": [
+        1,
+        11,
+        25,
+        36,
+        49
+      ]
+    },
+    {
+      "name": "attachments follow animation without serialized offset drift",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "point to spotlight preserves attachment effect and offset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo restores point hand source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo restores hand spotlight",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "plain hand spotlight casts without visible effect mesh",
+      "passed": true,
+      "detail": {
+        "id": "light-656cc2ac-1aa9-4cda-ac7a-46df9e3c8aea",
+        "attachment": "hand.R",
+        "position": [
+          0.1262972056865692,
+          0.4401000738143921,
+          0.013976117596030235
+        ],
+        "local": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "parent": "Director light attachment hand.R",
+        "tip": [
+          0.12629719876282586,
+          0.44010007960753583,
+          0.013976117221143225
+        ],
+        "light": {
+          "type": "SpotLight",
+          "enabled": true,
+          "intensity": 1,
+          "color": [
+            1,
+            1,
+            1
+          ]
+        },
+        "effects": []
+      }
+    },
+    {
+      "name": "detach retains world location",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo restores attached local offset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "hand light visibly changes nearby set receiver pixels",
+      "passed": true,
+      "detail": {
+        "receiver": "stage-9c80ac38-ca35-454c-99ea-2229baf7da9e",
+        "bounds": [
+          293,
+          0,
+          421,
+          134
+        ],
+        "mean_absolute_RGB_change": [
+          6.972306436567164,
+          6.718575093283582,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "local save HTTP200 shared:false",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "shared": false
+      }
+    },
+    {
+      "name": "fresh mobile reopen preserves effect and flare fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile touch drag changes selected beam strength",
+      "passed": true,
+      "detail": {
+        "before": 0.5,
+        "after": 0.82,
+        "actual": 0.82
+      }
+    },
+    {
+      "name": "mobile Undo restores before touch effect strength",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile Redo restores touched effect strength",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no JavaScript page errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "captures": [
+    "desktop-hand-ball-and-beam.png",
+    "desktop-hand-effects-with-receiver.png",
+    "mobile-hand-effects.png"
+  ],
+  "events": [
+    {
+      "type": "actual CDP touch range drag",
+      "selector": "#light-effect-strength",
+      "before": 0.5,
+      "target": 0.82,
+      "actual": 0.82
+    }
+  ],
+  "playback_samples": [
+    {
+      "frame": 1,
+      "lights": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "local": [
+            0,
+            0.03,
+            -0.15
+          ],
+          "world": [
+            0.4512801468372345,
+            1.0809385776519775,
+            0.008293847553431988
+          ],
+          "tip": [
+            0.4537334906823043,
+            0.9280131814792689,
+            0.011095237162016103
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            0.1262972056865692,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "tip": [
+            0.12629719876282586,
+            0.44010007960753583,
+            0.013976117221143225
+          ]
+        }
+      ]
+    },
+    {
+      "frame": 1,
+      "lights": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "local": [
+            0,
+            0.03,
+            -0.15
+          ],
+          "world": [
+            0.4512801468372345,
+            1.0809385776519775,
+            0.008293847553431988
+          ],
+          "tip": [
+            0.4537334906823043,
+            0.9280131814792689,
+            0.011095237162016103
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            0.1262972056865692,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "tip": [
+            0.12629719876282586,
+            0.44010007960753583,
+            0.013976117221143225
+          ]
+        }
+      ]
+    },
+    {
+      "frame": 11,
+      "lights": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "local": [
+            0,
+            0.03,
+            -0.15
+          ],
+          "world": [
+            0.5882928967475891,
+            0.9123802185058594,
+            0.17927557229995728
+          ],
+          "tip": [
+            0.4742195308554358,
+            0.8323414579533086,
+            0.1161797438343477
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            -0.021643955260515213,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "tip": [
+            -0.021643954733677973,
+            0.44010007960753583,
+            0.013976117221143225
+          ]
+        }
+      ]
+    },
+    {
+      "frame": 25,
+      "lights": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "local": [
+            0,
+            0.03,
+            -0.15
+          ],
+          "world": [
+            0.038285497575998306,
+            0.3042416572570801,
+            -0.013197040185332298
+          ],
+          "tip": [
+            0.027696196428231623,
+            0.4550745692201623,
+            0.009983013503941152
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            -0.3237028121948242,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "tip": [
+            -0.3237028191185676,
+            0.44010007960753583,
+            0.013976117221143225
+          ]
+        }
+      ]
+    },
+    {
+      "frame": 36,
+      "lights": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "local": [
+            0,
+            0.03,
+            -0.15
+          ],
+          "world": [
+            0.038285497575998306,
+            0.3042416572570801,
+            -0.013197040185332298
+          ],
+          "tip": [
+            0.027696196428231623,
+            0.4550745692201623,
+            0.009983013503941152
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            -0.3237028121948242,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "tip": [
+            -0.3237028191185676,
+            0.44010007960753583,
+            0.013976117221143225
+          ]
+        }
+      ]
+    },
+    {
+      "frame": 49,
+      "lights": [
+        {
+          "id": "light-2fd4c847-115a-43d4-831b-e822238cc396",
+          "local": [
+            0,
+            0.03,
+            -0.15
+          ],
+          "world": [
+            0.038285497575998306,
+            0.3042416572570801,
+            -0.013197040185332298
+          ],
+          "tip": [
+            0.027696196428231623,
+            0.4550745692201623,
+            0.009983013503941152
+          ]
+        },
+        {
+          "id": "light-6119be11-6b62-4521-9d8d-69a73fae0c91",
+          "local": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            -0.3237028121948242,
+            0.4401000738143921,
+            0.013976117596030235
+          ],
+          "tip": [
+            -0.3237028191185676,
+            0.44010007960753583,
+            0.013976117221143225
+          ]
+        }
+      ]
+    }
+  ],
+  "saved_take": {
+    "id": "dir_0cf546e9-ff53-4ca9-be17-a71058febbef",
+    "shared": false
+  },
+  "passed": false,
+  "functional_passed": true,
+  "visual_blocker": "Fresh mobile reopen after effect-strength Undo/Redo shows Trip selected but black character; source and cause under investigation."
+}

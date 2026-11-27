@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "name": "startup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "submitted version has one object",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "editing continues during pending save",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "older save does not clear failed current draft",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "newer unsaved edits remain explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actionable API error survives draft warning",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "page_errors": [],
+  "scope": "Local browser, injected quota and mocked delayed Save response; no durable writes or Crew messages.",
+  "after_delayed_save": {
+    "status": "Browser draft unavailable. Use Save take before closing. The submitted take was saved. Newer edits still need Save take.",
+    "label": "DRAFT NOT SAVED",
+    "objects": 2,
+    "keys": 0,
+    "guard": true,
+    "saveEnabled": true,
+    "sendDisabled": true
+  },
+  "source_sha256": "798a8ae15b000278a456649ed0fe96cddde73b21f0f9804d389aaace49359d26",
+  "passed": true
+}

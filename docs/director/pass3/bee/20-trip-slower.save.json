@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "saved": {
+    "id": "dir_48220507-2940-4e54-905f-b7f36d9fc92f",
+    "version": 1,
+    "owner": "dan",
+    "name": "Bee Pass3 \u00b7 Trip takes a beat \u00b7 12fps",
+    "createdAt": "2026-11-25T03:26:16.206Z",
+    "takeHash": "8e2817ef1bbdbdfb1a3cc91bb139934fe00d3467646758f05f32b7da9a92466d",
+    "asset": {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+    },
+    "keyframes": 4,
+    "look": "trip",
+    "href": "/director?take=dir_48220507-2940-4e54-905f-b7f36d9fc92f"
+  },
+  "storage": "local-workspace",
+  "shared": false
+}

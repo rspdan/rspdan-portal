@@ -1,0 +1,33 @@
+{
+  "reader": "Halp",
+  "execution_utc": "2026-11-25T03:34:23.307994+00:00",
+  "sources": [
+    {
+      "recorded": {
+        "sha256": "d8b368e34bbb9f7a913cd8a0dc0b2685534fc33807a9b77636cf1260d3011f34",
+        "path": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 856.jpg",
+        "size": 7669247,
+        "mtime": 1795438411.226318,
+        "ext": ".jpg"
+      },
+      "exists": true,
+      "actual_sha256": "d8b368e34bbb9f7a913cd8a0dc0b2685534fc33807a9b77636cf1260d3011f34",
+      "matches": true,
+      "pixel_view_by_halp_this_search": false
+    },
+    {
+      "recorded": {
+        "sha256": "06376e6c201d3b2c9e4a70ea01e40c3a2d883e496afbce674a37f84a431756a6",
+        "path": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 731.jpg",
+        "size": 3962848,
+        "mtime": 1795438408.7503424,
+        "ext": ".jpg"
+      },
+      "exists": true,
+      "actual_sha256": "06376e6c201d3b2c9e4a70ea01e40c3a2d883e496afbce674a37f84a431756a6",
+      "matches": true,
+      "pixel_view_by_halp_this_search": false
+    }
+  ],
+  "date_scope": "File names and ingestion mtimes are not asserted creation dates; 287 identity comes from Dan naming the exact art; 243 is recognition anchored by that identity."
+}

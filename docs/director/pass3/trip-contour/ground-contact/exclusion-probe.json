@@ -1,0 +1,16 @@
+{
+  "appearance_sha256": "68a04846ab6c5049cb61ae2a757b2cc22a3d4706353c2061974cd17f61b10e4f",
+  "core_sha256": "47f6c3b68621026a4c8a66644bdfc23a6be7a6ab17004b2dd8489ff59f69daa5",
+  "scope": "Five temperatures using Dan-approved outlined/spill image as the medium incandescent appearance. Existing numerical tripGlow=1 retained exactly; no intensity remap. Fixed pose/camera/room/outline/light rig; only temperature changes. Body temperature independently locked at6500 K; only exterior glow and projected spill change temperature. Flare off. Real Chromium viewport captures. No Save/Send/deploy.",
+  "checks": [],
+  "captures": [
+    {
+      "image": "before.png"
+    },
+    {
+      "image": "floor-excluded.png"
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

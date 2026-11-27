@@ -1,0 +1,114 @@
+{
+  "lighting_sha256": "b72d8418c1b8022bcd7f25e982bc6883947dc0db19d51acdd7c8602f923758bf",
+  "core_sha256": "a98b6350a34de3d3aed1d34158e712e0af677209cdfeb362236123a0247bc81c",
+  "checks": [
+    {
+      "name": "white core at strength0.15",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength0.15",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white core at strength0.5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength0.5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white core at strength1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "beam conversion still renders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "material correction disposes cleanly",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "image": "white-core-ball-0-15.png",
+      "state": {
+        "emission": [
+          0.915,
+          0.915,
+          0.915
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 0.15
+      }
+    },
+    {
+      "image": "white-core-ball-0-5.png",
+      "state": {
+        "emission": [
+          0.9500000000000001,
+          0.9500000000000001,
+          0.9500000000000001
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 0.5
+      }
+    },
+    {
+      "image": "white-core-ball-1.png",
+      "state": {
+        "emission": [
+          1,
+          1,
+          1
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 1
+      }
+    }
+  ],
+  "scope": "Narrow material correction after24modulechecks. Actual imported rig. No save/send.",
+  "passed": true
+}

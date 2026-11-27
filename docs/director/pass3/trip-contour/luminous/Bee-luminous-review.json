@@ -1,0 +1,157 @@
+{
+  "reader": "Bee",
+  "reviewed_utc": "2026-11-25T03:56:06.503793+00:00",
+  "status": "Initial seven images and three later follow-up images received. RawE3 is historical; current retained-form trial is reviewed separately in Bee-retained-form-review.json.",
+  "mode": "Personally opened screenshots; helper executed runtime render.",
+  "images": [
+    {
+      "file": "desktop-white-emission-035.png",
+      "sha256": "d1c10892f7700906f305c913c49448666937ba998d479eb295280ca7cd44a615",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-white-emission-100.png",
+      "sha256": "52cd3644e8f9e6119c9111845938ea6b27c7e2434eb52dc2136c367340b369de",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-white-emission-300.png",
+      "sha256": "52cd3644e8f9e6119c9111845938ea6b27c7e2434eb52dc2136c367340b369de",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-normal-luminous.png",
+      "sha256": "476c7610a73e0e396ae06c9a4b6109e8ebdc1e3289236a28c5f6ecc70c338b80",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-strong-glow.png",
+      "sha256": "fee4f1b54d6edc38dc6ca7711a2b5d8f944da0cf88928d54629a31566ce3a6f2",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-normal-luminous.png",
+      "sha256": "70682d437313b7a13fabff8799dc82280c1b8efb66a1a3df9116a1f3c78ab4f5",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "mobile-strong-glow.png",
+      "sha256": "a0d60056aa893bf58fa930472b1024539d1a50f591a1535aeda0a875b7be8900",
+      "pixels": [
+        354,
+        355
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "receipt": {
+    "file": "trial.json",
+    "sha256": "a30484e15c610748283349ac0937522654f039cbf8e140cc969c45ede763bdb7",
+    "executed_by": "director_browser_asset",
+    "read_by": "Bee"
+  },
+  "findings": [
+    {
+      "files": [
+        "desktop-white-emission-035.png"
+      ],
+      "observed": "Broad torso and limbs now read visibly white with pale form shading, unlike prior generally gray clay trial. Rounded head, torso and limb volume remain legible. This is an observer comparison, not Dan acceptance."
+    },
+    {
+      "files": [
+        "desktop-white-emission-100.png",
+        "desktop-white-emission-300.png"
+      ],
+      "observed": "Interiors appear almost uniformly flat white. Silhouette, raised-arm/head gap, lower-arm/torso gap and leg gap remain readable through the line. Depth cues within the body are largely absent."
+    },
+    {
+      "files": [
+        "desktop-normal-luminous.png",
+        "desktop-strong-glow.png",
+        "mobile-normal-luminous.png",
+        "mobile-strong-glow.png"
+      ],
+      "observed": "Both normal/strong versions remain outlined white figures; a meaningful glow-state difference is not evident to Bee in these white-field stills. No exact decoded-pixel equality is claimed."
+    }
+  ],
+  "interpretation": "E0.35 is presently the most informative ordinary-body candidate for volume among the viewed set. Higher emission may support an intentional flat luminous Story state; it does not yet demonstrate visible increasing glow on this white field. Intermediate E0.6 remains unviewed.",
+  "author_direction": {
+    "Trip": "White, made of light; flexible Ouch-like geometry with Story ability to glow. Full quote in source study light-direction.json.",
+    "outlines": "C.B. also relays Dan requesting outline controls for both Characters from black through gray to white. No such UI implementation was reviewed here.",
+    "scene": "White-room success criterion remains; a forthcoming dark context is halo diagnosis only, not a replacement backdrop solution."
+  },
+  "material_scope": {
+    "from_helper_receipt": "Same geometry, white albedo, changed emissive input and body-only Babylon GlowLayer; no production edits in this experiment.",
+    "glow_layer": "Screen glow does not add scene illumination, as explicitly stated in trial.json. This review does not claim Trip lights surrounding objects.",
+    "asset_inventory": "asset-inventory.json reports no images/textures/UV/normal maps; native fingerprint material is absent from browserGLB. Bee read this inventory; it is not proof of native material parity."
+  },
+  "limits": [
+    "Single raised-arm pose; no new forearm/head-crossing pixels viewed in luminous set.",
+    "Still images only, no motion continuity or glow breathing/animation review.",
+    "Mobile viewport, not physical ACHE testing.",
+    "No new lore mechanism, power limit or Director approval inferred.",
+    "First two-image delivery of desktop-white-emission-300 was not visually legible; its later separate opening is the credited observation."
+  ],
+  "followup_received": {
+    "reviewed_utc": "2026-11-25T04:12:31.343285+00:00",
+    "images": [
+      {
+        "file": "desktop-white-emission-060.png",
+        "sha256": "e7f54418d18160b2ee7e62e3f3533ece745e0040b888f5226eed9e473b393b35",
+        "pixels": [
+          802,
+          802
+        ],
+        "actually_viewed": true
+      },
+      {
+        "file": "desktop-dark-ordinary.png",
+        "sha256": "c436c978952eccfd42e1f3781ae6997a88ae7e4ebdd859a3a77f25819c60bf46",
+        "pixels": [
+          802,
+          802
+        ],
+        "actually_viewed": true
+      },
+      {
+        "file": "desktop-dark-strong.png",
+        "sha256": "9d47dab96fc2859b64f55bc63ffeea5bb78920865044ab63c1234f651d70bb45",
+        "pixels": [
+          802,
+          802
+        ],
+        "actually_viewed": true
+      }
+    ],
+    "receipt": {
+      "file": "followup.json",
+      "sha256": "0ffd55a21f8c84462b2d4f6c06fc6c9a764d0c91773a32caa09d24c50aa8ba60"
+    },
+    "observed": "E0.6 in white room is also nearly flat white. Earlier dark ordinaryE0.35 retains pale shading; dark rawE3 becomes featureless white with a restrained edge halo. Gaps remain open, but rawE3 is not the new retained-form high candidate.",
+    "current_review": "Bee-retained-form-review.json"
+  }
+}

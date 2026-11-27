@@ -1,0 +1,22 @@
+{
+  "scope": "Actual local Astro browser UI; local-workspace store only; no external Crew messages",
+  "source_sha256": "cd6aa721a65ef2971758d0933c2de1ca50d0837bbd671ed0104a2b023a661e9f",
+  "checks": {
+    "playback_actually_advanced_before_load": true,
+    "load_stops_playback": true,
+    "reopened_frame_and_pose_hold": true,
+    "send_a_then_b_use_distinct_requests": true,
+    "send_a_then_b_target_exact_saved_takes": true,
+    "both_sends_local_only": true,
+    "morph_edit_stops_playback_and_holds": true,
+    "reset_joint_stops_playback_and_holds": true,
+    "loaded_take_persists_current_asset_draft": true,
+    "zero_page_errors": true
+  },
+  "page_errors": [],
+  "asset": {
+    "id": "ouch-director-pass2",
+    "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+  },
+  "passed": true
+}

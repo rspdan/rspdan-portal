@@ -1,0 +1,52 @@
+{
+  "lighting_sha256": "f3ed93210f2f65f1a4cf53c5c76846ba216e7464d6e67fe53d10f1eab64afe16",
+  "core_sha256": "e77b0a2fd739a2cd9189447f143ae5d19ec514536bd22dce1d4d8f5f40cb61d2",
+  "checks": [
+    {
+      "name": "white core at strength0.5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength0.5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "beam conversion still renders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "material correction disposes cleanly",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "image": "white-core-ball-0-5.png",
+      "state": {
+        "emission": [
+          0.9500000000000001,
+          0.9500000000000001,
+          0.9500000000000001
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 0.5
+      }
+    }
+  ],
+  "scope": "Narrow material correction after24modulechecks. Actual imported rig. No save/send.",
+  "passed": true
+}

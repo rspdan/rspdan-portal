@@ -1,0 +1,164 @@
+{
+  "lighting_sha256": "8d35e9acd0e03abf505909bdf715f2b1b389492be8d70936a272ad25408081d7",
+  "core_sha256": "a98b6350a34de3d3aed1d34158e712e0af677209cdfeb362236123a0247bc81c",
+  "checks": [
+    {
+      "name": "white core at strength0.15",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength0.15",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white core at strength0.5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength0.5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white core at strength1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "white center and colored edge at strength1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "flare omitted before use",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent flare enabled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "flare retains receiver and effect strength",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "flare emitter is attached light proxy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "repeated flare edits do not allocate resources",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "light off disables optical system",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "light on restores its optional flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "remove disposes optical system and textures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "restore retains optional flare and attachment",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "zero flare leaves ball and real light on",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "beam conversion still renders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "material correction disposes cleanly",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "image": "white-core-ball-0-15.png",
+      "state": {
+        "emission": [
+          0.915,
+          0.915,
+          0.915
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 0.15
+      }
+    },
+    {
+      "image": "white-core-ball-0-5.png",
+      "state": {
+        "emission": [
+          0.9500000000000001,
+          0.9500000000000001,
+          0.9500000000000001
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 0.5
+      }
+    },
+    {
+      "image": "white-core-ball-1.png",
+      "state": {
+        "emission": [
+          1,
+          1,
+          1
+        ],
+        "center": [
+          1,
+          1,
+          1
+        ],
+        "edge": [
+          0.65,
+          0.576078431372549,
+          0.40784313725490196
+        ],
+        "strength": 1
+      }
+    }
+  ],
+  "scope": "Final material/outline and independent per-light optics after24modulechecks. Actual imported rig. No save/send.",
+  "passed": true
+}

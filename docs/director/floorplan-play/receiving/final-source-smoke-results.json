@@ -1,0 +1,34 @@
+[
+  {
+    "check": "Rapid nearby touch corners finish only at first corner",
+    "passed": true
+  },
+  {
+    "check": "Touch polygon remains one undo",
+    "passed": true
+  },
+  {
+    "check": "Mouse same-corner doubleclick finishes triangle",
+    "passed": true
+  },
+  {
+    "check": "Final-source mouse toolbar drop is one undo",
+    "passed": true
+  },
+  {
+    "check": "Final-source mouse drop undo exact",
+    "passed": true
+  },
+  {
+    "check": "Final-source touch toolbar drop is one undo",
+    "passed": true
+  },
+  {
+    "check": "Final-source touch drop undo exact",
+    "passed": true
+  },
+  {
+    "check": "Real hint text selection produces no application error",
+    "passed": true
+  }
+]

@@ -1,0 +1,48 @@
+[
+  {
+    "check": "3D renders after imported plan",
+    "passed": true
+  },
+  {
+    "check": "Renderer uses scoped shadow adjustment",
+    "passed": true,
+    "details": [
+      {
+        "bias": 0.001,
+        "normalBias": 0.05,
+        "backfaces": false
+      }
+    ]
+  },
+  {
+    "check": "Preview preserves plan and pose",
+    "passed": true
+  },
+  {
+    "check": "Return to overhead remains editable",
+    "passed": true
+  },
+  {
+    "check": "Undo import clears generated plan",
+    "passed": true
+  },
+  {
+    "check": "Clearing plan restores original shadow bias",
+    "passed": true,
+    "details": {
+      "original": [
+        0
+      ],
+      "restored": [
+        0
+      ]
+    }
+  },
+  {
+    "check": "No application runtime errors",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  }
+]

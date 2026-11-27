@@ -1,0 +1,189 @@
+{
+  "schema": "nest-floorplan/v1",
+  "name": "Bee pocket studio \u2014 invented play set",
+  "units": "unit",
+  "grid": 0.25,
+  "activeLevelId": "level-ground",
+  "levels": [
+    {
+      "id": "level-ground",
+      "name": "Warm-up",
+      "elevation": 0,
+      "height": 2.7
+    },
+    {
+      "id": "level-15a01979-d9d2-4f18-b3fb-0038abec9440",
+      "name": "Light loft",
+      "elevation": 3.2,
+      "height": 2.7
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-3eda0449-ab08-4a87-874e-b5f9c587c5bd",
+      "levelId": "level-ground",
+      "name": "Room 1",
+      "points": [
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          3.75,
+          -0.25
+        ],
+        [
+          3.75,
+          2.75
+        ],
+        [
+          0.25,
+          2.75
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": [
+        {
+          "id": "opening-541ad4ed-d61e-4826-b304-069220d1aaeb",
+          "type": "door",
+          "edge": 0,
+          "at": 0.5,
+          "width": 0.9,
+          "height": 2.1,
+          "sill": 0
+        },
+        {
+          "id": "opening-9942e8c2-0787-4dfc-a2ea-fdbadaf5ec52",
+          "type": "window",
+          "edge": 1,
+          "at": 0.4931891025641026,
+          "width": 1,
+          "height": 1.2,
+          "sill": 0.81
+        },
+        {
+          "id": "placement-a6767faa-62dd-449f-a628-caeb4ef10575",
+          "type": "door",
+          "edge": 3,
+          "at": 0.4166666666666667,
+          "width": 0.9,
+          "height": 2.1,
+          "sill": 0
+        },
+        {
+          "id": "placement-af9dea64-32ee-410e-946d-dd90c243fb93",
+          "type": "window",
+          "edge": 2,
+          "at": 0.35714285714285715,
+          "width": 1,
+          "height": 1.2,
+          "sill": 0.81
+        },
+        {
+          "id": "placement-71117892-fd9f-443c-a950-97f43e8796f1",
+          "type": "passage",
+          "edge": 2,
+          "at": 0.7857142857142857,
+          "width": 1.2,
+          "height": 2.1,
+          "sill": 0
+        }
+      ]
+    },
+    {
+      "id": "room-7c5388be-5d69-4410-be22-d6ff8152ba6e",
+      "levelId": "level-15a01979-d9d2-4f18-b3fb-0038abec9440",
+      "name": "Room 2",
+      "points": [
+        [
+          0.5,
+          -0.25
+        ],
+        [
+          3.5,
+          -0.25
+        ],
+        [
+          3.5,
+          2.5
+        ],
+        [
+          0.5,
+          2.5
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": []
+    }
+  ],
+  "connectors": [
+    {
+      "id": "connection-11d6a842-d712-4ec0-832c-8927571bf289",
+      "type": "stairs",
+      "name": "Stairs",
+      "fromLevelId": "level-15a01979-d9d2-4f18-b3fb-0038abec9440",
+      "toLevelId": "level-ground",
+      "position": [
+        1.25,
+        0.5
+      ],
+      "size": [
+        1,
+        1.8
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "connection-233cfedd-06c8-4064-ae7d-354f6be3ba53",
+      "type": "elevator",
+      "name": "Elevator",
+      "fromLevelId": "level-15a01979-d9d2-4f18-b3fb-0038abec9440",
+      "toLevelId": "level-ground",
+      "position": [
+        2.75,
+        1.5
+      ],
+      "size": [
+        1.2,
+        1.2
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "placement-e1aa472c-7b2c-4653-a0a4-aca67097f459",
+      "type": "stairs",
+      "name": "Stairs",
+      "fromLevelId": "level-ground",
+      "toLevelId": "level-15a01979-d9d2-4f18-b3fb-0038abec9440",
+      "position": [
+        1.25,
+        1.75
+      ],
+      "size": [
+        1,
+        1.8
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "placement-d9c74bee-6486-4817-a974-2fd8f9cbd9b8",
+      "type": "elevator",
+      "name": "Elevator",
+      "fromLevelId": "level-ground",
+      "toLevelId": "level-15a01979-d9d2-4f18-b3fb-0038abec9440",
+      "position": [
+        3,
+        0.25
+      ],
+      "size": [
+        1.2,
+        1.2
+      ],
+      "rotation": 0
+    }
+  ]
+}

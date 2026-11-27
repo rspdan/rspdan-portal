@@ -1,0 +1,28 @@
+{
+  "recorded_at_utc": "2026-11-26T04:07:44.381173+00:00",
+  "checks": [
+    "perspective touch pinch/pan in pose: camera only, one undo",
+    "perspective touch pinch/pan in lighting: camera only, one undo",
+    "perspective touch pinch/pan in stage: camera only, one undo",
+    "perspective touch pinch/pan in camera: camera only, one undo",
+    "orthographic touch pinch/pan in pose: camera only, one undo",
+    "orthographic touch pinch/pan in lighting: camera only, one undo",
+    "orthographic touch pinch/pan in stage: camera only, one undo",
+    "orthographic touch pinch/pan in camera: camera only, one undo",
+    "floor-plan drag zoom after 3D pinch changes view only",
+    "floor-plan pinch under Draw room preserves the plan and take",
+    "MTR0 study opens beside full renderer without changing the take or horizontal overflow",
+    "390px document and Camera inspector received; no page errors"
+  ],
+  "pass": true,
+  "page_errors": [],
+  "source_hashes": {
+    "public/director/director.js": "ded31f91d2196ed6d1c080f2443300efcc0d4a65178fee4405383ee376aeef91",
+    "public/director/director.css": "8fb42f1acf5c97ee2166fa150d233675e4b844518b2f30cb228520f238fa3a5d",
+    "public/director/direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890",
+    "public/director/camera-navigation.js": "34754a6c2e7a196537e8d5c9b1e367145495fcde0634e867399e559e63d96c95",
+    "public/director/floorplan-editor.js": "cc716657e4868a95628f3d9d6ea91059c2b0ec598cd07e6dd019cba1394f4f5e",
+    "public/director/floorplan-editor.css": "8a8df66427c899d96a233a0c8d241c0ce148d72185aedc824600198b5263fd1f",
+    "src/pages/director/index.astro": "a3d3379cc252f7d35a4ec3689ae2187f60e1e5ba87a065d6fde6f2f1af2505c9"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "mtr0-operator-runtime/v1",
+  "pythonRequires": ">=3.11",
+  "receivedPythonSeries": "3.12",
+  "dependencies": {
+    "mcp": "1.29.0",
+    "httpx": "0.28.1",
+    "pydantic": "2.13.4"
+  },
+  "cli": "cli.py",
+  "mcpStdio": "server.py",
+  "service": "Existing local DEV portal with explicit DIRECTOR_STUDY_STORE_DIR",
+  "hostRegistration": "Required separately for a compatible MCP host",
+  "receivingScope": "Synthetic loopback providers and Linux local storage; no real inference or target-station verification"
+}

@@ -1,0 +1,1 @@
+Initial harness route lambda accepted a second positional default; Playwright supplied its Request into that slot. Fixed fixture with a one-argument closure. No runtime optics result was obtained from that first attempt.

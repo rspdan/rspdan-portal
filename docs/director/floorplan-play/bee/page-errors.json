@@ -1,0 +1,18 @@
+[
+  {
+    "surface": "desktop",
+    "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+  },
+  {
+    "surface": "touch",
+    "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+  },
+  {
+    "surface": "touch",
+    "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+  },
+  {
+    "surface": "desktop",
+    "error": "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+  }
+]

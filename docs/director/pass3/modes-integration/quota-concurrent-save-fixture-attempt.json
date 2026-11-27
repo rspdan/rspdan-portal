@@ -1,0 +1,14 @@
+{
+  "checks": [
+    {
+      "name": "startup",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "page_errors": [],
+  "scope": "Local browser, injected quota and mocked delayed Save response; no durable writes or Crew messages.",
+  "source_sha256": "38ab893bae32914c4418a0012c428ace1f6ab56ae8b63dfc73e8a1f193ba0993",
+  "passed": false,
+  "fixture_error": "The fixture waited on a function expression, so Playwright invoked releaseSave instead of testing its presence. No concurrent-save assertion was reached."
+}

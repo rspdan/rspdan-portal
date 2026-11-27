@@ -1,0 +1,1800 @@
+{
+  "scope": "Actual Chromium/softwareWebGL on integrated scene, independent optics controller at the existing geometric head anchor; no live save/send. Source/camera changes and exact fixed-state stability.",
+  "hashes": {
+    "director.js": "47f6c3b68621026a4c8a66644bdfc23a6be7a6ab17004b2dd8489ff59f69daa5",
+    "appearance.js": "68a04846ab6c5049cb61ae2a757b2cc22a3d4706353c2061974cd17f61b10e4f",
+    "lighting.js": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "optics.js": "029b264c263e0a451a407da0b9fdcad6693d36e4fed8f6a45a473ae5c9469643"
+  },
+  "checks": [
+    {
+      "name": "room ready",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "preset glow is selected and visible",
+      "passed": true,
+      "detail": {
+        "preset": "glow",
+        "glow": 1,
+        "rays": 0,
+        "streak": 0,
+        "ghosts": 0,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      }
+    },
+    {
+      "name": "preset starburst is selected and visible",
+      "passed": true,
+      "detail": {
+        "preset": "starburst",
+        "glow": 0.5,
+        "rays": 1,
+        "streak": 0,
+        "ghosts": 0,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      }
+    },
+    {
+      "name": "preset anamorphic is selected and visible",
+      "passed": true,
+      "detail": {
+        "preset": "anamorphic",
+        "glow": 0.35,
+        "rays": 0,
+        "streak": 1,
+        "ghosts": 0,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      }
+    },
+    {
+      "name": "preset glass is selected and visible",
+      "passed": true,
+      "detail": {
+        "preset": "glass",
+        "glow": 0.7,
+        "rays": 0,
+        "streak": 0,
+        "ghosts": 1,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      }
+    },
+    {
+      "name": "defaults are independent and unknown presets use compact glow",
+      "passed": true,
+      "detail": {
+        "fresh": 0.5,
+        "missing": {
+          "preset": "glow",
+          "glow": 1,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "unknown": {
+          "preset": "glow",
+          "glow": 1,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        }
+      }
+    },
+    {
+      "name": "source visible with streak and bounded ghosts",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.9335569877952508,
+          0.9335569877952508,
+          0.9335569877952508
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0.5077078396679591,
+              0.8884887194189284,
+              1.0577246659749147
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              1.0577246659749147,
+              0.7361763675185405,
+              0.4653988530289624
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0.7615617595019385,
+              0.5923258129459522,
+              1.0577246659749147
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "fixed source and camera do not pulse",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fixed source and camera produce identical pixels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "camera pan moves optical ghost axis",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5654850886199068,
+        "source": [
+          249.90989403998447,
+          227.33873660960515
+        ],
+        "offAxis": 0.5740345832539014,
+        "transmission": 0.8616034048359783,
+        "streakSize": 1.633206780939353,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.24076865185687138,
+        "glowColor": [
+          0.8745274559085179,
+          0.8745274559085179,
+          0.8745274559085179
+        ],
+        "raysSize": 0.8812717100646842,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.32066524499714044,
+            "size": 0.08221029874910638,
+            "color": [
+              0.47560507946945996,
+              0.8323088890715551,
+              0.990843915561375
+            ],
+            "pixel": [
+              352.5506541556877,
+              345.3128684284061
+            ]
+          },
+          {
+            "position": -0.42755365999618733,
+            "size": 0.14249785116511776,
+            "color": [
+              0.990843915561375,
+              0.6896273652307169,
+              0.4359713228470049
+            ],
+            "pixel": [
+              465.5991277924164,
+              475.24950876212523
+            ]
+          },
+          {
+            "position": -0.9085515274918979,
+            "size": 0.2411502096640454,
+            "color": [
+              0.7134076192041899,
+              0.5548725927143701,
+              0.990843915561375
+            ],
+            "pixel": [
+              538.2731465588848,
+              558.780206119516
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "distance changes apparent streak size",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 1.832877101152959,
+        "source": [
+          186.00358114430085,
+          153.88557701039025
+        ],
+        "offAxis": 0.8168329012237492,
+        "transmission": 0.719769284820925,
+        "streakSize": 1.98490096138547,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2848511752733063,
+        "glowColor": [
+          0.7305658240932388,
+          0.7305658240932388,
+          0.7305658240932388
+        ],
+        "raysSize": 1.066564926224499,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.329405984444055,
+            "size": 0.10364637550565274,
+            "color": [
+              0.3973126452211505,
+              0.6952971291370135,
+              0.8277346775440636
+            ],
+            "pixel": [
+              330.17889299489207,
+              319.59903022478295
+            ]
+          },
+          {
+            "position": -0.43920797925874,
+            "size": 0.17965371754313145,
+            "color": [
+              0.8277346775440636,
+              0.5761033355706682,
+              0.3642032581193879
+            ],
+            "pixel": [
+              495.4281426734773,
+              509.534626366956
+            ]
+          },
+          {
+            "position": -0.9333169559248224,
+            "size": 0.3040293681499147,
+            "color": [
+              0.5959689678317258,
+              0.4635314194246757,
+              0.8277346775440636
+            ],
+            "pixel": [
+              601.6598031811393,
+              631.6360810297815
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "moving source changes response without camera motion",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.3762437172831747,
+        "source": [
+          499.15401530997764,
+          224.66435891238868
+        ],
+        "offAxis": 0.5032742034371652,
+        "transmission": 0.8936203319849685,
+        "streakSize": 1.683513513565097,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.25017228631497856,
+        "glowColor": [
+          0.9070246369647429,
+          0.9070246369647429,
+          0.9070246369647429
+        ],
+        "raysSize": 0.9095635804385807,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.3181178713237379,
+            "size": 0.0837871064170646,
+            "color": [
+              0.49327842325570254,
+              0.8632372406974795,
+              1.0276633817827137
+            ],
+            "pixel": [
+              432.2245464122877,
+              344.9044812187024
+            ]
+          },
+          {
+            "position": -0.42415716176498397,
+            "size": 0.14523098445624533,
+            "color": [
+              1.0276633817827137,
+              0.7152537137207686,
+              0.45217188798439395
+            ],
+            "pixel": [
+              359.3672714502831,
+              475.7940250417301
+            ]
+          },
+          {
+            "position": -0.9013339687505908,
+            "size": 0.24577551215672283,
+            "color": [
+              0.7399176348835538,
+              0.5754914937983197,
+              1.0276633817827137
+            ],
+            "pixel": [
+              312.5304518318516,
+              559.9373032136764
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "complete nearby occluder hides optics",
+      "passed": true,
+      "detail": {
+        "visible": false,
+        "visibility": 0,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0,
+          0,
+          0
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "removing occluder restores optics",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "partial occlusion reduces brightness",
+      "passed": true,
+      "detail": {
+        "visible": true,
+        "visibility": 0.3333333333333333,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.3065868597028738,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.3111856625984169,
+          0.3111856625984169,
+          0.3111856625984169
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0.1692359465559863,
+              0.2961629064729761,
+              0.35257488865830483
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0.35257488865830483,
+              0.24539212250618014,
+              0.1551329510096541
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0.2538539198339795,
+              0.19744193764865073,
+              0.35257488865830483
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "behind camera hides optics",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "offscreen source hides optics",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "rotation and spread retained",
+      "passed": true,
+      "detail": {
+        "preset": "anamorphic",
+        "glow": 0.35,
+        "rays": 0,
+        "streak": 1,
+        "ghosts": 0,
+        "spread": 0.65,
+        "rotation": 90,
+        "rayCount": 8
+      }
+    },
+    {
+      "name": "custom ray count and rotation retained",
+      "passed": true,
+      "detail": {
+        "preset": "starburst",
+        "glow": 0.5,
+        "rays": 1,
+        "streak": 0,
+        "ghosts": 0,
+        "spread": 1.4,
+        "rotation": 22,
+        "rayCount": 13
+      }
+    },
+    {
+      "name": "each component can be completely disabled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "component limits are bounded",
+      "passed": true,
+      "detail": {
+        "preset": "glow",
+        "glow": 1,
+        "rays": 0,
+        "streak": 0,
+        "ghosts": 0,
+        "spread": 2,
+        "rotation": 180,
+        "rayCount": 4
+      }
+    },
+    {
+      "name": "Off remains off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "repeat create/apply/dispose leaves no resources",
+      "passed": true,
+      "detail": {
+        "before": [
+          1,
+          12,
+          3
+        ],
+        "after": [
+          1,
+          12,
+          3
+        ]
+      }
+    }
+  ],
+  "captures": [
+    {
+      "image": "preset-glow.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glow",
+          "glow": 1,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          1.3336528397075011,
+          1.3336528397075011,
+          1.3336528397075011
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "preset-starburst.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "starburst",
+          "glow": 0.5,
+          "rays": 1,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.6668264198537506,
+          0.6668264198537506,
+          0.6668264198537506
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          1.9314972161281052,
+          1.9314972161281052,
+          1.9314972161281052
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "preset-anamorphic.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "anamorphic",
+          "glow": 0.35,
+          "rays": 0,
+          "streak": 1,
+          "ghosts": 0,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          1.4417266272658533,
+          1.4417266272658533,
+          1.4417266272658533
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.4667784938976254,
+          0.4667784938976254,
+          0.4667784938976254
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "preset-glass.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.9335569877952508,
+          0.9335569877952508,
+          0.9335569877952508
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0.5077078396679591,
+              0.8884887194189284,
+              1.0577246659749147
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              1.0577246659749147,
+              0.7361763675185405,
+              0.4653988530289624
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0.7615617595019385,
+              0.5923258129459522,
+              1.0577246659749147
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "preset-multi-iris-with-glow-streak.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0.6,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0.865035976359512,
+          0.865035976359512,
+          0.865035976359512
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.9335569877952508,
+          0.9335569877952508,
+          0.9335569877952508
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0.5077078396679591,
+              0.8884887194189284,
+              1.0577246659749147
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              1.0577246659749147,
+              0.7361763675185405,
+              0.4653988530289624
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0.7615617595019385,
+              0.5923258129459522,
+              1.0577246659749147
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "01-initial-head-glass.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.9335569877952508,
+          0.9335569877952508,
+          0.9335569877952508
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0.5077078396679591,
+              0.8884887194189284,
+              1.0577246659749147
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              1.0577246659749147,
+              0.7361763675185405,
+              0.4653988530289624
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0.7615617595019385,
+              0.5923258129459522,
+              1.0577246659749147
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "02-camera-pan.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.5654850886199068,
+        "source": [
+          249.90989403998447,
+          227.33873660960515
+        ],
+        "offAxis": 0.5740345832539014,
+        "transmission": 0.8616034048359783,
+        "streakSize": 1.633206780939353,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.24076865185687138,
+        "glowColor": [
+          0.8745274559085179,
+          0.8745274559085179,
+          0.8745274559085179
+        ],
+        "raysSize": 0.8812717100646842,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.32066524499714044,
+            "size": 0.08221029874910638,
+            "color": [
+              0.47560507946945996,
+              0.8323088890715551,
+              0.990843915561375
+            ],
+            "pixel": [
+              352.5506541556877,
+              345.3128684284061
+            ]
+          },
+          {
+            "position": -0.42755365999618733,
+            "size": 0.14249785116511776,
+            "color": [
+              0.990843915561375,
+              0.6896273652307169,
+              0.4359713228470049
+            ],
+            "pixel": [
+              465.5991277924164,
+              475.24950876212523
+            ]
+          },
+          {
+            "position": -0.9085515274918979,
+            "size": 0.2411502096640454,
+            "color": [
+              0.7134076192041899,
+              0.5548725927143701,
+              0.990843915561375
+            ],
+            "pixel": [
+              538.2731465588848,
+              558.780206119516
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "03-camera-nearer.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 1.832877101152959,
+        "source": [
+          186.00358114430085,
+          153.88557701039025
+        ],
+        "offAxis": 0.8168329012237492,
+        "transmission": 0.719769284820925,
+        "streakSize": 1.98490096138547,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2848511752733063,
+        "glowColor": [
+          0.7305658240932388,
+          0.7305658240932388,
+          0.7305658240932388
+        ],
+        "raysSize": 1.066564926224499,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.329405984444055,
+            "size": 0.10364637550565274,
+            "color": [
+              0.3973126452211505,
+              0.6952971291370135,
+              0.8277346775440636
+            ],
+            "pixel": [
+              330.17889299489207,
+              319.59903022478295
+            ]
+          },
+          {
+            "position": -0.43920797925874,
+            "size": 0.17965371754313145,
+            "color": [
+              0.8277346775440636,
+              0.5761033355706682,
+              0.3642032581193879
+            ],
+            "pixel": [
+              495.4281426734773,
+              509.534626366956
+            ]
+          },
+          {
+            "position": -0.9333169559248224,
+            "size": 0.3040293681499147,
+            "color": [
+              0.5959689678317258,
+              0.4635314194246757,
+              0.8277346775440636
+            ],
+            "pixel": [
+              601.6598031811393,
+              631.6360810297815
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "04-source-moved.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.3762437172831747,
+        "source": [
+          499.15401530997764,
+          224.66435891238868
+        ],
+        "offAxis": 0.5032742034371652,
+        "transmission": 0.8936203319849685,
+        "streakSize": 1.683513513565097,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.25017228631497856,
+        "glowColor": [
+          0.9070246369647429,
+          0.9070246369647429,
+          0.9070246369647429
+        ],
+        "raysSize": 0.9095635804385807,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.3181178713237379,
+            "size": 0.0837871064170646,
+            "color": [
+              0.49327842325570254,
+              0.8632372406974795,
+              1.0276633817827137
+            ],
+            "pixel": [
+              432.2245464122877,
+              344.9044812187024
+            ]
+          },
+          {
+            "position": -0.42415716176498397,
+            "size": 0.14523098445624533,
+            "color": [
+              1.0276633817827137,
+              0.7152537137207686,
+              0.45217188798439395
+            ],
+            "pixel": [
+              359.3672714502831,
+              475.7940250417301
+            ]
+          },
+          {
+            "position": -0.9013339687505908,
+            "size": 0.24577551215672283,
+            "color": [
+              0.7399176348835538,
+              0.5754914937983197,
+              1.0276633817827137
+            ],
+            "pixel": [
+              312.5304518318516,
+              559.9373032136764
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "05-occluded.png",
+      "state": {
+        "visible": false,
+        "visibility": 0,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0,
+          0,
+          0
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "06-partial-occlusion.png",
+      "state": {
+        "visible": true,
+        "visibility": 0.3333333333333333,
+        "strength": 1,
+        "lens": {
+          "preset": "glass",
+          "glow": 0.7,
+          "rays": 0,
+          "streak": 0,
+          "ghosts": 1,
+          "spread": 1,
+          "rotation": 0,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.3065868597028738,
+        "streakSize": 1.6497185181908112,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.2470003288559393,
+        "glowColor": [
+          0.3111856625984169,
+          0.3111856625984169,
+          0.3111856625984169
+        ],
+        "raysSize": 0.8923722434476765,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.08121572288900863,
+            "color": [
+              0.1692359465559863,
+              0.2961629064729761,
+              0.35257488865830483
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.14077391967428166,
+            "color": [
+              0.35257488865830483,
+              0.24539212250618014,
+              0.1551329510096541
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.23823278714109203,
+            "color": [
+              0.2538539198339795,
+              0.19744193764865073,
+              0.35257488865830483
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "07-rotated-anamorphic.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "anamorphic",
+          "glow": 0.35,
+          "rays": 0,
+          "streak": 1,
+          "ghosts": 0,
+          "spread": 0.65,
+          "rotation": 90,
+          "rayCount": 8
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 1.0723170368240271,
+        "streakColor": [
+          1.4417266272658533,
+          1.4417266272658533,
+          1.4417266272658533
+        ],
+        "glowSize": 0.16055021375636055,
+        "glowColor": [
+          0.4667784938976254,
+          0.4667784938976254,
+          0.4667784938976254
+        ],
+        "raysSize": 0.5800419582409897,
+        "raysColor": [
+          0,
+          0,
+          0
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.052790219877855614,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.09150304778828307,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.1548513116417098,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "image": "08-thirteen-ray-starburst.png",
+      "state": {
+        "visible": true,
+        "visibility": 1,
+        "strength": 1,
+        "lens": {
+          "preset": "starburst",
+          "glow": 0.5,
+          "rays": 1,
+          "streak": 0,
+          "ghosts": 0,
+          "spread": 1.4,
+          "rotation": 22,
+          "rayCount": 13
+        },
+        "distance": 2.4376666391681083,
+        "source": [
+          398.9600217804219,
+          225.73943694576138
+        ],
+        "offAxis": 0.43708836660058537,
+        "transmission": 0.9197605791086215,
+        "streakSize": 2.3096059254671357,
+        "streakColor": [
+          0,
+          0,
+          0
+        ],
+        "glowSize": 0.345800460398315,
+        "glowColor": [
+          0.6668264198537506,
+          0.6668264198537506,
+          0.6668264198537506
+        ],
+        "raysSize": 1.249321140826747,
+        "raysColor": [
+          1.9314972161281052,
+          1.9314972161281052,
+          1.9314972161281052
+        ],
+        "ghosts": [
+          {
+            "position": 0.31573518119762106,
+            "size": 0.11370201204461208,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              400.3559071072023,
+              345.66407436727286
+            ]
+          },
+          {
+            "position": -0.4209802415968281,
+            "size": 0.1970834875439943,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              401.85879052373025,
+              474.7812341769695
+            ]
+          },
+          {
+            "position": -0.8945830133932596,
+            "size": 0.33352590199752885,
+            "color": [
+              0,
+              0,
+              0
+            ],
+            "pixel": [
+              402.82492986292675,
+              557.7851226260602
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,2635 @@
+{
+  "appearance_sha256": "68b8a20b3ca8ca5dbf1269bfa2ded3dbb3aaf90272a3ccccdee94dea797b9a7b",
+  "core_sha256": "798a8ae15b000278a456649ed0fe96cddde73b21f0f9804d389aaace49359d26",
+  "scope": "Integrated Director UI input-event receiving of new appearance. Current core pinned against HMR. Desktop and Chromium touch/DPR3 emulation, not physical ACHE. No save or send.",
+  "checks": [
+    {
+      "name": "desktop-module-zero serialized controls and fixed pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-zero white body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "zero no halo or spill",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-zero extreme-only flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-low-led serialized controls and fixed pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-low-led white body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-low-led exterior stencil and equal active axes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-low-led extreme-only flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-medium-warm serialized controls and fixed pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-medium-warm white body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-medium-warm exterior stencil and equal active axes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-medium-warm extreme-only flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-high-cool serialized controls and fixed pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-high-cool white body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-high-cool exterior stencil and equal active axes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop-module-high-cool extreme-only flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "black outline independent with glow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Ouch disables both fields and spill, keeps white outline",
+      "passed": true,
+      "detail": {
+        "haloOff": true,
+        "spillOff": true,
+        "emission": [
+          0,
+          0,
+          0
+        ],
+        "outline": [
+          1,
+          1,
+          1
+        ],
+        "look": "ouch"
+      }
+    },
+    {
+      "name": "repeated apply and disposal bounded",
+      "passed": true,
+      "detail": {
+        "stable": true,
+        "restored": true,
+        "counts": [
+          27,
+          4,
+          1,
+          0,
+          6
+        ],
+        "beforeAfter": [
+          27,
+          4,
+          1,
+          0,
+          6
+        ]
+      }
+    },
+    {
+      "name": "mobile-module-medium-warm serialized controls and fixed pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-medium-warm white body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-medium-warm exterior stencil and equal active axes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-medium-warm extreme-only flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-high-cool serialized controls and fixed pose",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-high-cool white body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-high-cool exterior stencil and equal active axes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile-module-high-cool extreme-only flare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile resize updates both kernels",
+      "passed": true,
+      "detail": {
+        "before": [
+          28.24937655860349
+        ],
+        "after": {
+          "kernels": [
+            28.24937655860349,
+            28.24937655860349
+          ],
+          "expected": [
+            28.24937655860349,
+            28.24937655860349
+          ],
+          "render": [
+            708,
+            708
+          ]
+        }
+      }
+    }
+  ],
+  "captures": [
+    {
+      "image": "desktop-module-zero.png",
+      "state": {
+        "take": {
+          "schema": "nest-director-take/v2",
+          "asset": {
+            "id": "ouch-director-pass2",
+            "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+          },
+          "name": "Ouch \u00b7 First take",
+          "notes": "",
+          "look": "trip",
+          "fps": 24,
+          "frame": 1,
+          "range": {
+            "start": 1,
+            "end": 72
+          },
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": -0.005
+              },
+              "objects": [
+                {
+                  "id": "stage-3406fd15-77aa-4667-af77-26f19584a1af",
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 0,
+          "tripFlare": 0,
+          "tripTemperature": 6500,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          },
+          "keyframes": [],
+          "animation": {
+            "transition": "ease-in-out",
+            "loop": true
+          },
+          "output": {
+            "width": 720,
+            "height": 720
+          }
+        },
+        "poseUnchanged": true,
+        "body": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.35,
+            0.35,
+            0.35
+          ],
+          "vertices": 23134
+        },
+        "layers": [],
+        "optical": [],
+        "spill": [],
+        "render": [
+          802,
+          802
+        ]
+      }
+    },
+    {
+      "image": "desktop-module-low-led.png",
+      "state": {
+        "take": {
+          "schema": "nest-director-take/v2",
+          "asset": {
+            "id": "ouch-director-pass2",
+            "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+          },
+          "name": "Ouch \u00b7 First take",
+          "notes": "",
+          "look": "trip",
+          "fps": 24,
+          "frame": 1,
+          "range": {
+            "start": 1,
+            "end": 72
+          },
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": -0.005
+              },
+              "objects": [
+                {
+                  "id": "stage-3406fd15-77aa-4667-af77-26f19584a1af",
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 0.15,
+          "tripFlare": 0,
+          "tripTemperature": 6500,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          },
+          "keyframes": [],
+          "animation": {
+            "transition": "ease-in-out",
+            "loop": true
+          },
+          "output": {
+            "width": 720,
+            "height": 720
+          }
+        },
+        "poseUnchanged": true,
+        "body": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "vertices": 23134
+        },
+        "layers": [
+          {
+            "name": "Director Trip luminosity",
+            "enabled": true,
+            "kernel": 9.9,
+            "activeHorizontal": 9.9,
+            "activeVertical": 9.9,
+            "stencil": 2,
+            "inner": false,
+            "outer": true
+          }
+        ],
+        "optical": [],
+        "spill": [
+          {
+            "enabled": true,
+            "intensity": 0.36,
+            "color": [
+              1,
+              1,
+              1
+            ],
+            "excludedBody": true
+          }
+        ],
+        "render": [
+          802,
+          802
+        ]
+      }
+    },
+    {
+      "image": "desktop-module-medium-warm.png",
+      "state": {
+        "take": {
+          "schema": "nest-director-take/v2",
+          "asset": {
+            "id": "ouch-director-pass2",
+            "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+          },
+          "name": "Ouch \u00b7 First take",
+          "notes": "",
+          "look": "trip",
+          "fps": 24,
+          "frame": 1,
+          "range": {
+            "start": 1,
+            "end": 72
+          },
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": -0.005
+              },
+              "objects": [
+                {
+                  "id": "stage-3406fd15-77aa-4667-af77-26f19584a1af",
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 0.5,
+          "tripFlare": 0,
+          "tripTemperature": 3000,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          },
+          "keyframes": [],
+          "animation": {
+            "transition": "ease-in-out",
+            "loop": true
+          },
+          "output": {
+            "width": 720,
+            "height": 720
+          }
+        },
+        "poseUnchanged": true,
+        "body": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.39999999999999997,
+            0.39999999999999997,
+            0.39999999999999997
+          ],
+          "vertices": 23134
+        },
+        "layers": [
+          {
+            "name": "Director Trip luminosity",
+            "enabled": true,
+            "kernel": 19,
+            "activeHorizontal": 19,
+            "activeVertical": 19,
+            "stencil": 2,
+            "inner": false,
+            "outer": true
+          }
+        ],
+        "optical": [],
+        "spill": [
+          {
+            "enabled": true,
+            "intensity": 4,
+            "color": [
+              1,
+              0.6973366126954361,
+              0.4395952897749876
+            ],
+            "excludedBody": true
+          }
+        ],
+        "render": [
+          802,
+          802
+        ]
+      }
+    },
+    {
+      "image": "desktop-module-high-cool.png",
+      "state": {
+        "take": {
+          "schema": "nest-director-take/v2",
+          "asset": {
+            "id": "ouch-director-pass2",
+            "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+          },
+          "name": "Ouch \u00b7 First take",
+          "notes": "",
+          "look": "trip",
+          "fps": 24,
+          "frame": 1,
+          "range": {
+            "start": 1,
+            "end": 72
+          },
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": -0.005
+              },
+              "objects": [
+                {
+                  "id": "stage-3406fd15-77aa-4667-af77-26f19584a1af",
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 1,
+          "tripFlare": 0,
+          "tripTemperature": 8500,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          },
+          "keyframes": [],
+          "animation": {
+            "transition": "ease-in-out",
+            "loop": true
+          },
+          "output": {
+            "width": 720,
+            "height": 720
+          }
+        },
+        "poseUnchanged": true,
+        "body": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.44999999999999996,
+            0.44999999999999996,
+            0.44999999999999996
+          ],
+          "vertices": 23134
+        },
+        "layers": [
+          {
+            "name": "Director Trip luminosity",
+            "enabled": true,
+            "kernel": 32,
+            "activeHorizontal": 32,
+            "activeVertical": 32,
+            "stencil": 2,
+            "inner": false,
+            "outer": true
+          }
+        ],
+        "optical": [],
+        "spill": [
+          {
+            "enabled": true,
+            "intensity": 16,
+            "color": [
+              0.8257288385856254,
+              0.8718909547758223,
+              1
+            ],
+            "excludedBody": true
+          }
+        ],
+        "render": [
+          802,
+          802
+        ]
+      }
+    },
+    {
+      "image": "desktop-module-white-outline.png"
+    },
+    {
+      "image": "mobile-module-medium-warm.png",
+      "state": {
+        "take": {
+          "schema": "nest-director-take/v2",
+          "asset": {
+            "id": "ouch-director-pass2",
+            "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+          },
+          "name": "Ouch \u00b7 First take",
+          "notes": "",
+          "look": "trip",
+          "fps": 24,
+          "frame": 1,
+          "range": {
+            "start": 1,
+            "end": 72
+          },
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": -0.005
+              },
+              "objects": [
+                {
+                  "id": "stage-970fe6e1-db13-4af9-b1f8-61c96cc314d8",
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 0.5,
+          "tripFlare": 0,
+          "tripTemperature": 3000,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          },
+          "keyframes": [],
+          "animation": {
+            "transition": "ease-in-out",
+            "loop": true
+          },
+          "output": {
+            "width": 720,
+            "height": 720
+          }
+        },
+        "poseUnchanged": true,
+        "body": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.39999999999999997,
+            0.39999999999999997,
+            0.39999999999999997
+          ],
+          "vertices": 23134
+        },
+        "layers": [
+          {
+            "name": "Director Trip luminosity",
+            "enabled": true,
+            "kernel": 16.773067331670823,
+            "activeHorizontal": 16.773067331670823,
+            "activeVertical": 16.773067331670823,
+            "stencil": 2,
+            "inner": false,
+            "outer": true
+          }
+        ],
+        "optical": [],
+        "spill": [
+          {
+            "enabled": true,
+            "intensity": 4,
+            "color": [
+              1,
+              0.6973366126954361,
+              0.4395952897749876
+            ],
+            "excludedBody": true
+          }
+        ],
+        "render": [
+          708,
+          708
+        ]
+      }
+    },
+    {
+      "image": "mobile-module-high-cool.png",
+      "state": {
+        "take": {
+          "schema": "nest-director-take/v2",
+          "asset": {
+            "id": "ouch-director-pass2",
+            "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+          },
+          "name": "Ouch \u00b7 First take",
+          "notes": "",
+          "look": "trip",
+          "fps": 24,
+          "frame": 1,
+          "range": {
+            "start": 1,
+            "end": 72
+          },
+          "stage": {
+            "background": "white",
+            "design": {
+              "backdrop": {
+                "type": "color",
+                "color": "#010102",
+                "image": null,
+                "fit": "cover"
+              },
+              "floor": {
+                "enabled": true,
+                "color": "#060608",
+                "size": 200,
+                "height": -0.005
+              },
+              "objects": [
+                {
+                  "id": "stage-970fe6e1-db13-4af9-b1f8-61c96cc314d8",
+                  "name": "Radiance receiving block",
+                  "type": "box",
+                  "color": "#2e2e2e",
+                  "position": [
+                    0.45,
+                    0.325,
+                    -0.05
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "scale": [
+                    0.28,
+                    0.65,
+                    0.35
+                  ]
+                }
+              ]
+            }
+          },
+          "tripGlow": 1,
+          "tripFlare": 0,
+          "tripTemperature": 8500,
+          "outline": {
+            "enabled": true,
+            "tone": 0,
+            "width": 0.0025
+          },
+          "lighting": {
+            "ambient": {
+              "intensity": 0.35,
+              "color": "#ffffff"
+            },
+            "lights": [
+              {
+                "id": "light-key",
+                "name": "Key light",
+                "type": "directional",
+                "enabled": true,
+                "color": "#ffffff",
+                "intensity": 1.65,
+                "position": [
+                  -3,
+                  4,
+                  3
+                ],
+                "rotation": [
+                  -0.772607487030514,
+                  -0.8198672643969563,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              },
+              {
+                "id": "light-rim",
+                "name": "Rim light",
+                "type": "directional",
+                "enabled": false,
+                "color": "#ffffff",
+                "intensity": 2,
+                "position": [
+                  3,
+                  1.2,
+                  -4
+                ],
+                "rotation": [
+                  -0.1698462880836737,
+                  2.601173153319209,
+                  0
+                ],
+                "angle": 1.0471975511965976,
+                "range": 20
+              }
+            ]
+          },
+          "camera": {
+            "mode": "perspective",
+            "position": [
+              0.835022148406002,
+              0.8589568370510787,
+              2.2875533286625047
+            ],
+            "target": [
+              0,
+              0.59,
+              0
+            ],
+            "fov": 0.62,
+            "orthoSize": 1.48
+          },
+          "pose": {
+            "bones": {
+              "root": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "torso.lower": {
+                "position": [
+                  0,
+                  0.5409277677536011,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "thigh.L": {
+                "position": [
+                  0.03893342614173889,
+                  0.04492294415831566,
+                  1.8943593360631894e-09
+                ],
+                "rotation": [
+                  -0.9944078708534664,
+                  -0.07467535722681758,
+                  -0.07467509645650229,
+                  0.00045538657763058085
+                ],
+                "scale": [
+                  1.0000040531158447,
+                  1,
+                  1.0000001192092896
+                ]
+              },
+              "shin.L": {
+                "position": [
+                  1.0153343055208097e-08,
+                  0.1948436051607132,
+                  7.039712701661927e-10
+                ],
+                "rotation": [
+                  -0.0030531940925564095,
+                  -0.06543742008422257,
+                  0.06503831484020853,
+                  0.9957302042527886
+                ],
+                "scale": [
+                  0.9999998807907104,
+                  0.9999999403953552,
+                  1
+                ]
+              },
+              "thigh.R": {
+                "position": [
+                  -0.03893338143825531,
+                  0.04492319002747536,
+                  -2.4622079930480822e-09
+                ],
+                "rotation": [
+                  -0.9944647327615769,
+                  0.07391401214579268,
+                  0.07391401959637312,
+                  0.010645741358131752
+                ],
+                "scale": [
+                  1.0000042915344238,
+                  1.0000003576278687,
+                  1.0000001192092896
+                ]
+              },
+              "shin.R": {
+                "position": [
+                  -1.4633658729223953e-09,
+                  0.19484366476535797,
+                  1.3118881536655636e-09
+                ],
+                "rotation": [
+                  -0.01861580809658477,
+                  0.06511740302065488,
+                  -0.06372922576299406,
+                  0.9956664909980681
+                ],
+                "scale": [
+                  0.9999997019767761,
+                  1,
+                  1
+                ]
+              },
+              "torso.upper": {
+                "position": [
+                  0,
+                  0.14974379539489746,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "head": {
+                "position": [
+                  0,
+                  0.1597267985343933,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "upper_arm.L": {
+                "position": [
+                  0.056902673095464706,
+                  0.12578491866588593,
+                  5.185133389318253e-08
+                ],
+                "rotation": [
+                  -0.8465889550160868,
+                  -0.4232945073103653,
+                  -0.28859510533236726,
+                  0.14429749306153986
+                ],
+                "scale": [
+                  1.0000003576278687,
+                  1.0000001192092896,
+                  0.9999999403953552
+                ]
+              },
+              "lower_arm.L": {
+                "position": [
+                  -3.846361806836285e-08,
+                  0.1765144169330597,
+                  -8.681486640682579e-09
+                ],
+                "rotation": [
+                  -0.2681935410503835,
+                  -0.2725721280267732,
+                  -0.8952827389956465,
+                  0.22857269482216405
+                ],
+                "scale": [
+                  1,
+                  1.000000238418579,
+                  0.9999999403953552
+                ]
+              },
+              "upper_arm.R": {
+                "position": [
+                  -0.05690266564488411,
+                  0.12278998643159866,
+                  6.6183347691151084e-09
+                ],
+                "rotation": [
+                  -0.9331555715767068,
+                  0.2508398228108213,
+                  0.2508399420201077,
+                  0.05813248674308095
+                ],
+                "scale": [
+                  1,
+                  0.9999998807907104,
+                  1
+                ]
+              },
+              "lower_arm.R": {
+                "position": [
+                  -8.756201097526173e-09,
+                  0.17263539135456085,
+                  1.3437346790823312e-09
+                ],
+                "rotation": [
+                  -0.07599958800276338,
+                  0.19301985262249685,
+                  -0.1750933533210513,
+                  0.9624498515454141
+                ],
+                "scale": [
+                  0.9999999403953552,
+                  1.0000001192092896,
+                  1.0000001192092896
+                ]
+              }
+            },
+            "morphs": {
+              "Ouch | soft tube curl": 0,
+              "Ouch | soft perch": 0,
+              "Ouch | receiver wrap": 0
+            }
+          },
+          "keyframes": [],
+          "animation": {
+            "transition": "ease-in-out",
+            "loop": true
+          },
+          "output": {
+            "width": 720,
+            "height": 720
+          }
+        },
+        "poseUnchanged": true,
+        "body": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.44999999999999996,
+            0.44999999999999996,
+            0.44999999999999996
+          ],
+          "vertices": 23134
+        },
+        "layers": [
+          {
+            "name": "Director Trip luminosity",
+            "enabled": true,
+            "kernel": 28.24937655860349,
+            "activeHorizontal": 28.24937655860349,
+            "activeVertical": 28.24937655860349,
+            "stencil": 2,
+            "inner": false,
+            "outer": true
+          }
+        ],
+        "optical": [],
+        "spill": [
+          {
+            "enabled": true,
+            "intensity": 16,
+            "color": [
+              0.8257288385856254,
+              0.8718909547758223,
+              1
+            ],
+            "excludedBody": true
+          }
+        ],
+        "render": [
+          708,
+          708
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

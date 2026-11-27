@@ -1,0 +1,74 @@
+{
+  "status": "receiving complete; no unresolved product finding in audited scope",
+  "completed_utc": "2026-11-26T04:15:42.618453+00:00",
+  "final_source_hashes": {
+    "public/director/director.js": "73087bd5188927a8481e982be71c1a4f62bf112cee3546d7eec147f36932b0f1",
+    "public/director/camera-navigation.js": "36cd0157429ff3fba9f0bbaac29a951896754c9bc3f9946841328db1b86be5bd",
+    "public/director/direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890",
+    "public/director/director.css": "8fb42f1acf5c97ee2166fa150d233675e4b844518b2f30cb228520f238fa3a5d",
+    "src/pages/director/index.astro": "a3d3379cc252f7d35a4ec3689ae2187f60e1e5ba87a065d6fde6f2f1af2505c9"
+  },
+  "product_files_modified_by_reviewer": [],
+  "environment": "Chromium with SwiftShader on private loopback Astro server; 960/1365px desktop and 390px mobile emulation; not physical phone",
+  "storage": "Save/reopen used explicit private local-workspace store; shared false; no shared-store saves",
+  "evidence": [
+    {
+      "file": "camera-receiving.json",
+      "scope": "Six desktop camera gesture cases",
+      "sha256": "638ba420d113466b0498da4de6096384ef1a7000e76d070c7fd5c098becaaad2",
+      "source_stable": null
+    },
+    {
+      "file": "remaining-receiving.json",
+      "scope": "Four completed non-wheel desktop cases and superseded wheel assertion",
+      "sha256": "d060375b66e50a0aa27e98cb378b7534180e8be1ccf24c8da440a3849beb8139",
+      "source_stable": null
+    },
+    {
+      "file": "takeover-receiving.json",
+      "scope": "Pending joint long-press takeover pass; later failed fixed-time assertions superseded",
+      "sha256": "50e977cd671f919790a667172ac05ef4f7098582eb217f75839684db9019b0b5",
+      "source_stable": true
+    },
+    {
+      "file": "gizmo-uninstrumented-recheck.json",
+      "scope": "Actual rotation-gizmo pinch takeover; rollback, drain, one undo",
+      "sha256": "d99e204deb653739d347fe81e07755dfde60e33b19c660fa443e51f8c5f7e78d",
+      "source_stable": true
+    },
+    {
+      "file": "gizmo-blur-receiving.json",
+      "scope": "Active real gizmo blur cancellation",
+      "sha256": "7698ba5f919f800bb302ef428d6938ac33761fc5cc748a7fc827a8d9d6d6a236",
+      "source_stable": true
+    },
+    {
+      "file": "final-control-receiving.json",
+      "scope": "Top validity and .1/.01 distance after rendered frames",
+      "sha256": "3248e017981a198fef934fe5c098fc859ada81d163d4780b614da65ae949656b",
+      "source_stable": true
+    },
+    {
+      "file": "gizmo-lost-capture-receiving.json",
+      "scope": "Final active-gizmo unexpected capture-loss cancellation",
+      "sha256": "9b884b4d2d6778a326e1ed7413ba7eb7b894e67fb8d713f75484d8f5d30a6f62",
+      "source_stable": true
+    },
+    {
+      "file": "wheel-capture-receiving.json",
+      "scope": "Final wheel history and camera lost-capture recovery",
+      "sha256": "b8b3ad5a347b51eaa8651d7fb7dbab1e8940e588886318e20e85a18893568396",
+      "source_stable": true
+    }
+  ],
+  "interpretation_notes": [
+    "The initial broad desktop run was intentionally stopped after six successful cases to avoid duplicate mobile scope and reduce software-rendering contention. Its raw report is partial, not an all-suite success claim.",
+    "The remaining desktop run completed outside-release, Escape, camera fields and local saved/reopened camera; its wheel timing assertion was superseded by the final focused wheel evidence.",
+    "Earlier active-gizmo takeover checks used a fixed 100ms observation and could run before Chromium delivered coalesced pointer moves. Condition-based waiting passed on uninstrumented unchanged product source, with a demonstrated real initial pose edit.",
+    "An initial wheel timing assertion required all renderer-delivered events to arrive within 180ms; software rendering delayed/coalesced arrivals. Final test checks actual one-step reversible camera history and object invariance, and records arrival times without making an invalid timing assertion.",
+    "A test cleanup attempted touchCancel after touchEnd; that harness error was fixed before final capture-loss receiving.",
+    "Broad scope was checked on the earlier pinned implementation. The final subsequent product changes were the one-degree Top/orbit margin and cancellation of firstEdit on unexpected capture loss; focused receiving verifies both. Final wheel and camera/gizmo capture-loss reports pin unchanged final source hashes.",
+    "Initial uninstrumented gizmo failure and timing assertions remain preserved as raw evidence and are explicitly superseded, not presented as production failures."
+  ],
+  "fixture_stopped": true
+}

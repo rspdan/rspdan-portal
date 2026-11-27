@@ -1,0 +1,235 @@
+[
+  {
+    "execution_utc": "2026-11-25T03:21:21.750993+00:00",
+    "action": "Opened local Director in independent desktop Chromium context",
+    "detail": {
+      "viewport": [
+        1440,
+        1000
+      ],
+      "device_scale_factor": 1,
+      "source_stamp_raw": "DPS112426 7:16pm",
+      "physical_device": false
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:21:25.388326+00:00",
+    "action": "screenshot",
+    "detail": "01-arrival"
+  },
+  {
+    "execution_utc": "2026-11-25T03:22:05.593176+00:00",
+    "action": "Started original sandbox take",
+    "detail": {
+      "look": "Trip",
+      "gesture": "Relaxed",
+      "view": "Front",
+      "output": "720x1280",
+      "key": 1
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:22:08.507704+00:00",
+    "action": "screenshot",
+    "detail": "02-trip-portrait-start"
+  },
+  {
+    "execution_utc": "2026-11-25T03:23:50.142882+00:00",
+    "action": "Dragged visible slider",
+    "detail": {
+      "selector": "#rot-z",
+      "from": 14.0,
+      "target": 30,
+      "actual": "30"
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:23:53.536206+00:00",
+    "action": "screenshot",
+    "detail": "03-first-lean"
+  },
+  {
+    "execution_utc": "2026-11-25T03:24:25.936767+00:00",
+    "action": "Dragged visible slider",
+    "detail": {
+      "selector": "#rot-z",
+      "from": 30.0,
+      "target": -120,
+      "actual": "-120"
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:24:28.493468+00:00",
+    "action": "screenshot",
+    "detail": "04-overdone"
+  },
+  {
+    "execution_utc": "2026-11-25T03:24:32.043567+00:00",
+    "action": "screenshot",
+    "detail": "05-undo"
+  },
+  {
+    "execution_utc": "2026-11-25T03:24:35.061089+00:00",
+    "action": "screenshot",
+    "detail": "06-redo"
+  },
+  {
+    "execution_utc": "2026-11-25T03:24:36.663451+00:00",
+    "action": "Deliberate overreach and recovery",
+    "detail": {
+      "undo_pose_exact": false,
+      "redo_pose_exact": true,
+      "restored_frame": 48,
+      "before_z": 30,
+      "overdone_z": -120
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:25:33.920425+00:00",
+    "action": "Recovery comparison",
+    "detail": {
+      "undo_max_pose_delta": 2.220446049250313e-16,
+      "redo_max_pose_delta": 0
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:25:41.092663+00:00",
+    "action": "Dragged visible slider",
+    "detail": {
+      "selector": "#rot-z",
+      "from": 30.0,
+      "target": -25,
+      "actual": "-25"
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:25:47.329887+00:00",
+    "action": "screenshot",
+    "detail": "07-elbow-to-play"
+  },
+  {
+    "execution_utc": "2026-11-25T03:26:28.292133+00:00",
+    "action": "Tried visible blue elbow ring quarter turn",
+    "detail": {
+      "pose_delta": 0.6617180062446114,
+      "camera_delta": 0,
+      "slider_values": [
+        "-2",
+        "0",
+        "58"
+      ]
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:26:31.599714+00:00",
+    "action": "screenshot",
+    "detail": "08-elbow-ring"
+  },
+  {
+    "execution_utc": "2026-11-25T03:27:33.628728+00:00",
+    "action": "screenshot",
+    "detail": "09-three-quarter-inspection"
+  },
+  {
+    "execution_utc": "2026-11-25T03:27:33.730543+00:00",
+    "action": "Camera as pose inspection",
+    "detail": {
+      "pose_delta": 2.220446049250313e-16,
+      "camera_changed": true
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:28:08.059668+00:00",
+    "action": "screenshot",
+    "detail": "10-side-inspection"
+  },
+  {
+    "execution_utc": "2026-11-25T03:28:39.613009+00:00",
+    "action": "Dragged visible slider",
+    "detail": {
+      "selector": "#rot-x",
+      "from": -2.0,
+      "target": 45,
+      "actual": "45"
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:28:42.986992+00:00",
+    "action": "screenshot",
+    "detail": "11-arm-out-of-plane"
+  },
+  {
+    "execution_utc": "2026-11-25T03:28:44.325431+00:00",
+    "action": "Completed four wobble beats",
+    "detail": {
+      "key_frames": [
+        1,
+        24,
+        48,
+        72
+      ]
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:28:46.607450+00:00",
+    "action": "screenshot",
+    "detail": "12-timing-panel"
+  },
+  {
+    "execution_utc": "2026-11-25T03:31:56.056941+00:00",
+    "action": "Optional Frame motion button absent in this loaded UI; used standard Frame",
+    "detail": null
+  },
+  {
+    "execution_utc": "2026-11-25T03:32:01.641486+00:00",
+    "action": "screenshot",
+    "detail": "13-playback-end"
+  },
+  {
+    "execution_utc": "2026-11-25T03:32:01.800667+00:00",
+    "action": "One-cycle preview",
+    "detail": {
+      "frame": 72,
+      "play_label": "Play take",
+      "animation": {
+        "transition": "ease-in-out",
+        "loop": false
+      },
+      "outgoing24": "ease-in"
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:32:46.911381+00:00",
+    "action": "Saved only to local sandbox",
+    "detail": {
+      "id": "dir_8a7428ff-9310-48df-8a6e-0fa74ddb083f",
+      "shared": false,
+      "status": 200
+    }
+  },
+  {
+    "execution_utc": "2026-11-25T03:32:47.459658+00:00",
+    "action": "Main-frame navigation",
+    "detail": "http://127.0.0.1:5174/director?take=dir_8a7428ff-9310-48df-8a6e-0fa74ddb083f"
+  },
+  {
+    "execution_utc": "2026-11-25T03:32:50.669460+00:00",
+    "action": "screenshot",
+    "detail": "14-reopened"
+  },
+  {
+    "execution_utc": "2026-11-25T03:33:16.700442+00:00",
+    "action": "Reopened sandbox take through normal navigation",
+    "detail": {
+      "same_name": true,
+      "same_animation": true,
+      "same_output": true,
+      "same_fps": true,
+      "keyframes_error": 0,
+      "pose_error": 2.220446049250313e-16,
+      "shared": false,
+      "saved_id": "dir_8a7428ff-9310-48df-8a6e-0fa74ddb083f",
+      "page_errors": []
+    }
+  }
+]

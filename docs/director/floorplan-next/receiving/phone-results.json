@@ -1,0 +1,290 @@
+[
+  {
+    "device": "phone",
+    "check": "Empty Building view has explicit no-room/no-connection guidance",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Empty view toggle does not create plan/history",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Overview keeps all four IDs in descending elevation order",
+    "passed": true,
+    "details": [
+      "level-upper-id",
+      "level-ground-id",
+      "level-empty-same-name-id",
+      "level-below-id"
+    ]
+  },
+  {
+    "device": "phone",
+    "check": "Equal elevations group without merging IDs",
+    "passed": true,
+    "details": [
+      {
+        "elevation": 5.2,
+        "levels": [
+          "level-upper-id"
+        ]
+      },
+      {
+        "elevation": 0,
+        "levels": [
+          "level-ground-id",
+          "level-empty-same-name-id"
+        ]
+      },
+      {
+        "elevation": -3.2,
+        "levels": [
+          "level-below-id"
+        ]
+      }
+    ]
+  },
+  {
+    "device": "phone",
+    "check": "Empty duplicate-name level explicitly remains empty",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Named connections preserve duplicate names and ID endpoints",
+    "passed": true,
+    "details": [
+      {
+        "id": "connection-stair-long-name",
+        "name": "Library stair down to the laboratory \u2014 a deliberately long route name",
+        "levels": [
+          "level-ground-id",
+          "level-below-id"
+        ]
+      },
+      {
+        "id": "connection-lift-first",
+        "name": "Shared lift name",
+        "levels": [
+          "level-ground-id",
+          "level-upper-id"
+        ]
+      },
+      {
+        "id": "connection-lift-second",
+        "name": "Shared lift name",
+        "levels": [
+          "level-below-id",
+          "level-upper-id"
+        ]
+      }
+    ]
+  },
+  {
+    "device": "phone",
+    "check": "Building sorting and inspection do not mutate document/history",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Long labels do not cause horizontal page overflow",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Choosing duplicate-name level edits active ID once",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Choosing a level returns to editable Plan",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Undo level choice restores exact plan and local hint",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Redo updates local hint and active ID",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Choosing current level adds no history",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Nearby level selector disambiguates identical names",
+    "passed": true,
+    "details": [
+      "Entrance library \u2014 a deliberately long shared level name \u00b7 level 1",
+      "Upper control room with a long but distinct working name",
+      "Entrance library \u2014 a deliberately long shared level name \u00b7 level 3",
+      "Below-ground laboratory"
+    ]
+  },
+  {
+    "device": "phone",
+    "check": "Keyboard arrow selects Level inspector tab",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Keyboard End selects Plan inspector tab",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Keyboard Home returns Selected inspector tab",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Building round trip preserves viewport and selection",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Building round trip preserves plan/history/pose",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Selected connector name edit remains in Selected panel",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Plan marker uses custom connection name",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Return-to-plan control preserves view/selection/history",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Nearby destination control chooses exact duplicate-name ID",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Updated Building link follows ID, not duplicate label",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Renamed connection appears fully in Building",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Viewing updated links makes no extra history",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Keyboard overview activation selects level once",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused door toolbar drag remains one edit",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused door undo restores plan and hint",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused window toolbar drag remains one edit",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused window undo restores plan and hint",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused passage toolbar drag remains one edit",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused passage undo restores plan and hint",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused stairs toolbar drag remains one edit",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused stairs undo restores plan and hint",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused elevator toolbar drag remains one edit",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused elevator undo restores plan and hint",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Focused touch polygon completion remains one edit",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Polygon undo exact",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Export contains canonical plan without UI view state",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "3D preview preserves plan and character pose",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Save uses isolated local store",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Reload preserves plan and character pose",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "Reloaded overview retains all level IDs",
+    "passed": true
+  },
+  {
+    "device": "phone",
+    "check": "No application runtime exceptions",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd",
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  }
+]

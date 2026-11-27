@@ -1,0 +1,453 @@
+{
+  "environment": "Local Chromium with SwiftShader; desktop mouse and emulated Android touch (not physical ACHE)",
+  "source_sha256": {
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "director.js": "836ebe61a4e8e1f180bac6852e02b73153a7980cd2b675c376763c60b0ca6425"
+  },
+  "checks": {
+    "mouse_tap_selects_joint": true,
+    "mouse_tap_preserves_pose": true,
+    "mouse_tap_preserves_camera": true,
+    "mouse_short_move_preserves_pose": true,
+    "mouse_short_move_preserves_camera": true,
+    "mouse_hold_shows_drag_hint": true,
+    "mouse_hold_drag_moves_local_joint": true,
+    "mouse_hold_drag_preserves_camera": true,
+    "mouse_hold_drag_preserves_other_local_bones": true,
+    "mouse_single_undo_restores_drag": true,
+    "mouse_only_one_undo_entry": true,
+    "mouse_redo_restores_drag": true,
+    "mouse_draft_reload_restores_position": true,
+    "mouse_cancel_restores_pose": true,
+    "mouse_cancel_preserves_camera": true,
+    "mouse_cancel_does_not_add_undo": true,
+    "mouse_rotated_parent_matches_screen_drag": true,
+    "mouse_normal_ring_still_rotates": true,
+    "mouse_normal_ring_keeps_camera": true,
+    "mouse_background_still_orbits": true,
+    "touch_tap_selects_joint": true,
+    "touch_tap_preserves_pose": true,
+    "touch_tap_preserves_camera": true,
+    "touch_short_move_preserves_pose": true,
+    "touch_short_move_preserves_camera": true,
+    "touch_hold_shows_drag_hint": true,
+    "touch_hold_drag_moves_local_joint": true,
+    "touch_hold_drag_preserves_camera": true,
+    "touch_hold_drag_preserves_other_local_bones": true,
+    "touch_single_undo_restores_drag": true,
+    "touch_only_one_undo_entry": true,
+    "touch_redo_restores_drag": true,
+    "touch_draft_reload_restores_position": true,
+    "touch_cancel_restores_pose": true,
+    "touch_cancel_preserves_camera": true,
+    "touch_cancel_does_not_add_undo": true,
+    "touch_rotated_parent_matches_screen_drag": true,
+    "touch_normal_ring_still_rotates": true,
+    "touch_normal_ring_keeps_camera": true,
+    "touch_background_still_orbits": true,
+    "zero_page_errors": true,
+    "additional_multitouch_and_blur_receiving_passes": true
+  },
+  "metrics": {
+    "mouse_local_delta": 0.0546373084138464,
+    "mouse_screen_delta_with_rotated_parent": {
+      "x": 20.00012616001584,
+      "y": -10.000055322699154
+    },
+    "touch_local_delta": 0.12378278786578578,
+    "touch_screen_delta_with_rotated_parent": {
+      "x": 20.00012230931955,
+      "y": -10.000056667161715
+    },
+    "touch_ring_target": {
+      "x": 184,
+      "y": 134.234375,
+      "cx": 189.37028234003046,
+      "cy": 172.1775736070665,
+      "d": 38.32135505102782,
+      "mesh": "ignore"
+    },
+    "touch_ring_after": {
+      "selected": "head",
+      "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+      "camera_before": {
+        "mode": "perspective",
+        "position": [
+          0.7157332700622875,
+          0.7905344317580675,
+          1.9607599959964326
+        ],
+        "target": [
+          0,
+          0.56,
+          0
+        ],
+        "fov": 0.62,
+        "orthoSize": 1.48
+      },
+      "camera_after": {
+        "mode": "perspective",
+        "position": [
+          0.7157332700622875,
+          0.7905344317580675,
+          1.9607599959964326
+        ],
+        "target": [
+          0,
+          0.56,
+          0
+        ],
+        "fov": 0.62,
+        "orthoSize": 1.48
+      }
+    }
+  },
+  "page_errors": [],
+  "passed": true,
+  "ring_confirmation": {
+    "method": "Separate real mouse drag on an actual utility-layer ring; pointerdown/up observed in utility scene. Initial edge-target sweep was inconclusive and replaced with this bounded actual event trace.",
+    "events": [
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "ignore",
+        "x": 638,
+        "y": 238
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 638,
+        "y": 238
+      },
+      {
+        "scene": "utility",
+        "type": 1,
+        "mesh": "ignore",
+        "x": 638,
+        "y": 238
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "ignore",
+        "x": 640.9391479492188,
+        "y": 241.02410888671875
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 640.9391479492188,
+        "y": 241.02410888671875
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "ignore",
+        "x": 643.7235107421875,
+        "y": 244.1913299560547
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 643.7235107421875,
+        "y": 244.1913299560547
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 646.3460693359375,
+        "y": 247.49375915527344
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 646.3460693359375,
+        "y": 247.49375915527344
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 648.80029296875,
+        "y": 250.92312622070312
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 648.80029296875,
+        "y": 250.92312622070312
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 651.0800170898438,
+        "y": 254.47088623046875
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 651.0800170898438,
+        "y": 254.47088623046875
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 653.1796264648438,
+        "y": 258.1281433105469
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 653.1796264648438,
+        "y": 258.1281433105469
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 655.0938110351562,
+        "y": 261.8857421875
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 655.0938110351562,
+        "y": 261.8857421875
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 656.8178100585938,
+        "y": 265.7343444824219
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 656.8178100585938,
+        "y": 265.7343444824219
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 658.3473510742188,
+        "y": 269.664306640625
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 658.3473510742188,
+        "y": 269.664306640625
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 659.678466796875,
+        "y": 273.665771484375
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 659.678466796875,
+        "y": 273.665771484375
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 660.8079833984375,
+        "y": 277.7287902832031
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 660.8079833984375,
+        "y": 277.7287902832031
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 661.7330322265625,
+        "y": 281.8431701660156
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 661.7330322265625,
+        "y": 281.8431701660156
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 662.4512939453125,
+        "y": 285.9986267089844
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 662.4512939453125,
+        "y": 285.9986267089844
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 662.9609375,
+        "y": 290.184814453125
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 662.9609375,
+        "y": 290.184814453125
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 663.2607421875,
+        "y": 294.3912353515625
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 663.2607421875,
+        "y": 294.3912353515625
+      },
+      {
+        "scene": "utility",
+        "type": 4,
+        "mesh": "rotationDisplay",
+        "x": 663.3499145507812,
+        "y": 298.6073913574219
+      },
+      {
+        "scene": "main",
+        "type": 4,
+        "mesh": null,
+        "x": 663.3499145507812,
+        "y": 298.6073913574219
+      },
+      {
+        "scene": "utility",
+        "type": 2,
+        "mesh": "rotationDisplay",
+        "x": 663.3499145507812,
+        "y": 298.6073913574219
+      }
+    ],
+    "before_camera": {
+      "mode": "perspective",
+      "position": [
+        0.7157332700622875,
+        0.7905344317580675,
+        1.9607599959964326
+      ],
+      "target": [
+        0,
+        0.56,
+        0
+      ],
+      "fov": 0.62,
+      "orthoSize": 1.48
+    },
+    "after_camera": {
+      "mode": "perspective",
+      "position": [
+        0.7157332700622875,
+        0.7905344317580675,
+        1.9607599959964326
+      ],
+      "target": [
+        0,
+        0.56,
+        0
+      ],
+      "fov": 0.62,
+      "orthoSize": 1.48
+    },
+    "before_rotation": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "after_rotation": [
+      0,
+      0,
+      -0.37487241630484935,
+      0.9270764108172334
+    ]
+  },
+  "source_pin_note": "Helper SHA pins the tested direct-manipulation implementation; director.js SHA records the integrated UI used for the full direct gesture sweep. Subsequent unrelated undo-history changes are received independently by the parent reviewer.",
+  "fixture_notes": {
+    "initial_edge_target": {
+      "x": 519,
+      "y": 386,
+      "cx": 566.2456612826284,
+      "cy": 321.08037992051595,
+      "d": 80.29140415572142,
+      "mesh": "ignore"
+    },
+    "initial_edge_result": {
+      "selected": "head",
+      "hint": "Head \u00b7 hold a dot to move; drag a ring to rotate",
+      "camera_before": {
+        "mode": "perspective",
+        "position": [
+          0.7157332700622875,
+          0.7905344317580675,
+          1.9607599959964326
+        ],
+        "target": [
+          0,
+          0.56,
+          0
+        ],
+        "fov": 0.62,
+        "orthoSize": 1.48
+      },
+      "camera_after": {
+        "mode": "perspective",
+        "position": [
+          0.7738107819339,
+          0.7110357746584668,
+          1.9463825596568018
+        ],
+        "target": [
+          0,
+          0.56,
+          0
+        ],
+        "fov": 0.62,
+        "orthoSize": 1.48
+      }
+    },
+    "replacement": "See ring_confirmation for actual desktop ring receiving. The edge probe missed its target; the confirmed drag reached the Babylon utility ring."
+  },
+  "additional_receipt": "direct-manipulation-cancellation.json"
+}

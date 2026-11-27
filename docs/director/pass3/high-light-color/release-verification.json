@@ -1,0 +1,22 @@
+{
+  "verified_utc": "2026-11-25T05:57:48.883479+00:00",
+  "parent_commit": "41929281b15a25a9192ac6f878d5816ee588b691",
+  "sources": {
+    "director.js": "9caef46c15cde91f0b352521fdc5226e28b49519c4dd42e119f27e6c5b3aa97f",
+    "appearance.js": "5a9ff69ef04766dbb0794ee12a37166b501e16571506e6c05cfc499032289fb6",
+    "light-color.js": "97a8343add6f1dbac5fe9a0639d608f5f695b06eec1510dffee377b02b478ba0",
+    "optics.js": "029b264c263e0a451a407da0b9fdcad6693d36e4fed8f6a45a473ae5c9469643",
+    "lighting.js": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0"
+  },
+  "node_tests": {
+    "passed": 47,
+    "failed": 0
+  },
+  "production_build": "passed",
+  "independent_browser_checks": 33,
+  "appearance_study_checks": 25,
+  "temperature_checks": 11,
+  "helper_checks": 23,
+  "five_kelvin_pngs_match_baseline": true,
+  "scope": "Browser preview; HSL recipe saved, clock phase/pause not serialized; native renderer and physical mobile not established."
+}

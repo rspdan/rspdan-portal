@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "count": 23,
+  "sourceSha256": "97a8343add6f1dbac5fe9a0639d608f5f695b06eec1510dffee377b02b478ba0",
+  "checks": [
+    "absent and temperature retain Kelvin routing",
+    "six HSL primaries and secondaries",
+    "hue wraps both directions",
+    "HSL mode ignores supplied elapsed time",
+    "one continuous cycle returns to starting hue",
+    "cycle boundary is continuous",
+    "long playback wraps without accumulating phase",
+    "saturation and lightness stay fixed throughout cycle",
+    "zero saturation, black and white are exact",
+    "limits and invalid numbers are bounded",
+    "resolution does not mutate source recipe",
+    "clock starts selected recipe at zero",
+    "clock uses supplied monotonic milliseconds",
+    "same normalized recipe preserves elapsed",
+    "pause is idempotent and freezes elapsed",
+    "resume excludes paused duration and is idempotent",
+    "changed recipe restarts selected hue",
+    "restart resets elapsed without changing pause state",
+    "changed recipe while paused remains paused",
+    "forced configure restart works for unchanged recipe",
+    "new clock on reopen has no hidden elapsed state",
+    "backward or invalid injected readings cannot rewind",
+    "default browser performance clock works"
+  ]
+}

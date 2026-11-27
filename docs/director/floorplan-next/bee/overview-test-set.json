@@ -1,0 +1,228 @@
+{
+  "schema": "nest-floorplan/v1",
+  "name": "Bee pocket studio \u2014 invented play set",
+  "units": "unit",
+  "grid": 0.25,
+  "activeLevelId": "level-ground",
+  "levels": [
+    {
+      "id": "level-ground",
+      "name": "Warm-up",
+      "elevation": 0,
+      "height": 2.7
+    },
+    {
+      "id": "level-5607b33b-5df8-4162-a99b-2374c2bb3063",
+      "name": "Light loft",
+      "elevation": 3.2,
+      "height": 2.7
+    },
+    {
+      "id": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+      "name": "Understage",
+      "elevation": -2.5,
+      "height": 2.2
+    },
+    {
+      "id": "level-34fff09a-6b3f-4938-b031-91a5778f7c40",
+      "name": "Open sky idea \u2014 empty",
+      "elevation": 8.1,
+      "height": 2.2
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-b6065b18-0de1-49b8-a06e-241e673adf43",
+      "levelId": "level-ground",
+      "name": "Room 1",
+      "points": [
+        [
+          -2.25,
+          -1.75
+        ],
+        [
+          3,
+          -1.75
+        ],
+        [
+          3,
+          2.75
+        ],
+        [
+          -2.25,
+          2.75
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": [
+        {
+          "id": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+          "type": "door",
+          "edge": 0,
+          "at": 0.5047619047619047,
+          "width": 1.1,
+          "height": 2.1,
+          "sill": 0
+        },
+        {
+          "id": "opening-8a0f9aaa-e437-4936-99c0-1d9e0fa90bab",
+          "type": "window",
+          "edge": 1,
+          "at": 0.4786324786324786,
+          "width": 1,
+          "height": 1.2,
+          "sill": 0.81
+        },
+        {
+          "id": "placement-7abf70cf-a5f3-437c-b95c-197714b7a5cd",
+          "type": "door",
+          "edge": 3,
+          "at": 0.3888888888888889,
+          "width": 0.9,
+          "height": 2.1,
+          "sill": 0
+        },
+        {
+          "id": "placement-92e84ef7-aa5a-4107-a973-63f49a3c7422",
+          "type": "window",
+          "edge": 2,
+          "at": 0.42857142857142855,
+          "width": 1,
+          "height": 1.2,
+          "sill": 0.81
+        },
+        {
+          "id": "placement-f57d1599-42f7-4f08-a8ae-41c3e1fea452",
+          "type": "passage",
+          "edge": 2,
+          "at": 0.7142857142857143,
+          "width": 1.2,
+          "height": 2.1,
+          "sill": 0
+        }
+      ]
+    },
+    {
+      "id": "room-c56e5bdb-8934-4c4c-8424-df31edc1e867",
+      "levelId": "level-5607b33b-5df8-4162-a99b-2374c2bb3063",
+      "name": "Room 2",
+      "points": [
+        [
+          -1.75,
+          -1.5
+        ],
+        [
+          2.75,
+          -1.5
+        ],
+        [
+          2.75,
+          2.25
+        ],
+        [
+          -1.75,
+          2.25
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": []
+    },
+    {
+      "id": "room-78d8ae8c-6b52-4cc7-af34-f2926152d869",
+      "levelId": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+      "name": "Room 3",
+      "points": [
+        [
+          -1.75,
+          -1.25
+        ],
+        [
+          2,
+          -1.25
+        ],
+        [
+          2,
+          1.75
+        ],
+        [
+          -1.75,
+          1.75
+        ]
+      ],
+      "wallThickness": 0.15,
+      "wallColor": "#61766a",
+      "floorColor": "#ded4bd",
+      "openings": []
+    }
+  ],
+  "connectors": [
+    {
+      "id": "connection-30712e1c-f090-4323-bb81-4fa7ae0cd914",
+      "type": "stairs",
+      "name": "Stairs",
+      "fromLevelId": "level-5607b33b-5df8-4162-a99b-2374c2bb3063",
+      "toLevelId": "level-ground",
+      "position": [
+        -1,
+        -0.25
+      ],
+      "size": [
+        1,
+        1.8
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "connection-8e727197-4ea5-4442-a2b6-00b53f2db4a7",
+      "type": "elevator",
+      "name": "Elevator",
+      "fromLevelId": "level-5607b33b-5df8-4162-a99b-2374c2bb3063",
+      "toLevelId": "level-ground",
+      "position": [
+        1.5,
+        0.75
+      ],
+      "size": [
+        1.2,
+        1.2
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "placement-adecb0a8-d266-4649-ba79-0bf09796be70",
+      "type": "stairs",
+      "name": "Quiet stair",
+      "fromLevelId": "level-ground",
+      "toLevelId": "level-7051b424-44bf-444f-9b29-1eb692a29f10",
+      "position": [
+        -0.5,
+        1.5
+      ],
+      "size": [
+        1,
+        1.8
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "placement-0074b833-1fb7-4130-8d8c-910c7045fc8f",
+      "type": "elevator",
+      "name": "Elevator",
+      "fromLevelId": "level-ground",
+      "toLevelId": "level-5607b33b-5df8-4162-a99b-2374c2bb3063",
+      "position": [
+        1.75,
+        -0.5
+      ],
+      "size": [
+        1.2,
+        1.2
+      ],
+      "rotation": 0
+    }
+  ]
+}

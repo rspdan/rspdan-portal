@@ -1,0 +1,54 @@
+{
+  "scope": "Isolated actual Babylon browser harness for stage.js only; no live saves/messages or production source integration.",
+  "source_sha256": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+  "checks": {
+    "default_snapshot_preserves_200_floor": true,
+    "three_types": true,
+    "live_position": true,
+    "live_rotation": true,
+    "live_scale": true,
+    "restore_keeps_proxy": true,
+    "type_change_keeps_proxy": true,
+    "editor_handles": true,
+    "mode_hides_handles": true,
+    "shadow_casters": true,
+    "remove_cleans_mesh_and_shadow": true,
+    "floor_edit_and_mode_overrides": true,
+    "objects_bounded_at_32": true,
+    "contain_draws_full_image_in_canvas_with_letterbox": true,
+    "cover_fills_canvas_with_image": true,
+    "restore_reuses_same_image_texture": true,
+    "resize_updates_contain_fit": true,
+    "green_and_transparent_disable_image_layer": true,
+    "nonlocal_image_url_rejected": true,
+    "decode_failure_is_reported_and_releases_texture": true,
+    "valid_image_recovers_after_decode_failure": true,
+    "clearing_image_disposes_texture": true,
+    "restore_null_restores_original_floor_and_clears_objects": true,
+    "dispose_releases_owned_meshes_materials_layers_textures_observers": true,
+    "dispose_keeps_unrelated_shadow_caster": true,
+    "zero_page_errors": true
+  },
+  "page_errors": [],
+  "resource_counts": {
+    "before": {
+      "meshes": 2,
+      "nodes": 0,
+      "materials": 1,
+      "textures": 1,
+      "layers": 0,
+      "renderObservers": 0,
+      "resizeObservers": 1
+    },
+    "after": {
+      "meshes": 2,
+      "nodes": 0,
+      "materials": 1,
+      "textures": 1,
+      "layers": 0,
+      "renderObservers": 0,
+      "resizeObservers": 1
+    }
+  },
+  "passed": true
+}

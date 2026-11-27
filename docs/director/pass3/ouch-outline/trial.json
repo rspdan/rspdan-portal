@@ -1,0 +1,361 @@
+{
+  "scope": "Runtime-only fine outline color study on black Ouch, raised-arm pose. First three use the unchanged white room and baseline lights; fourth is an explicitly separate dark-room context demonstration. No production stage feature, asset, material-color or source edits.",
+  "source_sha256_before": "951dd89f086c273368b82ecc02d8ce35dbd367cbb5db3b2da77180b802a1cb4d",
+  "preset": "raised-arm",
+  "outline_width": 0.0025,
+  "lighting": "Existing baseline Room fill and Window light, unchanged in all captures.",
+  "variants": [
+    {
+      "id": "black-white-room",
+      "color": "#000000",
+      "room": "white"
+    },
+    {
+      "id": "gray-white-room",
+      "color": "#808080",
+      "room": "white"
+    },
+    {
+      "id": "white-white-room",
+      "color": "#FFFFFF",
+      "room": "white"
+    },
+    {
+      "id": "white-dark-room-context",
+      "color": "#FFFFFF",
+      "room": "dark-runtime-context-only"
+    }
+  ],
+  "captures": [
+    {
+      "image": "black-white-room.png",
+      "sha256": "e98d0e0e23bb30b8fac1eaa370a3a8abb57947fb4bfb9f4df09a78b5ea5ba4d7",
+      "pose_max_delta": 2.220446049250313e-16,
+      "camera_max_delta": 0,
+      "runtime_state": {
+        "clearColor": [
+          0.953,
+          0.957,
+          0.941,
+          1
+        ],
+        "floorDiffuse": [
+          0.95,
+          0.955,
+          0.94
+        ],
+        "lights": [
+          {
+            "name": "Room fill",
+            "intensity": 0.8,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0,
+              1,
+              0
+            ],
+            "groundColor": [
+              0.55,
+              0.58,
+              0.54
+            ]
+          },
+          {
+            "name": "Window light",
+            "intensity": 1.3,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0.4,
+              -1,
+              -0.5
+            ],
+            "groundColor": null
+          }
+        ],
+        "character": [
+          {
+            "name": "Ouch | Pass2 compact branch shell",
+            "vertices": 23134,
+            "color": [
+              0.025,
+              0.028,
+              0.026
+            ],
+            "outlineColor": [
+              0,
+              0,
+              0
+            ],
+            "outlineWidth": 0.0025,
+            "renderOutline": true
+          }
+        ]
+      }
+    },
+    {
+      "image": "gray-white-room.png",
+      "sha256": "3e9fc802325e3fda677987db2bcb7de7acc7e9ce75317750ab02f52826307ec3",
+      "pose_max_delta": 0,
+      "camera_max_delta": 0,
+      "runtime_state": {
+        "clearColor": [
+          0.953,
+          0.957,
+          0.941,
+          1
+        ],
+        "floorDiffuse": [
+          0.95,
+          0.955,
+          0.94
+        ],
+        "lights": [
+          {
+            "name": "Room fill",
+            "intensity": 0.8,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0,
+              1,
+              0
+            ],
+            "groundColor": [
+              0.55,
+              0.58,
+              0.54
+            ]
+          },
+          {
+            "name": "Window light",
+            "intensity": 1.3,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0.4,
+              -1,
+              -0.5
+            ],
+            "groundColor": null
+          }
+        ],
+        "character": [
+          {
+            "name": "Ouch | Pass2 compact branch shell",
+            "vertices": 23134,
+            "color": [
+              0.025,
+              0.028,
+              0.026
+            ],
+            "outlineColor": [
+              0.5019607843137255,
+              0.5019607843137255,
+              0.5019607843137255
+            ],
+            "outlineWidth": 0.0025,
+            "renderOutline": true
+          }
+        ]
+      }
+    },
+    {
+      "image": "white-white-room.png",
+      "sha256": "ca4566ecb097327dc7bb9ce8057fd19b910a519a5c07de7515427629cd21d4f4",
+      "pose_max_delta": 2.220446049250313e-16,
+      "camera_max_delta": 0,
+      "runtime_state": {
+        "clearColor": [
+          0.953,
+          0.957,
+          0.941,
+          1
+        ],
+        "floorDiffuse": [
+          0.95,
+          0.955,
+          0.94
+        ],
+        "lights": [
+          {
+            "name": "Room fill",
+            "intensity": 0.8,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0,
+              1,
+              0
+            ],
+            "groundColor": [
+              0.55,
+              0.58,
+              0.54
+            ]
+          },
+          {
+            "name": "Window light",
+            "intensity": 1.3,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0.4,
+              -1,
+              -0.5
+            ],
+            "groundColor": null
+          }
+        ],
+        "character": [
+          {
+            "name": "Ouch | Pass2 compact branch shell",
+            "vertices": 23134,
+            "color": [
+              0.025,
+              0.028,
+              0.026
+            ],
+            "outlineColor": [
+              1,
+              1,
+              1
+            ],
+            "outlineWidth": 0.0025,
+            "renderOutline": true
+          }
+        ]
+      }
+    },
+    {
+      "image": "white-dark-room-context.png",
+      "sha256": "2afb338e9441fd4572069b378437127d622c2658037bbbeb4660d38404c6c186",
+      "pose_max_delta": 0,
+      "camera_max_delta": 0,
+      "runtime_state": {
+        "clearColor": [
+          0.035,
+          0.04,
+          0.05,
+          1
+        ],
+        "floorDiffuse": [
+          0.035,
+          0.04,
+          0.05
+        ],
+        "lights": [
+          {
+            "name": "Room fill",
+            "intensity": 0.8,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0,
+              1,
+              0
+            ],
+            "groundColor": [
+              0.55,
+              0.58,
+              0.54
+            ]
+          },
+          {
+            "name": "Window light",
+            "intensity": 1.3,
+            "diffuse": [
+              1,
+              1,
+              1
+            ],
+            "direction": [
+              0.4,
+              -1,
+              -0.5
+            ],
+            "groundColor": null
+          }
+        ],
+        "character": [
+          {
+            "name": "Ouch | Pass2 compact branch shell",
+            "vertices": 23134,
+            "color": [
+              0.025,
+              0.028,
+              0.026
+            ],
+            "outlineColor": [
+              1,
+              1,
+              1
+            ],
+            "outlineWidth": 0.0025,
+            "renderOutline": true
+          }
+        ]
+      }
+    }
+  ],
+  "page_errors": [],
+  "served_source_sha256": "951dd89f086c273368b82ecc02d8ce35dbd367cbb5db3b2da77180b802a1cb4d",
+  "fixed_camera": {
+    "mode": "perspective",
+    "position": [
+      0.835022148406002,
+      0.8589568370510787,
+      2.2875533286625047
+    ],
+    "target": [
+      0,
+      0.59,
+      0
+    ],
+    "fov": 0.62,
+    "orthoSize": 1.48
+  },
+  "fixed_pose_sha256": "46c13a991b29c7bd5f0ee29ad5023bcfa13f0a54e62a2f326ea512ef59c0a3ac",
+  "asset": {
+    "id": "ouch-director-pass2",
+    "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+  },
+  "source_sha256_after": "951dd89f086c273368b82ecc02d8ce35dbd367cbb5db3b2da77180b802a1cb4d",
+  "passed": true,
+  "visual_review": {
+    "reviewer": "director_final_review",
+    "personally_viewed": [
+      "black-white-room.png",
+      "gray-white-room.png",
+      "white-white-room.png",
+      "white-dark-room-context.png"
+    ],
+    "black": "Crisp fine boundary around the shaded dark body.",
+    "gray": "Brighter edge is more visible around the dark shape.",
+    "white_on_white": "Light edge largely merges into the white room.",
+    "white_on_dark": "Clear silhouette separation in the explicitly separate dark-room context.",
+    "scope_limit": "Desktop stills only; no phone receiving or new production stage feature."
+  }
+}

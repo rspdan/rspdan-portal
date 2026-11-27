@@ -1,0 +1,98 @@
+[
+  {
+    "selectedTool": "select",
+    "hint": "Select a room, opening or connection. Drag a corner to reshape a room.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "android-touch",
+    "step": "room-draw",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "select",
+    "hint": "Select a room, opening or connection. Drag a corner to reshape a room.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "android-touch",
+    "step": "stairs-toolbar-drag",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "stairs",
+    "hint": "Add another level before placing a stair or elevator connection.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "android-touch",
+    "step": "stairs-tap-tap-one-level",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "select",
+    "hint": "Select a room, opening or connection. Drag a corner to reshape a room.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "android-touch",
+    "step": "elevator-longpress-drag",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "select",
+    "hint": "Select a room, opening or connection. Drag a corner to reshape a room.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "desktop-mouse",
+    "step": "room-draw",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "select",
+    "hint": "Select a room, opening or connection. Drag a corner to reshape a room.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "desktop-mouse",
+    "step": "stairs-toolbar-drag",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "stairs",
+    "hint": "Add another level before placing a stair or elevator connection.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "desktop-mouse",
+    "step": "stairs-tap-tap-one-level",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  },
+  {
+    "selectedTool": "select",
+    "hint": "Select a room, opening or connection. Drag a corner to reshape a room.",
+    "selection": "",
+    "menus": 0,
+    "scrollY": 0,
+    "device": "desktop-mouse",
+    "step": "elevator-longpress-drag",
+    "rooms": 1,
+    "connectors": 0,
+    "levels": 1
+  }
+]

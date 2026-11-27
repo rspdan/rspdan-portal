@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Art Scans 856.jpg",
+    "recorded_original": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 856.jpg",
+    "original_available": true,
+    "resolved_original": "/workspace/nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 856.jpg",
+    "resolved_original_available": false,
+    "resolved_thumb": "/workspace/nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.display/thumbs/1024/d8b368e34bbb9f7a913cd8a0dc0b2685534fc33807a9b77636cf1260d3011f34.webp",
+    "resolved_thumb_available": true,
+    "presented_links": {
+      "original_path": "../../../ASSETS.md",
+      "view_path": "DPS-ART_112326_1.display/thumbs/1024/d8b368e34bbb9f7a913cd8a0dc0b2685534fc33807a9b77636cf1260d3011f34.webp",
+      "recorded_original_path": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 856.jpg",
+      "recorded_view_path": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.display/thumbs/1024/d8b368e34bbb9f7a913cd8a0dc0b2685534fc33807a9b77636cf1260d3011f34.webp",
+      "view_path_available": true
+    }
+  },
+  {
+    "name": "Art Scans 731.jpg",
+    "recorded_original": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 731.jpg",
+    "original_available": true,
+    "resolved_original": "/workspace/nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 731.jpg",
+    "resolved_original_available": false,
+    "resolved_thumb": "/workspace/nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.display/thumbs/1024/06376e6c201d3b2c9e4a70ea01e40c3a2d883e496afbce674a37f84a431756a6.webp",
+    "resolved_thumb_available": true,
+    "presented_links": {
+      "original_path": "../../../ASSETS.md",
+      "view_path": "DPS-ART_112326_1.display/thumbs/1024/06376e6c201d3b2c9e4a70ea01e40c3a2d883e496afbce674a37f84a431756a6.webp",
+      "recorded_original_path": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.originals/DPS-ART_112326_1/Art Scans 731.jpg",
+      "recorded_view_path": "/workspace/Cloud.CB_112026_1/output/Dan.Art.Availability_112326_3/DPS-ART_112326_1.display/thumbs/1024/06376e6c201d3b2c9e4a70ea01e40c3a2d883e496afbce674a37f84a431756a6.webp",
+      "view_path_available": true
+    }
+  }
+]

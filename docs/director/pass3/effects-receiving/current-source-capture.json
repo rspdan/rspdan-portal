@@ -1,0 +1,53 @@
+{
+  "author": "Independent effects receiving agent",
+  "execution_utc": "2026-11-25T05:11:26.412858+00:00",
+  "scope": "Actual local Director DOM interactions and live Babylon scene. Desktop and Chromium touch emulation; input-event checks are labeled separately from physical pointer interactions. Local save shared:false only. No physical ACHE, native rendering, or artistic approval claimed.",
+  "hashes": {
+    "director.js": "a98b6350a34de3d3aed1d34158e712e0af677209cdfeb362236123a0247bc81c",
+    "appearance.js": "6faeb0e5915b7cdad0f937f521dba219b688c687a5cae275c0b6f38361190635",
+    "lighting.js": "8d35e9acd0e03abf505909bdf715f2b1b389492be8d70936a272ad25408081d7",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb",
+    "optics.js": "aab14efe013295acc084ddffc0091426c2db3a74d13f1c093c09d0acbba6cef3"
+  },
+  "checks": [
+    {
+      "name": "current source mobile white Trip with outline and handles",
+      "passed": true,
+      "detail": {
+        "shin_pixel": [
+          336.78978357368294,
+          518.4882768044872
+        ],
+        "median_RGB": [
+          255,
+          255,
+          255
+        ],
+        "take_look": "trip"
+      }
+    },
+    {
+      "name": "current optional optics reopen unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no JavaScript page errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "captures": [
+    "current-mobile-optics-framed.png"
+  ],
+  "events": [],
+  "saved_take": {
+    "id": "dir_afe8ff95-f918-4c4e-bca8-9592dc421e38",
+    "shared": false
+  },
+  "passed": true
+}

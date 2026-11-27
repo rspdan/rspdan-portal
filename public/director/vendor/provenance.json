@@ -1,0 +1,14 @@
+[
+  {
+    "file": "babylon.js",
+    "url": "https://cdn.babylonjs.com/babylon.js",
+    "bytes": 8927135,
+    "sha256": "d8cde01e4dac83deee70006fcf2c601440ca6bb0cb29ff237ea0e5b857141685"
+  },
+  {
+    "file": "babylonjs.loaders.min.js",
+    "url": "https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js",
+    "bytes": 885305,
+    "sha256": "abecd7cc0ba031c6aa2520b9f7f736980213892a3e0f0ac0a701e0b2e1512051"
+  }
+]

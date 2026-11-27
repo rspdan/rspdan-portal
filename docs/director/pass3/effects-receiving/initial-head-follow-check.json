@@ -1,0 +1,57 @@
+{
+  "author": "Independent effects receiving agent",
+  "execution_utc": "2026-11-25T04:56:08.233579+00:00",
+  "scope": "Actual local Director DOM interactions and live Babylon scene. Desktop and Chromium touch emulation; input-event checks are labeled separately from physical pointer interactions. Local save shared:false only. No physical ACHE, native rendering, or artistic approval claimed.",
+  "hashes": {
+    "director.js": "35e67b9ea89ff2372a32689619900255c1d87e88199308e52b2f9d6a67a7b9e6",
+    "appearance.js": "a983c8c2554ebe84f88adc4842b1438b47cf7b443d38cede1b6434dd4c9fe7a6",
+    "lighting.js": "5ccb2baee1557e98f9b93390e7babc937bf75f6e961f01a78f230ecd5c0a9c07",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb"
+  },
+  "checks": [
+    {
+      "name": "high body glow leaves head flare off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "head flare independently enabled and parented to head",
+      "passed": true,
+      "detail": [
+        {
+          "enabled": true,
+          "position": [
+            -0.004188962280750275,
+            0.9298776388168335,
+            -2.93925404548645e-06
+          ],
+          "parent": "head"
+        }
+      ]
+    },
+    {
+      "name": "flare follows actual head rotation",
+      "passed": false,
+      "detail": {
+        "before": [
+          -0.004188962280750275,
+          0.9298776388168335,
+          -2.93925404548645e-06
+        ],
+        "after": [
+          -0.004188962280750275,
+          0.9298776388168335,
+          -2.93925404548645e-06
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "captures": [],
+  "events": [],
+  "passed": false,
+  "exception": "Traceback (most recent call last):\n  File \"/workspace/scratch/director_effects_receiving.py\", line 58, in <module>\n    input_event(page,'#trip-flare',.7);obs=observe(page);ck('head flare independently enabled and parented to head',any(f['enabled'] and f['parent']=='head' for f in obs['flare']),obs['flare']);before=obs['flare'][0]['position'];select(page,'#joint','head');input_event(page,'#rot-x',35);after=observe(page)['flare'][0]['position'];ck('flare follows actual head rotation',dist(before,after)>.005,{'before':before,'after':after});input_event(page,'#trip-flare',0);input_event(page,'#trip-glow',.15)\n                                                                                                                                                                                                                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/director_effects_receiving.py\", line 15, in ck\n    if not ok:raise AssertionError(name)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: flare follows actual head rotation\n"
+}

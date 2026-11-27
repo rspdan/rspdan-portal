@@ -1,0 +1,16 @@
+{
+  "expectedDisk": {
+    "director.css": "a2b289dc22db4860cf18886dfbce5c4b0dcad07ef14b0bef6da79817f23a30f6",
+    "floorplan-editor.js": "61331e6a67f15008ea8a943f8e3bb478a6bffc40dd90cd9e4c32979916bf2c85",
+    "floorplan-editor.css": "70d9d99b40758fd623f010c5c43e334562eb3e59b12e9fb167899fe644f60cfd",
+    "floorplan-overview.js": "4f5bbe9654de78c9f77a7873c7a254aa70031eb492ea5f9f1005c4ae0b3c96f5",
+    "floorplan-overview.css": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
+  },
+  "browserLoaded": {
+    "director.css": "a2b289dc22db4860cf18886dfbce5c4b0dcad07ef14b0bef6da79817f23a30f6",
+    "floorplan-editor.css": "70d9d99b40758fd623f010c5c43e334562eb3e59b12e9fb167899fe644f60cfd",
+    "floorplan-overview.css": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6",
+    "floorplan-editor.js": "61331e6a67f15008ea8a943f8e3bb478a6bffc40dd90cd9e4c32979916bf2c85",
+    "floorplan-overview.js": "4f5bbe9654de78c9f77a7873c7a254aa70031eb492ea5f9f1005c4ae0b3c96f5"
+  }
+}

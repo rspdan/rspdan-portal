@@ -1,0 +1,37 @@
+{
+  "before": {
+    "scroll": 0,
+    "svg": {
+      "x": 0,
+      "y": 262,
+      "width": 390,
+      "height": 220.03125
+    },
+    "roomRelative": [
+      142.9812469482422,
+      67.99948120117188,
+      144.03749084472656,
+      124.03228759765625
+    ],
+    "selection": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+    "focusTag": "DIV"
+  },
+  "after": {
+    "scroll": 0,
+    "svg": {
+      "x": 0,
+      "y": 262,
+      "width": 390,
+      "height": 220.03125
+    },
+    "roomRelative": [
+      142.9812469482422,
+      67.99948120117188,
+      144.03749084472656,
+      124.03228759765625
+    ],
+    "selection": "opening-dcdb6288-2566-4ce7-8f4a-fffb6aeb9fbc",
+    "focusTag": "DIV"
+  },
+  "width": 1.2
+}

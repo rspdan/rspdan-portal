@@ -1,0 +1,932 @@
+{
+  "schema": "nest-floorplan-package/v1",
+  "plan": {
+    "schema": "nest-floorplan/v1",
+    "name": "Shared-door and two-level interoperability fixture",
+    "units": "m",
+    "grid": 0.25,
+    "activeLevelId": "level-ground",
+    "levels": [
+      {
+        "id": "level-ground",
+        "name": "Ground",
+        "elevation": 0,
+        "height": 2.7
+      },
+      {
+        "id": "level-upper",
+        "name": "Ground",
+        "elevation": 3,
+        "height": 2.7
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-west",
+        "levelId": "level-ground",
+        "name": "West room",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "wallThickness": 0.16,
+        "wallColor": "#d7c5a8",
+        "floorColor": "#876d49",
+        "openings": [
+          {
+            "id": "door-shared",
+            "type": "door",
+            "edge": 1,
+            "at": 0.5,
+            "width": 1,
+            "height": 2.1,
+            "sill": 0
+          },
+          {
+            "id": "window-west",
+            "type": "window",
+            "edge": 3,
+            "at": 0.5,
+            "width": 1.4,
+            "height": 1.1,
+            "sill": 0.9
+          }
+        ]
+      },
+      {
+        "id": "room-east",
+        "levelId": "level-ground",
+        "name": "Partial neighbor",
+        "points": [
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "wallThickness": 0.16,
+        "wallColor": "#c1d2c5",
+        "floorColor": "#9a8568",
+        "openings": []
+      },
+      {
+        "id": "room-upper",
+        "levelId": "level-upper",
+        "name": "Concave upper room",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "wallThickness": 0.12,
+        "wallColor": "#e8e2d8",
+        "floorColor": "#bda98a",
+        "openings": []
+      }
+    ],
+    "connectors": [
+      {
+        "id": "link-stairs",
+        "type": "stairs",
+        "name": "Planning stair footprint",
+        "fromLevelId": "level-ground",
+        "toLevelId": "level-upper",
+        "position": [
+          1,
+          1
+        ],
+        "size": [
+          1,
+          1.8
+        ],
+        "rotation": 0
+      }
+    ]
+  },
+  "geometry": {
+    "schema": "nest-floorplan-geometry/v1",
+    "units": "m",
+    "walls": [
+      {
+        "id": "wall-level-ground-0-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          4,
+          1.35,
+          0.5
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1,
+          2.7,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-0-1-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-east",
+          "room-west"
+        ],
+        "position": [
+          4,
+          1.35,
+          1.25
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          0.5,
+          2.7,
+          0.16
+        ],
+        "color": "#c1d2c5"
+      },
+      {
+        "id": "wall-level-ground-0-2-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-east",
+          "room-west"
+        ],
+        "position": [
+          4,
+          2.4000000000000004,
+          2
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1,
+          0.6000000000000001,
+          0.16
+        ],
+        "color": "#c1d2c5"
+      },
+      {
+        "id": "wall-level-ground-0-3-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-east",
+          "room-west"
+        ],
+        "position": [
+          4,
+          1.35,
+          2.75
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          0.5,
+          2.7,
+          0.16
+        ],
+        "color": "#c1d2c5"
+      },
+      {
+        "id": "wall-level-ground-0-4-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          4,
+          1.35,
+          3.5
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1,
+          2.7,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-1-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-east"
+        ],
+        "position": [
+          7,
+          1.35,
+          2
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          2,
+          2.7,
+          0.16
+        ],
+        "color": "#c1d2c5"
+      },
+      {
+        "id": "wall-level-ground-2-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          0,
+          1.35,
+          0.65
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1.3,
+          2.7,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-2-1-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          0,
+          0.45,
+          2
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1.4000000000000001,
+          0.9,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-2-1-1",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          0,
+          2.35,
+          2
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1.4000000000000001,
+          0.7000000000000002,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-2-2-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          0,
+          1.35,
+          3.35
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          1.2999999999999998,
+          2.7,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-3-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          2,
+          1.35,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-ground-4-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-east"
+        ],
+        "position": [
+          5.5,
+          1.35,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          3,
+          2.7,
+          0.16
+        ],
+        "color": "#c1d2c5"
+      },
+      {
+        "id": "wall-level-ground-5-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-east"
+        ],
+        "position": [
+          5.5,
+          1.35,
+          3
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          3,
+          2.7,
+          0.16
+        ],
+        "color": "#c1d2c5"
+      },
+      {
+        "id": "wall-level-ground-6-0-0",
+        "kind": "wall",
+        "levelId": "level-ground",
+        "roomIds": [
+          "room-west"
+        ],
+        "position": [
+          2,
+          1.35,
+          4
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.16
+        ],
+        "color": "#d7c5a8"
+      },
+      {
+        "id": "wall-level-upper-7-0-0",
+        "kind": "wall",
+        "levelId": "level-upper",
+        "roomIds": [
+          "room-upper"
+        ],
+        "position": [
+          2,
+          4.35,
+          3
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          2,
+          2.7,
+          0.12
+        ],
+        "color": "#e8e2d8"
+      },
+      {
+        "id": "wall-level-upper-8-0-0",
+        "kind": "wall",
+        "levelId": "level-upper",
+        "roomIds": [
+          "room-upper"
+        ],
+        "position": [
+          4,
+          4.35,
+          1
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          2,
+          2.7,
+          0.12
+        ],
+        "color": "#e8e2d8"
+      },
+      {
+        "id": "wall-level-upper-9-0-0",
+        "kind": "wall",
+        "levelId": "level-upper",
+        "roomIds": [
+          "room-upper"
+        ],
+        "position": [
+          0,
+          4.35,
+          2
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.12
+        ],
+        "color": "#e8e2d8"
+      },
+      {
+        "id": "wall-level-upper-10-0-0",
+        "kind": "wall",
+        "levelId": "level-upper",
+        "roomIds": [
+          "room-upper"
+        ],
+        "position": [
+          2,
+          4.35,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          4,
+          2.7,
+          0.12
+        ],
+        "color": "#e8e2d8"
+      },
+      {
+        "id": "wall-level-upper-11-0-0",
+        "kind": "wall",
+        "levelId": "level-upper",
+        "roomIds": [
+          "room-upper"
+        ],
+        "position": [
+          3,
+          4.35,
+          2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          2,
+          2.7,
+          0.12
+        ],
+        "color": "#e8e2d8"
+      },
+      {
+        "id": "wall-level-upper-12-0-0",
+        "kind": "wall",
+        "levelId": "level-upper",
+        "roomIds": [
+          "room-upper"
+        ],
+        "position": [
+          1,
+          4.35,
+          4
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          2,
+          2.7,
+          0.12
+        ],
+        "color": "#e8e2d8"
+      }
+    ],
+    "floors": [
+      {
+        "id": "floor-room-east",
+        "kind": "floor",
+        "roomId": "room-east",
+        "levelId": "level-ground",
+        "vertices": [
+          4,
+          0,
+          1,
+          7,
+          0,
+          1,
+          7,
+          0,
+          3,
+          4,
+          0,
+          3,
+          4,
+          -0.08,
+          1,
+          7,
+          -0.08,
+          1,
+          7,
+          -0.08,
+          3,
+          4,
+          -0.08,
+          3
+        ],
+        "indices": [
+          1,
+          0,
+          3,
+          7,
+          4,
+          5,
+          3,
+          2,
+          1,
+          5,
+          6,
+          7,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4,
+          1,
+          2,
+          6,
+          1,
+          6,
+          5,
+          2,
+          3,
+          7,
+          2,
+          7,
+          6,
+          3,
+          0,
+          4,
+          3,
+          4,
+          7
+        ],
+        "color": "#9a8568"
+      },
+      {
+        "id": "floor-room-upper",
+        "kind": "floor",
+        "roomId": "room-upper",
+        "levelId": "level-upper",
+        "vertices": [
+          0,
+          3,
+          0,
+          4,
+          3,
+          0,
+          4,
+          3,
+          2,
+          2,
+          3,
+          2,
+          2,
+          3,
+          4,
+          0,
+          3,
+          4,
+          0,
+          2.92,
+          0,
+          4,
+          2.92,
+          0,
+          4,
+          2.92,
+          2,
+          2,
+          2.92,
+          2,
+          2,
+          2.92,
+          4,
+          0,
+          2.92,
+          4
+        ],
+        "indices": [
+          2,
+          1,
+          0,
+          6,
+          7,
+          8,
+          3,
+          2,
+          0,
+          6,
+          8,
+          9,
+          3,
+          0,
+          5,
+          11,
+          6,
+          9,
+          5,
+          4,
+          3,
+          9,
+          10,
+          11,
+          0,
+          1,
+          7,
+          0,
+          7,
+          6,
+          1,
+          2,
+          8,
+          1,
+          8,
+          7,
+          2,
+          3,
+          9,
+          2,
+          9,
+          8,
+          3,
+          4,
+          10,
+          3,
+          10,
+          9,
+          4,
+          5,
+          11,
+          4,
+          11,
+          10,
+          5,
+          0,
+          6,
+          5,
+          6,
+          11
+        ],
+        "color": "#bda98a"
+      },
+      {
+        "id": "floor-room-west",
+        "kind": "floor",
+        "roomId": "room-west",
+        "levelId": "level-ground",
+        "vertices": [
+          0,
+          0,
+          0,
+          4,
+          0,
+          0,
+          4,
+          0,
+          4,
+          0,
+          0,
+          4,
+          0,
+          -0.08,
+          0,
+          4,
+          -0.08,
+          0,
+          4,
+          -0.08,
+          4,
+          0,
+          -0.08,
+          4
+        ],
+        "indices": [
+          1,
+          0,
+          3,
+          7,
+          4,
+          5,
+          3,
+          2,
+          1,
+          5,
+          6,
+          7,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4,
+          1,
+          2,
+          6,
+          1,
+          6,
+          5,
+          2,
+          3,
+          7,
+          2,
+          7,
+          6,
+          3,
+          0,
+          4,
+          3,
+          4,
+          7
+        ],
+        "color": "#876d49"
+      }
+    ],
+    "connectors": [
+      {
+        "id": "connector-link-stairs",
+        "kind": "connector",
+        "type": "stairs",
+        "name": "Planning stair footprint",
+        "levelId": "level-ground",
+        "fromLevelId": "level-ground",
+        "toLevelId": "level-upper",
+        "position": [
+          1,
+          0.04,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          1,
+          0.08,
+          1.8
+        ],
+        "color": "#d4a54a",
+        "toElevation": 3
+      }
+    ],
+    "bounds": {
+      "min": [
+        -0.08000000000000004,
+        -0.08,
+        -0.08
+      ],
+      "max": [
+        7.08,
+        5.699999999999999,
+        4.08
+      ]
+    }
+  }
+}

@@ -1,0 +1,879 @@
+{
+  "author": "Independent lens controls receiving agent",
+  "execution_utc": "2026-11-25T05:25:57.754582+00:00",
+  "scope": "Actual local Director DOM interactions and live Babylon scene. Desktop and Chromium touch emulation; input-event checks are labeled separately from physical pointer interactions. Local save shared:false only. No physical ACHE, native rendering, or artistic approval claimed.",
+  "hashes": {
+    "director.js": "47f6c3b68621026a4c8a66644bdfc23a6be7a6ab17004b2dd8489ff59f69daa5",
+    "appearance.js": "68a04846ab6c5049cb61ae2a757b2cc22a3d4706353c2061974cd17f61b10e4f",
+    "lighting.js": "8ff506c8ad0ff6479919deb57096b1edbdd88dd67f595ad1faa9b1050c48e4a0",
+    "stage.js": "4320e4ce26fc5388fb37e4f646dbc0dd7d682782af76f4f11357fc46cd133218",
+    "kinematics.js": "e1a8bf94d244b58e4d73220adafcaa454ca69d29fd111cc42a2d493fd2c5f360",
+    "direct-manipulation.js": "a408e4d0eb2f2dc73426dd93bc39f1a2e800a2c9fac932846779bbd772a0cf4a",
+    "animation.js": "d0174c37622680a9f1df95ce523d56712b129461936165e59dc8263d84a315eb",
+    "optics.js": "15a45175e9263c6e4a292ab6fc06fbd5a334c1b98979b8e759310b6b6f09f6e4"
+  },
+  "checks": [
+    {
+      "name": "old stored take still omits new optional fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old reopen preserves linked body and omitted lens snapshots",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh default head flare remains Off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "neutral body independent from external 1800 K",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "neutral body independent from external 3000 K",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "neutral body independent from external 4500 K",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "neutral body independent from external 6500 K",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "neutral body independent from external 8500 K",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "external spill actually changes hue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "link body omits optional override and applies warm tint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo restores independent neutral body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo restores linked omission",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop glow preset uses matching independent component defaults",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop starburst preset uses matching independent component defaults",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop anamorphic preset uses matching independent component defaults",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "desktop glass preset uses matching independent component defaults",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all four desktop types produce distinct actual pixels",
+      "passed": true,
+      "detail": {
+        "glow vs starburst": 0.3809879913682129,
+        "glow vs anamorphic": 0.41440196267436147,
+        "glow vs glass": 0.1402307821468772,
+        "starburst vs anamorphic": 0.6161248997207729,
+        "starburst vs glass": 0.3876997033600537,
+        "anamorphic vs glass": 0.5230160260197387
+      }
+    },
+    {
+      "name": "Undo lens component state 2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo lens component state 1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Undo lens component state 0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo lens component state 1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo lens component state 2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Redo lens component state 3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "hand lens configs independent from each other and Trip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "new lens controls keep both actual hand endpoints attached",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Trip lens source remains parented to head",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "neutral Trip stays white with handles and new lens controls",
+      "passed": true,
+      "detail": {
+        "pixel": [
+          356.4006888059824,
+          572.8237306580495
+        ],
+        "median_RGB": [
+          255,
+          255,
+          255
+        ],
+        "appearance": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.41,
+            0.41,
+            0.41
+          ],
+          "spill": [
+            1,
+            1,
+            1
+          ],
+          "outline": true,
+          "look": "trip"
+        }
+      }
+    },
+    {
+      "name": "local save HTTP200 shared:false",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "shared": false
+      }
+    },
+    {
+      "name": "fresh mobile reopen preserves new lens/body fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh mobile lens take preserves white Trip with controls",
+      "passed": true,
+      "detail": {
+        "pixel": [
+          314.6280329990816,
+          505.68481466756685
+        ],
+        "median_RGB": [
+          255,
+          255,
+          255
+        ],
+        "appearance": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.41,
+            0.41,
+            0.41
+          ],
+          "spill": [
+            1,
+            1,
+            1
+          ],
+          "outline": true,
+          "look": "trip"
+        }
+      }
+    },
+    {
+      "name": "mobile glow preset state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile starburst preset state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile anamorphic preset state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile glass preset state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all four mobile types produce distinct actual pixels",
+      "passed": true,
+      "detail": {
+        "glow vs starburst": 1.476256024769383,
+        "glow vs anamorphic": 1.6564145839318203,
+        "glow vs glass": 1.7394406939257556,
+        "starburst vs anamorphic": 0.33316376200963965,
+        "starburst vs glass": 0.34674143764563187,
+        "anamorphic vs glass": 0.564520891187079
+      }
+    },
+    {
+      "name": "actual mobile touch changes lens rays",
+      "passed": true,
+      "detail": {
+        "before": 1,
+        "actual": 0.35
+      }
+    },
+    {
+      "name": "mobile Undo restores lens ray strength",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile Redo restores touched lens ray strength",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mobile component Undo Redo does not blacken Trip",
+      "passed": true,
+      "detail": {
+        "pixel": [
+          314.6280329990816,
+          505.68481466756685
+        ],
+        "median_RGB": [
+          255,
+          255,
+          255
+        ],
+        "appearance": {
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.41,
+            0.41,
+            0.41
+          ],
+          "spill": [
+            1,
+            1,
+            1
+          ],
+          "outline": true,
+          "look": "trip"
+        }
+      }
+    },
+    {
+      "name": "no JavaScript page errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "name": "desktop-glow.png",
+      "png_sha256": "f5b8837e5112bfac2b0483514093bc9e667d5782bde2ee715db63036dd12cdda",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "desktop-starburst.png",
+      "png_sha256": "b583dfad483556371886e90b8480d02592538991c2c77357d815f12dadaf164b",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "desktop-anamorphic.png",
+      "png_sha256": "464641f1441bd2f303ba122bf446a15b28ff6a5e0b03e64047fab1233e8a3d97",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "desktop-glass.png",
+      "png_sha256": "9ab2230a3b27fa6ab8b2801c8463c58499a5080fd486c659dc552e2764931f05",
+      "size": [
+        802,
+        802
+      ]
+    },
+    {
+      "name": "mobile-glow.png",
+      "png_sha256": "d726c2bf3a59c9a19040598555164d86e5cb1464340c6e0313208a4d7adc3a59",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "mobile-starburst.png",
+      "png_sha256": "1e17c407c0dd36eccc301104b3b05646e11b47b086e47fe04f9d51d6b6043864",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "mobile-anamorphic.png",
+      "png_sha256": "47926e54d4b314a6f06452e2038c86a29dda21813d4d15e38625c4cda1963ade",
+      "size": [
+        708,
+        708
+      ]
+    },
+    {
+      "name": "mobile-glass.png",
+      "png_sha256": "fdafc58c760df019812a5344151794ad8e6ce1df986b79d150fc1e50a14eeac2",
+      "size": [
+        708,
+        708
+      ]
+    }
+  ],
+  "events": [
+    {
+      "type": "actual CDP touch range drag",
+      "selector": "#trip-lens-rays",
+      "before": 1.0,
+      "target": 0.35,
+      "actual": 0.35
+    }
+  ],
+  "temperature_samples": [
+    {
+      "temperature": 1800,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "emission": [
+        0.41,
+        0.41,
+        0.41
+      ],
+      "spill": [
+        1,
+        0.4973751078130879,
+        0
+      ],
+      "outline": true,
+      "look": "trip"
+    },
+    {
+      "temperature": 3000,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "emission": [
+        0.41,
+        0.41,
+        0.41
+      ],
+      "spill": [
+        1,
+        0.6973366126954361,
+        0.4395952897749876
+      ],
+      "outline": true,
+      "look": "trip"
+    },
+    {
+      "temperature": 4500,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "emission": [
+        0.41,
+        0.41,
+        0.41
+      ],
+      "spill": [
+        1,
+        0.8560549882476657,
+        0.7496101581433231
+      ],
+      "outline": true,
+      "look": "trip"
+    },
+    {
+      "temperature": 6500,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "emission": [
+        0.41,
+        0.41,
+        0.41
+      ],
+      "spill": [
+        1,
+        1,
+        1
+      ],
+      "outline": true,
+      "look": "trip"
+    },
+    {
+      "temperature": 8500,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "emission": [
+        0.41,
+        0.41,
+        0.41
+      ],
+      "spill": [
+        0.8257288385856254,
+        0.8718909547758223,
+        1
+      ],
+      "outline": true,
+      "look": "trip"
+    }
+  ],
+  "desktop_lens_states": {
+    "glow": {
+      "lens": {
+        "preset": "glow",
+        "glow": 1,
+        "rays": 0,
+        "streak": 0,
+        "ghosts": 0,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      },
+      "optics": [
+        {
+          "name": "Director Trip head optical response",
+          "enabled": true,
+          "emitter": "Director Trip head flare source",
+          "parent": "head",
+          "grandparent": "torso.upper",
+          "source": [
+            -0.004188962280750275,
+            0.9298776388168335,
+            -2.93925404548645e-06
+          ],
+          "parts": [
+            {
+              "texture": "Director Trip head optical response compact glow",
+              "color": [
+                1.0981493994376788,
+                1.0981493994376788,
+                1.0981493994376788
+              ],
+              "size": 0.2712280452247456,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response anamorphic streak",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 1.8615150229079804,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response radial starburst",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 1.002620910629792,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response cyan glass reflection",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.09524008592916366,
+              "position": 0.32444613874312217
+            },
+            {
+              "texture": "Director Trip head optical response amber glass reflection",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.16508281561055038,
+              "position": -0.4325948516574963
+            },
+            {
+              "texture": "Director Trip head optical response violet glass caustic",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.2793709187255468,
+              "position": -0.9192640597721795
+            }
+          ]
+        }
+      ]
+    },
+    "starburst": {
+      "lens": {
+        "preset": "starburst",
+        "glow": 0.5,
+        "rays": 1,
+        "streak": 0,
+        "ghosts": 0,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      },
+      "optics": [
+        {
+          "name": "Director Trip head optical response",
+          "enabled": true,
+          "emitter": "Director Trip head flare source",
+          "parent": "head",
+          "grandparent": "torso.upper",
+          "source": [
+            -0.004188962280750275,
+            0.9298776388168335,
+            -2.93925404548645e-06
+          ],
+          "parts": [
+            {
+              "texture": "Director Trip head optical response compact glow",
+              "color": [
+                0.5490746997188394,
+                0.5490746997188394,
+                0.5490746997188394
+              ],
+              "size": 0.2712280452247456,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response anamorphic streak",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 1.8615150229079804,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response radial starburst",
+              "color": [
+                1.590423268151121,
+                1.590423268151121,
+                1.590423268151121
+              ],
+              "size": 1.002620910629792,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response cyan glass reflection",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.09524008592916366,
+              "position": 0.32444613874312217
+            },
+            {
+              "texture": "Director Trip head optical response amber glass reflection",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.16508281561055038,
+              "position": -0.4325948516574963
+            },
+            {
+              "texture": "Director Trip head optical response violet glass caustic",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.2793709187255468,
+              "position": -0.9192640597721795
+            }
+          ]
+        }
+      ]
+    },
+    "anamorphic": {
+      "lens": {
+        "preset": "anamorphic",
+        "glow": 0.35,
+        "rays": 0,
+        "streak": 1,
+        "ghosts": 0,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      },
+      "optics": [
+        {
+          "name": "Director Trip head optical response",
+          "enabled": true,
+          "emitter": "Director Trip head flare source",
+          "parent": "head",
+          "grandparent": "torso.upper",
+          "source": [
+            -0.004188962280750275,
+            0.9298776388168335,
+            -2.93925404548645e-06
+          ],
+          "parts": [
+            {
+              "texture": "Director Trip head optical response compact glow",
+              "color": [
+                0.38435228980318753,
+                0.38435228980318753,
+                0.38435228980318753
+              ],
+              "size": 0.2712280452247456,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response anamorphic streak",
+              "color": [
+                1.3035827843698842,
+                1.3035827843698842,
+                1.3035827843698842
+              ],
+              "size": 1.8615150229079804,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response radial starburst",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 1.002620910629792,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response cyan glass reflection",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.09524008592916366,
+              "position": 0.32444613874312217
+            },
+            {
+              "texture": "Director Trip head optical response amber glass reflection",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.16508281561055038,
+              "position": -0.4325948516574963
+            },
+            {
+              "texture": "Director Trip head optical response violet glass caustic",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 0.2793709187255468,
+              "position": -0.9192640597721795
+            }
+          ]
+        }
+      ]
+    },
+    "glass": {
+      "lens": {
+        "preset": "glass",
+        "glow": 0.7,
+        "rays": 0.15,
+        "streak": 0,
+        "ghosts": 1,
+        "spread": 1,
+        "rotation": 0,
+        "rayCount": 8
+      },
+      "optics": [
+        {
+          "name": "Director Trip head optical response",
+          "enabled": true,
+          "emitter": "Director Trip head flare source",
+          "parent": "head",
+          "grandparent": "torso.upper",
+          "source": [
+            -0.004188962280750275,
+            0.9298776388168335,
+            -2.93925404548645e-06
+          ],
+          "parts": [
+            {
+              "texture": "Director Trip head optical response compact glow",
+              "color": [
+                0.7687045796063751,
+                0.7687045796063751,
+                0.7687045796063751
+              ],
+              "size": 0.2712280452247456,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response anamorphic streak",
+              "color": [
+                0,
+                0,
+                0
+              ],
+              "size": 1.8615150229079804,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response radial starburst",
+              "color": [
+                0.23856349022266815,
+                0.23856349022266815,
+                0.23856349022266815
+              ],
+              "size": 1.002620910629792,
+              "position": 1
+            },
+            {
+              "texture": "Director Trip head optical response cyan glass reflection",
+              "color": [
+                0.41805411619972316,
+                0.7315947033495156,
+                0.8709460754160899
+              ],
+              "size": 0.09524008592916366,
+              "position": 0.32444613874312217
+            },
+            {
+              "texture": "Director Trip head optical response amber glass reflection",
+              "color": [
+                0.8709460754160899,
+                0.6061784684895986,
+                0.38321627318307955
+              ],
+              "size": 0.16508281561055038,
+              "position": -0.4325948516574963
+            },
+            {
+              "texture": "Director Trip head optical response violet glass caustic",
+              "color": [
+                0.6270811742995848,
+                0.4877298022330104,
+                0.8709460754160899
+              ],
+              "size": 0.2793709187255468,
+              "position": -0.9192640597721795
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "saved_take": {
+    "id": "dir_d16f2ea3-ba9b-4465-9a01-429e2fe2316b",
+    "shared": false
+  },
+  "passed": false,
+  "automated_passed": true,
+  "functional_passed": true,
+  "visual_review": {
+    "status": "Historical functional pass; final visual pass pending explicit frame-synchronized captures and current source.",
+    "reviewed_desktop": [
+      "desktop-glow.png",
+      "desktop-starburst.png",
+      "desktop-anamorphic.png",
+      "desktop-glass.png"
+    ],
+    "reviewed_mobile": [
+      "mobile-starburst.png",
+      "mobile-anamorphic.png",
+      "mobile-glass.png"
+    ],
+    "mobile_capture_limit": "500 ms fixed wait produced screenshots one rendered preset behind. The pixel-distinct assertion passes but does not prove the labelled selected preset is visible. Final capture must wait at least three onAfterRenderObservable frames and inspect current optic configuration.",
+    "other_pending": "Dan requested a separate ground-contact correction; these historical screenshots do not include that correction."
+  }
+}

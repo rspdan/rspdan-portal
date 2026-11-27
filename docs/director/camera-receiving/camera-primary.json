@@ -1,0 +1,66 @@
+{
+  "scope": "Independent browser receiving; local private fixture; mobile emulation is not physical-device testing",
+  "started": 1795665618.4474285,
+  "cases": [
+    {
+      "name": "desktop_zoom_pose",
+      "pass": true,
+      "detail": {
+        "radius_before": 2.1,
+        "radius_in": 1.1525044357974557,
+        "radius_out": 2.1
+      }
+    },
+    {
+      "name": "desktop_zoom_lighting",
+      "pass": true,
+      "detail": {
+        "radius_before": 2.1,
+        "radius_in": 1.1525044357974557,
+        "radius_out": 2.1
+      }
+    },
+    {
+      "name": "desktop_zoom_stage",
+      "pass": true,
+      "detail": {
+        "radius_before": 2.1,
+        "radius_in": 1.1525044357974557,
+        "radius_out": 2.1
+      }
+    },
+    {
+      "name": "desktop_zoom_camera",
+      "pass": true,
+      "detail": {
+        "radius_before": 2.1,
+        "radius_in": 1.1525044357974557,
+        "radius_out": 2.1
+      }
+    },
+    {
+      "name": "desktop_orthographic_magnification",
+      "pass": true,
+      "detail": {
+        "size_before": 1.3453755213272816,
+        "size_after": 0.7383577410204791
+      }
+    },
+    {
+      "name": "desktop_middle_modifiers",
+      "pass": true,
+      "detail": {
+        "orbit": "pass",
+        "pan": "pass",
+        "zoom": "pass"
+      }
+    }
+  ],
+  "source_before": {
+    "public/director/director.js": "ded31f91d2196ed6d1c080f2443300efcc0d4a65178fee4405383ee376aeef91",
+    "public/director/direct-manipulation.js": "4e75c79b4ab508677d2449e4a2281b7f8c7b56c1d2288405c5a92352caa64890",
+    "public/director/camera-navigation.js": "34754a6c2e7a196537e8d5c9b1e367145495fcde0634e867399e559e63d96c95",
+    "public/director/director.css": "8fb42f1acf5c97ee2166fa150d233675e4b844518b2f30cb228520f238fa3a5d",
+    "src/pages/director/index.astro": "a3d3379cc252f7d35a4ec3689ae2187f60e1e5ba87a065d6fde6f2f1af2505c9"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "appearance_sha256": "88429419f099e6b6fd89bcfba6bb0dc18cea900c83a3440faa90cb7c0638f0e7",
+  "core_sha256": "dd2ff3fbf3884b6c30d5337df8541abea51a7f6e67e86b61e020b151de9e5448",
+  "scope": "Narrow follow-up of observer disposal: inspect deferred-removal marker immediately, then count after next timer and frame. No app changes; original immediate-count failure retained.",
+  "checks": [
+    {
+      "name": "contact controller disposal releases resources",
+      "passed": true,
+      "detail": {
+        "immediate": [
+          {
+            "removed": false,
+            "callback": "function sync() {\n      if (disposed) return;\n      for (const [id, entry] of entries) {\n        ent"
+          },
+          {
+            "removed": false,
+            "callback": "function sync() {\n      if (disposed) return;\n      fill.intensity = ambient.intensity;\n      if (am"
+          },
+          {
+            "removed": false,
+            "callback": "function followCharacter() {\n      if (!spill) return;\n      // Effect texture pixels follow the sho"
+          },
+          {
+            "removed": true,
+            "callback": "function followCharacter() {\n      if (!spill) return;\n      // Effect texture pixels follow the sho"
+          }
+        ],
+        "counts": [
+          27,
+          4,
+          1,
+          3
+        ],
+        "after": [
+          27,
+          4,
+          1,
+          3
+        ],
+        "restored": true
+      }
+    }
+  ],
+  "captures": [],
+  "errors": [],
+  "passed": true
+}

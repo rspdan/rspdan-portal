@@ -1,0 +1,75 @@
+{
+  "scope": "Actual in-session mobile touch Undo/Redo history. No reload-history guarantee, saved takes or messages.",
+  "browser": {
+    "is_mobile": true,
+    "has_touch": true,
+    "device_scale_factor": 3,
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "checks": {
+    "three_distinct_user_edits": true,
+    "undo_to_state_2_full_snapshot": true,
+    "undo_to_state_1_full_snapshot": true,
+    "undo_to_state_0_full_snapshot": true,
+    "redo_to_state_1_full_snapshot": true,
+    "redo_to_state_2_full_snapshot": true,
+    "redo_to_state_3_full_snapshot": true,
+    "new_edit_after_undo_clears_redo": true,
+    "branch_undo_returns_previous_state": true,
+    "zero_page_errors": true
+  },
+  "metrics": {
+    "undo_deltas": [
+      2.220446049250313e-16,
+      2.220446049250313e-16,
+      2.220446049250313e-16
+    ],
+    "redo_deltas": [
+      0,
+      0,
+      2.220446049250313e-16
+    ]
+  },
+  "page_errors": [],
+  "fixture_note": "Initial12px touch-range gestures did not change values; no Undo claim made from that invalid chain. This chain uses actual ArrowRight range edits and CDP touch Undo/Redo buttons.",
+  "served_source_sha256": "b6121019a17bdafcf64d8a1ed683009a88ba8b64e41c1c1d2be4f2b089bd37a8",
+  "state_fingerprints": [
+    "8f5702675d8918587e302d3b00d9efabbd73e1125ee60c3b1b71d9bebd239a9b",
+    "dccf6fbf8d4750f51922674329aa5a419b05d6adf1d6b03b844fc35d1ec8a89f",
+    "e73a4ab4feeba427e52d6fe509d394f36e4b5dcc3128bf173d1af3cc03a34c7e",
+    "c12f24c875b221296f6a654dd6f34f56275e132cb5c40ac060b789ba95c7b9da"
+  ],
+  "passed": true,
+  "extended_history": {
+    "scope": "Fresh desktop page; actual typing, keyboard morph change, mouse orbit and wheel, with UI Undo/Redo.",
+    "checks": {
+      "name_group_is_one_history_step": true,
+      "name_group_undo_full_snapshot": true,
+      "name_group_redo_full_snapshot": true,
+      "notes_group_is_one_history_step": true,
+      "notes_group_undo_full_snapshot": true,
+      "notes_group_redo_full_snapshot": true,
+      "morph_keyboard_adds_one_changed_state": true,
+      "morph_keyboard_undo_full_snapshot": true,
+      "morph_keyboard_redo_full_snapshot": true,
+      "camera_orbit_adds_one_changed_state": true,
+      "camera_orbit_undo_full_snapshot": true,
+      "camera_orbit_redo_full_snapshot": true,
+      "wheel_then_stage_are_two_ordered_states": true,
+      "wheel_then_stage_undo_stage_only": true,
+      "wheel_then_stage_undo_zoom": true,
+      "wheel_then_stage_redo_zoom": true,
+      "wheel_then_stage_redo_stage": true,
+      "zero_page_errors": true
+    },
+    "metrics": {
+      "wheel_to_stage_ms": 85.40000000596046
+    },
+    "page_errors": [],
+    "served_source_sha256": "b6121019a17bdafcf64d8a1ed683009a88ba8b64e41c1c1d2be4f2b089bd37a8",
+    "passed": true
+  }
+}

@@ -16,9 +16,7 @@ const MAX_AGE = 60 * 60 * 8; // 8 hours
 
 function getSecret() {
   const s = import.meta.env.PSPT_SECRET;
-  // TEMP unblock (Dan-direct 062326): fall back to a throwaway signing secret so login
-  // works even before PSPT_SECRET is set in Vercel. REMOVE once PSPT_SECRET is configured.
-  if (!s) return 'TEMP-drw-unblock-secret-062326-remove-after-smart-creds-set';
+  if (typeof s !== 'string' || s.length < 32) throw new Error('PSPT_SECRET not configured');
   return s;
 }
 
@@ -37,11 +35,16 @@ function hmacSign(payload) {
 
 function hmacVerify(token) {
   if (!token || !token.includes('.')) return null;
-  const [b64, sig] = token.split('.');
+  let secret;
+  try { secret = getSecret(); } catch { return null; }
+  const parts = token.split('.');
+  if (parts.length !== 2) return null;
+  const [b64, sig] = parts;
+  if (!/^[a-f0-9]{64}$/.test(sig)) return null;
   let json;
   try { json = Buffer.from(b64, 'base64url').toString(); }
   catch { return null; }
-  const expected = createHmac('sha256', getSecret()).update(json).digest('hex');
+  const expected = createHmac('sha256', secret).update(json).digest('hex');
   // timing-safe comparison
   if (sig.length !== expected.length) return null;
   const sigBuf = Buffer.from(sig, 'utf8');
@@ -49,7 +52,7 @@ function hmacVerify(token) {
   if (!timingSafeEqual(sigBuf, expBuf)) return null;
   try {
     const payload = JSON.parse(json);
-    if (payload.exp && Date.now() > payload.exp) return null; // expired
+    if (!payload || typeof payload.user !== 'string' || !Number.isFinite(payload.exp) || Date.now() >= payload.exp) return null;
     return payload;
   } catch { return null; }
 }
@@ -57,9 +60,6 @@ function hmacVerify(token) {
 // Validate username + password against PSPT_CREDS
 export function authenticate(username, password) {
   const u = username?.toLowerCase();
-  // TEMP unblock (Dan-direct 062326 "MAKE DUMB PASSWORD, GET IN"): a throwaway credential
-  // so Dan can get into /drw NOW regardless of env state. REMOVE once a smart PSPT_CREDS is set.
-  if (u === 'dan' && password === 'drw') return 'dan';
   let creds;
   try { creds = getCreds(); } catch { return null; }
   const stored = creds[u];

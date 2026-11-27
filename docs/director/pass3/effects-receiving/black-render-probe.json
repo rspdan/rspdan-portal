@@ -1,0 +1,370 @@
+[
+  {
+    "mobile": false,
+    "stage": "reopen",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": false,
+    "stage": "undo-redo",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": false,
+    "stage": "outline-off",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": false,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": false,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": false,
+    "stage": "glow-off",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.35,
+            0.35,
+            0.35
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": false,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": true,
+    "stage": "reopen",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": true,
+    "stage": "undo-redo",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": true,
+    "stage": "outline-off",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0.15,
+      "outline": {
+        "enabled": false,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.365,
+            0.365,
+            0.365
+          ],
+          "ready": true,
+          "outline": false,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": true,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  },
+  {
+    "mobile": true,
+    "stage": "glow-off",
+    "observation": {
+      "takeLook": "trip",
+      "glow": 0,
+      "outline": {
+        "enabled": true,
+        "tone": 0,
+        "width": 0.0025
+      },
+      "bodies": [
+        {
+          "name": "Ouch | Pass2 compact branch shell",
+          "material": "Director Trip 9",
+          "albedo": [
+            1,
+            1,
+            1
+          ],
+          "emission": [
+            0.35,
+            0.35,
+            0.35
+          ],
+          "ready": true,
+          "outline": true,
+          "outlineColor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "enabled": false,
+          "name": "Director Trip luminosity"
+        }
+      ],
+      "stencil": false,
+      "depth": true,
+      "depthWrite": true
+    },
+    "console_errors": []
+  }
+]

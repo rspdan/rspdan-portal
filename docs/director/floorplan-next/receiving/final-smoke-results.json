@@ -1,0 +1,79 @@
+[
+  {
+    "check": "Browser-loaded sources match frozen disk bytes",
+    "passed": true,
+    "details": {
+      "director.css": "a2b289dc22db4860cf18886dfbce5c4b0dcad07ef14b0bef6da79817f23a30f6",
+      "floorplan-editor.css": "70d9d99b40758fd623f010c5c43e334562eb3e59b12e9fb167899fe644f60cfd",
+      "floorplan-overview.css": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6",
+      "floorplan-editor.js": "61331e6a67f15008ea8a943f8e3bb478a6bffc40dd90cd9e4c32979916bf2c85",
+      "floorplan-overview.js": "4f5bbe9654de78c9f77a7873c7a254aa70031eb492ea5f9f1005c4ae0b3c96f5"
+    }
+  },
+  {
+    "check": "Destination remains touch reachable below sticky inspector tabs",
+    "passed": true
+  },
+  {
+    "check": "Level tab resets inspector scroll and reveals level name",
+    "passed": true
+  },
+  {
+    "check": "Name edit remains usable beside the drawn selected connection",
+    "passed": true
+  },
+  {
+    "check": "Phone scale omits duplicate long level label",
+    "passed": true
+  },
+  {
+    "check": "Return to plan keeps drawing view, item, document and history",
+    "passed": true
+  },
+  {
+    "check": "Return leaves inspector tabs and selected name reachable",
+    "passed": true
+  },
+  {
+    "check": "Building view renders all four levels and all three connections",
+    "passed": true
+  },
+  {
+    "check": "Plan and Building toggle remains view only",
+    "passed": true
+  },
+  {
+    "check": "Undo updates the local footer hint",
+    "passed": true
+  },
+  {
+    "check": "Redo restores the nearby edit and hint",
+    "passed": true
+  },
+  {
+    "check": "Layout has no horizontal document overflow",
+    "passed": true
+  },
+  {
+    "check": "Layout and view work preserve Trip pose",
+    "passed": true
+  },
+  {
+    "check": "All five frozen sources unchanged after receiving",
+    "passed": true,
+    "details": {
+      "director.css": "a2b289dc22db4860cf18886dfbce5c4b0dcad07ef14b0bef6da79817f23a30f6",
+      "floorplan-editor.js": "61331e6a67f15008ea8a943f8e3bb478a6bffc40dd90cd9e4c32979916bf2c85",
+      "floorplan-editor.css": "70d9d99b40758fd623f010c5c43e334562eb3e59b12e9fb167899fe644f60cfd",
+      "floorplan-overview.js": "4f5bbe9654de78c9f77a7873c7a254aa70031eb492ea5f9f1005c4ae0b3c96f5",
+      "floorplan-overview.css": "8e97f0f2e09042498cf877921ab95b52b2758c7f8222c0194c49b0d1150abef6"
+    }
+  },
+  {
+    "check": "No application exceptions",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  }
+]

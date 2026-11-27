@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "authority": "rspdan/nest-bridge",
+  "source_ref": "codex/dan-art-study-112426",
+  "scope": "Verified portable snapshot; edit authority sources and resync, never edit bundle files.",
+  "files": {
+    "crew_identity_registry.json": {
+      "source": "ENGINE/crew_identity_registry.json",
+      "source_sha256": "81479490b7942ef744de6cb2500b9c65a0c3000847a0df98405b7cd728d24830",
+      "sha256": "81479490b7942ef744de6cb2500b9c65a0c3000847a0df98405b7cd728d24830"
+    },
+    "crew_identity_preflight.py": {
+      "source": "ENGINE/crew_identity_preflight.py",
+      "source_sha256": "359623a08b8398b979158ee917fb9ce4302393d7e8198528d78daec71122d8d4",
+      "sha256": "359623a08b8398b979158ee917fb9ce4302393d7e8198528d78daec71122d8d4"
+    },
+    "crew_identity_commit_gate.py": {
+      "source": "ENGINE/crew_identity_commit_gate.py",
+      "source_sha256": "96c62983889841df2ac4ec7be44124651bc3807c07de2a8048fc0996234735ec",
+      "sha256": "96c62983889841df2ac4ec7be44124651bc3807c07de2a8048fc0996234735ec"
+    },
+    "install_identity_hooks.py": {
+      "source": "ENGINE/install_identity_hooks.py",
+      "source_sha256": "1a04913761f963d6e1496cb23523ab33b97dfbe25126c7ad6dec7b3335a98d06",
+      "sha256": "1a04913761f963d6e1496cb23523ab33b97dfbe25126c7ad6dec7b3335a98d06"
+    },
+    "crew_identity_delivery.py": {
+      "source": "ENGINE/crew_identity_delivery.py",
+      "source_sha256": "38eba36c05ce2f4740ce4f123b0300dfc669c32b982b97b4a37d9c431c7f0953",
+      "sha256": "38eba36c05ce2f4740ce4f123b0300dfc669c32b982b97b4a37d9c431c7f0953"
+    },
+    "CREW_IDENTITY.md": {
+      "source": "RELAY/CREW_IDENTITY.md",
+      "source_sha256": "c7d11d93f91200cb16a9d25489b87ceb755e6f4d20af1c8e65da96214ae29517",
+      "sha256": "53192e153c8f724f958d25ba5942286fd97e7c98fa505d4b364e99d50fff5d41"
+    }
+  }
+}

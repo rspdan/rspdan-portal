@@ -1,0 +1,59 @@
+{
+  "author": "Bee",
+  "recorded_utc": "2026-11-25T08:43:38Z",
+  "status": "Proposal and receiving criteria; candidate not yet played",
+  "portal_baseline": "895c5ff",
+  "native_checkpoint_from_parent": "981e961cd",
+  "sources": [
+    {
+      "path": "docs/director/floorplan-play/bee/README.md",
+      "sha256": "d138029dcc06bea1c816f5d37fd02eff15fc2fa88a779a1b9cf3885563089091",
+      "scope": "Text or relevant implementation excerpts read; previous play image observations retained with their original attribution."
+    },
+    {
+      "path": "docs/director/floorplan-overview.md",
+      "sha256": "9add43029e1d652479db7da5226cd9994db9f3f4b858e7bc23bd3790215156d8",
+      "scope": "Text or relevant implementation excerpts read; previous play image observations retained with their original attribution."
+    },
+    {
+      "path": "public/director/floorplan-editor.js",
+      "sha256": "043fcf2a9b73233cb7a0b2450000e66e3244f4475d1f591c16253568a5aaa623",
+      "scope": "Text or relevant implementation excerpts read; previous play image observations retained with their original attribution."
+    },
+    {
+      "path": "public/director/floorplan-editor.css",
+      "sha256": "9a10b8ffca0df2dbd8d20e1a5ef5c31ee7b59ec3d1350ba8760f619744b61ca0",
+      "scope": "Text or relevant implementation excerpts read; previous play image observations retained with their original attribution."
+    },
+    {
+      "path": "public/director/floorplan-renderer.js",
+      "sha256": "074c0d591c0c9fa3218a978d14f5b5d9ceec90e08105485215be78d58ac2803b",
+      "scope": "Text or relevant implementation excerpts read; previous play image observations retained with their original attribution."
+    }
+  ],
+  "mobile_priorities": [
+    "Selected/Level/Plan tabs, selected first",
+    "Compact selected-item and level/endpoint identity near canvas",
+    "Common fields without long repeated plan controls",
+    "Return to plan preserves selection and view",
+    "No automatic input focus/page jump on placement",
+    "Canvas-near level switch preserves drawing/placement tools"
+  ],
+  "building_priorities": [
+    "All authored level mini-plans and an elevation/connection overview",
+    "Numeric elevation order including negative levels and unequal heights",
+    "Empty levels visibly empty",
+    "Existing connection name/type/endpoints, no invented stairs/shafts/landings",
+    "Tap a level to edit it",
+    "Viewing does not change authored geometry",
+    "Schematic vertical view clearly identified as an overview"
+  ],
+  "actual_candidate_play": false,
+  "no_product_edit": true,
+  "no_native_edit": true,
+  "coordination": [
+    "/root/floorplan_ui_finish",
+    "/root/floorplan_building_view"
+  ],
+  "future_test_set": "Invented pocket studio; not Lighthouse canon"
+}

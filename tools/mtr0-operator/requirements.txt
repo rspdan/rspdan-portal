@@ -1,0 +1,5 @@
+# Runtime: Python >=3.11 (asyncio.timeout); received with Python 3.12.
+# Exact installed editions used by the receiving suite; no install ran in this slice.
+mcp==1.29.0
+httpx==0.28.1
+pydantic==2.13.4

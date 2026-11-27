@@ -1,0 +1,140 @@
+{
+  "appearance_sha256": "e58bffb723985b74b60cd9a089f499742d9cd2484c7793fefa823eb54d189cab",
+  "core_sha256": "dd2ff3fbf3884b6c30d5337df8541abea51a7f6e67e86b61e020b151de9e5448",
+  "scope": "Five temperatures using Dan-approved outlined/spill image as the medium incandescent appearance. Existing numerical tripGlow=1 retained exactly; no intensity remap. Fixed pose/camera/room/outline/light rig; only temperature changes. Body temperature independently locked at6500 K; only exterior glow and projected spill change temperature. Flare off. Real Chromium viewport captures. No Save/Send/deploy.",
+  "checks": [],
+  "captures": [
+    {
+      "image": "contact-off.png",
+      "contact": {
+        "directorContact": {
+          "contacts": [
+            {
+              "side": "L",
+              "center": [
+                0.07479662670288889,
+                0.003698579449035396
+              ],
+              "radii": [
+                0.05181090250405307,
+                0.06666748871815514
+              ],
+              "plane": [
+                0,
+                1,
+                0,
+                -0.0
+              ],
+              "bounds": [
+                -100,
+                100,
+                -100,
+                100
+              ],
+              "weight": 1,
+              "gap": 5.748933806289644e-05,
+              "surface": "White room floor",
+              "samples": 1072
+            },
+            {
+              "side": "R",
+              "center": [
+                -0.07512900038517924,
+                0.0035924991992944723
+              ],
+              "radii": [
+                0.0545879277981574,
+                0.06337713057699285
+              ],
+              "plane": [
+                0,
+                1,
+                0,
+                -0.0
+              ],
+              "bounds": [
+                -100,
+                100,
+                -100,
+                100
+              ],
+              "weight": 1,
+              "gap": 4.507664866738165e-05,
+              "surface": "White room floor",
+              "samples": 850
+            }
+          ],
+          "recomputations": 1,
+          "cachedSamples": 1922
+        }
+      }
+    },
+    {
+      "image": "contact-on.png",
+      "contact": {
+        "directorContact": {
+          "contacts": [
+            {
+              "side": "L",
+              "center": [
+                0.07479662670288889,
+                0.003698579449035396
+              ],
+              "radii": [
+                0.05181090250405307,
+                0.06666748871815514
+              ],
+              "plane": [
+                0,
+                1,
+                0,
+                -0.0
+              ],
+              "bounds": [
+                -100,
+                100,
+                -100,
+                100
+              ],
+              "weight": 1,
+              "gap": 5.748933806289644e-05,
+              "surface": "White room floor",
+              "samples": 1072
+            },
+            {
+              "side": "R",
+              "center": [
+                -0.07512900038517924,
+                0.0035924991992944723
+              ],
+              "radii": [
+                0.0545879277981574,
+                0.06337713057699285
+              ],
+              "plane": [
+                0,
+                1,
+                0,
+                -0.0
+              ],
+              "bounds": [
+                -100,
+                100,
+                -100,
+                100
+              ],
+              "weight": 1,
+              "gap": 4.507664866738165e-05,
+              "surface": "White room floor",
+              "samples": 850
+            }
+          ],
+          "recomputations": 1,
+          "cachedSamples": 1922
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,9 @@
+{
+  "deployment": "https://rspdan-portal-git-codex-nest-director-white-room-rspdan.vercel.app/director",
+  "actual_login": true,
+  "renderer_ready": true,
+  "page_errors": [],
+  "credential_scope": "Director preview branch; user-chosen credential verified",
+  "shared_save_not_repeated": true,
+  "live_crew_message_sent": false
+}

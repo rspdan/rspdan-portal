@@ -1,0 +1,28 @@
+{
+  "errors": [],
+  "view": {
+    "alpha": 1.2207963267948965,
+    "beta": 1.4607963267948965,
+    "barBottom": 158,
+    "points": [
+      {
+        "id": "light-key",
+        "x": 56.07959893939644,
+        "y": 228.57908271832946
+      },
+      {
+        "id": "light-rim",
+        "x": 301.8439801750882,
+        "y": 291.8517800094644
+      }
+    ]
+  },
+  "before": {
+    "alpha": 1.2207963267948965,
+    "beta": 1.4607963267948965
+  },
+  "orientation_preserved": true,
+  "markers_below_toolbar": true,
+  "core_sha256": "d2ae204b9ebe0c4286d343bd8e8ed633026edefe95c20f636ac9e13fddebf727",
+  "passed": true
+}

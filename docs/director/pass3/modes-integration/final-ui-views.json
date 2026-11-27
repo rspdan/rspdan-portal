@@ -1,0 +1,9 @@
+{
+  "errors": [],
+  "checks": [
+    "Timing switches Stage to Pose",
+    "Pose mode returns with character"
+  ],
+  "core_sha256": "d054253e57834fd59e476068d60d1e7cfc8afd92a8eafde45d184dc091580526",
+  "passed": true
+}

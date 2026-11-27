@@ -1,0 +1,29 @@
+{
+  "reader": "C.B.",
+  "baseline": "7bd0e7c",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "touch": true,
+    "dpr": 2
+  },
+  "authored_keyframes": [
+    1,
+    24,
+    48,
+    72
+  ],
+  "scrub_loss": {
+    "authored_frame": 48,
+    "navigation_frame": 49,
+    "undo_frame": 48,
+    "authored_pose_retained_by_navigation": false,
+    "authored_pose_recovered_by_undo": false
+  },
+  "direct_elbow_drag_changed_position": true,
+  "playback_started_and_paused_at_frame": 16,
+  "local_save_id": "dir_b9b224a9-2ada-42a9-90ca-0ee6051ef0cb",
+  "local_shared": false,
+  "page_errors": [],
+  "limits": "Local Chromium mobile emulation; no physical ACHE or frame-rate benchmark. Snapshots after playback was stopped."
+}

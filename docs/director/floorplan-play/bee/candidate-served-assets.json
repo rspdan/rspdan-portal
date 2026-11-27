@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-25T08:12:33.120067+00:00",
+  "scope": "Served bytes fetched after completed candidate play; not a claim of frozen deployment or exact earlier in-memory module identity.",
+  "assets": {
+    "floorplan-editor.js": {
+      "status": 200,
+      "sha256": "4de944f5e7a8c8270eb87e3913c3161f98b69893d2a8862480074ee3aad22a9d"
+    },
+    "floorplan-editor.css": {
+      "status": 200,
+      "sha256": "9a10b8ffca0df2dbd8d20e1a5ef5c31ee7b59ec3d1350ba8760f619744b61ca0"
+    }
+  },
+  "browser": "151.0.7922.173"
+}

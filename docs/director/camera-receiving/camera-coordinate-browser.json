@@ -1,0 +1,87 @@
+{
+  "scope": "Targeted integrated browser with synthetic local owner and explicit private take store; no shared writes",
+  "checks": [
+    {
+      "name": "small_coordinate_save_reopen",
+      "pass": true,
+      "shared": false,
+      "camera": {
+        "mode": "perspective",
+        "position": [
+          1.2013491407016592e-16,
+          1.2013491407016592e-16,
+          0.00105
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "fov": 0.62,
+        "orthoSize": 1.48
+      }
+    },
+    {
+      "name": "pole_coordinate_rejected",
+      "pass": true,
+      "camera_unchanged": true,
+      "history_unchanged": true
+    },
+    {
+      "name": "elevation_exact_limits",
+      "pass": true,
+      "values": [
+        {
+          "requested": -89.42704,
+          "elevation": -89.42704,
+          "field": -89.42704,
+          "valid": true
+        },
+        {
+          "requested": 89.42704,
+          "elevation": 89.42704,
+          "field": 89.42704,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "legacy_boundary_load_honest_and_saveable",
+      "pass": true,
+      "warning": "Saved take reopened with its near-vertical camera adjusted to the supported angle. The original saved take is unchanged; use Save take to keep this displayed view.",
+      "draft": true,
+      "source_unchanged": true,
+      "displayed_camera": {
+        "mode": "perspective",
+        "position": [
+          1000,
+          0.9999500004166653,
+          999.9900001666658
+        ],
+        "target": [
+          1000,
+          0,
+          1000
+        ],
+        "fov": 0.62,
+        "orthoSize": 1.48
+      }
+    },
+    {
+      "name": "adjusted_draft_saves_without_replacing_original",
+      "pass": true,
+      "shared": false,
+      "source_unchanged": true
+    }
+  ],
+  "source_before": {
+    "public/director/director.js": "bd726f48d9c8e73962d0855523912d6f1b49383020ac1439d2d24b4a7879a161",
+    "docs/director/camera-navigation.md": "86832cfbc599b5f2b801246f04fd1d678a6c55f0a4d4cf215cf6481a7e391f0d"
+  },
+  "page_errors": [],
+  "source_after": {
+    "public/director/director.js": "bd726f48d9c8e73962d0855523912d6f1b49383020ac1439d2d24b4a7879a161",
+    "docs/director/camera-navigation.md": "86832cfbc599b5f2b801246f04fd1d678a6c55f0a4d4cf215cf6481a7e391f0d"
+  },
+  "pass": true
+}

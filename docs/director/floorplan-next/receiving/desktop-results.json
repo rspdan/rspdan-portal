@@ -1,0 +1,210 @@
+[
+  {
+    "device": "desktop",
+    "check": "Empty Building view has explicit no-room/no-connection guidance",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Empty view toggle does not create plan/history",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Overview keeps all four IDs in descending elevation order",
+    "passed": true,
+    "details": [
+      "level-upper-id",
+      "level-ground-id",
+      "level-empty-same-name-id",
+      "level-below-id"
+    ]
+  },
+  {
+    "device": "desktop",
+    "check": "Equal elevations group without merging IDs",
+    "passed": true,
+    "details": [
+      {
+        "elevation": 5.2,
+        "levels": [
+          "level-upper-id"
+        ]
+      },
+      {
+        "elevation": 0,
+        "levels": [
+          "level-ground-id",
+          "level-empty-same-name-id"
+        ]
+      },
+      {
+        "elevation": -3.2,
+        "levels": [
+          "level-below-id"
+        ]
+      }
+    ]
+  },
+  {
+    "device": "desktop",
+    "check": "Empty duplicate-name level explicitly remains empty",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Named connections preserve duplicate names and ID endpoints",
+    "passed": true,
+    "details": [
+      {
+        "id": "connection-stair-long-name",
+        "name": "Library stair down to the laboratory \u2014 a deliberately long route name",
+        "levels": [
+          "level-ground-id",
+          "level-below-id"
+        ]
+      },
+      {
+        "id": "connection-lift-first",
+        "name": "Shared lift name",
+        "levels": [
+          "level-ground-id",
+          "level-upper-id"
+        ]
+      },
+      {
+        "id": "connection-lift-second",
+        "name": "Shared lift name",
+        "levels": [
+          "level-below-id",
+          "level-upper-id"
+        ]
+      }
+    ]
+  },
+  {
+    "device": "desktop",
+    "check": "Building sorting and inspection do not mutate document/history",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Long labels do not cause horizontal page overflow",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Choosing duplicate-name level edits active ID once",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Choosing a level returns to editable Plan",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Undo level choice restores exact plan and local hint",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Redo updates local hint and active ID",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Choosing current level adds no history",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Nearby level selector disambiguates identical names",
+    "passed": true,
+    "details": [
+      "Entrance library \u2014 a deliberately long shared level name \u00b7 level 1",
+      "Upper control room with a long but distinct working name",
+      "Entrance library \u2014 a deliberately long shared level name \u00b7 level 3",
+      "Below-ground laboratory"
+    ]
+  },
+  {
+    "device": "desktop",
+    "check": "Building round trip preserves viewport and selection",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Building round trip preserves plan/history/pose",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Selected connector name edit remains in Selected panel",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Plan marker uses custom connection name",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Nearby destination control chooses exact duplicate-name ID",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Updated Building link follows ID, not duplicate label",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Renamed connection appears fully in Building",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Viewing updated links makes no extra history",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Keyboard overview activation selects level once",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Export contains canonical plan without UI view state",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "3D preview preserves plan and character pose",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Save uses isolated local store",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Reload preserves plan and character pose",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "Reloaded overview retains all level IDs",
+    "passed": true
+  },
+  {
+    "device": "desktop",
+    "check": "No application runtime exceptions",
+    "passed": true,
+    "details": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd",
+      "Failed to fetch dynamically imported module: http://127.0.0.1:4341/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=2862bffd"
+    ]
+  }
+]

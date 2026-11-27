@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "saved": {
+    "id": "dir_8a7428ff-9310-48df-8a6e-0fa74ddb083f",
+    "version": 1,
+    "owner": "dan",
+    "name": "Halp Pass3: Trip's little wobble",
+    "createdAt": "2026-11-25T03:32:24.801Z",
+    "takeHash": "2a69551a220a429dfa138727dd8f5c9c90c7d0caad20d2a2076345501802f7e1",
+    "asset": {
+      "id": "ouch-director-pass2",
+      "sha256": "ad640bbaf1fdf61eb304c1495bd1ba81388a85acf0293bcd4b6c929833e1cb14"
+    },
+    "keyframes": 4,
+    "look": "trip",
+    "href": "/director?take=dir_8a7428ff-9310-48df-8a6e-0fa74ddb083f"
+  },
+  "storage": "local-workspace",
+  "shared": false
+}

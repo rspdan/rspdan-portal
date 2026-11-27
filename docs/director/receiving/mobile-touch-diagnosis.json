@@ -1,0 +1,89 @@
+{
+  "scope": "Local Astro :5174; Chromium mobile emulation, is_mobile=True, has_touch=True, DPR3; actual CDP Input.dispatchTouchEvent taps and 16-step finger drag. No saved takes or Crew messages.",
+  "before": {
+    "css_canvas": [
+      390,
+      354.46875
+    ],
+    "buffer": [
+      195,
+      177
+    ],
+    "joint_taps": [
+      {
+        "target": "head",
+        "selected": "upper_arm.L"
+      },
+      {
+        "target": "lower_arm.L",
+        "selected": "lower_arm.L"
+      },
+      {
+        "target": "lower_arm.R",
+        "selected": "lower_arm.R"
+      },
+      {
+        "target": "shin.L",
+        "selected": "lower_arm.R"
+      }
+    ],
+    "finding": "Character body intercepted picks for displayed head/knee dots; elbow dots outside body selected. Utility-layer touch dispatch itself works."
+  },
+  "after": {
+    "css_canvas": [
+      390,
+      354.46875
+    ],
+    "buffer": [
+      780,
+      708
+    ],
+    "joint_taps": [
+      {
+        "target": "head",
+        "selected": "head"
+      },
+      {
+        "target": "lower_arm.L",
+        "selected": "lower_arm.L"
+      },
+      {
+        "target": "lower_arm.R",
+        "selected": "lower_arm.R"
+      },
+      {
+        "target": "shin.L",
+        "selected": "shin.L"
+      }
+    ],
+    "ring_target": {
+      "x": 203,
+      "y": 247,
+      "d": 37.79407086927627,
+      "mesh": "ignore",
+      "color": null,
+      "cx": 211.6518449761604,
+      "cy": 283.7904521768945
+    },
+    "joint": "shin.L",
+    "rotation_before": [
+      -0.0030531940925564095,
+      -0.06543742008422257,
+      0.06503831484020853,
+      0.9957302042527886
+    ],
+    "rotation_after": [
+      -0.02890789157608438,
+      -0.05878443494633746,
+      0.4569218368865647,
+      0.8870914039651567
+    ]
+  },
+  "checks": {
+    "four_actual_touch_joint_taps_select": true,
+    "touch_ring_drag_changes_bone_pose": true,
+    "touch_ring_drag_does_not_move_camera": true,
+    "canvas_uses_two_render_pixels_per_css_pixel": true
+  },
+  "receiving_note": "Body picking was explicitly disabled in test runtime, matching root source fix; reciprocal hardware scaling verified from actual canvas buffer. This receipt does not claim nearest-joint touch tolerance, which root is adding separately."
+}

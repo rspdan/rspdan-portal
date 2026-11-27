@@ -1,0 +1,115 @@
+{
+  "reader": "Bee",
+  "reviewed_utc": "2026-11-25T04:12:31.343285+00:00",
+  "mode": "Independent actual screenshot receiving; renderer executed by director_browser_asset.",
+  "status": "Four reviewed dark-room candidates, no Director approval claimed.",
+  "Director_direction_received_through_C_B": "Combine newer white/outline appearance with important earlier shading; explore low LED/plastic, middle incandescent with temperature, stronger fluorescent/neon light.",
+  "images": [
+    {
+      "file": "desktop-dark-led-low.png",
+      "sha256": "921b56e5366ab6ee155d7223eb9221db4a2de6a8b75a5fdb8613bc537908c382",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-dark-incandescent-warm.png",
+      "sha256": "f24501b8b800ac781f2e283f8ea81351c80f0822ba302f2a5ebceb3e21f9db1a",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-dark-incandescent-neutral.png",
+      "sha256": "d0a4f106c75d3e2f681eeec73818fca68c59e90caf9eb11b7746da91a0942775",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    },
+    {
+      "file": "desktop-dark-neon-cool-retained.png",
+      "sha256": "7f9845b21afc96809ceded802a0846aba2f0f08d3166b818533765424b7be939",
+      "pixels": [
+        802,
+        802
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "findings": [
+    {
+      "scope": "all four",
+      "observed": "Broad body reads white within this dark context; pale shading retains rounded head, torso and limb volume. No broad gray-body degradation or featureless-white interior clipping comparable to earlier rawE3 is apparent."
+    },
+    {
+      "file": "desktop-dark-led-low.png",
+      "observed": "Low state reads as an opaque white/plastic figure with little visible halo. Shape and arm/leg gaps remain clear."
+    },
+    {
+      "files": [
+        "desktop-dark-incandescent-warm.png",
+        "desktop-dark-incandescent-neutral.png"
+      ],
+      "observed": "Warm and neutral differences are subtle, mainly faint warm versus cooler/neutral floor tint. Body remains near-identical white. Low-to-warm transition is not strongly signaled at this full-body camera distance."
+    },
+    {
+      "file": "desktop-dark-neon-cool-retained.png",
+      "observed": "A visible edge halo and stronger cool floor pool distinguish high state. Rounded shading survives; between-leg gap and gaps around arm/body/head remain open. White-body identity persists in this dark context."
+    }
+  ],
+  "recommendation": "The retained-form high state is substantially more informative than flat rawE3. Keep white body and volume; treat middle temperature/state readability as a remaining limitation. Do not solve it by yellowing or graying the whole Character.",
+  "receipt": {
+    "file": "dark-temperature-trial.json",
+    "sha256": "3a6e260b12b80e64d7b89a008389d99e0d81ad22258f3b6d6fc6770d2cfad63c",
+    "cases_for_viewed_images": [
+      {
+        "name": "dark-led-low",
+        "g": 0,
+        "temperature": 6500,
+        "emission": 0.35
+      },
+      {
+        "name": "dark-incandescent-warm",
+        "g": 0.5,
+        "temperature": 3000,
+        "emission": 0.4
+      },
+      {
+        "name": "dark-incandescent-neutral",
+        "g": 0.5,
+        "temperature": 6500,
+        "emission": 0.4
+      },
+      {
+        "name": "dark-neon-cool-retained",
+        "g": 1,
+        "temperature": 8500,
+        "emission": 0.45
+      }
+    ],
+    "parameters_are": "Runtime implementation inputs, not measured physical lamp temperatures or Dan source-art dimensions."
+  },
+  "limits": [
+    "Four desktop stills of one raised-arm pose only.",
+    "No actual motion, transition/easing, mobile or new forearm/head overlap review for this retained-form recipe.",
+    "This dark-room set does not independently reverify the same recipe in the white room.",
+    "Visible floor pool is observed; its implementation/physical-light model was not independently inspected by Bee.",
+    "Earlier rawE3 flat-white state is historical counterexample, not the current candidate.",
+    "No implemented outline-control UI was reviewed.",
+    "No new lore or appearance approval inferred."
+  ],
+  "subsequent_Director_receiving": {
+    "recorded_utc": "2026-11-25T04:21:51.367186+00:00",
+    "received_through": "C.B.",
+    "accepted_scope": "base only",
+    "not_established": "glow is not yet visible enough to Dan",
+    "next": "Actual broader art pass by C.B., Bee and Halp; no additional recipe changes during this study",
+    "Bee_art_receipt": "nest-bridge/HYPERCAMPUS/ART/DPS-ART_112326/ShellGame.Development/ODK.Pass2/Bee/Glow-art-pass/glow-art-reading.json"
+  }
+}

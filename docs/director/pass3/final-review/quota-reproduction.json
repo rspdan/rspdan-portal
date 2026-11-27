@@ -1,0 +1,9 @@
+{
+  "status": "Set piece added.",
+  "storageLabel": "BROWSER DRAFT",
+  "objects": 1,
+  "keys": 0,
+  "unloadGuard": false,
+  "draftUnchanged": true,
+  "scope": "Injected QuotaExceededError; no live save. Tests error-path communication and no-key scene guard."
+}
